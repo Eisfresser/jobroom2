@@ -74,12 +74,12 @@
         }
     },
     "typeahead-multiselect": {
+        "tooltip": "Um <strong>mehrere</strong> Suchbegriffe einzugeben, dr\u00fccken Sie \"ENTER\" auf Ihrer Tastatur oder w\u00e4hlen Sie mehrere Suchbefriffe aus der Liste aus.",
         "type": {
             "canton": "Canton",
             "classification": "Cat\u00e9gorie",
             "locality": "Localit\u00e9",
             "occupation": "Profession"
-        },
-        "tooltip": "Um <strong>mehrere</strong> Suchbegriffe einzugeben, dr\u00fccken Sie \"ENTER\" auf Ihrer Tastatur oder w\u00e4hlen Sie mehrere Suchbefriffe aus der Liste aus."
+        }
     }
 }

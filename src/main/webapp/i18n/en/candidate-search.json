@@ -22,6 +22,9 @@
                 "one.with-query.with-locality": "1 '{{query}}' candidate in {{locality}}"
             }
         },
+        "degree": {
+            "label": "Training"
+        },
         "experience": {
             "label": "Professional experience"
         },
@@ -53,14 +56,15 @@
                 "default": "Select degree",
                 "label": "Degree"
             },
-            "occupation": {
-                "placeholder": "Occupation"
-            },
+            "reset": "Reset",
             "residence": {
                 "placeholder": "Canton of residence",
                 "selected": "Cantons"
-            },
-            "reset": "Reset"
+            }
+        },
+        "occupations": {
+            "placeholder": "Occupation",
+            "label": "Occupation"
         },
         "workForm": {
             "HOME_WORK": "Home-based work",
@@ -75,9 +79,6 @@
         "workplace": {
             "label": "Work location",
             "placeholder": "Work location"
-        },
-        "degree": {
-            "label": "Training"
         }
     }
 }

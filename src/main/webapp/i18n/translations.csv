@@ -79,12 +79,13 @@ candidate-search,candidate-search.graduation.label,Abschluss,Degree,Diplôme,Tit
 candidate-search,candidate-search.keywords.label,Suchbegriffe,Search terms,Critères de recherche,Termini ricercati
 candidate-search,candidate-search.languageSkills.label,Sprachkenntnisse,Languages,Connaissances linguistiques,Conoscenze linguistiche
 candidate-search,candidate-search.no-selection,Keine Auswahl,No selection,Aucune sélection,Nessuna scelta
+candidate-search,candidate-search.occupations.label,Berufsbezeichnung,Occupation,Profession,Professione
+candidate-search,candidate-search.occupations.placeholder,Berufsbezeichnung,Occupation,Profession,Professione
 candidate-search,candidate-search.skills.label,Suchbegriffe,Key words,Mots-clés,Parole chiave
 candidate-search,candidate-search.skills.placeholder,"Fähigkeiten, Skills","Competencies, skills","Compétences, skills","Competenze, skills"
 candidate-search,candidate-search.title,Kandidatensuche,Candidate search,Recherche de candidats,Cerca candidati
 candidate-search,candidate-search.toolbar.graduation.default,Abschluss auswählen,Select degree,Sélectionner un diplôme,Seleziona titolo...
 candidate-search,candidate-search.toolbar.graduation.label,Abschluss,Degree,Diplôme,Titolo
-candidate-search,candidate-search.toolbar.occupation.placeholder,Berufsbezeichnung,Occupation,Profession,Professione
 candidate-search,candidate-search.toolbar.reset,Zurücksetzen,Reset,Rétablir,Ripristina
 candidate-search,candidate-search.toolbar.residence.placeholder,Wohnkanton,Canton of residence,Canton de domicile,Luogo di domicilio: Cantone
 candidate-search,candidate-search.toolbar.residence.selected,Kantone,Cantons,Cantons,Cantoni

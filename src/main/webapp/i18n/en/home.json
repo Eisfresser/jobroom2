@@ -91,16 +91,16 @@
                 },
                 "messages": {
                     "validate": {
-                        "email-format": "This email address is invalid.",
-                        "phone-format": "Please enter a valid phone number e.g. 031 999 99 99 or +41 31 999 99 99",
-                        "required": "This field is required.",
                         "date-format": "DD.MM.YYYY",
-                        "employment-start": {
-                            "date-before": "The min date is actual date"
-                        },
+                        "email-format": "This email address is invalid.",
                         "employment-duration": {
                             "date-before": "The min date is employment start date"
                         },
+                        "employment-start": {
+                            "date-before": "The min date is actual date"
+                        },
+                        "phone-format": "Please enter a valid phone number e.g. 031 999 99 99 or +41 31 999 99 99",
+                        "required": "This field is required.",
                         "zip-format": "Invalid postal code",
                         "zip-or-city-format": "Invalid postal code/city"
                     }

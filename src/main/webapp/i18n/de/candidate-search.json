@@ -22,6 +22,9 @@
                 "one.with-query.with-locality": "1 '{{query}}' Kandidat in {{locality}}"
             }
         },
+        "degree": {
+            "label": "Ausbildung"
+        },
         "experience": {
             "label": "Berufserfahrung"
         },
@@ -53,14 +56,15 @@
                 "default": "Abschluss ausw\u00e4hlen",
                 "label": "Abschluss"
             },
-            "occupation": {
-                "placeholder": "Berufsbezeichnung"
-            },
+            "reset": "Zur\u00fccksetzen",
             "residence": {
                 "placeholder": "Wohnkanton",
                 "selected": "Kantone"
-            },
-            "reset": "Zur\u00fccksetzen"
+            }
+        },
+        "occupations": {
+            "placeholder": "Berufsbezeichnung",
+            "label": "Berufsbezeichnung"
         },
         "workForm": {
             "HOME_WORK": "Heimarbeit",
@@ -75,9 +79,6 @@
         "workplace": {
             "label": "Arbeitsort",
             "placeholder": "Arbeitsort"
-        },
-        "degree": {
-            "label": "Ausbildung"
         }
     }
 }

@@ -91,16 +91,16 @@
                 },
                 "messages": {
                     "validate": {
-                        "email-format": "Diese E-Mail-Adresse ist ung\u00fcltig.",
-                        "phone-format": "Bitte g\u00fcltige Telefonnummer eingeben z. B. 031 999 99 99 oder +41 31 999 99 99",
-                        "required": "Pflichtfeld",
                         "date-format": "TT.MM.JJJJ",
-                        "employment-start": {
-                            "date-before": "The min date is actual date"
-                        },
+                        "email-format": "Diese E-Mail-Adresse ist ung\u00fcltig.",
                         "employment-duration": {
                             "date-before": "The min date is employment start date"
                         },
+                        "employment-start": {
+                            "date-before": "The min date is actual date"
+                        },
+                        "phone-format": "Bitte g\u00fcltige Telefonnummer eingeben z. B. 031 999 99 99 oder +41 31 999 99 99",
+                        "required": "Pflichtfeld",
                         "zip-format": "PLZ ung\u00fcltig",
                         "zip-or-city-format": "PLZ/Ort ung\u00fcltig"
                     }

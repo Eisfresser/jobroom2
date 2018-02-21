@@ -4,14 +4,16 @@
               class="form-inline toolbar-form">
 
             <div class="form-group form-group--wide">
+                <label class="sr-only" translate="candidate-search.occupations.label"></label>
                 <jr2-typeahead-multiselect
                     formControlName="occupations"
                     [itemLoader]="fetchOccupationSuggestions"
                     [editable]="false"
-                    [placeHolder]="'job-search.toolbar.occupation.placeholder' | translate"></jr2-typeahead-multiselect>
+                    [placeHolder]="'candidate-search.occupations.placeholder' | translate"></jr2-typeahead-multiselect>
             </div>
 
             <div class="form-group form-group--wide w-100">
+                <label class="sr-only" translate="candidate-search.skills.label"></label>
                 <jr2-multiselect formControlName="skills" [placeholder]="'candidate-search.skills.placeholder' | translate"
                                  class="form-control form-control-lg">
                 </jr2-multiselect>

@@ -22,6 +22,9 @@
                 "one.with-query.with-locality": "1 candidat pour '{{query}}' \u00e0 {{locality}}"
             }
         },
+        "degree": {
+            "label": "Formation"
+        },
         "experience": {
             "label": "Exp\u00e9rience professionnelle"
         },
@@ -53,14 +56,15 @@
                 "default": "S\u00e9lectionner un dipl\u00f4me",
                 "label": "Dipl\u00f4me"
             },
-            "occupation": {
-                "placeholder": "Profession"
-            },
+            "reset": "R\u00e9tablir",
             "residence": {
                 "placeholder": "Canton de domicile",
                 "selected": "Cantons"
-            },
-            "reset": "R\u00e9tablir"
+            }
+        },
+        "occupations": {
+            "placeholder": "Profession",
+            "label": "Profession"
         },
         "workForm": {
             "HOME_WORK": "Travail \u00e0 domicile",
@@ -75,9 +79,6 @@
         "workplace": {
             "label": "Lieu de travail",
             "placeholder": "Lieu de travail"
-        },
-        "degree": {
-            "label": "Formation"
         }
     }
 }

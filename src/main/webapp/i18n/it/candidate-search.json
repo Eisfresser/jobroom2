@@ -22,6 +22,9 @@
                 "one.with-query.with-locality": "1 candidato per '{{query}}' in {{locality}}"
             }
         },
+        "degree": {
+            "label": "Formazione"
+        },
         "experience": {
             "label": "Esperienza professionale"
         },
@@ -53,14 +56,15 @@
                 "default": "Seleziona titolo...",
                 "label": "Titolo"
             },
-            "occupation": {
-                "placeholder": "Professione"
-            },
+            "reset": "Ripristina",
             "residence": {
                 "placeholder": "Luogo di domicilio: Cantone",
                 "selected": "Cantoni"
-            },
-            "reset": "Ripristina"
+            }
+        },
+        "occupations": {
+            "placeholder": "Professione",
+            "label": "Professione"
         },
         "workForm": {
             "HOME_WORK": "Telelavoro",
@@ -75,9 +79,6 @@
         "workplace": {
             "label": "Luogo di lavoro",
             "placeholder": "Luogo di lavoro"
-        },
-        "degree": {
-            "label": "Formazione"
         }
     }
 }

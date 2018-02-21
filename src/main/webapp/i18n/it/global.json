@@ -146,10 +146,10 @@
             "email.placeholder": "Il tuo indirizzo e-mail",
             "newpassword": "Nuova password",
             "newpassword.placeholder": "Nuova password",
-            "username": "Utente",
-            "username.placeholder": "Il tuo nome utente",
             "phone": "Telefono",
-            "phone.placeholder": "031 999 99 99 or +41 31 999 99 99"
+            "phone.placeholder": "031 999 99 99 or +41 31 999 99 99",
+            "username": "Utente",
+            "username.placeholder": "Il tuo nome utente"
         },
         "gender": {
             "FEMALE": "femmina",
@@ -462,8 +462,8 @@
         "ribbon": {
             "dev": "Local",
             "development": "Development",
-            "test": "Test",
-            "staging": "Staging"
+            "staging": "Staging",
+            "test": "Test"
         },
         "title": "Job-Room"
     },
