@@ -46,6 +46,10 @@
             "label": "Sprachkenntnisse"
         },
         "no-selection": "Keine Auswahl",
+        "occupations": {
+            "label": "Berufsbezeichnung",
+            "placeholder": "Berufsbezeichnungen, Kategorien"
+        },
         "skills": {
             "label": "Suchbegriffe",
             "placeholder": "F\u00e4higkeiten, Skills"
@@ -61,10 +65,6 @@
                 "placeholder": "Wohnkanton",
                 "selected": "Kantone"
             }
-        },
-        "occupations": {
-            "placeholder": "Berufsbezeichnung",
-            "label": "Berufsbezeichnung"
         },
         "workForm": {
             "HOME_WORK": "Heimarbeit",

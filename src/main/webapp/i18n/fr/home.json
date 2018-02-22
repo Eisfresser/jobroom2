@@ -91,13 +91,13 @@
                 },
                 "messages": {
                     "validate": {
-                        "date-format": "JJ.MM.AAAA",
+                        "date-format": "Format de date JJ.MM.AAAA",
                         "email-format": "Cette adresse courriel n'est pas valide.",
                         "employment-duration": {
-                            "date-before": "The min date is employment start date"
+                            "date-before": "La date doit se trouver apr\u00e8s l'entr\u00e9e en fonction."
                         },
                         "employment-start": {
-                            "date-before": "The min date is actual date"
+                            "date-before": "La date doit se trouver dans le futur."
                         },
                         "phone-format": "Please enter a valid phone number e.g. 031 999 99 99 or +41 31 999 99 99",
                         "required": "Ce champ est obligatoire.",

@@ -46,6 +46,10 @@
             "label": "Languages"
         },
         "no-selection": "No selection",
+        "occupations": {
+            "label": "Occupation",
+            "placeholder": "Occupations, categories"
+        },
         "skills": {
             "label": "Key words",
             "placeholder": "Competencies, skills"
@@ -61,10 +65,6 @@
                 "placeholder": "Canton of residence",
                 "selected": "Cantons"
             }
-        },
-        "occupations": {
-            "placeholder": "Occupation",
-            "label": "Occupation"
         },
         "workForm": {
             "HOME_WORK": "Home-based work",

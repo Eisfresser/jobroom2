@@ -46,6 +46,10 @@
             "label": "Connaissances linguistiques"
         },
         "no-selection": "Aucune s\u00e9lection",
+        "occupations": {
+            "label": "Profession",
+            "placeholder": "Professions, cat\u00e9gories"
+        },
         "skills": {
             "label": "Mots-cl\u00e9s",
             "placeholder": "Comp\u00e9tences, skills"
@@ -61,10 +65,6 @@
                 "placeholder": "Canton de domicile",
                 "selected": "Cantons"
             }
-        },
-        "occupations": {
-            "placeholder": "Profession",
-            "label": "Profession"
         },
         "workForm": {
             "HOME_WORK": "Travail \u00e0 domicile",

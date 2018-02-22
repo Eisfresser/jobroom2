@@ -46,6 +46,10 @@
             "label": "Conoscenze linguistiche"
         },
         "no-selection": "Nessuna scelta",
+        "occupations": {
+            "label": "Professione",
+            "placeholder": "Professioni, categorie"
+        },
         "skills": {
             "label": "Parole chiave",
             "placeholder": "Competenze, skills"
@@ -61,10 +65,6 @@
                 "placeholder": "Luogo di domicilio: Cantone",
                 "selected": "Cantoni"
             }
-        },
-        "occupations": {
-            "placeholder": "Professione",
-            "label": "Professione"
         },
         "workForm": {
             "HOME_WORK": "Telelavoro",
