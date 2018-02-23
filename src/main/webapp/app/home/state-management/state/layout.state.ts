@@ -15,9 +15,9 @@ export class AgenciesTab {
 }
 
 export interface HomeLayoutState {
-    activeToolbarItem: ToolbarItem,
-    activeCompanyTabId: string,
-    activeAgencyTabId: string,
+    activeToolbarItem: ToolbarItem;
+    activeCompanyTabId: string;
+    activeAgencyTabId: string;
 }
 
 export const initialState: HomeLayoutState = {

@@ -34,7 +34,7 @@ export class JobSearchFilterComponent implements OnInit, OnDestroy {
                 sort: this.searchFilter.sort
             });
         }
-    };
+    }
 
     filterForm: FormGroup;
     companyName: FormControl;

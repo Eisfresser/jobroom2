@@ -38,5 +38,5 @@ export function datepickerI18nService() {
     return {
         provide: NgbDatepickerI18n,
         useClass: NgbDatepickerI18nService
-    }
+    };
 }

@@ -38,7 +38,7 @@ export interface GenderAwareOccupationLabel {
 }
 
 interface OccupationLabelDataCache {
-    [key: string]: OccupationLabelData
+    [key: string]: OccupationLabelData;
 }
 
 @Injectable()
@@ -51,7 +51,7 @@ export class OccupationPresentationService {
     findOccupationLabelsByAvamCode(avamCode: number | string, language: string): Observable<GenderAwareOccupationLabel> {
         const extractCode = () => {
             if (typeof avamCode === 'string') {
-                return +avamCode.split(':')[1]
+                return +avamCode.split(':')[1];
             }
             return avamCode;
         };
@@ -106,7 +106,7 @@ export class OccupationPresentationService {
                 const mappedClassifications = classifications.map(classificationMapper(occupations.length));
 
                 return [...mappedOccupations, ...mappedClassifications];
-            })
+            });
     }
 
     fetchCandidateSearchOccupationSuggestions = (query: string): Observable<Array<TypeaheadMultiselectModel>> => {

@@ -1,20 +1,20 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { NgbActiveModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager } from 'ng-jhipster';
+import { PHONE_NUMBER_REGEX } from '../../shared/validation/regex-patterns';
 
 import { UserModalService } from './user-modal.service';
 import { JhiLanguageHelper, User, UserService } from '../../shared';
-import { PHONE_NUMBER_REGEX } from '../../shared/validation/regex-patterns';
-import { Observable } from 'rxjs/Observable';
-import { OrganizationService } from '../../shared/organization/organization.service';
 import {
     formatOrganizationName,
     Organization,
     OrganizationAutocomplete,
     OrganizationSuggestion
 } from '../../shared/organization/organization.model';
+import { OrganizationService } from '../../shared/organization/organization.service';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
     selector: 'jhi-user-mgmt-dialog',
@@ -74,7 +74,7 @@ export class UserMgmtDialogComponent implements OnInit {
     private onSaveSuccess(result) {
         this.eventManager.broadcast({ name: 'userListModification', content: 'OK' });
         this.isSaving = false;
-        this.activeModal.dismiss(result);
+        this.activeModal.dismiss(result.body);
     }
 
     private onSaveError() {
@@ -98,7 +98,6 @@ export class UserMgmtDialogComponent implements OnInit {
 })
 export class UserDialogComponent implements OnInit, OnDestroy {
 
-    modalRef: NgbModalRef;
     routeSub: any;
 
     constructor(
@@ -110,9 +109,9 @@ export class UserDialogComponent implements OnInit, OnDestroy {
         this.routeSub = this.route.params.subscribe((params) => {
             setTimeout(() => {
                 if ( params['login'] ) {
-                    this.modalRef = this.userModalService.open(UserMgmtDialogComponent as Component, params['login']);
+                    this.userModalService.open(UserMgmtDialogComponent as Component, params['login']);
                 } else {
-                    this.modalRef = this.userModalService.open(UserMgmtDialogComponent as Component);
+                    this.userModalService.open(UserMgmtDialogComponent as Component);
                 }
             });
         });

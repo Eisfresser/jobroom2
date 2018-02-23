@@ -1,16 +1,15 @@
 import './vendor.ts';
 
-import { NgModule } from '@angular/core';
+import { Injector, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { Ng2Webstorage } from 'ng2-webstorage';
+import { Ng2Webstorage } from 'ngx-webstorage';
 
 import { JobroomSharedModule, UserRouteAccessService } from './shared';
-import { JobroomHomeModule } from './home/home.module';
+import { JobroomHomeModule } from './home';
 import { JobroomAdminModule } from './admin/admin.module';
 import { JobroomAccountModule } from './account/account.module';
 import { JobroomEntityModule } from './entities/entity.module';
 
-import { customHttpProvider } from './blocks/interceptor/http.provider';
 import { PaginationConfig } from './blocks/config/uib-pagination.config';
 import {
     ActiveMenuDirective,
@@ -31,22 +30,24 @@ import { JobSearchModule } from './job-search/job-search.module';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { DEBUG_INFO_ENABLED, VERSION } from './app.constants';
+import { DEBUG_INFO_ENABLED } from './app.constants';
 import { CandidateSearchModule } from './candidate-search/candidate-search.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { CustomRouterStateSerializer, } from './shared/custom-router-state-serializer/custom-router-state-serializer';
 import { RouterStateSerializer, StoreRouterConnectingModule } from '@ngrx/router-store';
 import { reducers } from './shared/state-management/reducers/core.reducers';
 
-import { TranslateLoader } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { Http } from '@angular/http';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './blocks/interceptor/auth.interceptor';
+import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
+import { AuthExpiredInterceptor } from './blocks/interceptor/auth-expired.interceptor';
+import { ErrorHandlerInterceptor } from './blocks/interceptor/errorhandler.interceptor';
+import { JhiEventManager } from 'ng-jhipster';
+import { NotificationInterceptor } from './blocks/interceptor/notification.interceptor';
+import { CacheKeyInterceptor } from './blocks/interceptor/cache.interceptor';
+import { CookieService } from 'ngx-cookie';
+import { JhiBase64Service } from 'ng-jhipster/src/service/base64.service';
 // jhipster-needle-angular-add-module-import JHipster will add new module here
-
-export function translatePartialLoader(http: Http) {
-    // todo: remove it after migrating to the latest ng-jhipster version
-    return new TranslateHttpLoader(http, 'i18n/', `.json?version=${VERSION}`);
-}
 
 const imports = [
     BrowserModule,
@@ -88,11 +89,51 @@ if (DEBUG_INFO_ENABLED) {
     providers: [
         ProfileService,
         VersionService,
-        customHttpProvider(),
         PaginationConfig,
         UserRouteAccessService,
         { provide: RouterStateSerializer, useClass: CustomRouterStateSerializer },
-        { provide: TranslateLoader, useFactory: translatePartialLoader, deps: [ Http ] }
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: AuthInterceptor,
+            multi: true,
+            deps: [
+                LocalStorageService,
+                SessionStorageService
+            ]
+        },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: AuthExpiredInterceptor,
+            multi: true,
+            deps: [
+                Injector
+            ]
+        },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: ErrorHandlerInterceptor,
+            multi: true,
+            deps: [
+                JhiEventManager
+            ]
+        },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: NotificationInterceptor,
+            multi: true,
+            deps: [
+                Injector
+            ]
+        },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: CacheKeyInterceptor,
+            multi: true,
+            deps: [
+                CookieService,
+                JhiBase64Service
+            ]
+        }
     ],
     bootstrap: [JhiMainComponent]
 })

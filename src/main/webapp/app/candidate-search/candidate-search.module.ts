@@ -33,7 +33,7 @@ const effects: Array<any> = [
 ];
 
 if (USER_TRACKING_ENABLED) {
-    effects.push(UserTrackingEffects)
+    effects.push(UserTrackingEffects);
 }
 
 @NgModule({

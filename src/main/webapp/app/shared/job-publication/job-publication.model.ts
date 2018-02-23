@@ -119,7 +119,7 @@ export interface JobPublication {
     application: Application;
     publication: Publication;
     creationDate: string;
-    locale: Locale
+    locale: Locale;
     status?: Status;
 }
 

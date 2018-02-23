@@ -6,10 +6,10 @@ import { Principal } from '../../../../../../main/webapp/app/shared';
 import { OrganizationService } from '../../../../../../main/webapp/app/shared/organization/organization.service';
 import { JobPublicationCancelDialogService } from '../../../../../../main/webapp/app/dashboard/dialogs/job-publication-cancel-dialog.service';
 import { JobPublicationService } from '../../../../../../main/webapp/app/shared/job-publication/job-publication.service';
-import { HttpModule } from '@angular/http';
 import { TranslateService } from '@ngx-translate/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('PEA-DashboardComponent', () => {
     let component: PeaDashboardComponent;
@@ -24,7 +24,7 @@ describe('PEA-DashboardComponent', () => {
         TestBed.configureTestingModule({
             imports: [
                 ReactiveFormsModule,
-                HttpModule,
+                HttpClientModule,
             ],
             declarations: [PeaDashboardComponent],
             providers: [

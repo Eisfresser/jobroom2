@@ -1,21 +1,19 @@
 import { inject, TestBed } from '@angular/core/testing';
 import { JobroomTestModule } from '../../../test.module';
 import { LocalityService } from '../../../../../../main/webapp/app/shared/index';
-import { MockBackend } from '@angular/http/testing';
 import {
     GeoPoint,
     LocalityAutocomplete,
     LocalityInputType
 } from '../../../../../../main/webapp/app/shared/reference-service/locality-autocomplete';
 import { TypeaheadMultiselectModel } from '../../../../../../main/webapp/app/shared/input-components';
-import { Response, ResponseOptions } from '@angular/http';
 import { NAVIGATOR_TOKEN } from '../../../../../../main/webapp/app/shared/reference-service/locality.service';
-import arrayContaining = jasmine.arrayContaining;
+import { HttpTestingController } from '@angular/common/http/testing';
 
 describe('LocalityService', () => {
-    const createJsonResponse = (obj: any) => new Response(new ResponseOptions({ body: JSON.stringify(obj) }));
     const mockNavigator: any = {};
     mockNavigator.geolocation = jasmine.createSpyObj('mockGeolocation', ['getCurrentPosition']);
+    let httpMock: HttpTestingController;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -25,25 +23,25 @@ describe('LocalityService', () => {
                 { provide: NAVIGATOR_TOKEN, useValue: mockNavigator }
             ]
         });
+
+        httpMock = TestBed.get(HttpTestingController);
+    });
+
+    afterEach(() => {
+        httpMock.verify();
     });
 
     describe('fetchSuggestions', () => {
-        let lastConnection;
-
-        beforeEach(inject([MockBackend], (mockBackend: MockBackend) => {
-            mockBackend.connections.subscribe((connection: any) => lastConnection = connection);
-        }));
-
         it('should call http.get with the correct URL parameters',
             inject([LocalityService], (service: LocalityService) => {
                 // WHEN
-                service.fetchSuggestions('ber');
+                service.fetchSuggestions('ber').subscribe();
 
                 // THEN
-                const urlArray = lastConnection.request.url.split(/[?&]/);
-                expect(urlArray).toEqual(arrayContaining(['referenceservice/api/_search/localities']));
-                expect(urlArray).toEqual(arrayContaining(['prefix=ber']));
-                expect(urlArray).toEqual(arrayContaining(['distinctByLocalityCity=true']))
+                httpMock.expectOne((req) =>
+                    req.url === 'referenceservice/api/_search/localities'
+                    && req.params.get('prefix') === 'ber'
+                    && req.params.get('distinctByLocalityCity') === 'true');
             }));
 
         it('should map the response Locality list without duplicates to an array of TypeaheadMultiselectModel',
@@ -74,7 +72,8 @@ describe('LocalityService', () => {
                 // WHEN
                 let model: Array<TypeaheadMultiselectModel>;
                 service.fetchSuggestions('bern').subscribe((res: any) => model = res);
-                lastConnection.mockRespond(createJsonResponse(suggestResponse));
+                const req = httpMock.expectOne({ method: 'GET' });
+                req.flush(suggestResponse);
 
                 // THEN
                 expect(model.length).toEqual(3);
@@ -90,22 +89,16 @@ describe('LocalityService', () => {
     ;
 
     describe('getNearestLocality', () => {
-        let lastConnection;
-
-        beforeEach(inject([MockBackend], (mockBackend: MockBackend) => {
-            mockBackend.connections.subscribe((connection: any) => lastConnection = connection);
-        }));
-
         it('should call http.get with the correct URL parameters',
             inject([LocalityService], (service: LocalityService) => {
                 // WHEN
-                service.getNearestLocality({ latitude: 1111, longitude: 2222 });
+                service.getNearestLocality({ latitude: 1111, longitude: 2222 }).subscribe();
 
                 // THEN
-                const urlArray = lastConnection.request.url.split(/[?&]/);
-                expect(urlArray).toEqual(arrayContaining(['referenceservice/api/_search/localities/nearest']));
-                expect(urlArray).toEqual(arrayContaining(['latitude=1111']));
-                expect(urlArray).toEqual(arrayContaining(['longitude=2222']));
+                httpMock.expectOne((req) =>
+                    req.url === 'referenceservice/api/_search/localities/nearest'
+                    && req.params.get('latitude') === '1111'
+                    && req.params.get('longitude') === '2222');
             }));
     });
 

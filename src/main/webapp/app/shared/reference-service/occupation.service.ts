@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
-import { BaseRequestOptions, Http, Response, URLSearchParams } from '@angular/http';
 import { TranslateService } from '@ngx-translate/core';
 import {
     ClassificationSuggestion,
@@ -9,6 +8,7 @@ import {
 } from './occupation-autocomplete';
 import { TypeaheadMultiselectModel } from '../input-components';
 import { OccupationInputType } from './occupation-presentation.service';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 const DEFAULT_RESPONSE_SIZE = '10';
 const SEARCH_URL = 'referenceservice/api/_search/occupations/synonym';
@@ -46,7 +46,7 @@ export class OccupationService {
                 new TypeaheadMultiselectModel(OccupationInputType.CLASSIFICATION, c.code, c.name, startIndex + index));
     }
 
-    constructor(private http: Http, private translateService: TranslateService) {
+    constructor(private http: HttpClient, private translateService: TranslateService) {
     }
 
     fetchSuggestions(query: string): Observable<TypeaheadMultiselectModel[]> {
@@ -74,29 +74,22 @@ export class OccupationService {
             return Observable.of(this.occupationCache[cacheKey]);
         }
 
-        const params: URLSearchParams = new URLSearchParams();
-        params.set('code', code.toString());
-        params.set('language', currentLang);
-        const options = new BaseRequestOptions();
-        options.params = params;
+        const params = new HttpParams()
+            .set('code', code.toString())
+            .set('language', currentLang);
 
-        return this.http.get(OCCUPATIONS_URL, options)
-            .map((res: Response) => res.json() as Occupation)
+        return this.http.get<Occupation>(OCCUPATIONS_URL, { params })
             .do((occupation: Occupation) => this.occupationCache[cacheKey] = occupation)
             .map((occupation: Occupation) => occupation)
     }
 
     private fetchSuggestionsInternal(query: string): Observable<OccupationAutocomplete> {
-        const options = new BaseRequestOptions();
-        const params: URLSearchParams = new URLSearchParams();
-        options.params = params;
+        const params = new HttpParams()
+            .set('prefix', query)
+            .set('resultSize', DEFAULT_RESPONSE_SIZE)
+            .set('language', this.translateService.currentLang);
 
-        params.set('prefix', query);
-        params.set('resultSize', DEFAULT_RESPONSE_SIZE);
-        params.set('language', this.translateService.currentLang);
-
-        return this.http.get(SEARCH_URL, options)
-            .map((res: Response) => <OccupationAutocomplete>res.json());
+        return this.http.get<OccupationAutocomplete>(SEARCH_URL, { params });
     }
 
     private handleError(error: Response) {

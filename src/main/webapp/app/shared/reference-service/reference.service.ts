@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { BaseRequestOptions, Http, Response, URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { TranslateService } from '@ngx-translate/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 const REFERENCESERVICE_URL = 'referenceservice/api/';
 const JOB_CENTER_URL = REFERENCESERVICE_URL + 'job-centers';
@@ -28,20 +28,14 @@ export class JobCenter {
 @Injectable()
 export class ReferenceService {
 
-    constructor(private http: Http, private translateService: TranslateService) {
+    constructor(private http: HttpClient, private translateService: TranslateService) {
     }
 
     resolveJobCenter(code: string): Observable<JobCenter> {
-        const options = new BaseRequestOptions();
-        const params: URLSearchParams = new URLSearchParams();
-        options.params = params;
+        const params = new HttpParams()
+            .set('code', code)
+            .set('language', this.translateService.currentLang);
 
-        params.set('code', code);
-        params.set('language', this.translateService.currentLang);
-
-        return this.http.get(JOB_CENTER_URL, options)
-            .map((res: Response) => {
-                return <JobCenter>res.json();
-            });
+        return this.http.get<JobCenter>(JOB_CENTER_URL, { params });
     }
 }

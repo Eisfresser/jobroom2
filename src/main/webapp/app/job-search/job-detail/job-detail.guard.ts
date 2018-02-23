@@ -28,6 +28,6 @@ export class JobDetailGuard implements CanActivate {
                 return Observable.of(null);
             })
             .do((job) => this.store.dispatch(new JobDetailLoadedAction(job)))
-            .map((job) => !!job)
+            .map((job) => !!job);
     }
 }

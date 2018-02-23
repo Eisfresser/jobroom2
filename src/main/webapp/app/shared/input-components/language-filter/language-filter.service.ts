@@ -17,7 +17,7 @@ export class LanguageFilterService {
                 const unsortedLanguages = this.getUnsortedLanguages(translations, languageOptions);
                 const sortedMostUsedLanguages = this.getSortedMostUsedLanguages(unsortedLanguages);
                 const sortedLessUsedLanguages = this.getSortedLessUsedLanguages(unsortedLanguages);
-                return sortedMostUsedLanguages.concat(sortedLessUsedLanguages)
+                return sortedMostUsedLanguages.concat(sortedLessUsedLanguages);
             });
     }
 
@@ -27,7 +27,7 @@ export class LanguageFilterService {
             .map((key) => ({
                 key,
                 value: translations.global.reference.language[key]
-            }))
+            }));
     }
 
     private getSortedMostUsedLanguages(translations: Array<{ key: string, value: string }>) {

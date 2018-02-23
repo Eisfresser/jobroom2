@@ -7,7 +7,6 @@ import { JobSearchToolbarComponent } from './job-search-toolbar/job-search-toolb
 import { JobSearchSidebarComponent } from './job-search-sidebar/job-search-sidebar.component';
 import { JobSearchListItemComponent } from './job-search-list-item/job-search-list-item.component';
 import { JhiLanguageService } from 'ng-jhipster';
-import { customHttpProvider } from '../blocks/interceptor/http.provider';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { jobSearchReducer } from './state-management/reducers/job-search.reducers';
@@ -50,7 +49,6 @@ import { JobFingerprintRedirectResolver } from './job-fingerprint-redirect/job-f
         JobLocalityComponent
     ],
     providers: [
-        customHttpProvider(),
         JobFingerprintRedirectResolver,
         JobService
     ]

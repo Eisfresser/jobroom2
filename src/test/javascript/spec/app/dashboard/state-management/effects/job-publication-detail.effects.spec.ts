@@ -2,7 +2,6 @@ import { Observable } from 'rxjs/Observable';
 import { Store, StoreModule } from '@ngrx/store';
 import { TestBed } from '@angular/core/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
-import { HttpModule } from '@angular/http';
 import { JobPublicationDetailEffects } from '../../../../../../../main/webapp/app/dashboard/state-management/effects/job-publication-detail.effects';
 import { JobPublicationDetailState } from '../../../../../../../main/webapp/app/dashboard/state-management/state/job-publication-detail.state';
 import {
@@ -21,6 +20,7 @@ import {
 import { JobPublicationService } from '../../../../../../../main/webapp/app/shared/job-publication/job-publication.service';
 import { jobSearchReducer } from '../../../../../../../main/webapp/app/job-search/state-management/reducers/job-search.reducers';
 import { CancellationData } from '../../../../../../../main/webapp/app/dashboard/dialogs/cancellation-data';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('JobPublicationCancelEffects', () => {
     let effects: JobPublicationDetailEffects;
@@ -32,7 +32,7 @@ describe('JobPublicationCancelEffects', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
-                HttpModule,
+                HttpClientModule,
                 StoreModule.forRoot({ jobSearch: jobSearchReducer })
             ],
             providers: [

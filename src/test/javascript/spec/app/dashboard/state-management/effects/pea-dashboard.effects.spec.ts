@@ -5,7 +5,6 @@ import { DashboardState } from '../../../../../../../main/webapp/app/dashboard/s
 import { TestBed } from '@angular/core/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { cold, hot } from 'jasmine-marbles';
-import { Headers } from '@angular/http';
 import { Principal, ResponseWrapper } from '../../../../../../../main/webapp/app/shared';
 import {
     FilterJobPublicationsDashboardAction,
@@ -16,6 +15,7 @@ import {
 import { JobPublicationService } from '../../../../../../../main/webapp/app/shared/job-publication/job-publication.service';
 import { createJobPublication } from '../../../shared/job-publication/utils';
 import { dashboardReducer } from '../../../../../../../main/webapp/app/dashboard/state-management/reducers/dahboard.reducers';
+import { HttpHeaders } from '@angular/common/http';
 
 describe('PEADashboardEffects', () => {
     let effects: PEADashboardEffects;
@@ -58,7 +58,7 @@ describe('PEADashboardEffects', () => {
             const jobPublications = [
                 createJobPublication()
             ];
-            const responseWrapper = new ResponseWrapper(new Headers({ 'X-Total-Count': '100' }), jobPublications, 200);
+            const responseWrapper = new ResponseWrapper(new HttpHeaders({ 'X-Total-Count': '100' }), jobPublications, 200);
 
             actions$ = hot('-a', { a: action });
             const response = cold('-a|', { a: responseWrapper });
@@ -96,7 +96,7 @@ describe('PEADashboardEffects', () => {
             const jobPublications = [
                 createJobPublication()
             ];
-            const responseWrapper = new ResponseWrapper(new Headers({ 'X-Total-Count': '100' }), jobPublications, 200);
+            const responseWrapper = new ResponseWrapper(new HttpHeaders({ 'X-Total-Count': '100' }), jobPublications, 200);
 
             actions$ = hot('-a', { a: action });
             const response = cold('-a|', { a: responseWrapper });

@@ -46,7 +46,7 @@ export class CandidateSearchToolbarComponent implements OnInit, OnDestroy, OnCha
                 workplace: this.searchFilter.workplace
             });
         }
-    };
+    }
 
     @Output() searchCandidates = new EventEmitter<CandidateSearchFilter>();
 
@@ -102,6 +102,6 @@ export class CandidateSearchToolbarComponent implements OnInit, OnDestroy, OnCha
 
     resetFilters(event: any): void {
         event.preventDefault();
-        this.store.dispatch(new ResetFilterAction(new Date().getTime()))
+        this.store.dispatch(new ResetFilterAction(new Date().getTime()));
     }
 }

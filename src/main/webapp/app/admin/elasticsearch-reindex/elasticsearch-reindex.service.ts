@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class ElasticsearchReindexService {
@@ -13,7 +13,7 @@ export class ElasticsearchReindexService {
     };
 
     constructor(
-      private http: Http
+      private http: HttpClient
     ) { }
 
     reindex(document: string): Observable<void> {

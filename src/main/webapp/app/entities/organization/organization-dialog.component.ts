@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Response } from '@angular/http';
 
 import { Observable } from 'rxjs/Rx';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
@@ -46,7 +45,7 @@ export class OrganizationDialogComponent implements OnInit {
 
     private subscribeToSaveResponse(result: Observable<Organization>) {
         result.subscribe((res: Organization) =>
-            this.onSaveSuccess(res), (res: Response) => this.onSaveError());
+            this.onSaveSuccess(res), (_) => this.onSaveError());
     }
 
     private onSaveSuccess(result: Organization) {

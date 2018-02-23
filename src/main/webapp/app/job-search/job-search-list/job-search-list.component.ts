@@ -75,7 +75,7 @@ export class JobSearchListComponent implements OnDestroy, AfterViewInit {
         }
 
         if (this.baseQueryString && this.baseQueryString.length > 0) {
-            key += '.with-query'
+            key += '.with-query';
         }
 
         if (this.localityQueryString && this.localityQueryString.length > 0) {

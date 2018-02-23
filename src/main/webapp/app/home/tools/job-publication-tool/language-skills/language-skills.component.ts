@@ -125,6 +125,6 @@ export class LanguageSkillsComponent implements OnInit, OnDestroy {
             code: [value.code],
             spoken: [value.spoken],
             written: [value.written]
-        })
+        });
     }
 }

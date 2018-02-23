@@ -1,11 +1,6 @@
 const webpackConfig = require('../../../webpack/webpack.test.js');
 
-const ChromiumRevision = require('puppeteer/package.json').puppeteer.chromium_revision;
-const Downloader = require('puppeteer/utils/ChromiumDownloader');
-const revisionInfo = Downloader.revisionInfo(Downloader.currentPlatform(), ChromiumRevision);
-process.env.CHROMIUM_BIN = revisionInfo.executablePath;
-
-const WATCH = process.argv.indexOf('--watch') > -1;
+const WATCH = process.argv.includes('--watch');
 
 module.exports = (config) => {
     config.set({
@@ -48,9 +43,12 @@ module.exports = (config) => {
             reportSuccess: true // Default: true, will notify when a suite was successful
         },
 
+
         remapIstanbulReporter: {
             reports: { // eslint-disable-line
-                'lcovonly': 'build/test-results/coverage/lcov.info'
+                'lcovonly': 'build/test-results/coverage/report-lcov/lcov.info',
+                'html': 'build/test-results/coverage',
+                'text-summary': null
             }
         },
 
@@ -69,14 +67,7 @@ module.exports = (config) => {
 
         // start these browsers
         // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-        browsers: ['ChromiumHeadlessNoSandbox'],
-
-        customLaunchers: {
-            ChromiumHeadlessNoSandbox: {
-                base: 'ChromiumHeadless',
-                flags: ['--no-sandbox']
-            }
-        },
+        browsers: ['PhantomJS'],
 
         // Ensure all browsers can run tests written in .ts files
         mime: {
@@ -87,5 +78,4 @@ module.exports = (config) => {
         // if true, Karma captures browsers, runs the tests and exits
         singleRun: !WATCH
     });
-}
-;
+};

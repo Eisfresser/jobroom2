@@ -4,7 +4,6 @@ import {
     Router,
     RouterStateSnapshot
 } from '@angular/router';
-import { Observable } from 'rxjs/Rx';
 import { Injectable } from '@angular/core';
 import { JobService } from '../services';
 

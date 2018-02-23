@@ -1,25 +1,26 @@
-import { BaseRequestOptions, URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 
-export const createRequestOption = (req?: any): BaseRequestOptions => {
-    const options: BaseRequestOptions = new BaseRequestOptions();
+export const createRequestOption = (req?: any): HttpParams => {
+    let options: HttpParams = new HttpParams();
     if (req) {
-        const params: URLSearchParams = new URLSearchParams();
-        params.set('page', req.page);
-        params.set('size', req.size);
+        Object.keys(req).forEach((key) => {
+            if (key !== 'sort') {
+                options = options.set(key, req[key]);
+            }
+        });
         if (req.sort) {
-            params.paramsMap.set('sort', req.sort);
+            req.sort.forEach((val) => {
+                options = options.append('sort', val);
+            });
         }
-        params.set('query', req.query);
-
-        options.params = params;
     }
     return options;
 };
 
-export const createPageableURLSearchParams = (req?: any): URLSearchParams => {
-    const params: URLSearchParams = new URLSearchParams();
-    params.set('page', req.page);
-    params.set('size', req.size);
+export const createPageableURLSearchParams = (req?: any): HttpParams => {
+    const params = new HttpParams()
+        .set('page', req.page)
+        .set('size', req.size);
     if (req.sort) {
         if (req.sort instanceof Array) {
             req.sort.forEach((sort) => params.append('sort', sort));

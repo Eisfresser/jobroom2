@@ -1,6 +1,6 @@
 import { InjectionToken, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { JhiLanguageService, NgJhipsterModule } from 'ng-jhipster';
@@ -28,7 +28,7 @@ export function _window(): Window {
     ],
     exports: [
         FormsModule,
-        HttpModule,
+        HttpClientModule,
         CommonModule,
         NgbModule,
         NgJhipsterModule,
@@ -39,5 +39,4 @@ export function _window(): Window {
         { provide: WINDOW, useFactory: _window }
     ]
 })
-export class JobroomSharedLibsModule {
-}
+export class JobroomSharedLibsModule {}

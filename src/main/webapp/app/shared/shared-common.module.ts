@@ -1,13 +1,14 @@
-import { LOCALE_ID, NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { KeysPipe } from './pipes/enum-keys.pipe';
+import { registerLocaleData } from '@angular/common';
+import locale from '@angular/common/locales/de';
 
 import {
+    JobroomSharedLibsModule,
+    JhiLanguageHelper,
     FindLanguageFromKeyPipe,
     JhiAlertComponent,
-    JhiAlertErrorComponent,
-    JhiLanguageHelper,
-    JobroomSharedLibsModule
+    JhiAlertErrorComponent
 } from './';
 import {
     LanguageFilterComponent,
@@ -19,6 +20,7 @@ import {
     TypeaheadSingleselectComponent
 } from './input-components';
 import { WorkingTimeRangePipe } from './pipes/working-time-range.pipe';
+import { KeysPipe } from './pipes/enum-keys.pipe';
 
 @NgModule({
     imports: [
@@ -65,4 +67,7 @@ import { WorkingTimeRangePipe } from './pipes/working-time-range.pipe';
     ]
 })
 export class JobroomSharedCommonModule {
+    constructor() {
+        registerLocaleData(locale);
+    }
 }

@@ -1,18 +1,19 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
-import { Observable } from 'rxjs/Rx';
+import { HttpClient, HttpResponse } from '@angular/common/http';
+import { Observable } from 'rxjs/Observable';
+import { SERVER_API_URL } from '../../app.constants';
 
 @Injectable()
 export class JhiConfigurationService {
 
-    constructor(private http: Http) {
+    constructor(private http: HttpClient) {
     }
 
     get(): Observable<any> {
-        return this.http.get('management/configprops').map((res: Response) => {
+        return this.http.get(SERVER_API_URL + 'management/configprops', { observe: 'response' }).map((res: HttpResponse<any>) => {
             const properties: any[] = [];
 
-            const propertiesObject = res.json();
+            const propertiesObject = res.body;
 
             for (const key in propertiesObject) {
                 if (propertiesObject.hasOwnProperty(key)) {
@@ -22,16 +23,16 @@ export class JhiConfigurationService {
 
             return properties.sort((propertyA, propertyB) => {
                 return (propertyA.prefix === propertyB.prefix) ? 0 :
-                    (propertyA.prefix < propertyB.prefix) ? -1 : 1;
+                       (propertyA.prefix < propertyB.prefix) ? -1 : 1;
             });
         });
     }
 
     getEnv(): Observable<any> {
-        return this.http.get('management/env').map((res: Response) => {
+        return this.http.get(SERVER_API_URL + 'management/env', { observe: 'response' }).map((res: HttpResponse<any>) => {
             const properties: any = {};
 
-            const propertiesObject = res.json();
+            const propertiesObject = res.body;
 
             for (const key in propertiesObject) {
                 if (propertiesObject.hasOwnProperty(key)) {

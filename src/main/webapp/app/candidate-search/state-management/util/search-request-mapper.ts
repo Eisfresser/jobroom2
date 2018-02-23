@@ -81,7 +81,7 @@ function mapOccupationCode(occupationsOptions: Array<TypeaheadMultiselectModel> 
 function mapResidence(residences: Array<Canton | string>): Array<string> {
     return residences
         ? residences.map((residence) => residence.toString())
-        : null
+        : null;
 }
 
 function mapWorkplace(workplace?: TypeaheadItemDisplayModel): Array<string> {

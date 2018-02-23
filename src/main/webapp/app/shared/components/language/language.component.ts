@@ -30,13 +30,13 @@ export class LanguageComponent implements OnInit {
 
     private static filterLanguagesWithInvalidCodes(languages: LanguageSkill[]): LanguageSkill[] {
         return languages
-            .filter((language) => language.code !== '98' && language.code !== '99')
+            .filter((language) => language.code !== '98' && language.code !== '99');
     }
 
     constructor() {
     }
 
     ngOnInit(): void {
-        this.languages = LanguageComponent.filterLanguagesWithInvalidCodes(this.languages)
+        this.languages = LanguageComponent.filterLanguagesWithInvalidCodes(this.languages);
     }
 }

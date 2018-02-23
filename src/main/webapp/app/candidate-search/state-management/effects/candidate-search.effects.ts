@@ -114,7 +114,7 @@ export class CandidateSearchEffects {
         .ofType(NEXT_ITEM_LOADED)
         .filter((action: NextItemLoadedAction) => action.payload.feature === CANDIDATE_DETAIL_FEATURE)
         .do((action: NextItemLoadedAction) => {
-            this.router.navigate(['/candidate-detail', action.payload.item.id])
+            this.router.navigate(['/candidate-detail', action.payload.item.id]);
         });
 
     @Effect()

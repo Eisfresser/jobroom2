@@ -1,7 +1,6 @@
 import { fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
-import { MockBackend } from '@angular/http/testing';
+import { HttpTestingController } from '@angular/common/http/testing';
 import { TranslateService } from '@ngx-translate/core';
-import { Response, ResponseOptions } from '@angular/http';
 import { JobroomTestModule } from '../../../test.module';
 import {
     Occupation,
@@ -12,12 +11,11 @@ import {
     OccupationAutocomplete,
     OccupationSuggestion
 } from '../../../../../../main/webapp/app/shared/reference-service/occupation-autocomplete';
-import { OccupationInputType } from '../../../../../../main/webapp/app/shared/reference-service/occupation-presentation.service';
-import arrayContaining = jasmine.arrayContaining;
+import { OccupationInputType } from '../../../../../../main/webapp/app/shared/reference-service';
 
 describe('OccupationService', () => {
-
-    const createJsonResponse = (obj: any) => new Response(new ResponseOptions({ body: JSON.stringify(obj) }));
+    let httpMock: HttpTestingController;
+    let service: OccupationService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -27,31 +25,31 @@ describe('OccupationService', () => {
                 { provide: TranslateService, useValue: { currentLang: 'de' } }
             ]
         });
+
+        service = TestBed.get(OccupationService);
+        httpMock = TestBed.get(HttpTestingController);
+    });
+
+    afterEach(() => {
+        httpMock.verify();
     });
 
     describe('fetchSuggestions', () => {
-        let lastConnection;
 
-        beforeEach(inject([MockBackend], (mockBackend: MockBackend) => {
-            mockBackend.connections.subscribe((connection: any) => lastConnection = connection);
-        }));
+        it('should call http.get with the correct URL and parameters', () => {
+            // WHEN
+            service.fetchSuggestions('info').subscribe();
 
-        it('should call http.get with the correct URL and parameters',
-            inject([OccupationService], (service: OccupationService) => {
-
-                // WHEN
-                service.fetchSuggestions('info');
-
-                // THEN
-                const urlArray = lastConnection.request.url.split(/[?&]/);
-                expect(urlArray).toEqual(arrayContaining(['referenceservice/api/_search/occupations/synonym']));
-                expect(urlArray).toEqual(arrayContaining(['prefix=info']));
-                expect(urlArray).toEqual(arrayContaining(['resultSize=10']));
-                expect(urlArray).toEqual(arrayContaining(['language=de']));
-            }));
+            // THEN
+            httpMock.expectOne((req) =>
+                req.url === 'referenceservice/api/_search/occupations/synonym'
+                && req.params.get('prefix') === 'info'
+                && req.params.get('resultSize') === '10'
+                && req.params.get('language') === 'de');
+        });
 
         it('should map the OccupationAutocomplete response to an array of TypeaheadMultiselectModel',
-            fakeAsync(inject([OccupationService], (service: OccupationService) => {
+            fakeAsync(() => {
                 // GIVEN
                 const suggestResponse: OccupationAutocomplete = {
                     occupations: [
@@ -67,7 +65,8 @@ describe('OccupationService', () => {
                 // WHEN
                 let model: Array<TypeaheadMultiselectModel>;
                 service.fetchSuggestions('info').subscribe((res: any) => model = res);
-                lastConnection.mockRespond(createJsonResponse(suggestResponse));
+                const req = httpMock.expectOne({ method: 'GET' });
+                req.flush(suggestResponse);
                 tick();
 
                 // THEN
@@ -78,32 +77,24 @@ describe('OccupationService', () => {
                     new TypeaheadMultiselectModel(OccupationInputType.OCCUPATION, '02', 'Wirtschaftinformatiker', 2),
                     new TypeaheadMultiselectModel(OccupationInputType.CLASSIFICATION, '10', 'Berufe der Informatik', 3)
                 ]);
-            })));
+            }));
     });
 
     describe('getOccupations', () => {
-        let lastConnection;
+        it('should call http.get with the correct URL and parameters', () => {
+            // WHEN
+            service.getOccupations('info').subscribe();
 
-        beforeEach(inject([MockBackend], (mockBackend: MockBackend) => {
-            mockBackend.connections.subscribe((connection: any) => lastConnection = connection);
-        }));
-
-        it('should call http.get with the correct URL and parameters',
-            inject([OccupationService], (service: OccupationService) => {
-
-                // WHEN
-                service.getOccupations('info');
-
-                // THEN
-                const urlArray = lastConnection.request.url.split(/[?&]/);
-                expect(urlArray).toEqual(arrayContaining(['referenceservice/api/_search/occupations/synonym']));
-                expect(urlArray).toEqual(arrayContaining(['prefix=info']));
-                expect(urlArray).toEqual(arrayContaining(['resultSize=10']));
-                expect(urlArray).toEqual(arrayContaining(['language=de']));
-            }));
+            // THEN
+            httpMock.expectOne((req) =>
+                req.url === 'referenceservice/api/_search/occupations/synonym'
+                && req.params.get('prefix') === 'info'
+                && req.params.get('resultSize') === '10'
+                && req.params.get('language') === 'de');
+        });
 
         it('should map the OccupationAutocomplete.occupations response to an array of TypeaheadMultiselectModel',
-            fakeAsync(inject([OccupationService], (service: OccupationService) => {
+            fakeAsync(() => {
                 // GIVEN
                 const suggestResponse: OccupationAutocomplete = {
                     occupations: [
@@ -118,7 +109,8 @@ describe('OccupationService', () => {
                 // WHEN
                 let model: Array<OccupationSuggestion>;
                 service.getOccupations('info').subscribe((res: any) => model = res);
-                lastConnection.mockRespond(createJsonResponse(suggestResponse));
+                const req = httpMock.expectOne({ method: 'GET' });
+                req.flush(suggestResponse);
                 tick();
 
                 // THEN
@@ -127,31 +119,22 @@ describe('OccupationService', () => {
                     { code: '00', name: 'Informatiker' },
                     { code: '01', name: 'Bioinformatiker' },
                 ]);
-            })));
+            }));
     });
 
     describe('findOccupationByCode', () => {
-        let lastConnection;
+        it('should call http.get with the correct URL and parameters', () => {
+            // WHEN
+            service.findOccupationByCode(2242422).subscribe();
 
-        beforeEach(inject([MockBackend], (mockBackend: MockBackend) => {
-            mockBackend.connections.subscribe((connection: any) => lastConnection = connection);
-        }));
-
-        it('should call http.get with the correct URL and parameters',
-            inject([OccupationService], (service: OccupationService) => {
-
-                // WHEN
-                service.findOccupationByCode(2242422);
-
-                // THEN
-                const urlArray = lastConnection.request.url.split(/[?&]/);
-                expect(urlArray).toEqual(arrayContaining(['referenceservice/api/occupations']));
-                expect(urlArray).toEqual(arrayContaining(['code=2242422']));
-            })
-        );
+            // THEN
+            httpMock.expectOne((req) =>
+                req.url === 'referenceservice/api/occupations'
+                && req.params.get('code') === '2242422');
+        });
 
         it('should map the response to Occupation',
-            fakeAsync(inject([OccupationService], (service: OccupationService) => {
+            fakeAsync(() => {
                 // GIVEN
                 const suggestResponse: Occupation = {
                     code: 2242422,
@@ -164,12 +147,13 @@ describe('OccupationService', () => {
                 // WHEN
                 let model: Occupation;
                 service.findOccupationByCode(2242422).subscribe((res: any) => model = res);
-                lastConnection.mockRespond(createJsonResponse(suggestResponse));
+                const req = httpMock.expectOne({ method: 'GET' });
+                req.flush(suggestResponse);
                 tick();
 
                 // THEN
                 expect(model).toEqual(suggestResponse);
-            }))
+            })
         );
     });
 });

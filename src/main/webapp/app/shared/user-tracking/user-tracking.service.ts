@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { BaseRequestOptions, Http } from '@angular/http';
 import { TranslateService } from '@ngx-translate/core';
 import { TrackingItem } from './tracking-event';
 import { SERVER_API_URL } from '../../app.constants';
 import { CookieService } from 'ngx-cookie';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 
 const TRACKING_COOKIE_KEY = '_jr2.ID';
@@ -33,7 +33,7 @@ export class UserTrackingService {
         return uuid;
     }
 
-    constructor(private http: Http,
+    constructor(private http: HttpClient,
                 private translateService: TranslateService,
                 private cookieService: CookieService) {
 
@@ -48,8 +48,6 @@ export class UserTrackingService {
     }
 
     logEvent(event: TrackingItem) {
-        const options = new BaseRequestOptions();
-
         const locale = this.translateService.currentLang;
         const trackingId = this.trackingId;
 
@@ -59,7 +57,7 @@ export class UserTrackingService {
             data: JSON.stringify(event.data)
         });
 
-        return this.http.post(this.resourceUrl, request, options)
+        return this.http.post(this.resourceUrl, request, { observe: 'response' })
             .map((resp) => resp.status)
             .catch((error) => Observable.of({}));
     }

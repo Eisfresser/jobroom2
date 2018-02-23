@@ -21,6 +21,6 @@ export class JobPublicationCancelDialogService {
 
         modalRef.result.then(() => {
             subscription.unsubscribe();
-        })
+        });
     }
 }

@@ -66,7 +66,7 @@ function residenceMapper(searchFilter: CandidateSearchFilter, cantonOptions: IMu
     if (residences && residences.length > 0) {
         return residences
             .map((residence) => cantonOptions.find((opt) => opt.id === residence).name)
-            .join(', ')
+            .join(', ');
     } else {
         return '';
     }

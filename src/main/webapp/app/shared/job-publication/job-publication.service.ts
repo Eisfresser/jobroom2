@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { BaseRequestOptions, Http, URLSearchParams } from '@angular/http';
 import { Principal, ResponseWrapper } from '../';
 import { JobPublicationSearchRequest } from './job-publication-search-request';
 import { CancellationReason, JobPublication, Status } from './job-publication.model';
 import { createPageableURLSearchParams } from '../model/request-util';
 import { TranslateService } from '@ngx-translate/core';
 import { JobCancelRequest } from './job-publication-cancel-request';
+import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 
 @Injectable()
 export class JobPublicationService {
@@ -15,13 +15,12 @@ export class JobPublicationService {
     private readonly searchUrl = 'jobpublicationservice/api/_search/jobPublications';
 
     private static createCancelJobPublicationParams(jobCancelRequest: JobCancelRequest) {
-        const params = new URLSearchParams();
-        params.set('accessToken', jobCancelRequest.accessToken);
-        params.set('cancellationReason', CancellationReason[jobCancelRequest.cancellationReason]);
-        return params;
+        return new HttpParams()
+            .set('accessToken', jobCancelRequest.accessToken)
+            .set('cancellationReason', CancellationReason[jobCancelRequest.cancellationReason]);
     }
 
-    constructor(private http: Http,
+    constructor(private http: HttpClient,
                 private principal: Principal,
                 private translateService: TranslateService) {
     }
@@ -35,31 +34,27 @@ export class JobPublicationService {
     save(jobPublication: JobPublication): Observable<ResponseWrapper> {
         return this.getJobPublicationLocale()
             .map((locale) => Object.assign(jobPublication, { locale }))
-            .flatMap((body) => this.http.post(this.resourceUrl, body)
-                .map((resp) => new ResponseWrapper(resp.headers, resp.json(), resp.status)));
+            .flatMap((body) => this.http.post(this.resourceUrl, body, { observe: 'response' })
+                .map((resp: HttpResponse<any>) => new ResponseWrapper(resp.headers, resp.body, resp.status)));
     }
 
     search(request: JobPublicationSearchRequest): Observable<ResponseWrapper> {
-        const options = new BaseRequestOptions();
-        options.params = createPageableURLSearchParams(request);
+        const params = createPageableURLSearchParams(request);
 
-        return this.http.post(this.searchUrl, request, options)
-            .map((resp) => new ResponseWrapper(resp.headers, resp.json(), resp.status));
+        return this.http.post(this.searchUrl, request, { params, observe: 'response' })
+            .map((resp) => new ResponseWrapper(resp.headers, resp.body, resp.status));
     }
 
     findByIdAndAccessToken(id: string, accessToken: string): Observable<JobPublication> {
-        const options = new BaseRequestOptions();
-        options.params = new URLSearchParams();
-        options.params.set('accessToken', accessToken);
+        const params = new HttpParams()
+            .set('accessToken', accessToken);
 
-        return this.http.get(`${this.resourceUrl}/${id}`, options)
-            .map((resp) => resp.json() as JobPublication);
+        return this.http.get<JobPublication>(`${this.resourceUrl}/${id}`, { params });
     }
 
     cancelJobPublication(jobCancelRequest: JobCancelRequest): Observable<number> {
-        const options = new BaseRequestOptions();
-        options.params = JobPublicationService.createCancelJobPublicationParams(jobCancelRequest);
-        return this.http.post(`${this.resourceUrl}/${jobCancelRequest.id}/cancel`, {}, options)
+        const params = JobPublicationService.createCancelJobPublicationParams(jobCancelRequest);
+        return this.http.post(`${this.resourceUrl}/${jobCancelRequest.id}/cancel`, {}, { params, observe: 'response' })
             .map((result) => result.status);
     }
 

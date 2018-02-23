@@ -14,9 +14,9 @@ import { TypeaheadMultiselectModel } from '../../../../../../../main/webapp/app/
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { CandidateService } from '../../../../../../../main/webapp/app/candidate-search/services/candidate.service';
 import { JhiBase64Service } from 'ng-jhipster';
-import { Http } from '@angular/http';
 import { Principal } from '../../../../../../../main/webapp/app/shared';
 import { AccountService } from '../../../../../../../main/webapp/app/shared';
+import { HttpClient } from '@angular/common/http';
 
 describe('RouterEffects', () => {
     const testFilter = `eyJza2lsbHMiOltdLCJsYW5ndWFnZVNraWxscyI6W3siY29kZSI6ImRlIiwid3Jpd
@@ -45,7 +45,7 @@ describe('RouterEffects', () => {
                 AccountService,
                 provideMockActions(() => actions$),
                 { provide: Router, useValue: mockRouter },
-                { provide: Http, useValue: null }
+                { provide: HttpClient, useValue: null }
             ],
         });
 
@@ -113,7 +113,7 @@ describe('RouterEffects', () => {
             effects.routerNavigation$.subscribe();
 
             // THEN
-            expect(mockRouter.navigate).toHaveBeenCalledWith(['/candidate-search']);
+            expect(mockRouter.navigateSpy).toHaveBeenCalledWith(['/candidate-search']);
         });
 
     });

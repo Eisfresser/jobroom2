@@ -40,7 +40,7 @@ export class JobSearchComponent {
         this.localityQueryString$ = store.select(getLocalityQuery).map(queryModelToTextMapper);
         this.totalCount$ = store.select(getTotalJobCount);
         this.loading$ = store.select(getLoading);
-        this.reset$ = store.select(getResetTime)
+        this.reset$ = store.select(getResetTime);
     }
 }
 

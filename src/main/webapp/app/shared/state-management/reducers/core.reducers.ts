@@ -20,11 +20,11 @@ export function coreReducer(state = initialState, action: LanguageChangedAction)
 }
 
 export interface CoreState {
-    routerReducer: RouterReducerState<RouterStateUrl>,
-    coreReducer
+    routerReducer: RouterReducerState<RouterStateUrl>;
+    coreReducer;
 }
 
 export const reducers: ActionReducerMap<CoreState> = {
     routerReducer,
     coreReducer
-}
+};

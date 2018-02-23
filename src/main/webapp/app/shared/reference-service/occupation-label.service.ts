@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Http, Response, URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 const DEFAULT_RESPONSE_SIZE = '10';
 const OCCUPATION_LABEL_RESOURCE_SEARCH_URL = 'referenceservice/api/_search/occupations/label';
@@ -35,7 +35,7 @@ export interface OccupationLabel {
 }
 
 export interface OccupationLabelData {
-    [key: string]: string
+    [key: string]: string;
 }
 
 export interface OccupationLabelMapping {
@@ -53,18 +53,16 @@ export interface OccupationLabelMapping {
  */
 @Injectable()
 export class OccupationLabelService {
-    constructor(private http: Http) {
+    constructor(private http: HttpClient) {
     }
 
     suggestOccupation(prefix: string, types: Array<string>): Observable<OccupationLabelAutocomplete> {
-        const params: URLSearchParams = new URLSearchParams();
+        const params = new HttpParams()
+            .set('prefix', prefix)
+            .set('types', types.join(','))
+            .set('resultSize', DEFAULT_RESPONSE_SIZE);
 
-        params.set('prefix', prefix);
-        params.set('types', types.join(','));
-        params.set('resultSize', DEFAULT_RESPONSE_SIZE);
-
-        return this.http.get(OCCUPATION_LABEL_RESOURCE_SEARCH_URL, { params })
-            .map((res: Response) => <OccupationLabelAutocomplete>res.json())
+        return this.http.get<OccupationLabelAutocomplete>(OCCUPATION_LABEL_RESOURCE_SEARCH_URL, { params });
     }
 
     getOccupationLabelsByCodeAndType(code: number, type: string): Observable<OccupationLabelData> {
@@ -77,13 +75,11 @@ export class OccupationLabelService {
             url += '/' + classifier;
         }
 
-        return this.http.get(url)
-            .map((res: Response) => <OccupationLabelData>res.json())
+        return this.http.get<OccupationLabelData>(url);
     }
 
     getOccupationLabelsByKey(key: string): Observable<OccupationLabelData> {
-        return this.http.get(`${OCCUPATION_LABEL_RESOURCE_URL}/${key.replace(':', '/')}`)
-            .map((res: Response) => <OccupationLabelData>res.json())
+        return this.http.get<OccupationLabelData>(`${OCCUPATION_LABEL_RESOURCE_URL}/${key.replace(':', '/')}`);
     }
 
     getOccupationMappingByAvamCode(code: number): Observable<OccupationLabelMapping> {
@@ -99,7 +95,6 @@ export class OccupationLabelService {
     }
 
     private getOccupationMapping(code: number, type: string): Observable<OccupationLabelMapping> {
-        return this.http.get(`${OCCUPATION_LABEL_RESOURCE_URL}/mapping/${type}/${code}`)
-            .map((res: Response) => <OccupationLabelMapping>res.json())
+        return this.http.get<OccupationLabelMapping>(`${OCCUPATION_LABEL_RESOURCE_URL}/mapping/${type}/${code}`);
     }
 }

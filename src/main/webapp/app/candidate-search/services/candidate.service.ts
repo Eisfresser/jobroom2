@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Candidate, CandidateProfile, JobExperience } from './candidate';
 import { Observable } from 'rxjs/Observable';
-import { BaseRequestOptions, Http, Response } from '@angular/http';
 import { CandidateSearchRequest } from './candidate-search-request';
 import { ResponseWrapper } from '../../shared';
 import { CandidateSearchFilter } from '../state-management/state/candidate-search.state';
@@ -10,6 +9,7 @@ import { Experience } from '../../shared/model/shared-types';
 import { JhiBase64Service } from 'ng-jhipster';
 import { Principal } from '../../shared/auth/principal.service';
 import { OccupationCode } from '../../shared/reference-service/occupation-code';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 
 @Injectable()
 export class CandidateService {
@@ -18,8 +18,8 @@ export class CandidateService {
     private searchUrl = 'candidateservice/api/_search/candidates';
     private countUrl = 'candidateservice/api/_count/candidates';
 
-    private static convertResponse(res: Response): ResponseWrapper {
-        return new ResponseWrapper(res.headers, res.json(), res.status);
+    private static convertResponse(res: HttpResponse<any>): ResponseWrapper {
+        return new ResponseWrapper(res.headers, res.body, res.status);
     }
 
     static getBestMatchingJobExperience(occupationCodes: Array<string>, jobExperiences: JobExperience[]) {
@@ -64,7 +64,7 @@ export class CandidateService {
         }
     }
 
-    constructor(private http: Http,
+    constructor(private http: HttpClient,
                 private base64Service: JhiBase64Service,
                 private principal: Principal) {
     }
@@ -81,11 +81,7 @@ export class CandidateService {
         return this.canViewCandidateProtectedData(candidateProfile)
             .flatMap((canViewProtectedData) => {
                 if (canViewProtectedData) {
-                    return this.http.get(`${this.resourceUrl}/${candidateProfile.id}`)
-                        .map((res: Response) => {
-                            const jsonResponse = res.json();
-                            return jsonResponse as Candidate;
-                        });
+                    return this.http.get<Candidate>(`${this.resourceUrl}/${candidateProfile.id}`);
                 }
                 return Observable.of(null as Candidate);
             });
@@ -99,27 +95,20 @@ export class CandidateService {
     }
 
     findCandidateProfile(id: string): Observable<CandidateProfile> {
-        return this.http.get(`${this.resourceUrl}/profiles/${id}`)
-            .map((res: Response) => {
-                const jsonResponse = res.json();
-                return jsonResponse as CandidateProfile;
-            });
+        return this.http.get<CandidateProfile>(`${this.resourceUrl}/profiles/${id}`);
     }
 
     search(req: CandidateSearchRequest): Observable<ResponseWrapper> {
-        const options = new BaseRequestOptions();
-        options.params = createPageableURLSearchParams(req);
+        const params = createPageableURLSearchParams(req);
 
-        return this.http.post(this.searchUrl, req, options)
-            .map((res: Response) => CandidateService.convertResponse(res));
+        return this.http.post(this.searchUrl, req, { params, observe: 'response' })
+            .map((res) => CandidateService.convertResponse(res));
     }
 
     count(req: CandidateSearchRequest): Observable<number> {
-        return this.http.post(this.countUrl, req)
-            .map((res: Response) => CandidateService.convertResponse(res))
-            .map((wrapper: ResponseWrapper) => {
-                return Number.parseInt(wrapper.json.totalCount)
-            });
+        return this.http.post(this.countUrl, req, { observe: 'response' })
+            .map((res) => CandidateService.convertResponse(res))
+            .map((wrapper: ResponseWrapper) => Number.parseInt(wrapper.json.totalCount));
     }
 
     getRelevantJobExperience(occupationCodes: Array<string>, jobExperiences: JobExperience[]): JobExperience {

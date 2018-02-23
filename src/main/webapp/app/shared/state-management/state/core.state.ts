@@ -1,7 +1,7 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 
 export interface CoreState {
-    language: string
+    language: string;
 }
 
 export const initialState: CoreState = {

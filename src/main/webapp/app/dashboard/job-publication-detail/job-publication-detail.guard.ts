@@ -32,12 +32,12 @@ export class JobPublicationDetailGuard implements CanActivate {
             .take(1)
             .switchMap((status: LoadingStatus) => {
                 if (status === LoadingStatus.OK) {
-                    return Observable.of(true)
+                    return Observable.of(true);
                 } else {
                     this.router.navigate(['/error']);
 
-                    return Observable.of(false)
+                    return Observable.of(false);
                 }
-            })
+            });
     }
 }

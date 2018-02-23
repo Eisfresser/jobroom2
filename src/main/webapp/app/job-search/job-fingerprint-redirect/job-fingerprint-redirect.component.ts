@@ -1,7 +1,4 @@
-import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
-import { Store } from '@ngrx/store';
+import { AfterViewInit, Component } from '@angular/core';
 
 @Component({
     selector: 'jr2-job-fingerprint-redirect',

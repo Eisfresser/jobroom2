@@ -54,7 +54,7 @@ export class HomeEffects {
                 const req = createCandidateSearchRequestFromToolState(action.payload);
                 return this.candidateService.count(req)
                     .map((totalCount: number) => new CandidateSearchToolCountedAction(totalCount))
-                    .catch((err: any) => Observable.of(new CandidateSearchToolCountedAction(0)))
+                    .catch((err: any) => Observable.of(new CandidateSearchToolCountedAction(0)));
             }
         );
 
@@ -65,7 +65,7 @@ export class HomeEffects {
                 const req = createJobSearchRequestFromToolState(action.payload);
                 return this.jobService.count(req)
                     .map((totalCount: number) => new JobSearchToolCountedAction(totalCount))
-                    .catch((err: any) => Observable.of(new JobSearchToolCountedAction(0)))
+                    .catch((err: any) => Observable.of(new JobSearchToolCountedAction(0)));
             }
         );
 

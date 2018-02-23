@@ -1,4 +1,4 @@
-import { browser, by, element } from 'protractor';
+import { browser, element, by } from 'protractor';
 import { NavBarPage } from './../page-objects/jhi-page-objects';
 
 describe('administration', () => {

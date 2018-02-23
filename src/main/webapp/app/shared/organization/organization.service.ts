@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { BaseRequestOptions, URLSearchParams, Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { SERVER_API_URL } from '../../app.constants';
 
 import { Organization, OrganizationAutocomplete } from './organization.model';
 import { createRequestOption, ResponseWrapper } from '../';
+import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 
 @Injectable()
 export class OrganizationService {
@@ -12,88 +12,59 @@ export class OrganizationService {
     private resourceUrl = SERVER_API_URL + 'api/organizations';
     private resourceSearchUrl = SERVER_API_URL + 'api/_search/organizations';
 
-    constructor(private http: Http) {
+    constructor(private http: HttpClient) {
     }
 
     create(organization: Organization): Observable<Organization> {
         const copy = this.convert(organization);
-        return this.http.post(this.resourceUrl, copy).map((res: Response) => {
-            const jsonResponse = res.json();
-            return this.convertItemFromServer(jsonResponse);
-        });
+        return this.http.post<Organization>(this.resourceUrl, copy);
     }
 
     update(organization: Organization): Observable<Organization> {
         const copy = this.convert(organization);
-        return this.http.put(this.resourceUrl, copy).map((res: Response) => {
-            const jsonResponse = res.json();
-            return this.convertItemFromServer(jsonResponse);
-        });
+        return this.http.put<Organization>(this.resourceUrl, copy);
     }
 
     find(id: number): Observable<Organization> {
-        return this.http.get(`${this.resourceUrl}/${id}`).map((res: Response) => {
-            const jsonResponse = res.json();
-            return this.convertItemFromServer(jsonResponse);
-        });
+        return this.http.get<Organization>(`${this.resourceUrl}/${id}`);
     }
 
     findByExternalId(id: string): Observable<Organization> {
-        return this.http.get(`${this.resourceUrl}/externalId/${id}`).map((res: Response) => {
-            const jsonResponse = res.json();
-            return this.convertItemFromServer(jsonResponse);
-        });
+        return this.http.get<Organization>(`${this.resourceUrl}/externalId/${id}`);
     }
 
     query(req?: any): Observable<ResponseWrapper> {
-        const options = createRequestOption(req);
-        return this.http.get(this.resourceUrl, options)
-            .map((res: Response) => this.convertResponse(res));
+        const params = createRequestOption(req);
+        return this.http.get<Organization[]>(this.resourceUrl, { params, observe: 'response' })
+            .map((res: HttpResponse<Organization[]>) => this.convertResponse(res));
     }
 
-    delete(id: number): Observable<Response> {
-        return this.http.delete(`${this.resourceUrl}/${id}`);
+    delete(id: number): Observable<HttpResponse<any>> {
+        return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
     }
 
     search(req?: any): Observable<ResponseWrapper> {
-        const options = createRequestOption(req);
-        return this.http.get(this.resourceSearchUrl, options)
+        const params = createRequestOption(req);
+        return this.http.get(this.resourceSearchUrl, { params })
             .map((res: any) => this.convertResponse(res));
     }
 
     suggest(prefix: string, resultSize: number): Observable<OrganizationAutocomplete> {
-        const params: URLSearchParams = new URLSearchParams();
-        params.set('prefix', prefix);
-        params.set('resultSize', resultSize.toString());
-        const options: BaseRequestOptions = new BaseRequestOptions();
-        options.params = params;
+        const params = new HttpParams()
+            .set('prefix', prefix)
+            .set('resultSize', resultSize.toString());
 
-        return this.http.get(`${this.resourceSearchUrl}/suggest`, options)
-            .map((res: Response) => res.json() as OrganizationAutocomplete);
+        return this.http.get<OrganizationAutocomplete>(`${this.resourceSearchUrl}/suggest`, { params });
     }
 
-    private convertResponse(res: Response): ResponseWrapper {
-        const jsonResponse = res.json();
-        const result = [];
-        for (let i = 0; i < jsonResponse.length; i++) {
-            result.push(this.convertItemFromServer(jsonResponse[i]));
-        }
-        return new ResponseWrapper(res.headers, result, res.status);
-    }
-
-    /**
-     * Convert a returned JSON object to Organization.
-     */
-    private convertItemFromServer(json: any): Organization {
-        const entity: Organization = Object.assign(new Organization(), json);
-        return entity;
+    private convertResponse(res: HttpResponse<Organization>): ResponseWrapper {
+        return new ResponseWrapper(res.headers, res.body, res.status);
     }
 
     /**
      * Convert a Organization to a JSON which can be sent to the server.
      */
     private convert(organization: Organization): Organization {
-        const copy: Organization = Object.assign({}, organization);
-        return copy;
+        return Object.assign({}, organization);
     }
 }

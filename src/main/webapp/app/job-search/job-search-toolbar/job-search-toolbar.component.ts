@@ -31,7 +31,7 @@ export class JobSearchToolbarComponent implements OnInit, OnDestroy {
                 localityQuery: [...this.searchQuery.localityQuery]
             });
         }
-    };
+    }
 
     toolbarForm: FormGroup;
 
@@ -74,7 +74,7 @@ export class JobSearchToolbarComponent implements OnInit, OnDestroy {
 
     resetFilters(event: any): void {
         event.preventDefault();
-        this.store.dispatch(new ResetFilterAction(new Date().getTime()))
+        this.store.dispatch(new ResetFilterAction(new Date().getTime()));
     }
 
     fetchOccupationSuggestions = (query: string): Observable<TypeaheadMultiselectModel[]> =>

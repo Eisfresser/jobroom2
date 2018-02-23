@@ -82,7 +82,7 @@ export interface CandidateProfile {
     languages: LanguageSkill[];
     drivingCategories: string[];
     highestEducationLevel: string;
-    highestDegree: string
+    highestDegree: string;
     jobCenterCode: string;
     jobAdvisor: Contact;
     visited?: boolean;

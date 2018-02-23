@@ -17,7 +17,7 @@ const jobCancelFormValidator: ValidatorFn = (jobCancelForm: FormGroup) => {
     } else {
         return {
             occupiedWith: 'required'
-        }
+        };
     }
 };
 
@@ -73,6 +73,6 @@ export class JobPublicationCancelDialogComponent implements OnInit, OnDestroy {
             cancellationReason: formValue
         });
         this.submitCancellation.emit(cancellationData);
-        this.activeModal.close()
+        this.activeModal.close();
     }
 }

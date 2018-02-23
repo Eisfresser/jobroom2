@@ -17,7 +17,6 @@ import {
 } from '../../../../../../../main/webapp/app/job-search/state-management/actions/job-search.actions';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { ResponseWrapper } from '../../../../../../../main/webapp/app/shared/model/response-wrapper.model';
-import { Headers } from '@angular/http';
 import {
     JOB_SEARCH_DEBOUNCE,
     JOB_SEARCH_SCHEDULER
@@ -28,6 +27,7 @@ import {
     LoadNextItemsPageErrorAction,
     NextItemsPageLoadedAction
 } from '../../../../../../../main/webapp/app/shared/components/details-page-pagination/state-management/actions/details-page-pagination.actions';
+import { HttpHeaders } from '@angular/common/http';
 
 describe('JobSearchEffects', () => {
     let effects: JobSearchEffects;
@@ -69,7 +69,7 @@ describe('JobSearchEffects', () => {
                     publicationEndDate: new Date()
                 }
             ];
-            const responseWrapper = new ResponseWrapper(new Headers({ 'X-Total-Count': '100' }), jobList, 200);
+            const responseWrapper = new ResponseWrapper(new HttpHeaders({ 'X-Total-Count': '100' }), jobList, 200);
 
             actions$ = hot('-a', { a: action });
             const response = cold('-a|', { a: responseWrapper });
@@ -139,7 +139,7 @@ describe('JobSearchEffects', () => {
                     publicationEndDate: new Date()
                 }
             ];
-            const responseWrapper = new ResponseWrapper(new Headers({ 'X-Total-Count': '100' }), jobList, 200);
+            const responseWrapper = new ResponseWrapper(new HttpHeaders({ 'X-Total-Count': '100' }), jobList, 200);
 
             actions$ = hot('-a---', { a: action });
             const response = cold('-a|', { a: responseWrapper });
@@ -197,7 +197,7 @@ describe('JobSearchEffects', () => {
                     publicationEndDate: new Date()
                 }
             ];
-            const responseWrapper = new ResponseWrapper(new Headers({ 'X-Total-Count': '100' }), jobList, 200);
+            const responseWrapper = new ResponseWrapper(new HttpHeaders({ 'X-Total-Count': '100' }), jobList, 200);
             const action = new actions.LoadNextPageAction();
 
             actions$ = hot('-a', { a: action });

@@ -1,6 +1,6 @@
 export interface CancellationData {
-    id: string,
-    accessToken: string,
+    id: string;
+    accessToken: string;
     cancellationReason: {
         positionOccupied: boolean;
         occupiedWith: {
@@ -8,5 +8,5 @@ export interface CancellationData {
             privateAgency: boolean;
             self: boolean
         }
-    }
+    };
 }

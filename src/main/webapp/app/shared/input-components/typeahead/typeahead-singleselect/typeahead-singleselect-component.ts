@@ -50,7 +50,7 @@ export class TypeaheadSingleselectComponent implements ControlValueAccessor {
         if (item && item.model) {
             return item.model.label;
         } else {
-            return ''
+            return '';
         }
     }
 

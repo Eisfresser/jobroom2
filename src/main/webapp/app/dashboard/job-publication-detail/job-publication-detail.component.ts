@@ -38,7 +38,7 @@ export class JobPublicationDetailComponent {
         this.showCancellationLink$ = store.select(getJobPublication)
             .filter((jobPublication: JobPublication) => !!jobPublication)
             .map((jobPublication: JobPublication) =>
-                this.jobPublicationService.isJobPublicationCancellable(jobPublication.status))
+                this.jobPublicationService.isJobPublicationCancellable(jobPublication.status));
     }
 
     private fixApplicationUrl(jobPublication: JobPublication) {

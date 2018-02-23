@@ -21,7 +21,6 @@ import {
     Availability,
     DrivingLicenceCategory,
     Experience, Graduation,
-    ISCED_1997,
     WorkForm
 } from '../../shared';
 import { IMultiSelectOption, IMultiSelectSettings } from 'angular-2-dropdown-multiselect';
@@ -52,7 +51,7 @@ export class CandidateSearchFilterComponent implements OnInit, OnDestroy {
             });
             this.residence.reset(this.searchFilter.residence, { emitEvent: false });
         }
-    };
+    }
 
     @Output() searchCandidates = new EventEmitter<CandidateSearchFilter>();
 
@@ -112,7 +111,7 @@ export class CandidateSearchFilterComponent implements OnInit, OnDestroy {
         this.formChangesSubscription = Observable.merge(this.filterForm.valueChanges, residence$)
             .subscribe((formValue: any) => {
                 const searchFilter = Object.assign({}, this.searchFilter, formValue);
-                this.searchCandidates.emit(searchFilter)
+                this.searchCandidates.emit(searchFilter);
             }
         );
 

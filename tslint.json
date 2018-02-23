@@ -52,6 +52,7 @@
         "no-unused-expression": true,
         "no-use-before-declare": true,
         "no-var-keyword": true,
+        "no-unused-variable": true,
         "object-curly-spacing": [
             true,
             "always"
@@ -113,9 +114,6 @@
         "use-life-cycle-interface": true,
         "use-pipe-transform-interface": false,
         "component-class-suffix": true,
-        "directive-class-suffix": true,
-        "no-access-missing-member": true,
-        "templates-use-public": true,
-        "invoke-injectable": true
+        "directive-class-suffix": true
     }
 }

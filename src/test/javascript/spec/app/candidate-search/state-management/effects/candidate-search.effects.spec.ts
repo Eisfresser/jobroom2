@@ -23,7 +23,6 @@ import {
 } from '../../../../../../../main/webapp/app/candidate-search/state-management/actions/candidate-search.actions';
 import { ResponseWrapper } from '../../../../../../../main/webapp/app/shared/model/response-wrapper.model';
 import { createCandidateProfile } from '../utils';
-import { Headers } from '@angular/http';
 import {
     LoadNextItemsPageAction,
     LoadNextItemsPageErrorAction,
@@ -37,6 +36,7 @@ import {
 } from '../../../../../../../main/webapp/app/shared/reference-service/occupation-presentation.service';
 import { LanguageChangedAction } from '../../../../../../../main/webapp/app/shared/state-management/actions/core.actions';
 import { TypeaheadMultiselectModel } from '../../../../../../../main/webapp/app/shared/input-components/typeahead/typeahead-multiselect-model';
+import { HttpHeaders } from '@angular/common/http';
 
 describe('CandidateSearchEffects', () => {
     let effects: CandidateSearchEffects;
@@ -84,7 +84,7 @@ describe('CandidateSearchEffects', () => {
                 createCandidateProfile('c2'),
                 createCandidateProfile('c3')
             ];
-            const responseWrapper = new ResponseWrapper(new Headers({ 'X-Total-Count': '100' }), candidateProfileList, 200);
+            const responseWrapper = new ResponseWrapper(new HttpHeaders({ 'X-Total-Count': '100' }), candidateProfileList, 200);
 
             actions$ = hot('-a', { a: action });
             const response = cold('-a|', { a: responseWrapper });
@@ -149,7 +149,7 @@ describe('CandidateSearchEffects', () => {
                 createCandidateProfile('c2'),
                 createCandidateProfile('c3')
             ];
-            const responseWrapper = new ResponseWrapper(new Headers({ 'X-Total-Count': '100' }), candidateProfileList, 200);
+            const responseWrapper = new ResponseWrapper(new HttpHeaders({ 'X-Total-Count': '100' }), candidateProfileList, 200);
 
             actions$ = hot('-a---', { a: action });
             const response = cold('-a|', { a: responseWrapper });
@@ -200,7 +200,7 @@ describe('CandidateSearchEffects', () => {
                 createCandidateProfile('c2'),
                 createCandidateProfile('c3')
             ];
-            const responseWrapper = new ResponseWrapper(new Headers({ 'X-Total-Count': '100' }), candidateProfileList, 200);
+            const responseWrapper = new ResponseWrapper(new HttpHeaders({ 'X-Total-Count': '100' }), candidateProfileList, 200);
 
             actions$ = hot('-a---', { a: action });
             const response = cold('-a|', { a: responseWrapper });

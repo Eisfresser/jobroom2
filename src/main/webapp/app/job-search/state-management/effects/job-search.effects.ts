@@ -111,7 +111,7 @@ export class JobSearchEffects {
         .ofType(NEXT_ITEM_LOADED)
         .filter((action: NextItemLoadedAction) => action.payload.feature === JOB_DETAIL_FEATURE)
         .do((action: NextItemLoadedAction) => {
-            this.router.navigate(['/job-detail', action.payload.item.id])
+            this.router.navigate(['/job-detail', action.payload.item.id]);
         });
 
     constructor(private actions$: Actions,

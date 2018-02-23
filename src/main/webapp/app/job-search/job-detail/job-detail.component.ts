@@ -36,7 +36,7 @@ export class JobDetailComponent implements AfterViewInit {
             .filter((job) => !!job)
             .map((job) => job.jobCenterCode)
             .filter((jobCenterCode) => !!jobCenterCode)
-            .switchMap((jobCenterCode) => this.referenceService.resolveJobCenter(jobCenterCode))
+            .switchMap((jobCenterCode) => this.referenceService.resolveJobCenter(jobCenterCode));
     }
 
     isExternalJobDisclaimerShown(job: Job) {

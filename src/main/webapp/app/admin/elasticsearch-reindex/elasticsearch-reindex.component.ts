@@ -21,6 +21,6 @@ export class ElasticsearchReindexComponent {
 
     showConfirm(document) {
         const ngbModalRef = this.modalService.open(ElasticsearchReindexModalComponent);
-        ngbModalRef.componentInstance.document = document
+        ngbModalRef.componentInstance.document = document;
     }
 }

@@ -1,5 +1,5 @@
 import {
-    CEFR_Level, Contact, Gender,
+    Contact, Gender,
     LanguageSkill
 } from '../../shared/model/shared-types';
 

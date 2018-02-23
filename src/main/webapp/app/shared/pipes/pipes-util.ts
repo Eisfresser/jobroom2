@@ -9,5 +9,5 @@ export function mapLangToLocale(langKey: string): string {
         'en': 'en-GB'
     };
 
-    return langToLocaleMap[langKey] ? langToLocaleMap[langKey] : DEFAULT_LOCALE
-};
+    return langToLocaleMap[langKey] ? langToLocaleMap[langKey] : DEFAULT_LOCALE;
+}

@@ -4,9 +4,9 @@ import { CandidateSearchToolState } from './candidate-search-tool.state';
 import { HomeLayoutState } from './layout.state';
 
 export interface HomeState {
-    layoutState: HomeLayoutState
-    jobSearchTool: JobSearchToolState
-    candidateSearchTool: CandidateSearchToolState
+    layoutState: HomeLayoutState;
+    jobSearchTool: JobSearchToolState;
+    candidateSearchTool: CandidateSearchToolState;
 }
 
 export const getHomeState = createFeatureSelector<HomeState>('home');

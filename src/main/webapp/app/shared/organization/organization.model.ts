@@ -14,7 +14,7 @@ export function formatOrganizationName(organization: Organization | Organization
 
     }
     if (organization.street) {
-        formattedName = `${formattedName}, ${organization.street}`
+        formattedName = `${formattedName}, ${organization.street}`;
     }
     return formattedName;
 }

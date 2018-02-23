@@ -1,1 +1,1 @@
-export * from './job-search-shared.module'
+export * from './job-search-shared.module';

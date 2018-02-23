@@ -18,14 +18,14 @@ export interface CandidateSearchRequest {
 }
 
 export interface WorkLoad {
-    min: number
-    max: number
+    min: number;
+    max: number;
 }
 
 export interface CandidateLanguageSkill {
-    code: string
-    written?: string
-    spoken?: string
+    code: string;
+    written?: string;
+    spoken?: string;
 }
 
 export interface OccupationCode {

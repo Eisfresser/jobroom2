@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { BaseRequestOptions, Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { JhiDateUtils } from 'ng-jhipster';
 import { ResponseWrapper } from '../../shared';
@@ -7,6 +6,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Job } from './job';
 import { JobSearchRequest } from './job-search-request';
 import { createPageableURLSearchParams } from '../../shared/model/request-util';
+import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 
 @Injectable()
 export class JobService {
@@ -15,48 +15,42 @@ export class JobService {
     private searchUrl = 'jobservice/api/_search/jobs';
     private countUrl = 'jobservice/api/_count/jobs';
 
-    constructor(private http: Http,
+    constructor(private http: HttpClient,
                 private dateUtils: JhiDateUtils,
                 private translateService: TranslateService) {
     }
 
     find(id: string): Observable<Job> {
         return this.http.get(`${this.resourceUrl}/${id}`)
-            .map((res: Response) => {
-                const jsonResponse = res.json();
-                this.convertItemFromServer(jsonResponse);
-                return jsonResponse;
-            });
+            .map((res: any) => this.convertItemFromServer(res));
     }
 
     findByExternalId(externalId: string): Observable<Job> {
-        return this.http.get(this.resourceUrl, { params: { 'externalId': externalId } })
-            .map((res: Response) => {
-                const jsonResponse = res.json();
-                this.convertItemFromServer(jsonResponse);
-                return jsonResponse;
-            });
+        const params = new HttpParams()
+            .set('externalId', externalId);
+
+        return this.http.get(this.resourceUrl, { params })
+            .map((res: any) => this.convertItemFromServer(res));
     }
 
     search(req: JobSearchRequest): Observable<ResponseWrapper> {
-        const options = new BaseRequestOptions();
-        options.params = createPageableURLSearchParams(req);
-        options.params.set('language', this.translateService.currentLang);
+        const params = createPageableURLSearchParams(req)
+            .set('language', this.translateService.currentLang);
 
-        return this.http.post(this.searchUrl, req, options)
-            .map((res: Response) => this.convertResponse(res));
+        return this.http.post(this.searchUrl, req, { params, observe: 'response' })
+            .map((res: HttpResponse<any>) => this.convertResponse(res));
     }
 
     count(req: JobSearchRequest): Observable<number> {
-        return this.http.post(this.countUrl, req)
-            .map((res: Response) => this.convertResponse(res))
+        return this.http.post(this.countUrl, req, { observe: 'response' })
+            .map((res: HttpResponse<any>) => this.convertResponse(res))
             .map((wrapper: ResponseWrapper) => {
-                return Number.parseInt(wrapper.json.totalCount)
+                return Number.parseInt(wrapper.json.totalCount);
             });
     }
 
-    private convertResponse(res: Response): ResponseWrapper {
-        const jsonResponse = res.json();
+    private convertResponse(res: HttpResponse<any>): ResponseWrapper {
+        const jsonResponse = res.body;
         for (let i = 0; i < jsonResponse.length; i++) {
             this.convertItemFromServer(jsonResponse[i]);
         }
@@ -76,5 +70,6 @@ export class JobService {
             .convertLocalDateFromServer(entity.startDate);
         entity.endDate = this.dateUtils
             .convertLocalDateFromServer(entity.endDate);
+        return entity;
     }
 }
