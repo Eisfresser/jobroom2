@@ -4,6 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { TrackingItem } from './tracking-event';
 import { SERVER_API_URL } from '../../app.constants';
 import { CookieService } from 'ngx-cookie';
+import { Observable } from 'rxjs/Observable';
 
 const TRACKING_COOKIE_KEY = '_jr2.ID';
 
@@ -59,6 +60,7 @@ export class UserTrackingService {
         });
 
         return this.http.post(this.resourceUrl, request, options)
-            .map((resp) => resp.status);
+            .map((resp) => resp.status)
+            .catch((error) => Observable.of({}));
     }
 }
