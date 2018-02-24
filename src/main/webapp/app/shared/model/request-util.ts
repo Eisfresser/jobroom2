@@ -18,14 +18,14 @@ export const createRequestOption = (req?: any): HttpParams => {
 };
 
 export const createPageableURLSearchParams = (req?: any): HttpParams => {
-    const params = new HttpParams()
+    let params = new HttpParams()
         .set('page', req.page)
         .set('size', req.size);
     if (req.sort) {
         if (req.sort instanceof Array) {
-            req.sort.forEach((sort) => params.append('sort', sort));
+            req.sort.forEach((sort) => params = params.append('sort', sort));
         } else {
-            params.set('sort', req.sort);
+            params = params.set('sort', req.sort);
         }
     }
     return params;
