@@ -10,7 +10,7 @@ const TRACKING_COOKIE_KEY = '_jr2.ID';
 
 @Injectable()
 export class UserTrackingService {
-    private resourceUrl = SERVER_API_URL + 'tracking/api/tracking-items';
+    private resourceUrl = SERVER_API_URL + 'trackingservice/api/tracking-items';
 
     trackingId: string;
 
