@@ -248,6 +248,11 @@
                     "minlength": "Your username must be at least 5 characters.",
                     "required": "Your username is required."
                 }
+            },
+            "tooltip": {
+                "link-copy": {
+                    "success": "The link has been copied to your clipboard"
+                }
             }
         },
         "reference": {

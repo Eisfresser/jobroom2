@@ -186,7 +186,8 @@
                     <!--{{'job-detail.action.saveJob' | translate}}</a>-->
                     <!--</li>-->
                     <li class="nav-item">
-                        <a class="nav-link" ngxClipboard [cbContent]="getJobUrl()">
+                        <a class="nav-link" #copyToClipboard ngxClipboard [cbContent]="getJobUrl()" (cbOnSuccess)="onCopyLink()"
+                           [ngbTooltip]="'global.messages.tooltip.link-copy.success' | translate" triggers="manual">
                             <span class="fa fa-share" aria-hidden="true"></span>
                             {{'job-detail.action.copyLink' | translate}}</a>
                     </li>

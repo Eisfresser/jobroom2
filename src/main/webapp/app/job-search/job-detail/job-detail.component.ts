@@ -1,4 +1,10 @@
-import { AfterViewInit, Component } from '@angular/core';
+import {
+    AfterViewInit,
+    Component,
+    ElementRef,
+    HostListener,
+    ViewChild
+} from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import {
     JobCenter,
@@ -12,6 +18,8 @@ import {
     JobSearchState
 } from '../state-management/state/job-search.state';
 import { Store } from '@ngrx/store';
+import { TOOLTIP_AUTO_HIDE_TIMEOUT } from '../../app.constants';
+import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'jr2-job-detail',
@@ -26,6 +34,12 @@ export class JobDetailComponent implements AfterViewInit {
     jobCenter$: Observable<JobCenter>;
     jobListTotalSize$: Observable<number>;
     externalJobDisclaimerClosed = false;
+
+    @ViewChild('copyToClipboard')
+    copyToClipboardElementRef: ElementRef;
+
+    @ViewChild(NgbTooltip)
+    clipboardTooltip: NgbTooltip;
 
     constructor(private referenceService: ReferenceService,
                 private store: Store<JobSearchState>) {
@@ -53,5 +67,21 @@ export class JobDetailComponent implements AfterViewInit {
 
     getJobUrl() {
         return window.location.href;
+    }
+
+    onCopyLink(): void {
+        this.clipboardTooltip.open();
+        setTimeout(() => this.clipboardTooltip.close(), TOOLTIP_AUTO_HIDE_TIMEOUT)
+    }
+
+    @HostListener('document:click', ['$event.target'])
+    onClick(targetElement: HTMLElement): void {
+        if (!targetElement) {
+            return;
+        }
+
+        if (!this.copyToClipboardElementRef.nativeElement.contains(targetElement)) {
+            this.clipboardTooltip.close();
+        }
     }
 }

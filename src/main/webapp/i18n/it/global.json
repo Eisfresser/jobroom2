@@ -248,6 +248,11 @@
                     "minlength": "Nome utente deve essere di almeno 5 caratteri",
                     "required": "Nome utente \u00e8 obbligatorio."
                 }
+            },
+            "tooltip": {
+                "link-copy": {
+                    "success": "Il link \u00e8 stato copiato negli appunti"
+                }
             }
         },
         "reference": {

@@ -248,6 +248,11 @@
                     "minlength": "Ihr Benutzername muss mindestens 5 Zeichen lang sein",
                     "required": "Ihr Benutzername wird ben\u00f6tigt."
                 }
+            },
+            "tooltip": {
+                "link-copy": {
+                    "success": "Der Link wurde in Ihre Zwischenablage gelegt"
+                }
             }
         },
         "reference": {
