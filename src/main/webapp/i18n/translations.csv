@@ -640,10 +640,10 @@ home,home.tools.job-publication.locality.country,Land,Country,Pays,Paese
 home,home.tools.job-publication.locality.title,Arbeitsort,Place of work,Lieu de travail,Luogo di lavoro
 home,home.tools.job-publication.locality.zip,PLZ,Postal code,"NPA  ","NPA  "
 home,home.tools.job-publication.locality.zipcode,PLZ / Ort,Postal code / city,NPA / lieu,NPA / luogo
-home,home.tools.job-publication.messages.validate.date-format,Datumsformat TT.MM.JJJJ,Please use date format DD.MM.YYYY,Format de date JJ.MM.AAAA,Formato della data GG.MM.AAAA
+home,home.tools.job-publication.messages.validate.date-format,"Datumsformat ungültig, richtiges Format: TT.MM.JJJJ","Invalid date format, correct format: DD.MM.YYYY",Le format de la date n’est pas conforme. Format correct: JJ.MM.AAAA,Il formato della data non è corretto. Formato corretto: GG.MM.AAAA
 home,home.tools.job-publication.messages.validate.email-format,Diese E-Mail-Adresse ist ungültig.,This email address is invalid.,Cette adresse courriel n'est pas valide.,L'indirizzo e-mail non è valido.
-home,home.tools.job-publication.messages.validate.employment-duration.date-before,Datum muss nach dem Stellenantritt liegen.,Please enter a date after the employment start.,La date doit se trouver après l'entrée en fonction.,La data deve trovarsi dopo l'inizio dell'attività.
-home,home.tools.job-publication.messages.validate.employment-start.date-before,Datum muss in der Zukunft liegen.,Please enter a date in the future.,La date doit se trouver dans le futur.,La data deve situarsi nel futuro.
+home,home.tools.job-publication.messages.validate.employment-duration.date-before,Datum muss nach dem Stellenantritt liegen.,Date must be after the employment start.,La date doit se situer après l'entrée en fonction.,La data deve trovarsi dopo l'inizio dell'attività.
+home,home.tools.job-publication.messages.validate.employment-start.date-before,Datum muss in der Zukunft liegen.,Date must be in the future.,La date doit se situer dans le futur.,La data deve situarsi nel futuro.
 home,home.tools.job-publication.messages.validate.phone-format,Bitte gültige Telefonnummer eingeben z. B. 031 999 99 99 oder +41 31 999 99 99,Please enter a valid phone number e.g. 031 999 99 99 or +41 31 999 99 99,Please enter a valid phone number e.g. 031 999 99 99 or +41 31 999 99 99,Please enter a valid phone number e.g. 031 999 99 99 or +41 31 999 99 99
 home,home.tools.job-publication.messages.validate.required,Pflichtfeld,This field is required.,Ce champ est obligatoire.,Questo campo è obbligatorio.
 home,home.tools.job-publication.messages.validate.zip-format,PLZ ungültig,Invalid postal code,NPA n'est pas valide.,NPA non è valido.
