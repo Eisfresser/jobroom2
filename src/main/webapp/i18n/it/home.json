@@ -91,7 +91,7 @@
                 },
                 "messages": {
                     "validate": {
-                        "date-format": "Formato della data GG.MM.AAAA",
+                        "date-format": "Il formato della data non \u00e8 corretto. Formato corretto: GG.MM.AAAA",
                         "email-format": "L'indirizzo e-mail non \u00e8 valido.",
                         "employment-duration": {
                             "date-before": "La data deve trovarsi dopo l'inizio dell'attivit\u00e0."

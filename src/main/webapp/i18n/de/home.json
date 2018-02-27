@@ -91,7 +91,7 @@
                 },
                 "messages": {
                     "validate": {
-                        "date-format": "Datumsformat TT.MM.JJJJ",
+                        "date-format": "Datumsformat ung\u00fcltig, richtiges Format: TT.MM.JJJJ",
                         "email-format": "Diese E-Mail-Adresse ist ung\u00fcltig.",
                         "employment-duration": {
                             "date-before": "Datum muss nach dem Stellenantritt liegen."

@@ -91,13 +91,13 @@
                 },
                 "messages": {
                     "validate": {
-                        "date-format": "Please use date format DD.MM.YYYY",
+                        "date-format": "Invalid date format, correct format: DD.MM.YYYY",
                         "email-format": "This email address is invalid.",
                         "employment-duration": {
-                            "date-before": "Please enter a date after the employment start."
+                            "date-before": "Date must be after the employment start."
                         },
                         "employment-start": {
-                            "date-before": "Please enter a date in the future."
+                            "date-before": "Date must be in the future."
                         },
                         "phone-format": "Please enter a valid phone number e.g. 031 999 99 99 or +41 31 999 99 99",
                         "required": "This field is required.",
