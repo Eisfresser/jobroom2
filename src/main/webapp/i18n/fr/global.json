@@ -248,6 +248,11 @@
                     "minlength": "Votre nom d'utilisateur doit comporter au moins 5 caract\u00e8res.",
                     "required": "Votre nom d'utilisateur est requis."
                 }
+            },
+            "tooltip": {
+                "link-copy": {
+                    "success": "Le lien a \u00e9t\u00e9 plac\u00e9 dans le presse-papier"
+                }
             }
         },
         "reference": {

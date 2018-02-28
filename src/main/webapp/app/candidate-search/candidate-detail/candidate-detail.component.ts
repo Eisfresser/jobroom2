@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import {
     Candidate,
     CandidateProfile,
@@ -30,6 +30,8 @@ import {
     PhoneToOpenedAction,
     PrintCandidateAction
 } from '../state-management/actions/candidate-search.actions';
+import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
+import { TOOLTIP_AUTO_HIDE_TIMEOUT } from '../../app.constants';
 
 interface EnrichedJobExperience extends JobExperience {
     occupationLabels: {
@@ -54,6 +56,12 @@ export class CandidateDetailComponent implements OnInit {
     preferredWorkRegions$: Observable<Array<string>>;
     preferredWorkCantons$: Observable<Array<string>>;
     contact$: Observable<Contact>;
+
+    @ViewChild(NgbTooltip)
+    clipboardTooltip: NgbTooltip;
+
+    @ViewChild('copyToClipboard')
+    copyToClipboardElementRef: ElementRef;
 
     constructor(private referenceService: ReferenceService,
                 private candidateService: CandidateService,
@@ -196,5 +204,23 @@ export class CandidateDetailComponent implements OnInit {
 
     isAuthenticated(): boolean {
         return this.principal.isAuthenticated();
+    }
+
+    onCopyLink(event: Event): void {
+        if (!this.clipboardTooltip.isOpen()) {
+            this.clipboardTooltip.open();
+            setTimeout(() => this.clipboardTooltip.close(), TOOLTIP_AUTO_HIDE_TIMEOUT);
+        }
+    }
+
+    @HostListener('document:click', ['$event.target'])
+    onClick(targetElement: HTMLElement): void {
+        if (!targetElement) {
+            return;
+        }
+
+        if (!this.copyToClipboardElementRef.nativeElement.contains(targetElement)) {
+            this.clipboardTooltip.close();
+        }
     }
 }
