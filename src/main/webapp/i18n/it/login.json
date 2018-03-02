@@ -4,7 +4,13 @@
             "button": "Accedi",
             "password": "Password",
             "password.placeholder": "La tua password",
-            "rememberme": "Ricordami"
+            "rememberme": "Ricordami",
+            "information": {
+                "pea": {
+                    "text":"Procedura di registrazione per le agenzie di collocamento private",
+                    "url":"https://www.arbeit.swiss/secoalv/it/home/menue/arbeitsvermittler/dienstleistungen-der-rav/job-room-konto.html"
+                }
+            }
         },
         "messages": {
             "error": {
