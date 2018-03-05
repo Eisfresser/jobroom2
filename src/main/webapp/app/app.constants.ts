@@ -3,15 +3,12 @@
 let _VERSION = '0.0.1-SNAPSHOT'; // This value will be overwritten by Webpack
 let _DEBUG_INFO_ENABLED = true; // This value will be overwritten by Webpack
 let _SERVER_API_URL = ''; // This value will be overwritten by Webpack
-let _USER_TRACKING_ENABLED = false; // This value will be overwritten by Webpack
 /* @toreplace VERSION */
 /* @toreplace DEBUG_INFO_ENABLED */
 /* @toreplace SERVER_API_URL */
-/* @toreplace USER_TRACKING_ENABLED */
 /* tslint:enable */
 export const VERSION = _VERSION;
 export const DEBUG_INFO_ENABLED = _DEBUG_INFO_ENABLED;
-export const USER_TRACKING_ENABLED = true;
 export const SERVER_API_URL = _SERVER_API_URL;
 export const TYPEAHEAD_QUERY_MIN_LENGTH = 2;
 export const MULTISELECT_FREE_TEXT_VALUE_MIN_LENGTH = 2;
