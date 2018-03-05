@@ -1,4 +1,14 @@
+@import '../../../../../content/scss/jbr2_variables.scss';
+
 .typeahead-singleselect {
+    width: 100%;
+
+    overflow-x: hidden;
+    overflow-y: auto;
+    min-height: 3rem;
+    max-height: 4rem;
+    font-size: 1rem;
+    line-height: 1rem;
 
     .typeahead-singleselect__input {
         &:focus {
@@ -6,8 +16,37 @@
             box-shadow: none;
             outline: none;
         }
+        background: transparent;
         padding: 0;
         border: 0;
-        width: 100%;
+        width: inherit;
     }
+
+    .typeahead-singleselect__tag {
+        margin: 1px;
+
+        background-color: $additional-accent-amber;
+        border-color: $additional-accent-amber;
+    }
+
+    .typeahead-singleselect__tag-title {
+        display: inline-block;
+        float: left;
+
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        max-width: 120px;
+    }
+
+    input {
+        width: inherit;
+        max-width: 100%;
+    }
+
 }
+
+:host {
+    width: 100%;
+}
+

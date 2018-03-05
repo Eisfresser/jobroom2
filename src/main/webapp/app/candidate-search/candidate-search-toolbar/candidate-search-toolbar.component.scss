@@ -41,6 +41,16 @@ ss-multiselect-dropdown {
     width: 100%;
 }
 
+.toolbar-form .form-group {
+    max-width: 20%;
+    width: 20%;
+
+    &.form-group--wide {
+        max-width: 25%;
+        width: 25%;
+    }
+}
+
 @media screen and (max-width: 1024px) and (min-width: 480px) {
     :host /deep/ button.dropdown-toggle,
     select.form-control-lg:not([size]):not([multiple]) {
@@ -52,5 +62,11 @@ ss-multiselect-dropdown {
     .toolbar {
         margin-bottom: ($grid-gutter-width / -2);
         border-bottom-color: transparent;
+
+        .form-group,
+        .form-group.form-group--wide {
+            max-width: 100%;
+            width: 100%;
+        }
     }
 }
