@@ -48,11 +48,13 @@
         "no-selection": "Nessuna scelta",
         "occupations": {
             "label": "Professione",
-            "placeholder": "Professioni, categorie"
+            "placeholder": "Professioni, categorie",
+            "tooltip": "Selezione multipla possibile"
         },
         "skills": {
             "label": "Parole chiave",
-            "placeholder": "Competenze, skills"
+            "placeholder": "Competenze, skills",
+            "tooltip": "Vous pouvez ins\u00e9rer <strong>plusieurs</strong> mots-cl\u00e9s. Pour ajouter des mots-cl\u00e9s"
         },
         "title": "Cerca candidati",
         "toolbar": {

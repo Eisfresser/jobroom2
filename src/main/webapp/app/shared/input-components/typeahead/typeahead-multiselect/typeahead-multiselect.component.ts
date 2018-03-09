@@ -38,6 +38,7 @@ export class TypeaheadMultiselectComponent implements ControlValueAccessor {
     @Input() placeHolder: string;
     @Input() editable = true;
     @Input() focusFirst = false;
+    @Input() tooltip: string;
     @ViewChild(NgbTypeahead) ngbTypeahead;
 
     inputValue: string;

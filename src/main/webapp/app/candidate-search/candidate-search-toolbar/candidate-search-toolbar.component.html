@@ -9,6 +9,7 @@
                     formControlName="occupations"
                     [itemLoader]="fetchOccupationSuggestions"
                     [editable]="false"
+                    [tooltip]="'candidate-search.skills.tooltip'| translate"
                     [placeHolder]="'candidate-search.occupations.placeholder' | translate"></jr2-typeahead-multiselect>
             </div>
 
@@ -16,6 +17,7 @@
                 <label class="sr-only" translate="candidate-search.skills.label"></label>
                 <jr2-multiselect
                     formControlName="skills"
+                    [tooltip]="'candidate-search.skills.tooltip'| translate"
                     [placeholder]="'candidate-search.skills.placeholder' | translate">
                 </jr2-multiselect>
             </div>

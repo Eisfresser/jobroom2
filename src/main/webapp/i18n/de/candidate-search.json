@@ -47,12 +47,14 @@
         },
         "no-selection": "Keine Auswahl",
         "occupations": {
-            "label": "Berufsbezeichnung",
-            "placeholder": "Berufsbezeichnungen, Kategorien"
+            "label": "Berufsbezeichnungen",
+            "placeholder": "Berufsbezeichnungen, Kategorien",
+            "tooltip": "Mehrfachauswahl m\u00f6glich"
         },
         "skills": {
             "label": "Suchbegriffe",
-            "placeholder": "F\u00e4higkeiten, Skills"
+            "placeholder": "F\u00e4higkeiten, Skills",
+            "tooltip": "Sie k\u00f6nnen <strong>mehrere</strong> Suchbegriffe eingeben. Dr\u00fccken Sie nach Eingabe \u00abEnter\u00bb um weitere Suchbegriffe hinzuzuf\u00fcgen."
         },
         "title": "Kandidatensuche",
         "toolbar": {

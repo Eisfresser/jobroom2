@@ -2,15 +2,15 @@
     "login": {
         "form": {
             "button": "Anmelden",
-            "password": "Passwort",
-            "password.placeholder": "Ihr Passwort",
-            "rememberme": "Automatische Anmeldung",
             "information": {
                 "pea": {
-                    "text":"Vorgehen zur Registrierung für private Arbeitsvermittler",
-                    "url":"https://www.arbeit.swiss/secoalv/de/home/menue/arbeitsvermittler/dienstleistungen-der-rav/job-room-konto.html"
+                    "text": "Vorgehen zur Registrierung f\u00fcr private Arbeitsvermittler",
+                    "url": "https://www.arbeit.swiss/secoalv/de/home/menue/arbeitsvermittler/dienstleistungen-der-rav/job-room-konto.html"
                 }
-            }
+            },
+            "password": "Passwort",
+            "password.placeholder": "Ihr Passwort",
+            "rememberme": "Automatische Anmeldung"
         },
         "messages": {
             "error": {

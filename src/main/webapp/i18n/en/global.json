@@ -221,6 +221,11 @@
                     "noaccount": "You don't have an account yet?"
                 }
             },
+            "tooltip": {
+                "link-copy": {
+                    "success": "The link has been copied to your clipboard"
+                }
+            },
             "validate": {
                 "confirmpassword": {
                     "maxlength": "Your confirmation password cannot be longer than 50 characters.",
@@ -247,11 +252,6 @@
                     "maxlength": "Your username cannot be longer than 50 characters.",
                     "minlength": "Your username must be at least 5 characters.",
                     "required": "Your username is required."
-                }
-            },
-            "tooltip": {
-                "link-copy": {
-                    "success": "The link has been copied to your clipboard"
                 }
             }
         },

@@ -5,6 +5,7 @@
                 <div class="form-group form-group--wide">
                     <jr2-typeahead-multiselect formControlName="baseQuery"
                                                [itemLoader]="fetchOccupationSuggestions"
+                                               [tooltip]="'job-search.toolbar.occupation.tooltip'| translate"
                                                [placeHolder]="'job-search.toolbar.occupation.placeholder' | translate"></jr2-typeahead-multiselect>
                 </div>
                 <div class="form-group form-group--icon">
@@ -12,6 +13,7 @@
                                                [itemLoader]="fetchLocalitySuggestions"
                                                [editable]="false"
                                                [focusFirst]="true"
+                                               [tooltip]="'job-search.toolbar.locality.tooltip'| translate"
                                                [placeHolder]="'job-search.toolbar.locality.placeholder' | translate"></jr2-typeahead-multiselect>
                     <jr2-geo-location-select
                         (localitySelect)="handleLocalitySelect($event)"

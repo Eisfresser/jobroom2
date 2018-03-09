@@ -47,12 +47,14 @@
         },
         "no-selection": "Aucune s\u00e9lection",
         "occupations": {
-            "label": "Profession",
-            "placeholder": "Professions, cat\u00e9gories"
+            "label": "Professions",
+            "placeholder": "Professions, cat\u00e9gories",
+            "tooltip": "S\u00e9lection multiple possible"
         },
         "skills": {
             "label": "Mots-cl\u00e9s",
-            "placeholder": "Comp\u00e9tences, skills"
+            "placeholder": "Comp\u00e9tences, skills",
+            "tooltip": " press \u201cEnter\u201d after typing a search term."
         },
         "title": "Recherche de candidats",
         "toolbar": {
