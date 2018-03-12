@@ -266,17 +266,15 @@ public class UserService {
         });
     }
 
-    public void changePassword(String currentClearTextPassword, String newPassword) {
+    public void changePassword(String password) {
         SecurityUtils.getCurrentUserLogin()
-            .flatMap(userRepository::findOneByLogin)
-            .ifPresent(user -> {
-                String currentEncryptedPassword = user.getPassword();
-                assertClearTextPasswordMatchesEncryptedPassword(currentClearTextPassword, currentEncryptedPassword);
-                String encryptedPassword = passwordEncoder.encode(newPassword);
-                user.setPassword(encryptedPassword);
-                cacheManager.getCache(USERS_CACHE).evict(user.getLogin());
-                log.debug("Changed password for User: {}", user);
-            });
+                .flatMap(userRepository::findOneByLogin)
+                .ifPresent(user -> {
+                    String encryptedPassword = passwordEncoder.encode(password);
+                    user.setPassword(encryptedPassword);
+                    cacheManager.getCache(UserRepository.USERS_BY_LOGIN_CACHE).evict(user.getLogin());
+                    log.debug("Changed password for User: {}", user);
+                });
     }
 
     public void updatePassword(String login, String encryptedPassword) {

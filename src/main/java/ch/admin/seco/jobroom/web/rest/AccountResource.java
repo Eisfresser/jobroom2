@@ -22,7 +22,6 @@ import ch.admin.seco.jobroom.repository.UserRepository;
 import ch.admin.seco.jobroom.security.SecurityUtils;
 import ch.admin.seco.jobroom.service.MailService;
 import ch.admin.seco.jobroom.service.UserService;
-import ch.admin.seco.jobroom.service.dto.PasswordChangeDTO;
 import ch.admin.seco.jobroom.service.dto.UserDTO;
 import ch.admin.seco.jobroom.web.rest.errors.InternalServerErrorException;
 import ch.admin.seco.jobroom.web.rest.errors.InvalidPasswordException;
@@ -90,8 +89,8 @@ public class AccountResource {
     @Timed
     public UserDTO getAccount() {
         return userService.getUserWithAuthorities()
-            .map(UserDTO::new)
-            .orElseThrow(() -> new InternalServerErrorException("User could not be found"));
+                .map(UserDTO::new)
+                .orElseThrow(() -> new InternalServerErrorException("User could not be found"));
     }
 
     /**
@@ -109,22 +108,22 @@ public class AccountResource {
             throw new InternalServerErrorException("User could not be found");
         }
         userService.updateUser(userDTO.getFirstName(), userDTO.getLastName(), userDTO.getEmail(), userDTO.getPhone(), userDTO.getGender(),
-            userDTO.getLangKey(), userDTO.getImageUrl());
+                userDTO.getLangKey(), userDTO.getImageUrl());
     }
 
     /**
-     * POST  /account/change-password : changes the current user's password.
+     * POST  /account/change-password : changes the current user's password
      *
-     * @param passwordChangeDto current and new password
+     * @param password the new password
      * @throws InvalidPasswordException 400 (Bad Request) if the new password is incorrect
      */
     @PostMapping(path = "/account/change-password")
     @Timed
-    public void changePassword(@RequestBody PasswordChangeDTO passwordChangeDto) {
-        if (!checkPasswordLength(passwordChangeDto.getNewPassword())) {
+    public void changePassword(@RequestBody String password) {
+        if (!checkPasswordLength(password)) {
             throw new InvalidPasswordException();
         }
-        userService.changePassword(passwordChangeDto.getCurrentPassword(), passwordChangeDto.getNewPassword());
+        userService.changePassword(password);
     }
 
     /**
@@ -137,8 +136,8 @@ public class AccountResource {
     @Timed
     public void requestPasswordReset(@RequestBody String login) {
         mailService.sendPasswordResetMail(
-            userService.requestPasswordReset(login)
-                .orElseThrow(LoginNotFoundException::new)
+                userService.requestPasswordReset(login)
+                        .orElseThrow(LoginNotFoundException::new)
         );
     }
 
@@ -156,7 +155,7 @@ public class AccountResource {
             throw new InvalidPasswordException();
         }
         Optional<User> user =
-            userService.completePasswordReset(keyAndPassword.getNewPassword(), keyAndPassword.getKey());
+                userService.completePasswordReset(keyAndPassword.getNewPassword(), keyAndPassword.getKey());
 
         if (!user.isPresent()) {
             throw new InternalServerErrorException("No user was found for this reset key");
@@ -165,7 +164,7 @@ public class AccountResource {
 
     private boolean checkPasswordLength(String password) {
         return !StringUtils.isEmpty(password) &&
-            password.length() >= ManagedUserVM.PASSWORD_MIN_LENGTH &&
-            password.length() <= ManagedUserVM.PASSWORD_MAX_LENGTH;
+                password.length() >= ManagedUserVM.PASSWORD_MIN_LENGTH &&
+                password.length() <= ManagedUserVM.PASSWORD_MAX_LENGTH;
     }
 }
