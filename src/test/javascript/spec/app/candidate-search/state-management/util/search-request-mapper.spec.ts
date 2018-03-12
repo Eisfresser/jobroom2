@@ -12,14 +12,13 @@ import {
     Graduation,
     LanguageSkill,
     WorkForm
-} from '../../../../../../../main/webapp/app/shared/model/shared-types';
+} from '../../../../../../../main/webapp/app/shared';
 import { ITEMS_PER_PAGE } from '../../../../../../../main/webapp/app/shared';
 import {
     CandidateSearchToolState,
     initialState
 } from '../../../../../../../main/webapp/app/home/state-management/state/candidate-search-tool.state';
 import {
-    TypeaheadItemDisplayModel,
     TypeaheadMultiselectModel
 } from '../../../../../../../main/webapp/app/shared/input-components';
 import { CandidateSearchRequest } from '../../../../../../../main/webapp/app/candidate-search/services/candidate-search-request';
@@ -212,7 +211,7 @@ describe('createCandidateSearchRequestFromFilter', () => {
 
     it('should map CandidateSearchRequest with canton and region code', () => {
         // GIVEN
-        const workplace = new TypeaheadItemDisplayModel(new TypeaheadMultiselectModel('type', 'ZH:ZH08', 'label'), true, true);
+        const workplace = [new TypeaheadMultiselectModel('type', 'ZH:ZH08', 'label')];
         const filter: CandidateSearchFilter = Object.assign({}, defaultFilter, { 'workplace': workplace });
 
         // WHEN
@@ -242,7 +241,7 @@ describe('createCandidateSearchRequestFromToolState', () => {
     });
 
     it('should map CandidateSearchFilter with workplace', () => {
-        const workplace = new TypeaheadItemDisplayModel(new TypeaheadMultiselectModel('type', 'cc:bb', 'label'));
+        const workplace = [new TypeaheadMultiselectModel('type', 'cc:bb', 'label')];
         const filter: CandidateSearchToolState = Object.assign({}, defaultSearchToolState, { workplace });
 
         // WHEN

@@ -43,7 +43,7 @@ export class CandidateSearchToolbarComponent implements OnInit, OnDestroy, OnCha
             this.toolbarForm.reset({
                 occupations: [...this.searchFilter.occupations || []],
                 skills: [...this.searchFilter.skills || []],
-                workplace: this.searchFilter.workplace
+                workplace: [...this.searchFilter.workplace || []]
             });
         }
     };
@@ -80,7 +80,7 @@ export class CandidateSearchToolbarComponent implements OnInit, OnDestroy, OnCha
         this.toolbarForm = this.fb.group({
             occupations: [[...this.searchFilter.occupations || []]],
             skills: [[...this.searchFilter.skills || []]],
-            workplace: [this.searchFilter.workplace]
+            workplace: [[...this.searchFilter.workplace || []]]
         });
 
         this.toolbarForm.valueChanges

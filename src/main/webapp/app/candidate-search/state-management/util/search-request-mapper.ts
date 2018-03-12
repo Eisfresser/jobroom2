@@ -11,7 +11,6 @@ import {
     WorkForm
 } from '../../../shared';
 import { CandidateSearchToolState } from '../../../home/state-management';
-import { TypeaheadItemDisplayModel } from '../../../shared/input-components';
 import {
     CandidateLanguageSkill,
     CandidateSearchRequest,
@@ -84,9 +83,9 @@ function mapResidence(residences: Array<Canton | string>): Array<string> {
         : null
 }
 
-function mapWorkplace(workplace?: TypeaheadItemDisplayModel): Array<string> {
-    if (workplace) {
-        return workplace.model.code.split(':').reverse();
+function mapWorkplace(workplace?: Array<TypeaheadMultiselectModel>): Array<string> {
+    if (workplace && workplace.length) {
+        return workplace[0].code.split(':').reverse();
     }
     return [];
 }
