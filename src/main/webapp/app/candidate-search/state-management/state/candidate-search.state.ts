@@ -9,8 +9,7 @@ import {
     WorkForm
 } from '../../../shared';
 import { CandidateProfile } from '../../services/candidate';
-import { TypeaheadItemDisplayModel } from '../../../shared/input-components';
-import { TypeaheadMultiselectModel } from '../../../shared/input-components/typeahead/typeahead-multiselect-model';
+import { TypeaheadMultiselectModel } from '../../../shared/input-components';
 import { Degree } from '../../../shared/job-publication/job-publication.model';
 
 export interface CandidateSearchState {
@@ -29,7 +28,7 @@ export interface CandidateSearchFilter {
     occupations?: Array<TypeaheadMultiselectModel>;
     skills?: Array<string>;
     experience?: Experience;
-    workplace?: TypeaheadItemDisplayModel;
+    workplace?: Array<TypeaheadMultiselectModel>;
     residence?: Array<Canton | string>;
     availability?: Availability;
     workload?: [number, number];

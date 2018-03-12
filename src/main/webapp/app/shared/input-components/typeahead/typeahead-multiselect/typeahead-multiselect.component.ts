@@ -15,7 +15,7 @@ import {
     MULTISELECT_FREE_TEXT_VALUE_MIN_LENGTH,
     TYPEAHEAD_QUERY_MIN_LENGTH
 } from '../../../../app.constants';
-import { NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
+import { NgbTooltip, NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
 
 enum Key {
     Tab = 9,
@@ -34,12 +34,15 @@ enum Key {
 })
 export class TypeaheadMultiselectComponent implements ControlValueAccessor {
     @Input() itemLoader: (text: string) => Observable<TypeaheadMultiselectModel[]>;
-    // todo: use lower case as other input components
-    @Input() placeHolder: string;
+    @Input() placeholder: string;
     @Input() editable = true;
     @Input() focusFirst = false;
     @Input() tooltip: string;
+    @Input() limit = 0;
+    @Input() size: 'sm' | 'lg' = 'sm';
+
     @ViewChild(NgbTypeahead) ngbTypeahead;
+    @ViewChild('t') ngbTooltip: NgbTooltip;
 
     inputValue: string;
     selectedItems: Array<TypeaheadMultiselectModel> = [];
@@ -97,6 +100,8 @@ export class TypeaheadMultiselectComponent implements ControlValueAccessor {
                 event.preventDefault();
                 event.stopPropagation();
             }
+        } else if (!this.canSelect()) {
+            event.preventDefault();
         }
     }
 
@@ -117,7 +122,7 @@ export class TypeaheadMultiselectComponent implements ControlValueAccessor {
 
     selectFreeText() {
         const freeText = new TypeaheadMultiselectModel('free-text', this.inputValue, this.inputValue);
-        if (this.editable && !this.exists(freeText) && freeText.code
+        if (this.canSelect() && this.editable && !this.exists(freeText) && freeText.code
             && freeText.code.length >= MULTISELECT_FREE_TEXT_VALUE_MIN_LENGTH) {
 
             const newItems = [...this.selectedItems, freeText];
@@ -131,8 +136,16 @@ export class TypeaheadMultiselectComponent implements ControlValueAccessor {
         return null;
     }
 
+    private canSelect(): boolean {
+        return !this.limit || this.selectedItems.length < this.limit;
+    }
+
     selectItem(event: any) {
         event.preventDefault();
+
+        if (!this.canSelect()) {
+           return;
+        }
 
         const newItems = [...this.selectedItems, event.item.model];
 
@@ -184,8 +197,12 @@ export class TypeaheadMultiselectComponent implements ControlValueAccessor {
             return;
         }
 
-        if (!this.elRef.nativeElement.contains(targetElement) && !this.selectFreeText()) {
-            this.clearInput();
+        if (!this.elRef.nativeElement.contains(targetElement)) {
+            if (!this.selectFreeText()) {
+                this.clearInput();
+            }
+
+            this.closeTooltip();
         }
     }
 
@@ -196,5 +213,17 @@ export class TypeaheadMultiselectComponent implements ControlValueAccessor {
         // todo: We have to review this after updating to the next ng-bootstrap versions.
         this.ngbTypeahead._userInput = '';
         this.inputValue = '';
+    }
+
+    openTooltip(): void {
+        if (this.tooltip) {
+            this.ngbTooltip.open();
+        }
+    }
+
+    closeTooltip(): void {
+        if (this.tooltip) {
+            this.ngbTooltip.close();
+        }
     }
 }

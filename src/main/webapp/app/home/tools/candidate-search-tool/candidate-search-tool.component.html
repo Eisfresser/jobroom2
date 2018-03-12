@@ -12,7 +12,7 @@
                             [itemLoader]="fetchOccupationSuggestions"
                             [editable]="false"
                             [tooltip]="'candidate-search.occupations.tooltip'| translate"
-                            [placeHolder]="'candidate-search.occupations.placeholder' | translate"></jr2-typeahead-multiselect>
+                            [placeholder]="'candidate-search.occupations.placeholder' | translate"></jr2-typeahead-multiselect>
                     </div>
 
                     <div class="form-group">
@@ -24,12 +24,13 @@
 
                     <div class="form-group">
                         <label class="sr-only" translate="candidate-search.workplace.label"></label>
-                        <jr2-typeahead-singleselect formControlName="workplace"
-                                                    [tooltip]="'candidate-search.workplace.tooltip'| translate"
+                        <jr2-typeahead-multiselect formControlName="workplace"
+                                                    [limit]="1"
+                                                    [focusFirst]="true"
                                                     [placeholder]="'candidate-search.workplace.placeholder' | translate"
                                                     [itemLoader]="fetchLocalitySuggestions"
                                                     [editable]="false"
-                                                    [size]="''"></jr2-typeahead-singleselect>
+                                                    [size]="''"></jr2-typeahead-multiselect>
                     </div>
 
                     <button class="btn btn-primary btn-lg btn-block">

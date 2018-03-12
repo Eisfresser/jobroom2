@@ -11,7 +11,7 @@
     <input [id]="id" #input class="input typeahead-multiselect__input" autofocus name="inputValue"
            (keydown)="handleKeyDown($event); t.close()"
            (focus)="t.open()"
-           (blur)="handleBlur($event)"
+           (blur)="handleBlur($event); t.close()"
            [placeholder]="showPlaceholder() ? placeholder : ''"
            [style.width]="getInputWidth()" [disabled]="disabled || selectedItems.length === maxItemNum"/>
 </div>

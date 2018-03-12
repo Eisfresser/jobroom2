@@ -19,13 +19,11 @@ import { AccountService } from '../../../../../../../main/webapp/app/shared';
 import { HttpClient } from '@angular/common/http';
 
 describe('RouterEffects', () => {
-    const testFilter = `eyJza2lsbHMiOltdLCJsYW5ndWFnZVNraWxscyI6W3siY29kZSI6ImRlIiwid3Jpd
-    HRlbiI6MSwic3Bva2VuIjoxfV0sIndvcmtsb2FkIjpbMzAsMTAwXSwib2NjdXBhdGlvbnMiOm51bGwsImdyYW
-    R1YXRpb24iOm51bGwsInJlc2lkZW5jZSI6WyJBRyIsIkFJIiwiR0UiXSwiZXhwZXJpZW5jZSI6bnVsbCwid29
-    ya3BsYWNlIjp7Im1vZGVsIjp7InR5cGUiOiJsb2NhbGl0eSIsImNvZGUiOiJaSDpaSDA4IiwibGFiZWwiOiJC
-    ZXJnIGFtIElyY2hlbCIsIm9yZGVyIjowfSwiZmlyc3QiOnRydWUsImZpcnN0SW5Hcm91cCI6dHJ1ZX0sImF2Y
-    WlsYWJpbGl0eSI6bnVsbCwid29ya0Zvcm0iOm51bGwsImRlZ3JlZSI6bnVsbCwiZHJpdmluZ0xpY2VuY2VDYX
-    RlZ29yeSI6bnVsbH0=`;
+    const testFilter = `eyJza2lsbHMiOltdLCJsYW5ndWFnZVNraWxscyI6W3siY29kZSI6ImRlIiwid3JpdHRlbiI6MSw
+    ic3Bva2VuIjoxfV0sIndvcmtsb2FkIjpbMzAsMTAwXSwib2NjdXBhdGlvbnMiOm51bGwsImdyYWR1YXRpb24iOm51bGwsIn
+    Jlc2lkZW5jZSI6WyJBRyIsIkFJIiwiR0UiXSwiZXhwZXJpZW5jZSI6bnVsbCwid29ya3BsYWNlIjpbeyJ0eXBlIjoibG9jY
+    WxpdHkiLCJjb2RlIjoiWkg6WkgwOCIsImxhYmVsIjoiQmVyZyBhbSBJcmNoZWwiLCJvcmRlciI6MH1dLCJhdmFpbGFiaWxp
+    dHkiOm51bGwsIndvcmtGb3JtIjpudWxsLCJkZWdyZWUiOm51bGwsImRyaXZpbmdMaWNlbmNlQ2F0ZWdvcnkiOm51bGx9`;
 
     const mockRouter = new MockRouter();
 
@@ -84,16 +82,12 @@ describe('RouterEffects', () => {
                 graduation: null,
                 residence: ['AG', 'AI', 'GE'],
                 experience: null,
-                workplace: {
-                    model: {
-                        type: 'locality',
-                        code: 'ZH:ZH08',
-                        label: 'Berg am Irchel',
-                        order: 0
-                    } as TypeaheadMultiselectModel,
-                    first: true,
-                    firstInGroup: true
-                },
+                workplace: [{
+                    type: 'locality',
+                    code: 'ZH:ZH08',
+                    label: 'Berg am Irchel',
+                    order: 0
+                }] as Array<TypeaheadMultiselectModel>,
                 availability: null,
                 workForm: null,
                 degree: null,

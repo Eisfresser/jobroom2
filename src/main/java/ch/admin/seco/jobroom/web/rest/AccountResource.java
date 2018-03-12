@@ -112,7 +112,7 @@ public class AccountResource {
     }
 
     /**
-     * POST  /account/change-password : changes the current user's password
+     * POST  /account/change-password : changes the current user's password.
      *
      * @param password the new password
      * @throws InvalidPasswordException 400 (Bad Request) if the new password is incorrect

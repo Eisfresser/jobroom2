@@ -59,7 +59,7 @@ export class CandidateSearchToolComponent implements OnInit, OnDestroy, OnChange
     ngOnInit(): void {
         this.candidateSearchForm = this.fb.group({
             occupations: [[...this.candidateSearchToolModel.occupations || []]],
-            workplace: [this.candidateSearchToolModel.workplace],
+            workplace: [[...this.candidateSearchToolModel.workplace || []]],
             skills: [[...this.candidateSearchToolModel.skills || []]]
         });
 
@@ -99,7 +99,7 @@ export class CandidateSearchToolComponent implements OnInit, OnDestroy, OnChange
     private filterChanged(formValue: any) {
         const { occupations, workplace, skills } = formValue;
         const isFilterSelected = (occupations && occupations.length > 0)
-            || (workplace && workplace.model)
+            || (workplace && workplace.length)
             || (skills && skills.length);
 
         if (isFilterSelected) {

@@ -16,8 +16,7 @@ import {
     PhoneNumberInputComponent,
     RangeInputComponent,
     SearchButtonComponent,
-    TypeaheadMultiselectComponent,
-    TypeaheadSingleselectComponent
+    TypeaheadMultiselectComponent
 } from './input-components';
 import { WorkingTimeRangePipe } from './pipes/working-time-range.pipe';
 import { KeysPipe } from './pipes/enum-keys.pipe';
@@ -34,7 +33,6 @@ import { KeysPipe } from './pipes/enum-keys.pipe';
         TypeaheadMultiselectComponent,
         RangeInputComponent,
         MultiselectComponent,
-        TypeaheadSingleselectComponent,
         PhoneNumberInputComponent,
         LanguageFilterComponent,
         SearchButtonComponent,
@@ -58,7 +56,6 @@ import { KeysPipe } from './pipes/enum-keys.pipe';
         TypeaheadMultiselectComponent,
         RangeInputComponent,
         MultiselectComponent,
-        TypeaheadSingleselectComponent,
         PhoneNumberInputComponent,
         LanguageFilterComponent,
         SearchButtonComponent,
