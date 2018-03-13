@@ -79,10 +79,12 @@ candidate-search,candidate-search.graduation.label,Abschluss,Degree,Diplôme,Tit
 candidate-search,candidate-search.keywords.label,Suchbegriffe,Search terms,Critères de recherche,Termini ricercati
 candidate-search,candidate-search.languageSkills.label,Sprachkenntnisse,Languages,Connaissances linguistiques,Conoscenze linguistiche
 candidate-search,candidate-search.no-selection,Keine Auswahl,No selection,Aucune sélection,Nessuna scelta
-candidate-search,candidate-search.occupations.label,Berufsbezeichnung,Occupation,Profession,Professione
+candidate-search,candidate-search.occupations.label,Berufsbezeichnungen,Occupations,Professions,Professione
 candidate-search,candidate-search.occupations.placeholder,"Berufsbezeichnungen, Kategorien","Occupations, categories","Professions, catégories","Professioni, categorie"
+candidate-search,candidate-search.occupations.tooltip,Mehrfachauswahl möglich,Multiple selection possible,Sélection multiple possible,Selezione multipla possibile
 candidate-search,candidate-search.skills.label,Suchbegriffe,Key words,Mots-clés,Parole chiave
 candidate-search,candidate-search.skills.placeholder,"Fähigkeiten, Skills","Competencies, skills","Compétences, skills","Competenze, skills"
+candidate-search,candidate-search.skills.tooltip,Sie können <strong>mehrere</strong> Suchbegriffe eingeben. Drücken Sie nach Eingabe «Enter» um weitere Suchbegriffe hinzuzufügen.,"Search using <strong>several</strong> key words. To add further search terms, press “Enter” after typing a search term.","Vous pouvez insérer <strong>plusieurs</strong> mots-clés. Pour ajouter des mots-clés, appuyez sur la touche « Enter » après avoir entré un mot-clé.","È possibile inserire <strong>più</strong> termini di ricerca. Per aggiungere più termini di ricerca, premere «Invio» dopo aver inserito un termine di ricerca."
 candidate-search,candidate-search.title,Kandidatensuche,Candidate search,Recherche de candidats,Cerca candidati
 candidate-search,candidate-search.toolbar.graduation.default,Abschluss auswählen,Select degree,Sélectionner un diplôme,Seleziona titolo...
 candidate-search,candidate-search.toolbar.graduation.label,Abschluss,Degree,Diplôme,Titolo
@@ -757,9 +759,10 @@ job-search,job-search.job-search-list.title.one.with-query.with-locality,1 '{{qu
 job-search,job-search.title,Stelle suchen,Job search,Chercher un emploi,Cerca posti
 job-search,job-search.toolbar.locality-select.tooltip,Aktueller Standort wählen,Select my current location,Sélectionner le lieu actuel,selezione la mia posizione attuale
 job-search,job-search.toolbar.locality.placeholder,Ortschaft oder Kanton,Location or canton,Lieu ou canton,Località o Cantone
+job-search,job-search.toolbar.locality.tooltip,Mehrfachauswahl möglich,Multiple selection possible,Sélection multiple possible,Selezione multipla possibile
 job-search,job-search.toolbar.occupation.placeholder,"Berufsbezeichnungen, Suchbegriffe","Occupations, keywords","Professions, mots-clés","Professioni, parole chiave"
+job-search,job-search.toolbar.occupation.tooltip,Mehrfachauswahl möglich. Starten Sie Ihre Eingabe und wählen Sie einen Begriff aus der Liste oder drücken Sie «Enter» auf Ihrer Tastatur.,Multiple selection possible. Start typing and choose a term from the list or press “Enter”.,Sélection multiple possible. Commencez votre saisie et choisissez un terme de la liste ou appuyez sur la touche « Enter ».,Selezione multipla possibile. Cominciare a digitare e scegliere nella lista un termine oppure premere «Invio» sulla tastiera.
 job-search,job-search.toolbar.reset,Zurücksetzen,Reset,Rétablir,Ripristina
-job-search,typeahead-multiselect.tooltip,"Um <strong>mehrere</strong> Suchbegriffe einzugeben, drücken Sie ""ENTER"" auf Ihrer Tastatur oder wählen Sie mehrere Suchbefriffe aus der Liste aus.","Um <strong>mehrere</strong> Suchbegriffe einzugeben, drücken Sie ""ENTER"" auf Ihrer Tastatur oder wählen Sie mehrere Suchbefriffe aus der Liste aus.","Um <strong>mehrere</strong> Suchbegriffe einzugeben, drücken Sie ""ENTER"" auf Ihrer Tastatur oder wählen Sie mehrere Suchbefriffe aus der Liste aus.","Um <strong>mehrere</strong> Suchbegriffe einzugeben, drücken Sie ""ENTER"" auf Ihrer Tastatur oder wählen Sie mehrere Suchbefriffe aus der Liste aus."
 job-search,typeahead-multiselect.type.canton,Kanton,Canton,Canton,Cantone
 job-search,typeahead-multiselect.type.classification,Berufskategorie,Category,Catégorie,Categoria
 job-search,typeahead-multiselect.type.locality,Ortschaft,Locality,Localité,Località
@@ -824,12 +827,14 @@ job,jobserviceApp.job.created,Stelle mit ID {{ param }} erstellt,A new job is cr
 job,jobserviceApp.job.deleted,Stelle mit ID {{ param }} gelöscht,A job is deleted with identifier {{ param }},L'emploi portant l'ID {{ param }} a été supprimé,È stato eliminato un posto con identificatore {{ param }}
 job,jobserviceApp.job.updated,Stelle mit ID {{ param }} aktualisiert,A job is updated with identifier {{ param }},L'emploi portant l'ID {{ param }} a été mis à jour,È stato aggiornato un posto identificato da {{ param }}
 login,login.form.button,Anmelden,Sign in,Connexion,Accedi
+login,login.form.information.pea.text,Vorgehen zur Registrierung für private Arbeitsvermittler,Registration procedure for private placement officers,Procédure d’enregistrement pour les agences de placement privées,Procedura di registrazione per le agenzie di collocamento private
+login,login.form.information.pea.url,https://www.arbeit.swiss/secoalv/de/home/menue/arbeitsvermittler/dienstleistungen-der-rav/job-room-konto.html,https://www.arbeit.swiss/secoalv/en/home/menue/arbeitsvermittler/dienstleistungen-der-rav.html,https://www.arbeit.swiss/secoalv/fr/home/menue/arbeitsvermittler/dienstleistungen-der-rav/job-room-konto.html,https://www.arbeit.swiss/secoalv/it/home/menue/arbeitsvermittler/dienstleistungen-der-rav/job-room-konto.html
 login,login.form.password,Passwort,Password,Mot de passe,Password
 login,login.form.password.placeholder,Ihr Passwort,Your password,Votre mot de passe,La tua password
 login,login.form.rememberme,Automatische Anmeldung,Remember me,Garder la session ouverte,Ricordami
 login,login.messages.error.authentication,<strong>Anmeldung fehlgeschlagen!</strong> Überprüfen Sie bitte Ihre Angaben und versuchen Sie es erneut.,<strong>Failed to sign in!</strong> Please check your login credentials and try again.,<strong>Erreur d'authentification !</strong> Veuillez vérifier vos identifiants de connexion.,<strong>Accesso non riuscito!</strong> Si prega di controllare le credenziali e riprovare.
 login,login.password.forgot,Passwort vergessen,Did you forget your password?,Avez-vous oublié votre mot de passe ?,Password dimenticata?
-login,login.title,Anmelden,Sign in,Connexion,Accedi
+login,login.title,Login für private Arbeitsvermittler,Sign in for private employment agencies,Connexion pour agences privées de placement,Accesso per agenzie private di collocamento
 logs,audits.filter.button.clear,Clear,Clear,Effacer,Clear
 logs,audits.filter.button.close,Close,Close,Fermer,Close
 logs,audits.filter.button.today,Heute,Today,Aujourd'hui,Oggi
