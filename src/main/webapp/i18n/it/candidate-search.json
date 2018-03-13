@@ -54,7 +54,7 @@
         "skills": {
             "label": "Parole chiave",
             "placeholder": "Competenze, skills",
-            "tooltip": "Vous pouvez ins\u00e9rer <strong>plusieurs</strong> mots-cl\u00e9s. Pour ajouter des mots-cl\u00e9s"
+            "tooltip": "\u00c8 possibile inserire <strong>pi\u00f9</strong> termini di ricerca. Per aggiungere pi\u00f9 termini di ricerca, premere \u00abInvio\u00bb dopo aver inserito un termine di ricerca."
         },
         "title": "Cerca candidati",
         "toolbar": {

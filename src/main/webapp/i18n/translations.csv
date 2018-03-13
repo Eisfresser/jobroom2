@@ -84,7 +84,7 @@ candidate-search,candidate-search.occupations.placeholder,"Berufsbezeichnungen, 
 candidate-search,candidate-search.occupations.tooltip,Mehrfachauswahl möglich,Multiple selection possible,Sélection multiple possible,Selezione multipla possibile
 candidate-search,candidate-search.skills.label,Suchbegriffe,Key words,Mots-clés,Parole chiave
 candidate-search,candidate-search.skills.placeholder,"Fähigkeiten, Skills","Competencies, skills","Compétences, skills","Competenze, skills"
-candidate-search,candidate-search.skills.tooltip,Sie können <strong>mehrere</strong> Suchbegriffe eingeben. Drücken Sie nach Eingabe «Enter» um weitere Suchbegriffe hinzuzufügen.,Search using <strong>several</strong> key words. To add further search terms," press “Enter” after typing a search term.",Vous pouvez insérer <strong>plusieurs</strong> mots-clés. Pour ajouter des mots-clés
+candidate-search,candidate-search.skills.tooltip,Sie können <strong>mehrere</strong> Suchbegriffe eingeben. Drücken Sie nach Eingabe «Enter» um weitere Suchbegriffe hinzuzufügen.,"Search using <strong>several</strong> key words. To add further search terms, press “Enter” after typing a search term.","Vous pouvez insérer <strong>plusieurs</strong> mots-clés. Pour ajouter des mots-clés, appuyez sur la touche « Enter » après avoir entré un mot-clé.","È possibile inserire <strong>più</strong> termini di ricerca. Per aggiungere più termini di ricerca, premere «Invio» dopo aver inserito un termine di ricerca."
 candidate-search,candidate-search.title,Kandidatensuche,Candidate search,Recherche de candidats,Cerca candidati
 candidate-search,candidate-search.toolbar.graduation.default,Abschluss auswählen,Select degree,Sélectionner un diplôme,Seleziona titolo...
 candidate-search,candidate-search.toolbar.graduation.label,Abschluss,Degree,Diplôme,Titolo
@@ -834,7 +834,7 @@ login,login.form.password.placeholder,Ihr Passwort,Your password,Votre mot de pa
 login,login.form.rememberme,Automatische Anmeldung,Remember me,Garder la session ouverte,Ricordami
 login,login.messages.error.authentication,<strong>Anmeldung fehlgeschlagen!</strong> Überprüfen Sie bitte Ihre Angaben und versuchen Sie es erneut.,<strong>Failed to sign in!</strong> Please check your login credentials and try again.,<strong>Erreur d'authentification !</strong> Veuillez vérifier vos identifiants de connexion.,<strong>Accesso non riuscito!</strong> Si prega di controllare le credenziali e riprovare.
 login,login.password.forgot,Passwort vergessen,Did you forget your password?,Avez-vous oublié votre mot de passe ?,Password dimenticata?
-login,login.title,Anmelden,Sign in,Connexion,Accedi
+login,login.title,Login für private Arbeitsvermittler,Sign in for private employment agencies,Connexion pour agences privées de placement,Accesso per agenzie private di collocamento
 logs,audits.filter.button.clear,Clear,Clear,Effacer,Clear
 logs,audits.filter.button.close,Close,Close,Fermer,Close
 logs,audits.filter.button.today,Heute,Today,Aujourd'hui,Oggi

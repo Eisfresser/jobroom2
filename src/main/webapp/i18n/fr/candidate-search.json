@@ -54,7 +54,7 @@
         "skills": {
             "label": "Mots-cl\u00e9s",
             "placeholder": "Comp\u00e9tences, skills",
-            "tooltip": " press \u201cEnter\u201d after typing a search term."
+            "tooltip": "Vous pouvez ins\u00e9rer <strong>plusieurs</strong> mots-cl\u00e9s. Pour ajouter des mots-cl\u00e9s, appuyez sur la touche \u00ab Enter \u00bb apr\u00e8s avoir entr\u00e9 un mot-cl\u00e9."
         },
         "title": "Recherche de candidats",
         "toolbar": {

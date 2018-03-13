@@ -54,7 +54,7 @@
         "skills": {
             "label": "Key words",
             "placeholder": "Competencies, skills",
-            "tooltip": "Search using <strong>several</strong> key words. To add further search terms"
+            "tooltip": "Search using <strong>several</strong> key words. To add further search terms, press \u201cEnter\u201d after typing a search term."
         },
         "title": "Candidate search",
         "toolbar": {
