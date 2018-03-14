@@ -690,7 +690,7 @@ job-detail,job-detail.action.savePdf,Als PDF speichern,Save as PDF,Sauvegarder e
 job-detail,job-detail.action.sendEmail,Per E-Mail versenden,Send by email,Envoyer par courriel,Invia per e-mail
 job-detail,job-detail.action.showExternalPage,Zum externen Stelleninserat,Link to external job posting,Vers l'offre d'emploi externe,vai all'annuncio esterno
 job-detail,job-detail.application.additionalInfo,Ergänzende Angaben,Additional information,Indications complémentaires,Dati complementari
-job-detail,job-detail.application.email,Per E-Mail,By email,Par courriel,Per e-mail
+job-detail,job-detail.application.email,Elektronisch,Electronic,En ligne,Elettronica
 job-detail,job-detail.application.mail,Per Post,By post,Par la poste,Per posta
 job-detail,job-detail.application.mail.text,siehe Adresse des Unternehmens,See company address,Voir l'adresse de l'entreprise,V. indirizzo dell'impresa
 job-detail,job-detail.application.phone,Telefonisch,By phone,Par téléphone,Telefonicamente

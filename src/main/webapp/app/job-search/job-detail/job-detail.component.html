@@ -128,6 +128,7 @@
             <!-- Languages -->
             <jr2-languages [languages]="job.languages"></jr2-languages>
 
+            <br/>
             <!-- Application -->
             <div *ngIf="job.application" class="detail__content">
                 <h4 class="detail__content__title">{{ 'job-detail.application.title' | translate }}</h4>
@@ -139,7 +140,7 @@
                 <div *ngIf="job.application.emailEnabled" class="content__item">
                     <strong>{{ 'job-detail.application.email' | translate}}</strong>
                     <span>
-                        <a href="mailto:{{job.contact?.email || job.company?.email}}">{{job.contact?.email || job.company?.email}}</a>
+                        <a href="mailto:{{job.company?.email}}">{{job.company?.email}}</a>
                     </span>
                 </div>
                 <div *ngIf="job.application.phoneEnabled" class="content__item">
