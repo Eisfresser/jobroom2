@@ -2,6 +2,12 @@
     "login": {
         "form": {
             "button": "Sign in",
+            "information": {
+                "pea": {
+                    "text": "Registration procedure for private placement officers",
+                    "url": "https://www.arbeit.swiss/secoalv/en/home/menue/arbeitsvermittler/dienstleistungen-der-rav.html"
+                }
+            },
             "password": "Password",
             "password.placeholder": "Your password",
             "rememberme": "Remember me"

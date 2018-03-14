@@ -221,6 +221,11 @@
                     "noaccount": "Sie haben noch keinen Zugang?"
                 }
             },
+            "tooltip": {
+                "link-copy": {
+                    "success": "Der Link wurde in Ihre Zwischenablage gelegt"
+                }
+            },
             "validate": {
                 "confirmpassword": {
                     "maxlength": "Das best\u00e4tigte Passwort darf nicht l\u00e4nger als 50 Zeichen sein",
@@ -247,11 +252,6 @@
                     "maxlength": "Ihr Benutzername darf nicht l\u00e4nger als 50 Zeichen sein",
                     "minlength": "Ihr Benutzername muss mindestens 5 Zeichen lang sein",
                     "required": "Ihr Benutzername wird ben\u00f6tigt."
-                }
-            },
-            "tooltip": {
-                "link-copy": {
-                    "success": "Der Link wurde in Ihre Zwischenablage gelegt"
                 }
             }
         },

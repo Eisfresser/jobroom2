@@ -38,6 +38,7 @@ export class MultiselectComponent implements ControlValueAccessor, AfterViewInit
     @Input() id: string;
     @Input() placeholder = '';
     @Input() maxItemNum = MAX_ITEM_NUM;
+    @Input() tooltip: string;
     disabled = false;
     selectedItems: Array<string> = [];
 

@@ -65,16 +65,17 @@
                 "tooltip": "Select my current location"
             },
             "locality": {
-                "placeholder": "Location or canton"
+                "placeholder": "Location or canton",
+                "tooltip": "Multiple selection possible"
             },
             "occupation": {
-                "placeholder": "Occupations, keywords"
+                "placeholder": "Occupations, keywords",
+                "tooltip": "Multiple selection possible. Start typing and choose a term from the list or press \u201cEnter\u201d."
             },
             "reset": "Reset"
         }
     },
     "typeahead-multiselect": {
-        "tooltip": "Um <strong>mehrere</strong> Suchbegriffe einzugeben, dr\u00fccken Sie \"ENTER\" auf Ihrer Tastatur oder w\u00e4hlen Sie mehrere Suchbefriffe aus der Liste aus.",
         "type": {
             "canton": "Canton",
             "classification": "Category",

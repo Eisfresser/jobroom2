@@ -221,6 +221,11 @@
                     "noaccount": "Non hai ancora un account?"
                 }
             },
+            "tooltip": {
+                "link-copy": {
+                    "success": "Il link \u00e8 stato copiato negli appunti"
+                }
+            },
             "validate": {
                 "confirmpassword": {
                     "maxlength": "La tua password non pu\u00f2 contenere pi\u00f9 di 50 caratteri",
@@ -247,11 +252,6 @@
                     "maxlength": "Nome utente non pu\u00f2 contenere pi\u00f9 di 50 caratteri",
                     "minlength": "Nome utente deve essere di almeno 5 caratteri",
                     "required": "Nome utente \u00e8 obbligatorio."
-                }
-            },
-            "tooltip": {
-                "link-copy": {
-                    "success": "Il link \u00e8 stato copiato negli appunti"
                 }
             }
         },

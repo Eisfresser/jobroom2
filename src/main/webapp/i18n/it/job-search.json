@@ -65,16 +65,17 @@
                 "tooltip": "selezione la mia posizione attuale"
             },
             "locality": {
-                "placeholder": "Localit\u00e0 o Cantone"
+                "placeholder": "Localit\u00e0 o Cantone",
+                "tooltip": "Selezione multipla possibile"
             },
             "occupation": {
-                "placeholder": "Professioni, parole chiave"
+                "placeholder": "Professioni, parole chiave",
+                "tooltip": "Selezione multipla possibile. Cominciare a digitare e scegliere nella lista un termine oppure premere \u00abInvio\u00bb sulla tastiera."
             },
             "reset": "Ripristina"
         }
     },
     "typeahead-multiselect": {
-        "tooltip": "Um <strong>mehrere</strong> Suchbegriffe einzugeben, dr\u00fccken Sie \"ENTER\" auf Ihrer Tastatur oder w\u00e4hlen Sie mehrere Suchbefriffe aus der Liste aus.",
         "type": {
             "canton": "Cantone",
             "classification": "Categoria",

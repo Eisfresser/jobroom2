@@ -221,6 +221,11 @@
                     "noaccount": "Vous n'avez pas encore de compte ?"
                 }
             },
+            "tooltip": {
+                "link-copy": {
+                    "success": "Le lien a \u00e9t\u00e9 plac\u00e9 dans le presse-papier"
+                }
+            },
             "validate": {
                 "confirmpassword": {
                     "maxlength": "Le mot de passe confirm\u00e9 ne doit pas comporter plus de 50 caract\u00e8res.",
@@ -247,11 +252,6 @@
                     "maxlength": "Votre nom d'utilisateur ne doit pas comporter plus de 50 caract\u00e8res.",
                     "minlength": "Votre nom d'utilisateur doit comporter au moins 5 caract\u00e8res.",
                     "required": "Votre nom d'utilisateur est requis."
-                }
-            },
-            "tooltip": {
-                "link-copy": {
-                    "success": "Le lien a \u00e9t\u00e9 plac\u00e9 dans le presse-papier"
                 }
             }
         },

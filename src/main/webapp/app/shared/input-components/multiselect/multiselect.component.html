@@ -1,5 +1,5 @@
 <div class="form-control form-control-lg typeahead-multiselect d-flex flex-row flex-wrap" (click)="focusInput()"
-     placement="bottom" [ngbTooltip]="tooltip" triggers="manual"
+     placement="bottom" [ngbTooltip]="tooltipTemplate" triggers="manual"
      #t="ngbTooltip" (mouseenter)="t.open()" (mouseleave)="t.close()">
     <canvas #canvas height="0" width="0"></canvas>
 
@@ -16,6 +16,6 @@
            [style.width]="getInputWidth()" [disabled]="disabled || selectedItems.length === maxItemNum"/>
 </div>
 
-<ng-template #tooltip>
-    <p [innerHTML]="'typeahead-multiselect.tooltip' | translate"></p>
+<ng-template #tooltipTemplate>
+    <p [innerHTML]="tooltip"></p>
 </ng-template>
