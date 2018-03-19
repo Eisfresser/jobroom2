@@ -15,8 +15,7 @@ import {
     PhoneNumberInputComponent,
     RangeInputComponent,
     SearchButtonComponent,
-    TypeaheadMultiselectComponent,
-    TypeaheadSingleselectComponent
+    TypeaheadMultiselectComponent
 } from './input-components';
 import { WorkingTimeRangePipe } from './pipes/working-time-range.pipe';
 
@@ -32,7 +31,6 @@ import { WorkingTimeRangePipe } from './pipes/working-time-range.pipe';
         TypeaheadMultiselectComponent,
         RangeInputComponent,
         MultiselectComponent,
-        TypeaheadSingleselectComponent,
         PhoneNumberInputComponent,
         LanguageFilterComponent,
         SearchButtonComponent,
@@ -56,7 +54,6 @@ import { WorkingTimeRangePipe } from './pipes/working-time-range.pipe';
         TypeaheadMultiselectComponent,
         RangeInputComponent,
         MultiselectComponent,
-        TypeaheadSingleselectComponent,
         PhoneNumberInputComponent,
         LanguageFilterComponent,
         SearchButtonComponent,

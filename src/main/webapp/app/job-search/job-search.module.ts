@@ -10,7 +10,6 @@ import { JhiLanguageService } from 'ng-jhipster';
 import { customHttpProvider } from '../blocks/interceptor/http.provider';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { jobSearchReducer } from './state-management/reducers/job-search.reducers';
 import { JobSearchEffects } from './state-management/effects/job-search.effects';
 import { JobSearchListComponent } from './job-search-list/job-search-list.component';
@@ -18,7 +17,6 @@ import { JobDetailComponent } from './job-detail/job-detail.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { JobSearchFilterComponent } from './job-search-sidebar/job-search-filter/job-search-filter.component';
 import { MarkdownModule } from 'angular2-markdown';
-import { JobDetailResolver } from './job-detail/job-detail.resolver';
 import { ClipboardModule } from 'ngx-clipboard';
 import { JobService } from './services';
 import { JobLocalityComponent } from './job-locality/job-locality.component';
@@ -31,7 +29,6 @@ import { JobFingerprintRedirectResolver } from './job-fingerprint-redirect/job-f
     imports: [
         StoreModule.forFeature('jobSearch', jobSearchReducer),
         EffectsModule.forFeature([JobSearchEffects, DetailsPagePaginationEffects]),
-        StoreRouterConnectingModule,
         JobroomSharedModule,
         ReactiveFormsModule,
         CommonModule,
@@ -54,7 +51,6 @@ import { JobFingerprintRedirectResolver } from './job-fingerprint-redirect/job-f
     ],
     providers: [
         customHttpProvider(),
-        JobDetailResolver,
         JobFingerprintRedirectResolver,
         JobService
     ]

@@ -146,6 +146,8 @@
             "email.placeholder": "Il tuo indirizzo e-mail",
             "newpassword": "Nuova password",
             "newpassword.placeholder": "Nuova password",
+            "phone": "Telefono",
+            "phone.placeholder": "031 999 99 99 or +41 31 999 99 99",
             "username": "Utente",
             "username.placeholder": "Il tuo nome utente"
         },
@@ -217,6 +219,11 @@
                 "register": {
                     "link": "Crea un account",
                     "noaccount": "Non hai ancora un account?"
+                }
+            },
+            "tooltip": {
+                "link-copy": {
+                    "success": "Il link \u00e8 stato copiato negli appunti"
                 }
             },
             "validate": {
@@ -460,6 +467,7 @@
         "ribbon": {
             "dev": "Local",
             "development": "Development",
+            "staging": "Staging",
             "test": "Test"
         },
         "title": "Job-Room"

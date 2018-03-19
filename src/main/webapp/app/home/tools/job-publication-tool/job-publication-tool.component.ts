@@ -1,16 +1,15 @@
 import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
-    Component,
+    Component, ElementRef,
     Input,
     OnDestroy,
-    OnInit
+    OnInit, ViewChild
 } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import {
     AbstractControl,
-    FormBuilder,
-    FormGroup,
+    FormBuilder, FormGroup,
     ValidatorFn,
     Validators
 } from '@angular/forms';
@@ -61,6 +60,12 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
     @Input()
     userData: UserData;
 
+    @ViewChild('publicationStartDateEl')
+    publicationStartDateElementRef: ElementRef;
+
+    @ViewChild('publicationEndDateEl')
+    publicationEndDateElementRef: ElementRef;
+
     degrees = Degree;
     experiences = Experience;
     drivingLicenceCategories = DrivingLicenceCategory;
@@ -93,6 +98,8 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.fetchOccupationSuggestions = this.occupationPresentationService.fetchJobPublicationOccupationSuggestions;
         this.occupationFormatter = this.occupationPresentationService.occupationFormatter;
+        this.updateOccupationOnLanguageChange();
+
         this.languageSkills$ = this.languageSkillService.getLanguages();
         this.setupCountries();
 
@@ -111,9 +118,23 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
             'application.email', Validators.pattern(EMAIL_REGEX));
 
         this.configureDateInput('job.publicationStartDate.date', 'job.publicationStartDate.immediate',
-            (disabled) => this.publicationStartDateByArrangement = disabled);
+            (disabled) => {
+                this.publicationStartDateByArrangement = disabled;
+                if (!disabled) {
+                    setTimeout(() => {
+                        this.publicationStartDateElementRef.nativeElement.focus();
+                    }, 0);
+                }
+            });
         this.configureDateInput('job.publicationEndDate.date', 'job.publicationEndDate.permanent',
-            (disabled) => this.publicationEndDateIsPermanent = disabled);
+            (disabled) => {
+                this.publicationEndDateIsPermanent = disabled;
+                if (!disabled) {
+                    setTimeout(() => {
+                        this.publicationEndDateElementRef.nativeElement.focus();
+                    }, 0);
+                }
+            });
         this.updatePublicationStartDateRelatedField();
     }
 
@@ -417,5 +438,22 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
     resetForm(): void {
         this.resetAlerts();
         this.jobPublicationForm.reset(this.createDefaultFormModel());
+    }
+
+    get jobOccupation(): AbstractControl {
+        return this.jobPublicationForm.get('job.occupation.occupationSuggestion');
+    }
+
+    private updateOccupationOnLanguageChange() {
+        this.translateService.onLangChange
+            .takeUntil(this.unsubscribe$)
+            .filter((_) => !!this.jobOccupation.value)
+            .flatMap((e: LangChangeEvent) => {
+                const occupation: OccupationOption = this.jobOccupation.value;
+                return this.occupationPresentationService.findOccupationLabelsByCode(occupation.key, e.lang)
+                    .map((label) => Object.assign({}, occupation, { label: label.default }));
+            })
+            .subscribe((occupation) =>
+                this.jobOccupation.patchValue(occupation, { emitEvent: false }));
     }
 }

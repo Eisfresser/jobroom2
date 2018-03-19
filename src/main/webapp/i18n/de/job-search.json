@@ -65,10 +65,12 @@
                 "tooltip": "Aktueller Standort w\u00e4hlen"
             },
             "locality": {
-                "placeholder": "Ortschaft oder Kanton"
+                "placeholder": "Ortschaft oder Kanton",
+                "tooltip": "Mehrfachauswahl m\u00f6glich"
             },
             "occupation": {
-                "placeholder": "Berufsbezeichnungen, Suchbegriffe"
+                "placeholder": "Berufsbezeichnungen, Suchbegriffe",
+                "tooltip": "Mehrfachauswahl m\u00f6glich. Starten Sie Ihre Eingabe und w\u00e4hlen Sie einen Begriff aus der Liste oder dr\u00fccken Sie \u00abEnter\u00bb auf Ihrer Tastatur."
             },
             "reset": "Zur\u00fccksetzen"
         }

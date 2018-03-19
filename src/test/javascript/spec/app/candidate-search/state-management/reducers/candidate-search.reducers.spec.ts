@@ -7,7 +7,6 @@ import * as actions from '../../../../../../../main/webapp/app/candidate-search/
 import { CandidateProfile } from '../../../../../../../main/webapp/app/candidate-search/services/candidate';
 import { createCandidateProfile } from '../utils';
 import { TypeaheadMultiselectModel } from '../../../../../../../main/webapp/app/shared/input-components/index';
-import { TypeaheadItemDisplayModel } from '../../../../../../../main/webapp/app/shared/input-components/typeahead/typeahead-item-display-model';
 
 describe('candidateSearchReducer', () => {
     it('should not update CandidateSearchState for INIT_CANDIDATE_SEARCH action', () => {
@@ -86,16 +85,15 @@ describe('candidateSearchReducer', () => {
         // GIVEN
         const state = Object.assign({}, initialState, { searchError: true });
         const action = new actions.SearchCandidatesAction({
-            workplace: new TypeaheadItemDisplayModel(new TypeaheadMultiselectModel('type', 'code', 'label'), true, true)
+            workplace: [new TypeaheadMultiselectModel('type', 'code', 'label')]
         });
 
         // WHEN
         const newState = candidateSearchReducer(state, action);
 
         // THEN
-        expect(newState.searchFilter.workplace).toEqual(new TypeaheadItemDisplayModel(new TypeaheadMultiselectModel('type', 'code', 'label'), true, true));
+        expect(newState.searchFilter.workplace).toEqual([new TypeaheadMultiselectModel('type', 'code', 'label')]);
         expect(newState.loading).toBeTruthy();
-        expect(newState.initialState).toBeFalsy();
         verifyUnchanged(newState, state, ['loading', 'searchFilter', 'initialState']);
     });
 
@@ -111,26 +109,25 @@ describe('candidateSearchReducer', () => {
             totalCandidateCount: 0,
             page: 0,
             candidateProfileList: [],
-            initialState: true,
+            selectedCandidateProfile: null,
             searchError: false,
             candidateListScrollY: 0,
             resetTime: 0
         };
 
         const action = new actions.CandidateSearchToolChangedAction({
-            workplace: new TypeaheadItemDisplayModel(new TypeaheadMultiselectModel('type', 'code', 'label'), true, true)
+            workplace: [new TypeaheadMultiselectModel('type', 'code', 'label')]
         });
 
         // WHEN
         const newState = candidateSearchReducer(state, action);
 
         // THEN
-        expect(newState.searchFilter.workplace).toEqual(new TypeaheadItemDisplayModel(new TypeaheadMultiselectModel('type', 'code', 'label'), true, true));
+        expect(newState.searchFilter.workplace).toEqual([new TypeaheadMultiselectModel('type', 'code', 'label')]);
         expect(newState.searchFilter.skills).toEqual(initialState.searchFilter.skills);
         expect(newState.searchFilter.workload).toEqual(initialState.searchFilter.workload);
         expect(newState.loading).toBeTruthy();
-        expect(newState.initialState).toBeFalsy();
-        verifyUnchanged(newState, initialState, ['loading', 'initialState', 'searchFilter']);
+        verifyUnchanged(newState, initialState, ['loading', 'searchFilter']);
         verifyUnchanged(newState.searchFilter, initialState.searchFilter, ['workplace', 'skills', 'workload']);
     });
 
@@ -184,24 +181,24 @@ describe('candidateSearchReducer', () => {
         // GIVEN
         const state = Object.assign({}, initialState, {
             searchFilter: {
-                occupation: { key: 'avam:7632', label: 'java' },
+                occupations: [
+                    new TypeaheadMultiselectModel('occupation', 'avam:7632', 'java')
+                ]
             }
         });
-        const action = new actions.UpdateOccupationTranslationAction({
-            key: 'avam:7632',
-            label: 'java_de'
-        });
+        const action = new actions.UpdateOccupationTranslationAction(
+            [new TypeaheadMultiselectModel('occupation', 'avam:7632', 'java_de')]
+        );
 
         // WHEN
         const newState = candidateSearchReducer(state, action);
 
         // THEN
-        expect(newState.searchFilter.occupation).toEqual({
-            key: 'avam:7632',
-            label: 'java_de'
-        });
+        expect(newState.searchFilter.occupations).toEqual(
+            [new TypeaheadMultiselectModel('occupation', 'avam:7632', 'java_de')]
+        );
         verifyUnchanged(newState, initialState, ['searchFilter']);
-        verifyUnchanged(newState.searchFilter, initialState.searchFilter, ['occupation']);
+        verifyUnchanged(newState.searchFilter, initialState.searchFilter, ['occupations']);
     });
 
     it('should update CandidateSearchState for RESET_FILTER action', () => {
@@ -216,6 +213,38 @@ describe('candidateSearchReducer', () => {
         expect(newState.resetTime).toEqual(50);
     })
 
+    it('should update JobSearchState for CANDIDATE_PROFILE_DETAIL_LOADED action', () => {
+        // GIVEN
+        const state = initialState;
+        const candidate0 = {
+            id: '0',
+            externalId: 'extId0'
+        } as CandidateProfile;
+        const candidate1 = {
+            id: '1',
+            externalId: 'extId1'
+        } as CandidateProfile;
+        const candidate2 = {
+            id: '2',
+            externalId: 'extId2'
+        } as CandidateProfile;
+        const initialCandidateProfileList = [candidate0, candidate1, candidate2];
+
+        state.candidateProfileList.push(...initialCandidateProfileList);
+
+        const action = new actions.CandidateProfileDetailLoadedAction(Object.assign({}, candidate0));
+
+        // WHEN
+        const newState = candidateSearchReducer(state, action);
+
+        // THEN
+        expect(newState.candidateProfileList[0].visited).toBeTruthy();
+        expect(newState.candidateProfileList[1]).toEqual(candidate1);
+        expect(newState.candidateProfileList[2]).toEqual(candidate2);
+        expect(newState.selectedCandidateProfile).toEqual(candidate0);
+
+        verifyUnchanged(newState, state, ['selectedCandidateProfile', 'candidateProfileList']);
+    });
 });
 
 function verifyUnchanged<T>(newState: T, oldState: T, ignoreFields: Array<string>) {

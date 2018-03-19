@@ -80,6 +80,26 @@ services:
             placement:
                 constraints: [node.labels.type == data]
 
+    trackingservice-postgres:
+        image: postgres:latest
+        environment:
+            - TZ=Europe/Zurich
+            - PGDATA=/var/lib/postgresql/data/pgdata
+            - POSTGRES_USER=trackingservice
+            - POSTGRES_PASSWORD_FILE=/run/secrets/postgres-passwd
+        ports:
+            - 5438:5432
+        volumes:
+            - trackingservice-data:/var/lib/postgresql/data
+        networks:
+            - jobroom_data2
+        secrets:
+            - postgres-passwd
+        command: postgres -c tcp_keepalives_idle=60 -c tcp_keepalives_interval=60 -c tcp_keepalives_count=60
+        deploy:
+            placement:
+                constraints: [node.labels.type == data]
+
     jobroom-kibana:
         image: kibana:5
         env_file: env.properties
@@ -124,22 +144,6 @@ services:
                 limits:
                     memory: 2G
 
-    jobroom-batch-oracle:
-        image: container-registry.oracle.com/database/enterprise:12.2.0.1
-        environment:
-            - ORACLE_SID=orcl
-            - ORACLE_PWD=jobroom
-        ports:
-           - 1521:1521
-           - 5500:5500
-        volumes:
-           - jobroom-batch-data:/opt/oracle/oradata
-        networks:
-            - jobroom_data2
-        deploy:
-            placement:
-                constraints: [node.labels.type == data]
-
 volumes:
     jobroom-data:
         driver: local
@@ -148,6 +152,8 @@ volumes:
     candidateservice-data:
         driver: local
     referenceservice-data:
+        driver: local
+    trackingservice-data:
         driver: local
     elasticsearch-data:
         driver: local

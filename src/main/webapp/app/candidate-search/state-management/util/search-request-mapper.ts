@@ -1,5 +1,4 @@
 import { CandidateSearchFilter } from '../state/candidate-search.state';
-import { ITEMS_PER_PAGE } from '../../../shared';
 import {
     Availability,
     Canton,
@@ -7,28 +6,35 @@ import {
     DrivingLicenceCategory,
     Experience,
     Graduation,
-    ISCED_1997,
+    ITEMS_PER_PAGE,
     LanguageSkill,
     WorkForm
 } from '../../../shared';
 import { CandidateSearchToolState } from '../../../home/state-management';
-import { TypeaheadItemDisplayModel } from '../../../shared/input-components';
 import {
     CandidateLanguageSkill,
     CandidateSearchRequest,
     WorkLoad
 } from '../../services/candidate-search-request';
-import { OccupationCode, OccupationOption } from '../../../shared/reference-service';
+import { OccupationCode } from '../../../shared/reference-service';
+import { TypeaheadMultiselectModel } from '../../../shared/input-components/typeahead/typeahead-multiselect-model';
+import { OccupationInputType } from '../../../shared/reference-service/occupation-presentation.service';
+import { Degree } from '../../../shared/job-publication/job-publication.model';
+
+// todo: The same code is duplicated in the job-search search-request-mapper.ts
+
+const toCode = (value: TypeaheadMultiselectModel) => value.code;
+const byValue = (type: string) => (value: TypeaheadMultiselectModel) => value.type === type;
 
 export function createCandidateSearchRequestFromFilter(searchFilter: CandidateSearchFilter, page = 0): CandidateSearchRequest {
     const {
-        occupation, experience, availability, workForm, educationLevel, graduation,
+        occupations, experience, availability, workForm, degree, graduation,
         drivingLicenceCategory
     } = searchFilter;
     const workplace = mapWorkplace(searchFilter.workplace);
 
     return {
-        occupation: mapOccupationCode(occupation),
+        occupationCodes: mapOccupationCode(occupations),
         skills: searchFilter.skills,
         experience: Experience[experience],
         residence: mapResidence(searchFilter.residence),
@@ -37,7 +43,7 @@ export function createCandidateSearchRequestFromFilter(searchFilter: CandidateSe
         availability: Availability[availability],
         workLoad: mapWorkLoad(searchFilter.workload),
         workForm: WorkForm[workForm],
-        educationLevel: ISCED_1997[educationLevel],
+        degree: Degree[degree],
         graduation: Graduation[graduation],
         drivingLicenceCategory: DrivingLicenceCategory[drivingLicenceCategory],
         languageSkills: mapLanguageSkills(searchFilter.languageSkills),
@@ -47,21 +53,28 @@ export function createCandidateSearchRequestFromFilter(searchFilter: CandidateSe
 }
 
 export function createCandidateSearchRequestFromToolState(toolState: CandidateSearchToolState): CandidateSearchRequest {
-    const { occupation, skills } = toolState;
+    const { occupations, skills } = toolState;
     const workplace = mapWorkplace(toolState.workplace);
 
     return {
-        occupation: mapOccupationCode(occupation),
+        occupationCodes: mapOccupationCode(occupations),
         cantonCode: workplace.pop(),
         regionCode: workplace.pop(),
-        skills
+        skills,
+        page: 0,
+        size: ITEMS_PER_PAGE
     } as CandidateSearchRequest;
 }
 
-function mapOccupationCode(occupation: OccupationOption): string {
-    return occupation
-        ? String(OccupationCode.fromString(occupation.key).value)
-        : null;
+function mapOccupationCode(occupationsOptions: Array<TypeaheadMultiselectModel> = []): Array<OccupationCode> {
+    const occupations = occupationsOptions.filter(byValue(OccupationInputType.OCCUPATION))
+        .map(toCode)
+        .map(OccupationCode.fromString);
+    const classifications = occupationsOptions.filter(byValue(OccupationInputType.CLASSIFICATION))
+        .map(toCode)
+        .map(OccupationCode.fromString);
+
+    return [...occupations, ...classifications];
 }
 
 function mapResidence(residences: Array<Canton | string>): Array<string> {
@@ -70,9 +83,9 @@ function mapResidence(residences: Array<Canton | string>): Array<string> {
         : null
 }
 
-function mapWorkplace(workplace?: TypeaheadItemDisplayModel): Array<string> {
-    if (workplace) {
-        return workplace.model.code.split(':').reverse();
+function mapWorkplace(workplace?: Array<TypeaheadMultiselectModel>): Array<string> {
+    if (workplace && workplace.length) {
+        return workplace[0].code.split(':').reverse();
     }
     return [];
 }

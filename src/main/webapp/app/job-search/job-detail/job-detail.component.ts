@@ -1,5 +1,10 @@
-import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {
+    AfterViewInit,
+    Component,
+    ElementRef,
+    HostListener,
+    ViewChild
+} from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import {
     JobCenter,
@@ -8,10 +13,13 @@ import {
 import { Job } from '../services';
 import {
     getJobList,
+    getSelectedJob,
     getTotalJobCount,
     JobSearchState
 } from '../state-management/state/job-search.state';
 import { Store } from '@ngrx/store';
+import { TOOLTIP_AUTO_HIDE_TIMEOUT } from '../../app.constants';
+import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'jr2-job-detail',
@@ -20,35 +28,37 @@ import { Store } from '@ngrx/store';
         './job-detail.scss'
     ]
 })
-export class JobDetailComponent implements OnInit, OnDestroy, AfterViewInit {
-    job: Job;
+export class JobDetailComponent implements AfterViewInit {
+    job$: Observable<Job>;
     jobList$: Observable<Job[]>;
     jobCenter$: Observable<JobCenter>;
-    showExternalJobDisclaimer: boolean;
     jobListTotalSize$: Observable<number>;
+    externalJobDisclaimerClosed = false;
 
-    constructor(private route: ActivatedRoute,
-                private referenceService: ReferenceService,
+    @ViewChild('copyToClipboard')
+    copyToClipboardElementRef: ElementRef;
+
+    @ViewChild(NgbTooltip)
+    clipboardTooltip: NgbTooltip;
+
+    constructor(private referenceService: ReferenceService,
                 private store: Store<JobSearchState>) {
+        this.job$ = this.store.select(getSelectedJob);
         this.jobList$ = this.store.select(getJobList);
         this.jobListTotalSize$ = this.store.select(getTotalJobCount);
+        this.jobCenter$ = this.job$
+            .filter((job) => !!job)
+            .map((job) => job.jobCenterCode)
+            .filter((jobCenterCode) => !!jobCenterCode)
+            .switchMap((jobCenterCode) => this.referenceService.resolveJobCenter(jobCenterCode))
+    }
+
+    isExternalJobDisclaimerShown(job: Job) {
+        return job.source === 'extern' && !this.externalJobDisclaimerClosed;
     }
 
     ngAfterViewInit(): void {
         window.scroll(0, 0);
-    }
-
-    ngOnInit() {
-        this.route.data.subscribe((data) => {
-            this.job = data['job'];
-            this.jobCenter$ = this.job.jobCenterCode
-                ? this.referenceService.resolveJobCenter(this.job.jobCenterCode)
-                : Observable.empty();
-            this.showExternalJobDisclaimer = this.job.source === 'extern';
-        });
-    }
-
-    ngOnDestroy(): void {
     }
 
     printJob() {
@@ -57,5 +67,21 @@ export class JobDetailComponent implements OnInit, OnDestroy, AfterViewInit {
 
     getJobUrl() {
         return window.location.href;
+    }
+
+    onCopyLink(): void {
+        this.clipboardTooltip.open();
+        setTimeout(() => this.clipboardTooltip.close(), TOOLTIP_AUTO_HIDE_TIMEOUT)
+    }
+
+    @HostListener('document:click', ['$event.target'])
+    onClick(targetElement: HTMLElement): void {
+        if (!targetElement) {
+            return;
+        }
+
+        if (!this.copyToClipboardElementRef.nativeElement.contains(targetElement)) {
+            this.clipboardTooltip.close();
+        }
     }
 }

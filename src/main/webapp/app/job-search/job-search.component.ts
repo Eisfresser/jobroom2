@@ -1,24 +1,20 @@
-import { ChangeDetectionStrategy, Component, HostListener, Inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { TypeaheadMultiselectModel } from '../shared/input-components';
 import {
     getBaseQuery,
     getJobList,
-    getResetTime,
-    getTotalJobCount,
-    JobSearchState
-} from './state-management';
-import {
-    getInitialState,
     getLoading,
     getLocalityQuery,
+    getResetTime,
     getSearchQuery,
-    JobSearchQuery
+    getTotalJobCount,
+    InitJobSearchAction,
+    JobSearchQuery,
+    JobSearchState
 } from './state-management';
 import { Job } from './services';
-import { InitJobSearchAction } from './state-management';
-import { WINDOW } from '../shared';
 
 @Component({
     selector: 'jr2-job-search',
@@ -33,12 +29,9 @@ export class JobSearchComponent {
     localityQueryString$: Observable<string>;
     totalCount$: Observable<number>;
     loading$: Observable<boolean>;
-    initialized$: Observable<boolean>;
-    showScrollButton = false;
     reset$: Observable<number>;
 
-    constructor(private store: Store<JobSearchState>,
-                @Inject(WINDOW) private window: Window) {
+    constructor(private store: Store<JobSearchState>) {
         this.store.dispatch(new InitJobSearchAction());
 
         this.jobList$ = store.select(getJobList);
@@ -47,17 +40,7 @@ export class JobSearchComponent {
         this.localityQueryString$ = store.select(getLocalityQuery).map(queryModelToTextMapper);
         this.totalCount$ = store.select(getTotalJobCount);
         this.loading$ = store.select(getLoading);
-        this.initialized$ = store.select(getInitialState).map((initialState: boolean) => !initialState);
         this.reset$ = store.select(getResetTime)
-    }
-
-    @HostListener('window:scroll')
-    onWindowScroll(): void {
-        this.showScrollButton = this.window.scrollY > 200;
-    }
-
-    scrollToTop(event: any): void {
-        this.window.scrollTo(0, 0);
     }
 }
 

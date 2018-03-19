@@ -67,7 +67,7 @@ candidate-search,candidate-search.candidate-search-list.title.one,1 Kandidat,1 c
 candidate-search,candidate-search.candidate-search-list.title.one.with-locality,1 Kandidat in {{locality}},1 candidate in {{locality}},1 candidat à {{locality}},1 candidato in {{locality}}
 candidate-search,candidate-search.candidate-search-list.title.one.with-query,1 '{{query}}' Kandidat,1 '{{query}}' candidate,1 candidat pour '{{query}}',1 candidato  per '{{query}}'
 candidate-search,candidate-search.candidate-search-list.title.one.with-query.with-locality,1 '{{query}}' Kandidat in {{locality}},1 '{{query}}' candidate in {{locality}},1 candidat pour '{{query}}' à {{locality}},1 candidato per '{{query}}' in {{locality}}
-candidate-search,candidate-search.education.label,Bildungsstufe,Level of education,Niveau de formation,Livello formativo
+candidate-search,candidate-search.degree.label,Ausbildung,Training,Formation,Formazione
 candidate-search,candidate-search.experience.label,Berufserfahrung,Professional experience,Expérience professionnelle,Esperienza professionale
 candidate-search,candidate-search.filter.candidate-search-link,Suche als Link versenden,Send search as link,Envoyer la recherche comme lien,Invia ricerca come link
 candidate-search,candidate-search.filter.title,Suchergebnisse filtern,Filter search result,Filtrer les résultats,Filtra risultati della ricerca
@@ -79,15 +79,18 @@ candidate-search,candidate-search.graduation.label,Abschluss,Degree,Diplôme,Tit
 candidate-search,candidate-search.keywords.label,Suchbegriffe,Search terms,Critères de recherche,Termini ricercati
 candidate-search,candidate-search.languageSkills.label,Sprachkenntnisse,Languages,Connaissances linguistiques,Conoscenze linguistiche
 candidate-search,candidate-search.no-selection,Keine Auswahl,No selection,Aucune sélection,Nessuna scelta
+candidate-search,candidate-search.occupations.label,Berufsbezeichnungen,Occupations,Professions,Professione
+candidate-search,candidate-search.occupations.placeholder,"Berufsbezeichnungen, Kategorien","Occupations, categories","Professions, catégories","Professioni, categorie"
+candidate-search,candidate-search.occupations.tooltip,Mehrfachauswahl möglich,Multiple selection possible,Sélection multiple possible,Selezione multipla possibile
 candidate-search,candidate-search.skills.label,Suchbegriffe,Key words,Mots-clés,Parole chiave
 candidate-search,candidate-search.skills.placeholder,"Fähigkeiten, Skills","Competencies, skills","Compétences, skills","Competenze, skills"
+candidate-search,candidate-search.skills.tooltip,Sie können <strong>mehrere</strong> Suchbegriffe eingeben. Drücken Sie nach Eingabe «Enter» um weitere Suchbegriffe hinzuzufügen.,"Search using <strong>several</strong> key words. To add further search terms, press “Enter” after typing a search term.","Vous pouvez insérer <strong>plusieurs</strong> mots-clés. Pour ajouter des mots-clés, appuyez sur la touche « Enter » après avoir entré un mot-clé.","È possibile inserire <strong>più</strong> termini di ricerca. Per aggiungere più termini di ricerca, premere «Invio» dopo aver inserito un termine di ricerca."
 candidate-search,candidate-search.title,Kandidatensuche,Candidate search,Recherche de candidats,Cerca candidati
 candidate-search,candidate-search.toolbar.graduation.default,Abschluss auswählen,Select degree,Sélectionner un diplôme,Seleziona titolo...
 candidate-search,candidate-search.toolbar.graduation.label,Abschluss,Degree,Diplôme,Titolo
-candidate-search,candidate-search.toolbar.occupation.placeholder,Berufsbezeichnung,Occupation,Profession,Professione
+candidate-search,candidate-search.toolbar.reset,Zurücksetzen,Reset,Rétablir,Ripristina
 candidate-search,candidate-search.toolbar.residence.placeholder,Wohnkanton,Canton of residence,Canton de domicile,Luogo di domicilio: Cantone
 candidate-search,candidate-search.toolbar.residence.selected,Kantone,Cantons,Cantons,Cantoni
-candidate-search,candidate-search.toolbar.reset,Zurücksetzen,Reset,Rétablir,Ripristina
 candidate-search,candidate-search.workForm.HOME_WORK,Heimarbeit,Home-based work,Travail à domicile,Telelavoro
 candidate-search,candidate-search.workForm.NIGHT_WORK,Nachtarbeit,Night work,Travail de nuit,Lavoro notturno
 candidate-search,candidate-search.workForm.SHIFT_WORK,Schichtarbeit,Shift work,Travail en équipes,Lavoro a turni
@@ -280,6 +283,8 @@ global,global.form.email,E-Mail-Adresse,Email address,Adresse courriel,Indirizzo
 global,global.form.email.placeholder,Ihre E-Mail Adresse,Your email address,Votre adresse courriel,Il tuo indirizzo e-mail
 global,global.form.newpassword,Neues Passwort,New password,Nouveau mot de passe,Nuova password
 global,global.form.newpassword.placeholder,Neues Passwort,New password,Nouveau mot de passe,Nuova password
+global,global.form.phone,Telefon,Telephone,Téléphone,Telefono
+global,global.form.phone.placeholder,031 999 99 99 or +41 31 999 99 99,031 999 99 99 or +41 31 999 99 99,031 999 99 99 or +41 31 999 99 99,031 999 99 99 or +41 31 999 99 99
 global,global.form.username,Benutzername,Username,Nom d'utilisateur,Utente
 global,global.form.username.placeholder,Ihr Benutzername,Your username,Votre nom d'utilisateur,Il tuo nome utente
 global,global.gender.FEMALE,weiblich,Female,féminin,femmina
@@ -329,6 +334,7 @@ global,global.messages.info.authenticated.prefix,"Wenn Sie sich ","If you’d li
 global,global.messages.info.authenticated.suffix,"möchten, versuchen Sie es mit <br/>- Administrator (Name=""admin"" und Passwort=""admin"")<br/>- Benutzer (Name=""user"" und Passwort=""user"").","you can try the default accounts:<br/>- Administrator (login=""admin"" and password=""admin"") <br/>- User (login=""user"" and password=""user"").",", vous pouvez utiliser les comptes par défaut : <br/> - Administrateur (nom d'utilisateur=""admin"" et mot de passe =""admin"") <br/> - Utilisateur (nom d'utilisateur=""user"" et mot de passe =""user"").",", puoi provare gli account di default: <br/> - Amministratore (user = ""admin"" e la password = ""admin"") <br/> - utente (user = ""user"" e la password = ""user"")"
 global,global.messages.info.register.link,Registrieren Sie sich,Register a new account,Créer un compte,Crea un account
 global,global.messages.info.register.noaccount,Sie haben noch keinen Zugang?,You don't have an account yet?,Vous n'avez pas encore de compte ?,Non hai ancora un account?
+global,global.messages.tooltip.link-copy.success,Der Link wurde in Ihre Zwischenablage gelegt,The link has been copied to your clipboard,Le lien a été placé dans le presse-papier,Il link è stato copiato negli appunti
 global,global.messages.validate.confirmpassword.maxlength,Das bestätigte Passwort darf nicht länger als 50 Zeichen sein,Your confirmation password cannot be longer than 50 characters.,Le mot de passe confirmé ne doit pas comporter plus de 50 caractères.,La tua password non può contenere più di 50 caratteri
 global,global.messages.validate.confirmpassword.minlength,Das bestätigte Passwort muss mindestens 5 Zeichen lang sein,Your confirmation password must be at least 5 characters.,Le mot de passe confirmé doit comporter au moins 5 caractères.,La tua password deve essere di almeno 4 caratteri
 global,global.messages.validate.confirmpassword.required,Sie müssen das Passwort bestätigen.,You must confirm your password.,Vous devez confirmer le mot de passe.,La password di conferma è obbligatoria.
@@ -546,6 +552,7 @@ global,global.reference.region.ZH11,Hinwil,Hinwil,Hinwil,Hinwil
 global,global.reference.region.ZH12,Stadt Zürich,Zurich City,ville de Zurich,città di Zurigo
 global,global.ribbon.dev,Local,Local,Local,Local
 global,global.ribbon.development,Entwicklung,Development,Développement,Development
+global,global.ribbon.staging,Staging,Staging,Staging,Staging
 global,global.ribbon.test,Test,Test,Test,Test
 global,global.title,Job-Room,Job-Room,Job-Room,Job-Room
 global,header.title,Arbeitslosenversicherung ALV,Unemployment insurance,Assurance-chômage AC,Assicurazione contro la disoccupazione AD
@@ -612,7 +619,7 @@ home,home.tools.job-publication.contact.phone,Telefon,Telephone number,Télépho
 home,home.tools.job-publication.contact.salutation,Anrede,Title,Titre,Forma di cortesia
 home,home.tools.job-publication.contact.title,Kontaktperson,Contact person,Personne de contact,Persona di contatto
 home,home.tools.job-publication.date-placeholder,TT.MM.JJJJ,DD.MM.YYYY,JJ.MM.AAAA,GG.MM.AAAA
-home,home.tools.job-publication.degree,Ausbildung,Education,Formation,Formazione
+home,home.tools.job-publication.degree,Ausbildung,Training,Formation,Formazione
 home,home.tools.job-publication.description.characters-counter-text,{{count}} Zeichen verbleibend.,{{count}} characters available,{{count}} caractères disponibles,{{count}} caratteri disponibili
 home,home.tools.job-publication.description.label,Tätigkeit / Anforderungen,Duties / requirements,Activité / exigences,Attività / requisiti
 home,home.tools.job-publication.description.placeholder,max. 9000 Zeichen,max. 9000 characters,max. 9000 caractères,max. 9000 caratteri
@@ -635,7 +642,10 @@ home,home.tools.job-publication.locality.country,Land,Country,Pays,Paese
 home,home.tools.job-publication.locality.title,Arbeitsort,Place of work,Lieu de travail,Luogo di lavoro
 home,home.tools.job-publication.locality.zip,PLZ,Postal code,"NPA  ","NPA  "
 home,home.tools.job-publication.locality.zipcode,PLZ / Ort,Postal code / city,NPA / lieu,NPA / luogo
+home,home.tools.job-publication.messages.validate.date-format,"Datumsformat ungültig, richtiges Format: TT.MM.JJJJ","Invalid date format, correct format: DD.MM.YYYY",Le format de la date n’est pas conforme. Format correct: JJ.MM.AAAA,Il formato della data non è corretto. Formato corretto: GG.MM.AAAA
 home,home.tools.job-publication.messages.validate.email-format,Diese E-Mail-Adresse ist ungültig.,This email address is invalid.,Cette adresse courriel n'est pas valide.,L'indirizzo e-mail non è valido.
+home,home.tools.job-publication.messages.validate.employment-duration.date-before,Datum muss nach dem Stellenantritt liegen.,Date must be after the employment start.,La date doit se situer après l'entrée en fonction.,La data deve trovarsi dopo l'inizio dell'attività.
+home,home.tools.job-publication.messages.validate.employment-start.date-before,Datum muss in der Zukunft liegen.,Date must be in the future.,La date doit se situer dans le futur.,La data deve situarsi nel futuro.
 home,home.tools.job-publication.messages.validate.phone-format,Bitte gültige Telefonnummer eingeben z. B. 031 999 99 99 oder +41 31 999 99 99,Please enter a valid phone number e.g. 031 999 99 99 or +41 31 999 99 99,Please enter a valid phone number e.g. 031 999 99 99 or +41 31 999 99 99,Please enter a valid phone number e.g. 031 999 99 99 or +41 31 999 99 99
 home,home.tools.job-publication.messages.validate.required,Pflichtfeld,This field is required.,Ce champ est obligatoire.,Questo campo è obbligatorio.
 home,home.tools.job-publication.messages.validate.zip-format,PLZ ungültig,Invalid postal code,NPA n'est pas valide.,NPA non è valido.
@@ -680,7 +690,7 @@ job-detail,job-detail.action.savePdf,Als PDF speichern,Save as PDF,Sauvegarder e
 job-detail,job-detail.action.sendEmail,Per E-Mail versenden,Send by email,Envoyer par courriel,Invia per e-mail
 job-detail,job-detail.action.showExternalPage,Zum externen Stelleninserat,Link to external job posting,Vers l'offre d'emploi externe,vai all'annuncio esterno
 job-detail,job-detail.application.additionalInfo,Ergänzende Angaben,Additional information,Indications complémentaires,Dati complementari
-job-detail,job-detail.application.email,Per E-Mail,By email,Par courriel,Per e-mail
+job-detail,job-detail.application.email,Elektronisch,Electronic,En ligne,Elettronica
 job-detail,job-detail.application.mail,Per Post,By post,Par la poste,Per posta
 job-detail,job-detail.application.mail.text,siehe Adresse des Unternehmens,See company address,Voir l'adresse de l'entreprise,V. indirizzo dell'impresa
 job-detail,job-detail.application.phone,Telefonisch,By phone,Par téléphone,Telefonicamente
@@ -749,7 +759,9 @@ job-search,job-search.job-search-list.title.one.with-query.with-locality,1 '{{qu
 job-search,job-search.title,Stelle suchen,Job search,Chercher un emploi,Cerca posti
 job-search,job-search.toolbar.locality-select.tooltip,Aktueller Standort wählen,Select my current location,Sélectionner le lieu actuel,selezione la mia posizione attuale
 job-search,job-search.toolbar.locality.placeholder,Ortschaft oder Kanton,Location or canton,Lieu ou canton,Località o Cantone
+job-search,job-search.toolbar.locality.tooltip,Mehrfachauswahl möglich,Multiple selection possible,Sélection multiple possible,Selezione multipla possibile
 job-search,job-search.toolbar.occupation.placeholder,"Berufsbezeichnungen, Suchbegriffe","Occupations, keywords","Professions, mots-clés","Professioni, parole chiave"
+job-search,job-search.toolbar.occupation.tooltip,Mehrfachauswahl möglich. Starten Sie Ihre Eingabe und wählen Sie einen Begriff aus der Liste oder drücken Sie «Enter» auf Ihrer Tastatur.,Multiple selection possible. Start typing and choose a term from the list or press “Enter”.,Sélection multiple possible. Commencez votre saisie et choisissez un terme de la liste ou appuyez sur la touche « Enter ».,Selezione multipla possibile. Cominciare a digitare e scegliere nella lista un termine oppure premere «Invio» sulla tastiera.
 job-search,job-search.toolbar.reset,Zurücksetzen,Reset,Rétablir,Ripristina
 job-search,typeahead-multiselect.type.canton,Kanton,Canton,Canton,Cantone
 job-search,typeahead-multiselect.type.classification,Berufskategorie,Category,Catégorie,Categoria
@@ -815,12 +827,14 @@ job,jobserviceApp.job.created,Stelle mit ID {{ param }} erstellt,A new job is cr
 job,jobserviceApp.job.deleted,Stelle mit ID {{ param }} gelöscht,A job is deleted with identifier {{ param }},L'emploi portant l'ID {{ param }} a été supprimé,È stato eliminato un posto con identificatore {{ param }}
 job,jobserviceApp.job.updated,Stelle mit ID {{ param }} aktualisiert,A job is updated with identifier {{ param }},L'emploi portant l'ID {{ param }} a été mis à jour,È stato aggiornato un posto identificato da {{ param }}
 login,login.form.button,Anmelden,Sign in,Connexion,Accedi
+login,login.form.information.pea.text,Vorgehen zur Registrierung für private Arbeitsvermittler,Registration procedure for private placement officers,Procédure d’enregistrement pour les agences de placement privées,Procedura di registrazione per le agenzie di collocamento private
+login,login.form.information.pea.url,https://www.arbeit.swiss/secoalv/de/home/menue/arbeitsvermittler/dienstleistungen-der-rav/job-room-konto.html,https://www.arbeit.swiss/secoalv/en/home/menue/arbeitsvermittler/dienstleistungen-der-rav.html,https://www.arbeit.swiss/secoalv/fr/home/menue/arbeitsvermittler/dienstleistungen-der-rav/job-room-konto.html,https://www.arbeit.swiss/secoalv/it/home/menue/arbeitsvermittler/dienstleistungen-der-rav/job-room-konto.html
 login,login.form.password,Passwort,Password,Mot de passe,Password
 login,login.form.password.placeholder,Ihr Passwort,Your password,Votre mot de passe,La tua password
 login,login.form.rememberme,Automatische Anmeldung,Remember me,Garder la session ouverte,Ricordami
 login,login.messages.error.authentication,<strong>Anmeldung fehlgeschlagen!</strong> Überprüfen Sie bitte Ihre Angaben und versuchen Sie es erneut.,<strong>Failed to sign in!</strong> Please check your login credentials and try again.,<strong>Erreur d'authentification !</strong> Veuillez vérifier vos identifiants de connexion.,<strong>Accesso non riuscito!</strong> Si prega di controllare le credenziali e riprovare.
 login,login.password.forgot,Passwort vergessen,Did you forget your password?,Avez-vous oublié votre mot de passe ?,Password dimenticata?
-login,login.title,Anmelden,Sign in,Connexion,Accedi
+login,login.title,Login für private Arbeitsvermittler,Sign in for private employment agencies,Connexion pour agences privées de placement,Accesso per agenzie private di collocamento
 logs,audits.filter.button.clear,Clear,Clear,Effacer,Clear
 logs,audits.filter.button.close,Close,Close,Fermer,Close
 logs,audits.filter.button.today,Heute,Today,Aujourd'hui,Oggi

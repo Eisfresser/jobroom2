@@ -1,4 +1,6 @@
-<div class="form-control form-control-lg typeahead-multiselect d-flex flex-row flex-wrap" (click)="focusInput()">
+<div class="form-control {{size ? 'form-control-' + size : ''}} typeahead-multiselect d-flex flex-row flex-wrap" (click)="focusInput()"
+     placement="bottom" [ngbTooltip]="tooltipTemplate" triggers="manual"
+     #t="ngbTooltip" (mouseenter)="openTooltip()" (mouseleave)="closeTooltip()">
     <span class="badge typeahead-multiselect__tag" *ngFor="let item of selectedItems" [ngClass]="getItemClass(item)">
         <span class="typeahead-multiselect__tag-title">{{item.label}}</span>
         <span class="fa fa-times remove-button" aria-hidden="true" (click)="removeItem(item)"></span>
@@ -13,9 +15,10 @@
         </div>
     </ng-template>
 
-    <input #input class="input typeahead-multiselect__input" name="inputValue"
-           (keydown)="handleKeyDown($event)"
-           [placeholder]="showPlaceholder() ? placeHolder : ''"
+    <input class="input typeahead-multiselect__input" name="inputValue"
+           (keydown)="handleKeyDown($event); closeTooltip()"
+           (focus)="openTooltip()"
+           [placeholder]="showPlaceholder() ? placeholder : ''"
            [(ngModel)]="inputValue"
            [ngbTypeahead]="wrappedItemLoader"
            [resultFormatter]="formatResultItem"
@@ -26,3 +29,7 @@
            [size]="inputValue?.length+2"
            [editable]="editable"/>
 </div>
+
+<ng-template #tooltipTemplate>
+    <p [innerHTML]="tooltip"></p>
+</ng-template>

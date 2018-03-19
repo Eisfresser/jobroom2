@@ -91,7 +91,14 @@
                 },
                 "messages": {
                     "validate": {
+                        "date-format": "Datumsformat ung\u00fcltig, richtiges Format: TT.MM.JJJJ",
                         "email-format": "Diese E-Mail-Adresse ist ung\u00fcltig.",
+                        "employment-duration": {
+                            "date-before": "Datum muss nach dem Stellenantritt liegen."
+                        },
+                        "employment-start": {
+                            "date-before": "Datum muss in der Zukunft liegen."
+                        },
                         "phone-format": "Bitte g\u00fcltige Telefonnummer eingeben z. B. 031 999 99 99 oder +41 31 999 99 99",
                         "required": "Pflichtfeld",
                         "zip-format": "PLZ ung\u00fcltig",

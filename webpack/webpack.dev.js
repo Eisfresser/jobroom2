@@ -15,6 +15,7 @@ const URLS = [
     '/referenceservice',
     '/candidateservice',
     '/jobpublicationservice',
+    '/trackingservice',
     '/management',
     '/swagger-resources',
     '/v2/api-docs',

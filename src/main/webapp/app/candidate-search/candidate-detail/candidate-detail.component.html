@@ -23,19 +23,20 @@
                                 </p>
                             </address>
 
-                            <div *ngIf="contact">
+                            <div *ngIf="contact$ | async as contact">
                                 <div *ngIf="isAuthenticated() || jobCenter.showContactDetailsToPublic">
                                     {{contact.firstName}} {{contact.lastName}}
                                 </div>
                                 <div>
                                     <span>{{'candidate-detail.job-center.phone.label' | translate}}</span>
-                                    <a href="tel:{{contact.phone}}">{{contact.phone | jr2PhoneNumber}}</a>
+                                    <a href="tel:{{contact.phone}}" (click)="onPhoneToJobCenter()">{{contact.phone | jr2PhoneNumber}}</a>
                                 </div>
                                 <div *ngIf="isAuthenticated() || jobCenter.showContactDetailsToPublic">
                                     <span>{{'candidate-detail.job-center.email.label' | translate}}</span>
-                                    <a href="mailto:{{contact.email}}">{{contact.email}}</a>
+                                    <a href="mailto:{{contact.email}}" (click)="onMailToJobCenter()">{{contact.email}}</a>
                                 </div>
-                                <strong *ngIf="candidateProfile$ | async as candidateProfile">{{'candidate-detail.external-id' | translate}}: {{ candidateProfile.externalId }}</strong>
+                                <strong *ngIf="candidateProfile$ | async as candidateProfile">{{'candidate-detail.external-id' | translate}}: {{
+                                    candidateProfile.externalId }}</strong>
                             </div>
                         </div>
                     </div>
@@ -46,7 +47,7 @@
 
         <div *ngIf="candidateProfile$ | async as candidateProfile" class="col-12 col-md-8 order-3 base__content">
             <div *ngIf="relevantJobExperience$ | async as relevantJobExperience" class="detail__title">
-                <h2 class="text--light">{{ relevantJobExperience.occupation }}</h2>
+                <h2 class="text--light">{{ relevantJobExperience.occupationLabel }}</h2>
             </div>
 
             <div class="detail__content">
@@ -70,7 +71,7 @@
                             {{ (jobExperience.lastJob ? 'candidate-detail.job-experience.last-job.label' :
                             'candidate-detail.job-experience.job.label') | translate}}
                         </strong>
-                        <span class="text--bold">{{ jobExperience.occupation }}</span>
+                        <span class="text--bold">{{ jobExperience.occupationLabel }}</span>
                     </div>
                     <div *ngIf="isDisplayGraduation(jobExperience.graduation)" class="content__item">
                         <strong>{{ 'candidate-detail.job-experience.graduation.label' | translate }}</strong>
@@ -161,16 +162,16 @@
                     </div>
                     <div *ngIf="candidateProtectedData.phone" class="content__item">
                         <strong>{{ 'candidate-detail.personal-information.phone.label' | translate }}</strong>
-                        <span><a href="tel:{{candidateProtectedData.phone}}">{{candidateProtectedData.phone | jr2PhoneNumber}}</a></span>
+                        <span><a href="tel:{{candidateProtectedData.phone}}" (click)="onPhoneToCandidate()">{{candidateProtectedData.phone | jr2PhoneNumber}}</a></span>
                     </div>
                     <div *ngIf="candidateProtectedData.mobile" class="content__item">
                         <strong>{{ 'candidate-detail.personal-information.mobile.label' | translate }}</strong>
                         <span><a
-                            href="tel:{{candidateProtectedData.mobile}}">{{candidateProtectedData.mobile | jr2PhoneNumber}}</a></span>
+                            href="tel:{{candidateProtectedData.mobile}}" (click)="onPhoneToCandidate()">{{candidateProtectedData.mobile | jr2PhoneNumber}}</a></span>
                     </div>
                     <div *ngIf="candidateProtectedData.email" class="content__item">
                         <strong>{{ 'candidate-detail.personal-information.e-mail.label' | translate }}</strong>
-                        <span><a href="mailto:{{candidateProtectedData.email}}">{{candidateProtectedData.email}}</a></span>
+                        <span><a href="mailto:{{candidateProtectedData.email}}" (click)="onMailToCandidate()">{{candidateProtectedData.email}}</a></span>
                     </div>
                 </ng-container>
             </div>
@@ -190,12 +191,13 @@
                     <!--</a>-->
                     <!--</li>-->
                     <li class="nav-item">
-                        <a class="nav-link" ngxClipboard [cbContent]="getCandidateUrl()">
+                        <a class="nav-link" #copyToClipboard ngxClipboard [cbContent]="getCandidateUrl()" (cbOnSuccess)="onCopyLink($event)"
+                            [ngbTooltip]="'global.messages.tooltip.link-copy.success' | translate" triggers="manual">
                             <i class="fa fa-share" aria-hidden="true"></i> {{ 'candidate-detail.candidate-copy-link' | translate }}
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{'mailto:?body=' + getEncodedCandidateUrl()}}">
+                        <a class="nav-link" href="{{'mailto:?body=' + getEncodedCandidateUrl()}}" (click)="onSendLink()">
                             <i class="fa fa-envelope"></i> {{ 'candidate-detail.candidate-send-link' | translate }}
                         </a>
                     </li>

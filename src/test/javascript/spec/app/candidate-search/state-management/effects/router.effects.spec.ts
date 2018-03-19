@@ -10,22 +10,20 @@ import { RouterStateUrl } from '../../../../../../../main/webapp/app/shared/cust
 import { Params, Router } from '@angular/router';
 import { MockRouter } from '../../../../helpers/mock-route.service';
 import { SearchCandidatesAction } from '../../../../../../../main/webapp/app/candidate-search/state-management/actions/candidate-search.actions';
-import { TypeaheadMultiselectModel } from '../../../../../../../main/webapp/app/shared/input-components/typeahead/typeahead-multiselect-model';
+import { TypeaheadMultiselectModel } from '../../../../../../../main/webapp/app/shared/input-components';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { CandidateService } from '../../../../../../../main/webapp/app/candidate-search/services/candidate.service';
 import { JhiBase64Service } from 'ng-jhipster';
 import { Http } from '@angular/http';
-import { Principal } from '../../../../../../../main/webapp/app/shared/auth/principal.service';
-import { AccountService } from '../../../../../../../main/webapp/app/shared/auth/account.service';
+import { Principal } from '../../../../../../../main/webapp/app/shared';
+import { AccountService } from '../../../../../../../main/webapp/app/shared';
 
 describe('RouterEffects', () => {
-    const testFilter = 'eyJza2lsbHMiOltdLCJsYW5ndWFnZVNraWxscyI6W3siY29kZSI6ImRlIiwid3Jpd' +
-        'HRlbiI6MSwic3Bva2VuIjoxfV0sIndvcmtsb2FkIjpbMzAsMTAwXSwib2NjdXBhdGlvbiI6bnVsbCwiZ' +
-        '3JhZHVhdGlvbiI6bnVsbCwicmVzaWRlbmNlIjpbIkFHIiwiQUkiLCJHRSJdLCJleHBlcmllbmNlIjpud' +
-        'WxsLCJ3b3JrcGxhY2UiOnsibW9kZWwiOnsidHlwZSI6ImxvY2FsaXR5IiwiY29kZSI6IlpIOlpIMDgiL' +
-        'CJsYWJlbCI6IkJlcmcgYW0gSXJjaGVsIiwib3JkZXIiOjB9LCJmaXJzdCI6dHJ1ZSwiZmlyc3RJbkdyb' +
-        '3VwIjp0cnVlfSwiYXZhaWxhYmlsaXR5IjpudWxsLCJ3b3JrRm9ybSI6bnVsbCwiZWR1Y2F0aW9uTGV2Z' +
-        'WwiOm51bGwsImRyaXZpbmdMaWNlbmNlQ2F0ZWdvcnkiOm51bGx9';
+    const testFilter = `eyJza2lsbHMiOltdLCJsYW5ndWFnZVNraWxscyI6W3siY29kZSI6ImRlIiwid3JpdHRlbiI6MSw
+    ic3Bva2VuIjoxfV0sIndvcmtsb2FkIjpbMzAsMTAwXSwib2NjdXBhdGlvbnMiOm51bGwsImdyYWR1YXRpb24iOm51bGwsIn
+    Jlc2lkZW5jZSI6WyJBRyIsIkFJIiwiR0UiXSwiZXhwZXJpZW5jZSI6bnVsbCwid29ya3BsYWNlIjpbeyJ0eXBlIjoibG9jY
+    WxpdHkiLCJjb2RlIjoiWkg6WkgwOCIsImxhYmVsIjoiQmVyZyBhbSBJcmNoZWwiLCJvcmRlciI6MH1dLCJhdmFpbGFiaWxp
+    dHkiOm51bGwsIndvcmtGb3JtIjpudWxsLCJkZWdyZWUiOm51bGwsImRyaXZpbmdMaWNlbmNlQ2F0ZWdvcnkiOm51bGx9`;
 
     const mockRouter = new MockRouter();
 
@@ -80,23 +78,19 @@ describe('RouterEffects', () => {
                     { code: 'de', written: 1, spoken: 1 }
                 ],
                 workload: [30, 100],
-                occupation: null,
+                occupations: null,
                 graduation: null,
                 residence: ['AG', 'AI', 'GE'],
                 experience: null,
-                workplace: {
-                    model: {
-                        type: 'locality',
-                        code: 'ZH:ZH08',
-                        label: 'Berg am Irchel',
-                        order: 0
-                    } as TypeaheadMultiselectModel,
-                    first: true,
-                    firstInGroup: true
-                },
+                workplace: [{
+                    type: 'locality',
+                    code: 'ZH:ZH08',
+                    label: 'Berg am Irchel',
+                    order: 0
+                }] as Array<TypeaheadMultiselectModel>,
                 availability: null,
                 workForm: null,
-                educationLevel: null,
+                degree: null,
                 drivingLicenceCategory: null
             });
             const expected = cold('-b', { b: searchCandidatesAction });

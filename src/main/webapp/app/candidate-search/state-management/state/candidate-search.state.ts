@@ -1,5 +1,4 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { OccupationOption } from '../../../shared/reference-service';
 import {
     Availability,
     Canton,
@@ -11,7 +10,8 @@ import {
     WorkForm
 } from '../../../shared';
 import { CandidateProfile } from '../../services/candidate';
-import { TypeaheadItemDisplayModel } from '../../../shared/input-components';
+import { TypeaheadMultiselectModel } from '../../../shared/input-components';
+import { Degree } from '../../../shared/job-publication/job-publication.model';
 
 export interface CandidateSearchState {
     searchFilter: CandidateSearchFilter;
@@ -20,21 +20,21 @@ export interface CandidateSearchState {
     page: number;
     totalCandidateCount: number;
     candidateProfileList: Array<CandidateProfile>;
-    initialState: boolean;
+    selectedCandidateProfile: CandidateProfile;
     candidateListScrollY: number;
     resetTime: number;
 }
 
 export interface CandidateSearchFilter {
-    occupation?: OccupationOption,
-    skills?: Array<string>,
-    experience?: Experience,
-    workplace?: TypeaheadItemDisplayModel,
-    residence?: Array<Canton | string>,
-    availability?: Availability,
+    occupations?: Array<TypeaheadMultiselectModel>;
+    skills?: Array<string>;
+    experience?: Experience;
+    workplace?: Array<TypeaheadMultiselectModel>;
+    residence?: Array<Canton | string>;
+    availability?: Availability;
     workload?: [number, number];
     workForm?: WorkForm,
-    educationLevel?: ISCED_1997,
+    degree?: Degree,
     graduation?: Graduation,
     drivingLicenceCategory?: DrivingLicenceCategory
     languageSkills?: Array<LanguageSkill>
@@ -50,7 +50,7 @@ export const initialState: CandidateSearchState = {
     totalCandidateCount: 0,
     page: 0,
     candidateProfileList: [],
-    initialState: true,
+    selectedCandidateProfile: null,
     searchError: false,
     candidateListScrollY: 0,
     resetTime: null
@@ -59,8 +59,13 @@ export const initialState: CandidateSearchState = {
 export const getCandidateSearchState = createFeatureSelector<CandidateSearchState>('candidateSearch');
 export const getCandidateProfileList = createSelector(getCandidateSearchState, (state: CandidateSearchState) => state.candidateProfileList);
 export const getSearchFilter = createSelector(getCandidateSearchState, (state: CandidateSearchState) => state.searchFilter);
+export const getSelectedOccupationCodes = createSelector(getSearchFilter, (candidateSearchFilter: CandidateSearchFilter) =>
+    (candidateSearchFilter.occupations || []).map((typeaheadMultiselectModel: TypeaheadMultiselectModel) => typeaheadMultiselectModel.code));
+export const getSelectedOccupationNames = createSelector(getSearchFilter, (candidateSearchFilter: CandidateSearchFilter) =>
+    (candidateSearchFilter.occupations || []).map((typeaheadMultiselectModel: TypeaheadMultiselectModel) => typeaheadMultiselectModel.label));
 export const getLoading = createSelector(getCandidateSearchState, (state: CandidateSearchState) => state.loading);
 export const getSearchError = createSelector(getCandidateSearchState, (state: CandidateSearchState) => state.searchError);
 export const getTotalCandidateCount = createSelector(getCandidateSearchState, (state: CandidateSearchState) => state.totalCandidateCount);
 export const getCandidateListScrollY = createSelector(getCandidateSearchState, (state: CandidateSearchState) => state.candidateListScrollY);
+export const getSelectedCandidateProfile = createSelector(getCandidateSearchState, (state: CandidateSearchState) => state.selectedCandidateProfile);
 export const getResetTime = createSelector(getCandidateSearchState, (state: CandidateSearchState) => state.resetTime);

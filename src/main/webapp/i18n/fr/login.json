@@ -2,6 +2,12 @@
     "login": {
         "form": {
             "button": "Connexion",
+            "information": {
+                "pea": {
+                    "text": "Proc\u00e9dure d\u2019enregistrement pour les agences de placement priv\u00e9es",
+                    "url": "https://www.arbeit.swiss/secoalv/fr/home/menue/arbeitsvermittler/dienstleistungen-der-rav/job-room-konto.html"
+                }
+            },
             "password": "Mot de passe",
             "password.placeholder": "Votre mot de passe",
             "rememberme": "Garder la session ouverte"
@@ -14,6 +20,6 @@
         "password": {
             "forgot": "Avez-vous oubli\u00e9 votre mot de passe ?"
         },
-        "title": "Connexion"
+        "title": "Connexion pour agences priv\u00e9es de placement"
     }
 }

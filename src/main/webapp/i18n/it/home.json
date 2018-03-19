@@ -91,7 +91,14 @@
                 },
                 "messages": {
                     "validate": {
+                        "date-format": "Il formato della data non \u00e8 corretto. Formato corretto: GG.MM.AAAA",
                         "email-format": "L'indirizzo e-mail non \u00e8 valido.",
+                        "employment-duration": {
+                            "date-before": "La data deve trovarsi dopo l'inizio dell'attivit\u00e0."
+                        },
+                        "employment-start": {
+                            "date-before": "La data deve situarsi nel futuro."
+                        },
                         "phone-format": "Please enter a valid phone number e.g. 031 999 99 99 or +41 31 999 99 99",
                         "required": "Questo campo \u00e8 obbligatorio.",
                         "zip-format": "NPA non \u00e8 valido.",

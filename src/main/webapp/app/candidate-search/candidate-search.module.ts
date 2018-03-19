@@ -13,7 +13,6 @@ import { LanguageSkillService } from './services/language-skill.service';
 import { CandidateSearchToolbarComponent } from './candidate-search-toolbar/candidate-search-toolbar.component';
 import { JobSearchSharedModule } from '../shared/job-search/job-search-shared.module';
 import { CandidateDetailComponent } from './candidate-detail/candidate-detail.component';
-import { CandidateDetailResolver } from './candidate-detail/candidate-detail.resolver';
 import { CandidateService } from './services/candidate.service';
 import { DetailsPagePaginationEffects } from '../shared/components/details-page-pagination/state-management/effects/details-page-pagination.effects';
 import { ClipboardModule } from 'ngx-clipboard';
@@ -23,6 +22,8 @@ import { CandidateSearchEffects } from './state-management/effects/candidate-sea
 import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
 import { CantonService } from './services/canton.service';
 import { RouterEffects } from './state-management/effects/router.effects';
+import { UserTrackingEffects } from '../shared/state-management/effects/user-tracking.effects';
+import { UserTrackingService } from '../shared/user-tracking/user-tracking.service';
 
 @NgModule({
     imports: [
@@ -30,7 +31,9 @@ import { RouterEffects } from './state-management/effects/router.effects';
         EffectsModule.forFeature([
             CandidateSearchEffects,
             DetailsPagePaginationEffects,
-            RouterEffects]),
+            RouterEffects,
+            UserTrackingEffects
+        ]),
         JobroomSharedModule,
         CommonModule,
         ReactiveFormsModule,
@@ -49,9 +52,9 @@ import { RouterEffects } from './state-management/effects/router.effects';
     ],
     providers: [
         LanguageSkillService,
-        CandidateDetailResolver,
         CandidateService,
-        CantonService
+        CantonService,
+        UserTrackingService
     ]
 })
 export class CandidateSearchModule {

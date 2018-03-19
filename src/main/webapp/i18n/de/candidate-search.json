@@ -22,8 +22,8 @@
                 "one.with-query.with-locality": "1 '{{query}}' Kandidat in {{locality}}"
             }
         },
-        "education": {
-            "label": "Bildungsstufe"
+        "degree": {
+            "label": "Ausbildung"
         },
         "experience": {
             "label": "Berufserfahrung"
@@ -46,9 +46,15 @@
             "label": "Sprachkenntnisse"
         },
         "no-selection": "Keine Auswahl",
+        "occupations": {
+            "label": "Berufsbezeichnungen",
+            "placeholder": "Berufsbezeichnungen, Kategorien",
+            "tooltip": "Mehrfachauswahl m\u00f6glich"
+        },
         "skills": {
             "label": "Suchbegriffe",
-            "placeholder": "F\u00e4higkeiten, Skills"
+            "placeholder": "F\u00e4higkeiten, Skills",
+            "tooltip": "Sie k\u00f6nnen <strong>mehrere</strong> Suchbegriffe eingeben. Dr\u00fccken Sie nach Eingabe \u00abEnter\u00bb um weitere Suchbegriffe hinzuzuf\u00fcgen."
         },
         "title": "Kandidatensuche",
         "toolbar": {
@@ -56,14 +62,11 @@
                 "default": "Abschluss ausw\u00e4hlen",
                 "label": "Abschluss"
             },
-            "occupation": {
-                "placeholder": "Berufsbezeichnung"
-            },
+            "reset": "Zur\u00fccksetzen",
             "residence": {
                 "placeholder": "Wohnkanton",
                 "selected": "Kantone"
-            },
-            "reset": "Zur\u00fccksetzen"
+            }
         },
         "workForm": {
             "HOME_WORK": "Heimarbeit",

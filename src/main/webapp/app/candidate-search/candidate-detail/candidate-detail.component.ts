@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import {
     Candidate,
     CandidateProfile,
@@ -21,10 +20,18 @@ import {
     CandidateSearchState,
     getCandidateProfileList,
     getSearchFilter,
+    getSelectedCandidateProfile,
     getTotalCandidateCount
 } from '../state-management/state/candidate-search.state';
 import { Contact, Gender, Graduation } from '../../shared';
 import { Principal } from '../../shared/auth/principal.service';
+import {
+    MailToOpenedAction,
+    PhoneToOpenedAction,
+    PrintCandidateAction
+} from '../state-management/actions/candidate-search.actions';
+import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
+import { TOOLTIP_AUTO_HIDE_TIMEOUT } from '../../app.constants';
 
 interface EnrichedJobExperience extends JobExperience {
     occupationLabels: {
@@ -48,10 +55,15 @@ export class CandidateDetailComponent implements OnInit {
     relevantJobExperience$: Observable<JobExperience>;
     preferredWorkRegions$: Observable<Array<string>>;
     preferredWorkCantons$: Observable<Array<string>>;
-    contact: Contact;
+    contact$: Observable<Contact>;
 
-    constructor(private route: ActivatedRoute,
-                private referenceService: ReferenceService,
+    @ViewChild(NgbTooltip)
+    clipboardTooltip: NgbTooltip;
+
+    @ViewChild('copyToClipboard')
+    copyToClipboardElementRef: ElementRef;
+
+    constructor(private referenceService: ReferenceService,
                 private candidateService: CandidateService,
                 private occupationPresentationService: OccupationPresentationService,
                 private translateService: TranslateService,
@@ -60,8 +72,8 @@ export class CandidateDetailComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.candidateProfile$ = this.route.data
-            .map((data) => data['candidateProfile']);
+        this.candidateProfile$ = this.store.select(getSelectedCandidateProfile)
+            .filter((candidateProfile) => !!candidateProfile);
 
         this.jobCenter$ = this.candidateProfile$
             .map((candidateProfile) => candidateProfile.jobCenterCode)
@@ -85,23 +97,27 @@ export class CandidateDetailComponent implements OnInit {
             .map((experiences) => experiences.sort((a, b) => +b.lastJob - +a.lastJob))
             .shareReplay();
 
-        const occupationCode$ = this.store.select(getSearchFilter)
-            .map((searchFilter: CandidateSearchFilter) => searchFilter.occupation ? searchFilter.occupation.key : null);
+        const occupationCodes$ = this.store.select(getSearchFilter)
+            .map((searchFilter: CandidateSearchFilter) =>
+                searchFilter.occupations
+                    ? searchFilter.occupations.map((typeaheadMultiselectModel) => typeaheadMultiselectModel.code)
+                    : []
+            );
 
         this.relevantJobExperience$ = this.jobExperiences$
-            .combineLatest(occupationCode$, this.jobExperiences$)
-            .map(([jobExperiences, occupationCode]) =>
-                this.candidateService.getRelevantJobExperience(occupationCode, jobExperiences));
+            .combineLatest(occupationCodes$, this.jobExperiences$)
+            .map(([jobExperiences, occupationCodes]) =>
+                this.candidateService.getRelevantJobExperience(occupationCodes, jobExperiences));
         this.populatePreferredWorkLocations();
 
-        Observable.combineLatest(this.candidateProfile$, this.jobCenter$)
-            .subscribe(([candidateProfile, jobCenter]) => {
+        this.contact$ = Observable.combineLatest(this.candidateProfile$, this.jobCenter$)
+            .map(([candidateProfile, jobCenter]) => {
                 if (jobCenter && (jobCenter.code.startsWith('BEA') || jobCenter.code.startsWith('BSA'))) {
-                    this.contact = { phone: jobCenter.phone, email: jobCenter.email };
+                    return { phone: jobCenter.phone, email: jobCenter.email };
                 } else {
-                    this.contact = candidateProfile.jobAdvisor;
+                    return candidateProfile.jobAdvisor;
                 }
-            });
+            })
     }
 
     private enrichWithLabels(jobExperience: JobExperience): Observable<EnrichedJobExperience> {
@@ -111,7 +127,7 @@ export class CandidateDetailComponent implements OnInit {
 
         return currentLanguage$
             .switchMap((language) =>
-                this.occupationPresentationService.findOccupationLabelsByAvamCode(jobExperience.occupationCode, language)
+                this.occupationPresentationService.findOccupationLabelsByAvamCode(jobExperience.occupation.avamCode, language)
                     .map((occupationLabels: GenderAwareOccupationLabel) =>
                         Object.assign({}, jobExperience, { occupationLabels }))
             );
@@ -120,8 +136,8 @@ export class CandidateDetailComponent implements OnInit {
     private formatOccupationLabel(gender: Gender): (jobExperience: EnrichedJobExperience) => EnrichedJobExperience {
         return (jobExperience: EnrichedJobExperience) => {
             const { male, female } = jobExperience.occupationLabels;
-            const occupation = (gender === Gender.FEMALE && female) ? female : male;
-            return Object.assign({}, jobExperience, { occupation });
+            const occupationLabel = (gender === Gender.FEMALE && female) ? female : male;
+            return Object.assign({}, jobExperience, { occupationLabel });
         }
     }
 
@@ -145,7 +161,27 @@ export class CandidateDetailComponent implements OnInit {
     }
 
     printCandidateDetails(): void {
-        window.print();
+        this.store.dispatch(new PrintCandidateAction());
+    }
+
+    onSendLink(): void {
+        this.store.dispatch(new MailToOpenedAction('sendLink'));
+    }
+
+    onMailToJobCenter(): void {
+        this.store.dispatch(new MailToOpenedAction('jobCenter'));
+    }
+
+    onPhoneToJobCenter(): void {
+        this.store.dispatch(new PhoneToOpenedAction('jobCenter'));
+    }
+
+    onMailToCandidate(): void {
+        this.store.dispatch(new MailToOpenedAction('candidate'));
+    }
+
+    onPhoneToCandidate(): void {
+        this.store.dispatch(new PhoneToOpenedAction('candidate'));
     }
 
     getCandidateUrl() {
@@ -168,5 +204,23 @@ export class CandidateDetailComponent implements OnInit {
 
     isAuthenticated(): boolean {
         return this.principal.isAuthenticated();
+    }
+
+    onCopyLink(event: Event): void {
+        if (!this.clipboardTooltip.isOpen()) {
+            this.clipboardTooltip.open();
+            setTimeout(() => this.clipboardTooltip.close(), TOOLTIP_AUTO_HIDE_TIMEOUT);
+        }
+    }
+
+    @HostListener('document:click', ['$event.target'])
+    onClick(targetElement: HTMLElement): void {
+        if (!targetElement) {
+            return;
+        }
+
+        if (!this.copyToClipboardElementRef.nativeElement.contains(targetElement)) {
+            this.clipboardTooltip.close();
+        }
     }
 }

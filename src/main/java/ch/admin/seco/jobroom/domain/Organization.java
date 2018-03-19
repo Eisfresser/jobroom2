@@ -11,12 +11,16 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.validator.constraints.Email;
+
+import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Mapping;
+import org.springframework.data.elasticsearch.annotations.Setting;
 
 import ch.admin.seco.jobroom.domain.enumeration.CompanyType;
 
@@ -26,6 +30,9 @@ import ch.admin.seco.jobroom.domain.enumeration.CompanyType;
 @Entity
 @Table(name = "organization")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Document(indexName = "organization", type = "organization")
+@Mapping(mappingPath = "config/elasticsearch/mappings/organization.json")
+@Setting(settingPath = "config/elasticsearch/settings/folding-analyzer.json")
 public class Organization extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -86,17 +93,21 @@ public class Organization extends AbstractAuditingEntity implements Serializable
         return externalId;
     }
 
+    public void setExternalId(String externalId) {
+        this.externalId = externalId;
+    }
+
     public Organization externalId(String externalId) {
         this.externalId = externalId;
         return this;
     }
 
-    public void setExternalId(String externalId) {
-        this.externalId = externalId;
-    }
-
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Organization name(String name) {
@@ -104,12 +115,12 @@ public class Organization extends AbstractAuditingEntity implements Serializable
         return this;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getStreet() {
         return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
     }
 
     public Organization street(String street) {
@@ -117,12 +128,12 @@ public class Organization extends AbstractAuditingEntity implements Serializable
         return this;
     }
 
-    public void setStreet(String street) {
-        this.street = street;
-    }
-
     public String getZipCode() {
         return zipCode;
+    }
+
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
     }
 
     public Organization zipCode(String zipCode) {
@@ -130,12 +141,12 @@ public class Organization extends AbstractAuditingEntity implements Serializable
         return this;
     }
 
-    public void setZipCode(String zipCode) {
-        this.zipCode = zipCode;
-    }
-
     public String getCity() {
         return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 
     public Organization city(String city) {
@@ -143,12 +154,12 @@ public class Organization extends AbstractAuditingEntity implements Serializable
         return this;
     }
 
-    public void setCity(String city) {
-        this.city = city;
-    }
-
     public String getEmail() {
         return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public Organization email(String email) {
@@ -156,12 +167,12 @@ public class Organization extends AbstractAuditingEntity implements Serializable
         return this;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getPhone() {
         return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public Organization phone(String phone) {
@@ -169,21 +180,17 @@ public class Organization extends AbstractAuditingEntity implements Serializable
         return this;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
     public CompanyType getType() {
         return type;
+    }
+
+    public void setType(CompanyType type) {
+        this.type = type;
     }
 
     public Organization type(CompanyType type) {
         this.type = type;
         return this;
-    }
-
-    public void setType(CompanyType type) {
-        this.type = type;
     }
 
     public Boolean isActive() {
@@ -200,6 +207,11 @@ public class Organization extends AbstractAuditingEntity implements Serializable
     }
 
     @Override
+    public int hashCode() {
+        return Objects.hashCode(getId());
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
@@ -212,11 +224,6 @@ public class Organization extends AbstractAuditingEntity implements Serializable
             return false;
         }
         return Objects.equals(getId(), organization.getId());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(getId());
     }
 
     @Override

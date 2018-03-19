@@ -65,10 +65,12 @@
                 "tooltip": "S\u00e9lectionner le lieu actuel"
             },
             "locality": {
-                "placeholder": "Lieu ou canton"
+                "placeholder": "Lieu ou canton",
+                "tooltip": "S\u00e9lection multiple possible"
             },
             "occupation": {
-                "placeholder": "Professions, mots-cl\u00e9s"
+                "placeholder": "Professions, mots-cl\u00e9s",
+                "tooltip": "S\u00e9lection multiple possible. Commencez votre saisie et choisissez un terme de la liste ou appuyez sur la touche \u00ab Enter \u00bb."
             },
             "reset": "R\u00e9tablir"
         }

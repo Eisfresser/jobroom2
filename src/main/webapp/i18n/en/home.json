@@ -62,7 +62,7 @@
                     "title": "Contact person"
                 },
                 "date-placeholder": "DD.MM.YYYY",
-                "degree": "Education",
+                "degree": "Training",
                 "description": {
                     "characters-counter-text": "{{count}} characters available",
                     "label": "Duties / requirements",
@@ -91,7 +91,14 @@
                 },
                 "messages": {
                     "validate": {
+                        "date-format": "Invalid date format, correct format: DD.MM.YYYY",
                         "email-format": "This email address is invalid.",
+                        "employment-duration": {
+                            "date-before": "Date must be after the employment start."
+                        },
+                        "employment-start": {
+                            "date-before": "Date must be in the future."
+                        },
                         "phone-format": "Please enter a valid phone number e.g. 031 999 99 99 or +41 31 999 99 99",
                         "required": "This field is required.",
                         "zip-format": "Invalid postal code",

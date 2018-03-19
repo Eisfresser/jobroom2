@@ -6,27 +6,31 @@
                 <form [formGroup]="candidateSearchForm" (submit)="search(candidateSearchForm.value)" novalidate>
 
                     <div class="form-group">
-                        <input id="occupation-input" formControlName="occupation" class="form-control"
-                               [ngbTypeahead]="fetchOccupationSuggestions"
-                               [placeholder]="'candidate-search.toolbar.occupation.placeholder' | translate"
-                               [inputFormatter]="occupationFormatter"
-                               [resultFormatter]="occupationFormatter"
-                               (blur)="clearInvalidValue($event)">
+                        <label class="sr-only" translate="candidate-search.occupations.label"></label>
+                        <jr2-typeahead-multiselect
+                            formControlName="occupations"
+                            [itemLoader]="fetchOccupationSuggestions"
+                            [editable]="false"
+                            [tooltip]="'candidate-search.occupations.tooltip'| translate"
+                            [placeholder]="'candidate-search.occupations.placeholder' | translate"></jr2-typeahead-multiselect>
                     </div>
 
                     <div class="form-group">
-                        <jr2-multiselect formControlName="skills" [placeholder]="'candidate-search.skills.placeholder' | translate"
-                                         class="form-control">
-                        </jr2-multiselect>
+                        <label class="sr-only" translate="candidate-search.skills.label"></label>
+                        <jr2-multiselect formControlName="skills"
+                                         [tooltip]="'candidate-search.skills.tooltip'| translate"
+                                         [placeholder]="'candidate-search.skills.placeholder' | translate"></jr2-multiselect>
                     </div>
 
                     <div class="form-group">
                         <label class="sr-only" translate="candidate-search.workplace.label"></label>
-                        <jr2-typeahead-singleselect formControlName="workplace"
+                        <jr2-typeahead-multiselect formControlName="workplace"
+                                                    [limit]="1"
+                                                    [focusFirst]="true"
                                                     [placeholder]="'candidate-search.workplace.placeholder' | translate"
                                                     [itemLoader]="fetchLocalitySuggestions"
                                                     [editable]="false"
-                                                    [size]="''"></jr2-typeahead-singleselect>
+                                                    [size]="''"></jr2-typeahead-multiselect>
                     </div>
 
                     <button class="btn btn-primary btn-lg btn-block">

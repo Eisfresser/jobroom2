@@ -1,27 +1,51 @@
-@import '~@alv-ch/alv-styleguide/build/scss/mixins/alv-border';
-@import '~@alv-ch/alv-styleguide/build/scss/alv-ch_variables';
+@import '../../../../content/scss/jbr2_variables.scss';
 
-/*todo: review styles*/
-.input-multiselect {
-    .remove-button {
-        margin-left: 0.3rem;
-        cursor: pointer;
+.typeahead-multiselect {
+    width: 100%;
+
+    overflow-x: hidden;
+    overflow-y: auto;
+    min-height: 3rem;
+    max-height: 4rem;
+    font-size: 1rem;
+    line-height: 1rem;
+
+    .typeahead-multiselect__tag {
+        margin: 1px;
+
+        background-color: $additional-accent-amber;
+        border-color: $additional-accent-amber;
     }
-    .input-multiselect__input {
+
+    .typeahead-multiselect__tag-title {
+        display: inline-block;
+        float: left;
+
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        max-width: 120px;
+    }
+
+    .typeahead-multiselect__input {
         &:focus {
             border: none;
             box-shadow: none;
             outline: none;
         }
+        background: transparent;
         padding: 0;
         border: 0;
-        width: 100%;
+        width: inherit;
     }
-    .input-multiselect__tag {
-        margin: 0 0.2rem 0.2rem 0;
-        @include alv-border-radius(0.5rem);
-        background-color: $additional-accent-amber;
-        border-color: $additional-accent-amber;
-        overflow: auto;
+
+    input {
+        width: inherit;
+        max-width: 100%;
     }
+
+}
+
+:host {
+    width: 100%;
 }
