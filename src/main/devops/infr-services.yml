@@ -56,6 +56,50 @@ services:
             placement:
                 constraints: [node.labels.type == java]
 
+    zookeeper:
+        image: wurstmeister/zookeeper:3.4.6
+        ports:
+          - 2181:2181
+        deploy:
+            placement:
+                constraints: [node.labels.type == java]
+
+    kafka:
+        image: wurstmeister/kafka:1.0.0
+        environment:
+            KAFKA_ADVERTISED_HOST_NAME: kafka
+            KAFKA_ADVERTISED_PORT: 9092
+            KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+        ports:
+            - 9092:9092
+        deploy:
+            placement:
+                constraints: [node.labels.type == java]
+
+    spring-cloud-dataflow:
+        build: spring-cloud-dataflow
+        image: spring-cloud-dataflow
+        environment:
+            SPRING_CLOUD_SKIPPER_CLIENT_SERVER_URI: http://spring-cloud-skipper:7577/api
+            SPRING_CLOUD_STREAM_KAFKA_BINDER_BROKERS: kafka:9092
+            SPRING_CLOUD_STREAM_KAFKA_BINDER_ZK_NODES: zookeeper:2181
+            SPRING_CLOUD_DATAFLOW_APPLICATION_PROPERTIES_STREAM_SPRING_CLOUD_STREAM_KAFKA_BINDER_BROKERS: kafka:9092
+            SPRING_CLOUD_DATAFLOW_APPLICATION_PROPERTIES_STREAM_SPRING_CLOUD_STREAM_KAFKA_BINDER_ZK_NODES: zookeeper:2181
+            SPRING_DATASOURCE_URL: jdbc:postgresql://spring-cloud-dataflow-postgres:5432/spring-cloud-dataflow
+            SPRING_DATASOURCE_USERNAME: spring-cloud-dataflow
+            SPRING_DATASOURCE_PASSWORD: s3cr3t
+            SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
+            MAVEN_LOCAL_REPOSITORY: /repo
+            MAVEN_REMOTE_REPOSITORIES_SPRING_RELEASE: https://repo.spring.io/libs-release
+            MAVEN_REMOTE_REPOSITORIES_ALVCH: https://alvch.jfrog.io/alvch/global
+            LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_CLOUD_DEPLOYER: TRACE
+        volumes:
+            - ${HOME}/.m2/repository:/repo
+        ports:
+            - 9393:9393
+            - 7000-7010:7000-7010
+
+
 networks:
     jobroom_data2:
         external: true
@@ -75,5 +119,5 @@ configs:
         external: true
 
 volumes:
-    nginx-error-pages: 
+    nginx-error-pages:
         driver: local

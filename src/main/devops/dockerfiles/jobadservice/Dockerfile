@@ -5,9 +5,9 @@ ENV SPRING_OUTPUT_ANSI_ENABLED=ALWAYS \
     JAVA_OPTS=""
 
 # add directly the jar
-COPY trackingservice.jar /app.jar
+COPY jobadservice.jar /app.jar
 
-EXPOSE 8085 5701/udp
+EXPOSE 8086 5701/udp
 CMD echo "The application will start in ${SLEEP}s..." && \
     sleep ${SLEEP} && \
     java ${JAVA_OPTS} -Djava.security.egd=file:/dev/./urandom -jar /app.jar

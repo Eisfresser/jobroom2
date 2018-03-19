@@ -100,6 +100,26 @@ services:
             placement:
                 constraints: [node.labels.type == data]
 
+    jobadservice-postgres:
+        image: postgres:latest
+        environment:
+            - TZ=Europe/Zurich
+            - PGDATA=/var/lib/postgresql/data/pgdata
+            - POSTGRES_USER=jobadservice
+            - POSTGRES_PASSWORD_FILE=/run/secrets/postgres-passwd
+        ports:
+            - 5438:5432
+        volumes:
+            - jobadservice-data:/var/lib/postgresql/data
+        networks:
+            - jobroom_data2
+        secrets:
+            - postgres-passwd
+        command: postgres -c tcp_keepalives_idle=60 -c tcp_keepalives_interval=60 -c tcp_keepalives_count=60
+        deploy:
+            placement:
+                constraints: [node.labels.type == data]
+
     jobroom-kibana:
         image: kibana:5
         env_file: env.properties
@@ -171,6 +191,8 @@ volumes:
         driver: local
     trackingservice-data:
         driver: local
+    jobadservice-data:
+        driver: local
     elasticsearch-data:
         driver: local
     jobroom-batch-data:
@@ -183,4 +205,4 @@ networks:
 secrets:
     postgres-passwd:
         external: true
- 
+
