@@ -1,12 +1,12 @@
+import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs/Observable';
 import { Principal, ResponseWrapper } from '../';
+import { createPageableURLSearchParams } from '../model/request-util';
+import { JobCancelRequest } from './job-publication-cancel-request';
 import { JobPublicationSearchRequest } from './job-publication-search-request';
 import { CancellationReason, JobPublication, Status } from './job-publication.model';
-import { createPageableURLSearchParams } from '../model/request-util';
-import { TranslateService } from '@ngx-translate/core';
-import { JobCancelRequest } from './job-publication-cancel-request';
-import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 
 @Injectable()
 export class JobPublicationService {
@@ -27,7 +27,7 @@ export class JobPublicationService {
 
     private getJobPublicationLocale(): Observable<string> {
         return this.principal.isAuthenticated()
-            ? Observable.fromPromise(this.principal.identity())
+            ? Observable.fromPromise(this.principal.identity().then((identity) => identity.langKey))
             : Observable.of(this.translateService.currentLang);
     }
 
