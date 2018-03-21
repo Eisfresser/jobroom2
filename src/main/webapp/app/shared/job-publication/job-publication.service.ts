@@ -27,7 +27,8 @@ export class JobPublicationService {
 
     private getJobPublicationLocale(): Observable<string> {
         return this.principal.isAuthenticated()
-            ? Observable.fromPromise(this.principal.identity().then((identity) => identity.langKey))
+            ? Observable.fromPromise(this.principal.identity())
+                .map((identity) => identity.langKey)
             : Observable.of(this.translateService.currentLang);
     }
 
