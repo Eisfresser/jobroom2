@@ -42,9 +42,14 @@ export class UserTrackingEffects {
     @Effect({ dispatch: false })
     logResult$: Observable<any> = this.actions$
         .ofType(candidateSearch.CANDIDATE_LIST_LOADED)
-        .switchMap((action: CandidateProfileListLoadedAction) =>
+        .map((action: CandidateProfileListLoadedAction) => action.payload)
+        .switchMap((payload) =>
             this.trackingService.logEvent(new TrackingItem('result', {
-                result: action.payload
+                result: payload.candidateProfileList.map((candidateProfile, index) => Object.assign({}, {
+                    externalId: candidateProfile.externalId,
+                    rank: ((payload.page === 0) && (index === 0)) ? 1 : 0,
+                })),
+                totalCandidateCount: payload.totalCandidateCount
             })));
 
     @Effect({ dispatch: false })
