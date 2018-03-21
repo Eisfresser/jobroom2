@@ -67,7 +67,7 @@ dependencyManagement {
 defaultTasks 'bootRun'
 
 group = 'ch.admin.seco.jobroom'
-version = version != 'unspecified' ? version : '1.0.0-SNAPSHOT'
+version = version != 'unspecified' ? version : '2.0.6-SNAPSHOT'
 
 description = ''
 
