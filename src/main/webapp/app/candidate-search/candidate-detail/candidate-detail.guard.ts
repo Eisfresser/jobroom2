@@ -28,6 +28,6 @@ export class CandidateDetailGuard implements CanActivate {
                 return Observable.of(null);
             })
             .do((candidateProfile) => this.store.dispatch(new CandidateProfileDetailLoadedAction(candidateProfile)))
-            .map((candidateProfile) => !!candidateProfile);
+            .map((candidateProfile) => !!candidateProfile)
     }
 }

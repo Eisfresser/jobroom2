@@ -68,7 +68,7 @@ management:
             expose: '*'
     endpoint:
         health:
-            show-details: true
+            show-details: always
     info:
         git:
             mode: full
@@ -96,9 +96,10 @@ spring:
         mode: HTML
 
 server:
-    session:
-        cookie:
-            http-only: true
+    servlet:
+        session:
+            cookie:
+                http-only: true
 
 info:
     project:

@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect } from '@ngrx/effects';
+import * as routerStore from '@ngrx/router-store';
+import { RouterNavigationAction } from '@ngrx/router-store';
+import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import * as candidateSearch from '../../../candidate-search/state-management/actions/candidate-search.actions';
 import {
@@ -9,21 +12,18 @@ import {
     PRINT_CANDIDATE,
     SearchCandidatesAction
 } from '../../../candidate-search/state-management/actions/candidate-search.actions';
-import * as routerStore from '@ngrx/router-store';
-import { RouterNavigationAction } from '@ngrx/router-store';
-import {
-    LOAD_NEXT_ITEM,
-    LOAD_PREVIOUS_ITEM,
-    NEXT_ITEM_LOADED
-} from '../../components/details-page-pagination/state-management/actions/details-page-pagination.actions';
-import { Store } from '@ngrx/store';
 import {
     CandidateSearchState,
     getCandidateProfileList,
     getSelectedCandidateProfile
 } from '../../../candidate-search/state-management/state/candidate-search.state';
-import { UserTrackingService } from '../../user-tracking/user-tracking.service';
+import {
+    LOAD_NEXT_ITEM,
+    LOAD_PREVIOUS_ITEM,
+    NEXT_ITEM_LOADED
+} from '../../components/details-page-pagination/state-management/actions/details-page-pagination.actions';
 import { TrackingItem } from '../../user-tracking/tracking-event';
+import { UserTrackingService } from '../../user-tracking/user-tracking.service';
 
 const HIT_MATCHER_REGEX = /\/candidate-search->\/candidate-detail\/[\w-]+$/;
 const SELECTED_CANDIDATE_PROFILE_ID_IDX = 3;

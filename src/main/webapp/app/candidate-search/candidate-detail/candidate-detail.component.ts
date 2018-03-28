@@ -92,7 +92,7 @@ export class CandidateDetailComponent implements OnInit {
                 const wantedJobExperiences = profile.jobExperiences
                     .filter((experience) => experience.wanted);
                 return Observable.combineLatest(wantedJobExperiences.map(this.enrichWithLabels.bind(this)))
-                    .map((jobExperiences) => jobExperiences.map(this.formatOccupationLabel(profile.gender)));
+                    .map((jobExperiences) => jobExperiences.map(this.formatOccupationLabel(profile.gender)))
             })
             .map((experiences) => experiences.sort((a, b) => +b.lastJob - +a.lastJob))
             .shareReplay();
@@ -117,7 +117,7 @@ export class CandidateDetailComponent implements OnInit {
                 } else {
                     return candidateProfile.jobAdvisor;
                 }
-            });
+            })
     }
 
     private enrichWithLabels(jobExperience: JobExperience): Observable<EnrichedJobExperience> {
@@ -138,7 +138,7 @@ export class CandidateDetailComponent implements OnInit {
             const { male, female } = jobExperience.occupationLabels;
             const occupationLabel = (gender === Gender.FEMALE && female) ? female : male;
             return Object.assign({}, jobExperience, { occupationLabel });
-        };
+        }
     }
 
     private populatePreferredWorkLocations(): void {

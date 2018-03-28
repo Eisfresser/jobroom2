@@ -24,22 +24,16 @@ import { CantonService } from './services/canton.service';
 import { RouterEffects } from './state-management/effects/router.effects';
 import { UserTrackingEffects } from '../shared/state-management/effects/user-tracking.effects';
 import { UserTrackingService } from '../shared/user-tracking/user-tracking.service';
-import { USER_TRACKING_ENABLED } from '../app.constants';
-
-const effects: Array<any> = [
-    CandidateSearchEffects,
-    DetailsPagePaginationEffects,
-    RouterEffects
-];
-
-if (USER_TRACKING_ENABLED) {
-    effects.push(UserTrackingEffects);
-}
 
 @NgModule({
     imports: [
         StoreModule.forFeature('candidateSearch', candidateSearchReducer),
-        EffectsModule.forFeature([...effects]),
+        EffectsModule.forFeature([
+            CandidateSearchEffects,
+            DetailsPagePaginationEffects,
+            RouterEffects,
+            UserTrackingEffects
+        ]),
         JobroomSharedModule,
         CommonModule,
         ReactiveFormsModule,

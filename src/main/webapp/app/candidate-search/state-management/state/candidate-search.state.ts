@@ -8,9 +8,9 @@ import {
     LanguageSkill,
     WorkForm
 } from '../../../shared';
-import { CandidateProfile } from '../../services/candidate';
 import { TypeaheadMultiselectModel } from '../../../shared/input-components';
 import { Degree } from '../../../shared/job-publication/job-publication.model';
+import { CandidateProfile } from '../../services/candidate';
 
 export interface CandidateSearchState {
     searchFilter: CandidateSearchFilter;

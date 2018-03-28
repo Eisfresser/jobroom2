@@ -1,6 +1,5 @@
 buildscript {
     repositories {
-        mavenLocal()
         jcenter()
         maven { url "http://repo.spring.io/plugins-release" }
         maven { url "https://plugins.gradle.org/m2/" }
@@ -60,9 +59,7 @@ dependencyManagement {
 
     }
     imports {
-        mavenBom 'org.springframework.cloud:spring-cloud-dependencies:Finchley.M9'
-//        mavenBom 'io.github.jhipster:jhipster-dependencies:' + jhipster_dependencies_version
-        //jhipster-needle-gradle-dependency-management - JHipster will add additional dependencies management here
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${spring_cloud_version}"
     }
 }
 
@@ -101,6 +98,7 @@ task testReport(type: TestReport) {
 
 apply from: 'gradle/checkstyle.gradle'
 apply from: 'gradle/docker.gradle'
+apply from: 'gradle/docker-compose.gradle'
 apply from: 'gradle/sonar.gradle'
 apply from: 'gradle/liquibase.gradle'
 apply from: 'gradle/mapstruct.gradle'
