@@ -5,13 +5,12 @@ import {
     DrivingLicenceCategory,
     Experience,
     Graduation,
-    ISCED_1997,
     LanguageSkill,
     WorkForm
 } from '../../../shared';
-import { CandidateProfile } from '../../services/candidate';
 import { TypeaheadMultiselectModel } from '../../../shared/input-components';
 import { Degree } from '../../../shared/job-publication/job-publication.model';
+import { CandidateProfile } from '../../services/candidate';
 
 export interface CandidateSearchState {
     searchFilter: CandidateSearchFilter;
@@ -33,11 +32,11 @@ export interface CandidateSearchFilter {
     residence?: Array<Canton | string>;
     availability?: Availability;
     workload?: [number, number];
-    workForm?: WorkForm,
-    degree?: Degree,
-    graduation?: Graduation,
-    drivingLicenceCategory?: DrivingLicenceCategory
-    languageSkills?: Array<LanguageSkill>
+    workForm?: WorkForm;
+    degree?: Degree;
+    graduation?: Graduation;
+    drivingLicenceCategory?: DrivingLicenceCategory;
+    languageSkills?: Array<LanguageSkill>;
 }
 
 export const initialState: CandidateSearchState = {
