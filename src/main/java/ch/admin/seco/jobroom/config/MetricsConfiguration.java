@@ -75,10 +75,10 @@ public class MetricsConfiguration extends MetricsConfigurerAdapter {
         metricRegistry.register(PROP_METRIC_REG_JVM_FILES, new FileDescriptorRatioGauge());
         metricRegistry.register(PROP_METRIC_REG_JVM_BUFFERS, new BufferPoolMetricSet(ManagementFactory.getPlatformMBeanServer()));
         metricRegistry.register(PROP_METRIC_REG_JVM_ATTRIBUTE_SET, new JvmAttributeGaugeSet());
-        if (hikariDataSource != null) {
-            log.debug("Monitoring the datasource");
-            hikariDataSource.setMetricRegistry(metricRegistry);
-        }
+//        if (hikariDataSource != null) {
+//            log.debug("Monitoring the datasource");
+//            hikariDataSource.setMetricRegistry(metricRegistry);
+//        }
         if (jHipsterProperties.getMetrics().getJmx().isEnabled()) {
             log.debug("Initializing Metrics JMX reporting");
             JmxReporter jmxReporter = JmxReporter.forRegistry(metricRegistry).build();

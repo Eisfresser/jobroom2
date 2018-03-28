@@ -5,9 +5,9 @@ ENV SPRING_OUTPUT_ANSI_ENABLED=ALWAYS \
     JAVA_OPTS=""
 
 # add directly the jar
-COPY jobroom_batch.jar /app.jar
+COPY jobroom_batch.jar /jobroom_batch.jar
 
-EXPOSE 9000 
+EXPOSE 9000
 CMD echo "The application will start in ${SLEEP}s..." && \
     sleep ${SLEEP} && \
-    java ${JAVA_OPTS} -Djava.security.egd=file:/dev/./urandom -jar /app.jar
+    java ${JAVA_OPTS} -Djava.security.egd=file:/dev/./urandom -jar /jobroom_batch.jar

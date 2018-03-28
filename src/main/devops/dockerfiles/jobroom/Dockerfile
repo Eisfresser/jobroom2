@@ -5,9 +5,9 @@ ENV SPRING_OUTPUT_ANSI_ENABLED=ALWAYS \
     JAVA_OPTS=""
 
 # add directly the jar
-COPY jobroom.war /app.war
+COPY jobroom.war /jobroom.war
 
 EXPOSE 8080 5701/udp
 CMD echo "The application will start in ${SLEEP}s..." && \
     sleep ${SLEEP} && \
-    java ${JAVA_OPTS} -Djava.security.egd=file:/dev/./urandom -jar /app.war
+    java ${JAVA_OPTS} -Djava.security.egd=file:/dev/./urandom -jar /jobroom.war

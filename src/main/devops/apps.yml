@@ -5,7 +5,8 @@ services:
         image: localhost:5000/jr2_jobroom-app
         env_file: apps-env.properties
         environment:
-            - SERVER_PORT=8080
+            LIQUIBASE_DROPFIRST: false
+            SERVER_PORT: 8080
         ports:
             - 8080:8080
         networks:
@@ -16,14 +17,16 @@ services:
         deploy:
             placement:
                 constraints: [node.labels.type == java]
+
     jobservice-app:
         build: dockerfiles/jobservice
         image: localhost:5000/jr2_jobservice-app
         env_file: apps-env.properties
         environment:
-            - SERVER_PORT=8081
-        ports:
-            - 8081:8081
+            LIQUIBASE_DROPFIRST: false
+#            - SERVER_PORT=8081
+#        ports:
+#            - 8081:8081
         networks:
             - jobroom_data2
         secrets:
@@ -32,14 +35,16 @@ services:
         deploy:
             placement:
                 constraints: [node.labels.type == java]
+
     referenceservice-app:
         build: dockerfiles/referenceservice
         image: localhost:5000/jr2_referenceservice-app
         env_file: apps-env.properties
         environment:
-            - SERVER_PORT=8082
-        ports:
-            - 8082:8082
+            LIQUIBASE_DROPFIRST: false
+#            - SERVER_PORT=8082
+#        ports:
+#            - 8082:8082
         networks:
             - jobroom_data2
         secrets:
@@ -48,14 +53,16 @@ services:
         deploy:
             placement:
                 constraints: [node.labels.type == java]
+
     candidateservice-app:
         build: dockerfiles/candidateservice
         image: localhost:5000/jr2_candidateservice-app
         env_file: apps-env.properties
         environment:
-            - SERVER_PORT=8083
-        ports:
-            - 8083:8083
+            LIQUIBASE_DROPFIRST: false
+#            - SERVER_PORT=8083
+#        ports:
+#            - 8083:8083
         networks:
             - jobroom_data2
         secrets:
@@ -64,18 +71,18 @@ services:
         deploy:
             placement:
                 constraints: [node.labels.type == java]
+
     jobroom-batch:
         build: dockerfiles/jobroom_batch
         image: localhost:5000/jr2_jobroom-batch
         env_file: apps-env.properties
         environment:
-            - SPRING_PROFILES_ACTIVE=development
-            - SPRING_APPLICATION_NAME=jobroom_batch
-            - SERVER_PORT=9000
-        ports:
-            - 9000:9000
+            SPRING_PROFILES_ACTIVE: development
+                SPRING_APPLICATION_NAME: jobroom_batch
+ #           - SERVER_PORT=9000
+ #       ports:
+ #           - 9000:9000
         volumes:
-            - batch-data:/build
             - batch-tmp-data:/tmp/batch/
         networks:
             - jobroom_data2
@@ -91,9 +98,10 @@ services:
         image: localhost:5000/jr2_jobpublicationservice-app
         env_file: apps-env.properties
         environment:
-            - SERVER_PORT=8084
-        ports:
-            - 8084:8084
+            LIQUIBASE_ENABLED: false
+#            - SERVER_PORT=8084
+#        ports:
+#            - 8084:8084
         networks:
             - jobroom_data2
         secrets:
@@ -101,16 +109,17 @@ services:
               target: bootstrap.yml
         deploy:
             placement:
-                constraints: [node.labels.type == java]
+                constraints: [node.labels.type == infr]
 
     trackingservice-app:
         build: dockerfiles/trackingservice
         image: localhost:5000/jr2_trackingservice-app
         env_file: apps-env.properties
         environment:
-            - SERVER_PORT=8085
-        ports:
-            - 8085:8085
+            LIQUIBASE_ENABLED: false
+#            - SERVER_PORT: 8085
+#        ports:
+#            - 8085:8085
         networks:
             - jobroom_data2
         secrets:
@@ -118,14 +127,15 @@ services:
               target: bootstrap.yml
         deploy:
             placement:
-                constraints: [node.labels.type == java]
+                constraints: [node.labels.type == infr]
 
     jobadservice-app:
         build: dockerfiles/jobadservice
         image: localhost:5000/jr2_jobadservice-app
         env_file: apps-env.properties
         environment:
-            - SERVER_PORT=8086
+            SPRING_LIQUIBASE_DROPFIRST: false
+            SERVER_PORT: 8086
         ports:
             - 8086:8086
         networks:
@@ -138,8 +148,6 @@ services:
                 constraints: [node.labels.type == java]
 
 volumes:
-    batch-data:
-        driver: local
     batch-tmp-data:
         driver: local
 
@@ -150,6 +158,3 @@ networks:
 secrets:
     bootstrap.yml-1:
         external: true
-    truststore.jks:
-        external: true
-

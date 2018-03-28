@@ -6,12 +6,11 @@ buildscript {
         maven { url "https://plugins.gradle.org/m2/" }
         // TODO To remove after final Spring Boot 2 release
         maven { url "https://repo.spring.io/milestone" }
-        maven { url "https://repo.spring.io/snapshot" }
         maven { url "https://dl.bintray.com/jhipster/maven" }
     }
     dependencies {
         classpath "org.springframework.boot:spring-boot-gradle-plugin:${spring_boot_version}"
-        classpath "io.spring.gradle:propdeps-plugin:0.0.9.RELEASE"
+        classpath "io.spring.gradle:propdeps-plugin:0.0.10.RELEASE"
         classpath "gradle.plugin.com.gorylenko.gradle-git-properties:gradle-git-properties:1.4.17"
         //jhipster-needle-gradle-buildscript-dependency - JHipster will add additional gradle build script plugins here
     }
@@ -24,6 +23,7 @@ plugins {
     id "io.spring.dependency-management" version "1.0.4.RELEASE"
     id "com.gorylenko.gradle-git-properties" version "1.4.17"
     id "com.moowork.node" version "1.2.0"
+    id 'com.avast.gradle.docker-compose' version '0.7.1'
     //jhipster-needle-gradle-plugins - JHipster will add additional gradle plugins here
 }
 
@@ -39,6 +39,8 @@ apply plugin: 'org.springframework.boot'
 apply plugin: 'propdeps'
 apply plugin: 'com.moowork.node'
 apply plugin: 'io.spring.dependency-management'
+apply plugin: 'com.gorylenko.gradle-git-properties'
+apply plugin: 'checkstyle'
 apply plugin: 'idea'
 
 dependencyManagement {
@@ -58,7 +60,7 @@ dependencyManagement {
 
     }
     imports {
-        mavenBom 'org.springframework.cloud:spring-cloud-dependencies:Finchley.M5'
+        mavenBom 'org.springframework.cloud:spring-cloud-dependencies:Finchley.M9'
 //        mavenBom 'io.github.jhipster:jhipster-dependencies:' + jhipster_dependencies_version
         //jhipster-needle-gradle-dependency-management - JHipster will add additional dependencies management here
     }
@@ -67,7 +69,7 @@ dependencyManagement {
 defaultTasks 'bootRun'
 
 group = 'ch.admin.seco.jobroom'
-version = version != 'unspecified' ? version : '2.0.6-SNAPSHOT'
+version = version != 'unspecified' ? version : '1.0.0-SNAPSHOT'
 
 description = ''
 
@@ -76,8 +78,13 @@ bootWar {
 }
 
 springBoot {
-    mainClassName = 'ch.admin.seco.jobroom.JobroomApp'
-    buildInfo()
+    buildInfo({
+        properties {
+            additional = [
+                'number': System.env.TRAVIS_JOB_NUMBER ?: 'n/a'
+            ]
+        }
+    })
 }
 
 test {
@@ -121,7 +128,6 @@ repositories {
     maven { url 'https://alvch.jfrog.io/alvch/libs-releases' }
     // TODO To remove after final Spring Boot 2 release
     maven { url "https://repo.spring.io/milestone" }
-    maven { url "https://repo.spring.io/snapshot" }
     maven { url "https://dl.bintray.com/jhipster/maven" }
 }
 
@@ -222,7 +228,7 @@ task cleanResources(type: Delete) {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '4.4'
+    gradleVersion = '4.6'
 }
 
 task stage(dependsOn: 'bootWar') {

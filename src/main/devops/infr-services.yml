@@ -1,25 +1,25 @@
-version: '3.4'
+version: '3.3'
 services:
-    jhipster-registry:
-        image: jhipster/jhipster-registry
-        env_file: env.properties
-        environment:
-            - SPRING_PROFILES_ACTIVE=development
-            - GIT_URI=https://github.com/alv-ch/central-config.git
-            - SPRING_CLOUD_CONFIG_PROFILE=development
-            - SECURITY_USER_PASSWORD=$${jhipster.registry.password}
-        ports:
-            - 8761:8761
-        networks:
-            - jobroom_data2
-        secrets:
-            - source: bootstrap.yml-1
-              target: bootstrap.yml
-            - truststore.jks
-        command: java -Xmx512m -Xms256m -Duser.timezone=Europe/Zurich -Djava.security.egd=file:/dev/./urandom -jar /jhipster-registry.war --spring.cloud.config.server.git.uri=https://github.com/alv-ch/central-config.git
-        deploy:
-            placement:
-                constraints: [node.labels.type == java]
+#    jhipster-registry:
+#        image: jhipster/jhipster-registry
+#        env_file: env.properties
+#        environment:
+#            - SPRING_PROFILES_ACTIVE=development
+#            - GIT_URI=https://github.com/alv-ch/central-config.git
+#            - SPRING_CLOUD_CONFIG_PROFILE=development
+#            - SECURITY_USER_PASSWORD=$${jhipster.registry.password}
+#        ports:
+#            - 8761:8761
+#        networks:
+#            - jobroom_data2
+#        secrets:
+#            - source: bootstrap.yml-1
+#              target: bootstrap.yml
+#            - truststore.jks
+#        command: java -Xmx512m -Xms256m -Duser.timezone=Europe/Zurich -Djava.security.egd=file:/dev/./urandom -jar /jhipster-registry.war --spring.cloud.config.server.git.uri=https://github.com/alv-ch/central-config.git
+#        deploy:
+#            placement:
+#                constraints: [node.labels.type == java]
 
     mail-server:
         image: schickling/mailcatcher
@@ -33,7 +33,7 @@ services:
             - jobroom_data2
         deploy:
             placement:
-                constraints: [node.labels.type == java]
+                constraints: [node.labels.type == infr]
 
     nginx-proxy:
         image: localhost:5000/nginx-lua
@@ -60,45 +60,38 @@ services:
         image: wurstmeister/zookeeper:3.4.6
         ports:
           - 2181:2181
+        networks:
+            - jobroom_data2
         deploy:
             placement:
-                constraints: [node.labels.type == java]
+                constraints: [node.labels.type == infr]
 
     kafka:
         image: wurstmeister/kafka:1.0.0
         environment:
-            KAFKA_ADVERTISED_HOST_NAME: kafka
+            KAFKA_ADVERTISED_HOST_NAME: dev.job-room.ch
             KAFKA_ADVERTISED_PORT: 9092
-            KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+            KAFKA_ZOOKEEPER_CONNECT: dev.job-room.ch:2181
         ports:
             - 9092:9092
+        networks:
+            - jobroom_data2
         deploy:
             placement:
-                constraints: [node.labels.type == java]
+                constraints: [node.labels.type == infr]
 
-    spring-cloud-dataflow:
-        build: spring-cloud-dataflow
-        image: spring-cloud-dataflow
-        environment:
-            SPRING_CLOUD_SKIPPER_CLIENT_SERVER_URI: http://spring-cloud-skipper:7577/api
-            SPRING_CLOUD_STREAM_KAFKA_BINDER_BROKERS: kafka:9092
-            SPRING_CLOUD_STREAM_KAFKA_BINDER_ZK_NODES: zookeeper:2181
-            SPRING_CLOUD_DATAFLOW_APPLICATION_PROPERTIES_STREAM_SPRING_CLOUD_STREAM_KAFKA_BINDER_BROKERS: kafka:9092
-            SPRING_CLOUD_DATAFLOW_APPLICATION_PROPERTIES_STREAM_SPRING_CLOUD_STREAM_KAFKA_BINDER_ZK_NODES: zookeeper:2181
-            SPRING_DATASOURCE_URL: jdbc:postgresql://spring-cloud-dataflow-postgres:5432/spring-cloud-dataflow
-            SPRING_DATASOURCE_USERNAME: spring-cloud-dataflow
-            SPRING_DATASOURCE_PASSWORD: s3cr3t
-            SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
-            MAVEN_LOCAL_REPOSITORY: /repo
-            MAVEN_REMOTE_REPOSITORIES_SPRING_RELEASE: https://repo.spring.io/libs-release
-            MAVEN_REMOTE_REPOSITORIES_ALVCH: https://alvch.jfrog.io/alvch/global
-            LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_CLOUD_DEPLOYER: TRACE
-        volumes:
-            - ${HOME}/.m2/repository:/repo
+    mockserver:
+        image: jamesdbloom/mockserver:mockserver-5.3.0
         ports:
-            - 9393:9393
-            - 7000-7010:7000-7010
-
+            - 9180:9180
+        networks:
+            - jobroom_data2
+        environment:
+            - LOG_LEVEL=DEBUG
+        command: /opt/mockserver/run_mockserver.sh -serverPort 9180
+        deploy:
+            placement:
+                constraints: [node.labels.type == infr]
 
 networks:
     jobroom_data2:
