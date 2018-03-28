@@ -29,7 +29,7 @@ eureka:
 spring:
     profiles:
         active: dev
-        include: swagger
+#        include: swagger
     devtools:
         restart:
             enabled: true
@@ -70,7 +70,7 @@ spring:
         username:
         password:
     messages:
-        cache-seconds: 1
+#        cache-seconds:
     thymeleaf:
         cache: false
     zipkin: # Use the "zipkin" Maven profile to have the Spring Cloud Zipkin dependencies
