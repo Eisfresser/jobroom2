@@ -5,6 +5,7 @@ import {
     DrivingLicenceCategory,
     Experience,
     Graduation,
+    ISCED_1997,
     LanguageSkill,
     WorkForm
 } from '../../../shared';
@@ -32,11 +33,11 @@ export interface CandidateSearchFilter {
     residence?: Array<Canton | string>;
     availability?: Availability;
     workload?: [number, number];
-    workForm?: WorkForm;
-    degree?: Degree;
-    graduation?: Graduation;
-    drivingLicenceCategory?: DrivingLicenceCategory;
-    languageSkills?: Array<LanguageSkill>;
+    workForm?: WorkForm,
+    degree?: Degree,
+    graduation?: Graduation,
+    drivingLicenceCategory?: DrivingLicenceCategory
+    languageSkills?: Array<LanguageSkill>
 }
 
 export const initialState: CandidateSearchState = {

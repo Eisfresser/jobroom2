@@ -16,7 +16,7 @@ import {
     LOAD_PREVIOUS_ITEM,
     NEXT_ITEM_LOADED
 } from '../../components/details-page-pagination/state-management/actions/details-page-pagination.actions';
-import { Store } from '@ngrx/store';
+import { Action, Store } from '@ngrx/store';
 import {
     CandidateSearchState,
     getCandidateProfileList,
@@ -127,6 +127,6 @@ export class UserTrackingEffects {
     }
 
     private getCandidateProfileList() {
-        return this.store.select(getCandidateProfileList);
+        return this.store.select(getCandidateProfileList)
     }
 }

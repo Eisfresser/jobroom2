@@ -32,3 +32,8 @@ export interface OccupationCode {
     type: string,
     value: number
 }
+
+export interface OccupationCode {
+    type: string,
+    value: number
+}
