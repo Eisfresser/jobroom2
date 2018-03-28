@@ -28,14 +28,3 @@ task buildDocker(type: DockerBuildImage, dependsOn: 'copyDockerFiles') {
     tags = ["jobroom:latest".toString(), "jobroom:${project.version}".toString()]
 }
 
-apply plugin: 'docker-compose'
-dockerCompose.isRequiredBy(test)
-
-dockerCompose {
-    dockerComposeWorkingDirectory = "${project.rootProject.rootDir}/src/main/docker"
-    useComposeFiles = ["${project.rootProject.rootDir}/src/main/docker/elasticsearch.yml"]
-    stopContainers = System.getenv().hasProperty('TRAVIS_JOB_ID') ? true: false
-}
-
-dockerCompose.isRequiredBy(test)
-
