@@ -447,20 +447,28 @@ public class OrganizationResourceIntTest {
     @Transactional
     public void suggestOrganizations() throws Exception {
         // Initialize the database
-        organization = organization
-            .name("das team ag")
-            .city("Olten");
-        organizationRepository.saveAndFlush(organization);
-        organizationSearchRepository.save(organization);
+        saveOrganizations(
+            createEntity().externalId("11111").name("Das team ag").city("Olten"),
+            createEntity().externalId("22222").name("Das team ag").city("Bern"),
+            createEntity().externalId("33333").name("Google").city("Olten")
+        );
 
         // Search the organization
-        restOrganizationMockMvc.perform(get("/api/_search/organizations/suggest?prefix=das olten&resultSize=1"))
+        restOrganizationMockMvc.perform(get("/api/_search/organizations/suggest?prefix=das olten&resultSize=10"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.organizations.[*].externalId").value(hasItem(DEFAULT_EXTERNAL_ID)))
-            .andExpect(jsonPath("$.organizations.[*].name").value(hasItem("das team ag")))
+            .andExpect(jsonPath("$.organizations.length()").value("1"))
+            .andExpect(jsonPath("$.organizations.[*].externalId").value(hasItem("11111")))
+            .andExpect(jsonPath("$.organizations.[*].name").value(hasItem("Das team ag")))
             .andExpect(jsonPath("$.organizations.[*].street").value(hasItem(DEFAULT_STREET)))
             .andExpect(jsonPath("$.organizations.[*].city").value(hasItem("Olten")));
+    }
+
+    private void saveOrganizations(Organization... organizations) {
+        for (Organization organization : organizations) {
+            organizationRepository.saveAndFlush(organization);
+            organizationSearchRepository.save(organization);
+        }
     }
 
     @Test

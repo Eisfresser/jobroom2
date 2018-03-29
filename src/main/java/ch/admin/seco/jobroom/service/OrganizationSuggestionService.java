@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import com.google.common.base.Preconditions;
 import org.elasticsearch.index.query.MultiMatchQueryBuilder;
+import org.elasticsearch.index.query.Operator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -47,7 +48,8 @@ public class OrganizationSuggestionService {
     private SearchQuery buildSearchQuery(String query, int resultSize) {
         final MultiMatchQueryBuilder multiMatchQueryBuilder = new MultiMatchQueryBuilder(query, suggestFields)
             .analyzer("ascii_folding")
-            .type(MultiMatchQueryBuilder.Type.CROSS_FIELDS);
+            .type(MultiMatchQueryBuilder.Type.CROSS_FIELDS)
+            .operator(Operator.AND);
 
         return new NativeSearchQueryBuilder()
             .withQuery(multiMatchQueryBuilder)
