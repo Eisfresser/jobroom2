@@ -6,8 +6,8 @@ services:
         env_file: env.properties
         environment:
             SPRING_APPLICATION_NAME: spring-cloud-dataflow
-#            SPRING_CLOUD_STREAM_KAFKA_BINDER_BROKERS: kafka:9092
-#            SPRING_CLOUD_STREAM_KAFKA_BINDER_ZK_NODES: zookeeper:2181
+            SPRING_CLOUD_STREAM_KAFKA_BINDER_BROKERS: kafka:9092
+            SPRING_CLOUD_STREAM_KAFKA_BINDER_ZK_NODES: zookeeper:2181
         ports:
             - 9393:9393
             - 7000-7010:7000-7010

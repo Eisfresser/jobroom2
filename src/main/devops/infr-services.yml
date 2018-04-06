@@ -1,25 +1,25 @@
 version: '3.3'
 services:
-#    jhipster-registry:
-#        image: jhipster/jhipster-registry
-#        env_file: env.properties
-#        environment:
-#            - SPRING_PROFILES_ACTIVE=development
-#            - GIT_URI=https://github.com/alv-ch/central-config.git
-#            - SPRING_CLOUD_CONFIG_PROFILE=development
-#            - SECURITY_USER_PASSWORD=$${jhipster.registry.password}
-#        ports:
-#            - 8761:8761
-#        networks:
-#            - jobroom_data2
-#        secrets:
-#            - source: bootstrap.yml-1
-#              target: bootstrap.yml
-#            - truststore.jks
-#        command: java -Xmx512m -Xms256m -Duser.timezone=Europe/Zurich -Djava.security.egd=file:/dev/./urandom -jar /jhipster-registry.war --spring.cloud.config.server.git.uri=https://github.com/alv-ch/central-config.git
-#        deploy:
-#            placement:
-#                constraints: [node.labels.type == java]
+    jhipster-registry:
+        image: jhipster/jhipster-registry
+        env_file: env.properties
+        environment:
+            - SPRING_PROFILES_ACTIVE=development
+            - GIT_URI=https://github.com/alv-ch/central-config.git
+            - SPRING_CLOUD_CONFIG_PROFILE=development
+            - SECURITY_USER_PASSWORD=$${jhipster.registry.password}
+        ports:
+            - 8761:8761
+        networks:
+            - jobroom_data2
+        secrets:
+            - source: bootstrap.yml-1
+              target: bootstrap.yml
+            - truststore.jks
+        command: java -Xmx512m -Xms256m -Duser.timezone=Europe/Zurich -Djava.security.egd=file:/dev/./urandom -jar /jhipster-registry.war --spring.cloud.config.server.git.uri=https://github.com/alv-ch/central-config.git
+        deploy:
+            placement:
+                constraints: [node.labels.type == java]
 
     mail-server:
         image: schickling/mailcatcher
