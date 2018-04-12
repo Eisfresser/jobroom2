@@ -380,6 +380,7 @@ global,global.reference.canton.VD,Waadt,Vaud,Vaud,Vaud
 global,global.reference.canton.VS,Wallis,Valais,Valais,Vallese
 global,global.reference.canton.ZG,Zug,Zug,Zoug,Zugo
 global,global.reference.canton.ZH,Zürich,Zurich,Zurich,Zurigo
+global,global.reference.canton.99,Ausland,Abroad,Étranger,Estero
 global,global.reference.language.ar,Arabisch,Arab,Arabe,Arabo
 global,global.reference.language.bg,Bulgarisch,Bulgarian,Bulgare,Bulgaro
 global,global.reference.language.bs,Bosnisch,Bosnian,Bosniaque,Bosniaco

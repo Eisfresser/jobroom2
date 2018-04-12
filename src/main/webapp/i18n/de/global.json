@@ -285,7 +285,8 @@
                 "VD": "Waadt",
                 "VS": "Wallis",
                 "ZG": "Zug",
-                "ZH": "Z\u00fcrich"
+                "ZH": "Z\u00fcrich",
+                "99": "Ausland"
             },
             "language": {
                 "ar": "Arabisch",

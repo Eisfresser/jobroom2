@@ -285,7 +285,8 @@
                 "VD": "Vaud",
                 "VS": "Valais",
                 "ZG": "Zug",
-                "ZH": "Zurich"
+                "ZH": "Zurich",
+                "99": "Abroad"
             },
             "language": {
                 "ar": "Arab",
