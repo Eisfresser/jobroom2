@@ -20,6 +20,8 @@ EXPOSE 7000-7010 9393
 # Run application
 CMD echo "The application will start in ${JHIPSTER_SLEEP}s..." && \
     sleep ${JHIPSTER_SLEEP} && \
-    java ${JAVA_OPTS} -Djava.security.egd=file:/dev/./urandom -Djava.io.tmpdir=${TMP} -jar /spring-cloud-dataflow-server-local.jar \
-    --spring.cloud.deployer.local.envVarsToInherit=TMP,LANG,LANGUAGE,"LC_.*.","SPRING_CLOUD_STREAM_KAFKA.*" \
+    java ${JAVA_OPTS} -Djava.security.egd=file:/dev/./urandom -Djava.io.tmpdir=${TMP} \
+    -jar /spring-cloud-dataflow-server-local.jar \
+    --spring.config.location=file:/run/secrets/ \
     --logging.level.org.springframework.cloud.deployer=TRACE
+
