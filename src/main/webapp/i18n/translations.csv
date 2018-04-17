@@ -1001,6 +1001,7 @@ user-management,userManagement.delete.question,"Sind Sie sicher, dass Sie den Be
 user-management,userManagement.deleted,Ein Benutzer mit ID {{ param }} wurde gelöscht,A user was deleted with identifier {{ param }},L'utilisateur portant l'ID {{ param }} a été supprimé.,È stato eliminato l'utente identificato da {{ param }}
 user-management,userManagement.detail.title,Benutzer,User,Utilisateur,Utente
 user-management,userManagement.email,E-Mail,Email,Courriel,E-mail
+user-management,userManagement.extid,ExtId,ExtId,ExtId,ExtId
 user-management,userManagement.firstName,Vorname,First name,Prénom,Nome
 user-management,userManagement.home.createLabel,Neuen Benutzer erstellen,Create a new user,Créer un nouvel utilisateur,Crea un nuovo utente
 user-management,userManagement.home.createOrEditLabel,Benutzer erstellen oder bearbeiten,Create or edit a user,Créer ou éditer un utilisateur,Crea o modifica un utente
