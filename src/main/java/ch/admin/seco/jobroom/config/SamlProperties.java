@@ -1,46 +1,27 @@
-package ch.admin.seco.jobroom.security.saml;
+package ch.admin.seco.jobroom.config;
 
 import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Profile;
-import org.springframework.stereotype.Component;
 
-@Component
-@Profile("!security-mock")
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+@EnableConfigurationProperties
+@ConfigurationProperties(prefix = "security.saml")
 public class SamlProperties {
-
-    @Value("${security.saml.idpConfigPath}")
     private String idpConfigPath;
 
-    @Value("${security.saml.keystorePath}")
     private String keystorePath;
-
-    @Value("${security.saml.keystorePassword}")
     private String keystorePassword;
-
-    @Value("${security.saml.keystorePrivateKeyName}")
     private String keystorePrivateKeyName;
-
-    @Value("${security.saml.keystorePrivateKeyPassword}")
     private String keystorePrivateKeyPassword;
-
-    @Value("${security.saml.externalContextScheme}")
     private String externalContextScheme;
-
-    @Value("${security.saml.externalContextServerName}")
     private String externalContextServerName;
-
-    @Value("${security.saml.externalContextServerPort}")
     private String externalContextServerPort;
-
-    @Value("${security.saml.externalContextPath}")
     private String externalContextPath;
-
-    @Value("${security.saml.entityId:}")
     private String entityId;
-
-    @Value("${security.saml.entityAlias:}")
-    public String entityAlias;
+    //public String entityAlias;
 
     public String getIdpConfigPath() {
         return idpConfigPath;
@@ -122,11 +103,11 @@ public class SamlProperties {
         this.entityId = entityId;
     }
 
-    public String getEntityAlias() {
+    /*public String getEntityAlias() {
         return StringUtils.isEmpty(this.entityAlias) ? null : entityAlias;
     }
 
     public void setEntityAlias(String entityAlias) {
         this.entityAlias = entityAlias;
-    }
+    }*/
 }

@@ -1,12 +1,13 @@
 package ch.admin.seco.jobroom.security.saml.utils;
 
-import ch.admin.seco.jobroom.domain.User;
-import org.springframework.security.core.GrantedAuthority;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+
+import org.springframework.security.core.GrantedAuthority;
+
+import ch.admin.seco.jobroom.domain.User;
 
 public class AuthenticatedUser extends org.springframework.security.core.userdetails.User {
 

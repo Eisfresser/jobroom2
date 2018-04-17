@@ -154,3 +154,17 @@ jhipster:
 # ===================================================================
 
 # application:
+
+security:
+    saml:
+        idpConfigPath:
+        keystorePath:
+        keystorePassword:
+        keystorePrivateKeyName:
+        keystorePrivateKeyPassword:
+        externalContextScheme:
+        externalContextServerName:
+        externalContextServerPort:
+        externalContextPath:
+        entityId:
+        #entityAlias:

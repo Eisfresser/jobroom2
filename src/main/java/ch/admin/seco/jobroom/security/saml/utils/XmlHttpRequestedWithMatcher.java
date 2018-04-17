@@ -1,9 +1,9 @@
 package ch.admin.seco.jobroom.security.saml.utils;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.security.web.util.matcher.RequestHeaderRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
-
-import javax.servlet.http.HttpServletRequest;
 
 public class XmlHttpRequestedWithMatcher implements RequestMatcher {
 

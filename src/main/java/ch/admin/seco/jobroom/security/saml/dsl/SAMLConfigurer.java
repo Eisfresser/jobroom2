@@ -1,7 +1,18 @@
 package ch.admin.seco.jobroom.security.saml.dsl;
 
-import ch.admin.seco.jobroom.security.saml.utils.HttpStatusEntryPoint;
-import ch.admin.seco.jobroom.security.saml.utils.XmlHttpRequestedWithMatcher;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Timer;
+import java.util.regex.Pattern;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
 import org.opensaml.saml2.metadata.provider.FilesystemMetadataProvider;
@@ -13,6 +24,7 @@ import org.opensaml.xml.parse.StaticBasicParserPool;
 import org.opensaml.xml.parse.XMLParserException;
 import org.opensaml.xml.security.x509.CertPathPKIXTrustEvaluator;
 import org.opensaml.xml.security.x509.PKIXTrustEvaluator;
+
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
@@ -21,20 +33,44 @@ import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
-import org.springframework.security.saml.*;
+import org.springframework.security.saml.SAMLAuthenticationProvider;
+import org.springframework.security.saml.SAMLBootstrap;
+import org.springframework.security.saml.SAMLDiscovery;
+import org.springframework.security.saml.SAMLEntryPoint;
+import org.springframework.security.saml.SAMLLogoutFilter;
+import org.springframework.security.saml.SAMLLogoutProcessingFilter;
+import org.springframework.security.saml.SAMLProcessingFilter;
 import org.springframework.security.saml.context.SAMLContextProvider;
 import org.springframework.security.saml.context.SAMLContextProviderLB;
 import org.springframework.security.saml.key.JKSKeyManager;
 import org.springframework.security.saml.key.KeyManager;
 import org.springframework.security.saml.log.SAMLDefaultLogger;
-import org.springframework.security.saml.metadata.*;
-import org.springframework.security.saml.processor.*;
+import org.springframework.security.saml.metadata.CachingMetadataManager;
+import org.springframework.security.saml.metadata.ExtendedMetadata;
+import org.springframework.security.saml.metadata.ExtendedMetadataDelegate;
+import org.springframework.security.saml.metadata.MetadataDisplayFilter;
+import org.springframework.security.saml.metadata.MetadataGenerator;
+import org.springframework.security.saml.metadata.MetadataGeneratorFilter;
+import org.springframework.security.saml.processor.HTTPArtifactBinding;
+import org.springframework.security.saml.processor.HTTPPAOS11Binding;
+import org.springframework.security.saml.processor.HTTPPostBinding;
+import org.springframework.security.saml.processor.HTTPRedirectDeflateBinding;
+import org.springframework.security.saml.processor.HTTPSOAP11Binding;
+import org.springframework.security.saml.processor.SAMLBinding;
+import org.springframework.security.saml.processor.SAMLProcessor;
+import org.springframework.security.saml.processor.SAMLProcessorImpl;
 import org.springframework.security.saml.storage.EmptyStorageFactory;
 import org.springframework.security.saml.trust.MetadataCredentialResolver;
 import org.springframework.security.saml.trust.PKIXInformationResolver;
 import org.springframework.security.saml.userdetails.SAMLUserDetailsService;
 import org.springframework.security.saml.util.VelocityFactory;
-import org.springframework.security.saml.websso.*;
+import org.springframework.security.saml.websso.ArtifactResolutionProfile;
+import org.springframework.security.saml.websso.ArtifactResolutionProfileImpl;
+import org.springframework.security.saml.websso.SingleLogoutProfileImpl;
+import org.springframework.security.saml.websso.WebSSOProfile;
+import org.springframework.security.saml.websso.WebSSOProfileConsumerImpl;
+import org.springframework.security.saml.websso.WebSSOProfileImpl;
+import org.springframework.security.saml.websso.WebSSOProfileOptions;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.DefaultSecurityFilterChain;
 import org.springframework.security.web.FilterChainProxy;
@@ -51,12 +87,10 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.NegatedRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
-import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
-import java.util.*;
-import java.util.regex.Pattern;
+import ch.admin.seco.jobroom.security.saml.utils.HttpStatusEntryPoint;
+import ch.admin.seco.jobroom.security.saml.utils.XmlHttpRequestedWithMatcher;
 
-public class SAMLConfigurer extends SecurityConfigurerAdapter<DefaultSecurityFilterChain, HttpSecurity> {
+public final class SAMLConfigurer extends SecurityConfigurerAdapter<DefaultSecurityFilterChain, HttpSecurity> {
     private IdentityProvider identityProvider = new IdentityProvider();
     private ServiceProvider serviceProvider = new ServiceProvider();
 
@@ -99,8 +133,8 @@ public class SAMLConfigurer extends SecurityConfigurerAdapter<DefaultSecurityFil
         AuthenticationEntryPoint entryPoint = prepareEntryPoint(samlEntryPoint);
 
         http
-                .httpBasic().realmName("saml")
-                .authenticationEntryPoint(entryPoint);
+            .httpBasic().realmName("saml")
+            .authenticationEntryPoint(entryPoint);
 
         CsrfConfigurer<HttpSecurity> csrfConfigurer = http.getConfigurer(CsrfConfigurer.class);
         if (csrfConfigurer != null) {
@@ -112,9 +146,9 @@ public class SAMLConfigurer extends SecurityConfigurerAdapter<DefaultSecurityFil
         }
 
         http
-                .addFilterBefore(metadataGeneratorFilter(samlEntryPoint, extendedMetadata), ChannelProcessingFilter.class)
-                .addFilterAfter(samlFilter(samlEntryPoint, contextProvider), BasicAuthenticationFilter.class)
-                .authenticationProvider(samlAuthenticationProvider);
+            .addFilterBefore(metadataGeneratorFilter(samlEntryPoint, extendedMetadata), ChannelProcessingFilter.class)
+            .addFilterAfter(samlFilter(samlEntryPoint, contextProvider), BasicAuthenticationFilter.class)
+            .authenticationProvider(samlAuthenticationProvider);
     }
 
     public static SAMLConfigurer saml() {
@@ -267,9 +301,9 @@ public class SAMLConfigurer extends SecurityConfigurerAdapter<DefaultSecurityFil
 
     private SAMLLogoutFilter samlLogoutFilter(SAMLContextProvider contextProvider, SAMLProcessor samlProcessor) {
         SAMLLogoutFilter samlLogoutFilter = new SAMLLogoutFilter(
-                successLogoutHandler(),
-                new LogoutHandler[]{logoutHandler()},
-                new LogoutHandler[]{logoutHandler()}
+            successLogoutHandler(),
+            new LogoutHandler[] {logoutHandler()},
+            new LogoutHandler[] {logoutHandler()}
         );
         samlLogoutFilter.setProfile(singleLogoutProfile(samlProcessor));
         samlLogoutFilter.setContextProvider(contextProvider);
@@ -413,7 +447,7 @@ public class SAMLConfigurer extends SecurityConfigurerAdapter<DefaultSecurityFil
                 httpMetadataProvider.setParserPool(parserPool);
                 return httpMetadataProvider;
             } catch (MetadataProviderException e) {
-                throw new IllegalStateException("could not initialize HTTPMetadataProvider",e);
+                throw new IllegalStateException("could not initialize HTTPMetadataProvider", e);
             }
         }
 
@@ -425,7 +459,7 @@ public class SAMLConfigurer extends SecurityConfigurerAdapter<DefaultSecurityFil
                 filesystemMetadataProvider.setParserPool(parserPool);
                 return filesystemMetadataProvider;
             } catch (MetadataProviderException | IOException e) {
-                throw new IllegalStateException("could not initialize FilesystemMetadataProvider",e);
+                throw new IllegalStateException("could not initialize FilesystemMetadataProvider", e);
             }
         }
 
@@ -546,24 +580,33 @@ public class SAMLConfigurer extends SecurityConfigurerAdapter<DefaultSecurityFil
             @Override
             public String toString() {
                 return "KeyStore{" +
-                        "storeFilePath='" + storeFilePath + '\'' +
-                        ", password='" + password + '\'' +
-                        ", keyname='" + keyname + '\'' +
-                        ", keyPassword='" + keyPassword + '\'' +
-                        '}';
+                    "storeFilePath='" + storeFilePath + '\'' +
+                    ", password='" + password + '\'' +
+                    ", keyname='" + keyname + '\'' +
+                    ", keyPassword='" + keyPassword + '\'' +
+                    '}';
             }
 
             @Override
             public boolean equals(Object o) {
-                if (this == o) return true;
-                if (o == null || getClass() != o.getClass()) return false;
-
+                if (this == o) {
+                    return true;
+                }
+                if (o == null
+                    || getClass() != o.getClass()) {
+                    return false;
+                }
                 KeyStore keyStore = (KeyStore) o;
 
-                if (storeFilePath != null ? !storeFilePath.equals(keyStore.storeFilePath) : keyStore.storeFilePath != null)
+                if (storeFilePath != null ? !storeFilePath.equals(keyStore.storeFilePath) : keyStore.storeFilePath != null) {
                     return false;
-                if (password != null ? !password.equals(keyStore.password) : keyStore.password != null) return false;
-                if (keyname != null ? !keyname.equals(keyStore.keyname) : keyStore.keyname != null) return false;
+                }
+                if (password != null ? !password.equals(keyStore.password) : keyStore.password != null) {
+                    return false;
+                }
+                if (keyname != null ? !keyname.equals(keyStore.keyname) : keyStore.keyname != null) {
+                    return false;
+                }
                 return keyPassword != null ? keyPassword.equals(keyStore.keyPassword) : keyStore.keyPassword == null;
 
             }
@@ -576,6 +619,7 @@ public class SAMLConfigurer extends SecurityConfigurerAdapter<DefaultSecurityFil
                 result = 31 * result + (keyPassword != null ? keyPassword.hashCode() : 0);
                 return result;
             }
+
         }
     }
 

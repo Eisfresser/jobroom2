@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import com.codahale.metrics.annotation.Timed;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -31,6 +32,7 @@ import ch.admin.seco.jobroom.web.rest.vm.LoginVM;
  * Controller to authenticate users.
  */
 @RestController
+@Profile("security-mock")
 @RequestMapping("/api")
 public class UserJWTController {
 

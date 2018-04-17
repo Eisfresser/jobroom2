@@ -1,21 +1,23 @@
 package ch.admin.seco.jobroom.security.saml;
 
-import ch.admin.seco.jobroom.domain.User;
-import ch.admin.seco.jobroom.security.saml.infrastructure.EiamEnrichedSamlUser;
-import ch.admin.seco.jobroom.security.saml.infrastructure.SamlUser;
-import ch.admin.seco.jobroom.security.saml.infrastructure.SamlBasedUserDetailsProvider;
-import ch.admin.seco.jobroom.security.saml.utils.AuthenticatedUser;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.mapping.Attributes2GrantedAuthoritiesMapper;
 import org.springframework.security.core.authority.mapping.SimpleAttributes2GrantedAuthoritiesMapper;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import ch.admin.seco.jobroom.domain.User;
+import ch.admin.seco.jobroom.security.saml.infrastructure.EiamEnrichedSamlUser;
+import ch.admin.seco.jobroom.security.saml.infrastructure.SamlBasedUserDetailsProvider;
+import ch.admin.seco.jobroom.security.saml.infrastructure.SamlUser;
+import ch.admin.seco.jobroom.security.saml.utils.AuthenticatedUser;
 
 public class DefaultSamlBasedUserDetailsProvider implements SamlBasedUserDetailsProvider {
 
@@ -45,7 +47,7 @@ public class DefaultSamlBasedUserDetailsProvider implements SamlBasedUserDetails
     private User toJobroomUser(EiamEnrichedSamlUser eiamEnrichedSamlUser) {
         String phone = null;
 
-/*        if (eiamEnrichedSamlUser.getUserExtId().isPresent()) {
+        /*if (eiamEnrichedSamlUser.getUserExtId().isPresent()) {
             User user = this.iamService.getUser(eiamEnrichedSamlUser.getUserExtId().get());
             phone = user.getPhone();
         }
