@@ -39,13 +39,12 @@ public class AbstractSecurityConfig extends WebSecurityConfigurerAdapter {
         RequestMatcher notResourcesMatcher = new NegatedRequestMatcher(new AntPathRequestMatcher("/*service/**"));
         HeaderWriter notResourcesHeaderWriter = new DelegatingRequestMatcherHeaderWriter(notResourcesMatcher, new CacheControlHeadersWriter());
 
-        http.csrf().disable();
-
-        http.exceptionHandling()
+        http.csrf().disable()
+        .exceptionHandling()
             .accessDeniedHandler(problemSupport)
             //TODO: is this really needed?
             .authenticationEntryPoint(problemSupport)
-        //.and().authorizeRequests().antMatchers("/**").fullyAuthenticated()
+            //.and().authorizeRequests().antMatchers("/**").fullyAuthenticated()
         .and()
             .headers()
                 .cacheControl().disable()

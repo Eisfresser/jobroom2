@@ -21,6 +21,8 @@ import org.springframework.web.filter.CorsFilter;
 
 import ch.admin.seco.jobroom.security.AuthoritiesConstants;
 import ch.admin.seco.jobroom.security.MD5PasswordEncoder;
+import ch.admin.seco.jobroom.security.jwt.JWTConfigurer;
+import ch.admin.seco.jobroom.security.jwt.TokenProvider;
 import ch.admin.seco.jobroom.security.saml.DefaultSamlBasedUserDetailsProvider;
 import ch.admin.seco.jobroom.security.saml.infrastructure.EiamSamlUserDetailsService;
 import ch.admin.seco.jobroom.security.saml.infrastructure.SamlBasedUserDetailsProvider;
@@ -31,15 +33,14 @@ import ch.admin.seco.jobroom.security.saml.infrastructure.SamlBasedUserDetailsPr
 public class SecurityConfiguration {
 
     @Configuration
-    @Profile("!security-mock")
+    @Profile("saml-security")
     static class SamlSecurityConfig extends AbstractSecurityConfig {
 
         private SamlProperties samlProperties;
 
         // private final EiamSamlUserDetailsService userDetailsService;
-        // private final TokenProvider tokenProvider;
 
-        SamlSecurityConfig(SamlProperties samlProperties, CorsFilter corsFilter, SecurityProblemSupport problemSupport) {
+        SamlSecurityConfig(SamlProperties samlProperties, SecurityProblemSupport problemSupport) {
             super(problemSupport);
             this.samlProperties = samlProperties;
         }
@@ -95,10 +96,6 @@ public class SecurityConfiguration {
 
         }
 
-        /*private JWTConfigurer securityConfigurerAdapter() {
-            return new JWTConfigurer(tokenProvider);
-        }*/
-
         private EiamSamlUserDetailsService eiamSamlUserDetailsService() {
             return new EiamSamlUserDetailsService(samlBasedUserDetailsProvider());
         }
@@ -115,7 +112,7 @@ public class SecurityConfiguration {
     }
 
     @Configuration
-    @Profile("security-mock")
+    @Profile("!saml-security")
     static class MockedSecurityConfig extends AbstractSecurityConfig {
 
         //private static final String DEFAULT_FORM_LOGOUT_URL = "/form-logout";
@@ -123,6 +120,7 @@ public class SecurityConfiguration {
         private final AuthenticationManagerBuilder authenticationManagerBuilder;
         private final UserDetailsService userDetailsService;
         private final CorsFilter corsFilter;
+        private final TokenProvider tokenProvider;
 
 
 
@@ -147,11 +145,12 @@ public class SecurityConfiguration {
         /*@Autowired
         private IamService iamService;
         */
-        MockedSecurityConfig(SecurityProblemSupport problemSupport, AuthenticationManagerBuilder authenticationManagerBuilder, UserDetailsService userDetailsService, CorsFilter corsFilter) {
+        MockedSecurityConfig(SecurityProblemSupport problemSupport, AuthenticationManagerBuilder authenticationManagerBuilder, UserDetailsService userDetailsService, CorsFilter corsFilter, TokenProvider tokenProvider) {
             super(problemSupport);
             this.authenticationManagerBuilder = authenticationManagerBuilder;
             this.userDetailsService = userDetailsService;
             this.corsFilter = corsFilter;
+            this.tokenProvider = tokenProvider;
         }
 
         @Override
@@ -159,7 +158,28 @@ public class SecurityConfiguration {
             super.configure(http);
 
             http
-                .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
+                .headers()
+                .and()
+                .sessionManagement()
+                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .authorizeRequests()
+                .antMatchers("/api/register").permitAll()
+                .antMatchers("/api/activate").permitAll()
+                .antMatchers("/api/authenticate").permitAll()
+                .antMatchers("/api/account/reset-password/init").permitAll()
+                .antMatchers("/api/account/reset-password/finish").permitAll()
+                .antMatchers("/api/profile-info").permitAll()
+                .antMatchers("/api/**").authenticated()
+                .antMatchers("/management/health").permitAll()
+                .antMatchers("/management/info").permitAll()
+                .antMatchers("/management/**").hasAuthority(AuthoritiesConstants.ADMIN)
+                .antMatchers("/v2/api-docs/**").permitAll()
+                .antMatchers("/swagger-resources/configuration/ui").permitAll()
+                .antMatchers("/swagger-ui/index.html").hasAuthority(AuthoritiesConstants.ADMIN)
+                .and()
+                .apply(securityConfigurerAdapter());
 
 
             /*.exceptionHandling()
@@ -170,6 +190,10 @@ public class SecurityConfiguration {
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher(DEFAULT_FORM_LOGOUT_URL, "GET"))
                 .logoutSuccessUrl("/");*/
+        }
+
+        private JWTConfigurer securityConfigurerAdapter() {
+            return new JWTConfigurer(tokenProvider);
         }
 
         /*@Override

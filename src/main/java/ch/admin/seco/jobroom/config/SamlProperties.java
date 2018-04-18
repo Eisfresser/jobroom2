@@ -5,8 +5,10 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 @Configuration
+@Profile("saml-security")
 @EnableConfigurationProperties
 @ConfigurationProperties(prefix = "security.saml")
 public class SamlProperties {

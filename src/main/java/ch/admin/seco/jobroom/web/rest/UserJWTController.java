@@ -32,7 +32,7 @@ import ch.admin.seco.jobroom.web.rest.vm.LoginVM;
  * Controller to authenticate users.
  */
 @RestController
-@Profile("security-mock")
+@Profile("!saml-security")
 @RequestMapping("/api")
 public class UserJWTController {
 
