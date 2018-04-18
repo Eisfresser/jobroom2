@@ -194,7 +194,8 @@
                 "main": "Administration",
                 "metrics": "Metrics",
                 "tracker": "User tracker",
-                "userManagement": "User management"
+                "userManagement": "User management",
+                "systemNotifications": "System notifications"
             },
             "dashboard": "Dashboard",
             "entities": {

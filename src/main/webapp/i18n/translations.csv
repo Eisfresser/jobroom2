@@ -319,6 +319,7 @@ global,global.menu.admin.jhipster-needle-menu-add-admin-element,JHipster will ad
 global,global.menu.admin.logs,Protokoll,Logs,Logs,Log
 global,global.menu.admin.main,Administration,Administration,Administration,Amministratore
 global,global.menu.admin.metrics,Metriken,Metrics,Mesures,Metriche
+global,global.menu.admin.systemNotifications,System Mitteilungen,System notifications,Notification système,Notifica di sistema
 global,global.menu.admin.tracker,Benutzer Aktivitäten,User tracker,Activité des utilisateurs,Tracciamento utente
 global,global.menu.admin.userManagement,Benutzerverwaltung,User management,Gestion des utilisateurs,Gestione utenti
 global,global.menu.dashboard,Dashboard,Dashboard,Dashboard,Dashboard
@@ -351,6 +352,7 @@ global,global.messages.validate.username.invalid,Ihr Benutzername ist ungültig.
 global,global.messages.validate.username.maxlength,Ihr Benutzername darf nicht länger als 50 Zeichen sein,Your username cannot be longer than 50 characters.,Votre nom d'utilisateur ne doit pas comporter plus de 50 caractères.,Nome utente non può contenere più di 50 caratteri
 global,global.messages.validate.username.minlength,Ihr Benutzername muss mindestens 5 Zeichen lang sein,Your username must be at least 5 characters.,Votre nom d'utilisateur doit comporter au moins 5 caractères.,Nome utente deve essere di almeno 5 caratteri
 global,global.messages.validate.username.required,Ihr Benutzername wird benötigt.,Your username is required.,Votre nom d'utilisateur est requis.,Nome utente è obbligatorio.
+global,global.reference.canton.99,Ausland,Abroad,Étranger,Estero
 global,global.reference.canton.AG,Aargau,Aargau,Argovie,Argovia
 global,global.reference.canton.AI,Appenzell Innerrhoden,Appenzell Innerrhoden,Appenzell Rhodes-Intérieures,Appenzello Interno
 global,global.reference.canton.AR,Appenzell Ausserrhoden,Appenzell Ausserrhoden,Appenzell Rhodes-Extérieures,Appenzello Esterno
@@ -380,7 +382,6 @@ global,global.reference.canton.VD,Waadt,Vaud,Vaud,Vaud
 global,global.reference.canton.VS,Wallis,Valais,Valais,Vallese
 global,global.reference.canton.ZG,Zug,Zug,Zoug,Zugo
 global,global.reference.canton.ZH,Zürich,Zurich,Zurich,Zurigo
-global,global.reference.canton.99,Ausland,Abroad,Étranger,Estero
 global,global.reference.language.ar,Arabisch,Arab,Arabe,Arabo
 global,global.reference.language.bg,Bulgarisch,Bulgarian,Bulgare,Bulgaro
 global,global.reference.language.bs,Bosnisch,Bosnian,Bosniaque,Bosniaco

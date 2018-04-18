@@ -194,7 +194,8 @@
                 "main": "Amministratore",
                 "metrics": "Metriche",
                 "tracker": "Tracciamento utente",
-                "userManagement": "Gestione utenti"
+                "userManagement": "Gestione utenti",
+                "systemNotifications": "Notifica di sistema"
             },
             "dashboard": "Dashboard",
             "entities": {

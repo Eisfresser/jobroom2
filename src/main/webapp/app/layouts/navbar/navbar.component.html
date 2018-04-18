@@ -246,6 +246,16 @@
                                         jhiTranslate="global.menu.admin.userManagement">User management</span>
                                 </a>
 
+                                <a class="dropdown-item"
+                                   routerLink="system-notification"
+                                   routerLinkActive="active"
+                                   (click)="collapseNavbar()">
+                                    <span class="fa fa-exclamation-triangle"
+                                          aria-hidden="true"></span>
+                                    <span
+                                        jhiTranslate="global.menu.admin.systemNotifications">System Notifications</span>
+                                </a>
+
                                 <a class="dropdown-item" routerLink="jhi-metrics"
                                    routerLinkActive="active"
                                    (click)="collapseNavbar()">
