@@ -102,7 +102,7 @@ public class SAMLConfigurer extends SecurityConfigurerAdapter<DefaultSecurityFil
                 .httpBasic().realmName("saml")
                 .authenticationEntryPoint(entryPoint);
 
-        CsrfConfigurer<HttpSecurity> csrfConfigurer = http.getConfigurer(CsrfConfigurer.class);
+/*        CsrfConfigurer<HttpSecurity> csrfConfigurer = http.getConfigurer(CsrfConfigurer.class);
         if (csrfConfigurer != null) {
             // Workaround to get working with Spring Security 3.2.
             RequestMatcher ignored = new AntPathRequestMatcher("/saml/SSO");
@@ -110,7 +110,7 @@ public class SAMLConfigurer extends SecurityConfigurerAdapter<DefaultSecurityFil
             RequestMatcher matcher = new AndRequestMatcher(new DefaultRequiresCsrfMatcher(), notIgnored);
             csrfConfigurer.requireCsrfProtectionMatcher(matcher);
         }
-
+*/
         http
                 .addFilterBefore(metadataGeneratorFilter(samlEntryPoint, extendedMetadata), ChannelProcessingFilter.class)
                 .addFilterAfter(samlFilter(samlEntryPoint, contextProvider), BasicAuthenticationFilter.class)

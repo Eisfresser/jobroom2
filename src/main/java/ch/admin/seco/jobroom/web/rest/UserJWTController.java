@@ -36,11 +36,11 @@ public class UserJWTController {
 
     private final TokenProvider tokenProvider;
 
-    private final AuthenticationManager authenticationManager;
+    //private final AuthenticationManager authenticationManager;
 
-    public UserJWTController(TokenProvider tokenProvider, AuthenticationManager authenticationManager) {
+    public UserJWTController(TokenProvider tokenProvider) { //, AuthenticationManager authenticationManager) {
         this.tokenProvider = tokenProvider;
-        this.authenticationManager = authenticationManager;
+        //this.authenticationManager = authenticationManager;
     }
 
     @PostMapping("/authenticate")
@@ -51,9 +51,10 @@ public class UserJWTController {
             new UsernamePasswordAuthenticationToken(loginVM.getUsername(), loginVM.getPassword());
         authenticationToken.setDetails(new WebAuthenticationDetails(request));
 
-        Authentication authentication = this.authenticationManager.authenticate(authenticationToken);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+       // Authentication authentication = this.authenticationManager.authenticate(authenticationToken);
+       // SecurityContextHolder.getContext().setAuthentication(authentication);
         boolean rememberMe = (loginVM.isRememberMe() == null) ? false : loginVM.isRememberMe();
+        Authentication authentication = null;
         String jwt = tokenProvider.createToken(authentication, rememberMe);
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add(JWTConfigurer.AUTHORIZATION_HEADER, "Bearer " + jwt);
@@ -69,7 +70,8 @@ public class UserJWTController {
             new UsernamePasswordAuthenticationToken(username, password);
         authenticationToken.setDetails(new WebAuthenticationDetails(request));
 
-        Authentication authentication = this.authenticationManager.authenticate(authenticationToken);
+       // Authentication authentication = this.authenticationManager.authenticate(authenticationToken);
+        Authentication authentication = null;
         SecurityContextHolder.getContext().setAuthentication(authentication);
         DefaultOAuth2AccessToken oAuth2AccessToken = tokenProvider.createAccessToken(authentication);
         return ResponseEntity.ok(oAuth2AccessToken);
