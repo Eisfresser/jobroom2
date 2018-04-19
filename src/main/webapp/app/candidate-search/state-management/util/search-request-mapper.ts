@@ -85,6 +85,9 @@ function mapResidence(residences: Array<Canton | string>): Array<string> {
 
 function mapWorkplace(workplace?: Array<TypeaheadMultiselectModel>): Array<string> {
     if (workplace && workplace.length) {
+        if (workplace[0].code.indexOf('null:null') >= 0) {
+            return ['AU', '99'];
+        }
         return workplace[0].code.split(':').reverse();
     }
     return [];

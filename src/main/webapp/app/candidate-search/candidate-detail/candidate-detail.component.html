@@ -136,7 +136,7 @@
                               {{ canton }}{{ last ? '' : ', '}}
                           </ng-container>
                       </p>
-                      <p *ngIf="candidateProfile.preferredWorkCantons?.length >= 26">
+                      <p *ngIf="candidateProfile.preferredWorkCantons?.length >= 26 && !containsPreferredWorkCantonAbroad(candidateProfile.preferredWorkCantons)">
                           {{ 'global.reference.canton.CH' | translate }}
                       </p>
                     </span>

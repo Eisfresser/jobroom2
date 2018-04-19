@@ -252,6 +252,18 @@ describe('createCandidateSearchRequestFromToolState', () => {
         expect(candidateSearchRequest.regionCode).toEqual('bb');
     });
 
+    it('should map CandidateSearchFilter with workplace abroad', () => {
+        //GIVEN
+        const workplace = [new TypeaheadMultiselectModel('type', 'null:null', 'label')];
+        const filter: CandidateSearchToolState = Object.assign({}, defaultSearchToolState, { workplace });
+        // WHEN
+        const candidateSearchRequest: CandidateSearchRequest = createCandidateSearchRequestFromToolState(filter);
+
+        // THEN
+        expect(candidateSearchRequest.cantonCode).toEqual('99');
+        expect(candidateSearchRequest.regionCode).toEqual('AU');
+    });
+
     it('should map CandidateSearchFilter with skills', () => {
         // GIVEN
         const skills = ['java'];
