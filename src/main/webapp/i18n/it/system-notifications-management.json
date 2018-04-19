@@ -1,0 +1,13 @@
+{
+    "system-notifications-management": {
+        "title": "notifiche di sistema"
+    },
+    "systemNotificationsManagement": {
+        "title": "Test",
+        "type": "Test",
+        "startDate": "Test",
+        "endDate": "Test",
+        "status": "Test",
+        "actions": "Test"
+    }
+}

@@ -1,24 +1,24 @@
 export class SystemNotification {
-    notificationId: number;
-    notificationTitle: string;
-    notificationType: string;
-    notificationStartDate: string;
-    notificationEndDate: string;
-    isNotificationActive: boolean;
+    id: number;
+    title: string;
+    type: string;
+    startDate: string;
+    endDate: string;
+    isActive: boolean;
 
     constructor(
-        notificationId: number,
-        notificationTitle: string,
-        notificationType: string,
-        notificationStartDate: string,
-        notificationEndDate: string,
-        isNotificationActive: boolean
+        id: number,
+        title: string,
+        type: string,
+        startDate: string,
+        endDate: string,
+        isActive: boolean
     ) {
-        this.notificationId = notificationId ? notificationId : null;
-        this.notificationTitle = notificationTitle ? notificationTitle : null;
-        this.notificationType = notificationType ? notificationType : null;
-        this.notificationStartDate = notificationStartDate ? notificationStartDate : null;
-        this.notificationEndDate = notificationEndDate ? notificationEndDate : null;
-        this.isNotificationActive = isNotificationActive ? isNotificationActive : null;
+        this.id = id ? id : null;
+        this.title = title ? title : null;
+        this.type = type ? type : null;
+        this.startDate = startDate ? startDate : null;
+        this.endDate = endDate ? endDate : null;
+        this.isActive = isActive ? isActive : null;
     }
 }

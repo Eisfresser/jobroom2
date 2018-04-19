@@ -994,6 +994,13 @@ settings,settings.messages.validate.lastname.maxlength,Ihr Nachname darf nicht l
 settings,settings.messages.validate.lastname.minlength,Ihr Nachname muss mindestens 1 Zeichen lang sein,Your last name must be at least 1 character.,Votre nom doit comporter au moins un caractère.,Il cognome deve essere di almeno 1 carattere
 settings,settings.messages.validate.lastname.required,Ihr Nachname wird benötigt.,Your last name is required.,Votre nom est requis.,Il cognome è obbligatorio.
 settings,settings.title,Einstellungen für Benutzer [<b>{{username}}</b>],User settings for [<b>{{username}}</b>],Paramètres d'utilisateur [<b>{{username}}</b>],Impostazioni per l'utente [<b>{{username}}</b>]
+system-notifications-management,system-notifications-management.title,System Mitteilungen,System notifications,notifications système,notifiche di sistema
+system-notifications-management,systemNotificationsManagement.title,Titel,Title,Test,Test
+system-notifications-management,systemNotificationsManagement.type,Typ,Type,Test,Test
+system-notifications-management,systemNotificationsManagement.startDate,Von,From,Test,Test
+system-notifications-management,systemNotificationsManagement.endDate,Bis,To,Test,Test
+system-notifications-management,systemNotificationsManagement.status,Status,State,Test,Test
+system-notifications-management,systemNotificationsManagement.actions,Aktionen,Actions,Test,Test
 user-management,userManagement.activated,Aktiv,Active,Activé,Attivato
 user-management,userManagement.created,Ein neuer Benutzer wurde mit ID {{ param }} erstellt,A new user is created with identifier {{ param }},Un nouvel utilisateur portant l'ID {{ param }} a été créé.,È stato creato un nuovo utente con identificativo {{ param }}
 user-management,userManagement.createdBy,Erstellt von,Created by,Créé par,Creato da

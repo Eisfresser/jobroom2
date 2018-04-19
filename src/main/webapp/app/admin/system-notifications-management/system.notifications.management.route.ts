@@ -1,10 +1,10 @@
-import {Route} from "@angular/router";
-import {SystemNotificationsManagementComponent} from "./system.notifications.management.component";
+import {Route} from '@angular/router';
+import {SystemNotificationsManagementComponent} from './system.notifications.management.component';
 
 export const systemNotificationsManagementRoute: Route = {
-    path: "system-notifications",
+    path: "system-notifications-management",
     component: SystemNotificationsManagementComponent,
     data: {
-        pageTitle: "system.notifications.title"
+        pageTitle: "system-notifications-management.title"
     }
 };

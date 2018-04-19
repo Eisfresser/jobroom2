@@ -14,20 +14,21 @@
         <table class="table table-striped">
             <thead>
             <tr>
-                <th>Titel</th>
-                <th>Meldungsart</th>
-                <th>von</th>
-                <th>bis</th>
-                <th>Status</th>
-                <th></th>
+                <th jhiTranslate="systemNotificationsManagement.title">Title</th>
+                <th jhiTranslate="systemNotificationsManagement.type">Type</th>
+                <th jhiTranslate="systemNotificationsManagement.startDate">StartDate</th>
+                <th jhiTranslate="systemNotificationsManagement.endDate">EndDate</th>
+                <th jhiTranslate="systemNotificationsManagement.status">Status</th>
+                <th jhiTranslate="systemNotificationsManagement.actions">Actions</th>
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
+            <tr *ngFor="let systemnotification of systemNotifications">
+
+                <td>{{systemnotification.title}}</td>
+                <td>{{systemnotification.type}}</td>
+                <td>{{systemnotification.startDate}}</td>
+                <td>{{systemnotification.endDate}}</td>
                 <th>
                     <button class="btn btn-danger btn-sm"
                             jhiTranslate="userManagement.deactivated">Deactivated</button>

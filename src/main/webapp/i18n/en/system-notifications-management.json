@@ -1,0 +1,13 @@
+{
+    "system-notifications-management": {
+        "title": "System notifications"
+    },
+    "systemNotificationsManagement": {
+        "title": "Title",
+        "type": "Type",
+        "startDate": "From",
+        "endDate": "To",
+        "status": "State",
+        "actions": "Actions"
+    }
+}

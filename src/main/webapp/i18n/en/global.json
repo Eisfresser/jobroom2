@@ -193,9 +193,9 @@
                 "logs": "Logs",
                 "main": "Administration",
                 "metrics": "Metrics",
+                "systemNotifications": "System notifications",
                 "tracker": "User tracker",
-                "userManagement": "User management",
-                "systemNotifications": "System notifications"
+                "userManagement": "User management"
             },
             "dashboard": "Dashboard",
             "entities": {
@@ -258,6 +258,7 @@
         },
         "reference": {
             "canton": {
+                "99": "Abroad",
                 "AG": "Aargau",
                 "AI": "Appenzell Innerrhoden",
                 "AR": "Appenzell Ausserrhoden",
@@ -286,8 +287,7 @@
                 "VD": "Vaud",
                 "VS": "Valais",
                 "ZG": "Zug",
-                "ZH": "Zurich",
-                "99": "Abroad"
+                "ZH": "Zurich"
             },
             "language": {
                 "ar": "Arab",
