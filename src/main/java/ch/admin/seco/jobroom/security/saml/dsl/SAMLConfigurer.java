@@ -1,5 +1,7 @@
 package ch.admin.seco.jobroom.security.saml.dsl;
 
+import ch.admin.seco.jobroom.security.jwt.TokenProvider;
+import ch.admin.seco.jobroom.security.saml.JWTAuthenticationStrategy;
 import ch.admin.seco.jobroom.security.saml.utils.HttpStatusEntryPoint;
 import ch.admin.seco.jobroom.security.saml.utils.XmlHttpRequestedWithMatcher;
 import org.apache.commons.httpclient.HttpClient;
@@ -20,7 +22,6 @@ import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
 import org.springframework.security.saml.*;
 import org.springframework.security.saml.context.SAMLContextProvider;
 import org.springframework.security.saml.context.SAMLContextProviderLB;
@@ -46,9 +47,7 @@ import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
-import org.springframework.security.web.util.matcher.AndRequestMatcher;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.security.web.util.matcher.NegatedRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import javax.servlet.http.HttpServletRequest;
@@ -65,6 +64,7 @@ public class SAMLConfigurer extends SecurityConfigurerAdapter<DefaultSecurityFil
     private SAMLProcessor samlProcessor = samlProcessor();
     private SAMLDefaultLogger samlLogger = new SAMLDefaultLogger();
     private SAMLAuthenticationProvider samlAuthenticationProvider;
+    private JWTAuthenticationStrategy jwtAuthenticationStrategy;
     private MetadataProvider metadataProvider;
     private ExtendedMetadataDelegate extendedMetadataDelegate;
     private CachingMetadataManager cachingMetadataManager;
@@ -90,6 +90,7 @@ public class SAMLConfigurer extends SecurityConfigurerAdapter<DefaultSecurityFil
         cachingMetadataManager = cachingMetadataManager();
         webSSOProfile = new WebSSOProfileImpl(samlProcessor, cachingMetadataManager);
         samlAuthenticationProvider = samlAuthenticationProvider();
+        jwtAuthenticationStrategy = new JWTAuthenticationStrategy();
 
         bootstrap();
 
@@ -217,7 +218,7 @@ public class SAMLConfigurer extends SecurityConfigurerAdapter<DefaultSecurityFil
         return new HTTPRedirectDeflateBinding(parserPool);
     }
 
-    private SAMLProcessingFilter samlWebSSOProcessingFilter(SAMLAuthenticationProvider samlAuthenticationProvider, SAMLContextProvider contextProvider, SAMLProcessor samlProcessor) throws Exception {
+    private SAMLProcessingFilter samlWebSSOProcessingFilter(SAMLAuthenticationProvider samlAuthenticationProvider, SAMLContextProvider contextProvider, SAMLProcessor samlProcessor, JWTAuthenticationStrategy jwtAuthenticationStrategy) throws Exception {
         SAMLProcessingFilter samlWebSSOProcessingFilter = new SAMLProcessingFilter();
 
         AuthenticationManagerBuilder authenticationManagerBuilder = new AuthenticationManagerBuilder(objectPostProcessor);
@@ -225,6 +226,7 @@ public class SAMLConfigurer extends SecurityConfigurerAdapter<DefaultSecurityFil
         samlWebSSOProcessingFilter.setAuthenticationManager(authenticationManagerBuilder.build());
         samlWebSSOProcessingFilter.setContextProvider(contextProvider);
         samlWebSSOProcessingFilter.setSAMLProcessor(samlProcessor);
+        samlWebSSOProcessingFilter.setSessionAuthenticationStrategy(jwtAuthenticationStrategy);
 
         SavedRequestAwareAuthenticationSuccessHandler savedRequestAwareAuthenticationSuccessHandler = new SavedRequestAwareAuthenticationSuccessHandler();
         savedRequestAwareAuthenticationSuccessHandler.setDefaultTargetUrl("/");
@@ -242,7 +244,7 @@ public class SAMLConfigurer extends SecurityConfigurerAdapter<DefaultSecurityFil
         List<SecurityFilterChain> chains = new ArrayList<>();
         chains.add(new DefaultSecurityFilterChain(new AntPathRequestMatcher("/saml/login/**"), samlEntryPoint));
         chains.add(new DefaultSecurityFilterChain(new AntPathRequestMatcher("/saml/metadata/**"), metadataDisplayFilter(contextProvider)));
-        chains.add(new DefaultSecurityFilterChain(new AntPathRequestMatcher("/saml/SSO/**"), samlWebSSOProcessingFilter(samlAuthenticationProvider, contextProvider, samlProcessor)));
+        chains.add(new DefaultSecurityFilterChain(new AntPathRequestMatcher("/saml/SSO/**"), samlWebSSOProcessingFilter(samlAuthenticationProvider, contextProvider, samlProcessor, jwtAuthenticationStrategy)));
         chains.add(new DefaultSecurityFilterChain(new AntPathRequestMatcher("/saml/logout/**"), samlLogoutFilter(contextProvider, samlProcessor)));
         chains.add(new DefaultSecurityFilterChain(new AntPathRequestMatcher("/saml/SingleLogout/**"), samlLogoutProcessingFilter(contextProvider, samlProcessor)));
         chains.add(new DefaultSecurityFilterChain(new AntPathRequestMatcher("/saml/discovery/**"), samlDiscovery(contextProvider)));
@@ -318,6 +320,8 @@ public class SAMLConfigurer extends SecurityConfigurerAdapter<DefaultSecurityFil
         contextProvider.setServerName(serviceProvider.hostName);
         contextProvider.setContextPath(serviceProvider.basePath);
         contextProvider.setKeyManager(serviceProvider.keyManager);
+        // TODO: workaroung that InResponseToField check fails, because of different HttpSessions -> remove following line and fix problem!
+        contextProvider.setStorageFactory(new EmptyStorageFactory());
 
         MetadataCredentialResolver resolver = new MetadataCredentialResolver(cachingMetadataManager, serviceProvider.keyManager);
         PKIXTrustEvaluator pkixTrustEvaluator = new CertPathPKIXTrustEvaluator();

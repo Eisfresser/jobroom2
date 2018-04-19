@@ -1,5 +1,6 @@
 package ch.admin.seco.jobroom.security.saml;
 
+import ch.admin.seco.jobroom.security.AuthoritiesConstants;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
@@ -36,7 +37,23 @@ public class AbstractSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.exceptionHandling().accessDeniedHandler(forbiddenDeniedHandler());
 
-        http.authorizeRequests().antMatchers("/**").fullyAuthenticated();
+        http.authorizeRequests().
+            antMatchers("/login").fullyAuthenticated()
+
+            .antMatchers("/api/register").permitAll()
+            .antMatchers("/api/activate").permitAll()
+            .antMatchers("/api/authenticate").permitAll()
+            .antMatchers("/api/account/reset-password/init").permitAll()
+            .antMatchers("/api/account/reset-password/finish").permitAll()
+            .antMatchers("/api/profile-info").permitAll()
+            .antMatchers("/api/**").authenticated()
+            .antMatchers("/management/health").permitAll()
+            .antMatchers("/management/info").permitAll()
+            .antMatchers("/management/**").hasAuthority(AuthoritiesConstants.ADMIN)
+            .antMatchers("/v2/api-docs/**").permitAll()
+            .antMatchers("/swagger-resources/configuration/ui").permitAll()
+            .antMatchers("/swagger-ui/index.html").hasAuthority(AuthoritiesConstants.ADMIN);
+
     }
 
 
