@@ -41,7 +41,7 @@ public class JWTAuthenticationStrategy implements SessionAuthenticationStrategy 
         boolean rememberMe = false;
         // TODO: generate real JWT via tokenProvider
         //String jwt = tokenProvider.createToken(authentication, rememberMe);
-        String jwt = "THIS_IS_A_DUMMY_JWT_JUST_FOR_TESTING"
+        String jwt = "THIS_IS_A_DUMMY_JWT_JUST_FOR_TESTING";
         response.addHeader(JWTConfigurer.AUTHORIZATION_HEADER, "Bearer " + jwt);
 
     }
