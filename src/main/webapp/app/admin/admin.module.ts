@@ -20,6 +20,7 @@ import {
     JhiMetricsService,
     LogsComponent,
     LogsService,
+    SystemNotificationsManagementComponent,
     UserDeleteDialogComponent,
     UserDialogComponent,
     UserMgmtComponent,
@@ -30,7 +31,7 @@ import {
     UserResolve,
     UserResolvePagingParams
 } from './';
-import {SystemNotificationsComponent} from "./system-notifications/system.notifications.component";
+
 
 /* jhipster-needle-add-admin-module-import - JHipster will add admin modules imports here */
 
@@ -57,7 +58,7 @@ import {SystemNotificationsComponent} from "./system-notifications/system.notifi
         JhiGatewayComponent,
         JhiMetricsMonitoringComponent,
         JhiMetricsMonitoringModalComponent,
-        SystemNotificationsComponent
+        SystemNotificationsManagementComponent
     ],
     entryComponents: [
         UserMgmtDialogComponent,

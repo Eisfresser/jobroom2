@@ -8,7 +8,7 @@ import {
     healthRoute,
     logsRoute,
     metricsRoute,
-    systemNotificationsRoute,
+    systemNotificationsManagementRoute,
     userDialogRoute,
     userMgmtRoute,
 } from './';
@@ -24,7 +24,7 @@ const ADMIN_ROUTES = [
     gatewayRoute,
     ...userMgmtRoute,
     metricsRoute,
-    systemNotificationsRoute
+    systemNotificationsManagementRoute
 ];
 
 export const adminState: Routes = [{
