@@ -8,6 +8,15 @@
         "startDate": "From",
         "endDate": "To",
         "status": "State",
-        "actions": "Actions"
+        "actions": "Actions",
+        "home": {
+            "create": "Create a new system notification",
+            "title": "System notifications"
+        },
+        "activated": "Activated",
+        "deactivated": "Deactivated",
+        "delete": {
+            "question": "Do you really want to delete the system notification?"
+        }
     }
 }

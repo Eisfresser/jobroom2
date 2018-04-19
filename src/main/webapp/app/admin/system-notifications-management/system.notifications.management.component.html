@@ -1,6 +1,6 @@
 <div class="container-fluid">
     <h2>
-        <span jhiTranslate="userManagement.home.title">Users</span>
+        <span jhiTranslate="systemNotificationsManagement.home.title">Users</span>
     </h2>
     <div class="row">
         <div class="col-sm-12">
@@ -23,16 +23,21 @@
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let systemnotification of systemNotifications">
+            <tr *ngFor="let systemNotification of systemNotifications">
 
-                <td>{{systemnotification.title}}</td>
-                <td>{{systemnotification.type}}</td>
-                <td>{{systemnotification.startDate}}</td>
-                <td>{{systemnotification.endDate}}</td>
+                <td>{{systemNotification.title}}</td>
+                <td>{{systemNotification.type}}</td>
+                <td>{{systemNotification.startDate}}</td>
+                <td>{{systemNotification.endDate}}</td>
                 <th>
-                    <button class="btn btn-danger btn-sm"
-                            jhiTranslate="userManagement.deactivated">Deactivated</button>
-                   </th>
+                    <button class="btn btn-success btn-sm"
+                            *ngIf="systemNotification.isActive"
+                            jhiTranslate="systemNotificationsManagement.activated">Activated
+                    </button>
+                    <button class="btn btn-danger btn-sm" *ngIf="!systemNotification.isActive"
+                            jhiTranslate="systemNotificationsManagement.deactivated">Deactivated
+                    </button>
+                </th>
                 <th>
                     <button type="submit"
                             class="btn btn-info btn-sm">
@@ -45,6 +50,7 @@
                         <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
                     </button>
                     <button type="submit"
+                            [routerLink]="['/', { outlets: { popup: ['system-notification-delete'] } }]"
                             class="btn btn-danger btn-sm">
                         <span class="fa fa-remove"></span>
                         <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
@@ -54,7 +60,7 @@
             </tbody>
         </table>
     </div>
-    <button class="btn btn-primary">
-        <span class="fa fa-plus"></span> <span jhiTranslate="userManagement.home.createLabel">Create a new User</span>
+    <button class="btn btn-primary" [routerLink]="['/', { outlets: { popup: ['system-notification-new'] } }]">
+        <span class="fa fa-plus"></span> <span jhiTranslate="systemNotificationsManagement.home.create">Create a new SystemNotification</span>
     </button>
 </div>

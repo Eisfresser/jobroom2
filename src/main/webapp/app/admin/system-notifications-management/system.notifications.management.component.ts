@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {SystemNotification} from '../../shared/system-notification/system.notification.model';
+import { Component, OnInit } from '@angular/core';
+import { SystemNotification } from '../../shared/system-notification/system.notification.model';
 
 @Component({
     selector: 'jhi-sys-notifications',
@@ -34,7 +34,7 @@ export class SystemNotificationsManagementComponent implements OnInit {
                 'SYSTEM',
                 '01-01-2001',
                 '01-01-2001',
-                true
+                false
             ),
             new SystemNotification(
                 3,
@@ -50,7 +50,7 @@ export class SystemNotificationsManagementComponent implements OnInit {
                 'SYSTEM',
                 '01-01-2001',
                 '01-01-2001',
-                true
+                false
             ),
             new SystemNotification(
                 5,

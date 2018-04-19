@@ -1,8 +1,8 @@
-import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
-import {RouterModule} from '@angular/router';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
-import {JobroomSharedModule} from '../shared';
-import {JobroomElasticsearchReindexModule} from './elasticsearch-reindex/elasticsearch-reindex.module';
+import { JobroomSharedModule } from '../shared';
+import { JobroomElasticsearchReindexModule } from './elasticsearch-reindex/elasticsearch-reindex.module';
 import {
     adminState,
     AuditsComponent,
@@ -21,6 +21,8 @@ import {
     LogsComponent,
     LogsService,
     SystemNotificationsManagementComponent,
+    SystemNotificationsManagementModalCreateComponent,
+    SystemNotificationsManagementModalDeleteComponent,
     UserDeleteDialogComponent,
     UserDialogComponent,
     UserMgmtComponent,
@@ -31,7 +33,7 @@ import {
     UserResolve,
     UserResolvePagingParams
 } from './';
-
+import { SystemNotificationsManagementModalService } from './system-notifications-management/system.notifications.management.modal.service';
 
 /* jhipster-needle-add-admin-module-import - JHipster will add admin modules imports here */
 
@@ -39,7 +41,7 @@ import {
     imports: [
         JobroomSharedModule,
         RouterModule.forRoot(adminState, { useHash: true }),
-        JobroomElasticsearchReindexModule,
+        JobroomElasticsearchReindexModule
         /* jhipster-needle-add-admin-module - JHipster will add admin modules here */
     ],
     declarations: [
@@ -58,13 +60,15 @@ import {
         JhiGatewayComponent,
         JhiMetricsMonitoringComponent,
         JhiMetricsMonitoringModalComponent,
-        SystemNotificationsManagementComponent
+        SystemNotificationsManagementComponent,
+        SystemNotificationsManagementModalCreateComponent,
+        SystemNotificationsManagementModalDeleteComponent
     ],
     entryComponents: [
         UserMgmtDialogComponent,
         UserMgmtDeleteDialogComponent,
         JhiHealthModalComponent,
-        JhiMetricsMonitoringModalComponent,
+        JhiMetricsMonitoringModalComponent
     ],
     providers: [
         AuditsService,
@@ -75,8 +79,10 @@ import {
         LogsService,
         UserResolvePagingParams,
         UserResolve,
-        UserModalService
+        UserModalService,
+        SystemNotificationsManagementModalService
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class JobroomAdminModule {}
+export class JobroomAdminModule {
+}

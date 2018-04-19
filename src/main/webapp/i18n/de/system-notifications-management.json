@@ -8,6 +8,15 @@
         "startDate": "Von",
         "endDate": "Bis",
         "status": "Status",
-        "actions": "Aktionen"
+        "actions": "Aktionen",
+        "home": {
+            "create": "Neue Systemmitteilung erfassen",
+            "title": "System Mitteilungen"
+        },
+        "activated": "Aktiv",
+        "deactivated": "Deaktiviert",
+        "delete": {
+            "question": "M\u00f6chten sie die Systemmitteilung wirklich \u00f6schen?"
+        }
     }
 }

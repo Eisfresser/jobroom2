@@ -1,4 +1,4 @@
-import {Routes} from '@angular/router';
+import { Routes } from '@angular/router';
 
 import {
     auditsRoute,
@@ -9,11 +9,12 @@ import {
     logsRoute,
     metricsRoute,
     systemNotificationsManagementRoute,
+    systemNotificationsModalRoute,
     userDialogRoute,
-    userMgmtRoute,
+    userMgmtRoute
 } from './';
 
-import {UserRouteAccessService} from '../shared';
+import { UserRouteAccessService } from '../shared';
 
 const ADMIN_ROUTES = [
     auditsRoute,
@@ -24,16 +25,19 @@ const ADMIN_ROUTES = [
     gatewayRoute,
     ...userMgmtRoute,
     metricsRoute,
-    systemNotificationsManagementRoute
+    systemNotificationsManagementRoute,
+    ...systemNotificationsModalRoute
 ];
 
-export const adminState: Routes = [{
-    path: '',
-    data: {
-        authorities: ['ROLE_ADMIN']
+export const adminState: Routes = [
+    {
+        path: '',
+        data: {
+            authorities: ['ROLE_ADMIN']
+        },
+        canActivate: [UserRouteAccessService],
+        children: ADMIN_ROUTES
     },
-    canActivate: [UserRouteAccessService],
-    children: ADMIN_ROUTES
-},
-    ...userDialogRoute
+    ...userDialogRoute,
+    ...systemNotificationsModalRoute
 ];
