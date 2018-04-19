@@ -122,6 +122,7 @@ public class SecurityConfiguration {
                 .userDetailsService(this.eiamSamlUserDetailsService());
         }
 
+        //TODO: create these Objects as beans/services to inject them..
         private EiamSamlUserDetailsService eiamSamlUserDetailsService() {
             return new EiamSamlUserDetailsService(samlBasedUserDetailsProvider());
         }

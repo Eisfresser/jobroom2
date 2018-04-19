@@ -51,6 +51,7 @@ import { JobroomSharedModule, UserRouteAccessService } from './shared';
 import { CustomRouterStateSerializer, } from './shared/custom-router-state-serializer/custom-router-state-serializer';
 import { reducers } from './shared/state-management/reducers/core.reducers';
 import './vendor.ts';
+import { XmlhttprequestInterceptor } from './blocks/interceptor/xmlhttprequest.interceptor';
 
 // jhipster-needle-angular-add-module-import JHipster will add new module here
 
@@ -104,6 +105,14 @@ if (DEBUG_INFO_ENABLED) {
         { provide: RouterStateSerializer, useClass: CustomRouterStateSerializer },
         { provide: TranslateLoader, useFactory: translatePartialLoader, deps: [ HttpClient ] },
         { provide: RouterStateSerializer, useClass: CustomRouterStateSerializer },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: XmlhttprequestInterceptor,
+            multi: true,
+            deps: [
+                Injector
+            ]
+        },
         {
             provide: HTTP_INTERCEPTORS,
             useClass: AuthInterceptor,

@@ -170,8 +170,8 @@ jhipster:
 
 security:
     saml:
-        idpConfigPath: 'file:///home/stfi/development/projects/jobroom/saml-config/local-shibboleth-idp-metadata.xml'
-        keystorePath: 'file:///home/stfi/development/projects/jobroom/saml-config/local-keystore.jks'
+        idpConfigPath: classpath:config/security/local-shibboleth-idp-metadata.xml
+        keystorePath: classpath:config/security/local-keystore.jks
         keystorePassword: 'mima01'
         keystorePrivateKeyName: 'saml2-sp'
         keystorePrivateKeyPassword: 'mima01'
