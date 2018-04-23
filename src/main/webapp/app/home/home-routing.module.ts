@@ -14,6 +14,14 @@ const routes: Routes = [
         }
     },
     {
+        path: 'login',
+        component: HomeComponent,
+        data: {
+            authorities: [],
+            pageTitle: 'home.title'
+        }
+    },
+    {
         path: 'jobseekers',
         component: HomeComponent,
         data: {

@@ -20,6 +20,7 @@ import { JobPublicationResolverService } from './tools/job-publication-tool/serv
 import { UserDataResolverService } from './tools/job-publication-tool/service/user-data-resolver.service';
 import { ScrollToFirstInvalidDirective } from './tools/job-publication-tool/scroll-to-first-invalid.directive';
 import { InputErrorMessageComponent } from './tools/job-publication-tool/input-error-message/input-error-message.component';
+import { CookieModule } from 'ngx-cookie';
 
 @NgModule({
     imports: [
@@ -30,7 +31,8 @@ import { InputErrorMessageComponent } from './tools/job-publication-tool/input-e
         StoreModule.forFeature('home', homeReducers),
         EffectsModule.forFeature([HomeEffects, HomeRouterEffects]),
         HomeRoutingModule,
-        MultiselectDropdownModule
+        MultiselectDropdownModule,
+        CookieModule.forRoot()
     ],
     declarations: [
         HomeComponent,

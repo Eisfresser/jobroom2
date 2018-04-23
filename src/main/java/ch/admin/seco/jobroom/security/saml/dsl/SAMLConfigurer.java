@@ -56,6 +56,9 @@ import java.util.*;
 import java.util.regex.Pattern;
 
 public class SAMLConfigurer extends SecurityConfigurerAdapter<DefaultSecurityFilterChain, HttpSecurity> {
+
+    public static final String TARGET_URL_AFTER_AUTHENTICATION = "/";
+
     private IdentityProvider identityProvider = new IdentityProvider();
     private ServiceProvider serviceProvider = new ServiceProvider();
 
@@ -229,7 +232,7 @@ public class SAMLConfigurer extends SecurityConfigurerAdapter<DefaultSecurityFil
         samlWebSSOProcessingFilter.setSessionAuthenticationStrategy(jwtAuthenticationStrategy);
 
         SavedRequestAwareAuthenticationSuccessHandler savedRequestAwareAuthenticationSuccessHandler = new SavedRequestAwareAuthenticationSuccessHandler();
-        savedRequestAwareAuthenticationSuccessHandler.setDefaultTargetUrl("/");
+        savedRequestAwareAuthenticationSuccessHandler.setDefaultTargetUrl(TARGET_URL_AFTER_AUTHENTICATION);
         samlWebSSOProcessingFilter.setAuthenticationSuccessHandler(savedRequestAwareAuthenticationSuccessHandler);
         return samlWebSSOProcessingFilter;
     }
