@@ -95,6 +95,9 @@ public class SecurityConfiguration {
         private Map<String, String> rolemapping;
 
         @Autowired
+        private TokenProvider tokenProvider;
+
+        @Autowired
         private SamlProperties samlProperties;
 
         @Override
@@ -104,7 +107,7 @@ public class SecurityConfiguration {
             http.sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                 .and()
-                .apply(saml())
+                .apply(saml(this.tokenProvider))
                 .serviceProvider()
                 /*-*/.keyStore()
                 /*----*/.storeFilePath(samlProperties.getKeystorePath())
@@ -128,7 +131,6 @@ public class SecurityConfiguration {
                 .userDetailsService(this.eiamSamlUserDetailsService());
         }
 
-        //TODO: create these Objects as beans/services to inject them..
         private EiamSamlUserDetailsService eiamSamlUserDetailsService() {
             return new EiamSamlUserDetailsService(samlBasedUserDetailsProvider());
         }

@@ -73,6 +73,7 @@ public class SAMLConfigurer extends SecurityConfigurerAdapter<DefaultSecurityFil
     private CachingMetadataManager cachingMetadataManager;
     private WebSSOProfile webSSOProfile;
     private SAMLUserDetailsService samlUserDetailsService;
+    private TokenProvider tokenProvider;
 
     private ObjectPostProcessor<Object> objectPostProcessor = new ObjectPostProcessor<Object>() {
         public <T> T postProcess(T object) {
@@ -80,7 +81,8 @@ public class SAMLConfigurer extends SecurityConfigurerAdapter<DefaultSecurityFil
         }
     };
 
-    private SAMLConfigurer() {
+    private SAMLConfigurer(TokenProvider tokenProvider) {
+        this.tokenProvider = tokenProvider;
     }
 
     @Override
@@ -93,7 +95,7 @@ public class SAMLConfigurer extends SecurityConfigurerAdapter<DefaultSecurityFil
         cachingMetadataManager = cachingMetadataManager();
         webSSOProfile = new WebSSOProfileImpl(samlProcessor, cachingMetadataManager);
         samlAuthenticationProvider = samlAuthenticationProvider();
-        jwtAuthenticationStrategy = new JWTAuthenticationStrategy();
+        jwtAuthenticationStrategy = new JWTAuthenticationStrategy(this.tokenProvider);
 
         bootstrap();
 
@@ -121,8 +123,8 @@ public class SAMLConfigurer extends SecurityConfigurerAdapter<DefaultSecurityFil
                 .authenticationProvider(samlAuthenticationProvider);
     }
 
-    public static SAMLConfigurer saml() {
-        return new SAMLConfigurer();
+    public static SAMLConfigurer saml(TokenProvider tokenProvider) {
+        return new SAMLConfigurer(tokenProvider);
     }
 
     public SAMLConfigurer userDetailsService(SAMLUserDetailsService samlUserDetailsService) {

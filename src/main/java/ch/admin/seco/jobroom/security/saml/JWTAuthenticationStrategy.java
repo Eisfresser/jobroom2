@@ -1,9 +1,10 @@
 package ch.admin.seco.jobroom.security.saml;
 
-import ch.admin.seco.jobroom.security.saml.utils.ToBeRemovedTokenProvider;
+import ch.admin.seco.jobroom.security.jwt.TokenProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.session.SessionAuthenticationException;
 import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
+import org.springframework.util.Assert;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -11,15 +12,15 @@ import javax.servlet.http.HttpServletResponse;
 
 public class JWTAuthenticationStrategy implements SessionAuthenticationStrategy {
 
-    //private TokenProvider tokenProvider;
+    private final TokenProvider tokenProvider;
 
     /**
      * Creates a new instance
+     * @param tokenProvider
      */
-    // TODO: tokenProvider must be set by the caller and injected into the caller; but this currently does not work
-    public JWTAuthenticationStrategy() { //TokenProvider tokenProvider) {
-        //Assert.notNull(tokenProvider, "TokenProvider cannot be null");
-        //this.tokenProvider = tokenProvider;
+    public JWTAuthenticationStrategy(TokenProvider tokenProvider) {
+        Assert.notNull(tokenProvider, "TokenProvider cannot be null");
+        this.tokenProvider = tokenProvider;
     }
 
     /*
@@ -37,9 +38,7 @@ public class JWTAuthenticationStrategy implements SessionAuthenticationStrategy 
 
         // TODO: implement "remember me"
         boolean rememberMe = false;
-        // TODO: generate JWT via injected tokenProvider
-        ToBeRemovedTokenProvider tokenProvider = new ToBeRemovedTokenProvider();
-        String jwt = tokenProvider.createToken(authentication, rememberMe);
+        String jwt = this.tokenProvider.createToken(authentication, rememberMe);
         //  response.addHeader(JWTConfigurer.AUTHORIZATION_HEADER, "Bearer " + jwt);  // setting the header here does not help, because it is removed during the redirect
         // setting the jwt as a cookie, because the cookie "survives" the redirect. JS reads the cookie and stores it in the session storage
         settingJwtAsShortLivedCookie(jwt, response);
