@@ -37,7 +37,6 @@ import org.springframework.web.filter.CorsFilter;
 import ch.admin.seco.jobroom.security.AuthoritiesConstants;
 import ch.admin.seco.jobroom.security.MD5PasswordEncoder;
 import ch.admin.seco.jobroom.security.jwt.JWTConfigurer;
-import ch.admin.seco.jobroom.security.jwt.TokenProvider;
 
 import java.util.Map;
 
@@ -94,9 +93,6 @@ public class SecurityConfiguration {
         private Map<String, String> rolemapping;
 
         @Autowired
-        private TokenProvider tokenProvider;
-
-        @Autowired
         private SamlProperties samlProperties;
 
         @Override
@@ -106,7 +102,7 @@ public class SecurityConfiguration {
             http.sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                 .and()
-                .apply(saml(this.tokenProvider))
+                .apply(saml())
                 .serviceProvider()
                 /*-*/.keyStore()
                 /*----*/.storeFilePath(samlProperties.getKeystorePath())

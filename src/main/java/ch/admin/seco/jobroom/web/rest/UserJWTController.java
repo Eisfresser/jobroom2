@@ -17,11 +17,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import ch.admin.seco.jobroom.security.jwt.JWTConfigurer;
 import ch.admin.seco.jobroom.security.jwt.TokenProvider;
@@ -43,18 +39,14 @@ public class UserJWTController {
         //this.authenticationManager = authenticationManager;
     }
 
-    @PostMapping("/authenticate")
+    @GetMapping("/getToken")
     @Timed
-    public ResponseEntity authorize(@Valid @RequestBody LoginVM loginVM, HttpServletRequest request, HttpServletResponse response) {
+    public ResponseEntity authorize(HttpServletRequest request, HttpServletResponse response) {
 
-        UsernamePasswordAuthenticationToken authenticationToken =
-            new UsernamePasswordAuthenticationToken(loginVM.getUsername(), loginVM.getPassword());
-        authenticationToken.setDetails(new WebAuthenticationDetails(request));
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-       // Authentication authentication = this.authenticationManager.authenticate(authenticationToken);
-       // SecurityContextHolder.getContext().setAuthentication(authentication);
-        boolean rememberMe = (loginVM.isRememberMe() == null) ? false : loginVM.isRememberMe();
-        Authentication authentication = null;
+        //TODO: implement rememberme
+        boolean rememberMe = false;
         String jwt = tokenProvider.createToken(authentication, rememberMe);
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add(JWTConfigurer.AUTHORIZATION_HEADER, "Bearer " + jwt);
