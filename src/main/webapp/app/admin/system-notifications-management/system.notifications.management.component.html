@@ -2,14 +2,6 @@
     <h2>
         <span jhiTranslate="systemNotificationsManagement.home.title">Users</span>
     </h2>
-    <div class="row">
-        <div class="col-sm-12">
-            <form name="searchForm" class="form-inline">
-                <div class="input-group w-100 mt-3">
-                </div>
-            </form>
-        </div>
-    </div>
     <div>
         <table class="table table-striped">
             <thead>
@@ -40,17 +32,13 @@
                 </th>
                 <th>
                     <button type="submit"
-                            class="btn btn-info btn-sm">
-                        <span class="fa fa-eye"></span>
-                        <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
-                    </button>
-                    <button type="submit"
+                            (click)="openDetailModal(systemNotification)"
                             class="btn btn-primary btn-sm">
                         <span class="fa fa-pencil"></span>
                         <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
                     </button>
                     <button type="submit"
-                            [routerLink]="['/', { outlets: { popup: ['system-notification-delete'] } }]"
+                            (click)="openDeleteModal(systemNotification)"
                             class="btn btn-danger btn-sm">
                         <span class="fa fa-remove"></span>
                         <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
@@ -60,7 +48,7 @@
             </tbody>
         </table>
     </div>
-    <button class="btn btn-primary" [routerLink]="['/', { outlets: { popup: ['system-notification-new'] } }]">
+    <button class="btn btn-primary" (click)="openCreateModal()">
         <span class="fa fa-plus"></span> <span jhiTranslate="systemNotificationsManagement.home.create">Create a new SystemNotification</span>
     </button>
 </div>

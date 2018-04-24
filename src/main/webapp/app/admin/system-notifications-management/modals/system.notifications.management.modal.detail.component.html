@@ -1,0 +1,54 @@
+<form (ngSubmit)="handleSubmit(form.value, form.valid)" #form="ngForm" novalidate>
+    <div class="modal-header">
+        <h4 class="modal-title">Neue System Mitteilung erfassen</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="form-group">
+            <label class="form-control-label">Title</label>
+            <input type="text" class="form-control" name="title" #title="ngModel" [ngModel]="systemNotification?.title">
+        </div>
+        <div class="form-group">
+            <label class="form-control-label">Text(DE)</label>
+            <input type="text" class="form-control">
+        </div>
+        <div class="form-group">
+            <label class="form-control-label">Text(EN)</label>
+            <input type="text" class="form-control">
+        </div>
+        <div class="form-group">
+            <label class="form-control-label">Text(FR)</label>
+            <input type="text" class="form-control">
+        </div>
+        <div class="form-group">
+            <label class="form-control-label">Text(IT)</label>
+            <input type="text" class="form-control">
+        </div>
+        <div class="form-group">
+            <label class="form-control-label">Anzeigen von:</label>
+            <input type="text" class="form-control" name="startDate" #startDate="ngModel" [ngModel]="systemNotification?.startDate" >
+        </div>
+        <div class="form-group">
+            <label class="form-control-label">Anzeigen bis:</label>
+            <input type="text" class="form-control" name="endDate" #startDate="ngModel" [ngModel]="systemNotification?.endDate">
+        </div>
+        <div class="form-group">
+            <label class="form-control-label">Mitteilungstyp</label>
+            <select class="form-control" name="type" #type="ngModel" [ngModel]="systemNotification?.type">
+                <option>INFO</option>
+                <option>SYSTEM</option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span
+            jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" class="btn btn-primary">
+            <span class="fa fa-floppy-o"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>
