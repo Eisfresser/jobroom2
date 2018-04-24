@@ -95,7 +95,7 @@ export class NavbarComponent implements OnInit {
     logout() {
         this.collapseNavbar();
         this.loginService.logout();
-        this.router.navigate(['']);
+        document.location.href = 'saml/logout';
     }
 
     toggleNavbar() {
