@@ -85,7 +85,6 @@ public class SecurityConfiguration {
 
 
     @Configuration
-    //@Order(101)      //TODO: which order?
     @ConfigurationProperties(prefix = "security")
     static class SamlSecurityConfig extends AbstractSecurityConfig {
 
