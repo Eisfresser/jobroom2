@@ -4,6 +4,7 @@ import { SystemNotificationsManagementModalCreateComponent } from './modals/syst
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SystemNotificationsManagementModalDeleteComponent } from './modals/system.notifications.management.modal.delete.component';
 import { SystemNotificationsManagementModalDetailComponent } from './modals/system.notifications.management.modal.detail.component';
+import { SystemNotificationService } from '../../shared/system-notification/system.notification.service';
 
 @Component({
     selector: 'jhi-sys-notifications',
@@ -11,53 +12,17 @@ import { SystemNotificationsManagementModalDetailComponent } from './modals/syst
 })
 export class SystemNotificationsManagementComponent implements OnInit {
     systemNotifications: SystemNotification[];
+    systemNotificationService: SystemNotificationService;
 
-    constructor(private modalService: NgbModal) {
+    constructor(
+        private modalService: NgbModal,
+        systemNotificationService: SystemNotificationService
+    ) {
+        this.systemNotificationService = systemNotificationService;
     }
 
-    ngOnInit() {
-        this.systemNotifications = new Array(
-            new SystemNotification(
-                1,
-                'Systemmitteilung 1',
-                'SYSTEM',
-                '01-01-2001',
-                '01-01-2001',
-                true
-            ),
-            new SystemNotification(
-                2,
-                'Systemmitteilung 2',
-                'SYSTEM',
-                '01-01-2001',
-                '01-01-2001',
-                false
-            ),
-            new SystemNotification(
-                3,
-                'Systemmitteilung 3',
-                'SYSTEM',
-                '01-01-2001',
-                '01-01-2001',
-                true
-            ),
-            new SystemNotification(
-                4,
-                'Systemmitteilung 4',
-                'SYSTEM',
-                '01-01-2001',
-                '01-01-2001',
-                false
-            ),
-            new SystemNotification(
-                5,
-                'Systemmitteilung 5',
-                'SYSTEM',
-                '01-01-2001',
-                '01-01-2001',
-                true
-            )
-        );
+    ngOnInit(): void {
+        this.systemNotifications = this.systemNotificationService.getAllSystemNotifications();
     }
 
     openCreateModal() {

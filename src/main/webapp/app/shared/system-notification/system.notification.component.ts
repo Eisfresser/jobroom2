@@ -1,14 +1,29 @@
-import {Component} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { SystemNotificationService } from './system.notification.service';
+import { SystemNotification } from './system.notification.model';
 
 @Component({
-    selector: 'system-notifications',
-    templateUrl: './system-notification.html',
-    styleUrls: ['./system-notification-component.scss']
+    selector: 'jr2-system-notification',
+    templateUrl: './system.notification.component.html',
+    styleUrls: ['./system.notification.component.scss']
 })
+export class SystemNotificationComponent implements OnInit {
+    systemNotificationService: SystemNotificationService;
+    systemNotifications: SystemNotification[];
 
-export class SystemNotificationComponent {
-
-    constructor(){
-
+    constructor(systemNotificationService: SystemNotificationService) {
+        this.systemNotificationService = systemNotificationService;
     }
+
+    ngOnInit(): void {
+        this.systemNotifications = this.systemNotificationService.getAllSystemNotifications();
+    }
+
+    getActiveSystemNotification(): SystemNotification[] {
+        return this.systemNotifications.filter(
+            (systemNotification: SystemNotification) =>
+                systemNotification.isActive
+        );
+    }
+
 }

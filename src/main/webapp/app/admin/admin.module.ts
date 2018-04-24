@@ -22,8 +22,8 @@ import {
     LogsService,
     SystemNotificationsManagementComponent,
     SystemNotificationsManagementModalCreateComponent,
-    SystemNotificationsManagementModalDetailComponent,
     SystemNotificationsManagementModalDeleteComponent,
+    SystemNotificationsManagementModalDetailComponent,
     UserDeleteDialogComponent,
     UserDialogComponent,
     UserMgmtComponent,
@@ -34,6 +34,7 @@ import {
     UserResolve,
     UserResolvePagingParams
 } from './';
+import { SystemNotificationService } from '../shared/system-notification/system.notification.service';
 
 /* jhipster-needle-add-admin-module-import - JHipster will add admin modules imports here */
 
@@ -76,6 +77,7 @@ import {
     ],
     providers: [
         AuditsService,
+        SystemNotificationService,
         JhiConfigurationService,
         JhiHealthService,
         JhiMetricsService,

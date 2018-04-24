@@ -20,6 +20,7 @@ import { JobPublicationResolverService } from './tools/job-publication-tool/serv
 import { UserDataResolverService } from './tools/job-publication-tool/service/user-data-resolver.service';
 import { ScrollToFirstInvalidDirective } from './tools/job-publication-tool/scroll-to-first-invalid.directive';
 import { InputErrorMessageComponent } from './tools/job-publication-tool/input-error-message/input-error-message.component';
+import { SystemNotificationComponent } from '../shared/system-notification/system.notification.component';
 
 @NgModule({
     imports: [
@@ -36,6 +37,7 @@ import { InputErrorMessageComponent } from './tools/job-publication-tool/input-e
         HomeComponent,
         JobSearchToolComponent,
         CandidateSearchToolComponent,
+        SystemNotificationComponent,
         JobPublicationToolComponent,
         ToolbarComponent,
         ToolbarItemComponent,
