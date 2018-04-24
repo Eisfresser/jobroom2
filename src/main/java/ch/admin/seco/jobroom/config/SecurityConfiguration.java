@@ -6,6 +6,7 @@ import ch.admin.seco.jobroom.security.saml.SamlProperties;
 import ch.admin.seco.jobroom.security.saml.infrastructure.EiamSamlUserDetailsService;
 import ch.admin.seco.jobroom.security.saml.infrastructure.SamlBasedUserDetailsProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.annotation.Order;
 import org.zalando.problem.spring.web.advice.security.SecurityProblemSupport;
@@ -37,6 +38,8 @@ import ch.admin.seco.jobroom.security.AuthoritiesConstants;
 import ch.admin.seco.jobroom.security.MD5PasswordEncoder;
 import ch.admin.seco.jobroom.security.jwt.JWTConfigurer;
 import ch.admin.seco.jobroom.security.jwt.TokenProvider;
+
+import java.util.Map;
 
 import static ch.admin.seco.jobroom.security.saml.dsl.SAMLConfigurer.saml;
 
@@ -83,10 +86,13 @@ public class SecurityConfiguration {
 
     @Configuration
     //@Order(101)      //TODO: which order?
+    @ConfigurationProperties(prefix = "security")
     static class SamlSecurityConfig extends AbstractSecurityConfig {
 
         //@Autowired
         //private IamService iamService;
+
+        private Map<String, String> rolemapping;
 
         @Autowired
         private SamlProperties samlProperties;
@@ -128,7 +134,15 @@ public class SecurityConfiguration {
         }
 
         private SamlBasedUserDetailsProvider samlBasedUserDetailsProvider() {
-            return new DefaultSamlBasedUserDetailsProvider();
+            return new DefaultSamlBasedUserDetailsProvider(rolemapping);
+        }
+
+        public Map<String, String> getRolemapping() {
+            return rolemapping;
+        }
+
+        public void setRolemapping(Map<String, String> rolemapping) {
+            this.rolemapping = rolemapping;
         }
     }
 

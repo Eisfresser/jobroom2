@@ -10,12 +10,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.mapping.Attributes2GrantedAuthoritiesMapper;
-import org.springframework.security.core.authority.mapping.SimpleAttributes2GrantedAuthoritiesMapper;
+import org.springframework.security.core.authority.mapping.MapBasedAttributes2GrantedAuthoritiesMapper;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class DefaultSamlBasedUserDetailsProvider implements SamlBasedUserDetailsProvider {
 
@@ -24,12 +22,14 @@ public class DefaultSamlBasedUserDetailsProvider implements SamlBasedUserDetails
     private static final String DEFAULT_DUMMY_PASSWORD = "N/A"; //NOSONAR
 
     //private IamService iamService;
+    private Map<String, String> roleMapping;
 
     private final Attributes2GrantedAuthoritiesMapper attributes2GrantedAuthoritiesMapper;
 
     @Autowired
-    public DefaultSamlBasedUserDetailsProvider() { //IamService iamService) {
+    public DefaultSamlBasedUserDetailsProvider(Map<String, String> roleMapping) { //IamService iamService) {
         //this.iamService = iamService;
+        this.roleMapping = roleMapping;
         this.attributes2GrantedAuthoritiesMapper = buildAttributes2GrantedAuthoritiesMapper();
     }
 
@@ -75,10 +75,9 @@ public class DefaultSamlBasedUserDetailsProvider implements SamlBasedUserDetails
         return new HashSet<>(attributes2GrantedAuthoritiesMapper.getGrantedAuthorities(roles));
     }
 
-    private SimpleAttributes2GrantedAuthoritiesMapper buildAttributes2GrantedAuthoritiesMapper() {
-        SimpleAttributes2GrantedAuthoritiesMapper attributes2GrantedAuthoritiesMapper = new SimpleAttributes2GrantedAuthoritiesMapper();
-        attributes2GrantedAuthoritiesMapper.setAddPrefixIfAlreadyExisting(false);
-        attributes2GrantedAuthoritiesMapper.setAttributePrefix("");
+    private Attributes2GrantedAuthoritiesMapper buildAttributes2GrantedAuthoritiesMapper() {
+        MapBasedAttributes2GrantedAuthoritiesMapper attributes2GrantedAuthoritiesMapper = new MapBasedAttributes2GrantedAuthoritiesMapper();
+        attributes2GrantedAuthoritiesMapper.setAttributes2grantedAuthoritiesMap(this.roleMapping);
         return attributes2GrantedAuthoritiesMapper;
     }
 }
