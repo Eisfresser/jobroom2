@@ -39,7 +39,10 @@ public class DefaultSamlBasedUserDetailsProvider implements SamlBasedUserDetails
             throw new IllegalArgumentException("EIAMEnrichedSAMLUser needed for getting userExtId");
         }
         EiamEnrichedSamlUser eIamSamlUser = (EiamEnrichedSamlUser) samlUser;
-        return new AuthenticatedUser(toJobroomUser(eIamSamlUser), toGrantedAuthorities(eIamSamlUser.getRoles()), DEFAULT_DUMMY_PASSWORD);
+        String username = eIamSamlUser.getDisplayName().orElse(eIamSamlUser.getUserExtId().orElse(eIamSamlUser.getNameId()));
+        //TODO: remove -> workaround for capital login name
+        username = username.toLowerCase();
+        return new AuthenticatedUser(username, toJobroomUser(eIamSamlUser), toGrantedAuthorities(eIamSamlUser.getRoles()), DEFAULT_DUMMY_PASSWORD);
     }
 
     private User toJobroomUser(EiamEnrichedSamlUser eiamEnrichedSamlUser) {

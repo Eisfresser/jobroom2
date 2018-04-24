@@ -3,10 +3,7 @@ package ch.admin.seco.jobroom.security.saml.utils;
 import ch.admin.seco.jobroom.domain.User;
 import org.springframework.security.core.GrantedAuthority;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class AuthenticatedUser extends org.springframework.security.core.userdetails.User {
 
@@ -14,8 +11,8 @@ public class AuthenticatedUser extends org.springframework.security.core.userdet
 
     private final List<String> roles;
 
-    public AuthenticatedUser(User user, Collection<? extends GrantedAuthority> authorities, String password) {
-        super(String.valueOf(user.getExtId()), password, authorities);
+    public AuthenticatedUser(String username, User user, Collection<? extends GrantedAuthority> authorities, String password) {
+        super(username, password, authorities);
 
         this.user = user;
         this.roles = new ArrayList<>(getRolesAsString(authorities));
