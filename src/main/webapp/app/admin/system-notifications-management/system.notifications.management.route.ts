@@ -1,7 +1,7 @@
 import { Route, Routes } from '@angular/router';
 import { SystemNotificationsManagementComponent } from './system.notifications.management.component';
-import { SystemNotificationsManagementModalCreateComponent } from './system.notifications.management.modal.create.component';
-import { SystemNotificationsManagementModalDeleteComponent } from './system.notifications.management.modal.delete.component';
+import { SystemNotificationsManagementModalCreateComponent } from './modals/system.notifications.management.modal.create.component';
+import { SystemNotificationsManagementModalDeleteComponent } from './modals/system.notifications.management.modal.delete.component';
 
 export const systemNotificationsManagementRoute: Route = {
     path: 'system-notifications-management',
@@ -10,16 +10,3 @@ export const systemNotificationsManagementRoute: Route = {
         pageTitle: 'system-notifications-management.title'
     }
 };
-
-export const systemNotificationsModalRoute: Routes = [
-    {
-        path: 'system-notification-new',
-        component: SystemNotificationsManagementModalCreateComponent,
-        outlet: 'popup'
-    },
-    {
-        path: 'system-notification-delete',
-        component: SystemNotificationsManagementModalDeleteComponent,
-        outlet: 'popup'
-    },
-];

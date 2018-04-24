@@ -22,6 +22,7 @@ import {
     LogsService,
     SystemNotificationsManagementComponent,
     SystemNotificationsManagementModalCreateComponent,
+    SystemNotificationsManagementModalDetailComponent,
     SystemNotificationsManagementModalDeleteComponent,
     UserDeleteDialogComponent,
     UserDialogComponent,
@@ -33,7 +34,6 @@ import {
     UserResolve,
     UserResolvePagingParams
 } from './';
-import { SystemNotificationsManagementModalService } from './system-notifications-management/system.notifications.management.modal.service';
 
 /* jhipster-needle-add-admin-module-import - JHipster will add admin modules imports here */
 
@@ -62,11 +62,15 @@ import { SystemNotificationsManagementModalService } from './system-notification
         JhiMetricsMonitoringModalComponent,
         SystemNotificationsManagementComponent,
         SystemNotificationsManagementModalCreateComponent,
-        SystemNotificationsManagementModalDeleteComponent
+        SystemNotificationsManagementModalDeleteComponent,
+        SystemNotificationsManagementModalDetailComponent
     ],
     entryComponents: [
         UserMgmtDialogComponent,
         UserMgmtDeleteDialogComponent,
+        SystemNotificationsManagementModalCreateComponent,
+        SystemNotificationsManagementModalDeleteComponent,
+        SystemNotificationsManagementModalDetailComponent,
         JhiHealthModalComponent,
         JhiMetricsMonitoringModalComponent
     ],
@@ -80,7 +84,6 @@ import { SystemNotificationsManagementModalService } from './system-notification
         UserResolvePagingParams,
         UserResolve,
         UserModalService,
-        SystemNotificationsManagementModalService
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

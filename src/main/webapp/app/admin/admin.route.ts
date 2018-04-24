@@ -9,7 +9,6 @@ import {
     logsRoute,
     metricsRoute,
     systemNotificationsManagementRoute,
-    systemNotificationsModalRoute,
     userDialogRoute,
     userMgmtRoute
 } from './';
@@ -25,8 +24,7 @@ const ADMIN_ROUTES = [
     gatewayRoute,
     ...userMgmtRoute,
     metricsRoute,
-    systemNotificationsManagementRoute,
-    ...systemNotificationsModalRoute
+    systemNotificationsManagementRoute
 ];
 
 export const adminState: Routes = [
@@ -38,6 +36,5 @@ export const adminState: Routes = [
         canActivate: [UserRouteAccessService],
         children: ADMIN_ROUTES
     },
-    ...userDialogRoute,
-    ...systemNotificationsModalRoute
+    ...userDialogRoute
 ];
