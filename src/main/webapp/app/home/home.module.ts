@@ -21,6 +21,7 @@ import { UserDataResolverService } from './tools/job-publication-tool/service/us
 import { ScrollToFirstInvalidDirective } from './tools/job-publication-tool/scroll-to-first-invalid.directive';
 import { InputErrorMessageComponent } from './tools/job-publication-tool/input-error-message/input-error-message.component';
 import { CookieModule } from 'ngx-cookie';
+import { AuthResolverService } from './tools/auth-resolver.service';
 
 @NgModule({
     imports: [
@@ -49,7 +50,8 @@ import { CookieModule } from 'ngx-cookie';
     entryComponents: [],
     providers: [
         JobPublicationResolverService,
-        UserDataResolverService
+        UserDataResolverService,
+        AuthResolverService
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

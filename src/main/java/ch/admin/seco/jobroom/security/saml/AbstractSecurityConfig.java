@@ -38,7 +38,7 @@ public class AbstractSecurityConfig extends WebSecurityConfigurerAdapter {
         http.exceptionHandling().accessDeniedHandler(forbiddenDeniedHandler());
 
         http.authorizeRequests().
-            antMatchers("/login").fullyAuthenticated()
+            antMatchers("/samllogin").fullyAuthenticated()
 
             .antMatchers("/api/register").permitAll()
             .antMatchers("/api/activate").permitAll()

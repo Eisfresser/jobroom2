@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home.component';
 import { JobPublicationResolverService } from './tools/job-publication-tool/service/job-publication-resolver.service';
 import { UserDataResolverService } from './tools/job-publication-tool/service/user-data-resolver.service';
+import { AuthResolverService } from './tools/auth-resolver.service';
 
 const routes: Routes = [
     {
@@ -14,11 +15,14 @@ const routes: Routes = [
         }
     },
     {
-        path: 'login',
+        path: 'auth',
         component: HomeComponent,
         data: {
             authorities: [],
             pageTitle: 'home.title'
+        },
+        resolve: {
+            auth: AuthResolverService
         }
     },
     {

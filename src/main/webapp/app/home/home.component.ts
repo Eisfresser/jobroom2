@@ -1,8 +1,6 @@
 import { Component, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
-import { CookieService } from 'ngx-cookie';
-import { SessionStorageService } from 'ngx-webstorage';
 import {
     CandidateSearchToolState,
     getActiveAgencyTabId,
@@ -55,19 +53,12 @@ export class HomeComponent implements OnInit, OnDestroy {
     constructor(private store: Store<HomeState>,
                 private route: ActivatedRoute,
                 private router: Router,
-                private renderer: Renderer2,
-                private _cookieService: CookieService,
-                private $sessionStorage: SessionStorageService) {
+                private renderer: Renderer2) {
         this.jobSearchToolModel$ = store.select(getJobSearchToolState);
         this.candidateSearchToolModel$ = store.select(getCandidateSearchToolState);
         this.activeToolbarItem$ = store.select(getActiveToolbarItem);
         this.activeCompanyTabId$ = store.select(getActiveCompanyTabId);
         this.activeAgencyTabId$ = store.select(getActiveAgencyTabId);
-
-        const ck = this._cookieService.get('jwt');
-        console.log(ck);  // TODO: remove; only for debugging during development
-        this.$sessionStorage.store('authenticationToken', ck);
-        this.isSubnavCollapsed = true;
 
         this.jobPublication$ = this.route.data
             .map((data) => data['jobPublication']);

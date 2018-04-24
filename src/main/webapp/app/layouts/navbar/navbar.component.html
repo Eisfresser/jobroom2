@@ -164,7 +164,17 @@
                                jhiTranslate="global.menu.account.login">
                                 Login
                             </a>
-
+                        </li>
+                        <li class="nav-item" *ngIf="!isAuthenticated()">
+                            <a class="nav-link nav-link--login" [href]="'/samllogin'">
+                                <span>{{'global.menu.account.login' | translate}}</span>
+                            </a>
+                        </li>
+                        <li class="nav-item" *ngIf="isAuthenticated()">
+                            <a class="nav-link nav-link--login" (click)="logout()"
+                               jhiTranslate="global.menu.account.logout">
+                                Logout
+                            </a>
                         </li>
                         <li ngbDropdown class="nav-item" *ngIf="isAuthenticated()">
                             <strong class="nav-link">
@@ -337,6 +347,17 @@
                     <a class="nav-link nav-link--login" (click)="login(false)"
                        jhiTranslate="global.menu.account.login">
                         Login
+                    </a>
+                </li>
+                <li class="nav-item" *ngIf="!isAuthenticated()">
+                    <a class="nav-link nav-link--login" [href]="'/samllogin'">
+                        <span>{{'global.menu.account.login' | translate}}</span>
+                    </a>
+                </li>
+                <li class="nav-item" *ngIf="isAuthenticated()">
+                    <a class="nav-link nav-link--login" (click)="logout()"
+                       jhiTranslate="global.menu.account.logout">
+                        Logout
                     </a>
                 </li>
                 <li ngbDropdown class="nav-item d-none d-sm-block dropdown" *ngIf="isAuthenticated()">

@@ -48,7 +48,9 @@ public class ToBeRemovedTokenProvider {
     }
 
     public String createToken(Authentication authentication, boolean rememberMe) {
-        return createToken(authentication, getAuthorities(authentication), getValidity(rememberMe));
+        // TODO: workaround to remove the role prefix
+        String authorities = getAuthorities(authentication).replaceAll("SECO-jobroom.", "");
+        return createToken(authentication, authorities, getValidity(rememberMe));
     }
 
     public DefaultOAuth2AccessToken createAccessToken(Authentication authentication) {
