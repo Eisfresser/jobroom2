@@ -1,4 +1,5 @@
 import { CEFR_Level, WorkForm } from '..';
+import { GeoPoint } from '../reference-service';
 
 export enum JobAdvertisementStatus {
     CREATED,
@@ -30,10 +31,10 @@ export enum WorkExperience {
 }
 
 export interface JobContent {
-    externalUrl: string;
+    externalUrl?: string;
     jobDescriptions: JobDescription[];
     company: Company;
-    employer: Employer;
+    employer?: Employer;
     employment: Employment;
     location: Location;
     occupations: Occupation[];
@@ -56,16 +57,16 @@ export interface JobAdvertisement {
     stellennummerEgov: string;
     stellennummerAvam: string;
     fingerprint: string;
-    reportingObligation: boolean;
-    reportingObligationEndDate: string;
+    reportingObligation?: boolean;
+    reportingObligationEndDate?: string;
     reportToAvam: boolean;
     jobCenterCode: string;
-    approvalDate: string;
-    rejectionDate: string;
-    rejectionCode: string;
-    rejectionReason: string;
-    cancellationDate: string;
-    cancellationCode: string;
+    approvalDate?: string;
+    rejectionDate?: string;
+    rejectionCode?: string;
+    rejectionReason?: string;
+    cancellationDate?: string;
+    cancellationCode?: string;
     jobContent: JobContent;
     owner: Owner;
     contact: Contact;
@@ -78,7 +79,7 @@ export interface Publication {
     euresDisplay: boolean;
     euresAnonymous: boolean;
     publicDisplay: boolean;
-    publicAnonynomous: boolean; // FIX typo on the back-end
+    publicAnonymous: boolean;
     restrictedDisplay: boolean;
     restrictedAnonymous: boolean;
 }
@@ -123,6 +124,17 @@ export interface Employment {
     workForms?: string[];
 }
 
+export interface Location {
+    remarks?: string;
+    city: string;
+    postalCode: string;
+    countryIsoCode: string;
+    communalCode?: string;
+    regionCode?: string;
+    cantonCode?: string;
+    coordinates?: GeoPoint;
+}
+
 export interface CreateLocation {
     remarks?: string;
     city: string;
@@ -132,8 +144,8 @@ export interface CreateLocation {
 
 export interface Occupation {
     avamOccupationCode: string;
-    workExperience: WorkExperience;
-    educationCode: string;
+    workExperience?: WorkExperience;
+    educationCode?: string;
 }
 
 export interface LanguageSkill {

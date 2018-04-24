@@ -174,7 +174,7 @@ export class JobPublicationMapper {
             euresDisplay: jobPublicationForm.publication.eures,
             euresAnonymous: jobPublicationForm.publication.euresAnonymous,
             publicDisplay: jobPublicationForm.publication.publicDisplay,
-            publicAnonynomous: jobPublicationForm.publication.publicAnonymous,
+            publicAnonymous: jobPublicationForm.publication.publicAnonymous,
             restrictedDisplay: jobPublicationForm.publication.restrictedDisplay,
             restrictedAnonymous: jobPublicationForm.publication.restrictedAnonymous
         };

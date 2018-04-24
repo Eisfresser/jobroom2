@@ -252,7 +252,7 @@ describe('createCandidateSearchRequestFromToolState', () => {
     });
 
     it('should map CandidateSearchFilter with workplace abroad', () => {
-        //GIVEN
+        // GIVEN
         const workplace = [new TypeaheadMultiselectModel('type', 'null:null', 'label')];
         const filter: CandidateSearchToolState = Object.assign({}, defaultSearchToolState, { workplace });
         // WHEN
