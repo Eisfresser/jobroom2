@@ -2,7 +2,7 @@ import { CandidateSearchFilter } from '../state/candidate-search.state';
 import {
     Availability,
     Canton,
-    CEFR_Level,
+    CEFR_Level, Degree,
     DrivingLicenceCategory,
     Experience,
     Graduation,
@@ -17,9 +17,8 @@ import {
     WorkLoad
 } from '../../services/candidate-search-request';
 import { OccupationCode } from '../../../shared/reference-service';
-import { TypeaheadMultiselectModel } from '../../../shared/input-components/typeahead/typeahead-multiselect-model';
-import { OccupationInputType } from '../../../shared/reference-service/occupation-presentation.service';
-import { Degree } from '../../../shared/job-publication/job-publication.model';
+import { TypeaheadMultiselectModel } from '../../../shared/input-components';
+import { OccupationInputType } from '../../../shared/reference-service';
 
 // todo: The same code is duplicated in the job-search search-request-mapper.ts
 

@@ -8,20 +8,18 @@ import {
 } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import {
-    AbstractControl,
+    AbstractControl, FormArray,
     FormBuilder, FormGroup,
-    ValidatorFn,
     Validators
 } from '@angular/forms';
 import { Subject } from 'rxjs/Subject';
 import {
-    DateUtils,
-    DrivingLicenceCategory,
+    DateUtils, Degree,
     EMAIL_REGEX,
     Gender,
     POSTBOX_NUMBER_REGEX,
     ResponseWrapper,
-    URL_REGEX,
+    URL_REGEX, WorkForm
 } from '../../../shared';
 import { LanguageSkillService } from '../../../candidate-search/services/language-skill.service';
 import {
@@ -34,15 +32,17 @@ import { Translations } from './zip-code/zip-code.component';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import * as countries from 'i18n-iso-countries';
 import {
-    Degree,
-    Experience,
     JobPublication
 } from '../../../shared/job-publication/job-publication.model';
-import { JobPublicationService } from '../../../shared/job-publication/job-publication.service';
 import { Subscriber } from 'rxjs/Subscriber';
 import { JobPublicationMapper } from './job-publication-mapper';
 import { Organization } from '../../../shared/organization/organization.model';
 import { UserData } from './service/user-data-resolver.service';
+import { JobAdvertisementService } from '../../../shared/job-advertisement/job-advertisement.service';
+import { Salutation, WorkExperience } from '../../../shared/job-advertisement/job-advertisement.model';
+import { CompanyFormModel, JobPublicationForm } from './job-publication-form.model';
+import { LanguageFilterService } from '../../../shared/input-components/language-filter/language-filter.service';
+import { languages } from '../../../candidate-search/services/language-skill.service';
 
 @Component({
     selector: 'jr2-job-publication-tool',
@@ -52,7 +52,6 @@ import { UserData } from './service/user-data-resolver.service';
 })
 export class JobPublicationToolComponent implements OnInit, OnDestroy {
     private readonly SWITZ_KEY = 'CH';
-    readonly JOB_DESCRIPTION_MAX_LENGTH = 9000;
     readonly APPLICATION_ADDITIONAL_INFO_MAX_LENGTH = 240;
 
     @Input()
@@ -60,22 +59,24 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
     @Input()
     userData: UserData;
 
-    @ViewChild('publicationStartDateEl')
-    publicationStartDateElementRef: ElementRef;
+    @ViewChild('employmentStartDateEl')
+    employmentStartDateElementRef: ElementRef;
 
-    @ViewChild('publicationEndDateEl')
-    publicationEndDateElementRef: ElementRef;
+    @ViewChild('employmentEndDateEl')
+    employmentEndDateElementRef: ElementRef;
 
     degrees = Degree;
-    experiences = Experience;
-    drivingLicenceCategories = DrivingLicenceCategory;
+    experiences = WorkExperience;
+    salutations = Salutation;
+    workForms = WorkForm;
     languageSkills$: Observable<Array<string>>;
+    languageOptionTranslations$: Observable<Array<{ key: string, value: string }>>;
 
     jobPublicationForm: FormGroup;
-    publicationStartDateByArrangement = true;
-    publicationEndDateIsPermanent = true;
-    publicationStartDateMin = DateUtils.mapDateToNgbDateStruct();
-    publicationEndDateMin = DateUtils.mapDateToNgbDateStruct();
+    employmentStartDateByArrangement = true;
+    employmentEndDateIsPermanent = true;
+    employmentStartDateMin = DateUtils.mapDateToNgbDateStruct();
+    employmentEndDateMin = DateUtils.mapDateToNgbDateStruct();
 
     fetchOccupationSuggestions: SuggestionLoaderFn<Array<OccupationOption>>;
     occupationFormatter: FormatterFn<OccupationOption>;
@@ -91,7 +92,8 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
                 private fb: FormBuilder,
                 private languageSkillService: LanguageSkillService,
                 private translateService: TranslateService,
-                private jobPublicationService: JobPublicationService,
+                private jobAdvertisementService: JobAdvertisementService,
+                private languageFilterService: LanguageFilterService,
                 private cd: ChangeDetectorRef) {
     }
 
@@ -99,78 +101,95 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
         this.fetchOccupationSuggestions = this.occupationPresentationService.fetchJobPublicationOccupationSuggestions;
         this.occupationFormatter = this.occupationPresentationService.occupationFormatter;
         this.updateOccupationOnLanguageChange();
+        this.languageOptionTranslations$ = this.languageFilterService.getSorterLanguageTranslations(languages);
 
         this.languageSkills$ = this.languageSkillService.getLanguages();
         this.setupCountries();
 
-        const formModel = this.jobPublication
+        const formModel: JobPublicationForm = this.jobPublication
             ? JobPublicationMapper.mapJobPublicationToFormModel(this.jobPublication)
             : this.createDefaultFormModel();
 
         this.jobPublicationForm = this.createJobPublicationForm(formModel);
 
-        this.validateCheckboxRelatedField('application.electronic',
-            ['application.email', 'application.url']);
-        this.validateCheckboxRelatedField('application.phoneEnabled', ['application.phoneNumber']);
-        this.validateElectronicApplicationFields('application.email',
-            'application.url', Validators.pattern(URL_REGEX));
-        this.validateElectronicApplicationFields('application.url',
-            'application.email', Validators.pattern(EMAIL_REGEX));
-
-        this.configureDateInput('job.publicationStartDate.date', 'job.publicationStartDate.immediate',
+        this.configureDateInput('employment.employmentStartDate.date', 'employment.employmentStartDate.immediate',
             (disabled) => {
-                this.publicationStartDateByArrangement = disabled;
+                this.employmentStartDateByArrangement = disabled;
                 if (!disabled) {
                     setTimeout(() => {
-                        this.publicationStartDateElementRef.nativeElement.focus();
+                        this.employmentStartDateElementRef.nativeElement.focus();
                     }, 0);
                 }
             });
-        this.configureDateInput('job.publicationEndDate.date', 'job.publicationEndDate.permanent',
+        this.configureDateInput('employment.employmentEndDate.date', 'employment.employmentEndDate.permanent',
             (disabled) => {
-                this.publicationEndDateIsPermanent = disabled;
+                this.employmentEndDateIsPermanent = disabled;
                 if (!disabled) {
                     setTimeout(() => {
-                        this.publicationEndDateElementRef.nativeElement.focus();
+                        this.employmentEndDateElementRef.nativeElement.focus();
                     }, 0);
                 }
             });
-        this.updatePublicationStartDateRelatedField();
+        this.updateEmploymentStartDateRelatedField();
+        this.configureEmployerSection();
     }
 
-    private createJobPublicationForm(formModel: any): FormGroup {
+    private configureEmployerSection() {
+        this.jobPublicationForm.get('company.surrogate').valueChanges
+            .takeUntil(this.unsubscribe$)
+            .startWith(this.jobPublicationForm.get('company.surrogate').value)
+            .subscribe((value) => {
+                const employer = this.jobPublicationForm.get('employer');
+                if (value) {
+                    employer.get('name').setValidators(Validators.required);
+                    employer.get('countryCode').setValidators(Validators.required);
+                } else {
+                    employer.clearValidators();
+                }
+            });
+    }
+
+    isEmployerEnabled(): boolean {
+        return this.jobPublicationForm.get('company.surrogate').value;
+    }
+
+    private createJobPublicationForm(formModel: JobPublicationForm): FormGroup {
         return this.fb.group({
-            job: this.fb.group({
-                title: [formModel.job.title, Validators.required],
-                occupation: this.fb.group({
-                    occupationSuggestion: [formModel.job.occupation.occupationSuggestion, Validators.required],
-                    degree: [formModel.job.occupation.degree],
-                    experience: [formModel.job.occupation.experience]
-                }),
-                description: [formModel.job.description,
-                    [Validators.required, Validators.maxLength(this.JOB_DESCRIPTION_MAX_LENGTH)]],
-                workload: [formModel.job.workload, Validators.required],
-                publicationStartDate: this.fb.group({
-                    immediate: formModel.job.publicationStartDate.immediate,
+            jobDescriptions: [formModel.jobDescriptions],
+            occupation: this.fb.group({
+                occupationSuggestion: [formModel.occupation.occupationSuggestion, Validators.required],
+                degree: [formModel.occupation.degree],
+                experience: [formModel.occupation.experience]
+            }),
+            languageSkills: [formModel.languageSkills],
+            employment: this.fb.group({
+                workload: [formModel.employment.workload, Validators.required],
+                employmentStartDate: this.fb.group({
+                    immediate: formModel.employment.employmentStartDate.immediate,
                     date: [{
-                        value: formModel.job.publicationStartDate.date,
-                        disabled: !formModel.job.publicationStartDate.date
+                        value: formModel.employment.employmentStartDate.date,
+                        disabled: !formModel.employment.employmentStartDate.date
                     }, Validators.required]
                 }),
-                publicationEndDate: this.fb.group({
-                    permanent: formModel.job.publicationEndDate.permanent,
+                employmentEndDate: this.fb.group({
+                    permanent: formModel.employment.employmentEndDate.permanent,
                     date: [{
-                        value: formModel.job.publicationEndDate.date,
-                        disabled: !formModel.job.publicationEndDate.date
+                        value: formModel.employment.employmentEndDate.date,
+                        disabled: !formModel.employment.employmentEndDate.date
                     }, Validators.required]
                 }),
-                drivingLicenseLevel: [formModel.job.drivingLicenseLevel],
-                location: this.fb.group({
-                    zipCode: [formModel.job.location.zipCode],
-                    countryCode: [formModel.job.location.countryCode, Validators.required],
-                    additionalDetails: [formModel.job.location.additionalDetails]
-                }),
-                languageSkills: [formModel.job.languageSkills]
+                shortEmployment: [formModel.employment.shortEmployment],
+                workForms: this.fb.array([
+                    formModel.employment.workForms[0],
+                    formModel.employment.workForms[1],
+                    formModel.employment.workForms[2],
+                    formModel.employment.workForms[3]
+                ])
+            }),
+            location: this.fb.group({
+                countryCode: [formModel.location.countryCode, Validators.required],
+                zipCode: [formModel.location.zipCode],
+                additionalDetails: [formModel.location.additionalDetails]
             }),
             company: this.fb.group({
                 name: [formModel.company.name, Validators.required],
@@ -179,9 +198,16 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
                 zipCode: [formModel.company.zipCode],
                 postboxNumber: [formModel.company.postboxNumber, Validators.pattern(POSTBOX_NUMBER_REGEX)],
                 postboxZipCode: [formModel.company.postboxZipCode],
-                countryCode: [formModel.company.countryCode, Validators.required]
+                countryCode: [formModel.company.countryCode, Validators.required],
+                surrogate: [formModel.company.surrogate]
+            }),
+            employer: this.fb.group({
+                name: [formModel.employer.name],
+                zipCode: [formModel.employer.zipCode],
+                countryCode: [formModel.employer.countryCode],
             }),
             contact: this.fb.group({
+                language: [formModel.contact.language, Validators.required],
                 salutation: [formModel.contact.salutation, Validators.required],
                 firstName: [formModel.contact.firstName, Validators.required],
                 lastName: [formModel.contact.lastName, Validators.required],
@@ -189,59 +215,70 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
                     [Validators.required]],
                 email: [formModel.contact.email, [Validators.required, Validators.pattern(EMAIL_REGEX)]],
             }),
+            publicContact: this.fb.group({
+                salutation: [formModel.publicContact.salutation],
+                firstName: [formModel.publicContact.firstName],
+                lastName: [formModel.publicContact.lastName],
+                phoneNumber: [formModel.publicContact.phoneNumber],
+                email: [formModel.publicContact.email, [Validators.pattern(EMAIL_REGEX)]],
+            }),
             application: this.fb.group({
-                written: [formModel.application.written],
-                electronic: [formModel.application.electronic],
-                phoneEnabled: [formModel.application.phoneEnabled],
-                email: [{
-                    value: formModel.application.email,
-                    disabled: true
-                }, []],
-                url: [{ value: formModel.application.url, disabled: true }, []],
-                phoneNumber: [{
-                    value: formModel.application.phoneNumber,
-                    disabled: true
-                }, [Validators.required]],
+                paperApplicationAddress: [formModel.application.paperApplicationAddress],
+                electronicApplicationEmail: [formModel.application.electronicApplicationEmail, Validators.pattern(EMAIL_REGEX)],
+                electronicApplicationUrl: [formModel.application.electronicApplicationUrl, Validators.pattern(URL_REGEX)],
+                phoneNumber: [formModel.application.phoneNumber],
                 additionalInfo: [formModel.application.additionalInfo,
                     [Validators.maxLength(this.APPLICATION_ADDITIONAL_INFO_MAX_LENGTH)]],
             }),
             publication: this.fb.group({
-                jobroom: [formModel.publication.jobroom],
+                publicDisplay: [formModel.publication.publicDisplay],
+                publicAnonymous: [formModel.publication.publicAnonymous],
                 eures: [formModel.publication.eures],
+                euresAnonymous: [formModel.publication.euresAnonymous],
+                restrictedDisplay: [formModel.publication.restrictedDisplay],
+                restrictedAnonymous: [formModel.publication.restrictedAnonymous]
             }),
             disclaimer: this.fb.control(false, Validators.requiredTrue)
         });
     }
 
-    private createDefaultFormModel(): any {
+    private createDefaultFormModel(): JobPublicationForm {
         const userData: UserData = this.userData || {};
         const company: Organization = userData.organization || {};
 
         return {
-            job: {
-                title: '',
-                occupation: {
-                    occupationSuggestion: null,
-                    degree: null,
-                    experience: null
-                },
-                description: '',
+            jobDescriptions: [],
+            occupation: {
+                occupationSuggestion: null,
+                degree: null,
+                experience: null
+            },
+            languageSkills: [],
+            employment: {
                 workload: [100, 100],
-                publicationStartDate: {
+                employmentStartDate: {
                     immediate: true,
                     date: null
                 },
-                publicationEndDate: {
+                employmentEndDate: {
                     permanent: true,
-                    value: null
+                    date: null
                 },
-                drivingLicenseLevel: null,
-                location: {
-                    countryCode: this.SWITZ_KEY,
-                    additionalDetails: '',
-                    zipCode: ''
-                },
-                languageSkills: []
+                shortEmployment: false,
+                workForms: [
+                    false,
+                    false,
+                    false,
+                    false
+                ]
+            },
+            location: {
+                countryCode: this.SWITZ_KEY,
+                additionalDetails: '',
+                zipCode: {
+                    zip: '',
+                    city: ''
+                }
             },
             company: {
                 name: company.name,
@@ -256,37 +293,85 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
                     zip: '',
                     city: ''
                 },
+                countryCode: this.SWITZ_KEY,
+                surrogate: false
+            },
+            employer: {
+                name: '',
+                zipCode: {
+                    zip: '',
+                    city: ''
+                },
                 countryCode: this.SWITZ_KEY
             },
             contact: {
+                language: this.translateService.currentLang,
                 salutation: this.getSalutation(userData),
                 firstName: userData.firstName,
                 lastName: userData.lastName,
                 phoneNumber: userData.phone,
                 email: userData.email
             },
+            publicContact: {
+                salutation: null,
+                firstName: '',
+                lastName: '',
+                phoneNumber: '',
+                email: ''
+            },
             application: {
-                written: false,
-                electronic: false,
-                phoneEnabled: false,
-                email: '',
-                url: '',
+                paperApplicationAddress: '',
+                electronicApplicationEmail: '',
+                electronicApplicationUrl: '',
                 phoneNumber: '',
                 additionalInfo: ''
             },
             publication: {
-                jobroom: true,
-                eures: false
+                publicDisplay: true,
+                publicAnonymous: false,
+                eures: false,
+                euresAnonymous: false,
+                restrictedDisplay: true,
+                restrictedAnonymous: true,
             }
         };
     }
 
-    private getSalutation(userData: UserData) {
+    copyFromContact() {
+        const contact = this.jobPublicationForm.get('contact').value;
+        this.jobPublicationForm.get('publicContact').patchValue(contact);
+        return false;
+    }
+
+    copyAddressFromCompany() {
+        const company: CompanyFormModel = this.jobPublicationForm.get('company').value;
+        const addressParts = [company.name];
+        if (company.postboxNumber) {
+            addressParts.push('PO Box ' + company.postboxNumber);
+            if (company.postboxZipCode) {
+                addressParts.push([company.postboxZipCode.zip, company.postboxZipCode.city].join(' '));
+            }
+        } else {
+            addressParts.push([company.street, company.houseNumber].join(' '));
+            if (company.zipCode) {
+                addressParts.push([company.zipCode.zip, company.zipCode.city].join(' '));
+            }
+        }
+        const address = addressParts
+            .filter((part) => !!part)
+            .map((part) => part.replace(/^\s*$/, ''))
+            .filter((part) => !!part)
+            .join(', ');
+        this.jobPublicationForm.get('application.paperApplicationAddress').setValue(address);
+        return false;
+    }
+
+    private getSalutation(userData: UserData): string {
         if (!userData.gender) {
             return null;
         }
 
-        return userData.gender === Gender.MALE ? 'MR' : 'MS';
+        return userData.gender === Gender.MALE ? Salutation[Salutation.MR] : Salutation[Salutation.MS];
     }
 
     ngOnDestroy(): void {
@@ -299,44 +384,6 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
             Observable.of(countryControl.value),
             countryControl.valueChanges)
             .map((selectedCountry) => selectedCountry === this.SWITZ_KEY);
-    }
-
-    get job(): FormGroup {
-        return this.jobPublicationForm.get('job') as FormGroup;
-    }
-
-    private validateCheckboxRelatedField(checkboxPath: string, relatedFieldPath: string[]) {
-        const checkbox = this.jobPublicationForm.get(checkboxPath);
-        checkbox.valueChanges
-            .takeUntil(this.unsubscribe$)
-            .startWith(checkbox.value)
-            .subscribe((enabled: boolean) => {
-                relatedFieldPath.forEach((path) => {
-                    const relatedControl = this.jobPublicationForm.get(path);
-                    if (enabled) {
-                        relatedControl.enable();
-                    } else {
-                        relatedControl.disable();
-                        relatedControl.setValue('');
-                    }
-                    relatedControl.updateValueAndValidity();
-                });
-            });
-    }
-
-    private validateElectronicApplicationFields(source: string, target: string, validator: ValidatorFn) {
-        const field = this.jobPublicationForm.get(source);
-        field.valueChanges
-            .takeUntil(this.unsubscribe$)
-            .startWith(field.value)
-            .map((value) => value ? value : '')
-            .distinctUntilChanged((a, b) => !a.length === !b.length)
-            .subscribe((value) => {
-                const validators = value ? [validator] : [Validators.required, validator];
-                const applicationUrlControl = this.jobPublicationForm.get(target);
-                applicationUrlControl.setValidators(validators);
-                applicationUrlControl.updateValueAndValidity();
-            });
     }
 
     private configureDateInput(dateInputPath: string, radioButtonsPath: string, onChange: (disabled: boolean) => void) {
@@ -356,20 +403,20 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
             });
     }
 
-    private updatePublicationStartDateRelatedField() {
-        this.jobPublicationForm.get('job.publicationStartDate.date').valueChanges
+    private updateEmploymentStartDateRelatedField() {
+        this.jobPublicationForm.get('employment.employmentStartDate.date').valueChanges
             .takeUntil(this.unsubscribe$)
             .subscribe((value) => {
                 if (value) {
-                    const publicationEndDateControl = this.jobPublicationForm.get('job.publicationEndDate.date');
-                    const publicationStartDate = DateUtils.mapNgbDateStructToDate(value);
-                    const publicationEndDate = DateUtils.mapNgbDateStructToDate(
-                        publicationEndDateControl.value ? publicationEndDateControl.value : this.publicationEndDateMin);
+                    const employmentEndDateControl = this.jobPublicationForm.get('employment.employmentEndDate.date');
+                    const employmentStartDate = DateUtils.mapNgbDateStructToDate(value);
+                    const employmentEndDate = DateUtils.mapNgbDateStructToDate(
+                        employmentEndDateControl.value ? employmentEndDateControl.value : this.employmentEndDateMin);
 
-                    if (publicationStartDate > publicationEndDate) {
-                        publicationEndDateControl.setValue(null);
+                    if (employmentStartDate > employmentEndDate) {
+                        employmentEndDateControl.setValue(null);
                     }
-                    this.publicationEndDateMin = DateUtils.mapDateToNgbDateStruct(publicationStartDate);
+                    this.employmentEndDateMin = DateUtils.mapDateToNgbDateStruct(employmentStartDate);
                 }
             });
     }
@@ -389,9 +436,9 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
     onSubmit(): void {
         this.resetAlerts();
         if (this.jobPublicationForm.valid) {
-            const jobPublication = JobPublicationMapper.mapJobPublicationFormToJobPublication(this.jobPublicationForm.value);
             this.jobPublicationForm.get('disclaimer').reset(false);
-            this.jobPublicationService.save(jobPublication)
+            const createJobAdvertisement = JobPublicationMapper.mapJobPublicationFormToCreateJobAdvertisement(this.jobPublicationForm.value);
+            this.jobAdvertisementService.save(createJobAdvertisement)
                 .subscribe(this.createSaveSubscriber());
         }
     }
@@ -404,7 +451,7 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
     private createSaveSubscriber() {
         return Subscriber.create(
             (resp: ResponseWrapper) => {
-                const changeStatusCb = resp.status === 201
+                const changeStatusCb = resp.status === 200
                     ? (show) => this.showSuccessSaveMessage = show
                     : (show) => this.showErrorSaveMessage = show;
                 this.showAlert(changeStatusCb);
@@ -441,7 +488,11 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
     }
 
     get jobOccupation(): AbstractControl {
-        return this.jobPublicationForm.get('job.occupation.occupationSuggestion');
+        return this.jobPublicationForm.get('occupation.occupationSuggestion');
+    }
+
+    get employmentWorkForms(): FormArray {
+        return <FormArray>this.jobPublicationForm.get('employment.workForms');
     }
 
     private updateOccupationOnLanguageChange() {

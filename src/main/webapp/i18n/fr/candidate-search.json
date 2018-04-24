@@ -68,13 +68,6 @@
                 "selected": "Cantons"
             }
         },
-        "workForm": {
-            "HOME_WORK": "Travail \u00e0 domicile",
-            "NIGHT_WORK": "Travail de nuit",
-            "SHIFT_WORK": "Travail en \u00e9quipes",
-            "SUNDAY_AND_HOLIDAYS": "Travail le dimanche et les jours f\u00e9ri\u00e9s",
-            "label": "Forme de travail"
-        },
         "workload": {
             "label": "Taux d'occupation"
         },

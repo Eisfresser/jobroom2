@@ -20,6 +20,8 @@ import { JobPublicationResolverService } from './tools/job-publication-tool/serv
 import { UserDataResolverService } from './tools/job-publication-tool/service/user-data-resolver.service';
 import { ScrollToFirstInvalidDirective } from './tools/job-publication-tool/scroll-to-first-invalid.directive';
 import { InputErrorMessageComponent } from './tools/job-publication-tool/input-error-message/input-error-message.component';
+import { JobPublicationMapper } from './tools/job-publication-tool/job-publication-mapper';
+import { JobDescriptionComponent } from './tools/job-publication-tool/job-description/job-description.component';
 
 @NgModule({
     imports: [
@@ -42,12 +44,14 @@ import { InputErrorMessageComponent } from './tools/job-publication-tool/input-e
         LanguageSkillsComponent,
         ZipCodeComponent,
         ScrollToFirstInvalidDirective,
-        InputErrorMessageComponent
+        InputErrorMessageComponent,
+        JobDescriptionComponent
     ],
     entryComponents: [],
     providers: [
         JobPublicationResolverService,
-        UserDataResolverService
+        UserDataResolverService,
+        JobPublicationMapper
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

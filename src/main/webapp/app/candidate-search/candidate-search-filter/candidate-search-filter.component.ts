@@ -21,11 +21,11 @@ import {
     Availability,
     DrivingLicenceCategory,
     Experience, Graduation,
-    WorkForm
+    WorkForm,
+    Degree
 } from '../../shared';
 import { IMultiSelectOption, IMultiSelectSettings } from 'angular-2-dropdown-multiselect';
 import { CantonService } from '../services/canton.service';
-import { Degree } from '../../shared/job-publication/job-publication.model';
 
 @Component({
     selector: 'jr2-candidate-search-filter',

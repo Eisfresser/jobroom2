@@ -336,7 +336,8 @@
                 "tr": "Turc",
                 "vi": "Vietnamien",
                 "written": "\u00c9crit",
-                "zh": "Chinois"
+                "zh": "Chinois",
+                "label": "Langue"
             },
             "languages": "Connaissances linguistiques",
             "region": {
@@ -471,7 +472,15 @@
             "staging": "Staging",
             "test": "Test"
         },
-        "title": "Job-Room"
+        "title": "Job-Room",
+        "workForm": {
+            "HOME_WORK": "Travail \u00e0 domicile",
+            "NIGHT_WORK": "Travail de nuit",
+            "SHIFT_WORK": "Travail en \u00e9quipes",
+            "SUNDAY_AND_HOLIDAYS": "Travail le dimanche et les jours f\u00e9ri\u00e9s",
+            "label": "Forme de travail",
+            "selected": "Formulaires de travail"
+        }
     },
     "header": {
         "title": "Assurance-ch\u00f4mage AC"

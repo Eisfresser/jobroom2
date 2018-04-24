@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { IMultiSelectOption } from 'angular-2-dropdown-multiselect';
 import { Observable } from 'rxjs/Observable';
-import { Canton } from '../../shared/model/shared-types';
+import { Canton } from '../../shared';
 
 @Injectable()
 export class CantonService {

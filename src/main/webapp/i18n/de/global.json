@@ -336,7 +336,8 @@
                 "tr": "T\u00fcrkisch",
                 "vi": "Vietnamesisch",
                 "written": "Schriftlich",
-                "zh": "Chinesisch"
+                "zh": "Chinesisch",
+                "label": "Sprache"
             },
             "languages": "Sprachkenntnisse",
             "region": {
@@ -471,7 +472,15 @@
             "staging": "Staging",
             "test": "Test"
         },
-        "title": "Job-Room"
+        "title": "Job-Room",
+        "workForm": {
+            "HOME_WORK": "Heimarbeit",
+            "NIGHT_WORK": "Nachtarbeit",
+            "SHIFT_WORK": "Schichtarbeit",
+            "SUNDAY_AND_HOLIDAYS": "Sonn- und Feiertagsarbeit",
+            "label": "Arbeitsform",
+            "selected": "Arbeitsformen"
+        }
     },
     "header": {
         "title": "Arbeitslosenversicherung ALV"

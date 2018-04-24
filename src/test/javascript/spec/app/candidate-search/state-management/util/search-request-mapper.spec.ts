@@ -6,7 +6,7 @@ import { CandidateSearchFilter } from '../../../../../../../main/webapp/app/cand
 import {
     Availability,
     Canton,
-    CEFR_Level,
+    CEFR_Level, Degree,
     DrivingLicenceCategory,
     Experience,
     Graduation,
@@ -22,7 +22,6 @@ import {
     TypeaheadMultiselectModel
 } from '../../../../../../../main/webapp/app/shared/input-components';
 import { CandidateSearchRequest } from '../../../../../../../main/webapp/app/candidate-search/services/candidate-search-request';
-import { Degree } from '../../../../../../../main/webapp/app/shared/job-publication/job-publication.model';
 
 describe('createCandidateSearchRequestFromFilter', () => {
 

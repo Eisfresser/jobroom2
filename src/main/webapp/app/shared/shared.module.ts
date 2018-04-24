@@ -20,6 +20,7 @@ import { JobPublicationService } from './job-publication/job-publication.service
 import { TextSizeLimitDirective } from './validation/text-size-limit.directive';
 import { LanguageFilterService } from './input-components/language-filter/language-filter.service';
 import { ScrollToTopComponent } from './components/scroll-to-top/scroll-to-top.component';
+import { JobAdvertisementService } from './job-advertisement/job-advertisement.service';
 
 @NgModule({
     imports: [
@@ -57,6 +58,7 @@ import { ScrollToTopComponent } from './components/scroll-to-top/scroll-to-top.c
         datepickerI18nService(),
         OrganizationService,
         JobPublicationService,
+        JobAdvertisementService,
         LanguageFilterService
     ],
     entryComponents: [JhiLoginModalComponent],

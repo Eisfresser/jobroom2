@@ -1,9 +1,9 @@
 import {
-    Degree, Experience, JobPublication, Locale,
+    Experience, JobPublication, Locale,
     Status
 } from '../../../../../../main/webapp/app/shared/job-publication/job-publication.model';
 import {
-    CEFR_Level,
+    CEFR_Level, Degree,
     DrivingLicenceCategory
 } from '../../../../../../main/webapp/app/shared';
 

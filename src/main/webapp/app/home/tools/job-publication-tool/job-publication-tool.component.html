@@ -1,99 +1,45 @@
 <div class="tab-content--job-room">
     <div class="d-flex flex-row">
         <div class="job-publication__form">
-            <ngb-alert *ngIf="showSuccessSaveMessage" type="success" (close)="showSuccessSaveMessage = false">{{ 'home.tools.job-publication.submit.success' | translate }}</ngb-alert>
-            <ngb-alert *ngIf="showErrorSaveMessage" type="danger" (close)="showErrorSaveMessage = false">{{ 'home.tools.job-publication.submit.error' | translate }}</ngb-alert>
+            <ngb-alert *ngIf="showSuccessSaveMessage" type="success" (close)="showSuccessSaveMessage = false">
+                {{ 'home.tools.job-publication.submit.success' | translate }}
+            </ngb-alert>
+            <ngb-alert *ngIf="showErrorSaveMessage" type="danger" (close)="showErrorSaveMessage = false">
+                {{ 'home.tools.job-publication.submit.error' | translate }}
+            </ngb-alert>
 
             <form #form="ngForm" [formGroup]="jobPublicationForm" (ngSubmit)="onSubmit()" novalidate jr2ScrollToFirstInvalid>
+                <!-- Job description -->
+                <fieldset class="job-publication--horizontal">
+                    <legend>{{ 'home.tools.job-publication.job-description' | translate }}</legend>
 
-                <ng-container formGroupName="job">
-                    <fieldset class="job-publication--horizontal">
-                        <legend>{{ 'home.tools.job-publication.job-description' | translate }}</legend>
+                    <jr2-job-description [group]="jobPublicationForm" [controlName]="'jobDescriptions'"></jr2-job-description>
+                </fieldset>
 
+                <!-- Occupation -->
+                <fieldset class="job-publication--horizontal">
+                    <legend>{{ 'home.tools.job-publication.occupation.label' | translate }}</legend>
+
+                    <ng-container formGroupName="occupation">
                         <div class="form-group">
-                            <label for="job-title" class="col-form-label">{{ 'home.tools.job-publication.job-title' |
-                                translate }}</label>
-                            <div>
-                                <input type="text" [jr2TextSizeLimit]="255" class="form-control" id="job-title" formControlName="title"/>
-                                <jr2-input-error-message [formGroup]="jobPublicationForm" path="job.title"
-                                                         [errorCodes]="['required']"
-                                                         [keys]="['home.tools.job-publication.messages.validate.required']">
-                                </jr2-input-error-message>
-                            </div>
-                        </div>
+                            <label>
+                                {{ 'home.tools.job-publication.occupation.label' | translate }}
+                                <span class="optional">{{ 'home.tools.job-publication.optional' | translate }}</span>
+                            </label>
+                            <div class="form-group--icon">
+                                <input class="form-control"
+                                       [ngbTypeahead]="fetchOccupationSuggestions"
+                                       [placeholder]="'home.tools.job-publication.occupation.placeholder' | translate"
+                                       [editable]="false"
+                                       [inputFormatter]="occupationFormatter"
+                                       [resultFormatter]="occupationFormatter"
+                                       formControlName="occupationSuggestion"/>
 
-                        <ng-container formGroupName="occupation">
-                            <div class="form-group">
-                                <label>{{ 'home.tools.job-publication.occupation.label' | translate }}</label>
-                                <div class="form-group--icon">
-                                    <input class="form-control form-control-lg"
-                                           [ngbTypeahead]="fetchOccupationSuggestions"
-                                           [placeholder]="'home.tools.job-publication.occupation.placeholder' | translate"
-                                           [editable]="false"
-                                           [inputFormatter]="occupationFormatter"
-                                           [resultFormatter]="occupationFormatter"
-                                           formControlName="occupationSuggestion"/>
-
-                                    <a href="#" class="fa-stack form-control--icon">
-                                        <span class="fa fa-search fa-stack-1x" aria-hidden="true"></span>
-                                    </a>
-                                    <jr2-input-error-message [formGroup]="jobPublicationForm" path="job.occupation.occupationSuggestion"
-                                                             [errorCodes]="['required']"
-                                                             [keys]="['home.tools.job-publication.messages.validate.required']">
-                                    </jr2-input-error-message>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="degree" class="col-form-label">
-                                    {{ 'home.tools.job-publication.degree' | translate }} <span class="optional">{{ 'home.tools.job-publication.optional' | translate }}</span>
-                                </label>
-                                <div>
-                                    <select class="form-control custom-select" id="degree"
-                                            formControlName="degree">
-                                        <option [ngValue]="null" selected>{{ 'home.tools.job-publication.no-selection' |
-                                            translate }}
-                                        </option>
-                                        <option *ngFor="let degree of degrees | keys"
-                                                [ngValue]="degree.value">
-                                            {{'global.degree.' + degree.value | translate}}
-                                        </option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="exp" class="col-form-label">{{ 'home.tools.job-publication.experience' |
-                                    translate }}
-                                    <span
-                                        class="optional">{{ 'home.tools.job-publication.optional' | translate }}</span>
-                                </label>
-                                <div>
-                                    <select class="form-control custom-select" id="exp" formControlName="experience">
-                                        <option [ngValue]="null">{{ 'home.tools.job-publication.no-selection' |
-                                            translate }}
-                                        </option>
-                                        <option *ngFor="let experience of experiences | keys"
-                                                [ngValue]="experience.value">
-                                            {{'home.tools.job-publication.experience.' + experience.value | translate}}
-                                        </option>
-                                    </select>
-                                </div>
-                            </div>
-                        </ng-container>
-
-                        <div class="form-group">
-                            <label for="description">{{ 'home.tools.job-publication.description.label' | translate
-                                }}</label>
-                            <div>
-                            <textarea #jobDescription class="form-control" id="description" rows="5"
-                                      [placeholder]="'home.tools.job-publication.description.placeholder' | translate"
-                                      aria-describedby="maxChar" formControlName="description"
-                                      [jr2TextSizeLimit]="JOB_DESCRIPTION_MAX_LENGTH"></textarea>
-                                <small id="maxChar" class="form-text text-muted"
-                                       jhiTranslate="home.tools.job-publication.description.characters-counter-text"
-                                       translateValues="{count: {{ max(JOB_DESCRIPTION_MAX_LENGTH - jobDescription.value.length, 0) }}}">
-                                </small>
-                                <jr2-input-error-message [formGroup]="jobPublicationForm" path="job.description"
+                                <a href="#" class="fa-stack form-control--icon">
+                                    <span class="fa fa-search fa-stack-1x" aria-hidden="true"></span>
+                                </a>
+                                <jr2-input-error-message [formGroup]="jobPublicationForm"
+                                                         path="occupation.occupationSuggestion"
                                                          [errorCodes]="['required']"
                                                          [keys]="['home.tools.job-publication.messages.validate.required']">
                                 </jr2-input-error-message>
@@ -101,176 +47,233 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="col-form-label">{{ 'home.tools.job-publication.workload' | translate
-                                }}</label>
-                            <jr2-range-input formControlName="workload" [min]="0" [max]="100" [step]="10"></jr2-range-input>
-                        </div>
-
-                        <ng-container formGroupName="publicationStartDate">
-                            <div class="form-group">
-                                <label class="col-form-label">{{ 'home.tools.job-publication.publicationStartDate.title'
-                                    | translate }}</label>
-                                <div class="form-group__inline">
-                                    <div class="radio col-form-label">
-                                        <input formControlName="immediate" type="radio" id="fromNow" [value]="true"
-                                               (click)="startDatePicker.close()"/>
-                                        <label for="fromNow">
-                                            {{ 'home.tools.job-publication.publicationStartDate.immediately' | translate
-                                            }}
-                                        </label>
-                                    </div>
-
-                                    <div class="radio col-form-label">
-                                        <input formControlName="immediate" type="radio"
-                                               id="byArrangement" [value]="false"/>
-                                        <label for="byArrangement">
-                                            {{ 'home.tools.job-publication.publicationStartDate.by-arrangement' |
-                                            translate }}
-                                        </label>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <div class="input-group">
-                                            <label for="stellenantritt-date" class="sr-only">
-                                                {{ 'home.tools.job-publication.publicationStartDate.label' | translate
-                                                }}
-                                            </label>
-                                            <input #startDatePicker="ngbDatepicker"
-                                                   #publicationStartDateEl
-                                                   class="form-control date__input"
-                                                   id="stellenantritt-date"
-                                                   placeholder="{{ 'home.tools.job-publication.date-placeholder' | translate }}"
-                                                   ngbDatepicker
-                                                   formControlName="date"
-                                                   [minDate]="publicationStartDateMin"
-                                                   (focus)="startDatePicker.close()"/>
-                                            <button class="input-group-addon"
-                                                    (click)="startDatePicker.toggle(); endDatePicker.close()"
-                                                    type="button"
-                                                    [disabled]="publicationStartDateByArrangement">
-                                                <i class="fa fa-calendar-o"
-                                                   aria-hidden="true"></i>
-                                            </button>
-                                        </div>
-                                        <jr2-input-error-message [formGroup]="jobPublicationForm" path="job.publicationStartDate.date"
-                                                                 [errorCodes]="['required', 'ngbDate.invalid', 'ngbDate.requiredBefore']"
-                                                                 [keys]="['home.tools.job-publication.messages.validate.required', 'home.tools.job-publication.messages.validate.date-format', 'home.tools.job-publication.messages.validate.employment-start.date-before']">
-                                        </jr2-input-error-message>
-                                    </div>
-                                </div>
-                            </div>
-                        </ng-container>
-
-                        <ng-container formGroupName="publicationEndDate">
-                            <div class="form-group">
-                                <label class="col-form-label">{{ 'home.tools.job-publication.publicationEndDate.title' |
-                                    translate }}</label>
-                                <div class="form-group__inline">
-                                    <div class="radio col-form-label">
-                                        <input type="radio" formControlName="permanent" id="permanent" [value]="true"/>
-                                        <label for="permanent">
-                                            {{ 'home.tools.job-publication.publicationEndDate.permanent' | translate }}
-                                        </label>
-                                    </div>
-
-                                    <div class="radio col-form-label">
-                                        <input type="radio" formControlName="permanent" id="temporary" [value]="false"
-                                               (click)="endDatePicker.close()"/>
-                                        <label for="temporary">
-                                            {{ 'home.tools.job-publication.publicationEndDate.temporary' | translate }}
-                                        </label>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <div class="input-group">
-                                            <label for="anstellungsdauer-date" class="sr-only">{{
-                                                'home.tools.job-publication.publicationEndDate.label' | translate
-                                                }}</label>
-                                            <input #endDatePicker="ngbDatepicker"
-                                                   #publicationEndDateEl
-                                                   placeholder="{{ 'home.tools.job-publication.date-placeholder' | translate }}"
-                                                   formControlName="date"
-                                                   ngbDatepicker
-                                                   class="form-control date__input"
-                                                   id="anstellungsdauer-date"
-                                                   [minDate]="publicationEndDateMin"
-                                                   (focus)="endDatePicker.close()"/>
-                                            <button class="input-group-addon"
-                                                    (click)="endDatePicker.toggle(); startDatePicker.close()"
-                                                    type="button"
-                                                    [disabled]="publicationEndDateIsPermanent">
-                                                <i class="fa fa-calendar-o" aria-hidden="true"></i>
-                                            </button>
-                                        </div>
-                                        <jr2-input-error-message [formGroup]="jobPublicationForm" path="job.publicationEndDate.date"
-                                                                 [errorCodes]="['required', 'ngbDate.invalid', 'ngbDate.requiredBefore']"
-                                                                 [keys]="['home.tools.job-publication.messages.validate.required', 'home.tools.job-publication.messages.validate.date-format', 'home.tools.job-publication.messages.validate.employment-duration.date-before']">
-                                        </jr2-input-error-message>
-                                    </div>
-                                </div>
-                            </div>
-                        </ng-container>
-
-                        <div class="form-group">
-                            <label for="driving-lic" class="col-form-label">{{
-                                'home.tools.job-publication.driving-licence' | translate }} <span class="optional">{{ 'home.tools.job-publication.optional' | translate }}</span></label>
+                            <label for="degree" class="col-form-label">
+                                {{ 'home.tools.job-publication.degree' | translate }} <span class="optional">{{ 'home.tools.job-publication.optional' | translate }}</span>
+                            </label>
                             <div>
-                                <select formControlName="drivingLicenseLevel" class="form-control custom-select"
-                                        id="driving-lic">
+                                <select class="form-control custom-select" id="degree"
+                                        formControlName="degree">
+                                    <option [ngValue]="null" selected>{{ 'home.tools.job-publication.no-selection' |
+                                        translate }}
+                                    </option>
+                                    <option *ngFor="let degree of degrees | keys"
+                                            [ngValue]="degree.value">
+                                        {{'global.degree.' + degree.value | translate}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="exp" class="col-form-label">{{ 'home.tools.job-publication.experience' |
+                                translate }}
+                                <span
+                                    class="optional">{{ 'home.tools.job-publication.optional' | translate }}</span>
+                            </label>
+                            <div>
+                                <select class="form-control custom-select" id="exp" formControlName="experience">
                                     <option [ngValue]="null">{{ 'home.tools.job-publication.no-selection' |
                                         translate }}
                                     </option>
-                                    <option *ngFor="let drivingLicenceCategory of drivingLicenceCategories | keys"
-                                            [ngValue]="drivingLicenceCategory.value">
-                                        {{'global.drivingLicenceCategory.' + drivingLicenceCategory.value | translate}}
+                                    <option *ngFor="let experience of experiences | keys"
+                                            [ngValue]="experience.value">
+                                        {{'home.tools.job-publication.experience.' + experience.value | translate}}
                                     </option>
                                 </select>
                             </div>
                         </div>
+                    </ng-container>
+                </fieldset>
 
-                        <jr2-language-skills [group]="job" [controlName]="'languageSkills'"
-                                             [languageOptions]="languageSkills$ | async"></jr2-language-skills>
-                    </fieldset>
+                <!-- Language skills -->
+                <fieldset class="job-publication--horizontal">
+                    <legend>
+                        {{ 'home.tools.job-publication.language-skills' | translate }}
+                    </legend>
 
-                    <fieldset formGroupName="location" class="job-publication--horizontal">
-                        <legend>{{ 'home.tools.job-publication.locality.title' | translate }}</legend>
+                    <jr2-language-skills [group]="jobPublicationForm" [controlName]="'languageSkills'"
+                                         [languageOptions]="languageSkills$ | async"></jr2-language-skills>
+                </fieldset>
 
+                <!-- Employment -->
+                <fieldset formGroupName="employment" class="job-publication--horizontal">
+                    <legend>{{ 'home.tools.job-publication.employment.title' | translate }}</legend>
+
+                    <div class="form-group">
+                        <label class="col-form-label">{{ 'home.tools.job-publication.workload' | translate
+                            }}</label>
+                        <jr2-range-input formControlName="workload" [min]="0" [max]="100" [step]="10"></jr2-range-input>
+                    </div>
+
+                    <ng-container formGroupName="employmentStartDate">
                         <div class="form-group">
-                            <label for="country" class="col-form-label">{{ 'home.tools.job-publication.locality.country'
+                            <label class="col-form-label">{{ 'home.tools.job-publication.employmentStartDate.title'
                                 | translate }}</label>
-                            <div>
-                                <select formControlName="countryCode" class="form-control custom-select" id="country">
-                                    <option *ngFor="let country of countries$ | async"
-                                            [value]="country.key">{{ country.value }}
-                                    </option>
-                                </select>
+                            <div class="form-group__inline">
+                                <div class="radio col-form-label">
+                                    <input formControlName="immediate" type="radio" id="fromNow" [value]="true"
+                                           (click)="startDatePicker.close()"/>
+                                    <label for="fromNow">
+                                        {{ 'home.tools.job-publication.employmentStartDate.immediately' | translate
+                                        }}
+                                    </label>
+                                </div>
+
+                                <div class="radio col-form-label">
+                                    <input formControlName="immediate" type="radio"
+                                           id="byArrangement" [value]="false"/>
+                                    <label for="byArrangement">
+                                        {{ 'home.tools.job-publication.employmentStartDate.by-arrangement' |
+                                        translate }}
+                                    </label>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <label for="stellenantritt-date" class="sr-only">
+                                            {{ 'home.tools.job-publication.employmentStartDate.label' | translate
+                                            }}
+                                        </label>
+                                        <input #startDatePicker="ngbDatepicker"
+                                               #employmentStartDateEl
+                                               class="form-control date__input"
+                                               id="stellenantritt-date"
+                                               placeholder="{{ 'home.tools.job-publication.date-placeholder' | translate }}"
+                                               ngbDatepicker
+                                               formControlName="date"
+                                               [minDate]="employmentStartDateMin"
+                                               (focus)="startDatePicker.close()"/>
+                                        <button class="input-group-addon"
+                                                (click)="startDatePicker.toggle(); endDatePicker.close()"
+                                                type="button"
+                                                [disabled]="employmentStartDateByArrangement">
+                                            <i class="fa fa-calendar-o"
+                                               aria-hidden="true"></i>
+                                        </button>
+                                    </div>
+                                    <jr2-input-error-message [formGroup]="jobPublicationForm" path="employment.employmentStartDate.date"
+                                                             [errorCodes]="['required', 'ngbDate.invalid', 'ngbDate.requiredBefore']"
+                                                             [keys]="['home.tools.job-publication.messages.validate.required', 'home.tools.job-publication.messages.validate.date-format', 'home.tools.job-publication.messages.validate.employment-start.date-before']">
+                                    </jr2-input-error-message>
+                                </div>
                             </div>
                         </div>
+                    </ng-container>
 
-                        <jr2-zip-code [group]="job.get('location')"
-                                      controlName="zipCode"
-                                      [switzSelected]="getSwitzSelected(job.get('location.countryCode')) | async">
-                        </jr2-zip-code>
-
+                    <ng-container formGroupName="employmentEndDate">
                         <div class="form-group">
-                            <label for="add-text" class="col-form-label">
-                                {{ 'home.tools.job-publication.locality.additional-text' | translate }}
-                                <span class="optional">{{ 'home.tools.job-publication.optional' | translate }}</span>
-                            </label>
-                            <div>
-                                <input formControlName="additionalDetails" type="text" [jr2TextSizeLimit]="50" class="form-control" id="add-text"
-                                       placeholder="{{ 'home.tools.job-publication.locality.additional-text.placeholder' | translate}}"/>
+                            <label class="col-form-label">{{ 'home.tools.job-publication.employmentEndDate.title' |
+                                translate }}</label>
+                            <div class="form-group__inline">
+                                <div class="radio col-form-label">
+                                    <input type="radio" formControlName="permanent" id="permanent" [value]="true"/>
+                                    <label for="permanent">
+                                        {{ 'home.tools.job-publication.employmentEndDate.permanent' | translate }}
+                                    </label>
+                                </div>
+
+                                <div class="radio col-form-label">
+                                    <input type="radio" formControlName="permanent" id="temporary" [value]="false"
+                                           (click)="endDatePicker.close()"/>
+                                    <label for="temporary">
+                                        {{ 'home.tools.job-publication.employmentEndDate.temporary' | translate }}
+                                    </label>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <label for="anstellungsdauer-date" class="sr-only">{{
+                                            'home.tools.job-publication.employmentEndDate.label' | translate
+                                            }}</label>
+                                        <input #endDatePicker="ngbDatepicker"
+                                               #employmentEndDateEl
+                                               placeholder="{{ 'home.tools.job-publication.date-placeholder' | translate }}"
+                                               formControlName="date"
+                                               ngbDatepicker
+                                               class="form-control date__input"
+                                               id="anstellungsdauer-date"
+                                               [minDate]="employmentEndDateMin"
+                                               (focus)="endDatePicker.close()"/>
+                                        <button class="input-group-addon"
+                                                (click)="endDatePicker.toggle(); startDatePicker.close()"
+                                                type="button"
+                                                [disabled]="employmentEndDateIsPermanent">
+                                            <i class="fa fa-calendar-o" aria-hidden="true"></i>
+                                        </button>
+                                    </div>
+                                    <jr2-input-error-message [formGroup]="jobPublicationForm" path="employment.employmentEndDate.date"
+                                                             [errorCodes]="['required', 'ngbDate.invalid', 'ngbDate.requiredBefore']"
+                                                             [keys]="['home.tools.job-publication.messages.validate.required', 'home.tools.job-publication.messages.validate.date-format', 'home.tools.job-publication.messages.validate.employment-duration.date-before']">
+                                    </jr2-input-error-message>
+                                </div>
                             </div>
                         </div>
-                    </fieldset>
-                </ng-container>
+                    </ng-container>
 
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <input id="shortEmployment" type="checkbox" formControlName="shortEmployment"/>
+                            <label for="shortEmployment">
+                                {{ 'home.tools.job-publication.shortEmployment.label' | translate }}
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="workForms" class="col-form-label">
+                            {{ 'global.workForm.label' | translate }}
+                        </label>
+                        <div id="workForms">
+                            <div *ngFor="let workFormControl of employmentWorkForms.controls; let i = index" class="checkbox">
+                                <input [id]="'workForm' + i" type="checkbox" [formControl]="workFormControl"/>
+                                <label [for]="'workForm' + i">
+                                    {{ 'global.workForm.' + workForms[i] | translate }}
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <!-- Location -->
+                <fieldset formGroupName="location" class="job-publication--horizontal">
+                    <legend>{{ 'home.tools.job-publication.locality.title' | translate }}</legend>
+
+                    <div class="form-group">
+                        <label for="country" class="col-form-label">{{ 'home.tools.job-publication.locality.country'
+                            | translate }}</label>
+                        <div>
+                            <select formControlName="countryCode" class="form-control custom-select" id="country">
+                                <option *ngFor="let country of countries$ | async"
+                                        [value]="country.key">{{ country.value }}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <jr2-zip-code [group]="jobPublicationForm.get('location')"
+                                  controlName="zipCode"
+                                  [switzSelected]="getSwitzSelected(jobPublicationForm.get('location.countryCode')) | async">
+                    </jr2-zip-code>
+
+                    <div class="form-group">
+                        <label for="add-text" class="col-form-label">
+                            {{ 'home.tools.job-publication.locality.additional-text' | translate }}
+                            <span class="optional">{{ 'home.tools.job-publication.optional' | translate }}</span>
+                        </label>
+                        <div>
+                            <input formControlName="additionalDetails" type="text" [jr2TextSizeLimit]="50" class="form-control" id="add-text"
+                                   placeholder="{{ 'home.tools.job-publication.locality.additional-text.placeholder' | translate}}"/>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <!-- Company -->
                 <fieldset formGroupName="company" class="job-publication--horizontal">
                     <legend>{{ 'home.tools.job-publication.company.title' | translate }}</legend>
 
                     <div class="form-group">
-                        <label for="unt-name" class="col-form-label">{{ 'home.tools.job-publication.company.title' |
-                            translate }}</label>
+                        <label for="unt-name" class="col-form-label">
+                            {{ 'home.tools.job-publication.company.name' | translate }}
+                        </label>
                         <div>
                             <input formControlName="name" type="text" [jr2TextSizeLimit]="255" class="form-control" id="unt-name"/>
                             <jr2-input-error-message [formGroup]="jobPublicationForm" path="company.name"
@@ -331,10 +334,62 @@
                             </select>
                         </div>
                     </div>
+
+                    <div class="checkbox">
+                        <input id="surrogate" type="checkbox" formControlName="surrogate"/>
+                        <label for="surrogate">
+                            {{ 'home.tools.job-publication.company.surrogate' | translate }}
+                        </label>
+                    </div>
                 </fieldset>
 
+                <!-- Employer -->
+                <fieldset *ngIf="jobPublicationForm.get('company.surrogate').value" formGroupName="employer" class="job-publication--horizontal">
+                    <legend>{{ 'home.tools.job-publication.employer.title' | translate }}</legend>
+
+                    <div class="form-group">
+                        <label for="employer-name" class="col-form-label">
+                            {{ 'home.tools.job-publication.employer.title' | translate }}
+                        </label>
+                        <div>
+                            <input formControlName="name" type="text" [jr2TextSizeLimit]="255" class="form-control" id="employer-name"/>
+                            <jr2-input-error-message [formGroup]="jobPublicationForm" path="employer.name"
+                                                     [errorCodes]="['required']"
+                                                     [keys]="['home.tools.job-publication.messages.validate.required']">
+                            </jr2-input-error-message>
+                        </div>
+                    </div>
+
+                    <jr2-zip-code [group]="jobPublicationForm.get('employer')"
+                                  controlName="zipCode"
+                                  [optional]="!isEmployerEnabled()"
+                                  [switzSelected]="getSwitzSelected(jobPublicationForm.get('employer.countryCode')) | async">
+                    </jr2-zip-code>
+
+                    <div class="form-group">
+                        <label for="employer-country" class="col-form-label">{{ 'home.tools.job-publication.company.country'
+                            | translate }}</label>
+                        <div>
+                            <select formControlName="countryCode" class="form-control custom-select" id="employer-country">
+                                <option *ngFor="let country of countries$ | async"
+                                        [value]="country.key">{{ country.value }}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <!-- Contact -->
                 <fieldset formGroupName="contact" class="job-publication--horizontal">
                     <legend>{{ 'home.tools.job-publication.contact.title' | translate }}</legend>
+
+                    <div class="form-group">
+                        <select class="form-control custom-select" formControlName="language">
+                            <option *ngFor="let languageOption of languageOptionTranslations$ | async" [value]="languageOption.key">
+                                {{ languageOption.value }}
+                            </option>
+                        </select>
+                    </div>
 
                     <div class="form-group">
                         <label for="kp-anrede" class="col-form-label">{{ 'home.tools.job-publication.contact.salutation'
@@ -344,11 +399,9 @@
                                 <option [ngValue]="null">
                                     {{ 'home.tools.job-publication.no-selection' | translate }}
                                 </option>
-                                <option value="MR">
-                                    {{ 'global.contactPerson.salutation.MR' | translate }}
-                                </option>
-                                <option value="MS">
-                                    {{ 'global.contactPerson.salutation.MS' | translate }}
+                                <option *ngFor="let salutation of salutations | keys"
+                                        [ngValue]="salutation.value">
+                                    {{'global.contactPerson.salutation.' + salutation.value | translate}}
                                 </option>
                             </select>
                             <jr2-input-error-message [formGroup]="jobPublicationForm" path="contact.salutation"
@@ -402,57 +455,135 @@
                             </jr2-input-error-message>
                         </div>
                     </div>
-
                 </fieldset>
 
+                <!-- Public Contact -->
+                <fieldset formGroupName="publicContact" class="job-publication--horizontal">
+                    <legend>{{ 'home.tools.job-publication.public-contact.title' | translate }}</legend>
+
+                    <div class="form-group">
+                        <button class="btn btn-sm btn-info float-right" (click)="copyFromContact()">
+                            {{ 'home.tools.job-publication.public-contact.copy' | translate}}
+                        </button>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pkp-anrede" class="col-form-label">
+                            {{ 'home.tools.job-publication.contact.salutation' | translate }}
+                            <span class="optional">{{ 'home.tools.job-publication.optional' | translate }}</span>
+                        </label>
+                        <div>
+                            <select formControlName="salutation" class="form-control custom-select" id="pkp-anrede">
+                                <option [ngValue]="null">
+                                    {{ 'home.tools.job-publication.no-selection' | translate }}
+                                </option>
+                                <option *ngFor="let salutation of salutations | keys"
+                                        [ngValue]="salutation.value">
+                                    {{'global.contactPerson.salutation.' + salutation.value | translate}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pkp-vorname" class="col-form-label">
+                            {{ 'home.tools.job-publication.contact.first-name' | translate }}
+                            <span class="optional">{{ 'home.tools.job-publication.optional' | translate }}</span>
+                        </label>
+                        <div>
+                            <input formControlName="firstName" [jr2TextSizeLimit]="255" type="text" class="form-control" id="pkp-vorname"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pkp-name" class="col-form-label">
+                            {{ 'home.tools.job-publication.contact.last-name' | translate }}
+                            <span class="optional">{{ 'home.tools.job-publication.optional' | translate }}</span>
+                        </label>
+                        <div>
+                            <input formControlName="lastName" [jr2TextSizeLimit]="255" type="text" class="form-control" id="pkp-name"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pkp-tel" class="col-form-label">
+                            {{ 'home.tools.job-publication.contact.phone' | translate }}
+                            <span class="optional">{{ 'home.tools.job-publication.optional' | translate }}</span>
+                        </label>
+                        <div>
+                            <jr2-phone-number-input id="pkp-tel" formControlName="phoneNumber" [jr2TextSizeLimit]="50" [placeholder]="'home.tools.job-publication.placeholders.phone' | translate">
+                            </jr2-phone-number-input>
+                        </div>
+                        <jr2-input-error-message [formGroup]="jobPublicationForm" path="publicContact.phoneNumber"
+                                                 [errorCodes]="['phoneValidator']"
+                                                 [keys]="['home.tools.job-publication.messages.validate.phone-format']">
+                        </jr2-input-error-message>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pkp-email" class="col-form-label">
+                            {{ 'home.tools.job-publication.contact.email' | translate }}
+                            <span class="optional">{{ 'home.tools.job-publication.optional' | translate }}</span>
+                        </label>
+                        <div>
+                            <input formControlName="email" [jr2TextSizeLimit]="50" type="email" class="form-control" id="pkp-email" [placeholder]="'home.tools.job-publication.placeholders.email' | translate"/>
+                            <jr2-input-error-message [formGroup]="jobPublicationForm" path="publicContact.email"
+                                                     [errorCodes]="['pattern']"
+                                                     [keys]="['home.tools.job-publication.messages.validate.email-format']">
+                            </jr2-input-error-message>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <!-- Application -->
                 <fieldset formGroupName="application" class="job-publication--horizontal">
                     <legend>{{ 'home.tools.job-publication.application.title' | translate }}</legend>
 
-                    <div class="checkbox">
-                        <input id="written" type="checkbox" formControlName="written"/>
-                        <label for="written">
-                            {{ 'home.tools.job-publication.application.mail-enabled' | translate }}
-                        </label>
-                    </div>
-
-                    <div class="checkbox">
-                        <input id="electronic" type="checkbox" formControlName="electronic"/>
-                        <label for="electronic">
-                            {{ 'home.tools.job-publication.application.email-enabled' | translate }}
-                        </label>
-                    </div>
-
                     <div class="form-group">
-                        <label for="app-email" class="col-form-label">{{ 'home.tools.job-publication.application.email'
-                            | translate }}</label>
+                        <label for="app-paper" class="col-form-label">
+                            {{ 'home.tools.job-publication.application.paper-application-url' | translate }}
+                            <span class="optional">{{ 'home.tools.job-publication.optional' | translate }}</span>
+                        </label>
+                        <button class="btn btn-sm btn-info float-right" (click)="copyAddressFromCompany()">
+                            {{ 'home.tools.job-publication.application.copy-from-business' | translate}}
+                        </button>
                         <div>
-                        <div>
-                            <input type="email" [jr2TextSizeLimit]="50" class="form-control" id="app-email" formControlName="email" [placeholder]="'home.tools.job-publication.placeholders.email' | translate"/>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="app-form" class="col-form-label">{{
-                            'home.tools.job-publication.application.online-form' | translate }}</label>
-                        <div>
-                            <input type="text" [jr2TextSizeLimit]="255" class="form-control" id="app-form" formControlName="url" [placeholder]="'home.tools.job-publication.placeholders.url' | translate"/>
+                            <input type="text" [jr2TextSizeLimit]="255" class="form-control" id="app-paper" formControlName="paperApplicationAddress"/>
                         </div>
                     </div>
 
-                    <div class="checkbox">
-                        <input id="phone" type="checkbox" formControlName="phoneEnabled"/>
-                        <label for="phone">
-                            {{ 'home.tools.job-publication.application.phone-enabled' | translate }}
-                        </label>
-                    </div>
                     <div class="form-group">
-                        <label for="app-phone" class="col-form-label">{{ 'home.tools.job-publication.application.phone' | translate }}</label>
+                        <label for="app-email" class="col-form-label">
+                            {{ 'home.tools.job-publication.application.email' | translate }}
+                            <span class="optional">{{ 'home.tools.job-publication.optional' | translate }}</span>
+                        </label>
+                        <div>
+                            <input type="email" [jr2TextSizeLimit]="50" class="form-control" id="app-email" formControlName="electronicApplicationEmail" [placeholder]="'home.tools.job-publication.placeholders.email' | translate"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="app-form" class="col-form-label">
+                            {{ 'home.tools.job-publication.application.online-form' | translate }}
+                            <span class="optional">{{ 'home.tools.job-publication.optional' | translate }}</span>
+                        </label>
+                        <div>
+                            <input type="text" [jr2TextSizeLimit]="255" class="form-control" id="app-form" formControlName="electronicApplicationUrl" [placeholder]="'home.tools.job-publication.placeholders.url' | translate"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="app-phone" class="col-form-label">
+                            {{ 'home.tools.job-publication.application.phone' | translate }}
+                            <span class="optional">{{ 'home.tools.job-publication.optional' | translate }}</span>
+                        </label>
                         <div>
                             <jr2-phone-number-input id="app-phone" formControlName="phoneNumber" [jr2TextSizeLimit]="50" [placeholder]="'home.tools.job-publication.placeholders.phone' | translate">
                             </jr2-phone-number-input>
                         </div>
                         <jr2-input-error-message [formGroup]="jobPublicationForm" path="application.phoneNumber"
-                                                 [errorCodes]="['required', 'phoneValidator']"
-                                                 [keys]="['home.tools.job-publication.messages.validate.required', 'home.tools.job-publication.messages.validate.phone-format']">
+                                                 [errorCodes]="['phoneValidator']"
+                                                 [keys]="['home.tools.job-publication.messages.validate.phone-format']">
                         </jr2-input-error-message>
                     </div>
 
@@ -474,21 +605,62 @@
                     </div>
                 </fieldset>
 
+                <!-- Publication -->
                 <fieldset formGroupName="publication" class="job-publication--horizontal">
                     <legend>{{ 'home.tools.job-publication.publication.title' | translate }}</legend>
 
-                    <div class="checkbox">
-                        <input id="jr" type="checkbox" formControlName="jobroom"/>
-                        <label for="jr">
-                            <a href="{{ 'home.tools.job-publication.publication.jobroom.url' | translate }}" target="_blank">{{ 'home.tools.job-publication.publication.jobroom' | translate }}</a>
-                        </label>
+                    <div class="form-group">
+                        <label>{{ 'home.tools.job-publication.publication.public.label' | translate }}</label>
+
+                        <div class="checkbox">
+                            <input id="jr" type="checkbox" formControlName="publicDisplay"/>
+                            <label for="jr">
+                                {{ 'home.tools.job-publication.publication.public-display' | translate }}
+                            </label>
+                        </div>
+
+                        <div class="checkbox">
+                            <input id="jra" type="checkbox" formControlName="publicAnonymous"/>
+                            <label for="jra">
+                                {{ 'home.tools.job-publication.publication.public-anonymous' | translate }}
+                            </label>
+                        </div>
                     </div>
 
-                    <div class="checkbox">
-                        <input id="eu" type="checkbox" formControlName="eures"/>
-                        <label for="eu">
-                            <a href="{{ 'home.tools.job-publication.publication.eures.url' | translate }}" target="_blank">{{ 'home.tools.job-publication.publication.eures' | translate }}</a>
-                        </label>
+                    <div class="form-group">
+                        <label>{{ 'home.tools.job-publication.publication.restricted.label' | translate }}</label>
+
+                        <div class="checkbox">
+                            <input id="rd" type="checkbox" formControlName="restrictedDisplay"/>
+                            <label for="rd">
+                                {{ 'home.tools.job-publication.publication.restricted-display' | translate }}
+                            </label>
+                        </div>
+
+                        <div class="checkbox">
+                            <input id="ra" type="checkbox" formControlName="restrictedAnonymous"/>
+                            <label for="ra">
+                                {{ 'home.tools.job-publication.publication.restricted-anonymous' | translate }}
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>{{ 'home.tools.job-publication.publication.eures.label' | translate }}</label>
+
+                        <div class="checkbox">
+                            <input id="eu" type="checkbox" formControlName="eures"/>
+                            <label for="eu">
+                                {{ 'home.tools.job-publication.publication.eures' | translate }}
+                            </label>
+                        </div>
+
+                        <div class="checkbox">
+                            <input id="eua" type="checkbox" formControlName="euresAnonymous"/>
+                            <label for="eua">
+                                {{ 'home.tools.job-publication.publication.eures-anonymous' | translate }}
+                            </label>
+                        </div>
                     </div>
                 </fieldset>
 

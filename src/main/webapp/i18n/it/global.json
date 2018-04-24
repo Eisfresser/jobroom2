@@ -336,7 +336,8 @@
                 "tr": "Turco",
                 "vi": "Vietnamita",
                 "written": "Scritto",
-                "zh": "Cinese"
+                "zh": "Cinese",
+                "label": "Lingua"
             },
             "languages": "Conoscenze linguistiche",
             "region": {
@@ -471,7 +472,15 @@
             "staging": "Staging",
             "test": "Test"
         },
-        "title": "Job-Room"
+        "title": "Job-Room",
+        "workForm": {
+            "HOME_WORK": "Telelavoro",
+            "NIGHT_WORK": "Lavoro notturno",
+            "SHIFT_WORK": "Lavoro a turni",
+            "SUNDAY_AND_HOLIDAYS": "Lavoro domenicale e festivo",
+            "label": "Tipologia lavorativa",
+            "selected": "Tipologia lavorativa"
+        }
     },
     "header": {
         "title": "Assicurazione contro la disoccupazione AD"
