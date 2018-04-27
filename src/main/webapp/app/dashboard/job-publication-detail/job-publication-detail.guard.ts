@@ -12,7 +12,7 @@ import {
     LoadingStatus
 } from '../state-management/state/job-publication-detail.state';
 import { Store } from '@ngrx/store';
-import { LoadJobPublicationAction } from '../state-management/actions/job-publication-detail.actions';
+import { LoadJobAdvertisementAction } from '../state-management/actions/job-publication-detail.actions';
 
 @Injectable()
 export class JobPublicationDetailGuard implements CanActivate {
@@ -23,9 +23,8 @@ export class JobPublicationDetailGuard implements CanActivate {
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
         const id = route.params['id'];
-        const accessToken = route.params['accessToken'];
 
-        this.store.dispatch(new LoadJobPublicationAction({ id, accessToken }));
+        this.store.dispatch(new LoadJobAdvertisementAction({ id }));
 
         return this.store.select(getLoadingStatus)
             .filter((status: LoadingStatus) => status !== LoadingStatus.INITIAL)

@@ -68,13 +68,6 @@
                 "selected": "Kantone"
             }
         },
-        "workForm": {
-            "HOME_WORK": "Heimarbeit",
-            "NIGHT_WORK": "Nachtarbeit",
-            "SHIFT_WORK": "Schichtarbeit",
-            "SUNDAY_AND_HOLIDAYS": "Sonn- und Feiertagsarbeit",
-            "label": "Arbeitsform"
-        },
         "workload": {
             "label": "Arbeitspensum"
         },

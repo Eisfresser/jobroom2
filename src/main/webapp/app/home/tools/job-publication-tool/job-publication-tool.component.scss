@@ -1,3 +1,5 @@
+@import '../../../../content/scss/jbr2_variables';
+
 .job-publication__radar {
     position: sticky;
     top: 100px;
@@ -27,4 +29,10 @@
     .job-publication__form {
         width: 100%;
     }
+}
+
+legend .optional {
+    font-size: 0.85rem;
+    vertical-align: middle;
+    color: #808080;
 }

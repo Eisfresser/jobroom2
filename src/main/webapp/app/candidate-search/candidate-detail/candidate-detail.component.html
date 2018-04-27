@@ -107,7 +107,7 @@
                     <strong>{{ 'candidate-detail.additional-information.workForm.label' | translate }}</strong>
                     <span>
                         <ng-container *ngFor="let workForm of candidateProfile.workForm | keys; last as isLast">
-                            {{('candidate-search.workForm.' + workForm.value | translate) + (isLast ? '' : ', ')}}
+                            {{('global.workForm.' + workForm.value | translate) + (isLast ? '' : ', ')}}
                         </ng-container>
                     </span>
                 </div>
@@ -136,7 +136,7 @@
                               {{ canton }}{{ last ? '' : ', '}}
                           </ng-container>
                       </p>
-                      <p *ngIf="candidateProfile.preferredWorkCantons?.length >= 26">
+                      <p *ngIf="candidateProfile.preferredWorkCantons?.length >= 26 && !containsPreferredWorkCantonAbroad(candidateProfile.preferredWorkCantons)">
                           {{ 'global.reference.canton.CH' | translate }}
                       </p>
                     </span>

@@ -1,10 +1,8 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { JobPublication } from '../../shared/job-publication/job-publication.model';
-import { JobPublicationService } from '../../shared/job-publication/job-publication.service';
 import { Store } from '@ngrx/store';
 import {
-    getJobPublication,
+    getJobAdvertisement,
     getShowCancellationError,
     getShowCancellationSuccess,
     JobPublicationDetailState
@@ -14,7 +12,12 @@ import {
     HideSuccessMessageAction,
     SubmitCancellationAction
 } from '../state-management/actions/job-publication-detail.actions';
-import { JobPublicationCancelDialogService } from '../dialogs/job-publication-cancel-dialog.service';
+import { JobAdvertisement, JobDescription } from '../../shared/job-advertisement/job-advertisement.model';
+import { JobAdvertisementService } from '../../shared/job-advertisement/job-advertisement.service';
+import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
+import { JobAdvertisementUtils } from '../job-advertisement.utils';
+import { LanguageSkill } from '../../shared/job-publication/job-publication.model';
+import { JobAdvertisementCancelDialogService } from '../dialogs/job-advertisement-cancel-dialog.service';
 
 @Component({
     selector: 'jr2-job-publication-detail',
@@ -23,36 +26,58 @@ import { JobPublicationCancelDialogService } from '../dialogs/job-publication-ca
 })
 export class JobPublicationDetailComponent {
 
-    jobPublication$: Observable<JobPublication>;
+    jobAdvertisement$: Observable<JobAdvertisement>;
     showCancellationSuccess$: Observable<boolean>;
     showCancellationError$: Observable<boolean>;
     showCancellationLink$: Observable<boolean>;
+    jobDescription$: Observable<JobDescription>;
+    languageSkills$: Observable<LanguageSkill[]>;
 
-    constructor(private jobPublicationService: JobPublicationService,
+    constructor(private jobAdvertisementService: JobAdvertisementService,
                 private store: Store<JobPublicationDetailState>,
-                private jobPublicationCancelDialogService: JobPublicationCancelDialogService) {
+                private translateService: TranslateService,
+                private jobAdvertisementCancelDialogService: JobAdvertisementCancelDialogService) {
         this.showCancellationSuccess$ = store.select(getShowCancellationSuccess);
         this.showCancellationError$ = store.select(getShowCancellationError);
-        this.jobPublication$ = store.select(getJobPublication)
+        this.jobAdvertisement$ = store.select(getJobAdvertisement)
             .map(this.fixApplicationUrl);
-        this.showCancellationLink$ = store.select(getJobPublication)
-            .filter((jobPublication: JobPublication) => !!jobPublication)
-            .map((jobPublication: JobPublication) =>
-                this.jobPublicationService.isJobPublicationCancellable(jobPublication.status));
+        this.showCancellationLink$ = store.select(getJobAdvertisement)
+            .filter((jobAdvertisement: JobAdvertisement) => !!jobAdvertisement)
+            .map((jobAdvertisement: JobAdvertisement) =>
+                this.jobAdvertisementService.isJobAdvertisementCancellable(jobAdvertisement.status));
+
+        this.jobDescription$ = Observable.merge(
+            Observable.of(this.translateService.currentLang),
+            this.translateService.onLangChange.map((e: LangChangeEvent) => e.lang))
+            .combineLatest(this.jobAdvertisement$)
+            .map(([lang, jobAdvertisement]: [string, JobAdvertisement]) => JobAdvertisementUtils.getJobDescription(jobAdvertisement, lang));
+
+        this.languageSkills$ = this.jobAdvertisement$
+            .map(this.mapLanguages);
     }
 
-    private fixApplicationUrl(jobPublication: JobPublication) {
-        if (jobPublication.application.url && !jobPublication.application.url.startsWith('http')) {
-            jobPublication.application = Object.assign(jobPublication.application, {
-                url: `http://${jobPublication.application.url}`
+    private fixApplicationUrl(jobAdvertisement: JobAdvertisement) {
+        const applyChannel = jobAdvertisement.jobContent.applyChannel;
+        if (applyChannel && applyChannel.formUrl && !applyChannel.formUrl.startsWith('http')) {
+            jobAdvertisement.jobContent.applyChannel = Object.assign(applyChannel, {
+                formUrl: `http://${applyChannel.formUrl}`
             });
         }
-        return jobPublication;
+        return jobAdvertisement;
     }
 
-    showCancellationDialog(id: string, accessToken: string) {
+    private mapLanguages(jobAdvertisement: JobAdvertisement): LanguageSkill[] {
+        return jobAdvertisement.jobContent.languageSkills
+            .map((languageSkill) => ({
+                code: languageSkill.languageIsoCode,
+                spokenLevel: languageSkill.spokenLevel,
+                writtenLevel: languageSkill.writtenLevel
+            }));
+    }
+
+    showCancellationDialog(id: string) {
         const onSubmit = (cancellationData) => this.store.dispatch(new SubmitCancellationAction(cancellationData));
-        this.jobPublicationCancelDialogService.open(id, accessToken, onSubmit);
+        this.jobAdvertisementCancelDialogService.open(id, onSubmit);
     }
 
     closeSuccessMessage() {
@@ -63,7 +88,7 @@ export class JobPublicationDetailComponent {
         this.store.dispatch(new HideErrorMessageAction());
     }
 
-    printJobPublication() {
+    printJobAdvertisement() {
         window.print();
     }
 }

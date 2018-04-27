@@ -6,10 +6,10 @@ import {
     Experience,
     Graduation,
     LanguageSkill,
-    WorkForm
+    WorkForm,
+    Degree
 } from '../../../shared';
 import { TypeaheadMultiselectModel } from '../../../shared/input-components';
-import { Degree } from '../../../shared/job-publication/job-publication.model';
 import { CandidateProfile } from '../../services/candidate';
 
 export interface CandidateSearchState {

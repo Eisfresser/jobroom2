@@ -1,32 +1,32 @@
 import { Action } from '@ngrx/store';
-import { JobPublication, } from '../../../shared/job-publication/job-publication.model';
 import { CancellationData } from '../../dialogs/cancellation-data';
+import { JobAdvertisement } from '../../../shared/job-advertisement/job-advertisement.model';
 
 export const SUBMIT_CANCELLATION = 'JOB_PUBLICATION_DETAIL:SUBMIT_CANCELLATION';
 export const CANCELLATION_SUCCEEDED = 'JOB_PUBLICATION_DETAIL:CANCELLATION_SUCCEEDED';
 export const CANCELLATION_FAILED = 'JOB_PUBLICATION_DETAIL:CANCELLATION_FAILED';
 export const HIDE_SUCCESS_MESSAGE = 'JOB_PUBLICATION_DETAIL:HIDE_SUCCESS_MESSAGE';
 export const HIDE_ERROR_MESSAGE = 'JOB_PUBLICATION_DETAIL:HIDE_ERROR_MESSAGE';
-export const LOAD_JOB_PUBLICATION = 'JOB_PUBLICATION_DETAIL:LOAD_JOB_PUBLICATION';
-export const LOAD_JOB_PUBLICATION_FAILED = 'JOB_PUBLICATION_DETAIL:LOAD_JOB_PUBLICATION_FAILED';
-export const JOB_PUBLICATION_LOADED = 'JOB_PUBLICATION_DETAIL:JOB_PUBLICATION_LOADED';
+export const LOAD_JOB_ADVERTISEMENT = 'JOB_PUBLICATION_DETAIL:LOAD_JOB_ADVERTISEMENT';
+export const LOAD_JOB_ADVERTISEMENT_FAILED = 'JOB_PUBLICATION_DETAIL:LOAD_JOB_ADVERTISEMENT_FAILED';
+export const JOB_ADVERTISEMENT_LOADED = 'JOB_PUBLICATION_DETAIL:JOB_ADVERTISEMENT_LOADED';
 
-export class LoadJobPublicationAction implements Action {
-    readonly type = LOAD_JOB_PUBLICATION;
+export class LoadJobAdvertisementAction implements Action {
+    readonly type = LOAD_JOB_ADVERTISEMENT;
 
-    constructor(public payload: { id: string, accessToken: string }) {
+    constructor(public payload: { id: string }) {
     }
 }
 
-export class JobPublicationLoadedAction implements Action {
-    readonly type = JOB_PUBLICATION_LOADED;
+export class JobAdvertisementLoadedAction implements Action {
+    readonly type = JOB_ADVERTISEMENT_LOADED;
 
-    constructor(public payload: JobPublication) {
+    constructor(public payload: JobAdvertisement) {
     }
 }
 
-export class LoadJobPublicationFailedAction implements Action {
-    readonly type = LOAD_JOB_PUBLICATION_FAILED;
+export class LoadJobAdvertisementFailedAction implements Action {
+    readonly type = LOAD_JOB_ADVERTISEMENT_FAILED;
 
     constructor(public payload = {}) {
     }
@@ -42,7 +42,7 @@ export class SubmitCancellationAction implements Action {
 export class CancellationSucceededAction implements Action {
     readonly type = CANCELLATION_SUCCEEDED;
 
-    constructor(public payload: JobPublication) {
+    constructor(public payload: JobAdvertisement) {
     }
 }
 
@@ -67,9 +67,9 @@ export class HideErrorMessageAction implements Action {
     }
 }
 
-export type Actions = LoadJobPublicationAction
-    | JobPublicationLoadedAction
-    | LoadJobPublicationFailedAction
+export type Actions = LoadJobAdvertisementAction
+    | JobAdvertisementLoadedAction
+    | LoadJobAdvertisementFailedAction
     | SubmitCancellationAction
     | CancellationSucceededAction
     | CancellationFailedAction

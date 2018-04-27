@@ -34,13 +34,12 @@
                         "label": "Dati complementari",
                         "placeholder": "max. 240 caratteri"
                     },
-                    "email": "E-mail",
-                    "email-enabled": "Candidatura elettronica",
-                    "mail-enabled": "Candidatura per posta",
-                    "online-form": "Modulo online",
-                    "phone": "Telefono",
-                    "phone-enabled": "Candidatura telefonica",
-                    "title": "Forme di candidatura"
+                    "email": "Email address for electronic application",
+                    "online-form": "Online form for electronic application",
+                    "copy-from-business": "Take address from business",
+                    "paper-application-url": "Address for paper application",
+                    "phone": "Phone number for application",
+                    "title": "Application channels"
                 },
                 "company": {
                     "country": "Paese",
@@ -51,7 +50,12 @@
                     "postbox-zipcode": "Casella postale NPA / luogo",
                     "street": "Via",
                     "title": "Impresa",
-                    "zipcode": "NPA / luogo"
+                    "name": "Business name",
+                    "zipcode": "NPA / luogo",
+                    "surrogate": "This bussiness is surrogate for a employer"
+                },
+                "employer": {
+                    "title": "Employer"
                 },
                 "contact": {
                     "email": "E-mail",
@@ -59,27 +63,39 @@
                     "last-name": "Cognome",
                     "phone": "Telefono",
                     "salutation": "Forma di cortesia",
-                    "title": "Persona di contatto"
+                    "title": "Contatto"
+                },
+                "public-contact": {
+                    "title": "Jobseeker contact",
+                    "copy": "Take from contact"
                 },
                 "date-placeholder": "GG.MM.AAAA",
-                "degree": "Formazione",
+                "employment": {
+                    "title": "Employment"
+                },
+                "degree": "Education",
                 "description": {
                     "characters-counter-text": "{{count}} caratteri disponibili",
                     "label": "Attivit\u00e0 / requisiti",
-                    "placeholder": "max. 9000 caratteri"
+                    "add": "Add new job description language",
+                    "placeholder": "max. 10000 caratteri"
                 },
                 "disclaimer": "Confermo che il datore di lavoro rispetta le condizioni salariali e lavorative usuali nel ramo e nel luogo in questione.",
                 "disclaimer.error": "Confermare che il datore di lavoro rispetta le condizioni salariali e lavorative del luogo e del ramo in questione.",
                 "driving-licence": "Patente",
                 "experience": "Esperienza professionale",
-                "experience.BETWEEN_1_AND_3_YEARS": "1 - 3 anni",
+                "experience.MORE_THAN_1_YEAR": "1 - 3 anni",
                 "experience.LESS_THAN_1_YEAR": "meno di 1 anno",
                 "experience.MORE_THAN_3_YEARS": "pi\u00f9 di 3 anni",
                 "experience.NO_EXPERIENCE": "senza esperienza",
                 "job-description": "Descrizione del posto",
+                "job-description-lang": {
+                    "label": "Job description language"
+                },
                 "job-title": "Denominazione del posto",
                 "language-skills": "Conoscenze linguistiche",
                 "language-skills.spoken.error": "Conoscenze linguistiche obbligatorie",
+                "language-skills.add": "Add new language skill",
                 "locality": {
                     "additional-text": "Testo aggiuntivo",
                     "additional-text.placeholder": "p. es. servizio esterno in tutta la Svizzera",
@@ -117,23 +133,35 @@
                     "url": "http://www.esempio.ch"
                 },
                 "publication": {
-                    "eures": " Portale EURES",
-                    "eures.url": "http://www.eures.ch/it",
-                    "jobroom": " Sito Job-Room",
-                    "jobroom.url": "http://www.job-room.ch",
-                    "title": "Mezzi di pubblicazione"
+                    "restricted-display": "Display it on the Job-Room restricted area",
+                    "restricted-anonymous": "Show details",
+                    "eures": "Display the publication in EURES",
+                    "eures-anonymous": "Show details for anonymous users",
+                    "public-display": "Display the publication on the website",
+                    "public-anonymous": "Show details for anonymous users",
+                    "title": "Mezzi di pubblicazione",
+                    "public": {
+                        "label": "Job-Room public website"
+                    },
+                    "restricted": {
+                        "label": "Job-Room restricted area"
+                    },
+                    "eures.label": "EURES"
                 },
-                "publicationEndDate": {
+                "employmentEndDate": {
                     "label": "a tempo determinato fino al",
                     "permanent": "a tempo indeterminato",
                     "temporary": "a tempo determinato fino al",
                     "title": "Durata dell'assunzione"
                 },
-                "publicationStartDate": {
+                "employmentStartDate": {
                     "by-arrangement": "dal",
                     "immediately": "da subito",
                     "label": "Inizio dell'attivit\u00e0 da Data",
                     "title": "Inizio dell'attivit\u00e0"
+                },
+                "shortEmployment": {
+                    "label": "Is a short employment (duration < 14 days)"
                 },
                 "reset": "Ripristina",
                 "submit": "Pubblica posto",

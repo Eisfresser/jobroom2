@@ -68,13 +68,6 @@
                 "selected": "Cantoni"
             }
         },
-        "workForm": {
-            "HOME_WORK": "Telelavoro",
-            "NIGHT_WORK": "Lavoro notturno",
-            "SHIFT_WORK": "Lavoro a turni",
-            "SUNDAY_AND_HOLIDAYS": "Lavoro domenicale e festivo",
-            "label": "Tipologia lavorativa"
-        },
         "workload": {
             "label": "Grado di occupazione"
         },

@@ -1,25 +1,22 @@
 import {
     CancellationSucceededAction,
-    FilterJobPublicationsDashboardAction,
-    JobPublicationsLoadedAction
+    FilterJobAdvertisementsDashboardAction,
+    JobAdvertisementsLoadedAction
 } from '../../../../../../../main/webapp/app/dashboard/state-management/actions/pea-dashboard.actions';
 import {
     initialState,
     PEADashboardState
 } from '../../../../../../../main/webapp/app/dashboard/state-management/state/pea-dashboard.state';
 import { peaDashboardReducer } from '../../../../../../../main/webapp/app/dashboard/state-management/reducers/pea-dashboard.reducers';
-import {
-    Locale,
-    Status
-} from '../../../../../../../main/webapp/app/shared/job-publication/job-publication.model';
+import { createJobAdvertisement } from '../../../shared/job-publication/utils';
 
 describe('peaDashboardReducer', () => {
-    it('should update PEADashboardState for JOB_PUBLICATIONS_LOADED action', () => {
+    it('should update PEADashboardState for JOB_ADVERTISEMENTS_LOADED action', () => {
         // GIVEN
         const state = Object.assign({}, initialState);
-        const jobPublications = [];
-        const action = new JobPublicationsLoadedAction({
-            jobPublications,
+        const jobAdvertisements = [];
+        const action = new JobAdvertisementsLoadedAction({
+            jobAdvertisements,
             totalCount: 3,
             page: 1
         });
@@ -30,14 +27,14 @@ describe('peaDashboardReducer', () => {
         // THEN
         expect(newState.page).toEqual(1);
         expect(newState.totalCount).toEqual(3);
-        expect(newState.jobPublications).toEqual(jobPublications);
-        expect(newState.jobPublicationFilter).toEqual(initialState.jobPublicationFilter);
+        expect(newState.jobAdvertisements).toEqual(jobAdvertisements);
+        expect(newState.jobAdvertisementFilter).toEqual(initialState.jobAdvertisementFilter);
     });
 
-    it('should update DashboardState for FILTER_JOB_PUBLICATIONS_DASHBOARD action', () => {
+    it('should update DashboardState for FILTER_JOB_ADVERTISEMENTS_DASHBOARD action', () => {
         // GIVEN
         const state = Object.assign({}, initialState);
-        const action = new FilterJobPublicationsDashboardAction({
+        const action = new FilterJobAdvertisementsDashboardAction({
             jobTitle: 'Se',
             onlineSinceDays: 2
         });
@@ -47,7 +44,7 @@ describe('peaDashboardReducer', () => {
 
         // THEN
         const expectedState = Object.assign({}, initialState, {
-            jobPublicationFilter: {
+            jobAdvertisementFilter: {
                 jobTitle: 'Se',
                 onlineSinceDays: 2
             },
@@ -58,63 +55,12 @@ describe('peaDashboardReducer', () => {
 
     it('should update DashboardState for CANCELLATION_SUCCEEDED action', () => {
         // GIVEN
-        const jobPublication1 = {
-            id: 'id1',
-            idAvam: 'id-avam',
-            accessToken: 'access-token1',
-            job: null,
-            company: null,
-            contact: null,
-            application: null,
-            publication: null,
-            creationDate: 'aa',
-            locale: Locale.DE,
-            status: Status.INITIAL
-        };
-
-        const jobPublication2 = {
-            id: 'id2',
-            idAvam: 'id-avam',
-            accessToken: 'access-token1',
-            job: null,
-            company: null,
-            contact: null,
-            application: null,
-            publication: null,
-            creationDate: 'aa',
-            locale: Locale.DE,
-            status: Status.INITIAL
-        };
-
-        const jobPublication3 = {
-            id: 'id3',
-            idAvam: 'id-avam',
-            accessToken: 'access-token1',
-            job: null,
-            company: null,
-            contact: null,
-            application: null,
-            publication: null,
-            creationDate: 'aa',
-            locale: Locale.DE,
-            status: Status.INITIAL
-        };
-
-        const jobPublication4 = {
-            id: 'id4',
-            idAvam: 'id-avam',
-            accessToken: 'access-token1',
-            job: null,
-            company: null,
-            contact: null,
-            application: null,
-            publication: null,
-            creationDate: 'aa',
-            locale: Locale.DE,
-            status: Status.INITIAL
-        };
+        const jobPublication1 = createJobAdvertisement('id1', 'id-avam');
+        const jobPublication2 = createJobAdvertisement('id2', 'id-avam');
+        const jobPublication3 = createJobAdvertisement('id3', 'id-avam');
+        const jobPublication4 = createJobAdvertisement('id4', 'id-avam');
         const state = Object.assign({}, initialState, {
-            jobPublications: [
+            jobAdvertisements: [
                 jobPublication1,
                 jobPublication2,
                 jobPublication3,
@@ -122,19 +68,7 @@ describe('peaDashboardReducer', () => {
             ]
         });
 
-        const updatedJobPublication = {
-            id: 'id2',
-            idAvam: 'id-avam',
-            accessToken: 'access-token1',
-            job: null,
-            company: null,
-            contact: null,
-            application: null,
-            publication: null,
-            creationDate: 'aa',
-            locale: Locale.DE,
-            status: Status.INITIAL
-        };
+        const updatedJobPublication = createJobAdvertisement('id2', 'id-avam');
 
         const action = new CancellationSucceededAction(updatedJobPublication);
 
@@ -143,7 +77,7 @@ describe('peaDashboardReducer', () => {
 
         // THEN
         const expectedState = Object.assign({}, initialState, {
-            jobPublications: [
+            jobAdvertisements: [
                 jobPublication1,
                 updatedJobPublication,
                 jobPublication3,

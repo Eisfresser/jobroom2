@@ -158,12 +158,15 @@
         "item-count": "Ergebnis {{first}} - {{second}} von {{total}} Elemente.",
         "job-publication": {
             "status": {
-                "ACTIVE": "Aktiv",
-                "DISMISSED": "Abgelehnt",
-                "INITIAL": "In Arbeit",
-                "IN_PROGRESS": "In Arbeit",
-                "UNKNOWN": "Unbekannt",
-                "UNSUBSCRIBED": "Abgemeldet"
+                "CREATED": "Created",
+                "INSPECTING": "Inspecting",
+                "APPROVED": "Approved",
+                "REJECTED": "Rejected",
+                "REFINING": "Refining",
+                "PUBLISHED_RESTRICTED": "Published restricted",
+                "PUBLISHED_PUBLIC": "Published public",
+                "CANCELLED": "Canceled",
+                "ARCHIVE": "Archive"
             }
         },
         "menu": {
@@ -337,7 +340,8 @@
                 "tr": "T\u00fcrkisch",
                 "vi": "Vietnamesisch",
                 "written": "Schriftlich",
-                "zh": "Chinesisch"
+                "zh": "Chinesisch",
+                "label": "Sprache"
             },
             "languages": "Sprachkenntnisse",
             "region": {
@@ -472,7 +476,15 @@
             "staging": "Staging",
             "test": "Test"
         },
-        "title": "Job-Room"
+        "title": "Job-Room",
+        "workForm": {
+            "HOME_WORK": "Heimarbeit",
+            "NIGHT_WORK": "Nachtarbeit",
+            "SHIFT_WORK": "Schichtarbeit",
+            "SUNDAY_AND_HOLIDAYS": "Sonn- und Feiertagsarbeit",
+            "label": "Arbeitsform",
+            "selected": "Arbeitsformen"
+        }
     },
     "header": {
         "title": "Arbeitslosenversicherung ALV"

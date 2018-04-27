@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
-const languages = [
+export const languages = [
     'de',
     'fr',
     'it',

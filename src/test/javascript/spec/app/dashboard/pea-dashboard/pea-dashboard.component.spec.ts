@@ -4,12 +4,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MockPrincipal } from '../../../helpers/mock-principal.service';
 import { Principal } from '../../../../../../main/webapp/app/shared';
 import { OrganizationService } from '../../../../../../main/webapp/app/shared/organization/organization.service';
-import { JobPublicationCancelDialogService } from '../../../../../../main/webapp/app/dashboard/dialogs/job-publication-cancel-dialog.service';
-import { JobPublicationService } from '../../../../../../main/webapp/app/shared/job-publication/job-publication.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { HttpClientModule } from '@angular/common/http';
+import { JobAdvertisementService } from '../../../../../../main/webapp/app/shared/job-advertisement/job-advertisement.service';
+import { JobAdvertisementCancelDialogService } from '../../../../../../main/webapp/app/dashboard/dialogs/job-advertisement-cancel-dialog.service';
 
 describe('PEA-DashboardComponent', () => {
     let component: PeaDashboardComponent;
@@ -37,7 +37,7 @@ describe('PEA-DashboardComponent', () => {
                     useValue: mockOrganizationService
                 },
                 {
-                    provide: JobPublicationCancelDialogService,
+                    provide: JobAdvertisementCancelDialogService,
                     useValue: mockJobPublicationCancelDialogService
                 },
                 {
@@ -45,7 +45,7 @@ describe('PEA-DashboardComponent', () => {
                     useValue: mockTranslateService
                 },
                 { provide: Store, useValue: mockStore },
-                JobPublicationService
+                JobAdvertisementService
             ]
         })
             .overrideTemplate(PeaDashboardComponent, '')
@@ -58,7 +58,7 @@ describe('PEA-DashboardComponent', () => {
     });
 
     it('should be created', () => {
-        component.jobPublicationFilter = {
+        component.jobAdvertisementFilter = {
             jobTitle: '',
             onlineSinceDays: 3
         };

@@ -206,6 +206,10 @@ export class CandidateDetailComponent implements OnInit {
         return this.principal.isAuthenticated();
     }
 
+    containsPreferredWorkCantonAbroad(cantons: Array<string>): boolean {
+        return cantons.some((canton) => cantons.indexOf('99') >= 0);
+    }
+
     onCopyLink(event: Event): void {
         if (!this.clipboardTooltip.isOpen()) {
             this.clipboardTooltip.open();

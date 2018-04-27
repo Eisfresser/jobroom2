@@ -158,12 +158,15 @@
         "item-count": "Showing {{first}} - {{second}} of {{total}} items.",
         "job-publication": {
             "status": {
-                "ACTIVE": "Active",
-                "DISMISSED": "Refused",
-                "INITIAL": "In progress",
-                "IN_PROGRESS": "In progress",
-                "UNKNOWN": "Unknown",
-                "UNSUBSCRIBED": "Canceled"
+                "CREATED": "Created",
+                "INSPECTING": "Inspecting",
+                "APPROVED": "Approved",
+                "REJECTED": "Rejected",
+                "REFINING": "Refining",
+                "PUBLISHED_RESTRICTED": "Published restricted",
+                "PUBLISHED_PUBLIC": "Published public",
+                "CANCELLED": "Canceled",
+                "ARCHIVE": "Archive"
             }
         },
         "menu": {
@@ -337,7 +340,8 @@
                 "tr": "Turkish",
                 "vi": "Vietnamese",
                 "written": "Written",
-                "zh": "Chinese"
+                "zh": "Chinese",
+                "label": "Language"
             },
             "languages": "Languages",
             "region": {
@@ -472,7 +476,15 @@
             "staging": "Staging",
             "test": "Test"
         },
-        "title": "Job-Room"
+        "title": "Job-Room",
+        "workForm": {
+            "HOME_WORK": "Home-based work",
+            "NIGHT_WORK": "Night work",
+            "SHIFT_WORK": "Shift work",
+            "SUNDAY_AND_HOLIDAYS": "Sunday and holiday work",
+            "label": "Work form",
+            "selected": "Work forms"
+        }
     },
     "header": {
         "title": "Unemployment insurance"

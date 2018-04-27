@@ -1,30 +1,30 @@
-import { JobPublication } from '../../../shared/job-publication/job-publication.model';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { JobAdvertisement } from '../../../shared/job-advertisement/job-advertisement.model';
 
 export interface PEADashboardState {
-    jobPublicationFilter: JobPublicationFilter;
-    jobPublications: JobPublication[];
+    jobAdvertisementFilter: JobAdvertisementFilter;
+    jobAdvertisements: JobAdvertisement[];
     totalCount: number;
     page: number;
 }
 
-export interface JobPublicationFilter {
+export interface JobAdvertisementFilter {
     jobTitle: string;
     onlineSinceDays: number;
 }
 
 export const initialState: PEADashboardState = {
-    jobPublicationFilter: {
+    jobAdvertisementFilter: {
         jobTitle: '',
         onlineSinceDays: 90
     },
-    jobPublications: [],
+    jobAdvertisements: [],
     totalCount: 0,
     page: 0
 };
 
-export const getJobPublicationDashboardState = createFeatureSelector<PEADashboardState>('peaDashboard');
-export const getJobPublicationFilter = createSelector(getJobPublicationDashboardState, (state: PEADashboardState) => state.jobPublicationFilter);
-export const getJobPublications = createSelector(getJobPublicationDashboardState, (state: PEADashboardState) => state.jobPublications);
-export const getJobPublicationsTotalCount = createSelector(getJobPublicationDashboardState, (state: PEADashboardState) => state.totalCount);
-export const getJobPublicationsPage = createSelector(getJobPublicationDashboardState, (state: PEADashboardState) => state.page);
+export const getJobAdvertisementDashboardState = createFeatureSelector<PEADashboardState>('peaDashboard');
+export const getJobAdvertisementFilter = createSelector(getJobAdvertisementDashboardState, (state: PEADashboardState) => state.jobAdvertisementFilter);
+export const getJobAdvertisements = createSelector(getJobAdvertisementDashboardState, (state: PEADashboardState) => state.jobAdvertisements);
+export const getJobAdvertisementsTotalCount = createSelector(getJobAdvertisementDashboardState, (state: PEADashboardState) => state.totalCount);
+export const getJobAdvertisementsPage = createSelector(getJobAdvertisementDashboardState, (state: PEADashboardState) => state.page);

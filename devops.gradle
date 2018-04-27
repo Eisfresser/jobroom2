@@ -34,6 +34,9 @@ task copyArtifacts {
         exec {
             commandLine 'mvn', '-q', 'dependency:get', '-DrepoUrl=https://alvch.jfrog.io/alvch/libs-snapshots-local/', '-Dartifact=ch.admin.seco.jobs.services.jobadservice:web:LATEST:jar', '-Dtransitive=false', "-Ddest=${buildDir}/docker/dockerfiles/jobadservice/jobadservice.jar"
         }
+        exec {
+            commandLine 'mvn', '-q', 'dependency:get', '-DrepoUrl=https://alvch.jfrog.io/alvch/libs-snapshots-local/', '-Dartifact=ch.admin.seco.checkuptool:checkuptool:LATEST:jar', '-Dtransitive=false', "-Ddest=${buildDir}/docker/dockerfiles/checkuptool/checkuptool.jar"
+        }
     }
 }
 

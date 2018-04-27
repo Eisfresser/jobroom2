@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { LanguageSkill } from '../../model/shared-types';
+import { LanguageSkill } from '../../job-publication/job-publication.model';
 
 @Component({
     selector: 'jr2-languages',
