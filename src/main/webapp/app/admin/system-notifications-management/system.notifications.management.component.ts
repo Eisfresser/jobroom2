@@ -22,7 +22,12 @@ export class SystemNotificationsManagementComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.systemNotifications = this.systemNotificationService.getAllSystemNotifications();
+        this.systemNotificationService
+            .getAllSystemNotifications()
+            .subscribe(
+                (data: SystemNotification[]) =>
+                    (this.systemNotifications = data)
+            );
     }
 
     openCreateModal() {

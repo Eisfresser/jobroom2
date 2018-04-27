@@ -16,13 +16,12 @@ export class SystemNotificationComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.systemNotifications = this.systemNotificationService.getAllSystemNotifications();
     }
 
     getActiveSystemNotification(): SystemNotification[] {
         return this.systemNotifications.filter(
             (systemNotification: SystemNotification) =>
-                systemNotification.isActive
+                systemNotification.active
         );
     }
 

@@ -5,7 +5,7 @@ export class SystemNotification {
     type: string;
     startDate: string;
     endDate: string;
-    isActive: boolean;
+    active: boolean;
 
     constructor(
         id: number,
@@ -14,7 +14,7 @@ export class SystemNotification {
         type: string,
         startDate: string,
         endDate: string,
-        isActive: boolean
+        active: boolean
     ) {
         this.id = id ? id : null;
         this.title = title ? title : null;
@@ -22,6 +22,6 @@ export class SystemNotification {
         this.type = type ? type : null;
         this.startDate = startDate ? startDate : null;
         this.endDate = endDate ? endDate : null;
-        this.isActive = isActive ? isActive : null;
+        this.active = active ? active : null;
     }
 }

@@ -23,10 +23,10 @@
                 <td>{{systemNotification.endDate}}</td>
                 <th>
                     <button class="btn btn-success btn-sm"
-                            *ngIf="systemNotification.isActive"
+                            *ngIf="systemNotification.active"
                             jhiTranslate="systemNotificationsManagement.activated">Activated
                     </button>
-                    <button class="btn btn-danger btn-sm" *ngIf="!systemNotification.isActive"
+                    <button class="btn btn-danger btn-sm" *ngIf="!systemNotification.active"
                             jhiTranslate="systemNotificationsManagement.deactivated">Deactivated
                     </button>
                 </th>
