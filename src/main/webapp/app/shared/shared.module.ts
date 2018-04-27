@@ -16,7 +16,6 @@ import { DetailsPagePaginationComponent } from './components/details-page-pagina
 import { dateParserFormatterProvider } from './input-components/datepicker/ngb-date-moment-parser-formatter';
 import { datepickerI18nService } from './input-components/datepicker/ngb-datepicker-i18n-service';
 import { OrganizationService } from './organization/organization.service';
-import { JobPublicationService } from './job-publication/job-publication.service';
 import { TextSizeLimitDirective } from './validation/text-size-limit.directive';
 import { LanguageFilterService } from './input-components/language-filter/language-filter.service';
 import { ScrollToTopComponent } from './components/scroll-to-top/scroll-to-top.component';
@@ -57,7 +56,6 @@ import { JobAdvertisementService } from './job-advertisement/job-advertisement.s
         dateParserFormatterProvider(),
         datepickerI18nService(),
         OrganizationService,
-        JobPublicationService,
         JobAdvertisementService,
         LanguageFilterService
     ],

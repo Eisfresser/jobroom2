@@ -40,13 +40,7 @@ export interface JobContent {
     occupations: Occupation[];
     languageSkills: LanguageSkill[];
     applyChannel: ApplyChannel;
-    publicContact: PublicContact;
-}
-
-export interface Owner {
-    userId: string;
-    companyId: string;
-    accessToken: string;
+    publicContact?: PublicContact;
 }
 
 export interface JobAdvertisement {
@@ -68,8 +62,6 @@ export interface JobAdvertisement {
     cancellationDate?: string;
     cancellationCode?: string;
     jobContent: JobContent;
-    owner: Owner;
-    contact: Contact;
     publication: Publication;
 }
 
@@ -144,6 +136,7 @@ export interface CreateLocation {
 
 export interface Occupation {
     avamOccupationCode: string;
+    occupationLabel?: string;
     workExperience?: WorkExperience;
     educationCode?: string;
 }

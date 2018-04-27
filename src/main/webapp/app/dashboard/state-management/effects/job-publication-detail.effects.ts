@@ -2,45 +2,45 @@ import { Injectable } from '@angular/core';
 import { Action } from '@ngrx/store';
 import { Actions, Effect } from '@ngrx/effects';
 import { Observable } from 'rxjs/Observable';
-import { JobPublicationService } from '../../../shared/job-publication/job-publication.service';
 import { createJobPublicationCancellationRequest } from '../util/cancellation-request.mapper';
 import {
     CancellationFailedAction,
     CancellationSucceededAction,
-    JobPublicationLoadedAction,
-    LOAD_JOB_PUBLICATION,
-    LoadJobPublicationAction,
-    LoadJobPublicationFailedAction,
+    JobAdvertisementLoadedAction,
+    LOAD_JOB_ADVERTISEMENT,
+    LoadJobAdvertisementAction,
+    LoadJobAdvertisementFailedAction,
     SUBMIT_CANCELLATION,
     SubmitCancellationAction
 } from '../actions/job-publication-detail.actions';
 import { JobCancelRequest } from '../../../shared/job-publication/job-publication-cancel-request';
-import { JobPublication } from '../../../shared/job-publication/job-publication.model';
+import { JobAdvertisementService } from '../../../shared/job-advertisement/job-advertisement.service';
+import { JobAdvertisement } from '../../../shared/job-advertisement/job-advertisement.model';
 
 @Injectable()
 export class JobPublicationDetailEffects {
 
     @Effect()
-    loadJobPublication$: Observable<Action> = this.actions$
-        .ofType(LOAD_JOB_PUBLICATION)
-        .switchMap((action: LoadJobPublicationAction) =>
-            this.jobPublicationService.findByIdAndAccessToken(action.payload.id, action.payload.accessToken)
-                .map((jobPublication: JobPublication) => new JobPublicationLoadedAction(jobPublication))
-                .catch((error) => Observable.of(new LoadJobPublicationFailedAction(error)))
+    loadJobAdvertisement$: Observable<Action> = this.actions$
+        .ofType(LOAD_JOB_ADVERTISEMENT)
+        .switchMap((action: LoadJobAdvertisementAction) =>
+            this.jobAdvertisementService.findById(action.payload.id)
+                .map((jobAdvertisement: JobAdvertisement) => new JobAdvertisementLoadedAction(jobAdvertisement))
+                .catch((error) => Observable.of(new LoadJobAdvertisementFailedAction(error)))
         );
 
     @Effect()
-    cancelJobPublication$: Observable<Action> = this.actions$
+    cancelJobAdvertisement$: Observable<Action> = this.actions$
         .ofType(SUBMIT_CANCELLATION)
         .map((action: SubmitCancellationAction) => createJobPublicationCancellationRequest(action.payload))
         .switchMap((jobCancelRequest: JobCancelRequest) =>
-            this.jobPublicationService.cancelJobPublication(jobCancelRequest)
-                .flatMap((code) => this.jobPublicationService.findByIdAndAccessToken(jobCancelRequest.id, jobCancelRequest.accessToken))
-                .map((jobPublication: JobPublication) => new CancellationSucceededAction(jobPublication))
+            this.jobAdvertisementService.cancelJobPublication(jobCancelRequest)
+                .flatMap((code) => this.jobAdvertisementService.findById(jobCancelRequest.id))
+                .map((jobAdvertisement: JobAdvertisement) => new CancellationSucceededAction(jobAdvertisement))
                 .catch((error) => Observable.of(new CancellationFailedAction(error)))
         );
 
     constructor(private actions$: Actions,
-                private jobPublicationService: JobPublicationService) {
+                private jobAdvertisementService: JobAdvertisementService) {
     }
 }

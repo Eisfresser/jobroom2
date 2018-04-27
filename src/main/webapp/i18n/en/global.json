@@ -158,12 +158,15 @@
         "item-count": "Showing {{first}} - {{second}} of {{total}} items.",
         "job-publication": {
             "status": {
-                "ACTIVE": "Active",
-                "DISMISSED": "Refused",
-                "INITIAL": "In progress",
-                "IN_PROGRESS": "In progress",
-                "UNKNOWN": "Unknown",
-                "UNSUBSCRIBED": "Canceled"
+                "CREATED": "Created",
+                "INSPECTING": "Inspecting",
+                "APPROVED": "Approved",
+                "REJECTED": "Rejected",
+                "REFINING": "Refining",
+                "PUBLISHED_RESTRICTED": "Published restricted",
+                "PUBLISHED_PUBLIC": "Published public",
+                "CANCELLED": "Canceled",
+                "ARCHIVE": "Archive"
             }
         },
         "menu": {

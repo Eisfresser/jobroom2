@@ -31,15 +31,12 @@ import {
 import { Translations } from './zip-code/zip-code.component';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import * as countries from 'i18n-iso-countries';
-import {
-    JobPublication
-} from '../../../shared/job-publication/job-publication.model';
 import { Subscriber } from 'rxjs/Subscriber';
 import { JobPublicationMapper } from './job-publication-mapper';
 import { Organization } from '../../../shared/organization/organization.model';
 import { UserData } from './service/user-data-resolver.service';
 import { JobAdvertisementService } from '../../../shared/job-advertisement/job-advertisement.service';
-import { Salutation, WorkExperience } from '../../../shared/job-advertisement/job-advertisement.model';
+import { JobAdvertisement, Salutation, WorkExperience } from '../../../shared/job-advertisement/job-advertisement.model';
 import { CompanyFormModel, JobPublicationForm } from './job-publication-form.model';
 import { LanguageFilterService } from '../../../shared/input-components/language-filter/language-filter.service';
 import { languages } from '../../../candidate-search/services/language-skill.service';
@@ -55,7 +52,7 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
     readonly APPLICATION_ADDITIONAL_INFO_MAX_LENGTH = 240;
 
     @Input()
-    jobPublication: JobPublication;
+    jobAdvertisement: JobAdvertisement;
     @Input()
     userData: UserData;
 
@@ -106,9 +103,10 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
         this.languageSkills$ = this.languageSkillService.getLanguages();
         this.setupCountries();
 
-        const formModel: JobPublicationForm = this.jobPublication
-            ? JobPublicationMapper.mapJobPublicationToFormModel(this.jobPublication)
-            : this.createDefaultFormModel();
+        let formModel: JobPublicationForm = this.createDefaultFormModel();
+        if (this.jobAdvertisement) {
+            formModel = JobPublicationMapper.mapJobPublicationToFormModel(formModel, this.jobAdvertisement);
+        }
 
         this.jobPublicationForm = this.createJobPublicationForm(formModel);
 
@@ -132,12 +130,60 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
             });
         this.updateEmploymentStartDateRelatedField();
         this.configureEmployerSection();
+        this.configurePublicContactSection();
+    }
+
+    private configurePublicContactSection() {
+        const publicContactFieldValidators = {
+            salutation: [],
+            firstName: [],
+            lastName: [],
+            phoneNumber: [],
+            email: [Validators.pattern(EMAIL_REGEX)]
+        };
+        const publicContactFieldNames = Object.keys(publicContactFieldValidators);
+
+        const publicContact = this.jobPublicationForm.get('publicContact');
+
+        const makeRequired = (): void => {
+            publicContactFieldNames.forEach((name) => {
+                const field = publicContact.get(name);
+                field.setValidators([Validators.required, ...publicContactFieldValidators[name]]);
+                field.updateValueAndValidity({ emitEvent: false });
+            });
+        };
+
+        const resetValidators = (): void => {
+            publicContactFieldNames.forEach((name) => {
+                const field = publicContact.get(name);
+                field.clearValidators();
+                field.setValidators(publicContactFieldValidators[name]);
+                field.updateValueAndValidity({ emitEvent: false });
+            });
+        };
+
+        const isFilled = (value) => publicContactFieldNames
+            .map((name) => value[name])
+            .some((fieldValue) => !!fieldValue);
+
+        publicContact.valueChanges
+            .takeUntil(this.unsubscribe$)
+            .startWith(publicContact.value)
+            .distinctUntilChanged((a, b) => isFilled(a) === isFilled(b))
+            .subscribe((value) => {
+                if (isFilled(value)) {
+                    makeRequired();
+                } else {
+                    resetValidators();
+                }
+            });
     }
 
     private configureEmployerSection() {
-        this.jobPublicationForm.get('company.surrogate').valueChanges
+        const companySurrogate = this.jobPublicationForm.get('company.surrogate');
+        companySurrogate.valueChanges
             .takeUntil(this.unsubscribe$)
-            .startWith(this.jobPublicationForm.get('company.surrogate').value)
+            .startWith(companySurrogate.value)
             .subscribe((value) => {
                 const employer = this.jobPublicationForm.get('employer');
                 if (value) {
@@ -220,7 +266,7 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
                 firstName: [formModel.publicContact.firstName],
                 lastName: [formModel.publicContact.lastName],
                 phoneNumber: [formModel.publicContact.phoneNumber],
-                email: [formModel.publicContact.email, [Validators.pattern(EMAIL_REGEX)]],
+                email: [formModel.publicContact.email],
             }),
             application: this.fb.group({
                 paperApplicationAddress: [formModel.application.paperApplicationAddress],

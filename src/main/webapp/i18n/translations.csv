@@ -285,12 +285,15 @@ global,global.form.username.placeholder,Ihr Benutzername,Your username,Votre nom
 global,global.gender.FEMALE,weiblich,Female,féminin,femmina
 global,global.gender.MALE,männlich,Male,masculin,maschio
 global,global.item-count,Ergebnis {{first}} - {{second}} von {{total}} Elemente.,Showing {{first}} - {{second}} of {{total}} items.,Affichage {{first}} - {{second}} de {{total}} éléments.,Mostra {{first}} - {{second}} di {{total}} articoli.
-global,global.job-publication.status.ACTIVE,Aktiv,Active,Active,Attivo
-global,global.job-publication.status.DISMISSED,Abgelehnt,Refused,Refusée,Rifiutato
-global,global.job-publication.status.INITIAL,In Arbeit,In progress,En cours,In lavorazione
-global,global.job-publication.status.IN_PROGRESS,In Arbeit,In progress,En cours,In lavorazione
-global,global.job-publication.status.UNKNOWN,Unbekannt,Unknown,Inconnue,Ignoto
-global,global.job-publication.status.UNSUBSCRIBED,Abgemeldet,Canceled,Annulée,Annullato
+global,global.job-publication.status.CREATED,Created,Created,Created,Created
+global,global.job-publication.status.INSPECTING,Inspecting,Inspecting,Inspecting,Inspecting
+global,global.job-publication.status.APPROVED,Approved,Approved,Approved,Approved
+global,global.job-publication.status.REJECTED,Rejected,Rejected,Rejected,Rejected
+global,global.job-publication.status.REFINING,Refining,Refining,Refining,Refining
+global,global.job-publication.status.PUBLISHED_RESTRICTED,Published restricted,Published restricted,Published restricted,Published restricted
+global,global.job-publication.status.PUBLISHED_PUBLIC,Published public,Published public,Published public,Published public
+global,global.job-publication.status.CANCELLED,Canceled,Canceled,Canceled,Canceled
+global,global.job-publication.status.ARCHIVE,Archive,Archive,Archive,Archive
 global,global.menu.account.login,Anmelden,Sign in,Connexion,Accesso
 global,global.menu.account.logout,Abmelden,Sign out,Déconnexion,Esci
 global,global.menu.account.main,Zugang,Account,Compte,Utente

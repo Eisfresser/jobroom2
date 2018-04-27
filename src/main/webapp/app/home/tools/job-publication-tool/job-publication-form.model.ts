@@ -1,12 +1,12 @@
-import { JobDescription, WorkExperience } from '../../../shared/job-advertisement/job-advertisement.model';
+import { JobDescription } from '../../../shared/job-advertisement/job-advertisement.model';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
-import { Degree, LanguageSkill } from '../../../shared';
+import { LanguageSkill } from '../../../shared';
 import { OccupationOption } from '../../../shared/reference-service';
 
 export interface OccupationFormModel {
     occupationSuggestion: OccupationOption;
-    degree: Degree;
-    experience: WorkExperience;
+    degree: string;
+    experience: string;
 }
 
 export interface EmploymentStartDate {

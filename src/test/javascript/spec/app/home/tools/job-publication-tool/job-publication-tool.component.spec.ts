@@ -5,9 +5,7 @@ import { LanguageSkillService } from '../../../../../../../main/webapp/app/candi
 import { OccupationPresentationService } from '../../../../../../../main/webapp/app/shared/reference-service';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs/Observable';
-import { JobPublicationService } from '../../../../../../../main/webapp/app/shared/job-publication/job-publication.service';
 import { JobAdvertisementService } from '../../../../../../../main/webapp/app/shared/job-advertisement/job-advertisement.service';
-import { JhiLanguageHelper } from '../../../../../../../main/webapp/app/shared';
 import { LanguageFilterService } from '../../../../../../../main/webapp/app/shared/input-components/language-filter/language-filter.service';
 
 describe('JobPublicationToolComponent', () => {
@@ -28,10 +26,6 @@ describe('JobPublicationToolComponent', () => {
                 {
                     provide: OccupationPresentationService,
                     useValue: mockOccupationPresentationService
-                },
-                {
-                    provide: JobPublicationService,
-                    useValue: mockJobPublicationService
                 },
                 {
                     provide: JobAdvertisementService,

@@ -1,79 +1,68 @@
-import {
-    Experience, JobPublication, Locale,
-    Status
-} from '../../../../../../main/webapp/app/shared/job-publication/job-publication.model';
-import {
-    CEFR_Level, Degree,
-    DrivingLicenceCategory
-} from '../../../../../../main/webapp/app/shared';
+import { CEFR_Level } from '../../../../../../main/webapp/app/shared';
+import { JobAdvertisement, JobAdvertisementStatus, SourceSystem } from '../../../../../../main/webapp/app/shared/job-advertisement/job-advertisement.model';
 
-export function createJobPublication(): JobPublication {
+export function createJobAdvertisement(id = 'id', stellennummerAvam = 'avam'): JobAdvertisement {
     return {
-        application: {
-            additionalInfo: 'aa',
-            electronic: true,
-            email: 'bb',
-            phoneEnabled: true,
-            phoneNumber: 'cc',
-            url: 'dd',
-            written: true
-        },
-        company: {
-            city: 'ee',
-            countryCode: 'eeee',
-            houseNumber: 'ff',
-            name: 'gg',
-            postboxCity: 'hh',
-            postboxNumber: 'ii',
-            postboxZipCode: 'jj',
-            street: 'kk',
-            zipCode: 'll'
-        },
-        contact: {
-            email: 'mm',
-            firstName: 'nn',
-            lastName: 'oo',
-            phoneNumber: 'pp',
-            salutation: 'MS'
-        },
-        job: {
-            description: 'qq',
-            drivingLicenseLevel: DrivingLicenceCategory.B,
-            endDate: '2017-12-14',
-            languageSkills: [
+        id,
+        status: JobAdvertisementStatus.CREATED,
+        sourceSystem: SourceSystem.JOBROOM,
+        externalReference: null,
+        stellennummerEgov: 'egov',
+        stellennummerAvam,
+        fingerprint: null,
+        reportToAvam: true,
+        jobCenterCode: 'jobcenter',
+        jobContent: {
+            jobDescriptions: [
                 {
-                    code: 'DE',
-                    spokenLevel: CEFR_Level.BASIC,
-                    writtenLevel: CEFR_Level.PROFICIENT
+                    languageIsoCode: 'de',
+                    title: 'title',
+                    description: 'description'
                 }
             ],
-            location: {
-                additionalDetails: 'rr',
+            company: {
+                name: 'name',
+                street: 'street',
+                postalCode: '3333',
                 city: 'Bern',
-                communalCode: '2323',
-                countryCode: 'CH',
-                zipCode: '2503'
+                countryIsoCode: 'CH'
             },
-            occupation: {
-                avamOccupation: 'sfsfa',
-                degree: Degree.SEK_II_WEITERFUEHRENDE_SCHULE,
-                experience: Experience.LESS_THAN_1_YEAR
+            employment: {
+                shortEmployment: false,
+                immediately: true,
+                permanent: true,
+                workloadPercentageMin: 100,
+                workloadPercentageMax: 100
             },
-            permanent: true,
-            startDate: '2017-12-14',
-            startsImmediately: true,
-            title: 'Test Stelle',
-            workingTimePercentageMax: 90,
-            workingTimePercentageMin: 80
+            location: {
+                city: 'Bern',
+                postalCode: '3333',
+                countryIsoCode: 'CH'
+            },
+            occupations: [{
+                avamOccupationCode: 'avam'
+            }],
+            languageSkills: [{
+                languageIsoCode: 'de',
+                spokenLevel: CEFR_Level.BASIC,
+                writtenLevel: CEFR_Level.BASIC
+            }],
+            applyChannel: {
+                mailAddress: '',
+                emailAddress: '',
+                phoneNumber: '',
+                formUrl: '',
+                additionalInfo: ''
+            }
         },
         publication: {
-            eures: true,
-            jobroom: true
-        },
-        status: Status.ACTIVE,
-        locale: Locale.DE,
-        idAvam: '12312412',
-        accessToken: '832EDF45FEB5CF436897EEE1FA4C6EDE',
-        creationDate: '2017-12-14'
+            startDate: '2018-05-05',
+            euresDisplay: true,
+            euresAnonymous: true,
+            publicDisplay: true,
+            publicAnonymous: true,
+            restrictedDisplay: true,
+            restrictedAnonymous: true
+        }
     }
 }

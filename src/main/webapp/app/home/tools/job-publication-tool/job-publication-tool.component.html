@@ -459,7 +459,10 @@
 
                 <!-- Public Contact -->
                 <fieldset formGroupName="publicContact" class="job-publication--horizontal">
-                    <legend>{{ 'home.tools.job-publication.public-contact.title' | translate }}</legend>
+                    <legend>
+                        {{ 'home.tools.job-publication.public-contact.title' | translate }}
+                        <span class="optional">{{ 'home.tools.job-publication.optional' | translate }}</span>
+                    </legend>
 
                     <div class="form-group">
                         <button class="btn btn-sm btn-info float-right" (click)="copyFromContact()">
@@ -470,7 +473,6 @@
                     <div class="form-group">
                         <label for="pkp-anrede" class="col-form-label">
                             {{ 'home.tools.job-publication.contact.salutation' | translate }}
-                            <span class="optional">{{ 'home.tools.job-publication.optional' | translate }}</span>
                         </label>
                         <div>
                             <select formControlName="salutation" class="form-control custom-select" id="pkp-anrede">
@@ -482,54 +484,62 @@
                                     {{'global.contactPerson.salutation.' + salutation.value | translate}}
                                 </option>
                             </select>
+                            <jr2-input-error-message [formGroup]="jobPublicationForm" path="publicContact.salutation"
+                                                     [errorCodes]="['required']"
+                                                     [keys]="['home.tools.job-publication.messages.validate.required']">
+                            </jr2-input-error-message>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="pkp-vorname" class="col-form-label">
                             {{ 'home.tools.job-publication.contact.first-name' | translate }}
-                            <span class="optional">{{ 'home.tools.job-publication.optional' | translate }}</span>
                         </label>
                         <div>
                             <input formControlName="firstName" [jr2TextSizeLimit]="255" type="text" class="form-control" id="pkp-vorname"/>
+                            <jr2-input-error-message [formGroup]="jobPublicationForm" path="publicContact.firstName"
+                                                     [errorCodes]="['required']"
+                                                     [keys]="['home.tools.job-publication.messages.validate.required']">
+                            </jr2-input-error-message>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="pkp-name" class="col-form-label">
                             {{ 'home.tools.job-publication.contact.last-name' | translate }}
-                            <span class="optional">{{ 'home.tools.job-publication.optional' | translate }}</span>
                         </label>
                         <div>
                             <input formControlName="lastName" [jr2TextSizeLimit]="255" type="text" class="form-control" id="pkp-name"/>
+                            <jr2-input-error-message [formGroup]="jobPublicationForm" path="publicContact.lastName"
+                                                     [errorCodes]="['required']"
+                                                     [keys]="['home.tools.job-publication.messages.validate.required']">
+                            </jr2-input-error-message>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="pkp-tel" class="col-form-label">
                             {{ 'home.tools.job-publication.contact.phone' | translate }}
-                            <span class="optional">{{ 'home.tools.job-publication.optional' | translate }}</span>
                         </label>
                         <div>
                             <jr2-phone-number-input id="pkp-tel" formControlName="phoneNumber" [jr2TextSizeLimit]="50" [placeholder]="'home.tools.job-publication.placeholders.phone' | translate">
                             </jr2-phone-number-input>
                         </div>
                         <jr2-input-error-message [formGroup]="jobPublicationForm" path="publicContact.phoneNumber"
-                                                 [errorCodes]="['phoneValidator']"
-                                                 [keys]="['home.tools.job-publication.messages.validate.phone-format']">
+                                                 [errorCodes]="['required', 'phoneValidator']"
+                                                 [keys]="['home.tools.job-publication.messages.validate.required', 'home.tools.job-publication.messages.validate.phone-format']">
                         </jr2-input-error-message>
                     </div>
 
                     <div class="form-group">
                         <label for="pkp-email" class="col-form-label">
                             {{ 'home.tools.job-publication.contact.email' | translate }}
-                            <span class="optional">{{ 'home.tools.job-publication.optional' | translate }}</span>
                         </label>
                         <div>
                             <input formControlName="email" [jr2TextSizeLimit]="50" type="email" class="form-control" id="pkp-email" [placeholder]="'home.tools.job-publication.placeholders.email' | translate"/>
                             <jr2-input-error-message [formGroup]="jobPublicationForm" path="publicContact.email"
-                                                     [errorCodes]="['pattern']"
-                                                     [keys]="['home.tools.job-publication.messages.validate.email-format']">
+                                                     [errorCodes]="['required', 'pattern']"
+                                                     [keys]="['home.tools.job-publication.messages.validate.required', 'home.tools.job-publication.messages.validate.email-format']">
                             </jr2-input-error-message>
                         </div>
                     </div>

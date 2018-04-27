@@ -16,12 +16,11 @@ import { ZipCodeComponent } from './tools/job-publication-tool/zip-code/zip-code
 import { LanguageSkillsComponent } from './tools/job-publication-tool/language-skills/language-skills.component';
 import { HomeRoutingModule } from './home-routing.module';
 import { HomeRouterEffects } from './state-management/effects/router.effects';
-import { JobPublicationResolverService } from './tools/job-publication-tool/service/job-publication-resolver.service';
 import { UserDataResolverService } from './tools/job-publication-tool/service/user-data-resolver.service';
 import { ScrollToFirstInvalidDirective } from './tools/job-publication-tool/scroll-to-first-invalid.directive';
 import { InputErrorMessageComponent } from './tools/job-publication-tool/input-error-message/input-error-message.component';
-import { JobPublicationMapper } from './tools/job-publication-tool/job-publication-mapper';
 import { JobDescriptionComponent } from './tools/job-publication-tool/job-description/job-description.component';
+import { JobAdvertisementResolverService } from './tools/job-publication-tool/service/job-advertisement-resolver.service';
 
 @NgModule({
     imports: [
@@ -49,9 +48,8 @@ import { JobDescriptionComponent } from './tools/job-publication-tool/job-descri
     ],
     entryComponents: [],
     providers: [
-        JobPublicationResolverService,
-        UserDataResolverService,
-        JobPublicationMapper
+        JobAdvertisementResolverService,
+        UserDataResolverService
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

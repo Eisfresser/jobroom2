@@ -1,9 +1,7 @@
-import { JobPublication } from '../../../shared/job-publication/job-publication.model';
-import { OccupationOption } from '../../../shared/reference-service';
-import { DateUtils, WorkForm } from '../../../shared';
+import { DateUtils, Degree, WorkForm } from '../../../shared';
 import {
-    CreateJobAdvertisement,
-    LanguageSkill, Salutation
+    CreateJobAdvertisement, JobAdvertisement,
+    LanguageSkill, Salutation, WorkExperience
 } from '../../../shared/job-advertisement/job-advertisement.model';
 import { JobPublicationForm } from './job-publication-form.model';
 import * as moment from 'moment';
@@ -11,72 +9,140 @@ import * as moment from 'moment';
 export class JobPublicationMapper {
 
     private static readonly DEGREE = {
-        'SEK_II_WEITERFUEHRENDE_SCHULE': '130',
-        'SEK_II_GRUNDBILDUNG_EBA': '131',
-        'SEK_II_GRUNDBILDUNG_EFZ': '132',
-        'SEK_II_FACHMITTELSCHULE': '133',
-        'SEK_II_BERUFSMATURITAET': '134',
-        'SEK_II_FACHMATURITAET': '135',
-        'SEK_II_GYMNASIALE_MATURITAET': '136',
-        'TER_BERUFSBILDUNG_FA': '150',
-        'TER_BERUFSBILDUNG_DIPL': '160',
-        'TER_BACHELOR_FACHHOCHSCHULE': '170',
-        'TER_BACHELOR_UNIVERSITAET': '171',
-        'TER_MASTER_FACHHOCHSCHULE': '172',
-        'TER_MASTER_UNIVERSITAET': '173',
-        'TER_DOKTORAT_UNIVERSITAET': '180'
+        [Degree[Degree.SEK_II_WEITERFUEHRENDE_SCHULE]]: '130',
+        [Degree[Degree.SEK_II_GRUNDBILDUNG_EBA]]: '131',
+        [Degree[Degree.SEK_II_GRUNDBILDUNG_EFZ]]: '132',
+        [Degree[Degree.SEK_II_FACHMITTELSCHULE]]: '133',
+        [Degree[Degree.SEK_II_BERUFSMATURITAET]]: '134',
+        [Degree[Degree.SEK_II_FACHMATURITAET]]: '135',
+        [Degree[Degree.SEK_II_GYMNASIALE_MATURITAET]]: '136',
+        [Degree[Degree.TER_BERUFSBILDUNG_FA]]: '150',
+        [Degree[Degree.TER_BERUFSBILDUNG_DIPL]]: '160',
+        [Degree[Degree.TER_BACHELOR_FACHHOCHSCHULE]]: '170',
+        [Degree[Degree.TER_BACHELOR_UNIVERSITAET]]: '171',
+        [Degree[Degree.TER_MASTER_FACHHOCHSCHULE]]: '172',
+        [Degree[Degree.TER_MASTER_UNIVERSITAET]]: '173',
+        [Degree[Degree.TER_DOKTORAT_UNIVERSITAET]]: '180',
+        '130': Degree[Degree.SEK_II_WEITERFUEHRENDE_SCHULE],
+        '131': Degree[Degree.SEK_II_GRUNDBILDUNG_EBA],
+        '132': Degree[Degree.SEK_II_GRUNDBILDUNG_EFZ],
+        '133': Degree[Degree.SEK_II_FACHMITTELSCHULE],
+        '134': Degree[Degree.SEK_II_BERUFSMATURITAET],
+        '135': Degree[Degree.SEK_II_FACHMATURITAET],
+        '136': Degree[Degree.SEK_II_GYMNASIALE_MATURITAET],
+        '150': Degree[Degree.TER_BERUFSBILDUNG_FA],
+        '160': Degree[Degree.TER_BERUFSBILDUNG_DIPL],
+        '170': Degree[Degree.TER_BACHELOR_FACHHOCHSCHULE],
+        '171': Degree[Degree.TER_BACHELOR_UNIVERSITAET],
+        '172': Degree[Degree.TER_MASTER_FACHHOCHSCHULE],
+        '173': Degree[Degree.TER_MASTER_UNIVERSITAET],
+        '180': Degree[Degree.TER_DOKTORAT_UNIVERSITAET]
     };
 
-    // TODO: update
-    static mapJobPublicationToFormModel(jobPublication: JobPublication): JobPublicationForm {
-        const value: any = Object.assign({}, jobPublication);
-        const workload = [jobPublication.job.workingTimePercentageMin,
-            jobPublication.job.workingTimePercentageMax];
+    static mapJobPublicationToFormModel(jobPublicationForm: JobPublicationForm, jobAdvertisement: JobAdvertisement): JobPublicationForm {
+        jobPublicationForm.jobDescriptions = jobAdvertisement.jobContent.jobDescriptions;
 
-        value.job.occupation.occupationSuggestion = {
-            key: jobPublication.idAvam,
-            label: jobPublication.job.occupation.avamOccupation
-        } as OccupationOption;
+        if (jobAdvertisement.jobContent.occupations && jobAdvertisement.jobContent.occupations.length) {
+            const occupation = jobAdvertisement.jobContent.occupations[0];
+            jobPublicationForm.occupation = {
+                occupationSuggestion: {
+                    key: 'avam:' + occupation.avamOccupationCode,
+                    label: occupation.occupationLabel
+                },
+                degree: occupation.educationCode ? JobPublicationMapper.DEGREE[occupation.educationCode] : null,
+                experience: occupation.workExperience ? WorkExperience[WorkExperience[occupation.workExperience]] : null
+            };
+        }
 
-        value.job.languageSkills = value.job.languageSkills
+        jobPublicationForm.languageSkills = jobAdvertisement.jobContent.languageSkills
             .map((languageSkill) => ({
-                code: languageSkill.code,
+                code: languageSkill.languageIsoCode,
                 spoken: languageSkill.spokenLevel,
                 written: languageSkill.writtenLevel
             }));
 
-        Object.assign(value.job.location, {
-            zipCode: {
-                zip: jobPublication.job.location.zipCode,
-                city: jobPublication.job.location.city,
-                communalCode: jobPublication.job.location.communalCode
-            }
-        });
+        jobPublicationForm.employment = {
+            workload: [jobAdvertisement.jobContent.employment.workloadPercentageMin, jobAdvertisement.jobContent.employment.workloadPercentageMax],
+            employmentStartDate: {
+                immediate: jobAdvertisement.jobContent.employment.immediately,
+                date: DateUtils.dateStringToToNgbDateStruct(jobAdvertisement.jobContent.employment.startDate)
+            },
+            employmentEndDate: {
+                permanent: jobAdvertisement.jobContent.employment.permanent,
+                date: DateUtils.dateStringToToNgbDateStruct(jobAdvertisement.jobContent.employment.endDate)
+            },
+            shortEmployment: jobAdvertisement.jobContent.employment.shortEmployment,
+            workForms: JobPublicationMapper.mapWorkFormsToBooleans(jobAdvertisement.jobContent.employment.workForms)
+        };
 
-        Object.assign(value.job, {
-            workload,
-            publicationStartDate: {
-                immediate: jobPublication.job.startsImmediately,
-                date: DateUtils.dateStringToToNgbDateStruct(jobPublication.job.startDate)
-            },
-            publicationEndDate: {
-                permanent: jobPublication.job.permanent,
-                date: DateUtils.dateStringToToNgbDateStruct(jobPublication.job.endDate)
-            },
-        });
-
-        Object.assign(value.company, {
+        jobPublicationForm.location = {
+            countryCode: jobAdvertisement.jobContent.location.countryIsoCode,
+            additionalDetails: jobAdvertisement.jobContent.location.remarks,
             zipCode: {
-                zip: jobPublication.company.zipCode,
-                city: jobPublication.company.city,
+                zip: jobAdvertisement.jobContent.location.postalCode,
+                city: jobAdvertisement.jobContent.location.city,
+                communalCode: jobAdvertisement.jobContent.location.communalCode
             },
+        };
+
+        jobPublicationForm.company = {
+            name: jobAdvertisement.jobContent.company.name,
+            street: jobAdvertisement.jobContent.company.street,
+            houseNumber: jobAdvertisement.jobContent.company.houseNumber,
+            zipCode: {
+                zip: jobAdvertisement.jobContent.company.postalCode,
+                city: jobAdvertisement.jobContent.company.city
+            },
+            postboxNumber: jobAdvertisement.jobContent.company.postOfficeBoxNumber,
             postboxZipCode: {
-                zip: jobPublication.company.postboxZipCode,
-                city: jobPublication.company.postboxCity,
-            }
-        });
+                zip: jobAdvertisement.jobContent.company.postOfficeBoxPostalCode,
+                city: jobAdvertisement.jobContent.company.postOfficeBoxCity
+            },
+            countryCode: jobAdvertisement.jobContent.company.countryIsoCode,
+            surrogate: jobAdvertisement.jobContent.company.surrogate,
+        };
 
-        return value;
+        if (jobAdvertisement.jobContent.employer) {
+            jobPublicationForm.employer = {
+                name: jobAdvertisement.jobContent.employer.name,
+                zipCode: {
+                    zip: jobAdvertisement.jobContent.employer.postalCode,
+                    city: jobAdvertisement.jobContent.employer.city
+                },
+                countryCode: jobAdvertisement.jobContent.employer.countryIsoCode
+            };
+        }
+
+        if (jobAdvertisement.jobContent.publicContact) {
+            jobPublicationForm.publicContact = {
+                salutation: Salutation[Salutation[jobAdvertisement.jobContent.publicContact.salutation]],
+                firstName: jobAdvertisement.jobContent.publicContact.firstName,
+                lastName: jobAdvertisement.jobContent.publicContact.lastName,
+                phoneNumber: jobAdvertisement.jobContent.publicContact.phone,
+                email: jobAdvertisement.jobContent.publicContact.email
+            };
+        }
+
+        if (jobAdvertisement.jobContent.applyChannel) {
+            jobPublicationForm.application = {
+                paperApplicationAddress: jobAdvertisement.jobContent.applyChannel.mailAddress,
+                electronicApplicationEmail: jobAdvertisement.jobContent.applyChannel.emailAddress,
+                electronicApplicationUrl: jobAdvertisement.jobContent.applyChannel.formUrl,
+                phoneNumber: jobAdvertisement.jobContent.applyChannel.phoneNumber,
+                additionalInfo: jobAdvertisement.jobContent.applyChannel.additionalInfo
+            };
+        }
+
+        jobPublicationForm.publication = {
+            publicDisplay: jobAdvertisement.publication.publicDisplay,
+            publicAnonymous: jobAdvertisement.publication.publicAnonymous,
+            eures: jobAdvertisement.publication.euresDisplay,
+            euresAnonymous: jobAdvertisement.publication.euresAnonymous,
+            restrictedDisplay: jobAdvertisement.publication.restrictedDisplay,
+            restrictedAnonymous: jobAdvertisement.publication.restrictedAnonymous
+        };
+
+        return jobPublicationForm;
     }
 
     static mapJobPublicationFormToCreateJobAdvertisement(jobPublicationForm: JobPublicationForm): CreateJobAdvertisement {
@@ -88,8 +154,8 @@ export class JobPublicationMapper {
 
         jobAd.occupation = {
             avamOccupationCode: JobPublicationMapper.getAvamOccupationCode(jobPublicationForm),
-            workExperience: jobPublicationForm.occupation.experience,
-            educationCode: jobPublicationForm.occupation.degree ? JobPublicationMapper.DEGREE[jobPublicationForm.occupation.degree.toString()] : null
+            workExperience: jobPublicationForm.occupation.experience ? WorkExperience[jobPublicationForm.occupation.experience] : null,
+            educationCode: jobPublicationForm.occupation.degree ? JobPublicationMapper.DEGREE[jobPublicationForm.occupation.degree] : null
         };
 
         jobAd.languageSkills = jobPublicationForm.languageSkills
@@ -108,7 +174,7 @@ export class JobPublicationMapper {
             permanent: jobPublicationForm.employment.employmentEndDate.permanent,
             workloadPercentageMin: jobPublicationForm.employment.workload[0],
             workloadPercentageMax: jobPublicationForm.employment.workload[1],
-            workForms: JobPublicationMapper.mapWorkForms(jobPublicationForm.employment.workForms)
+            workForms: JobPublicationMapper.mapWorkFormsToStrings(jobPublicationForm.employment.workForms)
         };
 
         jobAd.location = {
@@ -144,7 +210,7 @@ export class JobPublicationMapper {
         };
 
         jobAd.contact = {
-            salutation: Salutation[jobPublicationForm.contact.salutation],
+            salutation: <Salutation>Salutation[jobPublicationForm.contact.salutation],
             firstName: jobPublicationForm.contact.firstName,
             lastName: jobPublicationForm.contact.lastName,
             phone: jobPublicationForm.contact.phoneNumber,
@@ -153,7 +219,7 @@ export class JobPublicationMapper {
         };
 
         jobAd.publicContact = {
-            salutation: Salutation[jobPublicationForm.publicContact.salutation],
+            salutation: <Salutation>Salutation[jobPublicationForm.publicContact.salutation],
             firstName: jobPublicationForm.publicContact.firstName,
             lastName: jobPublicationForm.publicContact.lastName,
             phone: jobPublicationForm.publicContact.phoneNumber,
@@ -187,9 +253,15 @@ export class JobPublicationMapper {
         return jobFormOccupation ? jobFormOccupation.key.replace('avam:', '') : null;
     }
 
-    private static mapWorkForms(workForms: [boolean, boolean, boolean, boolean]): string[] {
+    private static mapWorkFormsToStrings(workForms: [boolean, boolean, boolean, boolean]): string[] {
         return workForms
             .map((workFormSelected: boolean, index: number) => workFormSelected ? <string>WorkForm[index] : null)
             .filter((workForm) => !!workForm);
+    }
+
+    private static mapWorkFormsToBooleans(workForms: string[]): [boolean, boolean, boolean, boolean] {
+        return Object.keys(WorkForm)
+            .filter((key) => isNaN(parseInt(key, 10)))
+            .map((key) => workForms.includes(key)) as [boolean, boolean, boolean, boolean];
     }
 }
