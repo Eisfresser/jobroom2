@@ -51,6 +51,13 @@ deploy:
 
 - provider: script
   skip_cleanup: true
+  script: "./gradlew bootWar publish -Pprod -Pzipkin -x test -Pversion=${TRAVIS_JOB_NUMBER}-SNAPSHOT --stacktrace
+    && curl https://dev.job-room.ch:8444/deploy/jr2 --insecure"
+  on:
+    branch: feature/eiam-integration-poc
+
+- provider: script
+  skip_cleanup: true
   script: "./gradlew bootWar publish -Pprod -Pzipkin -x test -Pversion=`echo ${TRAVIS_BRANCH} | cut -c9-`"
   on:
     all_branches: true
