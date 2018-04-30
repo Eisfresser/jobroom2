@@ -14,7 +14,6 @@ import {
 import { initialState as initialCandidateToolState } from '../../../../../../../main/webapp/app/home/state-management/state/candidate-search-tool.state';
 import { initialState as initialJobToolState } from '../../../../../../../main/webapp/app/home/state-management/state/job-search-tool.state';
 import { cold, hot } from 'jasmine-marbles';
-import { JobService } from '../../../../../../../main/webapp/app/job-search/services/job.service';
 import { JobSearchToolCountedAction } from '../../../../../../../main/webapp/app/home/state-management/index';
 import { JobSearchToolCountAction } from '../../../../../../../main/webapp/app/home/state-management/actions/job-search-tool.actions';
 import { LanguageChangedAction } from '../../../../../../../main/webapp/app/shared/state-management/actions/core.actions';
@@ -23,6 +22,7 @@ import {
     OccupationPresentationService
 } from '../../../../../../../main/webapp/app/shared/reference-service/occupation-presentation.service';
 import { TypeaheadMultiselectModel } from '../../../../../../../main/webapp/app/shared/input-components/typeahead/typeahead-multiselect-model';
+import { JobAdvertisementService } from '../../../../../../../main/webapp/app/shared/job-advertisement/job-advertisement.service';
 
 describe('HomeEffects', () => {
     // todo: implement
@@ -32,7 +32,7 @@ describe('HomeEffects', () => {
     let mockState$: Observable<any>;
 
     const mockCandidateService = jasmine.createSpyObj('mockCandidateService', ['count']);
-    const mockJobService = jasmine.createSpyObj('mockJobService', ['count']);
+    const mockJobAdvertisementService = jasmine.createSpyObj('mockJobAdvertisementService', ['count']);
     const mockOccupationPresentationService = jasmine.createSpyObj('mockOccupationPresentationService', ['findOccupationLabelsByCode']);
     const mockStore = jasmine.createSpyObj('mockStore', ['select']);
     const mockRouter = new MockRouter();
@@ -44,7 +44,7 @@ describe('HomeEffects', () => {
                 HomeEffects,
                 provideMockActions(() => actions$),
                 { provide: CandidateService, useValue: mockCandidateService },
-                { provide: JobService, useValue: mockJobService },
+                { provide: JobAdvertisementService, useValue: mockJobAdvertisementService },
                 { provide: Router, useValue: mockRouter },
                 { provide: Store, useValue: mockStore },
                 {
@@ -93,7 +93,7 @@ describe('HomeEffects', () => {
 
             actions$ = hot('-a', { a: action });
             const response = cold('-a|', { a: totalCount });
-            mockJobService.count.and.returnValue(response);
+            mockJobAdvertisementService.count.and.returnValue(response);
 
             const countUpdatedAction = new JobSearchToolCountedAction(totalCount);
             const expected = cold('--b', { b: countUpdatedAction });
@@ -104,7 +104,7 @@ describe('HomeEffects', () => {
         it('should return new JobSearchToolCountedAction with zero totalCount on exception', () => {
             actions$ = hot('-a', { a: action });
             const response = cold('-#', {}, 'numberFormatException');
-            mockJobService.count.and.returnValue(response);
+            mockJobAdvertisementService.count.and.returnValue(response);
 
             const countUpdatedAction = new JobSearchToolCountedAction(0);
             const expected = cold('--b', { b: countUpdatedAction });

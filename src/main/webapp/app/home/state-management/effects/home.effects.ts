@@ -22,7 +22,6 @@ import {
 } from '../actions/candidate-search-tool.actions';
 import { CandidateService } from '../../../candidate-search/services/candidate.service';
 import { createCandidateSearchRequestFromToolState } from '../../../candidate-search/state-management/util/search-request-mapper';
-import { JobService } from '../../../job-search/services/job.service';
 import { createJobSearchRequestFromToolState } from '../../../job-search/state-management/util/search-request-mapper';
 import {
     LANGUAGE_CHANGED,
@@ -31,6 +30,7 @@ import {
 import { OccupationPresentationService } from '../../../shared/reference-service/occupation-presentation.service';
 import { getCandidateSearchToolState, HomeState } from '../state/home.state';
 import { TypeaheadMultiselectModel } from '../../../shared/input-components/typeahead/typeahead-multiselect-model';
+import { JobAdvertisementService } from '../../../shared/job-advertisement/job-advertisement.service';
 
 @Injectable()
 export class HomeEffects {
@@ -63,7 +63,7 @@ export class HomeEffects {
         .ofType(JOB_SEARCH_TOOL_COUNT)
         .switchMap((action: JobSearchToolCountAction) => {
                 const req = createJobSearchRequestFromToolState(action.payload);
-                return this.jobService.count(req)
+                return this.jobAdvertisementService.count(req)
                     .map((totalCount: number) => new JobSearchToolCountedAction(totalCount))
                     .catch((err: any) => Observable.of(new JobSearchToolCountedAction(0)));
             }
@@ -92,6 +92,6 @@ export class HomeEffects {
                 private store: Store<HomeState>,
                 private occupationPresentationService: OccupationPresentationService,
                 private candidateService: CandidateService,
-                private jobService: JobService) {
+                private jobAdvertisementService: JobAdvertisementService) {
     }
 }

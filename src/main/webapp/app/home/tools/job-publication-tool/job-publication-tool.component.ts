@@ -16,7 +16,7 @@ import { Subject } from 'rxjs/Subject';
 import {
     DateUtils, Degree,
     EMAIL_REGEX,
-    Gender,
+    Gender, JhiLanguageHelper,
     POSTBOX_NUMBER_REGEX,
     ResponseWrapper,
     URL_REGEX, WorkForm
@@ -40,6 +40,8 @@ import { JobAdvertisement, Salutation, WorkExperience } from '../../../shared/jo
 import { CompanyFormModel, JobPublicationForm } from './job-publication-form.model';
 import { LanguageFilterService } from '../../../shared/input-components/language-filter/language-filter.service';
 import { languages } from '../../../candidate-search/services/language-skill.service';
+import { Store } from '@ngrx/store';
+import { CoreState, getLanguage } from '../../../shared/state-management/state/core.state';
 
 @Component({
     selector: 'jr2-job-publication-tool',
@@ -85,7 +87,8 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
 
     private unsubscribe$ = new Subject<void>();
 
-    constructor(private occupationPresentationService: OccupationPresentationService,
+    constructor(private coreStore: Store<CoreState>,
+                private occupationPresentationService: OccupationPresentationService,
                 private fb: FormBuilder,
                 private languageSkillService: LanguageSkillService,
                 private translateService: TranslateService,
@@ -518,9 +521,7 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
         countries.registerLocale(require('i18n-iso-countries/langs/de.json'));
         countries.registerLocale(require('i18n-iso-countries/langs/it.json'));
 
-        this.countries$ = Observable.merge(
-            Observable.of(this.translateService.currentLang),
-            this.translateService.onLangChange.map((e: LangChangeEvent) => e.lang))
+        this.countries$ = this.coreStore.select(getLanguage)
             .map((lang: string) => {
                 const countryNames = countries.getNames(lang);
                 return Object.keys(countryNames)

@@ -5,16 +5,16 @@ import {
     RouterStateSnapshot
 } from '@angular/router';
 import { Injectable } from '@angular/core';
-import { JobService } from '../services';
+import { JobAdvertisementService } from '../../shared/job-advertisement/job-advertisement.service';
 
 @Injectable()
 export class JobFingerprintRedirectResolver implements Resolve<void> {
 
-    constructor(private jobService: JobService, private router: Router) {
+    constructor(private jobAdvertisementService: JobAdvertisementService, private router: Router) {
     }
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): void {
-        this.jobService.findByExternalId(route.queryParams['externalId'])
+        this.jobAdvertisementService.findByExternalId(route.queryParams['externalId'])
             .subscribe((job) => {
                 if (job !== null) {
                     this.router.navigate(['/job-detail/', job.id]);

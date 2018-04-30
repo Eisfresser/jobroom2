@@ -14,7 +14,9 @@ import {
     JobSearchQuery,
     JobSearchState
 } from './state-management';
-import { Job } from './services';
+import { JobAdvertisement, JobDescription } from '../shared/job-advertisement/job-advertisement.model';
+import { JobAdvertisementUtils } from '../dashboard/job-advertisement.utils';
+import { CoreState, getLanguage } from '../shared/state-management/state/core.state';
 
 @Component({
     selector: 'jr2-job-search',
@@ -23,15 +25,17 @@ import { Job } from './services';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JobSearchComponent {
-    jobList$: Observable<Array<Job>>;
+    jobList$: Observable<Array<JobAdvertisement>>;
     searchQuery$: Observable<JobSearchQuery>;
     baseQueryString$: Observable<string>;
     localityQueryString$: Observable<string>;
     totalCount$: Observable<number>;
     loading$: Observable<boolean>;
     reset$: Observable<number>;
+    jobDescriptions$: Observable<JobDescription[]>;
 
-    constructor(private store: Store<JobSearchState>) {
+    constructor(private store: Store<JobSearchState>,
+                private coreStore: Store<CoreState>) {
         this.store.dispatch(new InitJobSearchAction());
 
         this.jobList$ = store.select(getJobList);
@@ -41,6 +45,10 @@ export class JobSearchComponent {
         this.totalCount$ = store.select(getTotalJobCount);
         this.loading$ = store.select(getLoading);
         this.reset$ = store.select(getResetTime);
+
+        this.jobDescriptions$ = coreStore.select(getLanguage)
+            .combineLatest(this.jobList$)
+            .map(([lang, jobList]) => jobList.map((job) => JobAdvertisementUtils.getJobDescription(job, lang)));
     }
 }
 

@@ -14,10 +14,10 @@ import {
 } from '../state-management/actions/job-publication-detail.actions';
 import { JobAdvertisement, JobDescription } from '../../shared/job-advertisement/job-advertisement.model';
 import { JobAdvertisementService } from '../../shared/job-advertisement/job-advertisement.service';
-import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 import { JobAdvertisementUtils } from '../job-advertisement.utils';
 import { LanguageSkill } from '../../shared/job-publication/job-publication.model';
 import { JobAdvertisementCancelDialogService } from '../dialogs/job-advertisement-cancel-dialog.service';
+import { CoreState, getLanguage } from '../../shared/state-management/state/core.state';
 
 @Component({
     selector: 'jr2-job-publication-detail',
@@ -35,7 +35,7 @@ export class JobPublicationDetailComponent {
 
     constructor(private jobAdvertisementService: JobAdvertisementService,
                 private store: Store<JobPublicationDetailState>,
-                private translateService: TranslateService,
+                private coreStore: Store<CoreState>,
                 private jobAdvertisementCancelDialogService: JobAdvertisementCancelDialogService) {
         this.showCancellationSuccess$ = store.select(getShowCancellationSuccess);
         this.showCancellationError$ = store.select(getShowCancellationError);
@@ -46,9 +46,7 @@ export class JobPublicationDetailComponent {
             .map((jobAdvertisement: JobAdvertisement) =>
                 this.jobAdvertisementService.isJobAdvertisementCancellable(jobAdvertisement.status));
 
-        this.jobDescription$ = Observable.merge(
-            Observable.of(this.translateService.currentLang),
-            this.translateService.onLangChange.map((e: LangChangeEvent) => e.lang))
+        this.jobDescription$ = coreStore.select(getLanguage)
             .combineLatest(this.jobAdvertisement$)
             .map(([lang, jobAdvertisement]: [string, JobAdvertisement]) => JobAdvertisementUtils.getJobDescription(jobAdvertisement, lang));
 

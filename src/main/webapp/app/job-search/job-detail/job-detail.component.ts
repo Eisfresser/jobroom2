@@ -10,7 +10,6 @@ import {
     JobCenter,
     ReferenceService
 } from '../../shared/reference-service/reference.service';
-import { Job } from '../services';
 import {
     getJobList,
     getSelectedJob,
@@ -20,6 +19,9 @@ import {
 import { Store } from '@ngrx/store';
 import { TOOLTIP_AUTO_HIDE_TIMEOUT } from '../../app.constants';
 import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
+import { JobAdvertisement, JobDescription, SourceSystem } from '../../shared/job-advertisement/job-advertisement.model';
+import { JobAdvertisementUtils } from '../../dashboard/job-advertisement.utils';
+import { CoreState, getLanguage } from '../../shared/state-management/state/core.state';
 
 @Component({
     selector: 'jr2-job-detail',
@@ -29,8 +31,9 @@ import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
     ]
 })
 export class JobDetailComponent implements AfterViewInit {
-    job$: Observable<Job>;
-    jobList$: Observable<Job[]>;
+    job$: Observable<JobAdvertisement>;
+    jobDescription$: Observable<JobDescription>;
+    jobList$: Observable<JobAdvertisement[]>;
     jobCenter$: Observable<JobCenter>;
     jobListTotalSize$: Observable<number>;
     externalJobDisclaimerClosed = false;
@@ -42,7 +45,8 @@ export class JobDetailComponent implements AfterViewInit {
     clipboardTooltip: NgbTooltip;
 
     constructor(private referenceService: ReferenceService,
-                private store: Store<JobSearchState>) {
+                private store: Store<JobSearchState>,
+                private coreStore: Store<CoreState>) {
         this.job$ = this.store.select(getSelectedJob);
         this.jobList$ = this.store.select(getJobList);
         this.jobListTotalSize$ = this.store.select(getTotalJobCount);
@@ -51,10 +55,14 @@ export class JobDetailComponent implements AfterViewInit {
             .map((job) => job.jobCenterCode)
             .filter((jobCenterCode) => !!jobCenterCode)
             .switchMap((jobCenterCode) => this.referenceService.resolveJobCenter(jobCenterCode));
+
+        this.jobDescription$ = coreStore.select(getLanguage)
+            .combineLatest(this.job$)
+            .map(([lang, job]: [string, JobAdvertisement]) => JobAdvertisementUtils.getJobDescription(job, lang));
     }
 
-    isExternalJobDisclaimerShown(job: Job) {
-        return job.source === 'extern' && !this.externalJobDisclaimerClosed;
+    isExternalJobDisclaimerShown(job: JobAdvertisement) {
+        return job.sourceSystem === SourceSystem.EXTERN && !this.externalJobDisclaimerClosed;
     }
 
     ngAfterViewInit(): void {

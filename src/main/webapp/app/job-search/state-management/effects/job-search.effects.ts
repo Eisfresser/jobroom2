@@ -1,9 +1,8 @@
 import { Inject, Injectable, InjectionToken, Optional } from '@angular/core';
 import { Actions, Effect } from '@ngrx/effects';
-import { Job, JobSearchRequest, JobService } from '../../services';
 import { Observable } from 'rxjs/Observable';
 import { Action, Store } from '@ngrx/store';
-import { ResponseWrapper } from '../../../shared/model/response-wrapper.model';
+import { ResponseWrapper } from '../../../shared';
 import {
     getJobSearchState,
     JobSearchState,
@@ -36,6 +35,9 @@ import {
     NextItemLoadedAction,
     NextItemsPageLoadedAction,
 } from '../../../shared/components/details-page-pagination/state-management/actions/details-page-pagination.actions';
+import { JobAdvertisementService } from '../../../shared/job-advertisement/job-advertisement.service';
+import { JobAdvertisement } from '../../../shared/job-advertisement/job-advertisement.model';
+import { JobAdvertisementSearchRequest } from '../../../shared/job-advertisement/job-advertisement-search-request';
 
 export const JOB_SEARCH_DEBOUNCE = new InjectionToken<number>('JOB_SEARCH_DEBOUNCE');
 export const JOB_SEARCH_SCHEDULER = new InjectionToken<Scheduler>('JOB_SEARCH_SCHEDULER');
@@ -57,7 +59,7 @@ export class JobSearchEffects {
         .withLatestFrom(this.hasPreviousSearchTrigger(), this.store.select(getJobSearchState))
         .filter(([action, hasPrevTrigger, state]) => !hasPrevTrigger)
         .switchMap(([action, hasPrevTrigger, state]) =>
-            this.jobSearchService.search(toInitialSearchRequest(state))
+            this.jobSearchService.searchJobAds(toInitialSearchRequest(state))
                 .map(toJobListLoadedAction)
                 .catch((err: any) => Observable.of(new ShowJobListErrorAction(err)))
         );
@@ -68,7 +70,7 @@ export class JobSearchEffects {
         .debounceTime(this.debounce || 300, this.scheduler || async)
         .withLatestFrom(this.store.select(getJobSearchState))
         .switchMap(([action, state]) =>
-            this.jobSearchService.search(toJobSearchRequest(action as LoadJobTriggerAction, state))
+            this.jobSearchService.searchJobAds(toJobSearchRequest(action as LoadJobTriggerAction, state))
                 .map(toJobListLoadedAction)
                 .catch((err: any) => Observable.of(new ShowJobListErrorAction(err)))
         );
@@ -78,7 +80,7 @@ export class JobSearchEffects {
         .ofType(LOAD_NEXT_PAGE)
         .withLatestFrom(this.store.select(getJobSearchState))
         .switchMap(([action, state]) =>
-            this.jobSearchService.search(toNextPageRequest(state))
+            this.jobSearchService.searchJobAds(toNextPageRequest(state))
                 .map((response: ResponseWrapper) => new NextPageLoadedAction(response.json))
                 .catch((err: any) => Observable.of(new ShowJobListErrorAction(err)))
         );
@@ -99,7 +101,7 @@ export class JobSearchEffects {
                     .map((action: ShowJobListErrorAction) => null))
                 .take(1);
         })
-        .map((selectedJob: Job) => selectedJob
+        .map((selectedJob: JobAdvertisement) => selectedJob
             ? new NextItemsPageLoadedAction({
                 item: selectedJob,
                 feature: JOB_DETAIL_FEATURE
@@ -115,7 +117,7 @@ export class JobSearchEffects {
         });
 
     constructor(private actions$: Actions,
-                private jobSearchService: JobService,
+                private jobSearchService: JobAdvertisementService,
                 private store: Store<JobSearchState>,
                 @Optional()
                 @Inject(JOB_SEARCH_DEBOUNCE)
@@ -143,15 +145,15 @@ function toJobListLoadedAction(response: ResponseWrapper): JobListLoadedAction {
     });
 }
 
-function toInitialSearchRequest(state: JobSearchState): JobSearchRequest {
+function toInitialSearchRequest(state: JobSearchState): JobAdvertisementSearchRequest {
     return createJobSearchRequest(state.searchQuery, state.searchFilter, state.page);
 }
 
-function toNextPageRequest(state: JobSearchState): JobSearchRequest {
+function toNextPageRequest(state: JobSearchState): JobAdvertisementSearchRequest {
     return createJobSearchRequest(state.searchQuery, state.searchFilter, state.page);
 }
 
-function toJobSearchRequest(action: LoadJobTriggerAction, state: JobSearchState): JobSearchRequest {
+function toJobSearchRequest(action: LoadJobTriggerAction, state: JobSearchState): JobAdvertisementSearchRequest {
     if (action.type === TOOLBAR_CHANGED || action.type === JOB_SEARCH_TOOL_CHANGED) {
         return createJobSearchRequest(action.payload, state.searchFilter);
     } else {

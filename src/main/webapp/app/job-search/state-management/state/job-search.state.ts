@@ -1,7 +1,7 @@
 import { TypeaheadMultiselectModel } from '../../../shared/input-components';
-import { Job } from '../../services';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { ONLINE_SINCE_DEFAULT_VALUE } from '../../../shared/constants/job-search.constants';
+import { JobAdvertisement } from '../../../shared/job-advertisement/job-advertisement.model';
 
 export enum Sort {
     RELEVANCE_DESC,
@@ -21,8 +21,8 @@ export interface JobSearchState {
     searchError: boolean;
     searchQuery: JobSearchQuery;
     searchFilter: JobSearchFilter;
-    jobList: Array<Job>;
-    selectedJob: Job;
+    jobList: Array<JobAdvertisement>;
+    selectedJob: JobAdvertisement;
     totalJobCount: number;
     page: number;
     resetTime: number;

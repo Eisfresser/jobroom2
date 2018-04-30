@@ -1,13 +1,13 @@
 import { Component, Input } from '@angular/core';
-import { Locality } from '../services/job';
+import { Location } from '../../shared/job-advertisement/job-advertisement.model';
 
 @Component({
     selector: 'jr2-job-locality',
     template: `
-        <span *ngIf="locality" class="badge badge-blue">
-            {{ locality.zipCode }} {{ locality.text }}
-            <ng-container *ngIf="locality.cantonCode || locality.countryCode">
-                ({{ locality.cantonCode || locality.countryCode }})
+        <span *ngIf="location" class="badge badge-blue">
+            {{ location.postalCode }} {{ location.remarks }}
+            <ng-container *ngIf="location.cantonCode || location.countryIsoCode">
+                ({{ location.cantonCode || location.countryIsoCode }})
             </ng-container>
         </span>
     `
@@ -15,5 +15,5 @@ import { Locality } from '../services/job';
 
 export class JobLocalityComponent {
     @Input()
-    locality: Locality;
+    location: Location;
 }

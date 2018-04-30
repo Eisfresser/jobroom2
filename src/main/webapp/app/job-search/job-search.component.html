@@ -12,6 +12,7 @@
 
         <div class="base__content--wide">
             <jr2-job-search-list [jobList]="jobList$ | async"
+                                 [jobDescriptions]="jobDescriptions$ | async"
                                  [totalCount]="totalCount$ | async"
                                  [baseQueryString]="baseQueryString$ | async"
                                  [localityQueryString]="localityQueryString$ | async"></jr2-job-search-list>

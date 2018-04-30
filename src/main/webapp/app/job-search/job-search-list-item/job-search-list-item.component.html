@@ -1,19 +1,19 @@
-<div class="logo-box flex-height result-list__item md-whiteframe-1dp" [routerLink]="['/job-detail', job.id]" [ngClass]="{'result-list__item--visited' : job.visited}">
+<div *ngIf="jobDescription" class="logo-box flex-height result-list__item md-whiteframe-1dp" [routerLink]="['/job-detail', job.id]" [ngClass]="{'result-list__item--visited' : job.visited}">
     <div class="result-list__item__content d-flex w-100 flex-column flex-sm-row justify-content-between mb-1">
-        <h4 class="text--primary-color order-2 order-sm-1"><span [innerHtml]="job.title | safeHtml"></span></h4>
+        <h4 class="text--primary-color order-2 order-sm-1"><span [innerHtml]="jobDescription.title | safeHtml"></span></h4>
         <div class="order-1 order-sm-2 w-100">
-            <small class="result-list__item__date">{{job.registrationDate | jr2Date}}</small>
+            <small class="result-list__item__date">{{ job.publication.startDate | jr2Date }}</small>
         </div>
     </div>
 
     <div>
-        <span class="text--primary-color">{{job.company.name}}</span>
-        <jr2-job-locality [locality]="job.locality"></jr2-job-locality>
-        <span class="badge badge-gray">{{[job.workingTimePercentageMin, job.workingTimePercentageMax] | workingTimeRange}}</span>
-        <span class="badge badge-green" *ngIf="job.permanent">{{'job-search.job-search-list-item.badge.permanent' | translate}}</span>
-        <span class="badge badge-yellow" *ngIf="!job.permanent">{{'job-search.job-search-list-item.badge.temporary' | translate}}</span>
+        <span class="text--primary-color">{{job.jobContent.company.name}}</span>
+        <jr2-job-locality [location]="job.jobContent.location"></jr2-job-locality>
+        <span class="badge badge-gray">{{[job.jobContent.employment.workloadPercentageMin, job.jobContent.employment.workloadPercentageMax] | workingTimeRange}}</span>
+        <span class="badge badge-green" *ngIf="job.jobContent.employment.permanent">{{'job-search.job-search-list-item.badge.permanent' | translate}}</span>
+        <span class="badge badge-yellow" *ngIf="!job.jobContent.employment.permanent">{{'job-search.job-search-list-item.badge.temporary' | translate}}</span>
     </div>
 
-    <div class="line-clamp" [innerHtml]="job.description | safeHtml"></div>
+    <div class="line-clamp" [innerHtml]="jobDescription.description | safeHtml"></div>
 
 </div>

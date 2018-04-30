@@ -42,7 +42,8 @@ describe('createCandidateSearchRequestFromFilter', () => {
     it('should map CandidateSearchFilter with occupation code', () => {
         // GIVEN
         const occupations = [new TypeaheadMultiselectModel('occupation', 'bfs:564236', 'Java')];
-        const filter: CandidateSearchFilter = Object.assign({}, defaultFilter, { occupations });
+        const filter: CandidateSearchFilter = Object.assign(
+            {}, defaultFilter, { occupations });
 
         // WHEN
         const candidateSearchRequest: CandidateSearchRequest = createCandidateSearchRequestFromFilter(filter);

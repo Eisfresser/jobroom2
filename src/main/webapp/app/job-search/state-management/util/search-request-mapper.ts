@@ -2,7 +2,6 @@ import {
     ContractType, JobSearchFilter, JobSearchQuery,
     Sort
 } from '../state/job-search.state';
-import { JobSearchRequest } from '../../services/job-search-request';
 import { TypeaheadMultiselectModel } from '../../../shared/input-components';
 import {
     LocalityInputType,
@@ -11,12 +10,13 @@ import {
 import { ITEMS_PER_PAGE } from '../../../shared/constants/pagination.constants';
 import { JobSearchToolState } from '../../../home/state-management/state/job-search-tool.state';
 import { OccupationCode } from '../../../shared/reference-service/occupation-code';
+import { JobAdvertisementSearchRequest, JobAdvertisementSearchRequestBody, ProfessionCode } from '../../../shared/job-advertisement/job-advertisement-search-request';
 
 const toCode = (value: TypeaheadMultiselectModel) => value.code;
 const toLabel = (value: TypeaheadMultiselectModel) => value.label;
 const byValue = (type: string) => (value: TypeaheadMultiselectModel) => value.type === type;
 
-export function createJobSearchRequest(searchQuery: JobSearchQuery, searchFilter: JobSearchFilter, page = 0): JobSearchRequest {
+export function createJobSearchRequest(searchQuery: JobSearchQuery, searchFilter: JobSearchFilter, page = 0): JobAdvertisementSearchRequest {
     const { baseQuery, localityQuery } = searchQuery;
     const { companyName, onlineSince } = searchFilter;
 
@@ -25,20 +25,30 @@ export function createJobSearchRequest(searchQuery: JobSearchQuery, searchFilter
 
     const permanent = mapContractType(searchFilter.contractType);
     const sort = mapSort(searchFilter.sort);
-    const regions = [];
+    const regionCodes = [];
 
-    const req = Object.assign({
-        regions,
+    const body = Object.assign({
+        regionCodes,
         permanent,
-        workingTimeMin: searchFilter.workingTime[0],
-        workingTimeMax: searchFilter.workingTime[1],
-        sort,
+        workloadPercentageMin: searchFilter.workingTime[0],
+        workloadPercentageMax: searchFilter.workingTime[1],
         companyName,
         onlineSince,
-        page,
-        size: ITEMS_PER_PAGE
     }, request);
-    return req;
+
+    return {
+        page,
+        size: ITEMS_PER_PAGE,
+        // sort, //TODO: fix
+        body
+    };
+}
+
+function toProfessionCode(occupation: OccupationCode): ProfessionCode {
+    return {
+        type: occupation.type,
+        value: occupation.value.toString()
+    };
 }
 
 function populateBaseQuery(request, baseQuery: Array<TypeaheadMultiselectModel>) {
@@ -47,22 +57,24 @@ function populateBaseQuery(request, baseQuery: Array<TypeaheadMultiselectModel>)
         .map(toCode)
         .map((code: string) => code.split(','))
         .reduce((prev: string[], curr: string[]) => prev.concat(curr), [])
-        .map(OccupationCode.fromString);
+        .map(OccupationCode.fromString)
+        .map(toProfessionCode);
     const classifications = baseQuery.filter(byValue(OccupationInputType.CLASSIFICATION))
         .map(toCode)
-        .map(OccupationCode.fromString);
-    const occupationCodes = [...occupations, ...classifications];
+        .map(OccupationCode.fromString)
+        .map(toProfessionCode);
+    const professionCodes = [...occupations, ...classifications];
 
-    return Object.assign({}, request, { keywords, occupationCodes });
+    return Object.assign({}, request, { keywords, professionCodes });
 }
 
 function populateLocalityQuery(request, localityQuery: Array<TypeaheadMultiselectModel>) {
-    const localities = localityQuery.filter(byValue(LocalityInputType.LOCALITY)).map(toCode);
-    const cantons = localityQuery.filter(byValue(LocalityInputType.CANTON)).map(toCode);
-    return Object.assign({}, request, { localities, cantons });
+    const regionCodes = localityQuery.filter(byValue(LocalityInputType.LOCALITY)).map(toCode);
+    const cantonCodes = localityQuery.filter(byValue(LocalityInputType.CANTON)).map(toCode);
+    return Object.assign({}, request, { regionCodes, cantonCodes });
 }
 
-export function createJobSearchRequestFromToolState(toolState: JobSearchToolState): JobSearchRequest {
+export function createJobSearchRequestFromToolState(toolState: JobSearchToolState): JobAdvertisementSearchRequestBody {
     const { baseQuery, localityQuery, onlineSince } = toolState;
     const request = populateBaseQuery({ onlineSince }, baseQuery);
     return populateLocalityQuery(request, localityQuery);
