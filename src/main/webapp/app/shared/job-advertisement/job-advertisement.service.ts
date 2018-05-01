@@ -10,7 +10,7 @@ import { JobPublicationSearchRequest } from '../job-publication/job-publication-
 
 @Injectable()
 export class JobAdvertisementService {
-    private readonly resourceUrl = 'jobadservice/api/jobAdvertisement';
+    private readonly resourceUrl = 'jobadservice/api/jobAdvertisements';
     private readonly searchUrl = `${this.resourceUrl}/_search`;
     private readonly countUrl = `${this.resourceUrl}/_count`;
 
