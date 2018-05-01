@@ -1,19 +1,21 @@
 package ch.admin.seco.jobroom.security.saml.infrastructure;
 
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import javax.xml.namespace.QName;
+
 import org.apache.commons.lang.StringUtils;
 import org.opensaml.saml2.core.Attribute;
 import org.opensaml.xml.schema.XSString;
 import org.opensaml.xml.util.AttributeMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import org.springframework.security.saml.SAMLCredential;
 import org.springframework.security.saml.userdetails.SAMLUserDetailsService;
 import org.springframework.util.Assert;
-
-import javax.xml.namespace.QName;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 public class EiamSamlUserDetailsService implements SAMLUserDetailsService {
 

@@ -2,7 +2,6 @@ package ch.admin.seco.jobroom.web.rest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
 
 import com.codahale.metrics.annotation.Timed;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -11,17 +10,19 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import ch.admin.seco.jobroom.security.jwt.JWTConfigurer;
 import ch.admin.seco.jobroom.security.jwt.TokenProvider;
-import ch.admin.seco.jobroom.web.rest.vm.LoginVM;
 
 /**
  * Controller to authenticate users.
@@ -62,7 +63,7 @@ public class UserJWTController {
             new UsernamePasswordAuthenticationToken(username, password);
         authenticationToken.setDetails(new WebAuthenticationDetails(request));
 
-       // Authentication authentication = this.authenticationManager.authenticate(authenticationToken);
+        // Authentication authentication = this.authenticationManager.authenticate(authenticationToken);
         Authentication authentication = null;
         SecurityContextHolder.getContext().setAuthentication(authentication);
         DefaultOAuth2AccessToken oAuth2AccessToken = tokenProvider.createAccessToken(authentication);

@@ -1,6 +1,7 @@
 package ch.admin.seco.jobroom.security.saml;
 
 import org.apache.commons.lang.StringUtils;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;

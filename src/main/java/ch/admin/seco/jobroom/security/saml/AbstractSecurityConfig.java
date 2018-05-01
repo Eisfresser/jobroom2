@@ -1,6 +1,11 @@
 package ch.admin.seco.jobroom.security.saml;
 
-import ch.admin.seco.jobroom.security.AuthoritiesConstants;
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
@@ -9,10 +14,7 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.access.AccessDeniedHandler;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+import ch.admin.seco.jobroom.security.AuthoritiesConstants;
 
 public class AbstractSecurityConfig extends WebSecurityConfigurerAdapter {
 
