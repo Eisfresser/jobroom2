@@ -33,22 +33,21 @@ before_install:
 - export PATH=$HOME/.yarn/bin:$PATH
 install:
 - yarn install
-#--skip-integrity-check
 script:
-#- yarn test
-- ./gradlew install -Pprod -x test
+- yarn test
+- ./gradlew check jacocoTestReport -Pprod
 after_success:
 - bash <(curl -s https://codecov.io/bash)
 before_deploy:
 - chmod +x .travis/deploy.sh
 deploy:
-#deploy:
-#- provider: script
-#  skip_cleanup: true
-#  script: "./gradlew bootWar publish -Pprod -Pzipkin -x test -Pversion=${TRAVIS_JOB_NUMBER}-SNAPSHOT --stacktrace
-#    && curl https://dev.job-room.ch:8443/deploy/jr2 --insecure"
-#  on:
-#    branch: develop
+deploy:
+- provider: script
+  skip_cleanup: true
+  script: "./gradlew bootWar publish -Pprod -Pzipkin -x test -Pversion=${TRAVIS_JOB_NUMBER}-SNAPSHOT --stacktrace
+    && curl https://dev.job-room.ch:8443/deploy/jr2 --insecure"
+  on:
+    branch: develop
 
 - provider: script
   skip_cleanup: true
