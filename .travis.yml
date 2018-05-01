@@ -33,9 +33,9 @@ before_install:
 - export PATH=$HOME/.yarn/bin:$PATH
 install:
 - yarn install --skip-integrity-check
-#script:
+script:
 #- yarn test
-#- ./gradlew check jacocoTestReport sonarqube -Pprod
+- ./gradlew install -Pprod -x test -x check -x jacocoTestReport -x sonarqube
 after_success:
 - bash <(curl -s https://codecov.io/bash)
 before_deploy:
