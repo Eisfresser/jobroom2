@@ -49,4 +49,8 @@ export class SystemNotificationsManagementComponent implements OnInit {
         );
         modalRef.componentInstance.systemNotification = systemNotification;
     }
+
+    trackIdentity(index, item: SystemNotification) {
+        return item.id;
+    }
 }

@@ -1,5 +1,5 @@
-<div class="system-notification">
+<div class="system-notification" *ngIf="isSystemNotificationVisible()">
     <span class="warning-icon">
         <i class="fa fa-exclamation"></i></span>
-    <span class="system-notification-text"></span>
+    <span class="system-notification-text">{{activeSystemNotification?.text}}</span>
 </div>

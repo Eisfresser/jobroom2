@@ -17,12 +17,17 @@ export class SystemNotificationService {
 
     create(
         systemNotification: SystemNotification
-    ): Observable<HttpResponse<SystemNotification>> {
+    ): Observable<SystemNotification> {
         return this.http.post<SystemNotification>(
             this.resourceUrl,
-            systemNotification,
-            { observe: 'response' }
+            systemNotification
         );
+    }
+
+    delete(id: string): Observable<HttpResponse<any>> {
+        return this.http.delete(`${this.resourceUrl}/${id}`, {
+            observe: 'response'
+        });
     }
 
     update(
@@ -38,5 +43,4 @@ export class SystemNotificationService {
     getAllSystemNotifications(): Observable<SystemNotification[]> {
         return this.http.get<SystemNotification[]>(`${this.resourceUrl}`);
     }
-
 }

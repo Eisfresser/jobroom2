@@ -15,7 +15,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let systemNotification of systemNotifications">
+            <tr *ngFor="let systemNotification of systemNotifications; trackBy: trackIdentity">
 
                 <td>{{systemNotification.title}}</td>
                 <td>{{systemNotification.type}}</td>
