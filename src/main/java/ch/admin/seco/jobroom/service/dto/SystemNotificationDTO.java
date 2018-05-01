@@ -3,15 +3,12 @@ package ch.admin.seco.jobroom.service.dto;
 
 import ch.admin.seco.jobroom.domain.SystemNotification;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class SystemNotificationDTO {
 
-    @NotBlank
-    @Size(min = 1, max = 50)
     private UUID id;
 
     @Size(max = 50)
@@ -23,13 +20,10 @@ public class SystemNotificationDTO {
     @Size(max = 50)
     private String type;
 
-    @Size(max = 50)
     private LocalDateTime startDate;
 
-    @Size(max = 50)
     private LocalDateTime endDate;
 
-    @Size(max = 50)
     private boolean isActive;
 
     public SystemNotificationDTO() {

@@ -31,24 +31,18 @@ public class SystemNotification {
     @Column(name = "text", length = 50)
     private String text;
 
-    @NotNull
-    @Size(max = 50)
-    @Column(name = "type", length = 50)
+
+    @Column(name = "type")
     private String type;
 
-    @NotNull
-    @Size(min = 1, max = 50)
-    @Column(name = "startdate", length = 50)
+
+    @Column(name = "startdate")
     private LocalDateTime startDate;
 
-    @NotNull
-    @Size(min = 1, max = 50)
-    @Column(name = "enddate", length = 50)
+    @Column(name = "enddate")
     private LocalDateTime endDate;
 
-    @NotNull
-    @Size(min = 1, max = 50)
-    @Column(name = "active", length = 50)
+    @Column(name = "active")
     private boolean isActive;
 
 
