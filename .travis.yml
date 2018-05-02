@@ -51,7 +51,7 @@ deploy:
 - provider: script
   skip_cleanup: true
   script: "./gradlew bootWar publish -Pprod -Pzipkin -x test -Pversion=EIAM-SNAPSHOT --stacktrace
-    && curl https://dev.job-room.ch:8444/deploy/jr2 --insecure"
+    && curl https://dev.job-room.ch:8443/deploy/jr2 --insecure"
   on:
     branch: feature/eiam-integration-poc
 

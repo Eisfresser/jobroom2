@@ -14,7 +14,7 @@ task copyArtifacts {
             commandLine 'mvn', '-q', 'dependency:get', '-DrepoUrl=https://alvch.jfrog.io/alvch/libs-snapshots-local/', '-Dartifact=ch.admin.seco.jobroom:jobroom:LATEST:war', '-Dtransitive=false', "-Ddest=${buildDir}/docker/dockerfiles/jobroom/jobroom.war"
         }
         exec {
-            commandLine 'mvn', '-q', 'dependency:get', '-DrepoUrl=https://alvch.jfrog.io/alvch/libs-snapshots-local/', '-Dartifact=ch.admin.seco.jobroom:jobroom:EIAM:war', '-Dtransitive=false', "-Ddest=${buildDir}/docker/dockerfiles/jobroom-eiam/jobroom-eiam.war"
+            commandLine 'mvn', '-q', 'dependency:get', '-DrepoUrl=https://alvch.jfrog.io/alvch/libs-snapshots-local/', '-Dartifact=ch.admin.seco.jobroom:jobroom:EIAM-SNAPSHOT:war', '-Dtransitive=false', "-Ddest=${buildDir}/docker/dockerfiles/jobroom-eiam/jobroom-eiam.war"
         }
         exec {
             commandLine 'mvn', '-q', 'dependency:get', '-DrepoUrl=https://alvch.jfrog.io/alvch/libs-snapshots-local/', '-Dartifact=ch.admin.seco.service.job:jobservice:LATEST:jar', '-Dtransitive=false', "-Ddest=${buildDir}/docker/dockerfiles/jobservice/jobservice.jar"
