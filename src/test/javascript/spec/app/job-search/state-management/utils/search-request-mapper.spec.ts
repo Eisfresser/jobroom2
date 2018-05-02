@@ -25,16 +25,15 @@ describe('createJobSearchRequest', () => {
         onlineSince: 60
     };
 
-    xit('should map JobSearchFilter with default sort', () => {
+    it('should map JobSearchFilter with default sort', () => {
         // WHEN
         const jobSearchRequest: JobAdvertisementSearchRequest = createJobSearchRequest(defaultQuery, defaultFilter);
 
         // THEN
-        expect(jobSearchRequest.sort).toEqual(['_score,desc', 'registrationDate,desc']);
+        expect(jobSearchRequest.sort).toEqual(['score', 'date_desc']);
     });
 
-    // TODO: enable after implementing sort
-    xit('should map JobSearchFilter with sort by date asc', () => {
+    it('should map JobSearchFilter with sort by date asc', () => {
         // GIVEN
         const filter: JobSearchFilter = Object.assign({}, defaultFilter, { sort: Sort.DATE_ASC });
 
@@ -42,10 +41,10 @@ describe('createJobSearchRequest', () => {
         const jobSearchRequest: JobAdvertisementSearchRequest = createJobSearchRequest(defaultQuery, filter);
 
         // THEN
-        expect(jobSearchRequest.sort).toEqual(['registrationDate,asc', '_score,desc']);
+        expect(jobSearchRequest.sort).toEqual(['date_asc', 'score']);
     });
 
-    xit('should map JobSearchFilter with sort by date desc', () => {
+    it('should map JobSearchFilter with sort by date desc', () => {
         // GIVEN
         const filter: JobSearchFilter = Object.assign({}, defaultFilter, { sort: Sort.DATE_DESC });
 
@@ -53,7 +52,7 @@ describe('createJobSearchRequest', () => {
         const jobSearchRequest: JobAdvertisementSearchRequest = createJobSearchRequest(defaultQuery, filter);
 
         // THEN
-        expect(jobSearchRequest.sort).toEqual(['registrationDate,desc', '_score,desc']);
+        expect(jobSearchRequest.sort).toEqual(['date_desc', 'score']);
     });
 
     it('should map JobSearchFilter with default contract type', () => {
@@ -118,7 +117,7 @@ describe('createJobSearchRequest', () => {
         expect(jobSearchRequest.body.professionCodes[3].value).toEqual('111');
         expect(jobSearchRequest.body.professionCodes[3].type).toEqual('sbn3');
 
-        expect(jobSearchRequest.body.regionCodes).toEqual(['c4']);
+        expect(jobSearchRequest.body.communalCodes).toEqual(['c4']);
         expect(jobSearchRequest.body.cantonCodes).toEqual(['c5']);
     });
 

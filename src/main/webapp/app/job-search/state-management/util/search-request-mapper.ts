@@ -25,10 +25,8 @@ export function createJobSearchRequest(searchQuery: JobSearchQuery, searchFilter
 
     const permanent = mapContractType(searchFilter.contractType);
     const sort = mapSort(searchFilter.sort);
-    const regionCodes = [];
 
     const body = Object.assign({
-        regionCodes,
         permanent,
         workloadPercentageMin: searchFilter.workingTime[0],
         workloadPercentageMax: searchFilter.workingTime[1],
@@ -39,7 +37,7 @@ export function createJobSearchRequest(searchQuery: JobSearchQuery, searchFilter
     return {
         page,
         size: ITEMS_PER_PAGE,
-        // sort, //TODO: fix
+        sort,
         body
     };
 }
@@ -69,9 +67,9 @@ function populateBaseQuery(request, baseQuery: Array<TypeaheadMultiselectModel>)
 }
 
 function populateLocalityQuery(request, localityQuery: Array<TypeaheadMultiselectModel>) {
-    const regionCodes = localityQuery.filter(byValue(LocalityInputType.LOCALITY)).map(toCode);
+    const communalCodes = localityQuery.filter(byValue(LocalityInputType.LOCALITY)).map(toCode);
     const cantonCodes = localityQuery.filter(byValue(LocalityInputType.CANTON)).map(toCode);
-    return Object.assign({}, request, { regionCodes, cantonCodes });
+    return Object.assign({}, request, { communalCodes, cantonCodes });
 }
 
 export function createJobSearchRequestFromToolState(toolState: JobSearchToolState): JobAdvertisementSearchRequestBody {
@@ -96,11 +94,11 @@ function mapContractType(contractType: ContractType): boolean {
 function mapSort(sort: Sort): string {
     let sortArray;
     if (sort === Sort.DATE_ASC) {
-        sortArray = ['registrationDate,asc', '_score,desc'];
+        sortArray = ['date_asc', 'score'];
     } else if (sort === Sort.DATE_DESC) {
-        sortArray = ['registrationDate,desc', '_score,desc'];
+        sortArray = ['date_desc', 'score'];
     } else {
-        sortArray = ['_score,desc', 'registrationDate,desc'];
+        sortArray = ['score', 'date_desc'];
     }
 
     return sortArray;
