@@ -112,6 +112,7 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
         }
 
         this.jobPublicationForm = this.createJobPublicationForm(formModel);
+        this.configureEmployerSection(formModel);
 
         this.configureDateInput('employment.employmentStartDate.date', 'employment.employmentStartDate.immediate',
             (disabled) => {
@@ -132,7 +133,6 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
                 }
             });
         this.updateEmploymentStartDateRelatedField();
-        this.configureEmployerSection();
         this.configurePublicContactSection();
     }
 
@@ -182,18 +182,21 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
             });
     }
 
-    private configureEmployerSection() {
+    private configureEmployerSection(formModel: JobPublicationForm) {
         const companySurrogate = this.jobPublicationForm.get('company.surrogate');
         companySurrogate.valueChanges
             .takeUntil(this.unsubscribe$)
             .startWith(companySurrogate.value)
             .subscribe((value) => {
-                const employer = this.jobPublicationForm.get('employer');
                 if (value) {
-                    employer.get('name').setValidators(Validators.required);
-                    employer.get('countryCode').setValidators(Validators.required);
+                    this.jobPublicationForm.addControl('employer',
+                        this.fb.group({
+                            name: [formModel.employer.name, Validators.required],
+                            zipCode: [formModel.employer.zipCode],
+                            countryCode: [formModel.employer.countryCode, Validators.required],
+                        }));
                 } else {
-                    employer.clearValidators();
+                    this.jobPublicationForm.removeControl('employer');
                 }
             });
     }
@@ -249,11 +252,6 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
                 postboxZipCode: [formModel.company.postboxZipCode],
                 countryCode: [formModel.company.countryCode, Validators.required],
                 surrogate: [formModel.company.surrogate]
-            }),
-            employer: this.fb.group({
-                name: [formModel.employer.name],
-                zipCode: [formModel.employer.zipCode],
-                countryCode: [formModel.employer.countryCode],
             }),
             contact: this.fb.group({
                 language: [formModel.contact.language, Validators.required],

@@ -202,12 +202,14 @@ export class JobPublicationMapper {
             });
         }
 
-        jobAd.employer = {
-            name: jobPublicationForm.employer.name,
-            postalCode: jobPublicationForm.employer.zipCode.zip,
-            city: jobPublicationForm.employer.zipCode.city,
-            countryIsoCode: jobPublicationForm.employer.countryCode
-        };
+        if (jobPublicationForm.employer) {
+            jobAd.employer = {
+                name: jobPublicationForm.employer.name,
+                postalCode: jobPublicationForm.employer.zipCode.zip,
+                city: jobPublicationForm.employer.zipCode.city,
+                countryIsoCode: jobPublicationForm.employer.countryCode
+            };
+        }
 
         jobAd.contact = {
             salutation: <Salutation>Salutation[jobPublicationForm.contact.salutation],
@@ -218,13 +220,15 @@ export class JobPublicationMapper {
             languageIsoCode: jobPublicationForm.contact.language
         };
 
-        jobAd.publicContact = {
-            salutation: <Salutation>Salutation[jobPublicationForm.publicContact.salutation],
-            firstName: jobPublicationForm.publicContact.firstName,
-            lastName: jobPublicationForm.publicContact.lastName,
-            phone: jobPublicationForm.publicContact.phoneNumber,
-            email: jobPublicationForm.publicContact.email
-        };
+        if (!JobPublicationMapper.allFieldsSet(jobPublicationForm.publicContact)) {
+            jobAd.publicContact = {
+                salutation: <Salutation>Salutation[jobPublicationForm.publicContact.salutation],
+                firstName: jobPublicationForm.publicContact.firstName,
+                lastName: jobPublicationForm.publicContact.lastName,
+                phone: jobPublicationForm.publicContact.phoneNumber,
+                email: jobPublicationForm.publicContact.email
+            };
+        }
 
         jobAd.applyChannel = {
             mailAddress: jobPublicationForm.application.paperApplicationAddress,
@@ -246,6 +250,11 @@ export class JobPublicationMapper {
         };
 
         return jobAd;
+    }
+
+    private static allFieldsSet(obj: any): boolean {
+        return Object.keys(obj)
+            .some((key) => !obj[key]);
     }
 
     private static getAvamOccupationCode(jobPublicationForm: JobPublicationForm): string {
