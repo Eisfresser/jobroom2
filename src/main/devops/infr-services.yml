@@ -8,6 +8,7 @@ services:
             - GIT_URI=https://github.com/alv-ch/central-config.git
             - SPRING_CLOUD_CONFIG_PROFILE=development
             - SECURITY_USER_PASSWORD=$${jhipster.registry.password}
+            - SPRING_CONFIG_LOCATION=file:/run/secrets/
         ports:
             - 8761:8761
         networks:
