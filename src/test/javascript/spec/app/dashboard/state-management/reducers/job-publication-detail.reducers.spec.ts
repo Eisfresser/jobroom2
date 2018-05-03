@@ -13,10 +13,6 @@ import {
     LoadJobAdvertisementAction,
     LoadJobAdvertisementFailedAction
 } from '../../../../../../../main/webapp/app/dashboard/state-management/actions/job-publication-detail.actions';
-import {
-    Locale,
-    Status
-} from '../../../../../../../main/webapp/app/shared/job-publication/job-publication.model';
 import { createJobAdvertisement } from '../../../shared/job-publication/utils';
 import { JobAdvertisementStatus } from '../../../../../../../main/webapp/app/shared/job-advertisement/job-advertisement.model';
 

@@ -24,7 +24,7 @@ describe('JobPublicationCancelEffects', () => {
     let actions$: Observable<any>;
     let store: Store<JobPublicationDetailState>;
 
-    const mockJobAdvertisementService = jasmine.createSpyObj('mockJobAdvertisementService', ['findById', 'cancelJobPublication']);
+    const mockJobAdvertisementService = jasmine.createSpyObj('mockJobAdvertisementService', ['findById', 'cancel']);
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -83,7 +83,6 @@ describe('JobPublicationCancelEffects', () => {
         it('should return a new CancellationSucceededAction with the updated job publication on success', () => {
             const cancellationData: CancellationData = {
                 id: 'id',
-                accessToken: 'token',
                 cancellationReason: {
                     positionOccupied: true,
                     occupiedWith: {
@@ -99,7 +98,7 @@ describe('JobPublicationCancelEffects', () => {
             actions$ = hot('-a', { a: action });
 
             const cancellationResponse = cold('-a|', { a: 200 });
-            mockJobAdvertisementService.cancelJobPublication.and.returnValue(cancellationResponse);
+            mockJobAdvertisementService.cancel.and.returnValue(cancellationResponse);
 
             const findByIdAndTokenResponse = cold('-a|', { a: jobAdvertisement });
             mockJobAdvertisementService.findById.and.returnValue(findByIdAndTokenResponse);
@@ -113,7 +112,6 @@ describe('JobPublicationCancelEffects', () => {
         it('should return a new CancellationFailedAction on error', () => {
             const cancellationData: CancellationData = {
                 id: 'id',
-                accessToken: 'token',
                 cancellationReason: {
                     positionOccupied: true,
                     occupiedWith: {
@@ -128,7 +126,7 @@ describe('JobPublicationCancelEffects', () => {
             actions$ = hot('-a', { a: action });
 
             const response = cold('-#|', {}, 'error');
-            mockJobAdvertisementService.cancelJobPublication.and.returnValue(response);
+            mockJobAdvertisementService.cancel.and.returnValue(response);
 
             const cancellationFailedAction = new CancellationFailedAction('error');
             const expected = cold('--b', { b: cancellationFailedAction });

@@ -15,7 +15,6 @@ import {
 import { JobAdvertisement, JobDescription } from '../../shared/job-advertisement/job-advertisement.model';
 import { JobAdvertisementService } from '../../shared/job-advertisement/job-advertisement.service';
 import { JobAdvertisementUtils } from '../job-advertisement.utils';
-import { LanguageSkill } from '../../shared/job-publication/job-publication.model';
 import { JobAdvertisementCancelDialogService } from '../dialogs/job-advertisement-cancel-dialog.service';
 import { CoreState, getLanguage } from '../../shared/state-management/state/core.state';
 
@@ -25,13 +24,11 @@ import { CoreState, getLanguage } from '../../shared/state-management/state/core
     styleUrls: []
 })
 export class JobPublicationDetailComponent {
-
     jobAdvertisement$: Observable<JobAdvertisement>;
     showCancellationSuccess$: Observable<boolean>;
     showCancellationError$: Observable<boolean>;
     showCancellationLink$: Observable<boolean>;
     jobDescription$: Observable<JobDescription>;
-    languageSkills$: Observable<LanguageSkill[]>;
 
     constructor(private jobAdvertisementService: JobAdvertisementService,
                 private store: Store<JobPublicationDetailState>,
@@ -49,9 +46,6 @@ export class JobPublicationDetailComponent {
         this.jobDescription$ = coreStore.select(getLanguage)
             .combineLatest(this.jobAdvertisement$)
             .map(([lang, jobAdvertisement]: [string, JobAdvertisement]) => JobAdvertisementUtils.getJobDescription(jobAdvertisement, lang));
-
-        this.languageSkills$ = this.jobAdvertisement$
-            .map(this.mapLanguages);
     }
 
     private fixApplicationUrl(jobAdvertisement: JobAdvertisement) {
@@ -62,15 +56,6 @@ export class JobPublicationDetailComponent {
             });
         }
         return jobAdvertisement;
-    }
-
-    private mapLanguages(jobAdvertisement: JobAdvertisement): LanguageSkill[] {
-        return jobAdvertisement.jobContent.languageSkills
-            .map((languageSkill) => ({
-                code: languageSkill.languageIsoCode,
-                spokenLevel: languageSkill.spokenLevel,
-                writtenLevel: languageSkill.writtenLevel
-            }));
     }
 
     showCancellationDialog(id: string) {

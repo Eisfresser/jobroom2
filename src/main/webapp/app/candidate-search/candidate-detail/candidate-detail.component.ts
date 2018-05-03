@@ -32,6 +32,7 @@ import {
 } from '../state-management/actions/candidate-search.actions';
 import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import { TOOLTIP_AUTO_HIDE_TIMEOUT } from '../../app.constants';
+import { LanguageSkill } from '../../shared/job-advertisement/job-advertisement.model';
 
 interface EnrichedJobExperience extends JobExperience {
     occupationLabels: {
@@ -56,6 +57,7 @@ export class CandidateDetailComponent implements OnInit {
     preferredWorkRegions$: Observable<Array<string>>;
     preferredWorkCantons$: Observable<Array<string>>;
     contact$: Observable<Contact>;
+    languageSkills$: Observable<LanguageSkill[]>;
 
     @ViewChild(NgbTooltip)
     clipboardTooltip: NgbTooltip;
@@ -117,7 +119,19 @@ export class CandidateDetailComponent implements OnInit {
                 } else {
                     return candidateProfile.jobAdvisor;
                 }
-            })
+            });
+
+        this.languageSkills$ = this.candidateProfile$
+            .map(this.mapLanguages);
+    }
+
+    private mapLanguages(candidateProfile: CandidateProfile): LanguageSkill[] {
+        return candidateProfile.languages
+            .map((languageSkill) => ({
+                languageIsoCode: languageSkill.code,
+                spokenLevel: languageSkill.spokenLevel,
+                writtenLevel: languageSkill.writtenLevel
+            }));
     }
 
     private enrichWithLabels(jobExperience: JobExperience): Observable<EnrichedJobExperience> {

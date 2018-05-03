@@ -1,14 +1,13 @@
-import { CancellationReason } from '../../../../../../../main/webapp/app/shared/job-publication/job-publication.model';
-import { createJobPublicationCancellationRequest } from '../../../../../../../main/webapp/app/dashboard/state-management/util/cancellation-request.mapper';
+import { createJobAdvertisementCancellationRequest } from '../../../../../../../main/webapp/app/dashboard/state-management/util/cancellation-request.mapper';
 import { CancellationData } from '../../../../../../../main/webapp/app/dashboard/dialogs/cancellation-data';
+import { CancellationReason } from '../../../../../../../main/webapp/app/shared/job-advertisement/job-advertisement.model';
 
 describe('createJobPublicationCancelRequest', () => {
 
-    it('should return POSITION_NOT_OCCUPIED cancellationReason', () => {
+    it('should return NOT_OCCUPIED cancellationReason', () => {
         // GIVEN
         const cancellationData: CancellationData = {
             id: 'id',
-            accessToken: 'token',
             cancellationReason: {
                 positionOccupied: false,
                 occupiedWith: {
@@ -20,17 +19,16 @@ describe('createJobPublicationCancelRequest', () => {
         };
 
         // WHEN
-        const cancelRequest = createJobPublicationCancellationRequest(cancellationData);
+        const cancelRequest = createJobAdvertisementCancellationRequest(cancellationData);
 
         // THEN
-        expect(cancelRequest.cancellationReason).toEqual(CancellationReason.POSITION_NOT_OCCUPIED);
+        expect(cancelRequest.reasonCode).toEqual(CancellationReason[CancellationReason.NOT_OCCUPIED]);
     });
 
-    it('should return POSITION_OCCUPIED_SELF cancellationReason', () => {
+    it('should return OCCUPIED_SELF cancellationReason', () => {
         // GIVEN
         const cancellationData: CancellationData = {
             id: 'id',
-            accessToken: 'token',
             cancellationReason: {
                 positionOccupied: true,
                 occupiedWith: {
@@ -42,17 +40,16 @@ describe('createJobPublicationCancelRequest', () => {
         };
 
         // WHEN
-        const cancelRequest = createJobPublicationCancellationRequest(cancellationData);
+        const cancelRequest = createJobAdvertisementCancellationRequest(cancellationData);
 
         // THEN
-        expect(cancelRequest.cancellationReason).toEqual(CancellationReason.POSITION_OCCUPIED_SELF);
+        expect(cancelRequest.reasonCode).toEqual(CancellationReason[CancellationReason.OCCUPIED_SELF]);
     });
 
-    it('should return POSITION_OCCUPIED_BOTH cancellationReason', () => {
+    it('should return OCCUPIED_BOTH cancellationReason', () => {
         // GIVEN
         const cancellationData: CancellationData = {
             id: 'id',
-            accessToken: 'token',
             cancellationReason: {
                 positionOccupied: true,
                 occupiedWith: {
@@ -64,17 +61,16 @@ describe('createJobPublicationCancelRequest', () => {
         };
 
         // WHEN
-        const cancelRequest = createJobPublicationCancellationRequest(cancellationData);
+        const cancelRequest = createJobAdvertisementCancellationRequest(cancellationData);
 
         // THEN
-        expect(cancelRequest.cancellationReason).toEqual(CancellationReason.POSITION_OCCUPIED_BOTH);
+        expect(cancelRequest.reasonCode).toEqual(CancellationReason[CancellationReason.OCCUPIED_BOTH]);
     });
 
-    it('should return POSITION_OCCUPIED_JOB_CENTER cancellationReason', () => {
+    it('should return OCCUPIED_JOB_CENTER cancellationReason', () => {
         // GIVEN
         const cancellationData: CancellationData = {
             id: 'id',
-            accessToken: 'token',
             cancellationReason: {
                 positionOccupied: true,
                 occupiedWith: {
@@ -86,17 +82,16 @@ describe('createJobPublicationCancelRequest', () => {
         };
 
         // WHEN
-        const cancelRequest = createJobPublicationCancellationRequest(cancellationData);
+        const cancelRequest = createJobAdvertisementCancellationRequest(cancellationData);
 
         // THEN
-        expect(cancelRequest.cancellationReason).toEqual(CancellationReason.POSITION_OCCUPIED_JOB_CENTER);
+        expect(cancelRequest.reasonCode).toEqual(CancellationReason[CancellationReason.OCCUPIED_JOB_CENTER]);
     });
 
-    it('should return POSITION_OCCUPIED_PRIVATE_AGENCY cancellationReason as default', () => {
+    it('should return OCCUPIED_PRIVATE_AGENCY cancellationReason as default', () => {
         // GIVEN
         const cancellationData: CancellationData = {
             id: 'id',
-            accessToken: 'token',
             cancellationReason: {
                 positionOccupied: true,
                 occupiedWith: {
@@ -108,9 +103,9 @@ describe('createJobPublicationCancelRequest', () => {
         };
 
         // WHEN
-        const cancelRequest = createJobPublicationCancellationRequest(cancellationData);
+        const cancelRequest = createJobAdvertisementCancellationRequest(cancellationData);
 
         // THEN
-        expect(cancelRequest.cancellationReason).toEqual(CancellationReason.POSITION_OCCUPIED_PRIVATE_AGENCY);
+        expect(cancelRequest.reasonCode).toEqual(CancellationReason[CancellationReason.OCCUPIED_PRIVATE_AGENCY]);
     });
 });

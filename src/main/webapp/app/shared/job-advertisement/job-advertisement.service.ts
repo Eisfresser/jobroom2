@@ -4,7 +4,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { CreateJobAdvertisement, JobAdvertisement, JobAdvertisementStatus } from './job-advertisement.model';
 import { createPageableURLSearchParams } from '../model/request-util';
-import { JobCancelRequest } from '../job-publication/job-publication-cancel-request';
+import { JobAdvertisementCancelRequest } from './job-advertisement-cancel-request';
 import { JobAdvertisementSearchRequest, JobAdvertisementSearchRequestBody } from './job-advertisement-search-request';
 import { JobPublicationSearchRequest } from '../job-publication/job-publication-search-request';
 
@@ -54,9 +54,10 @@ export class JobAdvertisementService {
         return this.http.get<JobAdvertisement>(`${this.resourceUrl}/${externalId}`);
     }
 
-    // TODO: update
-    cancelJobPublication(jobCancelRequest: JobCancelRequest): Observable<number> {
-        return this.http.patch(`${this.resourceUrl}/${jobCancelRequest.id}/cancel`, {}, { observe: 'response' })
+    cancel(jobAdCancelRequest: JobAdvertisementCancelRequest): Observable<number> {
+        const { reasonCode } = jobAdCancelRequest;
+        return this.http.patch(`${this.resourceUrl}/${jobAdCancelRequest.id}/cancel`,
+            { reasonCode }, { observe: 'response' })
             .map((result) => result.status);
     }
 

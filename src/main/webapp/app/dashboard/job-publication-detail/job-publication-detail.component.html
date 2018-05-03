@@ -98,7 +98,7 @@
             <div class="job-detail__content" [innerHtml]="jobDescription.description | safeHtml"></div>
 
             <!-- Languages -->
-            <jr2-languages *ngIf="languageSkills$ | async as languageSkills" [languages]="languageSkills"></jr2-languages>
+            <jr2-languages [languages]="jobAdvertisement.jobContent.languageSkills"></jr2-languages>
 
         </div>
 

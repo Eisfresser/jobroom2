@@ -1,6 +1,5 @@
 export interface CancellationData {
     id: string;
-    accessToken: string;
     cancellationReason: {
         positionOccupied: boolean;
         occupiedWith: {

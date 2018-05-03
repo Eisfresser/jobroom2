@@ -94,7 +94,7 @@
 
 
             <!-- Languages -->
-            <jr2-languages [languages]="candidateProfile.languages"
+            <jr2-languages [languages]="languageSkills$ | async"
                            [containerClass]="'detail__content'"
                            [titleClass]="'detail__content__title'"></jr2-languages>
 

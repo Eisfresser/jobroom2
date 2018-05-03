@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { LanguageSkill } from '../../job-publication/job-publication.model';
+import { LanguageSkill } from '../../job-advertisement/job-advertisement.model';
 
 @Component({
     selector: 'jr2-languages',
@@ -9,7 +9,7 @@ import { LanguageSkill } from '../../job-publication/job-publication.model';
 
             <div [class]="itemClass" *ngFor="let language of languages">
                 <strong>
-                    {{ 'global.reference.language.' + language.code | lowercase | translate }}
+                    {{ 'global.reference.language.' + language.languageIsoCode | lowercase | translate }}
                 </strong>
                 <span>
                     <ng-container *ngIf="language.spokenLevel">
@@ -30,7 +30,7 @@ export class LanguageComponent implements OnInit {
 
     private static filterLanguagesWithInvalidCodes(languages: LanguageSkill[]): LanguageSkill[] {
         return languages
-            .filter((language) => language.code !== '98' && language.code !== '99');
+            .filter((language) => language.languageIsoCode !== '98' && language.languageIsoCode !== '99');
     }
 
     constructor() {

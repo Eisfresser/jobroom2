@@ -28,7 +28,6 @@ const jobCancelFormValidator: ValidatorFn = (jobCancelForm: FormGroup) => {
 export class JobPublicationCancelDialogComponent implements OnInit, OnDestroy {
 
     @Input() id: string;
-    @Input() accessToken: string;
     @Output() submitCancellation = new EventEmitter<CancellationData>();
 
     jobCancelForm: FormGroup;
@@ -69,7 +68,6 @@ export class JobPublicationCancelDialogComponent implements OnInit, OnDestroy {
     cancelJobPublication(formValue: any) {
         const cancellationData = Object.assign({}, {
             id: this.id,
-            accessToken: this.accessToken,
             cancellationReason: formValue
         });
         this.submitCancellation.emit(cancellationData);

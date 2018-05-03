@@ -19,19 +19,19 @@ import {
     PEADashboardState
 } from '../state/pea-dashboard.state';
 import { JobPublicationSearchRequest } from '../../../shared/job-publication/job-publication-search-request';
-import { createJobPublicationCancellationRequest } from '../util/cancellation-request.mapper';
-import { JobCancelRequest } from '../../../shared/job-publication/job-publication-cancel-request';
+import { createJobAdvertisementCancellationRequest } from '../util/cancellation-request.mapper';
 import { JobAdvertisementService } from '../../../shared/job-advertisement/job-advertisement.service';
 import { JobAdvertisement } from '../../../shared/job-advertisement/job-advertisement.model';
+import { JobAdvertisementCancelRequest } from '../../../shared/job-advertisement/job-advertisement-cancel-request';
 
 @Injectable()
 export class PEADashboardEffects {
     @Effect()
     cancelJobAdvertisement$: Observable<Action> = this.actions$
         .ofType(SUBMIT_CANCELLATION)
-        .map((action: SubmitCancellationAction) => createJobPublicationCancellationRequest(action.payload))
-        .switchMap((jobCancelRequest: JobCancelRequest) =>
-            this.jobAdvertisementService.cancelJobPublication(jobCancelRequest)
+        .map((action: SubmitCancellationAction) => createJobAdvertisementCancellationRequest(action.payload))
+        .switchMap((jobCancelRequest: JobAdvertisementCancelRequest) =>
+            this.jobAdvertisementService.cancel(jobCancelRequest)
                 .flatMap((code) => this.jobAdvertisementService.findById(jobCancelRequest.id))
                 .map((jobAdvertisement: JobAdvertisement) => new CancellationSucceededAction(jobAdvertisement))
                 .catch(() => Observable.of(new JobAdvertisementsLoadErrorAction()))

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Action } from '@ngrx/store';
 import { Actions, Effect } from '@ngrx/effects';
 import { Observable } from 'rxjs/Observable';
-import { createJobPublicationCancellationRequest } from '../util/cancellation-request.mapper';
+import { createJobAdvertisementCancellationRequest } from '../util/cancellation-request.mapper';
 import {
     CancellationFailedAction,
     CancellationSucceededAction,
@@ -13,9 +13,9 @@ import {
     SUBMIT_CANCELLATION,
     SubmitCancellationAction
 } from '../actions/job-publication-detail.actions';
-import { JobCancelRequest } from '../../../shared/job-publication/job-publication-cancel-request';
 import { JobAdvertisementService } from '../../../shared/job-advertisement/job-advertisement.service';
 import { JobAdvertisement } from '../../../shared/job-advertisement/job-advertisement.model';
+import { JobAdvertisementCancelRequest } from '../../../shared/job-advertisement/job-advertisement-cancel-request';
 
 @Injectable()
 export class JobPublicationDetailEffects {
@@ -32,9 +32,9 @@ export class JobPublicationDetailEffects {
     @Effect()
     cancelJobAdvertisement$: Observable<Action> = this.actions$
         .ofType(SUBMIT_CANCELLATION)
-        .map((action: SubmitCancellationAction) => createJobPublicationCancellationRequest(action.payload))
-        .switchMap((jobCancelRequest: JobCancelRequest) =>
-            this.jobAdvertisementService.cancelJobPublication(jobCancelRequest)
+        .map((action: SubmitCancellationAction) => createJobAdvertisementCancellationRequest(action.payload))
+        .switchMap((jobCancelRequest: JobAdvertisementCancelRequest) =>
+            this.jobAdvertisementService.cancel(jobCancelRequest)
                 .flatMap((code) => this.jobAdvertisementService.findById(jobCancelRequest.id))
                 .map((jobAdvertisement: JobAdvertisement) => new CancellationSucceededAction(jobAdvertisement))
                 .catch((error) => Observable.of(new CancellationFailedAction(error)))

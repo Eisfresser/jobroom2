@@ -13,6 +13,14 @@ export enum JobAdvertisementStatus {
     ARCHIVE
 }
 
+export enum CancellationReason {
+    OCCUPIED_SELF,
+    OCCUPIED_JOB_CENTER,
+    OCCUPIED_PRIVATE_AGENCY,
+    OCCUPIED_BOTH,
+    NOT_OCCUPIED
+}
+
 export enum SourceSystem {
     JOBROOM,
     API,
