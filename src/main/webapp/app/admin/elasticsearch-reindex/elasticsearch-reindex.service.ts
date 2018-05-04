@@ -6,10 +6,10 @@ import { HttpClient } from '@angular/common/http';
 export class ElasticsearchReindexService {
 
     private readonly documentUrls = {
-        'users': '',
-        'jobs': 'jobservice/',
-        'candidates': 'candidateservice/',
-        'reference-data': 'referenceservice/',
+        'users': 'api/elasticsearch/index',
+        'jobs': 'jobadservice/api/jobAdvertisements/elasticsearch/index',
+        'candidates': 'candidateservice/api/elasticsearch/index',
+        'reference-data': 'referenceservice/api/elasticsearch/index',
     };
 
     constructor(
@@ -24,7 +24,7 @@ export class ElasticsearchReindexService {
         }
 
         return Observable.from(urls)
-            .map((url) => this.http.post(`${url}api/elasticsearch/index`, {}))
+            .map((url) => this.http.post(url, {}))
             .zipAll();
     }
 }
