@@ -22,7 +22,8 @@ describe('createJobSearchRequest', () => {
         contractType: ContractType.ALL,
         workingTime: [0, 100],
         sort: Sort.RELEVANCE_DESC,
-        onlineSince: 60
+        onlineSince: 60,
+        displayRestricted: false
     };
 
     it('should map JobSearchFilter with default sort', () => {

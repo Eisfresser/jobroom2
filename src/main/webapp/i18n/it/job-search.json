@@ -34,12 +34,16 @@
             "title": "Filtra risultati della ricerca",
             "working-time": {
                 "label": "Grado di occupazione"
+            },
+            "restricted-jobs": {
+                "label": "Nur meldepflichtige Stellen anzeigen"
             }
         },
         "job-search-list-item": {
             "badge": {
                 "permanent": "A tempo indeterminato",
-                "temporary": "A tempo determinato"
+                "temporary": "A tempo determinato",
+                "restricted": "meldepflichtig"
             }
         },
         "job-search-list": {

@@ -118,6 +118,7 @@
                 <span *ngIf="!job.jobContent.employment.permanent && !!job.jobContent.employment.endDate" class="badge badge-yellow" translate="job-detail.endDate"
                       [translateParams]="{date: job.jobContent.employment.endDate | jr2Date}"></span>
                 <span *ngIf="!job.jobContent.employment.permanent && !job.jobContent.employment.endDate" class="badge badge-yellow">{{'job-search.job-search-list-item.badge.temporary' | translate}}</span>
+                <span *ngIf="job.reportingObligation" class="badge badge-danger">{{'job-search.job-search-list-item.badge.restricted' | translate}}</span>
             </div>
 
             <!-- job description -->

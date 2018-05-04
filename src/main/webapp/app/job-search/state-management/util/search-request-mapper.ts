@@ -18,7 +18,7 @@ const byValue = (type: string) => (value: TypeaheadMultiselectModel) => value.ty
 
 export function createJobSearchRequest(searchQuery: JobSearchQuery, searchFilter: JobSearchFilter, page = 0): JobAdvertisementSearchRequest {
     const { baseQuery, localityQuery } = searchQuery;
-    const { companyName, onlineSince } = searchFilter;
+    const { companyName, onlineSince, displayRestricted } = searchFilter;
 
     let request = populateBaseQuery({}, baseQuery);
     request = populateLocalityQuery(request, localityQuery);
@@ -32,6 +32,7 @@ export function createJobSearchRequest(searchQuery: JobSearchQuery, searchFilter
         workloadPercentageMax: searchFilter.workingTime[1],
         companyName,
         onlineSince,
+        displayRestricted
     }, request);
 
     return {

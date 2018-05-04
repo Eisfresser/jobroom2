@@ -761,8 +761,10 @@ job-search,job-search.filter.sort.option.DATE_DESC,Sortiere nach Datum absteigen
 job-search,job-search.filter.sort.option.RELEVANCE_DESC,Sortiere nach Relevanz,Sort by relevance,Tri selon pertinence,Classifica per pertinenza
 job-search,job-search.filter.title,Suchergebnisse filtern,Filter search result,Filtrer les résultats,Filtra risultati della ricerca
 job-search,job-search.filter.working-time.label,Arbeitspensum,Workload,Taux d'occupation,Grado di occupazione
+job-search,job-search.filter.restricted-jobs.label,Nur meldepflichtige Stellen anzeigen,Nur meldepflichtige Stellen anzeigen,Nur meldepflichtige Stellen anzeigen,Nur meldepflichtige Stellen anzeigen
 job-search,job-search.job-search-list-item.badge.permanent,Unbefristet,Permanent,Indéterminé,A tempo indeterminato
 job-search,job-search.job-search-list-item.badge.temporary,Befristet,Temporary,Durée limitée,A tempo determinato
+job-search,job-search.job-search-list-item.badge.restricted,meldepflichtig,meldepflichtig,meldepflichtig,meldepflichtig
 job-search,job-search.job-search-list.error-message,Suche nach Stellen fehlgeschlagen,Failed to load job result list!,Les résultats de la recherche d'emplois n'ont pas pu être chargés,Impossibile caricare l'ultima lista di posti!
 job-search,job-search.job-search-list.title.many,{{count}} Stellen,{{count}} jobs,{{count}} emplois,{{count}} posti
 job-search,job-search.job-search-list.title.many.with-locality,{{count}} Stellen in {{locality}},{{count}} jobs in {{locality}},{{count}} emplois à {{locality}},{{count}} posti in {{locality}}

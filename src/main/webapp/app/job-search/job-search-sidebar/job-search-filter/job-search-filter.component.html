@@ -11,6 +11,13 @@
             </select>
         </div>
 
+        <div *jhiHasAnyAuthority="['ROLE_JOBSEEKER_CLIENT']" class="form-check">
+            <input id="restrictedJobsFilter" formControlName="displayRestricted" type="checkbox" class="form-check-input ml-0">
+            <label for="restrictedJobsFilter" class="form-check-label">
+                {{ 'job-search.filter.restricted-jobs.label' | translate }}
+            </label>
+        </div>
+
         <div class="form-group">
             <label for="companyName" class="small">{{'job-search.filter.company-name.label' | translate}}</label>
             <input [formControl]="companyName" class="form-control form-control-sm" id="companyName"

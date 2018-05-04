@@ -12,6 +12,7 @@
         <span class="badge badge-gray">{{[job.jobContent.employment.workloadPercentageMin, job.jobContent.employment.workloadPercentageMax] | workingTimeRange}}</span>
         <span class="badge badge-green" *ngIf="job.jobContent.employment.permanent">{{'job-search.job-search-list-item.badge.permanent' | translate}}</span>
         <span class="badge badge-yellow" *ngIf="!job.jobContent.employment.permanent">{{'job-search.job-search-list-item.badge.temporary' | translate}}</span>
+        <span class="badge badge-danger" *ngIf="job.reportingObligation">{{'job-search.job-search-list-item.badge.restricted' | translate}}</span>
     </div>
 
     <div class="line-clamp" [innerHtml]="jobDescription.description | safeHtml"></div>

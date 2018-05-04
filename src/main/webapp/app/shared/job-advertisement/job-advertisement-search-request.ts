@@ -15,6 +15,7 @@ export interface JobAdvertisementSearchRequestBody {
     permanent?: boolean;
     companyName?: string;
     onlineSince: number;
+    displayRestricted: boolean;
 }
 
 export interface JobAdvertisementSearchRequest {

@@ -63,7 +63,8 @@ describe('jobSearchReducer', () => {
                     contractType: ContractType.PERMANENT,
                     workingTime: [0, 80],
                     sort: Sort.DATE_ASC,
-                    onlineSince: ONLINE_SINCE_DEFAULT_VALUE - 1
+                    onlineSince: ONLINE_SINCE_DEFAULT_VALUE - 1,
+                    displayRestricted: false
                 },
                 totalJobCount: 0,
                 page: 0,
@@ -98,7 +99,8 @@ describe('jobSearchReducer', () => {
             contractType: ContractType.PERMANENT,
             workingTime: [80, 100],
             sort: Sort.DATE_ASC,
-            onlineSince: 60
+            onlineSince: 60,
+            displayRestricted: false
         };
         const action = new actions.FilterChangedAction(searchFilter);
 
