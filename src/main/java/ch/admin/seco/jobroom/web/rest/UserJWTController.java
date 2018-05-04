@@ -1,5 +1,13 @@
 package ch.admin.seco.jobroom.web.rest;
 
+import static ch.admin.seco.jobroom.security.jwt.JWTFilter.TOKEN_PREFIX;
+import static org.apache.commons.lang.StringUtils.EMPTY;
+import static org.springframework.http.HttpStatus.UNAUTHORIZED;
+import static org.springframework.http.ResponseEntity.ok;
+import static org.springframework.http.ResponseEntity.status;
+
+import java.util.Optional;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -23,7 +31,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import ch.admin.seco.jobroom.security.jwt.JWTConfigurer;
+import ch.admin.seco.jobroom.repository.UserRepository;
+import ch.admin.seco.jobroom.security.jwt.JWTFilter;
 import ch.admin.seco.jobroom.security.jwt.TokenProvider;
 import ch.admin.seco.jobroom.web.rest.vm.LoginVM;
 
@@ -38,41 +47,61 @@ public class UserJWTController {
 
     private final AuthenticationManager authenticationManager;
 
-    public UserJWTController(TokenProvider tokenProvider, AuthenticationManager authenticationManager) {
+    private final UserRepository userRepository;
+
+    public UserJWTController(TokenProvider tokenProvider, AuthenticationManager authenticationManager, UserRepository userRepository) {
         this.tokenProvider = tokenProvider;
         this.authenticationManager = authenticationManager;
+        this.userRepository = userRepository;
     }
 
     @PostMapping("/authenticate")
     @Timed
     public ResponseEntity authorize(@Valid @RequestBody LoginVM loginVM, HttpServletRequest request, HttpServletResponse response) {
+        Authentication authentication = authenticateWithUsernamePasswordAndRequest(loginVM.getUsername(), loginVM.getPassword(), request);
+        String token = createJwtToken(loginVM, authentication);
+        HttpHeaders httpHeaders = createHttpHeaders(token);
 
-        UsernamePasswordAuthenticationToken authenticationToken =
-            new UsernamePasswordAuthenticationToken(loginVM.getUsername(), loginVM.getPassword());
-        authenticationToken.setDetails(new WebAuthenticationDetails(request));
-
-        Authentication authentication = this.authenticationManager.authenticate(authenticationToken);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        boolean rememberMe = (loginVM.isRememberMe() == null) ? false : loginVM.isRememberMe();
-        String jwt = tokenProvider.createToken(authentication, rememberMe);
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add(JWTConfigurer.AUTHORIZATION_HEADER, "Bearer " + jwt);
-        return new ResponseEntity<>(new JWTToken(jwt), httpHeaders, HttpStatus.OK);
+        return new ResponseEntity<>(new JWTToken(token), httpHeaders, HttpStatus.OK);
     }
 
     @PostMapping(value = "/authenticate", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     @Timed
     public ResponseEntity authorizeOauth(@RequestParam String username, @RequestParam String password,
-        HttpServletRequest request) {
+                                         HttpServletRequest request) {
+        return userRepository.findOneByLogin(username)
+                             .map(user -> {
+                                 Authentication authentication = authenticateWithUsernamePasswordAndRequest(username, password, request);
+                                 DefaultOAuth2AccessToken accessToken = tokenProvider.createAccessToken(authentication, user);
+                                 return ok(accessToken);
+                             })
+                             .orElseGet(status(UNAUTHORIZED)::build);
+    }
 
-        UsernamePasswordAuthenticationToken authenticationToken =
-            new UsernamePasswordAuthenticationToken(username, password);
-        authenticationToken.setDetails(new WebAuthenticationDetails(request));
+    private Authentication authenticateWithUsernamePasswordAndRequest(String username, String password, HttpServletRequest request) {
+        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, password);
+        token.setDetails(new WebAuthenticationDetails(request));
+        Authentication authentication = this.authenticationManager.authenticate(token);
+        SecurityContextHolder.getContext()
+                             .setAuthentication(authentication);
 
-        Authentication authentication = this.authenticationManager.authenticate(authenticationToken);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        DefaultOAuth2AccessToken oAuth2AccessToken = tokenProvider.createAccessToken(authentication);
-        return ResponseEntity.ok(oAuth2AccessToken);
+        return authentication;
+    }
+
+    private HttpHeaders createHttpHeaders(String token) {
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add(JWTFilter.AUTHORIZATION_HEADER, TOKEN_PREFIX + token);
+
+        return httpHeaders;
+    }
+
+    private String createJwtToken(@Valid @RequestBody LoginVM loginVM, Authentication authentication) {
+        final Boolean rememberMe = Optional.ofNullable(loginVM.isRememberMe())
+                                           .orElse(false);
+
+        return userRepository.findOneByLogin(loginVM.getUsername())
+                             .map(user -> tokenProvider.createToken(authentication, rememberMe, user))
+                             .orElse(EMPTY);
     }
 
     /**
@@ -94,5 +123,7 @@ public class UserJWTController {
         void setIdToken(String idToken) {
             this.idToken = idToken;
         }
+
+
     }
 }

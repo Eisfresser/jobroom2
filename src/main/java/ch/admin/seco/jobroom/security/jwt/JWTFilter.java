@@ -1,16 +1,14 @@
 package ch.admin.seco.jobroom.security.jwt;
 
 import java.io.IOException;
+import java.util.function.Consumer;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.util.StringUtils;
 import org.springframework.web.filter.GenericFilterBean;
 
 /**
@@ -19,29 +17,28 @@ import org.springframework.web.filter.GenericFilterBean;
  */
 public class JWTFilter extends GenericFilterBean {
 
-    private TokenProvider tokenProvider;
+    public static final String TOKEN_PREFIX = "Bearer ";
 
-    public JWTFilter(TokenProvider tokenProvider) {
-        this.tokenProvider = tokenProvider;
+    public static final String AUTHORIZATION_HEADER = "Authorization";
+
+    private final TokenToAuthenticationConverter tokenToAuthenticationConverter;
+
+    private final TokenResolver tokenResolver;
+
+    JWTFilter(TokenToAuthenticationConverter converter, TokenResolver resolver) {
+        this.tokenToAuthenticationConverter = converter;
+        this.tokenResolver = resolver;
     }
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
         throws IOException, ServletException {
-        HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
-        String jwt = resolveToken(httpServletRequest);
-        if (StringUtils.hasText(jwt) && this.tokenProvider.validateToken(jwt)) {
-            Authentication authentication = this.tokenProvider.getAuthentication(jwt);
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-        }
+        tokenResolver.resolveToken(servletRequest).ifPresent(authenticateWithToken());
         filterChain.doFilter(servletRequest, servletResponse);
     }
 
-    private String resolveToken(HttpServletRequest request) {
-        String bearerToken = request.getHeader(JWTConfigurer.AUTHORIZATION_HEADER);
-        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
-            return bearerToken.substring(7, bearerToken.length());
-        }
-        return null;
+    private Consumer<String> authenticateWithToken() {
+        return token -> SecurityContextHolder.getContext()
+                                             .setAuthentication(this.tokenToAuthenticationConverter.convertTokenToAuthentication(token));
     }
 }

@@ -1,12 +1,17 @@
 package ch.admin.seco.jobroom.security.jwt;
 
+import static ch.admin.seco.jobroom.security.jwt.TestJHipsterPropertiesFactory.TOKEN_VALID_60_SECONDS;
+import static ch.admin.seco.jobroom.security.jwt.TestJHipsterPropertiesFactory.jHipsterProperties;
+import static ch.admin.seco.jobroom.security.jwt.TestSecretKey.e5c9ee274ae87bc031adda32e27fa98b9290da83;
+import static ch.admin.seco.jobroom.security.jwt.TestTokenFactory.EMPTY_TOKEN;
+import static ch.admin.seco.jobroom.security.jwt.TestTokenFactory.UNSUPPORTED_TOKEN;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
-import io.github.jhipster.config.JHipsterProperties;
+import ch.admin.seco.jobroom.domain.User;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.junit.Before;
@@ -23,60 +28,55 @@ import ch.admin.seco.jobroom.security.AuthoritiesConstants;
 
 public class TokenProviderTest {
 
-    private final String secretKey = "e5c9ee274ae87bc031adda32e27fa98b9290da83";
-    private final long ONE_MINUTE = 60000;
-    private JHipsterProperties jHipsterProperties;
     private TokenProvider tokenProvider;
+    private TokenValidator tokenValidator;
+
+    private User user;
 
     @Before
     public void setup() {
-        jHipsterProperties = Mockito.mock(JHipsterProperties.class);
-        tokenProvider = new TokenProvider(jHipsterProperties);
-        ReflectionTestUtils.setField(tokenProvider, "secretKey", secretKey);
-        ReflectionTestUtils.setField(tokenProvider, "tokenValidityInMilliseconds", ONE_MINUTE);
-    }
-
-    @Test
-    public void testReturnFalseWhenJWThasInvalidSignature() {
-        boolean isTokenValid = tokenProvider.validateToken(createTokenWithDifferentSignature());
-
-        assertThat(isTokenValid).isEqualTo(false);
+        user = Mockito.mock(User.class);
+        tokenProvider = new TokenProvider(jHipsterProperties());
+        tokenValidator = new TokenValidator(e5c9ee274ae87bc031adda32e27fa98b9290da83.name());
     }
 
     @Test
     public void testReturnFalseWhenJWTisMalformed() {
         Authentication authentication = createAuthentication();
-        String token = tokenProvider.createToken(authentication, false);
+
+        String token = tokenProvider.createToken(authentication, false, user);
         String invalidToken = token.substring(1);
-        boolean isTokenValid = tokenProvider.validateToken(invalidToken);
+        boolean isTokenValid = tokenValidator.validateToken(invalidToken);
 
         assertThat(isTokenValid).isEqualTo(false);
     }
 
     @Test
     public void testReturnFalseWhenJWTisExpired() {
-        ReflectionTestUtils.setField(tokenProvider, "tokenValidityInMilliseconds", -ONE_MINUTE);
+        ReflectionTestUtils.setField(tokenProvider, "tokenValidityInMilliseconds", -TOKEN_VALID_60_SECONDS);
 
         Authentication authentication = createAuthentication();
-        String token = tokenProvider.createToken(authentication, false);
+        String token = tokenProvider.createToken(authentication, false, user);
 
-        boolean isTokenValid = tokenProvider.validateToken(token);
+        boolean isTokenValid = tokenValidator.validateToken(token);
 
         assertThat(isTokenValid).isEqualTo(false);
     }
 
     @Test
     public void testReturnFalseWhenJWTisUnsupported() {
-        String unsupportedToken = createUnsupportedToken();
+        String unsupportedToken = UNSUPPORTED_TOKEN;
 
-        boolean isTokenValid = tokenProvider.validateToken(unsupportedToken);
+        boolean isTokenValid = tokenValidator.validateToken(unsupportedToken);
 
         assertThat(isTokenValid).isEqualTo(false);
     }
 
     @Test
     public void testReturnFalseWhenJWTisInvalid() {
-        boolean isTokenValid = tokenProvider.validateToken("");
+        final String emptyToken = EMPTY_TOKEN;
+
+        boolean isTokenValid = tokenValidator.validateToken(emptyToken);
 
         assertThat(isTokenValid).isEqualTo(false);
     }
@@ -86,19 +86,5 @@ public class TokenProviderTest {
         authorities.add(new SimpleGrantedAuthority(AuthoritiesConstants.ANONYMOUS));
         return new UsernamePasswordAuthenticationToken("anonymous", "anonymous", authorities);
     }
-
-    private String createUnsupportedToken() {
-        return Jwts.builder()
-            .setPayload("payload")
-            .signWith(SignatureAlgorithm.HS512, secretKey)
-            .compact();
-    }
-
-    private String createTokenWithDifferentSignature() {
-        return Jwts.builder()
-            .setSubject("anonymous")
-            .signWith(SignatureAlgorithm.HS512, "e5c9ee274ae87bc031adda32e27fa98b9290da90")
-            .setExpiration(new Date(new Date().getTime() + ONE_MINUTE))
-            .compact();
-    }
 }
+
