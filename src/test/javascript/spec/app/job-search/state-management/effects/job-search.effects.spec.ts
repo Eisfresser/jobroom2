@@ -29,6 +29,8 @@ import {
 import { HttpHeaders } from '@angular/common/http';
 import { createJobAdvertisement } from '../../../shared/job-publication/utils';
 import { JobAdvertisementService } from '../../../../../../../main/webapp/app/shared/job-advertisement/job-advertisement.service';
+import { UserLoginAction } from '../../../../../../../main/webapp/app/shared/state-management/actions/core.actions';
+import { User } from '../../../../../../../main/webapp/app/shared';
 
 describe('JobSearchEffects', () => {
     let effects: JobSearchEffects;
@@ -96,6 +98,47 @@ describe('JobSearchEffects', () => {
             const expected = cold('-');
 
             expect(effects.initJobSearch$).toBeObservable(expected);
+        });
+    });
+
+    describe('reloadJobList', () => {
+        it('should return new JobListLoadedAction when user logs in', () => {
+            const action = new UserLoginAction(new User('1', 'user'));
+            const jobList = [
+                createJobAdvertisement('0')
+            ];
+            const responseWrapper = new ResponseWrapper(new HttpHeaders({ 'X-Total-Count': '100' }), jobList, 200);
+
+            actions$ = hot('-a', { a: action });
+            const response = cold('-a|', { a: responseWrapper });
+            mockJobAdvertisementService.searchJobAds.and.returnValue(response);
+
+            const jobListLoadedAction = new actions.JobListLoadedAction({
+                jobList,
+                totalCount: 100,
+                page: 0
+            });
+            const expected = cold('--b', { b: jobListLoadedAction });
+
+            expect(effects.reloadJobList$).toBeObservable(expected);
+        });
+
+        it('should not return anything when user logs out', () => {
+            const action = new UserLoginAction(null);
+            const loadJobListAction = new actions.JobListLoadedAction({
+                jobList: [
+                    createJobAdvertisement('0')
+                ],
+                totalCount: 100,
+                page: 1
+            });
+            store.dispatch(loadJobListAction);
+
+            actions$ = hot('-a', { a: action });
+
+            const expected = cold('-');
+
+            expect(effects.reloadJobList$).toBeObservable(expected);
         });
     });
 

@@ -38,6 +38,7 @@ import {
 import { JobAdvertisementService } from '../../../shared/job-advertisement/job-advertisement.service';
 import { JobAdvertisement } from '../../../shared/job-advertisement/job-advertisement.model';
 import { JobAdvertisementSearchRequest } from '../../../shared/job-advertisement/job-advertisement-search-request';
+import { USER_LOGIN, UserLoginAction } from '../../../shared/state-management/actions/core.actions';
 
 export const JOB_SEARCH_DEBOUNCE = new InjectionToken<number>('JOB_SEARCH_DEBOUNCE');
 export const JOB_SEARCH_SCHEDULER = new InjectionToken<Scheduler>('JOB_SEARCH_SCHEDULER');
@@ -58,11 +59,14 @@ export class JobSearchEffects {
         .take(1)
         .withLatestFrom(this.hasPreviousSearchTrigger(), this.store.select(getJobSearchState))
         .filter(([action, hasPrevTrigger, state]) => !hasPrevTrigger)
-        .switchMap(([action, hasPrevTrigger, state]) =>
-            this.jobSearchService.searchJobAds(toInitialSearchRequest(state))
-                .map(toJobListLoadedAction)
-                .catch((err: any) => Observable.of(new ShowJobListErrorAction(err)))
-        );
+        .switchMap(([action, hasPrevTrigger, state]) => this.loadInitialJobs(state));
+
+    @Effect()
+    reloadJobList$: Observable<Action> = this.actions$
+        .ofType(USER_LOGIN)
+        .filter((action: UserLoginAction) => !!action.payload)
+        .withLatestFrom(this.store.select(getJobSearchState))
+        .switchMap(([action, state]) => this.loadInitialJobs(state));
 
     @Effect()
     loadJobList$: Observable<Action> = this.actions$
@@ -134,6 +138,12 @@ export class JobSearchEffects {
             .take(1)
             .map((action) => true)
             .startWith(false);
+    }
+
+    private loadInitialJobs(state: JobSearchState): Observable<JobListLoadedAction | ShowJobListErrorAction> {
+        return this.jobSearchService.searchJobAds(toInitialSearchRequest(state))
+            .map(toJobListLoadedAction)
+            .catch((err: any) => Observable.of(new ShowJobListErrorAction(err)));
     }
 }
 
