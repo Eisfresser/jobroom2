@@ -230,13 +230,15 @@ export class JobPublicationMapper {
             };
         }
 
-        jobAd.applyChannel = {
-            mailAddress: jobPublicationForm.application.paperApplicationAddress,
-            emailAddress: jobPublicationForm.application.electronicApplicationEmail,
-            phoneNumber: jobPublicationForm.application.phoneNumber,
-            formUrl: jobPublicationForm.application.electronicApplicationUrl,
-            additionalInfo: jobPublicationForm.application.additionalInfo
-        };
+        if (JobPublicationMapper.anyFieldSet(jobPublicationForm.application)) {
+            jobAd.applyChannel = {
+                mailAddress: jobPublicationForm.application.paperApplicationAddress,
+                emailAddress: jobPublicationForm.application.electronicApplicationEmail,
+                phoneNumber: jobPublicationForm.application.phoneNumber,
+                formUrl: jobPublicationForm.application.electronicApplicationUrl,
+                additionalInfo: jobPublicationForm.application.additionalInfo
+            };
+        }
 
         jobAd.publication = {
             startDate: moment().format('YYYY-MM-DD'),
@@ -255,6 +257,11 @@ export class JobPublicationMapper {
     private static allFieldsSet(obj: any): boolean {
         return Object.keys(obj)
             .some((key) => !obj[key]);
+    }
+
+    private static anyFieldSet(obj: any): boolean {
+        return Object.keys(obj)
+            .some((key) => !!obj[key]);
     }
 
     private static getAvamOccupationCode(jobPublicationForm: JobPublicationForm): string {

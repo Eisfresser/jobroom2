@@ -16,7 +16,7 @@ import { Subject } from 'rxjs/Subject';
 import {
     DateUtils, Degree,
     EMAIL_REGEX,
-    Gender, JhiLanguageHelper,
+    Gender,
     POSTBOX_NUMBER_REGEX,
     ResponseWrapper,
     URL_REGEX, WorkForm

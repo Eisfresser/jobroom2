@@ -1,7 +1,7 @@
 import {
     JobSearchEffects,
     jobSearchReducer,
-    JobSearchState
+    JobSearchState,
 } from '../../../../../../../main/webapp/app/job-search/state-management';
 import { TestBed } from '@angular/core/testing';
 import { MockRouter } from '../../../../helpers/mock-route.service';
@@ -102,23 +102,22 @@ describe('JobSearchEffects', () => {
     });
 
     describe('reloadJobList', () => {
-        it('should return new JobListLoadedAction when user logs in', () => {
+        beforeEach(() => {
+            jasmine.clock().uninstall();
+            jasmine.clock().install();
+        });
+
+        afterEach(() => {
+            jasmine.clock().uninstall();
+        });
+
+        it('should return new ResetFilterAction when user logs in', () => {
+            jasmine.clock().mockDate(new Date(1528070400000));
             const action = new UserLoginAction(new User('1', 'user'));
-            const jobList = [
-                createJobAdvertisement('0')
-            ];
-            const responseWrapper = new ResponseWrapper(new HttpHeaders({ 'X-Total-Count': '100' }), jobList, 200);
-
             actions$ = hot('-a', { a: action });
-            const response = cold('-a|', { a: responseWrapper });
-            mockJobAdvertisementService.searchJobAds.and.returnValue(response);
 
-            const jobListLoadedAction = new actions.JobListLoadedAction({
-                jobList,
-                totalCount: 100,
-                page: 0
-            });
-            const expected = cold('--b', { b: jobListLoadedAction });
+            const resetFilterAction = new actions.ResetFilterAction(1528070400000);
+            const expected = cold('-b', { b: resetFilterAction });
 
             expect(effects.reloadJobList$).toBeObservable(expected);
         });

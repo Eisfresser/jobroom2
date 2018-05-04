@@ -6,7 +6,7 @@ import { ResponseWrapper } from '../../../shared';
 import {
     getJobSearchState,
     JobSearchState,
-    LOAD_NEXT_PAGE,
+    LOAD_NEXT_PAGE, ResetFilterAction,
     SHOW_JOB_LIST_ERROR
 } from '../index';
 import {
@@ -65,8 +65,7 @@ export class JobSearchEffects {
     reloadJobList$: Observable<Action> = this.actions$
         .ofType(USER_LOGIN)
         .filter((action: UserLoginAction) => !!action.payload)
-        .withLatestFrom(this.store.select(getJobSearchState))
-        .switchMap(([action, state]) => this.loadInitialJobs(state));
+        .map((_) => new ResetFilterAction(new Date().getTime()));
 
     @Effect()
     loadJobList$: Observable<Action> = this.actions$

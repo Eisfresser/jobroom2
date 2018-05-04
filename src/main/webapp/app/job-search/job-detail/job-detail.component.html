@@ -136,7 +136,6 @@
 
                 <div *ngIf="job.jobContent.applyChannel.mailAddress" class="content__item">
                     <strong>{{ 'job-detail.application.mail' | translate}}</strong>
-                    <span>{{ 'job-detail.application.mail.text' | translate}}</span>
                     <span>{{ job.jobContent.applyChannel.mailAddress }}</span>
                 </div>
                 <div *ngIf="job.jobContent.applyChannel.emailAddress" class="content__item">
@@ -175,9 +174,9 @@
                        href="{{job.jobContent.applyChannel?.formUrl}}" target="{{job.id}}">
                         {{'job-detail.action.applyNow' | translate}}
                     </a>
-                    <a *ngIf="job.externalReference"
+                    <a *ngIf="job.jobContent.externalUrl"
                        class="btn btn-secondary btn-block btn-sm"
-                       href="{{job.externalReference}}" target="{{job.id}}">
+                       href="{{job.jobContent.externalUrl}}" target="{{job.id}}">
                         {{'job-detail.action.showExternalPage' | translate}}
                     </a>
                 </p>

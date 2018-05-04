@@ -62,7 +62,7 @@ export class JobDetailComponent implements AfterViewInit {
     }
 
     isExternalJobDisclaimerShown(job: JobAdvertisement) {
-        return job.sourceSystem === SourceSystem.EXTERN && !this.externalJobDisclaimerClosed;
+        return job.sourceSystem.toString() === SourceSystem[SourceSystem.EXTERN] && !this.externalJobDisclaimerClosed;
     }
 
     ngAfterViewInit(): void {
