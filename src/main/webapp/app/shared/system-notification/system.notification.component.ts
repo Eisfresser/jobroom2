@@ -11,31 +11,22 @@ import moment = require('moment');
 export class SystemNotificationComponent implements OnInit {
     systemNotificationService: SystemNotificationService;
     systemNotifications: SystemNotification[];
-    activeSystemNotification: SystemNotification;
 
     constructor(systemNotificationService: SystemNotificationService) {
         this.systemNotificationService = systemNotificationService;
     }
 
     ngOnInit(): void {
-        this.systemNotificationService
-            .getAllSystemNotifications()
-            .subscribe(
-                (data: SystemNotification[]) =>
-                    (this.systemNotifications = data)
-            );
+
     }
 
-    isSystemNotificationVisible(): boolean {
-        this.activeSystemNotification = this.systemNotifications.find(
-            (systemNotification: SystemNotification) =>
-                systemNotification.active
-        );
+    isInTimeRange(systemNotification: SystemNotification): boolean {
         return (
-            moment(moment.now()).isAfter(
-                this.activeSystemNotification.startDate
-            ) &&
-            moment(moment.now()).isBefore(this.activeSystemNotification.endDate)
+            moment(moment.now()).isAfter(systemNotification.startDate) &&
+            moment(moment.now()).isBefore(systemNotification.endDate)
         );
+    }
+    isActive(systemNotification: SystemNotification): boolean {
+        return systemNotification.active;
     }
 }

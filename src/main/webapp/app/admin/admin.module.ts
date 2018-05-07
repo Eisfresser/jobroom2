@@ -35,6 +35,10 @@ import {
     UserResolvePagingParams
 } from './';
 import { SystemNotificationService } from '../shared/system-notification/system.notification.service';
+import { StoreModule } from '@ngrx/store';
+import { systemNotificationReducer } from './system-notifications-management/state-management/reducers/system-notification-management-reducers';
+import { EffectsModule } from '@ngrx/effects';
+import { SystemNotificationManagementEffects } from './system-notifications-management/state-management/effects/system-notification-management.effects';
 
 /* jhipster-needle-add-admin-module-import - JHipster will add admin modules imports here */
 
@@ -42,6 +46,8 @@ import { SystemNotificationService } from '../shared/system-notification/system.
     imports: [
         JobroomSharedModule,
         RouterModule.forRoot(adminState, { useHash: true }),
+        StoreModule.forFeature('SystemNotifications', systemNotificationReducer),
+        EffectsModule.forFeature([SystemNotificationManagementEffects]),
         JobroomElasticsearchReindexModule
         /* jhipster-needle-add-admin-module - JHipster will add admin modules here */
     ],

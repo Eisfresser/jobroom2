@@ -1,20 +1,31 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { SystemNotification } from '../../shared/system-notification/system.notification.model';
-import { SystemNotificationsManagementModalCreateComponent } from './modals/system.notifications.management.modal.create.component';
+import { SystemNotificationsManagementModalCreateComponent } from './dialogs/system.notifications.management.modal.create.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { SystemNotificationsManagementModalDeleteComponent } from './modals/system.notifications.management.modal.delete.component';
-import { SystemNotificationsManagementModalDetailComponent } from './modals/system.notifications.management.modal.detail.component';
+import { SystemNotificationsManagementModalDeleteComponent } from './dialogs/system.notifications.management.modal.delete.component';
+import { SystemNotificationsManagementModalDetailComponent } from './dialogs/system.notifications.management.modal.detail.component';
 import { SystemNotificationService } from '../../shared/system-notification/system.notification.service';
+import { Observable } from 'rxjs/Observable';
+import { Store } from '@ngrx/store';
+import { getAllSystemNotifications, SystemNotificationState } from './state-management/state/system-notification-management.state';
+import {
+    CreateSystemNotificationAction,
+    DeleteSystemNotificationAction,
+    GetAllSystemNotificationsAction,
+    UpdateSystemNotificationAction
+} from './state-management/actions/system-notification-management.actions';
 
 @Component({
     selector: 'jhi-sys-notifications',
-    templateUrl: './system.notifications.management.component.html'
+    templateUrl: './system.notifications.management.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SystemNotificationsManagementComponent implements OnInit {
-    systemNotifications: SystemNotification[];
+    systemNotifications$: Observable<SystemNotification[]>;
     systemNotificationService: SystemNotificationService;
 
     constructor(
+        private store: Store<SystemNotificationState>,
         private modalService: NgbModal,
         systemNotificationService: SystemNotificationService
     ) {
@@ -22,18 +33,18 @@ export class SystemNotificationsManagementComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.systemNotificationService
-            .getAllSystemNotifications()
-            .subscribe(
-                (data: SystemNotification[]) =>
-                    (this.systemNotifications = data)
-            );
+       this.systemNotifications$ = this.store.select(getAllSystemNotifications);
+       this.store.dispatch(new GetAllSystemNotificationsAction);
     }
 
     openCreateModal() {
         const modalRef = this.modalService.open(
-            SystemNotificationsManagementModalCreateComponent
+            SystemNotificationsManagementModalCreateComponent,
         );
+        modalRef.componentInstance.systemNotification = { id: null, title: null, text: null, type: null, startDate: null, endDate: null, active: null }
+        modalRef.componentInstance.createEvent.subscribe((systemNotificationToCreate) => {
+            this.store.dispatch(new CreateSystemNotificationAction(systemNotificationToCreate));
+        });
     }
 
     openDetailModal(systemNotification: SystemNotification) {
@@ -41,6 +52,9 @@ export class SystemNotificationsManagementComponent implements OnInit {
             SystemNotificationsManagementModalDetailComponent
         );
         modalRef.componentInstance.systemNotification = systemNotification;
+        modalRef.componentInstance.updateEvent.subscribe((systemNotificationToUpdate) => {
+            this.store.dispatch(new UpdateSystemNotificationAction(systemNotificationToUpdate));
+        });
     }
 
     openDeleteModal(systemNotification: SystemNotification) {
@@ -48,9 +62,13 @@ export class SystemNotificationsManagementComponent implements OnInit {
             SystemNotificationsManagementModalDeleteComponent
         );
         modalRef.componentInstance.systemNotification = systemNotification;
+        modalRef.componentInstance.deleteEvent.subscribe((systemNotificationToDelete) => {
+            this.store.dispatch(new DeleteSystemNotificationAction(systemNotificationToDelete));
+        });
     }
 
-    trackIdentity(index, item: SystemNotification) {
-        return item.id;
+    setActive(systemNotificationToUpdate: SystemNotification, isActivated: boolean) {
+        systemNotificationToUpdate.active = isActivated;
+        this.store.dispatch(new UpdateSystemNotificationAction(systemNotificationToUpdate));
     }
 }

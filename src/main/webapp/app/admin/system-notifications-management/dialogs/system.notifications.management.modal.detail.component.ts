@@ -7,23 +7,18 @@ import { SystemNotification } from '../../../shared/system-notification/system.n
     templateUrl: './system.notifications.management.modal.detail.component.html'
 })
 export class SystemNotificationsManagementModalDetailComponent {
+    @Input() systemNotification: SystemNotification;
+    @Output() updateEvent = new EventEmitter<SystemNotification>();
 
-    @Input()
-    systemNotification: SystemNotification;
-
-    @Output()
-    update: EventEmitter<SystemNotification> = new EventEmitter<SystemNotification>();
-
-    constructor(public activeModal: NgbActiveModal) {
-    }
+    constructor(public activeModal: NgbActiveModal) {}
 
     clear() {
         this.activeModal.dismiss('Cancel');
     }
 
-    handleSubmit(systemNotification: SystemNotification, isValid: boolean) {
-        if (isValid) {
-            this.update.emit(systemNotification);
-        }
+    updateSystemNotification() {
+        this.updateEvent.emit(this.systemNotification);
+        this.activeModal.dismiss();
     }
+
 }

@@ -1,6 +1,6 @@
 <div class="container-fluid">
     <h2>
-        <span jhiTranslate="systemNotificationsManagement.home.title">Users</span>
+        <span jhiTranslate="systemNotificationsManagement.home.title">SystemNotifications</span>
     </h2>
     <div>
         <table class="table table-striped">
@@ -15,18 +15,20 @@
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let systemNotification of systemNotifications; trackBy: trackIdentity">
+            <tr *ngFor="let systemNotification of (systemNotifications$ | async)">
 
                 <td>{{systemNotification.title}}</td>
                 <td>{{systemNotification.type}}</td>
-                <td>{{systemNotification.startDate}}</td>
-                <td>{{systemNotification.endDate}}</td>
+                <td>{{systemNotification.startDate | date:'dd/MM/yy HH:mm'}}</td>
+                <td>{{systemNotification.endDate | date:'dd/MM/yy HH:mm'}}</td>
                 <th>
                     <button class="btn btn-success btn-sm"
                             *ngIf="systemNotification.active"
+                            (click)="setActive(systemNotification, false)"
                             jhiTranslate="systemNotificationsManagement.activated">Activated
                     </button>
                     <button class="btn btn-danger btn-sm" *ngIf="!systemNotification.active"
+                            (click)="setActive(systemNotification, true)"
                             jhiTranslate="systemNotificationsManagement.deactivated">Deactivated
                     </button>
                 </th>
