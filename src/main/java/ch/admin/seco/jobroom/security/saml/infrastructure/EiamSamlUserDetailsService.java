@@ -27,6 +27,8 @@ public class EiamSamlUserDetailsService implements SAMLUserDetailsService {
 
     private static final String EIAM_ISSUER_NAME = "uri:eiam.admin.ch:feds";
 
+    private static final String CH_LOGIN_ISSUER_NAME = "urn:eiam.admin.ch:idp:e-id:CH-LOGIN";
+
     private final SamlBasedUserDetailsProvider samlBasedUserDetailsProvider;
 
     public EiamSamlUserDetailsService(SamlBasedUserDetailsProvider samlBasedUserDetailsProvider) {
@@ -72,7 +74,7 @@ public class EiamSamlUserDetailsService implements SAMLUserDetailsService {
     private static Map<String, List<String>> extractAttributes(List<Attribute> credentialAttributes) {
         return credentialAttributes
                 .stream()
-                .filter(attribute -> isAttributeFromEiam(attribute) || isAttributeFromPEP(attribute))
+                .filter(attribute -> isAttributeFromEiam(attribute) || isAttributeFromPEP(attribute) || isAttributeFromChLogin(attribute))
                 .collect(Collectors.toMap(Attribute::getName, attribute -> attribute.getAttributeValues()
                         .stream()
                         .filter(xmlObject -> xmlObject instanceof XSString)
@@ -87,6 +89,12 @@ public class EiamSamlUserDetailsService implements SAMLUserDetailsService {
 
     private static boolean isAttributeFromPEP(Attribute attribute) {
         return StringUtils.isBlank(extractOriginalIssuer(attribute));
+    }
+
+    private static boolean isAttributeFromChLogin(Attribute attribute) {
+        return CH_LOGIN_ISSUER_NAME.equals(extractOriginalIssuer(attribute))
+            // fix duplicate key problem
+            && !attribute.getName().equals("http://schemas.eiam.admin.ch/ws/2013/12/identity/claims/e-id/clientExtId");
     }
 
     private static String extractOriginalIssuer(Attribute attribute) {

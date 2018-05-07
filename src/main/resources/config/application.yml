@@ -154,3 +154,11 @@ jhipster:
 # ===================================================================
 
 # application:
+
+security:
+    rolemapping:
+        SECO-jobroom.ROLE_ADMIN: ROLE_ADMIN
+        SECO-jobroom.ROLE_PRIVATE_EMPLOYMENT_AGENT: ROLE_PRIVATE_EMPLOYMENT_AGENT
+        SECO-jobroom.ROLE_PUBLIC_EMPLOYMENT_SERVICE: ROLE_PUBLIC_EMPLOYMENT_SERVICE
+        SECO-jobroom.ROLE_USER: ROLE_USER
+        SECO-jobroom.ROLE_SYSADMIN: ROLE_SYSADMIN

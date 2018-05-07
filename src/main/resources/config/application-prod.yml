@@ -153,3 +153,26 @@ jhipster:
 # ===================================================================
 
 # application:
+
+security:
+    saml:
+        idpConfigPath: /home/ubuntu/config/metadata-idp-ref.xml
+        keystorePath: /home/ubuntu/config/keystore-cert-ref.jks
+        keystorePassword: 'mima01'
+        keystorePrivateKeyName: 'saml2-sp'
+        keystorePrivateKeyPassword: 'mima01'
+        externalContextScheme: 'https'
+        externalContextServerName: 'localhost'
+        externalContextServerPort: '443'
+        externalContextPath: '/'
+        entityId: 'urn:wrong.url:sp:seco:JOBROOM-LOCAL'
+        #entityAlias: ''
+    user:
+        logout_url: 'https://dev.job-room.ch/saml/logout'
+        profile_url: 'http://www.cowsays.com/cow_messages/4701'
+    rolemapping:
+        SECO-jobroom.ROLE_ADMIN: ROLE_ADMIN
+        SECO-jobroom.ROLE_PRIVATE_EMPLOYMENT_AGENT: ROLE_PRIVATE_EMPLOYMENT_AGENT
+        SECO-jobroom.ROLE_PUBLIC_EMPLOYMENT_SERVICE: ROLE_PUBLIC_EMPLOYMENT_SERVICE
+        SECO-jobroom.ROLE_USER: ROLE_USER
+        SECO-jobroom.ROLE_SYSADMIN: ROLE_SYSADMIN
