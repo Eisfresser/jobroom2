@@ -37,7 +37,7 @@ public class SystemNotificationService {
     }
 
     @Transactional
-    public SystemNotification createSystemNotification(SystemNotificationDTO systemNotificationDTO) {
+    public SystemNotificationDTO createSystemNotification(SystemNotificationDTO systemNotificationDTO) {
         SystemNotification systemNotification = new SystemNotification();
         systemNotification.setTitle(systemNotificationDTO.getTitle());
         systemNotification.setText(systemNotificationDTO.getText());
@@ -47,9 +47,10 @@ public class SystemNotificationService {
         systemNotification.setEndDate(systemNotificationDTO.getEndDate());
         systemNotificationRepository.save(systemNotification);
         log.debug("Created Information for systemNotification: {}", systemNotification);
-        return systemNotification;
+        return systemNotificationDTO;
     }
 
+    @Transactional
     public void updateSystemNotification(SystemNotificationDTO systemNotificationDTO) {
         systemNotificationRepository.getSystemNotificationById(systemNotificationDTO.getId()).ifPresent(systemNotification -> {
             systemNotification.setTitle(systemNotificationDTO.getTitle());
@@ -59,10 +60,9 @@ public class SystemNotificationService {
             systemNotification.setEndDate(systemNotificationDTO.getEndDate());
             systemNotification.setActive(systemNotificationDTO.isActive());
             systemNotificationRepository.save(systemNotification);
-            log.debug("Changed Information for SystemNotification: {}", systemNotification);
+            log.debug("Updated SystemNotification: {}", systemNotification);
         });
     }
-
 
     @Transactional
     public void deleteSystemNotification(UUID id) {
