@@ -1,0 +1,7 @@
+<div *ngFor="let systemNotification of systemNotifications;">
+    <div class="system-notification" *ngIf="isActive(systemNotification) && isInTimeRange(systemNotification)">
+    <span class="warning-icon">
+        <i class="fa fa-exclamation"></i></span>
+        <span class="system-notification-text">{{systemNotification?.text}}</span>
+    </div>
+</div>

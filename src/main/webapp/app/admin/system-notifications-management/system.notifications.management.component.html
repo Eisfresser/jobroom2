@@ -1,0 +1,56 @@
+<div class="container-fluid">
+    <h2>
+        <span jhiTranslate="systemNotificationsManagement.home.title">SystemNotifications</span>
+    </h2>
+    <div>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th jhiTranslate="systemNotificationsManagement.title">Title</th>
+                <th jhiTranslate="systemNotificationsManagement.type">Type</th>
+                <th jhiTranslate="systemNotificationsManagement.startDate">StartDate</th>
+                <th jhiTranslate="systemNotificationsManagement.endDate">EndDate</th>
+                <th jhiTranslate="systemNotificationsManagement.status">Status</th>
+                <th jhiTranslate="systemNotificationsManagement.actions">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let systemNotification of (systemNotifications$ | async)">
+
+                <td>{{systemNotification.title}}</td>
+                <td>{{systemNotification.type}}</td>
+                <td>{{systemNotification.startDate | date:'dd/MM/yy HH:mm'}}</td>
+                <td>{{systemNotification.endDate | date:'dd/MM/yy HH:mm'}}</td>
+                <th>
+                    <button class="btn btn-success btn-sm"
+                            *ngIf="systemNotification.active"
+                            (click)="setActive(systemNotification, false)"
+                            jhiTranslate="systemNotificationsManagement.activated">Activated
+                    </button>
+                    <button class="btn btn-danger btn-sm" *ngIf="!systemNotification.active"
+                            (click)="setActive(systemNotification, true)"
+                            jhiTranslate="systemNotificationsManagement.deactivated">Deactivated
+                    </button>
+                </th>
+                <th>
+                    <button type="submit"
+                            (click)="openDetailModal(systemNotification)"
+                            class="btn btn-primary btn-sm">
+                        <span class="fa fa-pencil"></span>
+                        <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                    </button>
+                    <button type="submit"
+                            (click)="openDeleteModal(systemNotification)"
+                            class="btn btn-danger btn-sm">
+                        <span class="fa fa-remove"></span>
+                        <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                    </button>
+                </th>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <button class="btn btn-primary" (click)="openCreateModal()">
+        <span class="fa fa-plus"></span> <span jhiTranslate="systemNotificationsManagement.home.create">Create a new SystemNotification</span>
+    </button>
+</div>

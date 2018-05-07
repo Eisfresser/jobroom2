@@ -1,0 +1,22 @@
+{
+    "system-notifications-management": {
+        "title": "notifiche di sistema"
+    },
+    "systemNotificationsManagement": {
+        "title": "Title",
+        "type": "Type",
+        "startDate": "From",
+        "endDate": "To",
+        "status": "State",
+        "actions": "Test",
+        "home": {
+            "create": "Crea un nuovo notifiche di sistema",
+            "title": "notifiche di sistema"
+        },
+        "activated": "Activated",
+        "deactivated": "Deactivated",
+        "delete": {
+            "question": "Do you really want to delete the system notification?"
+        }
+    }
+}

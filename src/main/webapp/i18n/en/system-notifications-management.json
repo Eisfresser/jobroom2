@@ -1,0 +1,22 @@
+{
+    "system-notifications-management": {
+        "title": "System notifications"
+    },
+    "systemNotificationsManagement": {
+        "title": "Title",
+        "type": "Type",
+        "startDate": "From",
+        "endDate": "To",
+        "status": "State",
+        "actions": "Actions",
+        "home": {
+            "create": "Create a new system notification",
+            "title": "System notifications"
+        },
+        "activated": "Activated",
+        "deactivated": "Deactivated",
+        "delete": {
+            "question": "Do you really want to delete the system notification?"
+        }
+    }
+}

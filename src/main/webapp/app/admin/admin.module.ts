@@ -1,43 +1,54 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { JobroomSharedModule } from '../shared';
 import { JobroomElasticsearchReindexModule } from './elasticsearch-reindex/elasticsearch-reindex.module';
-/* jhipster-needle-add-admin-module-import - JHipster will add admin modules imports here */
-
 import {
     adminState,
     AuditsComponent,
-    UserMgmtComponent,
-    UserDialogComponent,
+    AuditsService,
+    GatewayRoutesService,
+    JhiConfigurationComponent,
+    JhiConfigurationService,
+    JhiDocsComponent,
+    JhiGatewayComponent,
+    JhiHealthCheckComponent,
+    JhiHealthModalComponent,
+    JhiHealthService,
+    JhiMetricsMonitoringComponent,
+    JhiMetricsMonitoringModalComponent,
+    JhiMetricsService,
+    LogsComponent,
+    LogsService,
+    SystemNotificationsManagementComponent,
+    SystemNotificationsManagementModalCreateComponent,
+    SystemNotificationsManagementModalDeleteComponent,
+    SystemNotificationsManagementModalDetailComponent,
     UserDeleteDialogComponent,
+    UserDialogComponent,
+    UserMgmtComponent,
+    UserMgmtDeleteDialogComponent,
     UserMgmtDetailComponent,
     UserMgmtDialogComponent,
-    UserMgmtDeleteDialogComponent,
-    LogsComponent,
-    JhiMetricsMonitoringModalComponent,
-    JhiMetricsMonitoringComponent,
-    JhiHealthModalComponent,
-    JhiHealthCheckComponent,
-    JhiConfigurationComponent,
-    JhiDocsComponent,
-    AuditsService,
-    JhiConfigurationService,
-    JhiHealthService,
-    JhiMetricsService,
-    GatewayRoutesService,
-    JhiGatewayComponent,
-    LogsService,
-    UserResolvePagingParams,
+    UserModalService,
     UserResolve,
-    UserModalService
+    UserResolvePagingParams
 } from './';
+import { SystemNotificationService } from '../shared/system-notification/system.notification.service';
+import { StoreModule } from '@ngrx/store';
+import { systemNotificationReducer } from './system-notifications-management/state-management/reducers/system-notification-management-reducers';
+import { EffectsModule } from '@ngrx/effects';
+import { SystemNotificationManagementEffects } from './system-notifications-management/state-management/effects/system-notification-management.effects';
+
+/* jhipster-needle-add-admin-module-import - JHipster will add admin modules imports here */
 
 @NgModule({
     imports: [
         JobroomSharedModule,
         RouterModule.forRoot(adminState, { useHash: true }),
-        JobroomElasticsearchReindexModule,
+        StoreModule.forFeature('SystemNotifications', systemNotificationReducer),
+        EffectsModule.forFeature([SystemNotificationManagementEffects]),
+        JobroomElasticsearchReindexModule
         /* jhipster-needle-add-admin-module - JHipster will add admin modules here */
     ],
     declarations: [
@@ -55,16 +66,24 @@ import {
         JhiDocsComponent,
         JhiGatewayComponent,
         JhiMetricsMonitoringComponent,
-        JhiMetricsMonitoringModalComponent
+        JhiMetricsMonitoringModalComponent,
+        SystemNotificationsManagementComponent,
+        SystemNotificationsManagementModalCreateComponent,
+        SystemNotificationsManagementModalDeleteComponent,
+        SystemNotificationsManagementModalDetailComponent
     ],
     entryComponents: [
         UserMgmtDialogComponent,
         UserMgmtDeleteDialogComponent,
+        SystemNotificationsManagementModalCreateComponent,
+        SystemNotificationsManagementModalDeleteComponent,
+        SystemNotificationsManagementModalDetailComponent,
         JhiHealthModalComponent,
-        JhiMetricsMonitoringModalComponent,
+        JhiMetricsMonitoringModalComponent
     ],
     providers: [
         AuditsService,
+        SystemNotificationService,
         JhiConfigurationService,
         JhiHealthService,
         JhiMetricsService,
@@ -72,8 +91,9 @@ import {
         LogsService,
         UserResolvePagingParams,
         UserResolve,
-        UserModalService
+        UserModalService,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class JobroomAdminModule {}
+export class JobroomAdminModule {
+}

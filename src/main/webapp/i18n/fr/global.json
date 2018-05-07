@@ -196,6 +196,7 @@
                 "logs": "Logs",
                 "main": "Administration",
                 "metrics": "Mesures",
+                "systemNotifications": "Notification syst\u00e8me",
                 "tracker": "Activit\u00e9 des utilisateurs",
                 "userManagement": "Gestion des utilisateurs"
             },
@@ -260,6 +261,7 @@
         },
         "reference": {
             "canton": {
+                "99": "\u00c9tranger",
                 "AG": "Argovie",
                 "AI": "Appenzell Rhodes-Int\u00e9rieures",
                 "AR": "Appenzell Rhodes-Ext\u00e9rieures",
@@ -288,8 +290,7 @@
                 "VD": "Vaud",
                 "VS": "Valais",
                 "ZG": "Zoug",
-                "ZH": "Zurich",
-                "99": "\u00c9tranger"
+                "ZH": "Zurich"
             },
             "language": {
                 "ar": "Arabe",
