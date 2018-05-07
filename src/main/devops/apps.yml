@@ -165,6 +165,24 @@ services:
             placement:
                 constraints: [node.labels.type == java]
 
+    checkuptool-app:
+        build: dockerfiles/checkuptool
+        image: localhost:5000/jr2_checkuptool-app
+        env_file: apps-env.properties
+        environment:
+            SERVER_PORT: 8087
+        ports:
+            - 8087:8087
+        networks:
+            - jobroom_data2
+        secrets:
+            - source: bootstrap.yml-1
+              target: bootstrap.yml
+        deploy:
+            placement:
+                constraints: [node.labels.type == java]
+
+
 volumes:
     batch-tmp-data:
         driver: local

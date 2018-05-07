@@ -34,12 +34,16 @@
             "title": "Suchergebnisse filtern",
             "working-time": {
                 "label": "Arbeitspensum"
+            },
+            "restricted-jobs": {
+                "label": "Nur meldepflichtige Stellen anzeigen"
             }
         },
         "job-search-list-item": {
             "badge": {
                 "permanent": "Unbefristet",
-                "temporary": "Befristet"
+                "temporary": "Befristet",
+                "restricted": "meldepflichtig"
             }
         },
         "job-search-list": {

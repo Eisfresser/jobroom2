@@ -7,27 +7,24 @@ import { JobPublicationDetailState } from '../../../../../../../main/webapp/app/
 import {
     CancellationFailedAction,
     CancellationSucceededAction,
-    JobPublicationLoadedAction,
-    LoadJobPublicationAction,
-    LoadJobPublicationFailedAction,
+    JobAdvertisementLoadedAction,
+    LoadJobAdvertisementAction,
+    LoadJobAdvertisementFailedAction,
     SubmitCancellationAction
 } from '../../../../../../../main/webapp/app/dashboard/state-management/actions/job-publication-detail.actions';
 import { cold, hot } from 'jasmine-marbles';
-import {
-    Locale,
-    Status
-} from '../../../../../../../main/webapp/app/shared/job-publication/job-publication.model';
-import { JobPublicationService } from '../../../../../../../main/webapp/app/shared/job-publication/job-publication.service';
 import { jobSearchReducer } from '../../../../../../../main/webapp/app/job-search/state-management/reducers/job-search.reducers';
 import { CancellationData } from '../../../../../../../main/webapp/app/dashboard/dialogs/cancellation-data';
 import { HttpClientModule } from '@angular/common/http';
+import { JobAdvertisementService } from '../../../../../../../main/webapp/app/shared/job-advertisement/job-advertisement.service';
+import { createJobAdvertisement } from '../../../shared/job-publication/utils';
 
 describe('JobPublicationCancelEffects', () => {
     let effects: JobPublicationDetailEffects;
     let actions$: Observable<any>;
     let store: Store<JobPublicationDetailState>;
 
-    const mockJobPublicationService = jasmine.createSpyObj('mockJobPublicationService', ['findByIdAndAccessToken', 'cancelJobPublication']);
+    const mockJobAdvertisementService = jasmine.createSpyObj('mockJobAdvertisementService', ['findById', 'cancel']);
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -39,8 +36,8 @@ describe('JobPublicationCancelEffects', () => {
                 JobPublicationDetailEffects,
                 provideMockActions(() => actions$),
                 {
-                    provide: JobPublicationService,
-                    useValue: mockJobPublicationService
+                    provide: JobAdvertisementService,
+                    useValue: mockJobAdvertisementService
                 }
             ]
         });
@@ -49,58 +46,43 @@ describe('JobPublicationCancelEffects', () => {
         store = TestBed.get(Store);
     });
 
-    describe('loadJobPublication$', () => {
-        it('should return a new JobPublicationLoadedAction with the loaded job publication on success', () => {
+    describe('loadJobAdvertisement$', () => {
+        it('should return a new JobAdvertisementLoadedAction with the loaded job publication on success', () => {
             const id = 'id';
-            const accessToken = 'access-token';
-            const action = new LoadJobPublicationAction({ id, accessToken });
+            const action = new LoadJobAdvertisementAction({ id });
 
             actions$ = hot('-a', { a: action });
 
-            const jobPublication = {
-                id,
-                idAvam: 'id-avam',
-                accessToken,
-                job: null,
-                company: null,
-                contact: null,
-                application: null,
-                publication: null,
-                creationDate: 'aa',
-                locale: Locale.DE,
-                status: Status.INITIAL
-            };
-            const response = cold('-a|', { a: jobPublication });
-            mockJobPublicationService.findByIdAndAccessToken.and.returnValue(response);
+            const jobAdvertisement = createJobAdvertisement(id, 'id-avam');
+            const response = cold('-a|', { a: jobAdvertisement });
+            mockJobAdvertisementService.findById.and.returnValue(response);
 
-            const jobPublicationLoadedAction = new JobPublicationLoadedAction(jobPublication);
+            const jobPublicationLoadedAction = new JobAdvertisementLoadedAction(jobAdvertisement);
             const expected = cold('--b', { b: jobPublicationLoadedAction });
 
-            expect(effects.loadJobPublication$).toBeObservable(expected);
+            expect(effects.loadJobAdvertisement$).toBeObservable(expected);
         });
 
-        it('should return a new LoadJobPublicationFailedAction on error', () => {
+        it('should return a new LoadJobAdvertisementFailedAction on error', () => {
             const id = 'id';
-            const accessToken = 'access-token';
-            const action = new LoadJobPublicationAction({ id, accessToken });
+            const action = new LoadJobAdvertisementAction({ id });
 
             actions$ = hot('-a', { a: action });
 
             const response = cold('-#|', {}, 'error');
-            mockJobPublicationService.findByIdAndAccessToken.and.returnValue(response);
+            mockJobAdvertisementService.findById.and.returnValue(response);
 
-            const loadJobPublicationFailedAction = new LoadJobPublicationFailedAction('error');
+            const loadJobPublicationFailedAction = new LoadJobAdvertisementFailedAction('error');
             const expected = cold('--b', { b: loadJobPublicationFailedAction });
 
-            expect(effects.loadJobPublication$).toBeObservable(expected);
+            expect(effects.loadJobAdvertisement$).toBeObservable(expected);
         });
     });
 
-    describe('cancelJobPublication$', () => {
+    describe('cancelJobAdvertisement$', () => {
         it('should return a new CancellationSucceededAction with the updated job publication on success', () => {
             const cancellationData: CancellationData = {
                 id: 'id',
-                accessToken: 'token',
                 cancellationReason: {
                     positionOccupied: true,
                     occupiedWith: {
@@ -110,39 +92,26 @@ describe('JobPublicationCancelEffects', () => {
                     }
                 }
             };
-            const jobPublication = {
-                id: 'id',
-                idAvam: 'id-avam',
-                accessToken: 'access-token',
-                job: null,
-                company: null,
-                contact: null,
-                application: null,
-                publication: null,
-                creationDate: 'aa',
-                locale: Locale.DE,
-                status: Status.INITIAL
-            };
+            const jobAdvertisement = createJobAdvertisement('id', 'id-avam');
 
             const action = new SubmitCancellationAction(cancellationData);
             actions$ = hot('-a', { a: action });
 
             const cancellationResponse = cold('-a|', { a: 200 });
-            mockJobPublicationService.cancelJobPublication.and.returnValue(cancellationResponse);
+            mockJobAdvertisementService.cancel.and.returnValue(cancellationResponse);
 
-            const findByIdAndTokenResponse = cold('-a|', { a: jobPublication });
-            mockJobPublicationService.findByIdAndAccessToken.and.returnValue(findByIdAndTokenResponse);
+            const findByIdAndTokenResponse = cold('-a|', { a: jobAdvertisement });
+            mockJobAdvertisementService.findById.and.returnValue(findByIdAndTokenResponse);
 
-            const cancellationSucceededAction = new CancellationSucceededAction(jobPublication);
+            const cancellationSucceededAction = new CancellationSucceededAction(jobAdvertisement);
             const expected = cold('---b', { b: cancellationSucceededAction });
 
-            expect(effects.cancelJobPublication$).toBeObservable(expected);
+            expect(effects.cancelJobAdvertisement$).toBeObservable(expected);
         });
 
         it('should return a new CancellationFailedAction on error', () => {
             const cancellationData: CancellationData = {
                 id: 'id',
-                accessToken: 'token',
                 cancellationReason: {
                     positionOccupied: true,
                     occupiedWith: {
@@ -157,12 +126,12 @@ describe('JobPublicationCancelEffects', () => {
             actions$ = hot('-a', { a: action });
 
             const response = cold('-#|', {}, 'error');
-            mockJobPublicationService.cancelJobPublication.and.returnValue(response);
+            mockJobAdvertisementService.cancel.and.returnValue(response);
 
             const cancellationFailedAction = new CancellationFailedAction('error');
             const expected = cold('--b', { b: cancellationFailedAction });
 
-            expect(effects.cancelJobPublication$).toBeObservable(expected);
+            expect(effects.cancelJobAdvertisement$).toBeObservable(expected);
         });
     });
 });

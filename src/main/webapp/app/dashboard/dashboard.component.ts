@@ -1,19 +1,19 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import {
     PEADashboardState,
-    getJobPublicationFilter,
-    getJobPublications,
-    getJobPublicationsPage,
-    getJobPublicationsTotalCount,
-    JobPublicationFilter
+    getJobAdvertisementFilter,
+    getJobAdvertisements,
+    getJobAdvertisementsPage,
+    getJobAdvertisementsTotalCount,
+    JobAdvertisementFilter
 } from './state-management/state/pea-dashboard.state';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
-import { JobPublication } from '../shared/job-publication/job-publication.model';
 import {
-    FilterJobPublicationsDashboardAction,
-    LoadNextJobPublicationsDashboardPageAction
+    FilterJobAdvertisementsDashboardAction,
+    LoadNextJobAdvertisementsDashboardPageAction
 } from './state-management/actions/pea-dashboard.actions';
+import { JobAdvertisement } from '../shared/job-advertisement/job-advertisement.model';
 
 @Component({
     selector: 'jr2-dashboard',
@@ -22,23 +22,23 @@ import {
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DashboardComponent {
-    jobPublicationFilter$: Observable<JobPublicationFilter>;
-    jobPublications$: Observable<JobPublication[]>;
-    jobPublicationsTotalCount$: Observable<number>;
-    jobPublicationsPage$: Observable<number>;
+    jobAdvertisementFilter$: Observable<JobAdvertisementFilter>;
+    jobAdvertisements$: Observable<JobAdvertisement[]>;
+    jobAdvertisementsTotalCount$: Observable<number>;
+    jobAdvertisementsPage$: Observable<number>;
 
     constructor(private store: Store<PEADashboardState>) {
-        this.jobPublicationFilter$ = store.select(getJobPublicationFilter);
-        this.jobPublications$ = store.select(getJobPublications);
-        this.jobPublicationsTotalCount$ = store.select(getJobPublicationsTotalCount);
-        this.jobPublicationsPage$ = store.select(getJobPublicationsPage);
+        this.jobAdvertisementFilter$ = store.select(getJobAdvertisementFilter);
+        this.jobAdvertisements$ = store.select(getJobAdvertisements);
+        this.jobAdvertisementsTotalCount$ = store.select(getJobAdvertisementsTotalCount);
+        this.jobAdvertisementsPage$ = store.select(getJobAdvertisementsPage);
     }
 
-    filterJobPublications(jobPublicationFilter: JobPublicationFilter): void {
-        this.store.dispatch(new FilterJobPublicationsDashboardAction(jobPublicationFilter));
+    filterJobAdvertisements(jobAdvertisementFilter: JobAdvertisementFilter): void {
+        this.store.dispatch(new FilterJobAdvertisementsDashboardAction(jobAdvertisementFilter));
     }
 
-    changeJobPublicationsPage(page): void {
-        this.store.dispatch(new LoadNextJobPublicationsDashboardPageAction({ page: page - 1 }));
+    changeJobAdvertisementsPage(page): void {
+        this.store.dispatch(new LoadNextJobAdvertisementsDashboardPageAction({ page: page - 1 }));
     }
 }

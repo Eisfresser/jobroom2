@@ -48,22 +48,22 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let jobPublication of jobPublicationList">
-                            <th scope="row">{{ jobPublication.id }}</th>
-                            <td>{{ jobPublication.idAvam }}</td>
-                            <td>{{ jobPublication.creationDate | date:'dd.MM.yyyy' }}</td>
-                            <td>{{ jobPublication.job.title }}</td>
-                            <td>{{ jobPublication.job.location.city }}</td>
-                            <td>{{ 'global.job-publication.status.' + jobPublication.status | translate }}</td>
+                        <tr *ngFor="let jobAdvertisement of jobAdvertisementList$ | async">
+                            <th scope="row">{{ jobAdvertisement.id }}</th>
+                            <td>{{ jobAdvertisement.avam }}</td>
+                            <td>{{ jobAdvertisement.publicationDate | date:'dd.MM.yyyy' }}</td>
+                            <td>{{ jobAdvertisement.title }}</td>
+                            <td>{{ jobAdvertisement.location }}</td>
+                            <td>{{ 'global.job-publication.status.' + jobAdvertisement.status | translate }}</td>
                             <td>
                                 <div class="actions">
-                                    <a routerLink="/job-publication-detail/{{jobPublication.id}}?accessToken={{jobPublication.accessToken}}" [attr.aria-label]="'dashboard.job-publication.action.view' | translate" data-toggle="tooltip" data-placement="top" [title]="'dashboard.job-publication.action.view' | translate" class="btn btn-link p-1">
+                                    <a routerLink="/job-publication-detail/{{jobAdvertisement.id}}" [attr.aria-label]="'dashboard.job-publication.action.view' | translate" data-toggle="tooltip" data-placement="top" [title]="'dashboard.job-publication.action.view' | translate" class="btn btn-link p-1">
                                         <span class="fa fa-fw fa-eye" aria-hidden="true"></span>
                                     </a>
-                                    <a [routerLink]="['/agents/jobpublication', { jobPublicationId: jobPublication.id, accessToken: jobPublication.accessToken }]" [attr.aria-label]="'dashboard.job-publication.action.copy' | translate" data-toggle="tooltip" data-placement="top" [title]="'dashboard.job-publication.action.copy' | translate" class="btn btn-link p-1">
+                                    <a [routerLink]="['/agents/jobpublication', { jobPublicationId: jobAdvertisement.id }]" [attr.aria-label]="'dashboard.job-publication.action.copy' | translate" data-toggle="tooltip" data-placement="top" [title]="'dashboard.job-publication.action.copy' | translate" class="btn btn-link p-1">
                                         <span class="fa fa-fw fa-clone" aria-hidden="true"></span>
                                     </a>
-                                    <a *ngIf="isJobPublicationCancellable(jobPublication.status)" (click)="showCancellationDialog(jobPublication.id, jobPublication.accessToken)" [attr.aria-label]="'dashboard.job-publication.action.delete' | translate" data-toggle="tooltip" data-placement="top" [title]="'dashboard.job-publication.action.delete' | translate" class="btn btn-link p-1">
+                                    <a *ngIf="isJobAdvertisementCancellable(jobAdvertisement.status)" (click)="showCancellationDialog(jobAdvertisement.id)" [attr.aria-label]="'dashboard.job-publication.action.delete' | translate" data-toggle="tooltip" data-placement="top" [title]="'dashboard.job-publication.action.delete' | translate" class="btn btn-link p-1">
                                         <span class="fa fa-fw fa-trash-o" aria-hidden="true"></span>
                                     </a>
                                 </div>

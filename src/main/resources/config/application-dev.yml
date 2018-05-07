@@ -116,6 +116,7 @@ jhipster:
             jobservice: /api,/v2/api-docs # recommended dev configuration
             referenceservice: /api,/v2/api-docs # recommended dev configuration
             candidateservice: /api,/v2/api-docs # recommended dev configuration
+            jobadservice: /api,/v2/api-docs # recommended dev configuration
     http:
         version: V_1_1 # To use HTTP/2 you will need SSL support (see above the "server.ssl" configuration)
     cache: # Cache configuration

@@ -10,6 +10,7 @@ import {
 import * as actions from '../../../../../../../main/webapp/app/job-search/state-management/actions/job-search.actions';
 import { TypeaheadMultiselectModel } from '../../../../../../../main/webapp/app/shared/input-components';
 import { ONLINE_SINCE_DEFAULT_VALUE } from '../../../../../../../main/webapp/app/shared/constants/job-search.constants';
+import { createJobAdvertisement } from '../../../shared/job-publication/utils';
 
 describe('jobSearchReducer', () => {
     it('should not change state for undefined action', () => {
@@ -62,7 +63,8 @@ describe('jobSearchReducer', () => {
                     contractType: ContractType.PERMANENT,
                     workingTime: [0, 80],
                     sort: Sort.DATE_ASC,
-                    onlineSince: ONLINE_SINCE_DEFAULT_VALUE - 1
+                    onlineSince: ONLINE_SINCE_DEFAULT_VALUE - 1,
+                    displayRestricted: false
                 },
                 totalJobCount: 0,
                 page: 0,
@@ -97,7 +99,8 @@ describe('jobSearchReducer', () => {
             contractType: ContractType.PERMANENT,
             workingTime: [80, 100],
             sort: Sort.DATE_ASC,
-            onlineSince: 60
+            onlineSince: 60,
+            displayRestricted: false
         };
         const action = new actions.FilterChangedAction(searchFilter);
 
@@ -114,27 +117,9 @@ describe('jobSearchReducer', () => {
         // GIVEN
         const state = initialState;
         const jobList = [
-            {
-                id: '0',
-                externalId: 'extId0',
-                title: 'title-0',
-                source: 'api',
-                publicationEndDate: new Date()
-            },
-            {
-                id: '1',
-                externalId: 'extId1',
-                title: 'title-1',
-                source: 'api',
-                publicationEndDate: new Date()
-            },
-            {
-                id: '2',
-                externalId: 'extId2',
-                title: 'title-2',
-                source: 'api',
-                publicationEndDate: new Date()
-            }
+            createJobAdvertisement('0'),
+            createJobAdvertisement('1'),
+            createJobAdvertisement('2')
         ];
         const action = new actions.JobListLoadedAction({
             jobList,
@@ -164,53 +149,17 @@ describe('jobSearchReducer', () => {
         // GIVEN
         const state = initialState;
         const initialJobList = [
-            {
-                id: '0',
-                externalId: 'extId0',
-                title: 'title-0',
-                source: 'api',
-                publicationEndDate: new Date()
-            },
-            {
-                id: '1',
-                externalId: 'extId1',
-                title: 'title-1',
-                source: 'api',
-                publicationEndDate: new Date()
-            },
-            {
-                id: '2',
-                externalId: 'extId2',
-                title: 'title-2',
-                source: 'api',
-                publicationEndDate: new Date()
-            }
+            createJobAdvertisement('0'),
+            createJobAdvertisement('1'),
+            createJobAdvertisement('2')
         ];
 
         state.jobList.push(...initialJobList);
 
         const jobList = [
-            {
-                id: '3',
-                externalId: 'extId3',
-                title: 'title-3',
-                source: 'api',
-                publicationEndDate: new Date()
-            },
-            {
-                id: '4',
-                externalId: 'extId4',
-                title: 'title-4',
-                source: 'api',
-                publicationEndDate: new Date()
-            },
-            {
-                id: '5',
-                externalId: 'extId5',
-                title: 'title-5',
-                source: 'api',
-                publicationEndDate: new Date()
-            }
+            createJobAdvertisement('3'),
+            createJobAdvertisement('4'),
+            createJobAdvertisement('5')
         ];
 
         const action = new actions.NextPageLoadedAction(jobList);
@@ -290,41 +239,24 @@ describe('jobSearchReducer', () => {
 
     it('should update JobSearchState for JOB_DETAIL_LOADED action', () => {
         // GIVEN
-        const publicationEndDate = new Date();
         const state = initialState;
-        const job0 = {
-            id: '0',
-            externalId: 'extId0',
-            title: 'title-0',
-            source: 'api',
-            publicationEndDate
-        };
-        const job1 = {
-            id: '1',
-            externalId: 'extId1',
-            title: 'title-1',
-            source: 'api',
-            publicationEndDate
-        };
-        const job2 = {
-            id: '2',
-            externalId: 'extId2',
-            title: 'title-2',
-            source: 'api',
-            publicationEndDate
-        };
-        const initialJobList = [job0, job1, job2];
+        const jobAdvertisement0 = createJobAdvertisement('0');
+        const initialJobList = [
+            jobAdvertisement0,
+            createJobAdvertisement('1'),
+            createJobAdvertisement('2')
+        ];
 
         state.jobList.push(...initialJobList);
 
-        const action = new actions.JobDetailLoadedAction(Object.assign({}, job0));
+        const action = new actions.JobDetailLoadedAction(Object.assign({}, jobAdvertisement0));
 
         // WHEN
         const newState = jobSearchReducer(state, action);
 
         // THEN
         expect(newState.jobList[0].visited).toBeTruthy();
-        expect(newState.selectedJob).toEqual(job0);
+        expect(newState.selectedJob).toEqual(jobAdvertisement0);
 
         verifyUnchanged(newState, state, ['selectedJob', 'jobList']);
     });

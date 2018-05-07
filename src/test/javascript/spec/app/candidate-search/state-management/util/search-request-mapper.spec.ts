@@ -6,7 +6,7 @@ import { CandidateSearchFilter } from '../../../../../../../main/webapp/app/cand
 import {
     Availability,
     Canton,
-    CEFR_Level,
+    CEFR_Level, Degree,
     DrivingLicenceCategory,
     Experience,
     Graduation,
@@ -22,7 +22,6 @@ import {
     TypeaheadMultiselectModel
 } from '../../../../../../../main/webapp/app/shared/input-components';
 import { CandidateSearchRequest } from '../../../../../../../main/webapp/app/candidate-search/services/candidate-search-request';
-import { Degree } from '../../../../../../../main/webapp/app/shared/job-publication/job-publication.model';
 
 describe('createCandidateSearchRequestFromFilter', () => {
 
@@ -43,7 +42,8 @@ describe('createCandidateSearchRequestFromFilter', () => {
     it('should map CandidateSearchFilter with occupation code', () => {
         // GIVEN
         const occupations = [new TypeaheadMultiselectModel('occupation', 'bfs:564236', 'Java')];
-        const filter: CandidateSearchFilter = Object.assign({}, defaultFilter, { occupations });
+        const filter: CandidateSearchFilter = Object.assign(
+            {}, defaultFilter, { occupations });
 
         // WHEN
         const candidateSearchRequest: CandidateSearchRequest = createCandidateSearchRequestFromFilter(filter);
@@ -250,6 +250,18 @@ describe('createCandidateSearchRequestFromToolState', () => {
         // THEN
         expect(candidateSearchRequest.cantonCode).toEqual('cc');
         expect(candidateSearchRequest.regionCode).toEqual('bb');
+    });
+
+    it('should map CandidateSearchFilter with workplace abroad', () => {
+        // GIVEN
+        const workplace = [new TypeaheadMultiselectModel('type', 'null:null', 'label')];
+        const filter: CandidateSearchToolState = Object.assign({}, defaultSearchToolState, { workplace });
+        // WHEN
+        const candidateSearchRequest: CandidateSearchRequest = createCandidateSearchRequestFromToolState(filter);
+
+        // THEN
+        expect(candidateSearchRequest.cantonCode).toEqual('99');
+        expect(candidateSearchRequest.regionCode).toEqual('AU');
     });
 
     it('should map CandidateSearchFilter with skills', () => {

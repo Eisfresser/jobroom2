@@ -17,7 +17,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { JobSearchFilterComponent } from './job-search-sidebar/job-search-filter/job-search-filter.component';
 import { MarkdownModule } from 'angular2-markdown';
 import { ClipboardModule } from 'ngx-clipboard';
-import { JobService } from './services';
 import { JobLocalityComponent } from './job-locality/job-locality.component';
 import { DetailsPagePaginationEffects } from '../shared/components/details-page-pagination/state-management/effects/details-page-pagination.effects';
 import { NouisliderModule } from 'ng2-nouislider';
@@ -49,8 +48,7 @@ import { JobFingerprintRedirectResolver } from './job-fingerprint-redirect/job-f
         JobLocalityComponent
     ],
     providers: [
-        JobFingerprintRedirectResolver,
-        JobService
+        JobFingerprintRedirectResolver
     ]
 })
 export class JobSearchModule {

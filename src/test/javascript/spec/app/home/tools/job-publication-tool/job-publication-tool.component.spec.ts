@@ -5,7 +5,9 @@ import { LanguageSkillService } from '../../../../../../../main/webapp/app/candi
 import { OccupationPresentationService } from '../../../../../../../main/webapp/app/shared/reference-service';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs/Observable';
-import { JobPublicationService } from '../../../../../../../main/webapp/app/shared/job-publication/job-publication.service';
+import { JobAdvertisementService } from '../../../../../../../main/webapp/app/shared/job-advertisement/job-advertisement.service';
+import { LanguageFilterService } from '../../../../../../../main/webapp/app/shared/input-components/language-filter/language-filter.service';
+import { Store } from '@ngrx/store';
 
 describe('JobPublicationToolComponent', () => {
     let component: JobPublicationToolComponent;
@@ -13,7 +15,10 @@ describe('JobPublicationToolComponent', () => {
     const mockOccupationPresentationService = jasmine.createSpyObj('mockOccupationPresentationService',
         ['fetchOccupationSuggestions', 'occupationFormatter']);
     const mockLanguageSkillService = jasmine.createSpyObj('mockLanguageSkillService', ['getLanguages']);
-    const mockJobPublicationService = jasmine.createSpyObj('mockJobPublicationService', ['findById', 'save']);
+    const mockJobAdvertisementService = jasmine.createSpyObj('mockJobAdvertisementService', ['findById', 'save']);
+    const mockLanguageFilterService = jasmine.createSpyObj('LanguageFilterService', ['getSorterLanguageTranslations']);
+    const mockStore = jasmine.createSpyObj('mockStore', ['select']);
+    mockStore.select.and.returnValue(Observable.of([]));
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -25,11 +30,16 @@ describe('JobPublicationToolComponent', () => {
                     useValue: mockOccupationPresentationService
                 },
                 {
-                    provide: JobPublicationService,
-                    useValue: mockJobPublicationService
+                    provide: JobAdvertisementService,
+                    useValue: mockJobAdvertisementService
+                },
+                {
+                    provide: LanguageFilterService,
+                    useValue: mockLanguageFilterService
                 },
                 { provide: LanguageSkillService, useValue: mockLanguageSkillService },
-                { provide: TranslateService, useValue: { currentLang: 'de', onLangChange: Observable.never() } }
+                { provide: TranslateService, useValue: { currentLang: 'de', onLangChange: Observable.never() } },
+                { provide: Store, useValue: mockStore }
             ]
         })
             .overrideTemplate(JobPublicationToolComponent, '')

@@ -3,6 +3,9 @@ import { JhiLanguageService } from 'ng-jhipster';
 
 import { Principal } from '../auth/principal.service';
 import { AuthServerProvider } from '../auth/auth-jwt.service';
+import { Store } from '@ngrx/store';
+import { CoreState } from '../state-management/state/core.state';
+import { UserLoginAction } from '../state-management/actions/core.actions';
 
 @Injectable()
 export class LoginService {
@@ -10,7 +13,8 @@ export class LoginService {
     constructor(
         private languageService: JhiLanguageService,
         private principal: Principal,
-        private authServerProvider: AuthServerProvider
+        private authServerProvider: AuthServerProvider,
+        private coreStore: Store<CoreState>
     ) {}
 
     login(credentials, callback?) {
@@ -24,6 +28,7 @@ export class LoginService {
                     if (account !== null) {
                         this.languageService.changeLanguage(account.langKey);
                     }
+                    this.coreStore.dispatch(new UserLoginAction(account));
                     resolve(data);
                 });
                 return cb();
@@ -42,5 +47,6 @@ export class LoginService {
     logout() {
         this.authServerProvider.logout().subscribe();
         this.principal.authenticate(null);
+        this.coreStore.dispatch(new UserLoginAction(null));
     }
 }

@@ -1,5 +1,5 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { JobPublication } from '../../../shared/job-publication/job-publication.model';
+import { JobAdvertisement } from '../../../shared/job-advertisement/job-advertisement.model';
 
 export enum LoadingStatus {
     INITIAL, OK, FAILED
@@ -8,23 +8,23 @@ export enum LoadingStatus {
 export interface JobPublicationDetailState {
     showCancellationSuccess: boolean;
     showCancellationError: boolean;
-    jobPublication: JobPublication;
+    jobAdvertisement: JobAdvertisement;
     loadingStatus: LoadingStatus;
 }
 
 export const initialState: JobPublicationDetailState = {
     showCancellationSuccess: false,
     showCancellationError: false,
-    jobPublication: null,
+    jobAdvertisement: null,
     loadingStatus: LoadingStatus.INITIAL
 };
 
-export const getJobPublicationDetailState = createFeatureSelector<JobPublicationDetailState>('jobPublicationDetail');
-export const getShowCancellationSuccess = createSelector(getJobPublicationDetailState,
+export const getJobAdvertisementDetailState = createFeatureSelector<JobPublicationDetailState>('jobPublicationDetail');
+export const getShowCancellationSuccess = createSelector(getJobAdvertisementDetailState,
     (state: JobPublicationDetailState) => state.showCancellationSuccess);
-export const getShowCancellationError = createSelector(getJobPublicationDetailState,
+export const getShowCancellationError = createSelector(getJobAdvertisementDetailState,
     (state: JobPublicationDetailState) => state.showCancellationError);
-export const getJobPublication = createSelector(getJobPublicationDetailState,
-    (state: JobPublicationDetailState) => state.jobPublication);
-export const getLoadingStatus = createSelector(getJobPublicationDetailState,
+export const getJobAdvertisement = createSelector(getJobAdvertisementDetailState,
+    (state: JobPublicationDetailState) => state.jobAdvertisement);
+export const getLoadingStatus = createSelector(getJobAdvertisementDetailState,
     (state: JobPublicationDetailState) => state.loadingStatus);

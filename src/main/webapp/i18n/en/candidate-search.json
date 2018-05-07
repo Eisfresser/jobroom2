@@ -68,13 +68,6 @@
                 "selected": "Cantons"
             }
         },
-        "workForm": {
-            "HOME_WORK": "Home-based work",
-            "NIGHT_WORK": "Night work",
-            "SHIFT_WORK": "Shift work",
-            "SUNDAY_AND_HOLIDAYS": "Sunday and holiday work",
-            "label": "Work form"
-        },
         "workload": {
             "label": "Workload"
         },

@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
-import { JobSearchFilter, JobSearchQuery } from '../state/job-search.state';
-import { Job } from '../../services';
+import { JobSearchFilter, JobSearchQuery } from '..';
+import { JobAdvertisement } from '../../../shared/job-advertisement/job-advertisement.model';
 
 export const INIT_JOB_SEARCH = 'JOBS:INIT_JOB_SEARCH';
 export const LOAD_NEXT_PAGE = 'JOBS:LOAD_NEXT_PAGE';
@@ -53,21 +53,21 @@ export class LoadNextPageAction implements Action {
 export class JobDetailLoadedAction implements Action {
     readonly type = JOB_DETAIL_LOADED;
 
-    constructor(public payload: Job) {
+    constructor(public payload: JobAdvertisement) {
     }
 }
 
 export class JobListLoadedAction implements Action {
     readonly type = JOB_LIST_LOADED;
 
-    constructor(public payload: { jobList: Array<Job>, totalCount: number, page: number }) {
+    constructor(public payload: { jobList: Array<JobAdvertisement>, totalCount: number, page: number }) {
     }
 }
 
 export class NextPageLoadedAction implements Action {
     readonly type = NEXT_PAGE_LOADED;
 
-    constructor(public payload: Array<Job>) {
+    constructor(public payload: Array<JobAdvertisement>) {
     }
 }
 

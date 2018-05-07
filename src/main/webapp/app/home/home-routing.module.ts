@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home.component';
-import { JobPublicationResolverService } from './tools/job-publication-tool/service/job-publication-resolver.service';
 import { UserDataResolverService } from './tools/job-publication-tool/service/user-data-resolver.service';
+import { JobAdvertisementResolverService } from './tools/job-publication-tool/service/job-advertisement-resolver.service';
 import { AuthResolverService } from './tools/auth-resolver.service';
 
 const routes: Routes = [
@@ -64,7 +64,7 @@ const routes: Routes = [
         path: 'agents/jobpublication',
         component: HomeComponent,
         resolve: {
-            jobPublication: JobPublicationResolverService,
+            jobAdvertisement: JobAdvertisementResolverService,
             userData: UserDataResolverService
         },
         data: {

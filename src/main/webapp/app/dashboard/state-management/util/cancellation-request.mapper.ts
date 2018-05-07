@@ -1,6 +1,6 @@
-import { JobCancelRequest } from '../../../shared/job-publication/job-publication-cancel-request';
-import { CancellationReason } from '../../../shared/job-publication/job-publication.model';
 import { CancellationData } from '../../dialogs/cancellation-data';
+import { JobAdvertisementCancelRequest } from '../../../shared/job-advertisement/job-advertisement-cancel-request';
+import { CancellationReason } from '../../../shared/job-advertisement/job-advertisement.model';
 
 interface CancellationReasonForm {
     positionOccupied: boolean;
@@ -11,32 +11,31 @@ interface CancellationReasonForm {
     }
 }
 
-export function createJobPublicationCancellationRequest(cancellationData: CancellationData): JobCancelRequest {
-    const { id, accessToken, cancellationReason } = cancellationData;
+export function createJobAdvertisementCancellationRequest(cancellationData: CancellationData): JobAdvertisementCancelRequest {
+    const { id, cancellationReason } = cancellationData;
     return {
         id,
-        accessToken,
-        cancellationReason: getCancellationReason(cancellationReason)
-    } as JobCancelRequest;
+        reasonCode: CancellationReason[getCancellationReason(cancellationReason)]
+    } as JobAdvertisementCancelRequest;
 }
 
 function getCancellationReason(cancellationReasonForm: CancellationReasonForm): CancellationReason {
     if (!cancellationReasonForm.positionOccupied) {
-        return CancellationReason.POSITION_NOT_OCCUPIED;
+        return CancellationReason.NOT_OCCUPIED;
     }
 
     if (cancellationReasonForm.occupiedWith.self) {
-        return CancellationReason.POSITION_OCCUPIED_SELF;
+        return CancellationReason.OCCUPIED_SELF;
     }
 
     if (cancellationReasonForm.occupiedWith.jobCenter
         && cancellationReasonForm.occupiedWith.privateAgency) {
-        return CancellationReason.POSITION_OCCUPIED_BOTH;
+        return CancellationReason.OCCUPIED_BOTH;
     }
 
     if (cancellationReasonForm.occupiedWith.jobCenter) {
-        return CancellationReason.POSITION_OCCUPIED_JOB_CENTER;
+        return CancellationReason.OCCUPIED_JOB_CENTER;
     }
 
-    return CancellationReason.POSITION_OCCUPIED_PRIVATE_AGENCY;
+    return CancellationReason.OCCUPIED_PRIVATE_AGENCY;
 }

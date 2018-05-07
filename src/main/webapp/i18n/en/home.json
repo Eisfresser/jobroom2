@@ -34,13 +34,12 @@
                         "label": "Supplementary information",
                         "placeholder": "Max. 240 characters"
                     },
-                    "email": "Email",
-                    "email-enabled": "Electronic application",
-                    "mail-enabled": "Paper application",
-                    "online-form": "Online form",
-                    "phone": "Telephone number",
-                    "phone-enabled": "Application by telephone",
-                    "title": "Application forms"
+                    "email": "Email address for electronic application",
+                    "online-form": "Online form for electronic application",
+                    "copy-from-business": "Take address from business",
+                    "paper-application-url": "Address for paper application",
+                    "phone": "Phone number for application",
+                    "title": "Application channels"
                 },
                 "company": {
                     "country": "Country",
@@ -51,35 +50,52 @@
                     "postbox-zipcode": "PO box postal code / city",
                     "street": "Street",
                     "title": "Business",
-                    "zipcode": "Postal code / city"
+                    "name": "Business name",
+                    "zipcode": "Postal code / city",
+                    "surrogate": "This bussiness is surrogate for a employer"
+                },
+                "employer": {
+                    "title": "Employer"
                 },
                 "contact": {
                     "email": "Email",
                     "first-name": "First name",
                     "last-name": "Last name",
                     "phone": "Telephone number",
-                    "salutation": "Title",
-                    "title": "Contact person"
+                    "salutation": "Salutation",
+                    "title": "Contact"
+                },
+                "public-contact": {
+                    "title": "Jobseeker contact",
+                    "copy": "Take from contact"
                 },
                 "date-placeholder": "DD.MM.YYYY",
-                "degree": "Training",
+                "employment": {
+                    "title": "Employment"
+                },
+                "degree": "Education",
                 "description": {
                     "characters-counter-text": "{{count}} characters available",
                     "label": "Duties / requirements",
-                    "placeholder": "max. 9000 characters"
+                    "add": "Add new job description language",
+                    "placeholder": "max. 10000 characters"
                 },
                 "disclaimer": "I certify that the employer complies with local and industry standards for wage and working conditions.",
                 "disclaimer.error": "Please confirm that the employer complies with local and industry standards for wage and working conditions.",
                 "driving-licence": "Driving licence",
                 "experience": "Work experience",
-                "experience.BETWEEN_1_AND_3_YEARS": "1 - 3 years",
+                "experience.MORE_THAN_1_YEAR": "1 - 3 years",
                 "experience.LESS_THAN_1_YEAR": "less than 1 year",
                 "experience.MORE_THAN_3_YEARS": "more than 3 years",
                 "experience.NO_EXPERIENCE": "no experience",
                 "job-description": "Job description",
+                "job-description-lang": {
+                    "label": "Job description language"
+                },
                 "job-title": "Job title",
                 "language-skills": "Languages",
                 "language-skills.spoken.error": "Language skill is required",
+                "language-skills.add": "Add new language skill",
                 "locality": {
                     "additional-text": "Additional text",
                     "additional-text.placeholder": "e.g. in the field throughout Switzerland",
@@ -117,23 +133,35 @@
                     "url": "http://www.example.ch"
                 },
                 "publication": {
-                    "eures": "EURES Portal",
-                    "eures.url": "http://www.eures.ch/en",
-                    "jobroom": " Job-Room Website",
-                    "jobroom.url": "http://www.job-room.ch",
-                    "title": "Publication media"
+                    "restricted-display": "Display it on the Job-Room restricted area",
+                    "restricted-anonymous": "Show details",
+                    "eures": "Display the publication in EURES",
+                    "eures-anonymous": "Show details for anonymous users",
+                    "public-display": "Display the publication on the website",
+                    "public-anonymous": "Show details for anonymous users",
+                    "title": "Publication media",
+                    "public": {
+                        "label": "Job-Room public website"
+                    },
+                    "restricted": {
+                        "label": "Job-Room restricted area"
+                    },
+                    "eures.label": "EURES"
                 },
-                "publicationEndDate": {
+                "employmentEndDate": {
                     "label": "Temporary employment to date",
                     "permanent": "permanent",
                     "temporary": "temporary until",
                     "title": "Employment duration"
                 },
-                "publicationStartDate": {
+                "employmentStartDate": {
                     "by-arrangement": "from",
                     "immediately": "immediately",
                     "label": "Employment start date",
                     "title": "Employment start"
+                },
+                "shortEmployment": {
+                    "label": "Is a short employment (duration < 14 days)"
                 },
                 "reset": "Reset",
                 "submit": "Publish job",

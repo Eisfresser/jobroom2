@@ -6,11 +6,11 @@ import {
     ContractType, JobSearchFilter, JobSearchQuery,
     Sort
 } from '../../../../../../../main/webapp/app/job-search/state-management/state/job-search.state';
-import { JobSearchRequest } from '../../../../../../../main/webapp/app/job-search/services/job-search-request';
 import { TypeaheadMultiselectModel } from '../../../../../../../main/webapp/app/shared/input-components';
 import { LocalityInputType } from '../../../../../../../main/webapp/app/shared/reference-service/locality-autocomplete';
 import { OccupationInputType } from '../../../../../../../main/webapp/app/shared/reference-service/occupation-presentation.service';
 import { JobSearchToolState } from '../../../../../../../main/webapp/app/home/state-management/state/job-search-tool.state';
+import { JobAdvertisementSearchRequest, JobAdvertisementSearchRequestBody } from '../../../../../../../main/webapp/app/shared/job-advertisement/job-advertisement-search-request';
 
 describe('createJobSearchRequest', () => {
     const defaultQuery: JobSearchQuery = {
@@ -22,15 +22,16 @@ describe('createJobSearchRequest', () => {
         contractType: ContractType.ALL,
         workingTime: [0, 100],
         sort: Sort.RELEVANCE_DESC,
-        onlineSince: 60
+        onlineSince: 60,
+        displayRestricted: false
     };
 
     it('should map JobSearchFilter with default sort', () => {
         // WHEN
-        const jobSearchRequest: JobSearchRequest = createJobSearchRequest(defaultQuery, defaultFilter);
+        const jobSearchRequest: JobAdvertisementSearchRequest = createJobSearchRequest(defaultQuery, defaultFilter);
 
         // THEN
-        expect(jobSearchRequest.sort).toEqual(['_score,desc', 'registrationDate,desc']);
+        expect(jobSearchRequest.sort).toEqual(['score', 'date_desc']);
     });
 
     it('should map JobSearchFilter with sort by date asc', () => {
@@ -38,10 +39,10 @@ describe('createJobSearchRequest', () => {
         const filter: JobSearchFilter = Object.assign({}, defaultFilter, { sort: Sort.DATE_ASC });
 
         // WHEN
-        const jobSearchRequest: JobSearchRequest = createJobSearchRequest(defaultQuery, filter);
+        const jobSearchRequest: JobAdvertisementSearchRequest = createJobSearchRequest(defaultQuery, filter);
 
         // THEN
-        expect(jobSearchRequest.sort).toEqual(['registrationDate,asc', '_score,desc']);
+        expect(jobSearchRequest.sort).toEqual(['date_asc', 'score']);
     });
 
     it('should map JobSearchFilter with sort by date desc', () => {
@@ -49,18 +50,18 @@ describe('createJobSearchRequest', () => {
         const filter: JobSearchFilter = Object.assign({}, defaultFilter, { sort: Sort.DATE_DESC });
 
         // WHEN
-        const jobSearchRequest: JobSearchRequest = createJobSearchRequest(defaultQuery, filter);
+        const jobSearchRequest: JobAdvertisementSearchRequest = createJobSearchRequest(defaultQuery, filter);
 
         // THEN
-        expect(jobSearchRequest.sort).toEqual(['registrationDate,desc', '_score,desc']);
+        expect(jobSearchRequest.sort).toEqual(['date_desc', 'score']);
     });
 
     it('should map JobSearchFilter with default contract type', () => {
         // WHEN
-        const jobSearchRequest: JobSearchRequest = createJobSearchRequest(defaultQuery, defaultFilter);
+        const jobSearchRequest: JobAdvertisementSearchRequest = createJobSearchRequest(defaultQuery, defaultFilter);
 
         // THEN
-        expect(jobSearchRequest.permanent).toEqual(null);
+        expect(jobSearchRequest.body.permanent).toEqual(null);
     });
 
     it('should map JobSearchFilter with permanent contract type', () => {
@@ -68,10 +69,10 @@ describe('createJobSearchRequest', () => {
         const filter: JobSearchFilter = Object.assign({}, defaultFilter, { contractType: ContractType.PERMANENT, });
 
         // WHEN
-        const jobSearchRequest: JobSearchRequest = createJobSearchRequest(defaultQuery, filter);
+        const jobSearchRequest: JobAdvertisementSearchRequest = createJobSearchRequest(defaultQuery, filter);
 
         // THEN
-        expect(jobSearchRequest.permanent).toBeTruthy();
+        expect(jobSearchRequest.body.permanent).toBeTruthy();
     });
 
     it('should map JobSearchFilter with temporary contract type', () => {
@@ -79,10 +80,10 @@ describe('createJobSearchRequest', () => {
         const filter: JobSearchFilter = Object.assign({}, defaultFilter, { contractType: ContractType.TEMPORARY, });
 
         // WHEN
-        const jobSearchRequest: JobSearchRequest = createJobSearchRequest(defaultQuery, filter);
+        const jobSearchRequest: JobAdvertisementSearchRequest = createJobSearchRequest(defaultQuery, filter);
 
         // THEN
-        expect(jobSearchRequest.permanent).toBeFalsy();
+        expect(jobSearchRequest.body.permanent).toBeFalsy();
     });
 
     it('should map JobSearchQuery', () => {
@@ -101,32 +102,32 @@ describe('createJobSearchRequest', () => {
         };
 
         // WHEN
-        const jobSearchRequest: JobSearchRequest = createJobSearchRequest(query, defaultFilter);
+        const jobSearchRequest: JobAdvertisementSearchRequest = createJobSearchRequest(query, defaultFilter);
 
         // THEN
-        expect(jobSearchRequest.keywords).toEqual(['l1']);
-        expect(jobSearchRequest.occupationCodes[0].value).toEqual(33);
-        expect(jobSearchRequest.occupationCodes[0].type).toEqual('x28');
+        expect(jobSearchRequest.body.keywords).toEqual(['l1']);
+        expect(jobSearchRequest.body.professionCodes[0].value).toEqual('33');
+        expect(jobSearchRequest.body.professionCodes[0].type).toEqual('x28');
 
-        expect(jobSearchRequest.occupationCodes[1].value).toEqual(11);
-        expect(jobSearchRequest.occupationCodes[1].type).toEqual('avam');
+        expect(jobSearchRequest.body.professionCodes[1].value).toEqual('11');
+        expect(jobSearchRequest.body.professionCodes[1].type).toEqual('avam');
 
-        expect(jobSearchRequest.occupationCodes[2].value).toEqual(12);
-        expect(jobSearchRequest.occupationCodes[2].type).toEqual('avam');
+        expect(jobSearchRequest.body.professionCodes[2].value).toEqual('12');
+        expect(jobSearchRequest.body.professionCodes[2].type).toEqual('avam');
 
-        expect(jobSearchRequest.occupationCodes[3].value).toEqual(111);
-        expect(jobSearchRequest.occupationCodes[3].type).toEqual('sbn3');
+        expect(jobSearchRequest.body.professionCodes[3].value).toEqual('111');
+        expect(jobSearchRequest.body.professionCodes[3].type).toEqual('sbn3');
 
-        expect(jobSearchRequest.localities).toEqual(['c4']);
-        expect(jobSearchRequest.cantons).toEqual(['c5']);
+        expect(jobSearchRequest.body.communalCodes).toEqual(['c4']);
+        expect(jobSearchRequest.body.cantonCodes).toEqual(['c5']);
     });
 
     it('should map JobSearchFilter with default online since', () => {
         // WHEN
-        const jobSearchRequest: JobSearchRequest = createJobSearchRequest(defaultQuery, defaultFilter);
+        const jobSearchRequest: JobAdvertisementSearchRequest = createJobSearchRequest(defaultQuery, defaultFilter);
 
         // THEN
-        expect(jobSearchRequest.onlineSince).toEqual(60);
+        expect(jobSearchRequest.body.onlineSince).toEqual(60);
     })
 });
 
@@ -141,7 +142,7 @@ describe('createJobSearchRequestFromToolState', () => {
 
     it('should map JobSearchToolState with onlineSince value', () => {
         // WHEN
-        const jobSearchRequest: JobSearchRequest = createJobSearchRequestFromToolState(defaultFilter);
+        const jobSearchRequest: JobAdvertisementSearchRequestBody = createJobSearchRequestFromToolState(defaultFilter);
 
         // THEN
         expect(jobSearchRequest.onlineSince).toEqual(33);

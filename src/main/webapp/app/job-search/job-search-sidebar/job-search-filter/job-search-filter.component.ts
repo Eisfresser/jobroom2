@@ -31,7 +31,8 @@ export class JobSearchFilterComponent implements OnInit, OnDestroy {
                 contractType: this.searchFilter.contractType,
                 workingTime: this.searchFilter.workingTime,
                 onlineSince: this.searchFilter.onlineSince,
-                sort: this.searchFilter.sort
+                sort: this.searchFilter.sort,
+                displayRestricted: this.searchFilter.displayRestricted
             });
         }
     }
@@ -54,7 +55,8 @@ export class JobSearchFilterComponent implements OnInit, OnDestroy {
             contractType: [this.searchFilter.contractType],
             workingTime: [this.searchFilter.workingTime],
             onlineSince: [this.searchFilter.onlineSince],
-            sort: [this.searchFilter.sort]
+            sort: [this.searchFilter.sort],
+            displayRestricted: [this.searchFilter.displayRestricted]
         });
 
         this.companyName = this.fb.control(this.searchFilter.companyName);

@@ -1,5 +1,4 @@
 import { AfterViewInit, Component, HostListener, Input, OnDestroy } from '@angular/core';
-import { Job } from '../services';
 import { Store } from '@ngrx/store';
 import { JobSearchState, LoadNextPageAction } from '../state-management';
 import { Observable } from 'rxjs/Observable';
@@ -12,6 +11,7 @@ import {
     SaveScrollYAction
 } from '../state-management/actions/job-search.actions';
 import { Subscription } from 'rxjs/Subscription';
+import { JobAdvertisement, JobDescription } from '../../shared/job-advertisement/job-advertisement.model';
 
 @Component({
     selector: 'jr2-job-search-list',
@@ -19,7 +19,8 @@ import { Subscription } from 'rxjs/Subscription';
     styles: []
 })
 export class JobSearchListComponent implements OnDestroy, AfterViewInit {
-    @Input() jobList: Array<Job>;
+    @Input() jobList: Array<JobAdvertisement>;
+    @Input() jobDescriptions: Array<JobDescription>;
     @Input() totalCount: number;
     @Input() baseQueryString: string;
     @Input() localityQueryString: string;

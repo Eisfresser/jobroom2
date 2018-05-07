@@ -5,3 +5,9 @@
 :host /deep/ .form-row:nth-child(even) .form-group {
     margin-bottom: 0;
 }
+
+.language-skills__item {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    background-color: rgba(0, 0, 0, 0.08);
+}

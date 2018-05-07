@@ -34,12 +34,16 @@
             "title": "Filter search result",
             "working-time": {
                 "label": "Workload"
+            },
+            "restricted-jobs": {
+                "label": "Nur meldepflichtige Stellen anzeigen"
             }
         },
         "job-search-list-item": {
             "badge": {
                 "permanent": "Permanent",
-                "temporary": "Temporary"
+                "temporary": "Temporary",
+                "restricted": "meldepflichtig"
             }
         },
         "job-search-list": {

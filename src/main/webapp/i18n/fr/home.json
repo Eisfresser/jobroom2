@@ -34,13 +34,12 @@
                         "label": "Indications compl\u00e9mentaires",
                         "placeholder": "max. 240 caract\u00e8res"
                     },
-                    "email": "Courriel",
-                    "email-enabled": "Postulation en ligne",
-                    "mail-enabled": "Postulation par courrier",
-                    "online-form": "Formulaire en ligne",
-                    "phone": "T\u00e9l\u00e9phone",
-                    "phone-enabled": "Postulation par t\u00e9l\u00e9phone",
-                    "title": "Formes de postulation"
+                    "email": "Email address for electronic application",
+                    "online-form": "Online form for electronic application",
+                    "copy-from-business": "Take address from business",
+                    "paper-application-url": "Address for paper application",
+                    "phone": "Phone number for application",
+                    "title": "Application channels"
                 },
                 "company": {
                     "country": "Pays",
@@ -51,35 +50,52 @@
                     "postbox-zipcode": "Case postale NPA / lieu",
                     "street": "Rue",
                     "title": "Entreprise",
-                    "zipcode": "NPA / lieu"
+                    "name": "Business name",
+                    "zipcode": "NPA / lieu",
+                    "surrogate": "This bussiness is surrogate for a employer"
+                },
+                "employer": {
+                    "title": "Employer"
                 },
                 "contact": {
                     "email": "Courriel",
                     "first-name": "Pr\u00e9nom",
                     "last-name": "Nom",
                     "phone": "T\u00e9l\u00e9phone",
-                    "salutation": "Titre",
-                    "title": "Personne de contact"
+                    "salutation": "Salutation",
+                    "title": "Contact"
+                },
+                "public-contact": {
+                    "title": "Jobseeker contact",
+                    "copy": "Take from contact"
                 },
                 "date-placeholder": "JJ.MM.AAAA",
-                "degree": "Formation",
+                "employment": {
+                    "title": "Employment"
+                },
+                "degree": "Education",
                 "description": {
                     "characters-counter-text": "{{count}} caract\u00e8res disponibles",
                     "label": "Activit\u00e9 / exigences",
-                    "placeholder": "max. 9000 caract\u00e8res"
+                    "add": "Add new job description language",
+                    "placeholder": "max. 10000 caract\u00e8res"
                 },
                 "disclaimer": "Je confirme que l'employeur respecte les conditions de travail et de salaire usuelles dans la branche et la localit\u00e9 en question.",
                 "disclaimer.error": "Veuillez confirmer que l'employeur respecte bien les conditions de travail et de salaire en vigueur dans la branche et la localit\u00e9 en question.",
                 "driving-licence": "Permis de conduire",
                 "experience": "Exp\u00e9rience professionnelle",
-                "experience.BETWEEN_1_AND_3_YEARS": "1 - 3 ann\u00e9es",
+                "experience.MORE_THAN_1_YEAR": "1 - 3 ann\u00e9es",
                 "experience.LESS_THAN_1_YEAR": "moins de 1 ann\u00e9e",
                 "experience.MORE_THAN_3_YEARS": "plus de 3 ann\u00e9es",
                 "experience.NO_EXPERIENCE": "sans exp\u00e9rience",
                 "job-description": "Descriptif du poste",
+                "job-description-lang": {
+                    "label": "Job description language"
+                },
                 "job-title": "D\u00e9signation du poste",
                 "language-skills": "Connaissances linguistiques",
                 "language-skills.spoken.error": "Des connaissances linguistiques sont requises",
+                "language-skills.add": "Add new language skill",
                 "locality": {
                     "additional-text": "Texte compl\u00e9mentaire",
                     "additional-text.placeholder": "p. ex. service externe dans toute la Suisse",
@@ -117,23 +133,35 @@
                     "url": "http://www.exemple.ch"
                 },
                 "publication": {
-                    "eures": "Portal EURES",
-                    "eures.url": "http://www.eures.ch/fr",
-                    "jobroom": " Site Job-Room",
-                    "jobroom.url": "http://www.job-room.ch",
-                    "title": "Moyens de publication"
+                    "restricted-display": "Display it on the Job-Room restricted area",
+                    "restricted-anonymous": "Show details",
+                    "eures": "Display the publication in EURES",
+                    "eures-anonymous": "Show details for anonymous users",
+                    "public-display": "Display the publication on the website",
+                    "public-anonymous": "Show details for anonymous users",
+                    "title": "Moyens de publication",
+                    "public": {
+                        "label": "Job-Room public website"
+                    },
+                    "restricted": {
+                        "label": "Job-Room restricted area"
+                    },
+                    "eures.label": "EURES"
                 },
-                "publicationEndDate": {
+                "employmentEndDate": {
                     "label": "Engagement limit\u00e9 au [date]",
                     "permanent": "illimit\u00e9",
                     "temporary": "limit\u00e9 au",
                     "title": "Dur\u00e9e de l'engagement"
                 },
-                "publicationStartDate": {
+                "employmentStartDate": {
                     "by-arrangement": "du",
                     "immediately": "tout de suite",
                     "label": "Entr\u00e9e en fonction le [date]",
                     "title": "Entr\u00e9e en fonction  "
+                },
+                "shortEmployment": {
+                    "label": "Is a short employment (duration < 14 days)"
                 },
                 "reset": "R\u00e9tablir",
                 "submit": "Publier un emploi",

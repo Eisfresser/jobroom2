@@ -1,7 +1,7 @@
 import {
     JobSearchEffects,
     jobSearchReducer,
-    JobSearchState
+    JobSearchState,
 } from '../../../../../../../main/webapp/app/job-search/state-management';
 import { TestBed } from '@angular/core/testing';
 import { MockRouter } from '../../../../helpers/mock-route.service';
@@ -21,20 +21,23 @@ import {
     JOB_SEARCH_DEBOUNCE,
     JOB_SEARCH_SCHEDULER
 } from '../../../../../../../main/webapp/app/job-search/state-management/effects/job-search.effects';
-import { JobService } from '../../../../../../../main/webapp/app/job-search/services';
 import {
     LoadNextItemsPageAction,
     LoadNextItemsPageErrorAction,
     NextItemsPageLoadedAction
 } from '../../../../../../../main/webapp/app/shared/components/details-page-pagination/state-management/actions/details-page-pagination.actions';
 import { HttpHeaders } from '@angular/common/http';
+import { createJobAdvertisement } from '../../../shared/job-publication/utils';
+import { JobAdvertisementService } from '../../../../../../../main/webapp/app/shared/job-advertisement/job-advertisement.service';
+import { UserLoginAction } from '../../../../../../../main/webapp/app/shared/state-management/actions/core.actions';
+import { User } from '../../../../../../../main/webapp/app/shared';
 
 describe('JobSearchEffects', () => {
     let effects: JobSearchEffects;
     let actions$: Observable<any>;
     let store: Store<JobSearchState>;
 
-    const mockJobService = jasmine.createSpyObj('mockJobService', ['search']);
+    const mockJobAdvertisementService = jasmine.createSpyObj('mockJobAdvertisementService', ['searchJobAds']);
     const mockRouter = new MockRouter();
 
     beforeEach(() => {
@@ -45,7 +48,7 @@ describe('JobSearchEffects', () => {
             providers: [
                 JobSearchEffects,
                 provideMockActions(() => actions$),
-                { provide: JobService, useValue: mockJobService },
+                { provide: JobAdvertisementService, useValue: mockJobAdvertisementService },
                 { provide: Router, useValue: mockRouter },
                 { provide: JOB_SEARCH_SCHEDULER, useFactory: getTestScheduler },
                 { provide: JOB_SEARCH_DEBOUNCE, useValue: 30 }
@@ -61,19 +64,13 @@ describe('JobSearchEffects', () => {
 
         it('should return new JobListLoadedAction if store is in initial state', () => {
             const jobList = [
-                {
-                    id: '0',
-                    externalId: 'extId0',
-                    title: 'title-0',
-                    source: 'api',
-                    publicationEndDate: new Date()
-                }
+                createJobAdvertisement('0')
             ];
             const responseWrapper = new ResponseWrapper(new HttpHeaders({ 'X-Total-Count': '100' }), jobList, 200);
 
             actions$ = hot('-a', { a: action });
             const response = cold('-a|', { a: responseWrapper });
-            mockJobService.search.and.returnValue(response);
+            mockJobAdvertisementService.searchJobAds.and.returnValue(response);
 
             const jobListLoadedAction = new actions.JobListLoadedAction({
                 jobList,
@@ -89,13 +86,7 @@ describe('JobSearchEffects', () => {
 
             const loadJobListAction = new actions.JobListLoadedAction({
                 jobList: [
-                    {
-                        id: '0',
-                        externalId: 'extId0',
-                        title: 'title-0',
-                        source: 'api',
-                        publicationEndDate: new Date()
-                    }
+                    createJobAdvertisement('0')
                 ],
                 totalCount: 100,
                 page: 1
@@ -110,6 +101,46 @@ describe('JobSearchEffects', () => {
         });
     });
 
+    describe('reloadJobList', () => {
+        beforeEach(() => {
+            jasmine.clock().uninstall();
+            jasmine.clock().install();
+        });
+
+        afterEach(() => {
+            jasmine.clock().uninstall();
+        });
+
+        it('should return new ResetFilterAction when user logs in', () => {
+            jasmine.clock().mockDate(new Date(1528070400000));
+            const action = new UserLoginAction(new User('1', 'user'));
+            actions$ = hot('-a', { a: action });
+
+            const resetFilterAction = new actions.ResetFilterAction(1528070400000);
+            const expected = cold('-b', { b: resetFilterAction });
+
+            expect(effects.reloadJobList$).toBeObservable(expected);
+        });
+
+        it('should not return anything when user logs out', () => {
+            const action = new UserLoginAction(null);
+            const loadJobListAction = new actions.JobListLoadedAction({
+                jobList: [
+                    createJobAdvertisement('0')
+                ],
+                totalCount: 100,
+                page: 1
+            });
+            store.dispatch(loadJobListAction);
+
+            actions$ = hot('-a', { a: action });
+
+            const expected = cold('-');
+
+            expect(effects.reloadJobList$).toBeObservable(expected);
+        });
+    });
+
     describe('loadJobList$', () => {
         it('should return a new JobListLoadedAction with the loaded jobs on success', () => {
             const action = new actions.ToolbarChangedAction({
@@ -117,33 +148,15 @@ describe('JobSearchEffects', () => {
                 localityQuery: []
             });
             const jobList = [
-                {
-                    id: '0',
-                    externalId: 'extId0',
-                    title: 'title-0',
-                    source: 'api',
-                    publicationEndDate: new Date()
-                },
-                {
-                    id: '1',
-                    externalId: 'extId1',
-                    title: 'title-1',
-                    source: 'api',
-                    publicationEndDate: new Date()
-                },
-                {
-                    id: '2',
-                    externalId: 'extId2',
-                    title: 'title-2',
-                    source: 'api',
-                    publicationEndDate: new Date()
-                }
+                createJobAdvertisement('0'),
+                createJobAdvertisement('1'),
+                createJobAdvertisement('2')
             ];
             const responseWrapper = new ResponseWrapper(new HttpHeaders({ 'X-Total-Count': '100' }), jobList, 200);
 
             actions$ = hot('-a---', { a: action });
             const response = cold('-a|', { a: responseWrapper });
-            mockJobService.search.and.returnValue(response);
+            mockJobAdvertisementService.searchJobAds.and.returnValue(response);
 
             const jobListLoadedAction = new actions.JobListLoadedAction({
                 jobList,
@@ -163,7 +176,7 @@ describe('JobSearchEffects', () => {
 
             actions$ = hot('-a---', { a: action });
             const response = cold('-#|', {}, 'error');
-            mockJobService.search.and.returnValue(response);
+            mockJobAdvertisementService.searchJobAds.and.returnValue(response);
 
             const showJobListErrorAction = new actions.ShowJobListErrorAction('error');
             const expected = cold('-----b', { b: showJobListErrorAction });
@@ -175,34 +188,16 @@ describe('JobSearchEffects', () => {
     describe('loadNextPage$', () => {
         it('should return a new NextPageLoadedAction with the loaded jobs on success', () => {
             const jobList = [
-                {
-                    id: '0',
-                    externalId: 'extId0',
-                    title: 'title-0',
-                    source: 'api',
-                    publicationEndDate: new Date()
-                },
-                {
-                    id: '1',
-                    externalId: 'extId1',
-                    title: 'title-1',
-                    source: 'api',
-                    publicationEndDate: new Date()
-                },
-                {
-                    id: '2',
-                    externalId: 'extId2',
-                    title: 'title-2',
-                    source: 'api',
-                    publicationEndDate: new Date()
-                }
+                createJobAdvertisement('0'),
+                createJobAdvertisement('1'),
+                createJobAdvertisement('2')
             ];
             const responseWrapper = new ResponseWrapper(new HttpHeaders({ 'X-Total-Count': '100' }), jobList, 200);
             const action = new actions.LoadNextPageAction();
 
             actions$ = hot('-a', { a: action });
             const response = cold('-a|', { a: responseWrapper });
-            mockJobService.search.and.returnValue(response);
+            mockJobAdvertisementService.searchJobAds.and.returnValue(response);
 
             const nextPageLoadedAction = new actions.NextPageLoadedAction(jobList);
             const expected = cold('--b', { b: nextPageLoadedAction });
@@ -215,7 +210,7 @@ describe('JobSearchEffects', () => {
 
             actions$ = hot('-a', { a: action });
             const response = cold('-#', {}, 'error');
-            mockJobService.search.and.returnValue(response);
+            mockJobAdvertisementService.searchJobAds.and.returnValue(response);
 
             const showJobListErrorAction = new actions.ShowJobListErrorAction('error');
             const expected = cold('--b', { b: showJobListErrorAction });
@@ -225,13 +220,7 @@ describe('JobSearchEffects', () => {
     });
 
     describe('nextItemsPageLoaded$', () => {
-        const job1 = {
-            id: '0',
-            externalId: 'extId0',
-            title: 'title-0',
-            source: 'api',
-            publicationEndDate: new Date()
-        };
+        const job1 = createJobAdvertisement('0');
         const jobList = [job1];
 
         it('should return NextItemsPageLoadedAction on success', () => {

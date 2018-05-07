@@ -1,10 +1,8 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { JobPublication } from '../../shared/job-publication/job-publication.model';
-import { JobPublicationService } from '../../shared/job-publication/job-publication.service';
 import { Store } from '@ngrx/store';
 import {
-    getJobPublication,
+    getJobAdvertisement,
     getShowCancellationError,
     getShowCancellationSuccess,
     JobPublicationDetailState
@@ -14,7 +12,11 @@ import {
     HideSuccessMessageAction,
     SubmitCancellationAction
 } from '../state-management/actions/job-publication-detail.actions';
-import { JobPublicationCancelDialogService } from '../dialogs/job-publication-cancel-dialog.service';
+import { JobAdvertisement, JobDescription } from '../../shared/job-advertisement/job-advertisement.model';
+import { JobAdvertisementService } from '../../shared/job-advertisement/job-advertisement.service';
+import { JobAdvertisementUtils } from '../job-advertisement.utils';
+import { JobAdvertisementCancelDialogService } from '../dialogs/job-advertisement-cancel-dialog.service';
+import { CoreState, getLanguage } from '../../shared/state-management/state/core.state';
 
 @Component({
     selector: 'jr2-job-publication-detail',
@@ -22,37 +24,43 @@ import { JobPublicationCancelDialogService } from '../dialogs/job-publication-ca
     styleUrls: []
 })
 export class JobPublicationDetailComponent {
-
-    jobPublication$: Observable<JobPublication>;
+    jobAdvertisement$: Observable<JobAdvertisement>;
     showCancellationSuccess$: Observable<boolean>;
     showCancellationError$: Observable<boolean>;
     showCancellationLink$: Observable<boolean>;
+    jobDescription$: Observable<JobDescription>;
 
-    constructor(private jobPublicationService: JobPublicationService,
+    constructor(private jobAdvertisementService: JobAdvertisementService,
                 private store: Store<JobPublicationDetailState>,
-                private jobPublicationCancelDialogService: JobPublicationCancelDialogService) {
+                private coreStore: Store<CoreState>,
+                private jobAdvertisementCancelDialogService: JobAdvertisementCancelDialogService) {
         this.showCancellationSuccess$ = store.select(getShowCancellationSuccess);
         this.showCancellationError$ = store.select(getShowCancellationError);
-        this.jobPublication$ = store.select(getJobPublication)
+        this.jobAdvertisement$ = store.select(getJobAdvertisement)
             .map(this.fixApplicationUrl);
-        this.showCancellationLink$ = store.select(getJobPublication)
-            .filter((jobPublication: JobPublication) => !!jobPublication)
-            .map((jobPublication: JobPublication) =>
-                this.jobPublicationService.isJobPublicationCancellable(jobPublication.status));
+        this.showCancellationLink$ = store.select(getJobAdvertisement)
+            .filter((jobAdvertisement: JobAdvertisement) => !!jobAdvertisement)
+            .map((jobAdvertisement: JobAdvertisement) =>
+                this.jobAdvertisementService.isJobAdvertisementCancellable(jobAdvertisement.status));
+
+        this.jobDescription$ = coreStore.select(getLanguage)
+            .combineLatest(this.jobAdvertisement$)
+            .map(([lang, jobAdvertisement]: [string, JobAdvertisement]) => JobAdvertisementUtils.getJobDescription(jobAdvertisement, lang));
     }
 
-    private fixApplicationUrl(jobPublication: JobPublication) {
-        if (jobPublication.application.url && !jobPublication.application.url.startsWith('http')) {
-            jobPublication.application = Object.assign(jobPublication.application, {
-                url: `http://${jobPublication.application.url}`
+    private fixApplicationUrl(jobAdvertisement: JobAdvertisement) {
+        const applyChannel = jobAdvertisement.jobContent.applyChannel;
+        if (applyChannel && applyChannel.formUrl && !applyChannel.formUrl.startsWith('http')) {
+            jobAdvertisement.jobContent.applyChannel = Object.assign(applyChannel, {
+                formUrl: `http://${applyChannel.formUrl}`
             });
         }
-        return jobPublication;
+        return jobAdvertisement;
     }
 
-    showCancellationDialog(id: string, accessToken: string) {
+    showCancellationDialog(id: string) {
         const onSubmit = (cancellationData) => this.store.dispatch(new SubmitCancellationAction(cancellationData));
-        this.jobPublicationCancelDialogService.open(id, accessToken, onSubmit);
+        this.jobAdvertisementCancelDialogService.open(id, onSubmit);
     }
 
     closeSuccessMessage() {
@@ -63,7 +71,7 @@ export class JobPublicationDetailComponent {
         this.store.dispatch(new HideErrorMessageAction());
     }
 
-    printJobPublication() {
+    printJobAdvertisement() {
         window.print();
     }
 }

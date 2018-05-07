@@ -22,6 +22,6 @@ export interface HomeLayoutState {
 
 export const initialState: HomeLayoutState = {
     activeToolbarItem: ToolbarItem.JOB_SEEKERS,
-    activeCompanyTabId: 'company-job-publication',
-    activeAgencyTabId: 'agency-candidate-search',
+    activeCompanyTabId: CompaniesTab.JOB_PUBLICATION,
+    activeAgencyTabId: AgenciesTab.CANDIDATE_SEARCH,
 };

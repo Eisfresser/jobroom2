@@ -158,12 +158,15 @@
         "item-count": "Mostra {{first}} - {{second}} di {{total}} articoli.",
         "job-publication": {
             "status": {
-                "ACTIVE": "Attivo",
-                "DISMISSED": "Rifiutato",
-                "INITIAL": "In lavorazione",
-                "IN_PROGRESS": "In lavorazione",
-                "UNKNOWN": "Ignoto",
-                "UNSUBSCRIBED": "Annullato"
+                "CREATED": "Created",
+                "INSPECTING": "Inspecting",
+                "APPROVED": "Approved",
+                "REJECTED": "Rejected",
+                "REFINING": "Refining",
+                "PUBLISHED_RESTRICTED": "Published restricted",
+                "PUBLISHED_PUBLIC": "Published public",
+                "CANCELLED": "Canceled",
+                "ARCHIVE": "Archive"
             }
         },
         "menu": {
@@ -285,7 +288,8 @@
                 "VD": "Vaud",
                 "VS": "Vallese",
                 "ZG": "Zugo",
-                "ZH": "Zurigo"
+                "ZH": "Zurigo",
+                "99": "Estero"
             },
             "language": {
                 "ar": "Arabo",
@@ -335,7 +339,8 @@
                 "tr": "Turco",
                 "vi": "Vietnamita",
                 "written": "Scritto",
-                "zh": "Cinese"
+                "zh": "Cinese",
+                "label": "Lingua"
             },
             "languages": "Conoscenze linguistiche",
             "region": {
@@ -470,7 +475,15 @@
             "staging": "Staging",
             "test": "Test"
         },
-        "title": "Job-Room"
+        "title": "Job-Room",
+        "workForm": {
+            "HOME_WORK": "Telelavoro",
+            "NIGHT_WORK": "Lavoro notturno",
+            "SHIFT_WORK": "Lavoro a turni",
+            "SUNDAY_AND_HOLIDAYS": "Lavoro domenicale e festivo",
+            "label": "Tipologia lavorativa",
+            "selected": "Tipologia lavorativa"
+        }
     },
     "header": {
         "title": "Assicurazione contro la disoccupazione AD"

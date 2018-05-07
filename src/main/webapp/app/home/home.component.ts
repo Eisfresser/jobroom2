@@ -18,9 +18,9 @@ import {
     ToolbarItem
 } from './state-management/state/layout.state';
 import { ActivatedRoute, Router } from '@angular/router';
-import { JobPublication } from '../shared/job-publication/job-publication.model';
 import { UserData } from './tools/job-publication-tool/service/user-data-resolver.service';
 import { Subscription } from 'rxjs/Subscription';
+import { JobAdvertisement } from '../shared/job-advertisement/job-advertisement.model';
 
 const BACKGROUND_CLASS_NAME_ARRAY = [];
 BACKGROUND_CLASS_NAME_ARRAY[ToolbarItem.JOB_SEEKERS] = 'background--jobseeker';
@@ -44,7 +44,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     candidateSearchToolModel$: Observable<CandidateSearchToolState>;
     activeCompanyTabId$: Observable<string>;
     activeAgencyTabId$: Observable<string>;
-    jobPublication$: Observable<JobPublication>;
+    jobAdvertisement$: Observable<JobAdvertisement>;
     userData$: Observable<UserData>;
     isSubnavCollapsed: boolean;
 
@@ -60,8 +60,10 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.activeCompanyTabId$ = store.select(getActiveCompanyTabId);
         this.activeAgencyTabId$ = store.select(getActiveAgencyTabId);
 
-        this.jobPublication$ = this.route.data
-            .map((data) => data['jobPublication']);
+        this.isSubnavCollapsed = true;
+
+        this.jobAdvertisement$ = this.route.data
+            .map((data) => data['jobAdvertisement']);
 
         this.userData$ = this.route.data
             .map((data) => data['userData']);

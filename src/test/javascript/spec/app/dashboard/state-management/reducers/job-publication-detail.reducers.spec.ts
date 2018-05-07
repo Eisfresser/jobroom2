@@ -9,34 +9,20 @@ import {
     CancellationSucceededAction,
     HideErrorMessageAction,
     HideSuccessMessageAction,
-    JobPublicationLoadedAction,
-    LoadJobPublicationAction,
-    LoadJobPublicationFailedAction
+    JobAdvertisementLoadedAction,
+    LoadJobAdvertisementAction,
+    LoadJobAdvertisementFailedAction
 } from '../../../../../../../main/webapp/app/dashboard/state-management/actions/job-publication-detail.actions';
-import {
-    Locale,
-    Status
-} from '../../../../../../../main/webapp/app/shared/job-publication/job-publication.model';
+import { createJobAdvertisement } from '../../../shared/job-publication/utils';
+import { JobAdvertisementStatus } from '../../../../../../../main/webapp/app/shared/job-advertisement/job-advertisement.model';
 
 describe('jobPublicationDetailReducer', () => {
 
     it('should update JobPublicationDetailState for CANCELLATION_SUCCEEDED action', () => {
         // GIVEN
-        const jobPublication = {
-            id: 'id',
-            idAvam: 'id-avam',
-            accessToken: 'access-token',
-            job: null,
-            company: null,
-            contact: null,
-            application: null,
-            publication: null,
-            creationDate: 'aa',
-            locale: Locale.DE,
-            status: Status.INITIAL
-        };
-        const state = Object.assign({}, initialState, { jobPublication });
-        const changedJobPublication = Object.assign({}, jobPublication, { status: Status.DISMISSED });
+        const jobAdvertisement = createJobAdvertisement();
+        const state = Object.assign({}, initialState, { jobAdvertisement });
+        const changedJobPublication = Object.assign({}, jobAdvertisement, { status: JobAdvertisementStatus.CANCELLED });
         const action = new CancellationSucceededAction(changedJobPublication);
 
         // WHEN
@@ -45,7 +31,7 @@ describe('jobPublicationDetailReducer', () => {
         // THEN
         expect(newState.showCancellationSuccess).toBeTruthy();
         expect(newState.showCancellationError).toBeFalsy();
-        expect(newState.jobPublication.status).toEqual(Status.DISMISSED);
+        expect(newState.jobAdvertisement.status).toEqual(JobAdvertisementStatus.CANCELLED);
     });
 
     it('should update JobPublicationDetailState for HIDE_SUCCESS_MESSAGE action', () => {
@@ -86,64 +72,39 @@ describe('jobPublicationDetailReducer', () => {
         expect(newState.showCancellationError).toBeFalsy();
     });
 
-    it('should update JobPublicationDetailState for LOAD_JOB_PUBLICATION action', () => {
+    it('should update JobPublicationDetailState for LOAD_JOB_ADVERTISEMENT action', () => {
         // GIVEN
-        const jobPublication = {
-            id: 'id',
-            idAvam: 'id-avam',
-            accessToken: 'access-token',
-            job: null,
-            company: null,
-            contact: null,
-            application: null,
-            publication: null,
-            creationDate: 'aa',
-            locale: Locale.DE,
-            status: Status.INITIAL
-        };
-        const state = Object.assign({}, initialState, { jobPublication });
-        const action = new LoadJobPublicationAction({
-            id: 'id',
-            accessToken: 'access-token'
+        const jobAdvertisement = createJobAdvertisement();
+        const state = Object.assign({}, initialState, { jobAdvertisement });
+        const action = new LoadJobAdvertisementAction({
+            id: 'id'
         });
 
         // WHEN
         const newState: JobPublicationDetailState = jobPublicationDetailReducer(state, action);
 
         // THEN
-        expect(newState.jobPublication).toBeNull();
+        expect(newState.jobAdvertisement).toBeNull();
         expect(newState.loadingStatus).toEqual(LoadingStatus.INITIAL);
     });
 
-    it('should update JobPublicationDetailState for JOB_PUBLICATION_LOADED action', () => {
+    it('should update JobPublicationDetailState for JOB_ADVERTISEMENT_LOADED action', () => {
         // GIVEN
-        const jobPublication = {
-            id: 'id',
-            idAvam: 'id-avam',
-            accessToken: 'access-token',
-            job: null,
-            company: null,
-            contact: null,
-            application: null,
-            publication: null,
-            creationDate: 'aa',
-            locale: Locale.DE,
-            status: Status.INITIAL
-        };
+        const jobAdvertisement = createJobAdvertisement();
         const state = Object.assign({}, initialState);
-        const action = new JobPublicationLoadedAction(jobPublication);
+        const action = new JobAdvertisementLoadedAction(jobAdvertisement);
 
         // WHEN
         const newState: JobPublicationDetailState = jobPublicationDetailReducer(state, action);
 
         // THEN
-        expect(newState.jobPublication).toEqual(jobPublication);
+        expect(newState.jobAdvertisement).toEqual(jobAdvertisement);
         expect(newState.loadingStatus).toEqual(LoadingStatus.OK);
     });
 
-    it('should update JobPublicationDetailState for LOAD_JOB_PUBLICATION_FAILED action', () => {
+    it('should update JobPublicationDetailState for LOAD_JOB_ADVERTISEMENT_FAILED action', () => {
         // GIVEN
-        const action = new LoadJobPublicationFailedAction();
+        const action = new LoadJobAdvertisementFailedAction();
         const state = Object.assign({}, initialState);
 
         // WHEN

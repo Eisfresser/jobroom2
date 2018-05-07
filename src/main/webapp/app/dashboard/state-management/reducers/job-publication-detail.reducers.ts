@@ -9,18 +9,18 @@ import {
     CANCELLATION_SUCCEEDED,
     HIDE_ERROR_MESSAGE,
     HIDE_SUCCESS_MESSAGE,
-    JOB_PUBLICATION_LOADED,
-    LOAD_JOB_PUBLICATION,
-    LOAD_JOB_PUBLICATION_FAILED,
+    JOB_ADVERTISEMENT_LOADED,
+    LOAD_JOB_ADVERTISEMENT,
+    LOAD_JOB_ADVERTISEMENT_FAILED,
 } from '../actions/job-publication-detail.actions';
 
 export function jobPublicationDetailReducer(state = initialState, action: Actions): JobPublicationDetailState {
     let newState;
     switch (action.type) {
         case CANCELLATION_SUCCEEDED:
-            const updatedJobPublication = Object.assign({}, action.payload);
+            const updatedJobAdvertisement = Object.assign({}, action.payload);
             newState = Object.assign({}, state, {
-                jobPublication: updatedJobPublication,
+                jobAdvertisement: updatedJobAdvertisement,
                 showCancellationSuccess: true,
                 showCancellationError: false,
             });
@@ -41,22 +41,22 @@ export function jobPublicationDetailReducer(state = initialState, action: Action
             newState = Object.assign({}, state, { showCancellationError: false });
             break;
 
-        case LOAD_JOB_PUBLICATION:
+        case LOAD_JOB_ADVERTISEMENT:
             newState = Object.assign({}, state, {
-                jobPublication: null,
+                jobAdvertisement: null,
                 loadingStatus: LoadingStatus.INITIAL
             });
             break;
 
-        case JOB_PUBLICATION_LOADED:
-            const jobPublication = Object.assign({}, action.payload);
+        case JOB_ADVERTISEMENT_LOADED:
+            const jobAdvertisement = Object.assign({}, action.payload);
             newState = Object.assign({}, state, {
-                jobPublication,
+                jobAdvertisement,
                 loadingStatus: LoadingStatus.OK
             });
             break;
 
-        case LOAD_JOB_PUBLICATION_FAILED:
+        case LOAD_JOB_ADVERTISEMENT_FAILED:
             newState = Object.assign({}, state, {
                 loadingStatus: LoadingStatus.FAILED
             });

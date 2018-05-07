@@ -73,11 +73,11 @@
             </div>
 
             <div class="form-group">
-                <label for="workForm" class="small" translate="candidate-search.workForm.label"></label>
+                <label for="workForm" class="small" translate="global.workForm.label"></label>
                 <select formControlName="workForm" id="workForm" class="form-control-sm custom-select">
                     <option selected="" value="null" translate="candidate-search.no-selection"></option>
                     <option *ngFor="let workForm of workForms | keys" [ngValue]="workForm.key">
-                        {{'candidate-search.workForm.' + workForm.value | translate}}
+                        {{'global.workForm.' + workForm.value | translate}}
                     </option>
                 </select>
             </div>

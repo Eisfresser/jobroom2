@@ -1,11 +1,10 @@
 import {
-    Availability,
+    Availability, CEFR_Level,
     Contact,
     Experience,
     Gender,
     Graduation,
-    ISCED_1997,
-    LanguageSkill
+    ISCED_1997
 } from '../../shared/model/shared-types';
 
 export interface Address {
@@ -63,6 +62,13 @@ export interface Occupation {
     bfsCode: number;
     sbn3Code: number;
     sbn5Code: number;
+}
+
+export interface LanguageSkill {
+    code: string;
+    nativeLanguage?: boolean;
+    spokenLevel: CEFR_Level;
+    writtenLevel: CEFR_Level;
 }
 
 export interface CandidateProfile {

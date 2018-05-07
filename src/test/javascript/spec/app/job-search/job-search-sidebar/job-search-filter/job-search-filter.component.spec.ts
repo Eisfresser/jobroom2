@@ -51,7 +51,8 @@ describe('JobSearchFilterComponent', () => {
                 contractType: ContractType.PERMANENT,
                 workingTime: [80, 100],
                 sort: Sort.DATE_ASC,
-                onlineSince: 30
+                onlineSince: 30,
+                displayRestricted: false
             }, { emitEvent: true });
 
             // THEN
@@ -60,7 +61,8 @@ describe('JobSearchFilterComponent', () => {
                 workingTime: [80, 100],
                 sort: Sort.DATE_ASC,
                 companyName: null,
-                onlineSince: 30
+                onlineSince: 30,
+                displayRestricted: false
             }));
         });
 
@@ -75,7 +77,8 @@ describe('JobSearchFilterComponent', () => {
                 workingTime: [0, 100],
                 sort: Sort.RELEVANCE_DESC,
                 companyName: 'ab',
-                onlineSince: 30
+                onlineSince: 30,
+                displayRestricted: false
             }));
         }));
 
@@ -90,7 +93,8 @@ describe('JobSearchFilterComponent', () => {
                 workingTime: [0, 100],
                 sort: null,
                 companyName: 'a',
-                onlineSince: 30
+                onlineSince: 30,
+                displayRestricted: false
             }));
         }));
     });
