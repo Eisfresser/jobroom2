@@ -1,10 +1,8 @@
 package ch.admin.seco.jobroom.web.rest;
 
-import ch.admin.seco.jobroom.domain.SystemNotification;
 import ch.admin.seco.jobroom.repository.SystemNotificationRepository;
 import ch.admin.seco.jobroom.service.SystemNotificationService;
 import ch.admin.seco.jobroom.service.dto.SystemNotificationDTO;
-import ch.admin.seco.jobroom.web.rest.errors.SystemNotificationIdAlreadyUsedException;
 import com.codahale.metrics.annotation.Timed;
 import com.hazelcast.util.Preconditions;
 import org.slf4j.Logger;
@@ -69,10 +67,6 @@ public class SystemNotificationResource {
     public void updateSystemNotification(@Valid @RequestBody SystemNotificationDTO systemNotificationDTO) {
         Preconditions.checkNotNull(systemNotificationDTO);
         log.debug("REST request to update SystemNotification : {}", systemNotificationDTO);
-        Optional<SystemNotification> existingSystemNotification = systemNotificationRepository.getSystemNotificationById(systemNotificationDTO.getId());
-        if (existingSystemNotification.isPresent() && (!existingSystemNotification.get().getId().equals(systemNotificationDTO.getId()))) {
-            throw new SystemNotificationIdAlreadyUsedException();
-        }
         systemNotificationService.updateSystemNotification(systemNotificationDTO);
     }
 }
