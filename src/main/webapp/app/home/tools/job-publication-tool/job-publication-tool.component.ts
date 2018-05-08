@@ -279,11 +279,7 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
             }),
             publication: this.fb.group({
                 publicDisplay: [formModel.publication.publicDisplay],
-                publicAnonymous: [formModel.publication.publicAnonymous],
                 eures: [formModel.publication.eures],
-                euresAnonymous: [formModel.publication.euresAnonymous],
-                restrictedDisplay: [formModel.publication.restrictedDisplay],
-                restrictedAnonymous: [formModel.publication.restrictedAnonymous]
             }),
             disclaimer: this.fb.control(false, Validators.requiredTrue)
         });
@@ -375,11 +371,7 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
             },
             publication: {
                 publicDisplay: true,
-                publicAnonymous: false,
-                eures: false,
-                euresAnonymous: false,
-                restrictedDisplay: true,
-                restrictedAnonymous: true,
+                eures: false
             }
         };
     }

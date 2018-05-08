@@ -77,11 +77,7 @@ export interface ApplicationFormModel {
 
 export interface PublicationFormModel {
     publicDisplay: boolean;
-    publicAnonymous: boolean;
     eures: boolean;
-    euresAnonymous: boolean;
-    restrictedDisplay: boolean;
-    restrictedAnonymous: boolean;
 }
 
 export interface EmployerFormModel {

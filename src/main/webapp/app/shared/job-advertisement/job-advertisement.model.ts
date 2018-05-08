@@ -78,11 +78,11 @@ export interface Publication {
     startDate: string;
     endDate?: string;
     euresDisplay: boolean;
-    euresAnonymous: boolean;
+    euresAnonymous?: boolean;
     publicDisplay: boolean;
-    publicAnonymous: boolean;
-    restrictedDisplay: boolean;
-    restrictedAnonymous: boolean;
+    publicAnonymous?: boolean;
+    restrictedDisplay?: boolean;
+    restrictedAnonymous?: boolean;
 }
 
 export interface JobDescription {

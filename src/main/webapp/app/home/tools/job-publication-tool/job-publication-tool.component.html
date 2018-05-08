@@ -619,58 +619,18 @@
                 <fieldset formGroupName="publication" class="job-publication--horizontal">
                     <legend>{{ 'home.tools.job-publication.publication.title' | translate }}</legend>
 
-                    <div class="form-group">
-                        <label>{{ 'home.tools.job-publication.publication.public.label' | translate }}</label>
-
-                        <div class="checkbox">
-                            <input id="jr" type="checkbox" formControlName="publicDisplay"/>
-                            <label for="jr">
-                                {{ 'home.tools.job-publication.publication.public-display' | translate }}
-                            </label>
-                        </div>
-
-                        <div class="checkbox">
-                            <input id="jra" type="checkbox" formControlName="publicAnonymous"/>
-                            <label for="jra">
-                                {{ 'home.tools.job-publication.publication.public-anonymous' | translate }}
-                            </label>
-                        </div>
+                    <div class="checkbox">
+                        <input id="jr" type="checkbox" formControlName="publicDisplay"/>
+                        <label for="jr">
+                            <a href="{{ 'home.tools.job-publication.publication.jobroom.url' | translate }}" target="_blank">{{ 'home.tools.job-publication.publication.jobroom' | translate }}</a>
+                        </label>
                     </div>
 
-                    <div class="form-group">
-                        <label>{{ 'home.tools.job-publication.publication.restricted.label' | translate }}</label>
-
-                        <div class="checkbox">
-                            <input id="rd" type="checkbox" formControlName="restrictedDisplay"/>
-                            <label for="rd">
-                                {{ 'home.tools.job-publication.publication.restricted-display' | translate }}
-                            </label>
-                        </div>
-
-                        <div class="checkbox">
-                            <input id="ra" type="checkbox" formControlName="restrictedAnonymous"/>
-                            <label for="ra">
-                                {{ 'home.tools.job-publication.publication.restricted-anonymous' | translate }}
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label>{{ 'home.tools.job-publication.publication.eures.label' | translate }}</label>
-
-                        <div class="checkbox">
-                            <input id="eu" type="checkbox" formControlName="eures"/>
-                            <label for="eu">
-                                {{ 'home.tools.job-publication.publication.eures' | translate }}
-                            </label>
-                        </div>
-
-                        <div class="checkbox">
-                            <input id="eua" type="checkbox" formControlName="euresAnonymous"/>
-                            <label for="eua">
-                                {{ 'home.tools.job-publication.publication.eures-anonymous' | translate }}
-                            </label>
-                        </div>
+                    <div class="checkbox">
+                        <input id="eu" type="checkbox" formControlName="eures"/>
+                        <label for="eu">
+                            <a href="{{ 'home.tools.job-publication.publication.eures.url' | translate }}" target="_blank">{{ 'home.tools.job-publication.publication.eures' | translate }}</a>
+                        </label>
                     </div>
                 </fieldset>
 

@@ -135,11 +135,7 @@ export class JobPublicationMapper {
 
         jobPublicationForm.publication = {
             publicDisplay: jobAdvertisement.publication.publicDisplay,
-            publicAnonymous: jobAdvertisement.publication.publicAnonymous,
-            eures: jobAdvertisement.publication.euresDisplay,
-            euresAnonymous: jobAdvertisement.publication.euresAnonymous,
-            restrictedDisplay: jobAdvertisement.publication.restrictedDisplay,
-            restrictedAnonymous: jobAdvertisement.publication.restrictedAnonymous
+            eures: jobAdvertisement.publication.euresDisplay
         };
 
         return jobPublicationForm;
@@ -244,11 +240,7 @@ export class JobPublicationMapper {
             startDate: moment().format('YYYY-MM-DD'),
             endDate: null,
             euresDisplay: jobPublicationForm.publication.eures,
-            euresAnonymous: jobPublicationForm.publication.euresAnonymous,
-            publicDisplay: jobPublicationForm.publication.publicDisplay,
-            publicAnonymous: jobPublicationForm.publication.publicAnonymous,
-            restrictedDisplay: jobPublicationForm.publication.restrictedDisplay,
-            restrictedAnonymous: jobPublicationForm.publication.restrictedAnonymous
+            publicDisplay: jobPublicationForm.publication.publicDisplay
         };
 
         return jobAd;

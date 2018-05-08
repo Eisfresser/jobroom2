@@ -133,12 +133,10 @@
                     "url": "http://www.esempio.ch"
                 },
                 "publication": {
-                    "restricted-display": "Display it on the Job-Room restricted area",
-                    "restricted-anonymous": "Show details",
-                    "eures": "Display the publication in EURES",
-                    "eures-anonymous": "Show details for anonymous users",
-                    "public-display": "Display the publication on the website",
-                    "public-anonymous": "Show details for anonymous users",
+                    "eures": " Portale EURES",
+                    "eures.url": "http://www.eures.ch/it",
+                    "jobroom": " Sito Job-Room",
+                    "jobroom.url": "http://www.job-room.ch",
                     "title": "Mezzi di pubblicazione",
                     "public": {
                         "label": "Job-Room public website"

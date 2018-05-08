@@ -671,12 +671,10 @@ home,home.tools.job-publication.optional,Optional,Optional,Optionnel,Opzionale
 home,home.tools.job-publication.placeholders.email,muster@email.ch,example@email.ch,exemple@email.ch,esempio@email.ch
 home,home.tools.job-publication.placeholders.phone,031 999 99 99 oder +41 31 999 99 99,031 999 99 99 or +41 31 999 99 99,031 999 99 99 ou +41 31 999 99 99,031 999 99 99 o +41 31 999 99 99
 home,home.tools.job-publication.placeholders.url,http://www.muster.ch,http://www.example.ch,http://www.exemple.ch,http://www.esempio.ch
-home,home.tools.job-publication.publication.restricted-display,Display it on the Job-Room restricted area,Display it on the Job-Room restricted area,Display it on the Job-Room restricted area,Display it on the Job-Room restricted area
-home,home.tools.job-publication.publication.restricted-anonymous,Show details,Show details,Show details,Show details
-home,home.tools.job-publication.publication.eures,Display the publication in EURES,Display the publication in EURES,Display the publication in EURES,Display the publication in EURES
-home,home.tools.job-publication.publication.eures-anonymous,Show details for anonymous users,Show details for anonymous users,Show details for anonymous users,Show details for anonymous users
-home,home.tools.job-publication.publication.public-display,Display the publication on the website,Display the publication on the website,Display the publication on the website,Display the publication on the website
-home,home.tools.job-publication.publication.public-anonymous,Show details for anonymous users,Show details for anonymous users,Show details for anonymous users,Show details for anonymous users
+home,home.tools.job-publication.publication.eures,EURES Portal,EURES Portal,Portal EURES," Portale EURES"
+home,home.tools.job-publication.publication.eures.url,http://www.eures.ch,http://www.eures.ch/en,http://www.eures.ch/fr,http://www.eures.ch/it
+home,home.tools.job-publication.publication.jobroom,Job-Room Website," Job-Room Website"," Site Job-Room"," Sito Job-Room"
+home,home.tools.job-publication.publication.jobroom.url,http://www.job-room.ch,http://www.job-room.ch,http://www.job-room.ch,http://www.job-room.ch
 home,home.tools.job-publication.publication.title,Publikationsmedien,Publication media,Moyens de publication,Mezzi di pubblicazione
 home,home.tools.job-publication.publication.public.label,Job-Room public website,Job-Room public website,Job-Room public website,Job-Room public website
 home,home.tools.job-publication.publication.restricted.label,Job-Room restricted area,Job-Room restricted area,Job-Room restricted area,Job-Room restricted area

@@ -133,12 +133,10 @@
                     "url": "http://www.muster.ch"
                 },
                 "publication": {
-                    "restricted-display": "Display it on the Job-Room restricted area",
-                    "restricted-anonymous": "Show details",
-                    "eures": "Display the publication in EURES",
-                    "eures-anonymous": "Show details for anonymous users",
-                    "public-display": "Display the publication on the website",
-                    "public-anonymous": "Show details for anonymous users",
+                    "eures": "EURES Portal",
+                    "eures.url": "http://www.eures.ch",
+                    "jobroom": "Job-Room Website",
+                    "jobroom.url": "http://www.job-room.ch",
                     "title": "Publikationsmedien",
                     "public": {
                         "label": "Job-Room public website"
