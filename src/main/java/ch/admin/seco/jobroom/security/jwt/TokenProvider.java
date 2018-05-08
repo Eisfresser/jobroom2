@@ -44,18 +44,18 @@ public class TokenProvider {
         return createToken(authentication.getName(), expirationDate, claims);
     }
 
+    public DefaultOAuth2AccessToken createAccessToken(Authentication authentication) {
+        String token = createToken(authentication, false);
+        Date expirationDate = calculateExpirationDate(false);
+        return createAccessToken(token, expirationDate);
+    }
+
     private User getUser(Authentication authentication) {
         if (authentication.getPrincipal() instanceof DomainUserPrincipal) {
             final DomainUserPrincipal principal = (DomainUserPrincipal) authentication.getPrincipal();
             return principal.getUser();
         }
         return null;
-    }
-
-    public DefaultOAuth2AccessToken createAccessToken(Authentication authentication) {
-        String token = createToken(authentication, false);
-        Date expirationDate = calculateExpirationDate(false);
-        return createAccessToken(token, expirationDate);
     }
 
     private DefaultOAuth2AccessToken createAccessToken(String token, Date expirationDate) {

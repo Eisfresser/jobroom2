@@ -5,20 +5,34 @@ import static ch.admin.seco.jobroom.security.jwt.TestAuthenticationFactory.domai
 import static ch.admin.seco.jobroom.security.jwt.TestJHipsterPropertiesFactory.TOKEN_VALID_60_SECONDS;
 import static ch.admin.seco.jobroom.security.jwt.TestJHipsterPropertiesFactory.jHipsterProperties;
 import static ch.admin.seco.jobroom.security.jwt.TestSecretKey.e5c9ee274ae87bc031adda32e27fa98b9290da83;
-import static ch.admin.seco.jobroom.security.jwt.TestTokenFactory.EMPTY_TOKEN;
-import static ch.admin.seco.jobroom.security.jwt.TestTokenFactory.UNSUPPORTED_TOKEN;
+import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.test.util.ReflectionTestUtils.setField;
+
+import java.util.Collection;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameter;
+import org.junit.runners.Parameterized.Parameters;
 
 import org.springframework.security.core.Authentication;
-import org.springframework.test.util.ReflectionTestUtils;
+import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 
+@RunWith(Parameterized.class)
 public class TokenProviderTest {
 
     private TokenProvider tokenProvider;
     private TokenValidator validator;
+
+    @Parameter
+    public Authentication authentication;
+    @Parameter(1)
+    public boolean rememberMe;
+    @Parameter(2)
+    public boolean validToken;
 
     @Before
     public void setup() {
@@ -26,57 +40,30 @@ public class TokenProviderTest {
         validator = new TokenValidator(e5c9ee274ae87bc031adda32e27fa98b9290da83.name());
     }
 
-    @Test
-    public void shouldCreateTokenReturnValidTokenIfValidUserAndRememberMeIsFalse() {
-        Authentication authentication = domainUserAuthentication();
-
-        String token = tokenProvider.createToken(authentication, false);
-
-        assertThat(validator.validateToken(token)).isTrue();
+    @Parameters
+    public static Collection<Object[]> data() {
+        return asList(new Object[][] {
+                {domainUserAuthentication(), false, true},
+                {domainUserAuthentication(), true, true},
+                {anonymousAuthentication(), false, true},
+                {anonymousAuthentication(), true, true}
+            }
+        );
     }
 
     @Test
-    public void shouldCreateTokenReturnValidTokenIfValidUserAndRememberMeIsTrue() {
-        Authentication authentication = domainUserAuthentication();
+    public void shouldCreateToken() {
 
-        String token = tokenProvider.createToken(authentication, false);
+        String token = tokenProvider.createToken(authentication, rememberMe);
 
-        assertThat(validator.validateToken(token)).isTrue();
+        assertThat(validator.validateToken(token)).isEqualTo(validToken);
     }
 
     @Test
-    public void testReturnFalseWhenJWTisMalformed() {
-        Authentication authentication = anonymousAuthentication();
+    public void shouldCreateAccessToken() {
+        final DefaultOAuth2AccessToken accessToken = tokenProvider.createAccessToken(authentication);
 
-        String token = tokenProvider.createToken(authentication, false);
-        String invalidToken = token.substring(1);
-
-        assertThat(validator.validateToken(invalidToken)).isFalse();
+        assertThat(validator.validateToken(accessToken.getValue())).isEqualTo(validToken);
     }
-
-    @Test
-    public void testReturnFalseWhenJWTisExpired() {
-        ReflectionTestUtils.setField(tokenProvider, "tokenValidityInMilliseconds", -TOKEN_VALID_60_SECONDS);
-
-        Authentication authentication = anonymousAuthentication();
-        String token = tokenProvider.createToken(authentication, false);
-
-        assertThat(validator.validateToken(token)).isFalse();
-    }
-
-    @Test
-    public void testReturnFalseWhenJWTisUnsupported() {
-        String token = UNSUPPORTED_TOKEN;
-
-        assertThat(validator.validateToken(token)).isFalse();
-    }
-
-    @Test
-    public void testReturnFalseWhenJWTisInvalid() {
-        final String token = EMPTY_TOKEN;
-
-        assertThat(validator.validateToken(token)).isFalse();
-    }
-
 }
 

@@ -2,6 +2,7 @@ package ch.admin.seco.jobroom.security.jwt;
 
 import static java.util.Collections.singletonList;
 import static java.util.UUID.randomUUID;
+import static org.apache.commons.lang3.StringUtils.EMPTY;
 
 import java.util.List;
 import java.util.UUID;
@@ -24,8 +25,7 @@ class TestAuthenticationFactory {
     static Authentication domainUserAuthentication() {
         DomainUserPrincipal principal = new DomainUserPrincipal(jobRoomUser());
         List<SimpleGrantedAuthority> authorities = singletonList(new SimpleGrantedAuthority(AuthoritiesConstants.ANONYMOUS));
-        Object credentials = "";
-        return new UsernamePasswordAuthenticationToken(principal, credentials, authorities);
+        return new UsernamePasswordAuthenticationToken(principal, EMPTY, authorities);
     }
 
     private static User jobRoomUser() {

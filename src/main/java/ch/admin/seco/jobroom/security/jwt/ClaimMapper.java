@@ -20,7 +20,6 @@ import io.jsonwebtoken.Jwts;
 
 import org.springframework.security.core.GrantedAuthority;
 
-import ch.admin.seco.jobroom.domain.Organization;
 import ch.admin.seco.jobroom.domain.User;
 
 final class ClaimMapper {
@@ -41,7 +40,7 @@ final class ClaimMapper {
         };
     }
 
-    static BiConsumer<Claims, User> mapUserToClaims() {
+    private static BiConsumer<Claims, User> mapUserToClaims() {
         return (claims, user) -> {
             if (user != null) {
                 claims.put(firstName.name(), user.getFirstName());
@@ -50,22 +49,16 @@ final class ClaimMapper {
                 claims.put(userId.name(), user.getId());
                 claims.put(phone.name(), user.getPhone());
                 claims.put(extId.name(), null); //TODO to be changed to user.getExtId() after an implementation of EIAM will be provided;
-                mapOrganisationToClaims().accept(claims, user.getOrganization());
-            }
-        };
-    }
-
-    static BiConsumer<Claims, Organization> mapOrganisationToClaims() {
-        return (claims, organization) -> {
-            if (organization != null) {
-                claims.put(companyId.name(), organization.getId());
+                if (user.getOrganization() != null) {
+                    claims.put(companyId.name(), user.getOrganization().getId());
+                }
             }
         };
     }
 
     static BiConsumer<Claims, Collection<? extends GrantedAuthority>> joinAuthorityNamesWithComma() {
         return (claims, authorities) -> claims.put(auth.name(), authorities.stream()
-                                                                           .map(GrantedAuthority::getAuthority)
-                                                                           .collect(joining(KEY_VALUE_DELIMITER)));
+            .map(GrantedAuthority::getAuthority)
+            .collect(joining(KEY_VALUE_DELIMITER)));
     }
 }
