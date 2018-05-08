@@ -1,6 +1,7 @@
 package ch.admin.seco.jobroom.web.rest;
 
-import static ch.admin.seco.jobroom.security.jwt.JWTFilter.TOKEN_PREFIX;
+import static ch.admin.seco.jobroom.security.jwt.TokenResolver.AUTHORIZATION_HEADER;
+import static ch.admin.seco.jobroom.security.jwt.TokenResolver.TOKEN_PREFIX;
 import static org.apache.commons.lang.StringUtils.EMPTY;
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 import static org.springframework.http.ResponseEntity.ok;
@@ -32,7 +33,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ch.admin.seco.jobroom.repository.UserRepository;
-import ch.admin.seco.jobroom.security.jwt.JWTFilter;
 import ch.admin.seco.jobroom.security.jwt.TokenProvider;
 import ch.admin.seco.jobroom.web.rest.vm.LoginVM;
 
@@ -68,14 +68,14 @@ public class UserJWTController {
     @PostMapping(value = "/authenticate", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     @Timed
     public ResponseEntity authorizeOauth(@RequestParam String username, @RequestParam String password,
-                                         HttpServletRequest request) {
+        HttpServletRequest request) {
         return userRepository.findOneByLogin(username)
-                             .map(user -> {
-                                 Authentication authentication = authenticateWithUsernamePasswordAndRequest(username, password, request);
-                                 DefaultOAuth2AccessToken accessToken = tokenProvider.createAccessToken(authentication, user);
-                                 return ok(accessToken);
-                             })
-                             .orElseGet(status(UNAUTHORIZED)::build);
+            .map(user -> {
+                Authentication authentication = authenticateWithUsernamePasswordAndRequest(username, password, request);
+                DefaultOAuth2AccessToken accessToken = tokenProvider.createAccessToken(authentication, user);
+                return ok(accessToken);
+            })
+            .orElseGet(status(UNAUTHORIZED)::build);
     }
 
     private Authentication authenticateWithUsernamePasswordAndRequest(String username, String password, HttpServletRequest request) {
@@ -83,25 +83,25 @@ public class UserJWTController {
         token.setDetails(new WebAuthenticationDetails(request));
         Authentication authentication = this.authenticationManager.authenticate(token);
         SecurityContextHolder.getContext()
-                             .setAuthentication(authentication);
+            .setAuthentication(authentication);
 
         return authentication;
     }
 
     private HttpHeaders createHttpHeaders(String token) {
         HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add(JWTFilter.AUTHORIZATION_HEADER, TOKEN_PREFIX + token);
+        httpHeaders.add(AUTHORIZATION_HEADER, TOKEN_PREFIX + token);
 
         return httpHeaders;
     }
 
     private String createJwtToken(@Valid @RequestBody LoginVM loginVM, Authentication authentication) {
         final Boolean rememberMe = Optional.ofNullable(loginVM.isRememberMe())
-                                           .orElse(false);
+            .orElse(false);
 
         return userRepository.findOneByLogin(loginVM.getUsername())
-                             .map(user -> tokenProvider.createToken(authentication, rememberMe, user))
-                             .orElse(EMPTY);
+            .map(user -> tokenProvider.createToken(authentication, rememberMe, user))
+            .orElse(EMPTY);
     }
 
     /**
@@ -123,7 +123,6 @@ public class UserJWTController {
         void setIdToken(String idToken) {
             this.idToken = idToken;
         }
-
 
     }
 }

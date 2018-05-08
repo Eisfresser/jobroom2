@@ -7,6 +7,7 @@ import java.util.Locale;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
@@ -20,7 +21,7 @@ import ch.admin.seco.jobroom.repository.UserRepository;
 @Component("userDetailsService")
 public class DomainUserDetailsService implements UserDetailsService {
 
-    public static final String USER_NOT_FOUND_MSG_PTRN = "User %s was not found in the database";
+    public static final String BAD_CREDENTIALS_MSG = "The credentials are invalid!";
 
     private final Logger log = LoggerFactory.getLogger(DomainUserDetailsService.class);
 
@@ -34,10 +35,9 @@ public class DomainUserDetailsService implements UserDetailsService {
     @Transactional
     public DomainUserPrincipal loadUserByUsername(final String login) {
         log.debug("Authenticating {}", login);
-        String lowercaseLogin = login.toLowerCase(Locale.ENGLISH);
-        return userRepository.findOneWithAuthoritiesByLogin(lowercaseLogin)
+        return userRepository.findOneWithAuthoritiesByLogin(login.toLowerCase(Locale.ENGLISH))
                              .map(DomainUserPrincipal::new)
                              .orElseThrow(() ->
-                                 new UsernameNotFoundException(format(USER_NOT_FOUND_MSG_PTRN, lowercaseLogin)));
+                                 new BadCredentialsException(format(BAD_CREDENTIALS_MSG)));
     }
 }

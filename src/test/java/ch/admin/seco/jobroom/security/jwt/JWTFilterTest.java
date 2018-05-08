@@ -16,11 +16,11 @@ import javax.servlet.ServletException;
 
 import java.io.IOException;
 
-import static ch.admin.seco.jobroom.security.jwt.JWTFilter.AUTHORIZATION_HEADER;
-import static ch.admin.seco.jobroom.security.jwt.JWTFilter.TOKEN_PREFIX;
 import static ch.admin.seco.jobroom.security.jwt.TestSecretKey.e5c9ee274ae87bc031adda32e27fa98b9290da83;
 import static ch.admin.seco.jobroom.security.jwt.TestTokenFactory.INVALID_TOKEN;
 import static ch.admin.seco.jobroom.security.jwt.TestTokenFactory.TOKEN_VALID_19_YEARS;
+import static ch.admin.seco.jobroom.security.jwt.TokenResolver.AUTHORIZATION_HEADER;
+import static ch.admin.seco.jobroom.security.jwt.TokenResolver.TOKEN_PREFIX;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class JWTFilterTest {

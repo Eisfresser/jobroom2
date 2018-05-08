@@ -1,13 +1,16 @@
 package ch.admin.seco.jobroom.security.jwt;
 
 import static ch.admin.seco.jobroom.security.jwt.ClaimMapper.ClaimKey.auth;
-import static ch.admin.seco.jobroom.security.jwt.ClaimMapper.ClaimKey.company;
+import static ch.admin.seco.jobroom.security.jwt.ClaimMapper.ClaimKey.companyId;
 import static ch.admin.seco.jobroom.security.jwt.ClaimMapper.ClaimKey.email;
 import static ch.admin.seco.jobroom.security.jwt.ClaimMapper.ClaimKey.extId;
 import static ch.admin.seco.jobroom.security.jwt.ClaimMapper.ClaimKey.firstName;
 import static ch.admin.seco.jobroom.security.jwt.ClaimMapper.ClaimKey.lastName;
+import static ch.admin.seco.jobroom.security.jwt.ClaimMapper.ClaimKey.phone;
+import static ch.admin.seco.jobroom.security.jwt.ClaimMapper.ClaimKey.userId;
 import static ch.admin.seco.jobroom.security.jwt.TokenToAuthenticationConverter.KEY_VALUE_DELIMITER;
 import static java.util.stream.Collectors.joining;
+import static org.apache.commons.lang.StringUtils.EMPTY;
 
 import java.util.Collection;
 import java.util.function.BiConsumer;
@@ -27,7 +30,7 @@ final class ClaimMapper {
     }
 
     enum ClaimKey {
-        auth, extId, company, firstName, lastName, email;
+        auth, extId, companyId, firstName, lastName, email, phone, userId;
     }
 
     static BiFunction<User, Collection<? extends GrantedAuthority>, Claims> mapUserAndAuthoritiesToClaims() {
@@ -46,15 +49,18 @@ final class ClaimMapper {
                 claims.put(firstName.name(), user.getFirstName());
                 claims.put(lastName.name(), user.getLastName());
                 claims.put(email.name(), user.getEmail());
+                claims.put(userId.name(), user.getId());
+                claims.put(phone.name(), user.getPhone());
+                claims.put(extId.name(), EMPTY); //TODO to be changed to user.getExtId() after an implementation of EIAM will be provided;
             }
         };
     }
 
     static BiConsumer<Claims, Organization> mapOrganisationToClaims() {
+
         return (claims, organization) -> {
             if (organization != null) {
-                claims.put(extId.name(), organization.getExternalId());
-                claims.put(company.name(), organization.getName());
+                claims.put(companyId.name(), organization.getId());
             }
         };
     }

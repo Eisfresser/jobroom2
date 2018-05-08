@@ -7,11 +7,11 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.util.StringUtils;
 
-class TokenResolver {
+public class TokenResolver {
 
-    static final String TOKEN_PREFIX = "Bearer ";
+    public static final String TOKEN_PREFIX = "Bearer ";
 
-    static final String AUTHORIZATION_HEADER = "Authorization";
+    public static final String AUTHORIZATION_HEADER = "Authorization";
 
     static TokenResolver of(String secretKey) {
         return new TokenResolver(new TokenValidator(secretKey));
