@@ -1019,13 +1019,20 @@ system-notifications-management,systemNotificationsManagement.title,Titel,Title,
 system-notifications-management,systemNotificationsManagement.type,Typ,Type,Type,Type
 system-notifications-management,systemNotificationsManagement.startDate,Von,From,From,From
 system-notifications-management,systemNotificationsManagement.endDate,Bis,To,To,To
-system-notifications-management,systemNotificationsManagement.status,Status,State,State,State
-system-notifications-management,systemNotificationsManagement.actions,Aktionen,Actions,Test,Test
+system-notifications-management,systemNotificationsManagement.status,Status,Status,Status,Status
+system-notifications-management,systemNotificationsManagement.actions,Aktionen,Actions,Actions,Actions
 system-notifications-management,systemNotificationsManagement.home.create,Neue Systemmitteilung erfassen,Create a new system notification,Créer un nouvel notification système,Crea un nuovo notifiche di sistema
 system-notifications-management,systemNotificationsManagement.home.title,System Mitteilungen,System notifications,notifications système,notifiche di sistema
 system-notifications-management,systemNotificationsManagement.activated,Aktiv,Activated,Activated,Activated
 system-notifications-management,systemNotificationsManagement.deactivated,Deaktiviert,Deactivated,Deactivated,Deactivated
 system-notifications-management,systemNotificationsManagement.delete.question,Möchten sie die Systemmitteilung wirklich öschen?,Do you really want to delete the system notification?,Do you really want to delete the system notification?,Do you really want to delete the system notification?
+system-notifications-management,systemNotificationsManagement.create.modal.title,Neue Systemmitteilung erstellen,Create new System Notification,Create new System Notification,Create new System Notification
+system-notifications-management,systemNotificationsManagement.edit.modal.title,Systemmitteilung editieren,Edit System Notification,Edit System Notification,Edit System Notification
+system-notifications-management,systemNotificationsManagement.delete.modal.title,Systemmitteilung löschen,Delete System Notification,Delete System Notification,Delete System Notification
+system-notifications-management,systemNotificationsManagement.delete.modal.text,Möchten Sie die Systemmitteilung wirklich löschen?,Are you sure you want to delete this system notification?,Are you sure you want to delete this system notification?,Are you sure you want to delete this system notification?
+system-notifications-management,systemNotificationsManagement.systemnotification.type.systemerror,Systemfehler,System error,System error,System error
+system-notifications-management,systemNotificationsManagement.systemnotification.type.interruption,Unterbrechung,Interruption,Interruption,Interruption
+system-notifications-management,systemNotificationsManagement.systemnotification.type.maintenance,Wartung,maintenance,maintenance,maintenance
 user-management,userManagement.activated,Aktiv,Active,Activé,Attivato
 user-management,userManagement.created,Ein neuer Benutzer wurde mit ID {{ param }} erstellt,A new user is created with identifier {{ param }},Un nouvel utilisateur portant l'ID {{ param }} a été créé.,È stato creato un nuovo utente con identificativo {{ param }}
 user-management,userManagement.createdBy,Erstellt von,Created by,Créé par,Creato da

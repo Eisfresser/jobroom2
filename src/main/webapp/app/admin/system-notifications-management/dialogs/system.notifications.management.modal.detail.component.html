@@ -1,6 +1,6 @@
 <form (ngSubmit)="updateSystemNotification()" #form="ngForm" novalidate [ngFormOptions]="{updateOn: 'submit'}">
     <div class="modal-header">
-        <h4 class="modal-title">Neue System Mitteilung erfassen</h4>
+        <h4 class="modal-title" jhiTranslate="systemNotificationsManagement.edit.modal.title">Edit SystemNotification</h4>
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
                 (click)="clear()">&times;
         </button>
@@ -37,8 +37,9 @@
         <div class="form-group">
             <label class="form-control-label">Mitteilungstyp</label>
             <select class="form-control" name="type" #type="ngModel" [(ngModel)]="systemNotification.type">
-                <option>INFO</option>
-                <option>SYSTEM</option>
+                <option jhiTranslate="systemNotificationsManagement.systemnotification.type.interruption">Interruption</option>
+                <option jhiTranslate="systemNotificationsManagement.systemnotification.type.systemerror">System error</option>
+                <option jhiTranslate="systemNotificationsManagement.systemnotification.type.maintenance">Maintenance</option>
             </select>
         </div>
     </div>

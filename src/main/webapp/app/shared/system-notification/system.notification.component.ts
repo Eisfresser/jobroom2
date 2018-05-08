@@ -6,6 +6,8 @@ import { getAllSystemNotifications, SystemNotificationState } from '../../admin/
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 import * as moment from 'moment';
+import { JhiLanguageService } from 'ng-jhipster';
+import { Jobroom2LanguageService } from '../language/jobroom2-language.service';
 
 @Component({
     selector: 'jr2-system-notification',
@@ -15,12 +17,15 @@ import * as moment from 'moment';
 export class SystemNotificationComponent implements OnInit {
     systemNotificationService: SystemNotificationService;
     systemNotifications$: Observable<SystemNotification[]>;
+    languageService: JhiLanguageService;
 
-    constructor(systemNotificationService: SystemNotificationService, private store: Store<SystemNotificationState>) {
+    constructor(systemNotificationService: SystemNotificationService, private store: Store<SystemNotificationState>, jhiLanguageService: JhiLanguageService) {
         this.systemNotificationService = systemNotificationService;
+        this.languageService = jhiLanguageService;
     }
 
     ngOnInit(): void {
+
         this.systemNotifications$ = this.store.select(getAllSystemNotifications);
         this.store.dispatch(new GetAllSystemNotificationsAction);
     }
@@ -33,5 +38,20 @@ export class SystemNotificationComponent implements OnInit {
     }
     isActive(systemNotification: SystemNotification): boolean {
         return systemNotification.active;
+    }
+    // TODO: clean up & handle unauthorized
+    getCurrentLanguageCode(systemNotification: SystemNotification) {
+        if (this.languageService.currentLang === 'de') {
+            return systemNotification.text_de
+        }
+        if (this.languageService.currentLang === 'fr') {
+            return systemNotification.text_fr
+        }
+        if (this.languageService.currentLang === 'it') {
+            return systemNotification.text_it
+        }
+        if (this.languageService.currentLang === 'en') {
+            return systemNotification.text_en
+        }
     }
 }

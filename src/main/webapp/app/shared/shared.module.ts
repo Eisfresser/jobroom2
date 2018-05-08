@@ -20,6 +20,7 @@ import { TextSizeLimitDirective } from './validation/text-size-limit.directive';
 import { LanguageFilterService } from './input-components/language-filter/language-filter.service';
 import { ScrollToTopComponent } from './components/scroll-to-top/scroll-to-top.component';
 import { JobAdvertisementService } from './job-advertisement/job-advertisement.service';
+import { Jobroom2LanguageService } from './language/jobroom2-language.service';
 
 @NgModule({
     imports: [
@@ -53,6 +54,7 @@ import { JobAdvertisementService } from './job-advertisement/job-advertisement.s
         LocaleAwareDecimalPipe,
         PhoneNumberPipe,
         SafeHtmlPipe,
+        Jobroom2LanguageService,
         dateParserFormatterProvider(),
         datepickerI18nService(),
         OrganizationService,
