@@ -6,7 +6,6 @@ import static java.time.LocalDateTime.now;
 import static java.time.ZoneId.systemDefault;
 import static java.time.temporal.ChronoUnit.MILLIS;
 
-import java.util.Collection;
 import java.util.Date;
 
 import io.github.jhipster.config.JHipsterProperties;
@@ -15,7 +14,6 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.SignatureAlgorithm;
 
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.stereotype.Component;
 
@@ -33,8 +31,8 @@ public class TokenProvider {
 
     public TokenProvider(JHipsterProperties jHipsterProperties) {
         Jwt token = jHipsterProperties.getSecurity()
-                                                 .getAuthentication()
-                                                 .getJwt();
+            .getAuthentication()
+            .getJwt();
         this.secretKey = token.getSecret();
         this.tokenValidityInMilliseconds = 1000 * token.getTokenValidityInSeconds();
         this.tokenValidityInMillisecondsForRememberMe = 1000 * token.getTokenValidityInSecondsForRememberMe();
@@ -47,7 +45,7 @@ public class TokenProvider {
     }
 
     private User getUser(Authentication authentication) {
-        if(authentication.getPrincipal() instanceof DomainUserPrincipal){
+        if (authentication.getPrincipal() instanceof DomainUserPrincipal) {
             final DomainUserPrincipal principal = (DomainUserPrincipal) authentication.getPrincipal();
             return principal.getUser();
         }

@@ -10,7 +10,6 @@ import static ch.admin.seco.jobroom.security.jwt.ClaimMapper.ClaimKey.phone;
 import static ch.admin.seco.jobroom.security.jwt.ClaimMapper.ClaimKey.userId;
 import static ch.admin.seco.jobroom.security.jwt.TokenToAuthenticationConverter.KEY_VALUE_DELIMITER;
 import static java.util.stream.Collectors.joining;
-import static org.apache.commons.lang.StringUtils.EMPTY;
 
 import java.util.Collection;
 import java.util.function.BiConsumer;
