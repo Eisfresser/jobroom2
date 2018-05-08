@@ -1,19 +1,20 @@
 package ch.admin.seco.jobroom.service;
 
-import ch.admin.seco.jobroom.domain.SystemNotification;
-import ch.admin.seco.jobroom.repository.SystemNotificationRepository;
-import ch.admin.seco.jobroom.service.dto.SystemNotificationDTO;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import static java.util.stream.Collectors.toList;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import static java.util.stream.Collectors.toList;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import ch.admin.seco.jobroom.domain.SystemNotification;
+import ch.admin.seco.jobroom.repository.SystemNotificationRepository;
+import ch.admin.seco.jobroom.service.dto.SystemNotificationDTO;
 
 @Service
 @Transactional

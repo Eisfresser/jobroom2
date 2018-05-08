@@ -1,12 +1,13 @@
 package ch.admin.seco.jobroom.service.dto;
 
-
-import ch.admin.seco.jobroom.domain.SystemNotification;
+import java.time.LocalDateTime;
+import java.util.UUID;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.time.LocalDateTime;
-import java.util.UUID;
+
+import ch.admin.seco.jobroom.domain.SystemNotification;
+
 
 public class SystemNotificationDTO {
 
@@ -75,21 +76,37 @@ public class SystemNotificationDTO {
         this.title = title;
     }
 
-    public String getText_de() { return text_de; }
+    public String getText_de() {
+        return text_de;
+    }
 
-    public void setText_de(String text_de) { this.text_de = text_de; }
+    public void setText_de(String text_de) {
+        this.text_de = text_de;
+    }
 
-    public String getText_fr() { return text_fr; }
+    public String getText_fr() {
+        return text_fr;
+    }
 
-    public void setText_fr(String text_fr) { this.text_fr = text_fr; }
+    public void setText_fr(String text_fr) {
+        this.text_fr = text_fr;
+    }
 
-    public String getText_it() { return text_it; }
+    public String getText_it() {
+        return text_it;
+    }
 
-    public void setText_it(String text_it) { this.text_it = text_it; }
+    public void setText_it(String text_it) {
+        this.text_it = text_it;
+    }
 
-    public String getText_en() { return text_en; }
+    public String getText_en() {
+        return text_en;
+    }
 
-    public void setText_en(String text_en) { this.text_en = text_en; }
+    public void setText_en(String text_en) {
+        this.text_en = text_en;
+    }
 
     public String getType() {
         return type;

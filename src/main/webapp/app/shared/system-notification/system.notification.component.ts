@@ -5,7 +5,7 @@ import { GetAllSystemNotificationsAction } from '../../admin/system-notification
 import { getAllSystemNotifications, SystemNotificationState } from '../../admin/system-notifications-management/state-management/state/system-notification-management.state';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
-import moment = require('moment');
+import * as moment from 'moment';
 
 @Component({
     selector: 'jr2-system-notification',
