@@ -1,6 +1,6 @@
-import { SystemNotification } from '../../../../shared/system-notification/system.notification.model';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { getSystemNotificationEntities } from '../reducers/system-notification-management-reducers';
+import { SystemNotification } from '../../../../shared/system-notification/system.notification.model';
 
 export interface SystemNotificationState {
     entities: { [id: number]: SystemNotification};

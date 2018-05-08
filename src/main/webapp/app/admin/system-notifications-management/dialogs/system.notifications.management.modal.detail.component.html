@@ -12,19 +12,19 @@
         </div>
         <div class="form-group">
             <label class="form-control-label">Text(DE)</label>
-            <input type="text" class="form-control">
-        </div>
-        <div class="form-group">
-            <label class="form-control-label">Text(EN)</label>
-            <input type="text" class="form-control">
+            <input type="text" class="form-control" name="text_de" #text="ngModel" [(ngModel)]="systemNotification.text_de">
         </div>
         <div class="form-group">
             <label class="form-control-label">Text(FR)</label>
-            <input type="text" class="form-control">
+            <input type="text" class="form-control" name="text_fr" #text="ngModel" [(ngModel)]="systemNotification.text_fr">
         </div>
         <div class="form-group">
             <label class="form-control-label">Text(IT)</label>
-            <input type="text" class="form-control">
+            <input type="text" class="form-control" name="text_it" #text="ngModel" [(ngModel)]="systemNotification.text_it">
+        </div>
+        <div class="form-group">
+            <label class="form-control-label">Text(EN)</label>
+            <input type="text" class="form-control" name="text_en" #text="ngModel" [(ngModel)]="systemNotification.text_en">
         </div>
         <div class="form-group">
             <label class="form-control-label">Anzeigen von:</label>

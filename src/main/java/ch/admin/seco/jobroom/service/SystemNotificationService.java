@@ -40,7 +40,10 @@ public class SystemNotificationService {
     public SystemNotificationDTO createSystemNotification(SystemNotificationDTO systemNotificationDTO) {
         SystemNotification systemNotification = new SystemNotification();
         systemNotification.setTitle(systemNotificationDTO.getTitle());
-        systemNotification.setText(systemNotificationDTO.getText());
+        systemNotification.setText_de(systemNotificationDTO.getText_de());
+        systemNotification.setText_fr(systemNotificationDTO.getText_fr());
+        systemNotification.setText_it(systemNotificationDTO.getText_it());
+        systemNotification.setText_en(systemNotificationDTO.getText_en());
         systemNotification.setType(systemNotificationDTO.getType());
         systemNotification.setActive(systemNotificationDTO.isActive());
         systemNotification.setStartDate(systemNotificationDTO.getStartDate());
@@ -54,7 +57,10 @@ public class SystemNotificationService {
     public void updateSystemNotification(SystemNotificationDTO systemNotificationDTO) {
         systemNotificationRepository.getSystemNotificationById(systemNotificationDTO.getId()).ifPresent(systemNotification -> {
             systemNotification.setTitle(systemNotificationDTO.getTitle());
-            systemNotification.setText(systemNotificationDTO.getText());
+            systemNotification.setText_de(systemNotificationDTO.getText_de());
+            systemNotification.setText_fr(systemNotificationDTO.getText_fr());
+            systemNotification.setText_it(systemNotificationDTO.getText_it());
+            systemNotification.setText_en(systemNotificationDTO.getText_en());
             systemNotification.setType(systemNotificationDTO.getType());
             systemNotification.setStartDate(systemNotificationDTO.getStartDate());
             systemNotification.setEndDate(systemNotificationDTO.getEndDate());

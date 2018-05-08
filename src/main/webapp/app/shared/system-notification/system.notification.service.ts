@@ -11,7 +11,7 @@ import { catchError } from 'rxjs/operators';
 
 @Injectable()
 export class SystemNotificationService {
-    private resourceUrl = SERVER_API_URL + 'api/systemNotification';
+    private resourceUrl = SERVER_API_URL + 'api/system-notifications';
 
     constructor(private http: HttpClient) {
     }

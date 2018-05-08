@@ -30,14 +30,14 @@ public class SystemNotificationResource {
         this.systemNotificationRepository = systemNotificationRepository;
     }
 
-    @GetMapping("/systemNotification")
+    @GetMapping("/system-notifications")
     @Timed
     public List<SystemNotificationDTO> getAllSystemNotifications() {
         log.debug("REST request to get all SystemNotifications : {}");
         return systemNotificationService.getAllSystemNotifications();
     }
 
-    @GetMapping("/systemNotification/{id}")
+    @GetMapping("/system-notifications/{id}")
     @Timed
     public Optional<SystemNotificationDTO> getSystemNotificationById(@PathVariable UUID id) {
         Preconditions.checkNotNull(id);
@@ -45,7 +45,7 @@ public class SystemNotificationResource {
         return systemNotificationService.getSystemNotificationById(id);
     }
 
-    @PostMapping("/systemNotification")
+    @PostMapping("/system-notifications")
     @Timed
     public SystemNotificationDTO createSystemNotification(@Valid @RequestBody SystemNotificationDTO systemNotificationDTO) {
         Preconditions.checkNotNull(systemNotificationDTO);
@@ -55,14 +55,14 @@ public class SystemNotificationResource {
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @DeleteMapping(path = "/systemNotification/{id}")
+    @DeleteMapping(path = "/system-notifications/{id}")
     public void deleteSystemNotification(@PathVariable UUID id) {
         Preconditions.checkNotNull(id);
         log.debug("REST request to delete SystemNotification with id : {}", id);
         systemNotificationService.deleteSystemNotification(id);
     }
 
-    @PatchMapping("/systemNotification")
+    @PatchMapping("/system-notifications")
     @Timed
     public void updateSystemNotification(@Valid @RequestBody SystemNotificationDTO systemNotificationDTO) {
         Preconditions.checkNotNull(systemNotificationDTO);

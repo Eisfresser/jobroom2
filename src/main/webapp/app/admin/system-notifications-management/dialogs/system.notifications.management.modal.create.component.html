@@ -8,30 +8,42 @@
     <div class="modal-body">
         <div class="form-group">
             <label class="form-control-label">Titel</label>
-            <input type="text" class="form-control" name="title" #title="ngModel"  [(ngModel)]="systemNotification.title" required>
+            <input type="text" class="form-control" name="title" #title="ngModel"  [(ngModel)]="systemNotification.title">
         </div>
         <div class="form-group">
             <label class="form-control-label">Text(DE)</label>
-            <input type="text" class="form-control" name="text" #text="ngModel" [(ngModel)]="systemNotification.text" required>
+            <input type="text" class="form-control" name="text_de" #text="ngModel" [(ngModel)]="systemNotification.text_de">
+        </div>
+        <div class="form-group">
+            <label class="form-control-label">Text(FR)</label>
+            <input type="text" class="form-control" name="text_fr" #text="ngModel" [(ngModel)]="systemNotification.text_fr">
+        </div>
+        <div class="form-group">
+            <label class="form-control-label">Text(IT)</label>
+            <input type="text" class="form-control" name="text_it" #text="ngModel" [(ngModel)]="systemNotification.text_it">
+        </div>
+        <div class="form-group">
+            <label class="form-control-label">Text(EN)</label>
+            <input type="text" class="form-control" name="text_en" #text="ngModel" [(ngModel)]="systemNotification.text_en">
         </div>
         <div class="form-group">
             <label class="form-control-label">Mitteilungstyp</label>
-            <select class="form-control" name="type"  #endDate="ngModel" [(ngModel)]="systemNotification.type" required>
+            <select class="form-control" name="type"  #endDate="ngModel" [(ngModel)]="systemNotification.type">
                 <option>INFO</option>
                 <option>SYSTEM</option>
             </select>
         </div>
         <div class="form-group">
             <label class="form-control-label">Anzeigen von:</label>
-            <input type="text" class="form-control" name="startDate" #startDate="ngModel" [(ngModel)]="systemNotification.startDate" required>
+            <input type="text" class="form-control" name="startDate" #startDate="ngModel" [(ngModel)]="systemNotification.startDate">
         </div>
         <div class="form-group">
             <label class="form-control-label">Anzeigen bis:</label>
-            <input type="text" class="form-control" name="endDate"  #endDate="ngModel" [(ngModel)]="systemNotification.endDate" required>
+            <input type="text" class="form-control" name="endDate"  #endDate="ngModel" [(ngModel)]="systemNotification.endDate">
         </div>
         <div class="form-group">
             <label class="form-control-label">Aktiviert:</label>
-            <input type="checkbox" class="form-control" name="active" value="false" #active="ngModel" [(ngModel)]="systemNotification.active" required>
+            <input type="checkbox" class="form-control" name="active" value="false" #active="ngModel" [(ngModel)]="systemNotification.active">
         </div>
     </div>
     <div class="modal-footer">
@@ -39,7 +51,7 @@
             <span class="fa fa-ban"></span>&nbsp;<span
             jhiTranslate="entity.action.cancel">Cancel</span>
         </button>
-        <button type="submit" class="btn btn-primary" [disabled]="createForm.form.invalid">
+        <button type="submit" class="btn btn-primary">
             <span class="fa fa-floppy-o"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
         </button>
     </div>

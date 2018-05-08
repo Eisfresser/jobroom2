@@ -1,10 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { SystemNotification } from '../../shared/system-notification/system.notification.model';
 import { SystemNotificationsManagementModalCreateComponent } from './dialogs/system.notifications.management.modal.create.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SystemNotificationsManagementModalDeleteComponent } from './dialogs/system.notifications.management.modal.delete.component';
 import { SystemNotificationsManagementModalDetailComponent } from './dialogs/system.notifications.management.modal.detail.component';
-import { SystemNotificationService } from '../../shared/system-notification/system.notification.service';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 import { getAllSystemNotifications, SystemNotificationState } from './state-management/state/system-notification-management.state';
@@ -14,6 +12,8 @@ import {
     GetAllSystemNotificationsAction,
     UpdateSystemNotificationAction
 } from './state-management/actions/system-notification-management.actions';
+import { SystemNotification } from '../../shared/system-notification/system.notification.model';
+import { SystemNotificationService } from '../../shared/system-notification/system.notification.service';
 
 @Component({
     selector: 'jhi-sys-notifications',

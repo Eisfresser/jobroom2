@@ -27,9 +27,20 @@ public class SystemNotification {
     private String title;
 
     @NotNull
-    @Size(max = 50)
-    @Column(name = "text", length = 50)
-    private String text;
+    @Size(max = 150)
+    private String text_de;
+
+    @NotNull
+    @Size(max = 150)
+    private String text_fr;
+
+    @NotNull
+    @Size(max = 150)
+    private String text_it;
+
+    @NotNull
+    @Size(max = 150)
+    private String text_en;
 
 
     @Column(name = "type")
@@ -62,17 +73,25 @@ public class SystemNotification {
         this.title = title;
     }
 
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
-
     public String getType() {
         return type;
     }
+
+    public String getText_de() { return text_de; }
+
+    public void setText_de(String text_de) { this.text_de = text_de; }
+
+    public String getText_fr() { return text_fr; }
+
+    public void setText_fr(String text_fr) { this.text_fr = text_fr; }
+
+    public String getText_it() { return text_it; }
+
+    public void setText_it(String text_it) { this.text_it = text_it; }
+
+    public String getText_en() { return text_en; }
+
+    public void setText_en(String text_en) { this.text_en = text_en; }
 
     public void setType(String type) {
         this.type = type;

@@ -1,6 +1,7 @@
-id;title;text;type;active;startDate;endDate
-1;test1;test1;test1;false;2018-04-27 10:30:40.175;2018-04-27 10:30:40.175
-2;test2;test2;test2;false;2018-04-27 10:30:40.175;2018-04-27 10:30:40.175
-3;test3;test3;test3;false;2018-04-27 10:30:40.175;2018-04-27 10:30:40.175
-4;test4;test4;test4;false;2018-04-27 10:30:40.175;2018-04-27 10:30:40.175
-5;test5;test5;test5;false;2018-04-27 10:30:40.175;2018-04-27 10:30:40.175
+id;title;text_de;text_fr;text_it;text_en;type;active;startDate;endDate
+1;title1;test1_de;test1_fr;test1_it;test1_en;SYSTEM;false;2018-04-27 10:30:40.175;2018-04-27 10:30:40.175
+2;title2;test2_de;test2_fr;test2_it;test2_en;SYSTEM;false;2018-04-27 10:30:40.175;2018-04-27 10:30:40.175
+3;title3;test3_de;test3_fr;test3_it;test3_en;SYSTEM;false;2018-04-27 10:30:40.175;2018-04-27 10:30:40.175
+4;title4;test4_de;test4_fr;test4_it;test4_en;SYSTEM;false;2018-04-27 10:30:40.175;2018-04-27 10:30:40.175
+5;title5;test5_de;test5_fr;test5_it;test5_en;SYSTEM;false;2018-04-27 10:30:40.175;2018-04-27 10:30:40.175
+
