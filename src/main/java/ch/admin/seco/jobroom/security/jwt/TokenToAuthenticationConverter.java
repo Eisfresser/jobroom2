@@ -16,6 +16,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
+import ch.admin.seco.jobroom.security.DomainUserPrincipal;
+
 class TokenToAuthenticationConverter {
 
     static final String KEY_VALUE_DELIMITER = ",";

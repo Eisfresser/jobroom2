@@ -53,4 +53,8 @@ public class DomainUserPrincipal implements UserDetails {
     public boolean isEnabled() {
         return user.getActivated();
     }
+
+    public User getUser() {
+        return user;
+    }
 }

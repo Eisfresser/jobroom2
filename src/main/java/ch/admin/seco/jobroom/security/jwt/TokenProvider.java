@@ -6,6 +6,7 @@ import static java.time.LocalDateTime.now;
 import static java.time.ZoneId.systemDefault;
 import static java.time.temporal.ChronoUnit.MILLIS;
 
+import java.util.Collection;
 import java.util.Date;
 
 import io.github.jhipster.config.JHipsterProperties;
@@ -14,8 +15,12 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.SignatureAlgorithm;
 
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.stereotype.Component;
+
+import ch.admin.seco.jobroom.domain.User;
+import ch.admin.seco.jobroom.security.DomainUserPrincipal;
 
 @Component
 public class TokenProvider {
@@ -35,16 +40,22 @@ public class TokenProvider {
         this.tokenValidityInMillisecondsForRememberMe = 1000 * token.getTokenValidityInSecondsForRememberMe();
     }
 
-    public String createToken(Authentication authentication, boolean rememberMe, ch.admin.seco.jobroom.domain.User user) {
-        final String subject = authentication.getName();
+    public String createToken(Authentication authentication, boolean rememberMe) {
         final Date expirationDate = calculateExpirationDate(rememberMe);
-        final Claims claims = mapUserAndAuthoritiesToClaims().apply(user, authentication.getAuthorities());
-
-        return createToken(subject, expirationDate, claims);
+        Claims claims = mapUserAndAuthoritiesToClaims().apply(getUser(authentication), authentication.getAuthorities());
+        return createToken(authentication.getName(), expirationDate, claims);
     }
 
-    public DefaultOAuth2AccessToken createAccessToken(Authentication authentication, ch.admin.seco.jobroom.domain.User user) {
-        String token = createToken(authentication, false, user);
+    private User getUser(Authentication authentication) {
+        if(authentication.getPrincipal() instanceof DomainUserPrincipal){
+            final DomainUserPrincipal principal = (DomainUserPrincipal) authentication.getPrincipal();
+            return principal.getUser();
+        }
+        return null;
+    }
+
+    public DefaultOAuth2AccessToken createAccessToken(Authentication authentication) {
+        String token = createToken(authentication, false);
         Date expirationDate = calculateExpirationDate(false);
         return createAccessToken(token, expirationDate);
     }

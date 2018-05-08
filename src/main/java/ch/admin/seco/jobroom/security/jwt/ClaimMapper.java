@@ -38,7 +38,6 @@ final class ClaimMapper {
             Claims claims = Jwts.claims();
             joinAuthorityNamesWithComma().accept(claims, authorities);
             mapUserToClaims().accept(claims, user);
-            mapOrganisationToClaims().accept(claims, user.getOrganization());
             return claims;
         };
     }
@@ -51,13 +50,13 @@ final class ClaimMapper {
                 claims.put(email.name(), user.getEmail());
                 claims.put(userId.name(), user.getId());
                 claims.put(phone.name(), user.getPhone());
-                claims.put(extId.name(), EMPTY); //TODO to be changed to user.getExtId() after an implementation of EIAM will be provided;
+                claims.put(extId.name(), null); //TODO to be changed to user.getExtId() after an implementation of EIAM will be provided;
+                mapOrganisationToClaims().accept(claims, user.getOrganization());
             }
         };
     }
 
     static BiConsumer<Claims, Organization> mapOrganisationToClaims() {
-
         return (claims, organization) -> {
             if (organization != null) {
                 claims.put(companyId.name(), organization.getId());

@@ -2,10 +2,7 @@ package ch.admin.seco.jobroom.web.rest;
 
 import static ch.admin.seco.jobroom.security.jwt.TokenResolver.AUTHORIZATION_HEADER;
 import static ch.admin.seco.jobroom.security.jwt.TokenResolver.TOKEN_PREFIX;
-import static org.apache.commons.lang.StringUtils.EMPTY;
-import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 import static org.springframework.http.ResponseEntity.ok;
-import static org.springframework.http.ResponseEntity.status;
 
 import java.util.Optional;
 
@@ -32,7 +29,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import ch.admin.seco.jobroom.repository.UserRepository;
 import ch.admin.seco.jobroom.security.jwt.TokenProvider;
 import ch.admin.seco.jobroom.web.rest.vm.LoginVM;
 
@@ -47,35 +43,27 @@ public class UserJWTController {
 
     private final AuthenticationManager authenticationManager;
 
-    private final UserRepository userRepository;
-
-    public UserJWTController(TokenProvider tokenProvider, AuthenticationManager authenticationManager, UserRepository userRepository) {
+    public UserJWTController(TokenProvider tokenProvider, AuthenticationManager authenticationManager) {
         this.tokenProvider = tokenProvider;
         this.authenticationManager = authenticationManager;
-        this.userRepository = userRepository;
     }
 
     @PostMapping("/authenticate")
     @Timed
     public ResponseEntity authorize(@Valid @RequestBody LoginVM loginVM, HttpServletRequest request, HttpServletResponse response) {
         Authentication authentication = authenticateWithUsernamePasswordAndRequest(loginVM.getUsername(), loginVM.getPassword(), request);
-        String token = createJwtToken(loginVM, authentication);
-        HttpHeaders httpHeaders = createHttpHeaders(token);
-
-        return new ResponseEntity<>(new JWTToken(token), httpHeaders, HttpStatus.OK);
+        Boolean rememberMe = Optional.ofNullable(loginVM.isRememberMe()).orElse(false);
+        String token = tokenProvider.createToken(authentication, rememberMe);
+        return new ResponseEntity<>(new JWTToken(token), httpHeaders(token), HttpStatus.OK);
     }
 
     @PostMapping(value = "/authenticate", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     @Timed
     public ResponseEntity authorizeOauth(@RequestParam String username, @RequestParam String password,
         HttpServletRequest request) {
-        return userRepository.findOneByLogin(username)
-            .map(user -> {
-                Authentication authentication = authenticateWithUsernamePasswordAndRequest(username, password, request);
-                DefaultOAuth2AccessToken accessToken = tokenProvider.createAccessToken(authentication, user);
-                return ok(accessToken);
-            })
-            .orElseGet(status(UNAUTHORIZED)::build);
+        Authentication authentication = authenticateWithUsernamePasswordAndRequest(username, password, request);
+        final DefaultOAuth2AccessToken accessToken = tokenProvider.createAccessToken(authentication);
+        return ok(accessToken);
     }
 
     private Authentication authenticateWithUsernamePasswordAndRequest(String username, String password, HttpServletRequest request) {
@@ -88,20 +76,10 @@ public class UserJWTController {
         return authentication;
     }
 
-    private HttpHeaders createHttpHeaders(String token) {
+    private static HttpHeaders httpHeaders(String token) {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add(AUTHORIZATION_HEADER, TOKEN_PREFIX + token);
-
         return httpHeaders;
-    }
-
-    private String createJwtToken(@Valid @RequestBody LoginVM loginVM, Authentication authentication) {
-        final Boolean rememberMe = Optional.ofNullable(loginVM.isRememberMe())
-            .orElse(false);
-
-        return userRepository.findOneByLogin(loginVM.getUsername())
-            .map(user -> tokenProvider.createToken(authentication, rememberMe, user))
-            .orElse(EMPTY);
     }
 
     /**
