@@ -16,8 +16,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
-import ch.admin.seco.jobroom.security.DomainUserPrincipal;
-
 class TokenToAuthenticationConverter {
 
     static final String KEY_VALUE_DELIMITER = ",";
@@ -38,12 +36,12 @@ class TokenToAuthenticationConverter {
 
     private Collection<? extends GrantedAuthority> convertClaimsToAuthorities(Claims claims) {
         return Stream.of(claims)
-                     .map(claimMap -> claimMap.get(auth.name()))
-                     .map(Object::toString)
-                     .map(name -> name.split(KEY_VALUE_DELIMITER))
-                     .flatMap(Stream::of)
-                     .map(SimpleGrantedAuthority::new)
-                     .collect(Collectors.toList());
+            .map(claimMap -> claimMap.get(auth.name()))
+            .map(Object::toString)
+            .map(name -> name.split(KEY_VALUE_DELIMITER))
+            .flatMap(Stream::of)
+            .map(SimpleGrantedAuthority::new)
+            .collect(Collectors.toList());
     }
 
     private Claims parseTokenToClaims(String token) {
