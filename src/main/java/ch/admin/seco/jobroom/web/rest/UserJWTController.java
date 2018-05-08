@@ -6,19 +6,14 @@ import javax.servlet.http.HttpServletResponse;
 import com.codahale.metrics.annotation.Timed;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
-import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ch.admin.seco.jobroom.security.jwt.JWTConfigurer;
@@ -29,20 +24,18 @@ import ch.admin.seco.jobroom.security.jwt.TokenProvider;
  */
 @RestController
 @RequestMapping("/api")
+@Profile("!no-eiam")
 public class UserJWTController {
 
     private final TokenProvider tokenProvider;
 
-    //private final AuthenticationManager authenticationManager;
-
-    public UserJWTController(TokenProvider tokenProvider) { //, AuthenticationManager authenticationManager) {
+    public UserJWTController(TokenProvider tokenProvider) {
         this.tokenProvider = tokenProvider;
-        //this.authenticationManager = authenticationManager;
     }
 
     @GetMapping("/getToken")
     @Timed
-    public ResponseEntity authorize(HttpServletRequest request, HttpServletResponse response) {
+    public ResponseEntity getToken(HttpServletRequest request, HttpServletResponse response) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
@@ -52,22 +45,6 @@ public class UserJWTController {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add(JWTConfigurer.AUTHORIZATION_HEADER, "Bearer " + jwt);
         return new ResponseEntity<>(new JWTToken(jwt), httpHeaders, HttpStatus.OK);
-    }
-
-    @PostMapping(value = "/authenticate", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    @Timed
-    public ResponseEntity authorizeOauth(@RequestParam String username, @RequestParam String password,
-        HttpServletRequest request) {
-
-        UsernamePasswordAuthenticationToken authenticationToken =
-            new UsernamePasswordAuthenticationToken(username, password);
-        authenticationToken.setDetails(new WebAuthenticationDetails(request));
-
-        // Authentication authentication = this.authenticationManager.authenticate(authenticationToken);
-        Authentication authentication = null;
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        DefaultOAuth2AccessToken oAuth2AccessToken = tokenProvider.createAccessToken(authentication);
-        return ResponseEntity.ok(oAuth2AccessToken);
     }
 
     /**

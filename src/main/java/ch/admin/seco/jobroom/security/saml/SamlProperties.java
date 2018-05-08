@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 @Component
-@Profile("!security-mock")
+@Profile("!no-eiam")
 public class SamlProperties {
 
     @Value("${security.saml.idpConfigPath}")
