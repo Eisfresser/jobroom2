@@ -24,7 +24,19 @@
                 <constraints nullable="false"/>
             </column>
 
-            <column name="text" type="varchar(150)">
+            <column name="text_de" type="varchar(150)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="text_fr" type="varchar(150)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="text_it" type="varchar(150)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="text_en" type="varchar(150)">
                 <constraints nullable="false"/>
             </column>
 
