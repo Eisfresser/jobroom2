@@ -43,6 +43,9 @@ public class SamlProperties {
     @Value("${security.saml.entityAlias:}")
     public String entityAlias;
 
+    @Value("${security.saml.accessRequestUrl}")
+    private String accessRequestUrl;
+
     public String getIdpConfigPath() {
         return idpConfigPath;
     }
@@ -130,4 +133,13 @@ public class SamlProperties {
     public void setEntityAlias(String entityAlias) {
         this.entityAlias = entityAlias;
     }
+
+    public String getAccessRequestUrl() {
+        return accessRequestUrl;
+    }
+
+    public void setAccessRequestUrl(String accessRequestUrl) {
+        this.accessRequestUrl = accessRequestUrl;
+    }
+
 }

@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.Timer;
 import java.util.regex.Pattern;
 
@@ -76,7 +77,6 @@ import org.springframework.security.web.FilterChainProxy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.channel.ChannelProcessingFilter;
 import org.springframework.security.web.authentication.DelegatingAuthenticationEntryPoint;
-import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler;
@@ -84,12 +84,17 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
+import ch.admin.seco.jobroom.security.saml.JobroomAuthenticationSuccessHandler;
 import ch.admin.seco.jobroom.security.saml.utils.HttpStatusEntryPoint;
 import ch.admin.seco.jobroom.security.saml.utils.XmlHttpRequestedWithMatcher;
 
 public final class SAMLConfigurer extends SecurityConfigurerAdapter<DefaultSecurityFilterChain, HttpSecurity> {
 
-    public static final String TARGET_URL_AFTER_AUTHENTICATION = "/#/auth";
+    private static final String TARGET_URL_AFTER_AUTHENTICATION = "/#/auth";
+    private static final String TARGET_URL_AFTER_LOGOUT = "/#/home";
+
+    private final String targetUrlEiamAccessRequest;
+    private final Set<String> jobRoomRoles;
 
     private IdentityProvider identityProvider = new IdentityProvider();
     private ServiceProvider serviceProvider = new ServiceProvider();
@@ -111,7 +116,9 @@ public final class SAMLConfigurer extends SecurityConfigurerAdapter<DefaultSecur
         }
     };
 
-    private SAMLConfigurer() {
+    private SAMLConfigurer(String accessRequestUrl, Set<String> jobRoomRoles) {
+        this.targetUrlEiamAccessRequest = accessRequestUrl;
+        this.jobRoomRoles = jobRoomRoles;
     }
 
     @Override
@@ -151,8 +158,8 @@ public final class SAMLConfigurer extends SecurityConfigurerAdapter<DefaultSecur
             .authenticationProvider(samlAuthenticationProvider);
     }
 
-    public static SAMLConfigurer saml() {
-        return new SAMLConfigurer();
+    public static SAMLConfigurer saml(String accessRequestUrl, Set<String> jobRoomRoles) {
+        return new SAMLConfigurer(accessRequestUrl, jobRoomRoles);
     }
 
     public SAMLConfigurer userDetailsService(SAMLUserDetailsService samlUserDetailsService) {
@@ -260,10 +267,10 @@ public final class SAMLConfigurer extends SecurityConfigurerAdapter<DefaultSecur
         samlWebSSOProcessingFilter.setContextProvider(contextProvider);
         samlWebSSOProcessingFilter.setSAMLProcessor(samlProcessor);
 
-        SavedRequestAwareAuthenticationSuccessHandler savedRequestAwareAuthenticationSuccessHandler = new SavedRequestAwareAuthenticationSuccessHandler();
-        savedRequestAwareAuthenticationSuccessHandler.setAlwaysUseDefaultTargetUrl(true);
-        savedRequestAwareAuthenticationSuccessHandler.setDefaultTargetUrl(TARGET_URL_AFTER_AUTHENTICATION);
-        samlWebSSOProcessingFilter.setAuthenticationSuccessHandler(savedRequestAwareAuthenticationSuccessHandler);
+        JobroomAuthenticationSuccessHandler jobroomAuthenticationSuccessHandler = new JobroomAuthenticationSuccessHandler(this.targetUrlEiamAccessRequest, this.jobRoomRoles);
+        jobroomAuthenticationSuccessHandler.setAlwaysUseDefaultTargetUrl(true);
+        jobroomAuthenticationSuccessHandler.setDefaultTargetUrl(TARGET_URL_AFTER_AUTHENTICATION);
+        samlWebSSOProcessingFilter.setAuthenticationSuccessHandler(jobroomAuthenticationSuccessHandler);
         return samlWebSSOProcessingFilter;
     }
 
@@ -324,7 +331,7 @@ public final class SAMLConfigurer extends SecurityConfigurerAdapter<DefaultSecur
 
     private SimpleUrlLogoutSuccessHandler successLogoutHandler() {
         final SimpleUrlLogoutSuccessHandler successLogoutHandler = new SimpleUrlLogoutSuccessHandler();
-        successLogoutHandler.setDefaultTargetUrl("/");
+        successLogoutHandler.setDefaultTargetUrl(TARGET_URL_AFTER_LOGOUT);
         return successLogoutHandler;
     }
 
@@ -622,6 +629,11 @@ public final class SAMLConfigurer extends SecurityConfigurerAdapter<DefaultSecur
                 return result;
             }
         }
+
+        public String getTargetUrlEiamAccessRequest() {
+            return targetUrlEiamAccessRequest;
+        }
+
     }
 
     private static final class DefaultRequiresCsrfMatcher implements RequestMatcher {

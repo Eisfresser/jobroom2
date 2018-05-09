@@ -171,7 +171,7 @@ public class SecurityConfiguration {
             http.sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                 .and()
-                .apply(saml())
+                .apply(saml(samlProperties.getAccessRequestUrl(), rolemapping.keySet()))
                 .serviceProvider()
                 /*-*/.keyStore()
                 /*----*/.storeFilePath(samlProperties.getKeystorePath())
