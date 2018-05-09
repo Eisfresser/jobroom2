@@ -2,12 +2,10 @@ package ch.admin.seco.jobroom.security.jwt;
 
 import static ch.admin.seco.jobroom.security.jwt.TestAuthenticationFactory.anonymousAuthentication;
 import static ch.admin.seco.jobroom.security.jwt.TestAuthenticationFactory.domainUserAuthentication;
-import static ch.admin.seco.jobroom.security.jwt.TestJHipsterPropertiesFactory.TOKEN_VALID_60_SECONDS;
 import static ch.admin.seco.jobroom.security.jwt.TestJHipsterPropertiesFactory.jHipsterProperties;
 import static ch.admin.seco.jobroom.security.jwt.TestSecretKey.e5c9ee274ae87bc031adda32e27fa98b9290da83;
 import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.util.ReflectionTestUtils.setField;
 
 import java.util.Collection;
 
