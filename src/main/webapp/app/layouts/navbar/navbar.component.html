@@ -159,12 +159,12 @@
                                 {{ 'home.title.portal' | translate }}.swiss
                             </a>
                         </li>
-                        <li class="nav-item" *ngIf="!isAuthenticated()">
+                        <li class="nav-item" *ngIf="!isAuthenticated() && !noEiam">
                             <a class="nav-link nav-link--login" [href]="'/samllogin'">
                                 <span>{{'global.menu.account.login' | translate}}</span>
                             </a>
                         </li>
-                        <li class="nav-item" *ngIf="!isAuthenticated()">
+                        <li class="nav-item" *ngIf="!isAuthenticated() && noEiam">
                             <a class="nav-link nav-link--login" (click)="login(true)"
                                jhiTranslate="global.menu.account.login">
                                 Login
@@ -193,14 +193,16 @@
                                 <li class="nav-item">
                                     <a id="logout"
                                        routerLinkActive="active"
-                                       (click)="logout()">
+                                       (click)="logout()"
+                                       *ngIf="!noEiam">
                                         <span jhiTranslate="global.menu.account.logout">Sign out</span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a id="logout-no-eiam"
                                        routerLinkActive="active"
-                                       (click)="logoutNoEiam()">
+                                       (click)="logoutNoEiam()"
+                                       *ngIf="noEiam">
                                         <span jhiTranslate="global.menu.account.logout">Sign out</span>
                                     </a>
                                 </li>
@@ -345,12 +347,12 @@
                         <span>{{'home.contactform.text' | translate}}</span>
                     </a>
                 </li>
-                <li class="nav-item" *ngIf="!isAuthenticated()">
+                <li class="nav-item" *ngIf="!isAuthenticated() && !noEiam">
                     <a class="nav-link nav-link--login" [href]="'/samllogin'">
                         <span>{{'global.menu.account.login' | translate}}</span>
                     </a>
                 </li>
-                <li class="nav-item" *ngIf="!isAuthenticated()">
+                <li class="nav-item" *ngIf="!isAuthenticated() && noEiam">
                     <a class="nav-link nav-link--login" (click)="login(false)"
                        jhiTranslate="global.menu.account.login">
                         Login
@@ -379,14 +381,16 @@
                         <li>
                             <a class="dropdown-item dropdown-item--account" id="logout-desktop"
                                routerLinkActive="active"
-                               (click)="logout()">
+                               (click)="logout()"
+                               *ngIf="!noEiam">
                                 <span jhiTranslate="global.menu.account.logout">Sign out</span>
                             </a>
                         </li>
                         <li>
                             <a class="dropdown-item dropdown-item--account" id="logout-no-eiam-desktop"
                                routerLinkActive="active"
-                               (click)="logoutNoEiam()">
+                               (click)="logoutNoEiam()"
+                               *ngIf="noEiam">
                                 <span jhiTranslate="global.menu.account.logout">Sign out</span>
                             </a>
                         </li>
