@@ -1,5 +1,7 @@
 package ch.admin.seco.jobroom.config;
 
+import io.github.jhipster.config.JHipsterProperties;
+import io.github.jhipster.config.JHipsterProperties.Security.Authentication.Jwt;
 import org.zalando.problem.spring.web.advice.security.SecurityProblemSupport;
 
 import org.springframework.beans.factory.BeanInitializationException;
@@ -28,7 +30,6 @@ import org.springframework.web.filter.CorsFilter;
 import ch.admin.seco.jobroom.security.AuthoritiesConstants;
 import ch.admin.seco.jobroom.security.MD5PasswordEncoder;
 import ch.admin.seco.jobroom.security.jwt.JWTConfigurer;
-import ch.admin.seco.jobroom.security.jwt.TokenProvider;
 
 @Configuration
 @EnableWebSecurity
@@ -39,16 +40,21 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final UserDetailsService userDetailsService;
 
-    private final TokenProvider tokenProvider;
+    private final JHipsterProperties jHipsterProperties;
 
     private final CorsFilter corsFilter;
 
     private final SecurityProblemSupport problemSupport;
 
-    public SecurityConfiguration(AuthenticationManagerBuilder authenticationManagerBuilder, UserDetailsService userDetailsService, TokenProvider tokenProvider, CorsFilter corsFilter, SecurityProblemSupport problemSupport) {
+    public SecurityConfiguration(AuthenticationManagerBuilder authenticationManagerBuilder,
+                                 UserDetailsService userDetailsService,
+                                 CorsFilter corsFilter,
+                                 SecurityProblemSupport problemSupport,
+                                 JHipsterProperties jHipsterProperties
+    ) {
         this.authenticationManagerBuilder = authenticationManagerBuilder;
         this.userDetailsService = userDetailsService;
-        this.tokenProvider = tokenProvider;
+        this.jHipsterProperties = jHipsterProperties;
         this.corsFilter = corsFilter;
         this.problemSupport = problemSupport;
     }
@@ -127,6 +133,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 
     private JWTConfigurer securityConfigurerAdapter() {
-        return new JWTConfigurer(tokenProvider);
+        final Jwt jwt = this.jHipsterProperties.getSecurity()
+                                               .getAuthentication()
+                                               .getJwt();
+        return new JWTConfigurer(jwt);
     }
 }

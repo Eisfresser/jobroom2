@@ -1,5 +1,11 @@
 package ch.admin.seco.jobroom.web.rest;
 
+import static ch.admin.seco.jobroom.security.jwt.TokenResolver.AUTHORIZATION_HEADER;
+import static ch.admin.seco.jobroom.security.jwt.TokenResolver.TOKEN_PREFIX;
+import static org.springframework.http.ResponseEntity.ok;
+
+import java.util.Optional;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -23,7 +29,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import ch.admin.seco.jobroom.security.jwt.JWTConfigurer;
 import ch.admin.seco.jobroom.security.jwt.TokenProvider;
 import ch.admin.seco.jobroom.web.rest.vm.LoginVM;
 
@@ -46,33 +51,35 @@ public class UserJWTController {
     @PostMapping("/authenticate")
     @Timed
     public ResponseEntity authorize(@Valid @RequestBody LoginVM loginVM, HttpServletRequest request, HttpServletResponse response) {
-
-        UsernamePasswordAuthenticationToken authenticationToken =
-            new UsernamePasswordAuthenticationToken(loginVM.getUsername(), loginVM.getPassword());
-        authenticationToken.setDetails(new WebAuthenticationDetails(request));
-
-        Authentication authentication = this.authenticationManager.authenticate(authenticationToken);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        boolean rememberMe = (loginVM.isRememberMe() == null) ? false : loginVM.isRememberMe();
-        String jwt = tokenProvider.createToken(authentication, rememberMe);
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add(JWTConfigurer.AUTHORIZATION_HEADER, "Bearer " + jwt);
-        return new ResponseEntity<>(new JWTToken(jwt), httpHeaders, HttpStatus.OK);
+        Authentication authentication = authenticateWithUsernamePasswordAndRequest(loginVM.getUsername(), loginVM.getPassword(), request);
+        Boolean rememberMe = Optional.ofNullable(loginVM.isRememberMe()).orElse(false);
+        String token = tokenProvider.createToken(authentication, rememberMe);
+        return new ResponseEntity<>(new JWTToken(token), httpHeaders(token), HttpStatus.OK);
     }
 
     @PostMapping(value = "/authenticate", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     @Timed
     public ResponseEntity authorizeOauth(@RequestParam String username, @RequestParam String password,
         HttpServletRequest request) {
+        Authentication authentication = authenticateWithUsernamePasswordAndRequest(username, password, request);
+        final DefaultOAuth2AccessToken accessToken = tokenProvider.createAccessToken(authentication);
+        return ok(accessToken);
+    }
 
-        UsernamePasswordAuthenticationToken authenticationToken =
-            new UsernamePasswordAuthenticationToken(username, password);
-        authenticationToken.setDetails(new WebAuthenticationDetails(request));
+    private Authentication authenticateWithUsernamePasswordAndRequest(String username, String password, HttpServletRequest request) {
+        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, password);
+        token.setDetails(new WebAuthenticationDetails(request));
+        Authentication authentication = this.authenticationManager.authenticate(token);
+        SecurityContextHolder.getContext()
+            .setAuthentication(authentication);
 
-        Authentication authentication = this.authenticationManager.authenticate(authenticationToken);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        DefaultOAuth2AccessToken oAuth2AccessToken = tokenProvider.createAccessToken(authentication);
-        return ResponseEntity.ok(oAuth2AccessToken);
+        return authentication;
+    }
+
+    private static HttpHeaders httpHeaders(String token) {
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add(AUTHORIZATION_HEADER, TOKEN_PREFIX + token);
+        return httpHeaders;
     }
 
     /**
@@ -94,5 +101,6 @@ public class UserJWTController {
         void setIdToken(String idToken) {
             this.idToken = idToken;
         }
+
     }
 }

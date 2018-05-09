@@ -1,106 +1,103 @@
 package ch.admin.seco.jobroom.security.jwt;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.Collections;
-
-import io.github.jhipster.config.JHipsterProperties;
+import ch.admin.seco.jobroom.domain.User;
 import org.junit.Before;
 import org.junit.Test;
-
+import org.mockito.Mockito;
 import org.springframework.http.HttpStatus;
 import org.springframework.mock.web.MockFilterChain;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.test.util.ReflectionTestUtils;
 
-import ch.admin.seco.jobroom.security.AuthoritiesConstants;
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+
+import java.io.IOException;
+
+import static ch.admin.seco.jobroom.security.jwt.TestSecretKey.e5c9ee274ae87bc031adda32e27fa98b9290da83;
+import static ch.admin.seco.jobroom.security.jwt.TestTokenFactory.INVALID_TOKEN;
+import static ch.admin.seco.jobroom.security.jwt.TestTokenFactory.TOKEN_VALID_19_YEARS;
+import static ch.admin.seco.jobroom.security.jwt.TokenResolver.AUTHORIZATION_HEADER;
+import static ch.admin.seco.jobroom.security.jwt.TokenResolver.TOKEN_PREFIX;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class JWTFilterTest {
 
-    private TokenProvider tokenProvider;
+    static final String WRONG_AUTHORIZATION_HEADER = "Basic ";
+
+    private TokenToAuthenticationConverter tokenToAuthenticationConverter;
 
     private JWTFilter jwtFilter;
 
+    private MockHttpServletRequest request;
+
+    private FilterChain filterChain;
+
+    private MockHttpServletResponse response;
+
     @Before
     public void setup() {
-        JHipsterProperties jHipsterProperties = new JHipsterProperties();
-        tokenProvider = new TokenProvider(jHipsterProperties);
-        ReflectionTestUtils.setField(tokenProvider, "secretKey", "test secret");
-        ReflectionTestUtils.setField(tokenProvider, "tokenValidityInMilliseconds", 60000);
-        jwtFilter = new JWTFilter(tokenProvider);
-        SecurityContextHolder.getContext().setAuthentication(null);
+        tokenToAuthenticationConverter = new TokenToAuthenticationConverter(e5c9ee274ae87bc031adda32e27fa98b9290da83.name());
+        jwtFilter = new JWTFilter(tokenToAuthenticationConverter, TokenResolver.of(e5c9ee274ae87bc031adda32e27fa98b9290da83.name()));
+        request = new MockHttpServletRequest();
+        response = new MockHttpServletResponse();
+
+        filterChain = new MockFilterChain();
+        SecurityContextHolder.getContext()
+                             .setAuthentication(null);
     }
 
     @Test
-    public void testJWTFilter() throws Exception {
-        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-            "test-user",
-            "test-password",
-            Collections.singletonList(new SimpleGrantedAuthority(AuthoritiesConstants.USER))
-        );
-        String jwt = tokenProvider.createToken(authentication, false);
-        MockHttpServletRequest request = new MockHttpServletRequest();
-        request.addHeader(JWTConfigurer.AUTHORIZATION_HEADER, "Bearer " + jwt);
-        request.setRequestURI("/api/test");
-        MockHttpServletResponse response = new MockHttpServletResponse();
-        MockFilterChain filterChain = new MockFilterChain();
+    public void shouldDoFilterSetAuthenticationWithTokenAsCredentials() throws Exception {
+        request.addHeader(AUTHORIZATION_HEADER, TOKEN_PREFIX + TOKEN_VALID_19_YEARS);
+
         jwtFilter.doFilter(request, response, filterChain);
-        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
-        assertThat(SecurityContextHolder.getContext().getAuthentication().getName()).isEqualTo("test-user");
-        assertThat(SecurityContextHolder.getContext().getAuthentication().getCredentials().toString()).isEqualTo(jwt);
+
+        assertThat(authentication()).isNotNull();
+        assertThat(authentication().getCredentials()
+                                 .toString()).isEqualTo(TOKEN_VALID_19_YEARS);
     }
 
     @Test
-    public void testJWTFilterInvalidToken() throws Exception {
-        String jwt = "wrong_jwt";
-        MockHttpServletRequest request = new MockHttpServletRequest();
-        request.addHeader(JWTConfigurer.AUTHORIZATION_HEADER, "Bearer " + jwt);
-        request.setRequestURI("/api/test");
-        MockHttpServletResponse response = new MockHttpServletResponse();
-        MockFilterChain filterChain = new MockFilterChain();
+    public void shouldDoFilterSetNullAuthenticationIfInvalidToken() throws Exception {        ;
+        request.addHeader(AUTHORIZATION_HEADER, TOKEN_PREFIX + INVALID_TOKEN);
+
         jwtFilter.doFilter(request, response, filterChain);
-        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
-        assertThat(SecurityContextHolder.getContext().getAuthentication()).isNull();
+
+        assertThat(authentication()).isNull();
     }
 
     @Test
-    public void testJWTFilterMissingAuthorization() throws Exception {
-        MockHttpServletRequest request = new MockHttpServletRequest();
-        request.setRequestURI("/api/test");
-        MockHttpServletResponse response = new MockHttpServletResponse();
-        MockFilterChain filterChain = new MockFilterChain();
+    public void shouldDoFilterSetNullAuthenticationIfAuthorizationHeaderIsMissing() throws Exception {
         jwtFilter.doFilter(request, response, filterChain);
+
         assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
-        assertThat(SecurityContextHolder.getContext().getAuthentication()).isNull();
+        assertThat(authentication()).isNull();
     }
 
     @Test
-    public void testJWTFilterMissingToken() throws Exception {
-        MockHttpServletRequest request = new MockHttpServletRequest();
-        request.addHeader(JWTConfigurer.AUTHORIZATION_HEADER, "Bearer ");
-        request.setRequestURI("/api/test");
-        MockHttpServletResponse response = new MockHttpServletResponse();
-        MockFilterChain filterChain = new MockFilterChain();
+    public void shouldDoFilterSetNullAuthenticationIfTokenIsMissing() throws Exception {
+        request.addHeader(AUTHORIZATION_HEADER, TOKEN_PREFIX);
+
         jwtFilter.doFilter(request, response, filterChain);
-        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
-        assertThat(SecurityContextHolder.getContext().getAuthentication()).isNull();
+
+        assertThat(authentication()).isNull();
     }
 
     @Test
-    public void testJWTFilterWrongScheme() {
-        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-            "test-user",
-            "test-password",
-            Collections.singletonList(new SimpleGrantedAuthority(AuthoritiesConstants.USER))
-        );
-        String jwt = tokenProvider.createToken(authentication, false);
-        MockHttpServletRequest request = new MockHttpServletRequest();
-        request.addHeader(JWTConfigurer.AUTHORIZATION_HEADER, "Basic " + jwt);
-        request.setRequestURI("/api/test");
+    public void shouldDoFilterSetNullAuthenticationIfAuthorizationHeaderIsWrong() throws IOException, ServletException {
+        request.addHeader(AUTHORIZATION_HEADER, WRONG_AUTHORIZATION_HEADER + TOKEN_VALID_19_YEARS);
+
+        jwtFilter.doFilter(request, response, filterChain);
+
+        assertThat(authentication()).isNull();
     }
 
+    private Authentication authentication() {
+        return SecurityContextHolder.getContext()
+                                    .getAuthentication();
+    }
 }
+
