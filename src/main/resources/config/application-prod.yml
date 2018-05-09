@@ -165,14 +165,9 @@ security:
         externalContextServerName: 'localhost'
         externalContextServerPort: '443'
         externalContextPath: '/'
+        accessRequestUrl: 'https://sts-r.alv.admin.ch/_pep/accessRequest?appl=ALV-jobroom&returnURL=https%3A%2F%2Fdev.job-room.ch%2F%23%2Fregister'
         entityId: 'urn:wrong.url:sp:seco:JOBROOM-LOCAL'
         #entityAlias: ''
     user:
         logout_url: 'https://dev.job-room.ch/saml/logout'
         profile_url: 'http://www.cowsays.com/cow_messages/4701'
-    rolemapping:
-        SECO-jobroom.ROLE_ADMIN: ROLE_ADMIN
-        SECO-jobroom.ROLE_PRIVATE_EMPLOYMENT_AGENT: ROLE_PRIVATE_EMPLOYMENT_AGENT
-        SECO-jobroom.ROLE_PUBLIC_EMPLOYMENT_SERVICE: ROLE_PUBLIC_EMPLOYMENT_SERVICE
-        SECO-jobroom.ROLE_USER: ROLE_USER
-        SECO-jobroom.ROLE_SYSADMIN: ROLE_SYSADMIN
