@@ -4,13 +4,11 @@ import { RouterModule } from '@angular/router';
 import { JobroomSharedModule } from '../shared';
 
 import {
-    Register,
     ActivateService,
     PasswordService,
     PasswordResetInitService,
     PasswordResetFinishService,
     PasswordStrengthBarComponent,
-    RegisterComponent,
     RegistrationComponent,
     ActivateComponent,
     PasswordComponent,
@@ -27,7 +25,6 @@ import {
     ],
     declarations: [
         ActivateComponent,
-        RegisterComponent,
         RegistrationComponent,
         PasswordComponent,
         PasswordStrengthBarComponent,
@@ -36,7 +33,6 @@ import {
         SettingsComponent
     ],
     providers: [
-        Register,
         ActivateService,
         PasswordService,
         PasswordResetInitService,
