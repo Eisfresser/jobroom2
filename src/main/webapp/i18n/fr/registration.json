@@ -8,12 +8,12 @@
         "chlogin": {
             "title": "FR-Registrierung mit E-Mail, Passwort und SMS-Code (CH-Login)",
             "text": "Text in Franz\u00f6sisch.",
-            "link": "<a href=\"URL-Franz\u00f6sisch\">Link text in Franz\u00f6sisch</a>"
+            "link": "<a href=\"URL-Franz\u00f6sisch\" target=\"_blank\">Link text in Franz\u00f6sisch</a>"
         },
         "suisseid": {
             "title": "FR-Registrierung mit SuisseID",
             "text": "Text in Franz\u00f6sisch.",
-            "link": "<a href=\"URL-Franz\u00f6sisch\">Link text in Franz\u00f6sisch</a>"
+            "link": "<a href=\"URL-Franz\u00f6sisch\" target=\"_blank\">Link text in Franz\u00f6sisch</a>"
         },
         "click": {
             "text": "FR-Klicken Sie hier, um mit der Benutzerregistrierung zu beginnen."

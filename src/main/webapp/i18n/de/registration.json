@@ -8,12 +8,12 @@
         "chlogin": {
             "title": "Registrierung mit E-Mail, Passwort und SMS-Code (CH-Login)",
             "text": "Verwenden Sie eine E-Mail-Adresse als Benutzername und ein individuelles Passwort, um sich auf Job-Room anzumelden. Um die Sicherheit weiter zu erh\u00f6hen, senden wir Ihnen bei jeder Anmeldung einen Code per SMS an Ihr Mobiltelefon. Diese Methode ist f\u00fcr alle Benutzer verf\u00fcgbar.",
-            "link": "<a href=\"https://www.easygov.swiss/easygov/#/generalInformation/registrationByCHLogin\">Folgen Sie der Anleitung, um sich mit dieser Methode zu registrieren.</a>"
+            "link": "<a href=\"https://www.easygov.swiss/easygov/#/generalInformation/registrationByCHLogin\" target=\"_blank\">Folgen Sie der Anleitung, um sich mit dieser Methode zu registrieren.</a>"
         },
         "suisseid": {
             "title": "Registrierung mit SuisseID",
             "text": "Wenn Sie \u00fcber eine SuisseID verf\u00fcgen, k\u00f6nnen Sie diese auch zum Login auf arbeit.swiss verwenden.",
-            "link": "<a href=\"https://www.easygov.swiss/easygov/#/generalInformation/registrationBySuisseID\">Folgen Sie der Anleitung, um sich mit Ihrer SuisseID zu registrieren.</a>"
+            "link": "<a href=\"https://www.easygov.swiss/easygov/#/generalInformation/registrationBySuisseID\" target=\"_blank\">Folgen Sie der Anleitung, um sich mit Ihrer SuisseID zu registrieren.</a>"
         },
         "click": {
             "text": "Klicken Sie hier, um mit der Benutzerregistrierung zu beginnen."

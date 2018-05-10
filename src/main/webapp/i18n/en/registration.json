@@ -8,18 +8,18 @@
         "chlogin": {
             "title": "Register with email, password and SMS code (CH login)",
             "text": "Text in Englisch.",
-            "link": "<a href=\"URL-Englisch\">Link text in Englisch</a>"
+            "link": "<a href=\"URL-Englisch\" target=\"_blank\">Link text in Englisch</a>"
         },
         "suisseid": {
             "title": "Register with SuisseID",
             "text": "If you own a SuisseID you can also use it to log into arbeit.swiss.",
-            "link": "<a href=\"https://www.easygov.swiss/easygov/#/generalInformation/registrationBySuisseID\">Follow the instructions to register with your SuisseID.</a>"
+            "link": "<a href=\"https://www.easygov.swiss/easygov/#/generalInformation/registrationBySuisseID\" target=\"_blank\">Follow the instructions to register with your SuisseID.</a>"
         },
         "click": {
             "text": "Press button to start the user registration."
         },
         "button": {
-            "text": "Register user"
+            "text": "Register user now"
         }
     }
 }
