@@ -59,7 +59,7 @@
     </ng-container>
 
     <div class="button-bar" *ngIf="isAddEnabled()">
-        <button class="btn btn-primary" (click)="addNewDescription(languageOptionTranslations)">
+        <button class="btn btn-primary" disabled (click)="addNewDescription(languageOptionTranslations)">
             <i class="fa fa-plus" aria-hidden="true"></i>
             {{'home.tools.job-publication.description.add'| translate}}</button>
     </div>
