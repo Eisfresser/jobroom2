@@ -171,6 +171,13 @@
                             </a>
 
                         </li>
+                        <li class="nav-item" *ngIf="!isAuthenticated() && !noEiam">
+                            <a class="nav-link nav-link--login"
+                               routerLink="registration"
+                               routerLinkActive="active">
+                                <span>{{'global.menu.account.registration' | translate}}</span>
+                            </a>
+                        </li>
                         <li ngbDropdown class="nav-item" *ngIf="isAuthenticated()">
                             <strong class="nav-link">
                                 {{account?.firstName}} {{account?.lastName}}
@@ -356,6 +363,13 @@
                     <a class="nav-link nav-link--login" (click)="login(false)"
                        jhiTranslate="global.menu.account.login">
                         Login
+                    </a>
+                </li>
+                <li class="nav-item" *ngIf="!isAuthenticated() && !noEiam">
+                    <a class="nav-link nav-link--login"
+                       routerLink="registration"
+                       routerLinkActive="active">
+                        <span>{{'global.menu.account.registration' | translate}}</span>
                     </a>
                 </li>
                 <li ngbDropdown class="nav-item d-none d-sm-block dropdown" *ngIf="isAuthenticated()">

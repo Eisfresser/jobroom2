@@ -177,7 +177,8 @@
                 "password": "Mot de passe",
                 "register": "Cr\u00e9er un compte",
                 "sessions": "Sessions",
-                "settings": "Param\u00e8tres"
+                "settings": "Param\u00e8tres",
+                "registration": "Enregistrement"
             },
             "admin": {
                 "apidocs": "API",

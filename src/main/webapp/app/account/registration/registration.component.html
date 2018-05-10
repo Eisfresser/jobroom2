@@ -1,0 +1,43 @@
+<div>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h2 jhiTranslate="registration.title"></h2>
+
+            <h3 class="registration_text_spacing" jhiTranslate="registration.basics.title">Instructions for the user registration</h3>
+            <div jhiTranslate="registration.basics.text">
+                Die Benutzerregistrierung für Job-Room erfolgt über das <strong>System eIAM, der sicheren Identitäts- und Zugriffsverwaltung des Bundes</strong>. Dank eIAM können Sie mit einem einzigen Login verschiedene Informatikangebote der Bundesverwaltung nutzen. Da eIAM eine Dienstleistung des Bundesamtes für Informatik und Telekommunikation (BIT) ist, weicht das grafische Design von der Gestaltung auf Job-Room ab. Job-Room bietet Ihnen dank eIAM verschiedene Möglichkeiten, sich als Benutzer zu identifizieren.
+            </div>
+
+            <h3 class="registration_text_spacing" jhiTranslate="registration.chlogin.title">Register with email, password and SMS code (CH login)</h3>
+            <div jhiTranslate="registration.chlogin.text">
+                Verwenden Sie eine E-Mail-Adresse als Benutzername und ein individuelles Passwort, um sich auf Job-Room anzumelden. Um die Sicherheit weiter zu erhöhen, senden wir Ihnen bei jeder Anmeldung einen Code per SMS an Ihr Mobiltelefon. Diese Methode ist für alle Benutzer verfügbar.
+            </div>
+            <div jhiTranslate="registration.chlogin.link">
+                <a href="https://www.easygov.swiss/easygov/#/generalInformation/registrationByCHLogin">Folgen Sie der Anleitung, um sich mit dieser Methode zu registrieren.</a>
+            </div>
+
+            <h3 class="registration_text_spacing" jhiTranslate="registration.suisseid.title">Register with SuisseID</h3>
+            <div jhiTranslate="registration.suisseid.text">
+                If you own a SuisseID you can also use it to log into arbeit.swiss.
+            </div>
+            <div jhiTranslate="registration.suisseid.link">
+                <a href="https://www.easygov.swiss/easygov/#/generalInformation/registrationBySuisseID">Follow the instructions to register with your SuisseID.</a>
+            </div>
+
+            <hr class="registration_text_spacing">
+
+            <div jhiTranslate="registration.click.text" class="registration_text_spacing">
+                Press button to start the user registration.
+            </div>
+            <form class="form registration_text_spacing" role="form" (ngSubmit)="login()">
+                <div class="form-group row">
+                    <div class="col-sm-4 .mt-sm-0">
+                        <a class="btn btn-primary btn-lg btn-block" [href]="'/samllogin'">
+                            <span jhiTranslate="registration.button.text">Register user now</span>
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

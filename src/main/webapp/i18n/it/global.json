@@ -177,7 +177,8 @@
                 "password": "Password",
                 "register": "Registrazione",
                 "sessions": "Sessioni",
-                "settings": "Impostazioni"
+                "settings": "Impostazioni",
+                "registration": "Crea Account"
             },
             "admin": {
                 "apidocs": "API",

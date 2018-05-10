@@ -1,0 +1,25 @@
+{
+    "registration": {
+        "title": "Anleitung zur Benutzerregistrierung",
+        "basics": {
+            "title": "Grundlagen",
+            "text": "Die Benutzerregistrierung f\u00fcr Job-Room erfolgt \u00fcber das <strong>System eIAM, der sicheren Identit\u00e4ts- und Zugriffsverwaltung des Bundes</strong>. Dank eIAM k\u00f6nnen Sie mit einem einzigen Login verschiedene Informatikangebote der Bundesverwaltung nutzen. Da eIAM eine Dienstleistung des Bundesamtes f\u00fcr Informatik und Telekommunikation (BIT) ist, weicht das grafische Design von der Gestaltung auf Job-Room ab. Job-Room bietet Ihnen dank eIAM verschiedene M\u00f6glichkeiten, sich als Benutzer zu identifizieren."
+        },
+        "chlogin": {
+            "title": "Registrierung mit E-Mail, Passwort und SMS-Code (CH-Login)",
+            "text": "Verwenden Sie eine E-Mail-Adresse als Benutzername und ein individuelles Passwort, um sich auf Job-Room anzumelden. Um die Sicherheit weiter zu erh\u00f6hen, senden wir Ihnen bei jeder Anmeldung einen Code per SMS an Ihr Mobiltelefon. Diese Methode ist f\u00fcr alle Benutzer verf\u00fcgbar.",
+            "link": "<a href=\"https://www.easygov.swiss/easygov/#/generalInformation/registrationByCHLogin\">Folgen Sie der Anleitung, um sich mit dieser Methode zu registrieren.</a>"
+        },
+        "suisseid": {
+            "title": "Registrierung mit SuisseID",
+            "text": "Wenn Sie \u00fcber eine SuisseID verf\u00fcgen, k\u00f6nnen Sie diese auch zum Login auf arbeit.swiss verwenden.",
+            "link": "<a href=\"https://www.easygov.swiss/easygov/#/generalInformation/registrationBySuisseID\">Folgen Sie der Anleitung, um sich mit Ihrer SuisseID zu registrieren.</a>"
+        },
+        "click": {
+            "text": "Klicken Sie hier, um mit der Benutzerregistrierung zu beginnen."
+        },
+        "button": {
+            "text": "Jetzt Benutzer registrieren"
+        }
+    }
+}

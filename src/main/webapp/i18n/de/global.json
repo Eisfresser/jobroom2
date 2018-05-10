@@ -177,7 +177,8 @@
                 "password": "Passwort",
                 "register": "Registrierung",
                 "sessions": "Sitzungen",
-                "settings": "Einstellungen"
+                "settings": "Einstellungen",
+                "registration": "Registrieren"
             },
             "admin": {
                 "apidocs": "API",
