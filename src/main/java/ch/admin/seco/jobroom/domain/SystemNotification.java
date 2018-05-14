@@ -161,8 +161,8 @@ public class SystemNotification {
             return false;
         }
 
-        User user = (User) o;
-        return !(user.getId() == null || getId() == null) && Objects.equals(getId(), user.getId());
+        SystemNotification systemNotification = (SystemNotification) o;
+        return !(systemNotification.getId() == null || getId() == null) && Objects.equals(getId(), systemNotification.getId());
     }
 
     @Override

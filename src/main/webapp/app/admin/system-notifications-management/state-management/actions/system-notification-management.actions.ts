@@ -23,6 +23,25 @@ export class GetAllSystemNotificationsFailedAction implements Action {
     }
 }
 
+export const GET_ACTIVE_SYSTEMNOTIFICATIONS = 'SYSTEMNOTIFICATION:GET_ACTIVE';
+export const GET_ACTIVE_SYSTEMNOTIFICATIONS_SUCCESS = 'SYSTEMNOTIFICATION:GET_ACTIVE_SUCCESS';
+export const GET_ACTIVE_SYSTEMNOTIFICATIONS_FAILED = 'SYSTEMNOTIFICATION:GET_ACTIVE_FAILED';
+
+export class GetActiveSystemNotificationsAction implements Action {
+    readonly type = GET_ACTIVE_SYSTEMNOTIFICATIONS;
+}
+
+export class GetActiveSystemNotificationsSuccessAction implements Action {
+    readonly type = GET_ACTIVE_SYSTEMNOTIFICATIONS_SUCCESS;
+    constructor(public payload: SystemNotification[]) {
+    }
+}
+
+export class GetActiveSystemNotificationsFailedAction implements Action {
+    readonly type = GET_ACTIVE_SYSTEMNOTIFICATIONS_FAILED;
+    constructor(public payload = {}) {
+    }
+}
 // CREATE ACTIONS
 
 export const CREATE_SYSTEMNOTIFICATION = 'SYSTEMNOTIFICATION:CREATE_SYSTEMNOTIFICATION';
@@ -99,6 +118,9 @@ export type SystemNotificationActions =
     | GetAllSystemNotificationsAction
     | GetAllSystemNotificationsSuccessAction
     | GetAllSystemNotificationsFailedAction
+    | GetActiveSystemNotificationsAction
+    | GetActiveSystemNotificationsSuccessAction
+    | GetActiveSystemNotificationsFailedAction
     | CreateSystemNotificationAction
     | CreateSystemNotificationSuccessAction
     | CreateSystemNotificationFailedAction

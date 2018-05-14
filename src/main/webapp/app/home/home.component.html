@@ -25,7 +25,7 @@
             {{'home.toolbar.recruitmentAgencies' | translate}}
         </jr2-toolbar-item>
     </jr2-toolbar>
-    <jr2-system-notification></jr2-system-notification>
+    <jr2-system-notification [activeSystemNotifications] = "activeSystemNotifications$ | async"></jr2-system-notification>
     <div class="container" [ngSwitch]="activeToolbarItem$ | async">
         <div class="row">
             <div class="col-sm-12 col-md-10 col-xxl-8">

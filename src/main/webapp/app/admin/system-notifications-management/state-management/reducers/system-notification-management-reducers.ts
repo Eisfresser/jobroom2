@@ -1,7 +1,12 @@
-import { initialState, SystemNotificationState } from '../state/system-notification-management.state';
+import {
+    initialState,
+    SystemNotificationState
+} from '../state/system-notification-management.state';
 import {
     CREATE_SYSTEMNOTIFICATION_SUCCESS,
     DELETE_SYSTEMNOTIFICATION_SUCCESS,
+    GET_ACTIVE_SYSTEMNOTIFICATIONS_FAILED,
+    GET_ACTIVE_SYSTEMNOTIFICATIONS_SUCCESS,
     GET_ALL_SYSTEMNOTIFICATIONS,
     GET_ALL_SYSTEMNOTIFICATIONS_FAILED,
     GET_ALL_SYSTEMNOTIFICATIONS_SUCCESS,
@@ -24,14 +29,17 @@ export function systemNotificationReducer(
         case GET_ALL_SYSTEMNOTIFICATIONS_SUCCESS: {
             const systemNotifications = action.payload;
             const entities = systemNotifications.reduce(
-                (entitiesReduced: { [id: number]: SystemNotification }, systemNotification: SystemNotification) => {
+                (
+                    entitiesReduced: { [id: number]: SystemNotification },
+                    systemNotification: SystemNotification
+                ) => {
                     return {
                         ...entitiesReduced,
-                        [systemNotification.id]: systemNotification,
+                        [systemNotification.id]: systemNotification
                     };
                 },
                 {
-                    ...state.entities,
+                    ...state.entities
                 }
             );
             return {
@@ -43,7 +51,38 @@ export function systemNotificationReducer(
         }
 
         case GET_ALL_SYSTEMNOTIFICATIONS_FAILED: {
-            console.log('GET FAILED');
+            return {
+                ...state,
+                loading: false,
+                loaded: false
+            };
+        }
+
+        case GET_ACTIVE_SYSTEMNOTIFICATIONS_SUCCESS: {
+            const systemNotifications = action.payload;
+            const entities = systemNotifications.reduce(
+                (
+                    entitiesReduced: { [id: number]: SystemNotification },
+                    systemNotification: SystemNotification
+                ) => {
+                    return {
+                        ...entitiesReduced,
+                        [systemNotification.id]: systemNotification
+                    };
+                },
+                {
+                    ...state.entities
+                }
+            );
+            return {
+                ...state,
+                loading: false,
+                loaded: true,
+                entities
+            };
+        }
+
+        case GET_ACTIVE_SYSTEMNOTIFICATIONS_FAILED: {
             return {
                 ...state,
                 loading: false,
@@ -52,7 +91,10 @@ export function systemNotificationReducer(
         }
         case DELETE_SYSTEMNOTIFICATION_SUCCESS: {
             const systemNotification = action.payload;
-            const { [systemNotification.id]: removed, ...entities } = state.entities;
+            const {
+                [systemNotification.id]: removed,
+                ...entities
+            } = state.entities;
             return {
                 ...state,
                 entities

@@ -8,8 +8,8 @@ import {
     DELETE_SYSTEMNOTIFICATION,
     DeleteSystemNotificationAction,
     DeleteSystemNotificationFailedAction,
-    DeleteSystemNotificationSuccessAction,
-    GET_ALL_SYSTEMNOTIFICATIONS,
+    DeleteSystemNotificationSuccessAction, GET_ACTIVE_SYSTEMNOTIFICATIONS,
+    GET_ALL_SYSTEMNOTIFICATIONS, GetActiveSystemNotificationsFailedAction, GetActiveSystemNotificationsSuccessAction,
     GetAllSystemNotificationsFailedAction,
     GetAllSystemNotificationsSuccessAction,
     UPDATE_SYSTEMNOTIFICATION,
@@ -44,6 +44,17 @@ export class SystemNotificationManagementEffects {
                 .pipe(
                     map((systemNotifications) => new GetAllSystemNotificationsSuccessAction(systemNotifications)),
                     catchError((error) => of(new GetAllSystemNotificationsFailedAction(error)))
+                );
+        })
+    );
+
+    @Effect()
+    loadActiveSystemNotifications$ = this.actions$.ofType(GET_ACTIVE_SYSTEMNOTIFICATIONS).pipe(
+        switchMap(() => {
+            return this.systemNotificationService.getActiveSystemNotifications()
+                .pipe(
+                    map((systemNotifications) => new GetActiveSystemNotificationsSuccessAction(systemNotifications)),
+                    catchError((error) => of(new GetActiveSystemNotificationsFailedAction(error)))
                 );
         })
     );
