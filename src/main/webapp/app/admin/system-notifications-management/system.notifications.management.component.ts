@@ -5,7 +5,10 @@ import { SystemNotificationsManagementModalDeleteComponent } from './dialogs/sys
 import { SystemNotificationsManagementModalDetailComponent } from './dialogs/system.notifications.management.modal.detail.component';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
-import { getAllSystemNotifications, SystemNotificationState } from './state-management/state/system-notification-management.state';
+import {
+    getAllSystemNotifications,
+    SystemNotificationState
+} from './state-management/state/system-notification-management.state';
 import {
     CreateSystemNotificationAction,
     DeleteSystemNotificationAction,
@@ -33,18 +36,37 @@ export class SystemNotificationsManagementComponent implements OnInit {
     }
 
     ngOnInit(): void {
-       this.systemNotifications$ = this.store.select(getAllSystemNotifications);
-       this.store.dispatch(new GetAllSystemNotificationsAction);
+        this.systemNotifications$ = this.store.select(
+            getAllSystemNotifications
+        );
+        this.store.dispatch(new GetAllSystemNotificationsAction());
     }
 
     openCreateModal() {
         const modalRef = this.modalService.open(
-            SystemNotificationsManagementModalCreateComponent,
+            SystemNotificationsManagementModalCreateComponent
         );
-        modalRef.componentInstance.systemNotification = { id: null, title: null, text: null, type: null, startDate: null, endDate: null, active: null }
-        modalRef.componentInstance.createEvent.subscribe((systemNotificationToCreate) => {
-            this.store.dispatch(new CreateSystemNotificationAction(systemNotificationToCreate));
-        });
+        modalRef.componentInstance.systemNotification = {
+            id: null,
+            title: null,
+            text_de: null,
+            text_fr: null,
+            text_it: null,
+            text_en: null,
+            type: null,
+            startDate: null,
+            endDate: null,
+            active: null
+        };
+        modalRef.componentInstance.createEvent.subscribe(
+            (systemNotificationToCreate) => {
+                this.store.dispatch(
+                    new CreateSystemNotificationAction(
+                        systemNotificationToCreate
+                    )
+                );
+            }
+        );
     }
 
     openDetailModal(systemNotification: SystemNotification) {
@@ -52,9 +74,15 @@ export class SystemNotificationsManagementComponent implements OnInit {
             SystemNotificationsManagementModalDetailComponent
         );
         modalRef.componentInstance.systemNotification = systemNotification;
-        modalRef.componentInstance.updateEvent.subscribe((systemNotificationToUpdate) => {
-            this.store.dispatch(new UpdateSystemNotificationAction(systemNotificationToUpdate));
-        });
+        modalRef.componentInstance.updateEvent.subscribe(
+            (systemNotificationToUpdate) => {
+                this.store.dispatch(
+                    new UpdateSystemNotificationAction(
+                        systemNotificationToUpdate
+                    )
+                );
+            }
+        );
     }
 
     openDeleteModal(systemNotification: SystemNotification) {
@@ -62,13 +90,24 @@ export class SystemNotificationsManagementComponent implements OnInit {
             SystemNotificationsManagementModalDeleteComponent
         );
         modalRef.componentInstance.systemNotification = systemNotification;
-        modalRef.componentInstance.deleteEvent.subscribe((systemNotificationToDelete) => {
-            this.store.dispatch(new DeleteSystemNotificationAction(systemNotificationToDelete));
-        });
+        modalRef.componentInstance.deleteEvent.subscribe(
+            (systemNotificationToDelete) => {
+                this.store.dispatch(
+                    new DeleteSystemNotificationAction(
+                        systemNotificationToDelete
+                    )
+                );
+            }
+        );
     }
 
-    setActive(systemNotificationToUpdate: SystemNotification, isActivated: boolean) {
+    setActive(
+        systemNotificationToUpdate: SystemNotification,
+        isActivated: boolean
+    ) {
         systemNotificationToUpdate.active = isActivated;
-        this.store.dispatch(new UpdateSystemNotificationAction(systemNotificationToUpdate));
+        this.store.dispatch(
+            new UpdateSystemNotificationAction(systemNotificationToUpdate)
+        );
     }
 }
