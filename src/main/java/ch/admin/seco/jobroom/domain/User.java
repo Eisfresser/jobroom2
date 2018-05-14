@@ -51,10 +51,6 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @GenericGenerator(name = "UUIDGenerator", strategy = "uuid2")
     private UUID id;
 
-    @Size(max = 10)
-    @Column(name = "ext_id", length = 10)
-    private String extId;
-
     @NotNull
     @Pattern(regexp = Constants.LOGIN_REGEX)
     @Size(min = 1, max = 50)
@@ -132,14 +128,6 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     public void setId(UUID id) {
         this.id = id;
-    }
-
-    public String getExtId() {
-        return extId;
-    }
-
-    public void setExtId(String extId) {
-        this.extId = extId;
     }
 
     public String getLogin() {
@@ -286,7 +274,6 @@ public class User extends AbstractAuditingEntity implements Serializable {
     public String toString() {
         return "User{" +
             "login='" + login + '\'' +
-            ", extId='" + extId + '\'' +
             ", firstName='" + firstName + '\'' +
             ", lastName='" + lastName + '\'' +
             ", email='" + email + '\'' +
