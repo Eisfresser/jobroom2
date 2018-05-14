@@ -46,18 +46,6 @@ export class SystemNotificationsManagementComponent implements OnInit {
         const modalRef = this.modalService.open(
             SystemNotificationsManagementModalCreateComponent
         );
-        modalRef.componentInstance.systemNotification = {
-            id: null,
-            title: null,
-            text_de: null,
-            text_fr: null,
-            text_it: null,
-            text_en: null,
-            type: null,
-            startDate: null,
-            endDate: null,
-            active: null
-        };
         modalRef.componentInstance.createEvent.subscribe(
             (systemNotificationToCreate) => {
                 this.store.dispatch(
