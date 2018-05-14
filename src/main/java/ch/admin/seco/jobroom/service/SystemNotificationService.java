@@ -2,6 +2,7 @@ package ch.admin.seco.jobroom.service;
 
 import static java.util.stream.Collectors.toList;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -30,6 +31,13 @@ public class SystemNotificationService {
     @Transactional(readOnly = true)
     public List<SystemNotificationDTO> getAllSystemNotifications() {
         return systemNotificationRepository.getAllSystemNotifications().map(SystemNotificationDTO::toDto).collect(toList());
+    }
+
+    @Transactional(readOnly = true)
+    public List<SystemNotificationDTO> getActiveSystemNotifications() {
+        return systemNotificationRepository.getActiveSystemNotifications().map(SystemNotificationDTO::toDto).filter(
+            systemNotification -> systemNotification.getStartDate().isBefore(LocalDateTime.now()) && systemNotification.getEndDate().isAfter(LocalDateTime.now())
+        ).collect(toList());
     }
 
     @Transactional(readOnly = true)

@@ -48,6 +48,13 @@ public class SystemNotificationResource {
         return systemNotificationService.getAllSystemNotifications();
     }
 
+    @GetMapping("/active-system-notifications")
+    @Timed
+    public List<SystemNotificationDTO> getActiveSystemNotifications() {
+        log.debug("REST request to get active SystemNotifications : {}");
+        return systemNotificationService.getActiveSystemNotifications();
+    }
+
     @GetMapping("/system-notifications/{id}")
     @Timed
     public Optional<SystemNotificationDTO> getSystemNotificationById(@PathVariable UUID id) {

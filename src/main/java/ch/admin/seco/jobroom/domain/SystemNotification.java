@@ -1,6 +1,7 @@
 package ch.admin.seco.jobroom.domain;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.UUID;
 
 import javax.persistence.Column;
@@ -144,6 +145,39 @@ public class SystemNotification {
 
     public void setActive(boolean active) {
         isActive = active;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(getId());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        User user = (User) o;
+        return !(user.getId() == null || getId() == null) && Objects.equals(getId(), user.getId());
+    }
+
+    @Override
+    public String toString() {
+        return "SystemNotification{" +
+            "title='" + title + '\'' +
+            ", text_de='" + text_de + '\'' +
+            ", text_fr='" + text_fr + '\'' +
+            ", text_it='" + text_it + '\'' +
+            ", text_en='" + text_en + '\'' +
+            ", type='" + type + '\'' +
+            ", startDate='" + startDate + '\'' +
+            ", endDate='" + endDate + '\'' +
+            ", isActive='" + isActive + '\'' +
+            "}";
     }
 }
 
