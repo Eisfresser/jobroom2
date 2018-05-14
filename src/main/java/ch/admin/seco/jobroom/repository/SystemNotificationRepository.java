@@ -6,9 +6,9 @@ import java.util.stream.Stream;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
 import ch.admin.seco.jobroom.domain.SystemNotification;
-import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SystemNotificationRepository extends JpaRepository<SystemNotification, UUID> {
