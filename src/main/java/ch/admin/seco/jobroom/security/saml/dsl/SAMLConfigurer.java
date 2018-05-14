@@ -630,10 +630,6 @@ public final class SAMLConfigurer extends SecurityConfigurerAdapter<DefaultSecur
             }
         }
 
-        public String getTargetUrlEiamAccessRequest() {
-            return targetUrlEiamAccessRequest;
-        }
-
     }
 
     private static final class DefaultRequiresCsrfMatcher implements RequestMatcher {
