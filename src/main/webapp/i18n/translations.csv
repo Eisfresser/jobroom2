@@ -673,7 +673,7 @@ home,home.tools.job-publication.placeholders.email,muster@email.ch,example@email
 home,home.tools.job-publication.placeholders.phone,031 999 99 99 oder +41 31 999 99 99,031 999 99 99 or +41 31 999 99 99,031 999 99 99 ou +41 31 999 99 99,031 999 99 99 o +41 31 999 99 99
 home,home.tools.job-publication.placeholders.url,http://www.muster.ch,http://www.example.ch,http://www.exemple.ch,http://www.esempio.ch
 home,home.tools.job-publication.publication.eures,EURES Portal,EURES Portal,Portal EURES," Portale EURES"
-home,home.tools.job-publication.publication.eures.url,http://www.eures.ch,http://www.eures.ch/en,http://www.eures.ch/fr,http://www.eures.ch/it
+home,home.tools.job-publication.publication.eures.url,https://ec.europa.eu/eures/public/de/,https://ec.europa.eu/eures/public/en,https://ec.europa.eu/eures/public/fr,https://ec.europa.eu/eures/public/it
 home,home.tools.job-publication.publication.jobroom,Job-Room Website," Job-Room Website"," Site Job-Room"," Sito Job-Room"
 home,home.tools.job-publication.publication.jobroom.url,http://www.job-room.ch,http://www.job-room.ch,http://www.job-room.ch,http://www.job-room.ch
 home,home.tools.job-publication.publication.title,Publikationsmedien,Publication media,Moyens de publication,Mezzi di pubblicazione
