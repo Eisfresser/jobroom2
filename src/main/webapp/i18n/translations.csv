@@ -317,6 +317,7 @@ global,global.menu.admin.jhipster-needle-menu-add-admin-element,JHipster will ad
 global,global.menu.admin.logs,Protokoll,Logs,Logs,Log
 global,global.menu.admin.main,Administration,Administration,Administration,Amministratore
 global,global.menu.admin.metrics,Metriken,Metrics,Mesures,Metriche
+global,global.menu.admin.systemNotifications,System Mitteilungen,System notifications,Notification système,Notifica di sistema
 global,global.menu.admin.tracker,Benutzer Aktivitäten,User tracker,Activité des utilisateurs,Tracciamento utente
 global,global.menu.admin.userManagement,Benutzerverwaltung,User management,Gestion des utilisateurs,Gestione utenti
 global,global.menu.dashboard,Dashboard,Dashboard,Dashboard,Dashboard
@@ -349,6 +350,7 @@ global,global.messages.validate.username.invalid,Ihr Benutzername ist ungültig.
 global,global.messages.validate.username.maxlength,Ihr Benutzername darf nicht länger als 50 Zeichen sein,Your username cannot be longer than 50 characters.,Votre nom d'utilisateur ne doit pas comporter plus de 50 caractères.,Nome utente non può contenere più di 50 caratteri
 global,global.messages.validate.username.minlength,Ihr Benutzername muss mindestens 5 Zeichen lang sein,Your username must be at least 5 characters.,Votre nom d'utilisateur doit comporter au moins 5 caractères.,Nome utente deve essere di almeno 5 caratteri
 global,global.messages.validate.username.required,Ihr Benutzername wird benötigt.,Your username is required.,Votre nom d'utilisateur est requis.,Nome utente è obbligatorio.
+global,global.reference.canton.99,Ausland,Abroad,Étranger,Estero
 global,global.reference.canton.AG,Aargau,Aargau,Argovie,Argovia
 global,global.reference.canton.AI,Appenzell Innerrhoden,Appenzell Innerrhoden,Appenzell Rhodes-Intérieures,Appenzello Interno
 global,global.reference.canton.AR,Appenzell Ausserrhoden,Appenzell Ausserrhoden,Appenzell Rhodes-Extérieures,Appenzello Esterno
@@ -378,7 +380,6 @@ global,global.reference.canton.VD,Waadt,Vaud,Vaud,Vaud
 global,global.reference.canton.VS,Wallis,Valais,Valais,Vallese
 global,global.reference.canton.ZG,Zug,Zug,Zoug,Zugo
 global,global.reference.canton.ZH,Zürich,Zurich,Zurich,Zurigo
-global,global.reference.canton.99,Ausland,Abroad,Étranger,Estero
 global,global.reference.language.ar,Arabisch,Arab,Arabe,Arabo
 global,global.reference.language.bg,Bulgarisch,Bulgarian,Bulgare,Bulgaro
 global,global.reference.language.bs,Bosnisch,Bosnian,Bosniaque,Bosniaco
@@ -1011,6 +1012,25 @@ settings,settings.messages.validate.lastname.maxlength,Ihr Nachname darf nicht l
 settings,settings.messages.validate.lastname.minlength,Ihr Nachname muss mindestens 1 Zeichen lang sein,Your last name must be at least 1 character.,Votre nom doit comporter au moins un caractère.,Il cognome deve essere di almeno 1 carattere
 settings,settings.messages.validate.lastname.required,Ihr Nachname wird benötigt.,Your last name is required.,Votre nom est requis.,Il cognome è obbligatorio.
 settings,settings.title,Einstellungen für Benutzer [<b>{{username}}</b>],User settings for [<b>{{username}}</b>],Paramètres d'utilisateur [<b>{{username}}</b>],Impostazioni per l'utente [<b>{{username}}</b>]
+system-notifications-management,system-notifications-management.title,System Mitteilungen,System notifications,notifications système,notifiche di sistema
+system-notifications-management,systemNotificationsManagement.title,Titel,Title,Title,Title
+system-notifications-management,systemNotificationsManagement.type,Typ,Type,Type,Type
+system-notifications-management,systemNotificationsManagement.startDate,Von,From,From,From
+system-notifications-management,systemNotificationsManagement.endDate,Bis,To,To,To
+system-notifications-management,systemNotificationsManagement.status,Status,Status,Status,Status
+system-notifications-management,systemNotificationsManagement.actions,Aktionen,Actions,Actions,Actions
+system-notifications-management,systemNotificationsManagement.home.create,Neue Systemmitteilung erfassen,Create a new system notification,Créer un nouvel notification système,Crea un nuovo notifiche di sistema
+system-notifications-management,systemNotificationsManagement.home.title,System Mitteilungen,System notifications,notifications système,notifiche di sistema
+system-notifications-management,systemNotificationsManagement.activated,Aktiv,Activated,Activated,Activated
+system-notifications-management,systemNotificationsManagement.deactivated,Deaktiviert,Deactivated,Deactivated,Deactivated
+system-notifications-management,systemNotificationsManagement.delete.question,Möchten sie die Systemmitteilung wirklich öschen?,Do you really want to delete the system notification?,Do you really want to delete the system notification?,Do you really want to delete the system notification?
+system-notifications-management,systemNotificationsManagement.create.modal.title,Neue Systemmitteilung erstellen,Create new System Notification,Create new System Notification,Create new System Notification
+system-notifications-management,systemNotificationsManagement.edit.modal.title,Systemmitteilung editieren,Edit System Notification,Edit System Notification,Edit System Notification
+system-notifications-management,systemNotificationsManagement.delete.modal.title,Systemmitteilung löschen,Delete System Notification,Delete System Notification,Delete System Notification
+system-notifications-management,systemNotificationsManagement.delete.modal.text,Möchten Sie die Systemmitteilung wirklich löschen?,Are you sure you want to delete this system notification?,Are you sure you want to delete this system notification?,Are you sure you want to delete this system notification?
+system-notifications-management,systemNotificationsManagement.systemnotification.type.systemerror,Systemfehler,System error,System error,System error
+system-notifications-management,systemNotificationsManagement.systemnotification.type.interruption,Unterbrechung,Interruption,Interruption,Interruption
+system-notifications-management,systemNotificationsManagement.systemnotification.type.maintenance,Wartung,maintenance,maintenance,maintenance
 user-management,userManagement.activated,Aktiv,Active,Activé,Attivato
 user-management,userManagement.created,Ein neuer Benutzer wurde mit ID {{ param }} erstellt,A new user is created with identifier {{ param }},Un nouvel utilisateur portant l'ID {{ param }} a été créé.,È stato creato un nuovo utente con identificativo {{ param }}
 user-management,userManagement.createdBy,Erstellt von,Created by,Créé par,Creato da

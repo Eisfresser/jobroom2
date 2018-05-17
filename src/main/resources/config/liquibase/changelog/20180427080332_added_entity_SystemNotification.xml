@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <property name="now" value="now()" dbms="h2"/>
+
+    <property name="now" value="current_timestamp" dbms="postgresql"/>
+
+    <property name="floatType" value="float4" dbms="postgresql, h2"/>
+    <property name="floatType" value="float" dbms="mysql, oracle, mssql"/>
+
+    <!--
+        Added the entity Systemnotification.
+    -->
+    <changeSet id="20180427080332-1" author="jhipster">
+        <createTable tableName="systemnotification">
+            <column name="id" type="uuid">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="title" type="varchar(150)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="text_de" type="varchar(150)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="text_fr" type="varchar(150)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="text_it" type="varchar(150)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="text_en" type="varchar(150)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="type" type="varchar(150)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="active" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="startDate" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="endDate" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+
+            <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
+        </createTable>
+    </changeSet>
+    <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->
+</databaseChangeLog>

@@ -196,6 +196,7 @@
                 "logs": "Protokoll",
                 "main": "Administration",
                 "metrics": "Metriken",
+                "systemNotifications": "System Mitteilungen",
                 "tracker": "Benutzer Aktivit\u00e4ten",
                 "userManagement": "Benutzerverwaltung"
             },
@@ -260,6 +261,7 @@
         },
         "reference": {
             "canton": {
+                "99": "Ausland",
                 "AG": "Aargau",
                 "AI": "Appenzell Innerrhoden",
                 "AR": "Appenzell Ausserrhoden",
@@ -288,8 +290,7 @@
                 "VD": "Waadt",
                 "VS": "Wallis",
                 "ZG": "Zug",
-                "ZH": "Z\u00fcrich",
-                "99": "Ausland"
+                "ZH": "Z\u00fcrich"
             },
             "language": {
                 "ar": "Arabisch",

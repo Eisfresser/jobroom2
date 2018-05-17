@@ -1,0 +1,15 @@
+.system-notification:first-child {
+    margin-top: -1.5rem;
+}
+
+.system-notification {
+    background-color: #fde9a4;
+
+    .warning-icon {
+        color: white;
+        width: 2.4rem;
+        display: inline-block;
+        text-align: -webkit-center;
+        background-color: #f46401;
+    }
+}

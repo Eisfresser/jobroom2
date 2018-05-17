@@ -1,0 +1,59 @@
+<div class="modal-header">
+    <h4 class="modal-title" jhiTranslate="systemNotificationsManagement.create.modal.title">Create new
+        SystemNotification</h4>
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+            (click)="clear()">&times;
+    </button>
+</div>
+<form [formGroup]="createForm" role="form" (ngSubmit)="createSystemNotification(createForm)" novalidate>
+    <div class="modal-body">
+        <label class="form-control-label">Titel</label>
+        <input type="text" class="form-control" formControlName="title" name="title">
+
+        <div class="form-group">
+            <label class="form-control-label">Text_DE</label>
+            <input type="text" class="form-control" formControlName="text_de" name="text_de">
+        </div>
+        <div class="form-group">
+            <label class="form-control-label">Text_FR</label>
+            <input type="text" class="form-control" formControlName="text_fr" name="text_fr">
+        </div>
+        <div class="form-group">
+            <label class="form-control-label">Text_IT</label>
+            <input type="text" class="form-control" formControlName="text_it" name="text_it">
+        </div>
+        <div class="form-group">
+            <label class="form-control-label">Text_EN</label>
+            <input type="text" class="form-control" formControlName="text_en" name="text_en">
+        </div>
+        <div class="form-group">
+            <label class="form-control-label">Type</label>
+            <select class="form-control" formControlName="type" name="type">
+                <option jhiTranslate="systemNotificationsManagement.systemnotification.type.interruption">Interruption
+                </option>
+                <option jhiTranslate="systemNotificationsManagement.systemnotification.type.systemerror">System error
+                </option>
+                <option jhiTranslate="systemNotificationsManagement.systemnotification.type.maintenance">Maintenance
+                </option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label">Anzeigen von:</label>
+            <input type="datetime-local" class="form-control" name="startDate" formControlName="startDate">
+        </div>
+        <div class="form-group">
+            <label class="form-control-label">Anzeigen bis:</label>
+            <input type="datetime-local" class="form-control" name="endDate" formControlName="endDate">
+        </div>
+        <div class="form-group">
+            <label class="form-control-label">Aktiviert:</label>
+            <input type="checkbox" class="form-control" name="active" value="false" formControlName="active">
+        </div>
+    </div>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-primary" [disabled]="createForm.invalid">
+            <span class="fa fa-floppy-o"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

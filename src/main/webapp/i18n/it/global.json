@@ -196,6 +196,7 @@
                 "logs": "Log",
                 "main": "Amministratore",
                 "metrics": "Metriche",
+                "systemNotifications": "Notifica di sistema",
                 "tracker": "Tracciamento utente",
                 "userManagement": "Gestione utenti"
             },
@@ -260,6 +261,7 @@
         },
         "reference": {
             "canton": {
+                "99": "Estero",
                 "AG": "Argovia",
                 "AI": "Appenzello Interno",
                 "AR": "Appenzello Esterno",
@@ -288,8 +290,7 @@
                 "VD": "Vaud",
                 "VS": "Vallese",
                 "ZG": "Zugo",
-                "ZH": "Zurigo",
-                "99": "Estero"
+                "ZH": "Zurigo"
             },
             "language": {
                 "ar": "Arabo",

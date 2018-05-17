@@ -1,0 +1,43 @@
+{
+    "system-notifications-management": {
+        "title": "notifiche di sistema"
+    },
+    "systemNotificationsManagement": {
+        "title": "Title",
+        "type": "Type",
+        "startDate": "From",
+        "endDate": "To",
+        "status": "Status",
+        "actions": "Actions",
+        "home": {
+            "create": "Crea un nuovo notifiche di sistema",
+            "title": "notifiche di sistema"
+        },
+        "activated": "Activated",
+        "deactivated": "Deactivated",
+        "delete": {
+            "question": "Do you really want to delete the system notification?",
+            "modal": {
+                "title": "Delete System Notification",
+                "text": "Are you sure you want to delete this system notification?"
+            }
+        },
+        "create": {
+            "modal": {
+                "title": "Create new System Notification"
+            }
+        },
+        "edit": {
+            "modal": {
+                "title": "Edit System Notification"
+            }
+        },
+        "systemnotification": {
+            "type": {
+                "systemerror": "System error",
+                "interruption": "Interruption",
+                "maintenance": "maintenance"
+            }
+        }
+    }
+}

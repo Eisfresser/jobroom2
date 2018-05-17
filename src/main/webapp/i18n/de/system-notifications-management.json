@@ -1,0 +1,43 @@
+{
+    "system-notifications-management": {
+        "title": "System Mitteilungen"
+    },
+    "systemNotificationsManagement": {
+        "title": "Titel",
+        "type": "Typ",
+        "startDate": "Von",
+        "endDate": "Bis",
+        "status": "Status",
+        "actions": "Aktionen",
+        "home": {
+            "create": "Neue Systemmitteilung erfassen",
+            "title": "System Mitteilungen"
+        },
+        "activated": "Aktiv",
+        "deactivated": "Deaktiviert",
+        "delete": {
+            "question": "M\u00f6chten sie die Systemmitteilung wirklich \u00f6schen?",
+            "modal": {
+                "title": "Systemmitteilung l\u00f6schen",
+                "text": "M\u00f6chten Sie die Systemmitteilung wirklich l\u00f6schen?"
+            }
+        },
+        "create": {
+            "modal": {
+                "title": "Neue Systemmitteilung erstellen"
+            }
+        },
+        "edit": {
+            "modal": {
+                "title": "Systemmitteilung editieren"
+            }
+        },
+        "systemnotification": {
+            "type": {
+                "systemerror": "Systemfehler",
+                "interruption": "Unterbrechung",
+                "maintenance": "Wartung"
+            }
+        }
+    }
+}
