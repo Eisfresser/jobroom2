@@ -23,6 +23,7 @@ import {
 } from '../../../../../../../main/webapp/app/shared/reference-service/occupation-presentation.service';
 import { TypeaheadMultiselectModel } from '../../../../../../../main/webapp/app/shared/input-components/typeahead/typeahead-multiselect-model';
 import { JobAdvertisementService } from '../../../../../../../main/webapp/app/shared/job-advertisement/job-advertisement.service';
+import { SystemNotificationService } from '../../../../../../../main/webapp/app/home/system-notification/system.notification.service';
 
 describe('HomeEffects', () => {
     // todo: implement
@@ -33,6 +34,7 @@ describe('HomeEffects', () => {
 
     const mockCandidateService = jasmine.createSpyObj('mockCandidateService', ['count']);
     const mockJobAdvertisementService = jasmine.createSpyObj('mockJobAdvertisementService', ['count']);
+    const mockSystemNotificationService = jasmine.createSpyObj('mockSystemNotificationService', ['count']);
     const mockOccupationPresentationService = jasmine.createSpyObj('mockOccupationPresentationService', ['findOccupationLabelsByCode']);
     const mockStore = jasmine.createSpyObj('mockStore', ['select']);
     const mockRouter = new MockRouter();
@@ -45,6 +47,7 @@ describe('HomeEffects', () => {
                 provideMockActions(() => actions$),
                 { provide: CandidateService, useValue: mockCandidateService },
                 { provide: JobAdvertisementService, useValue: mockJobAdvertisementService },
+                { provide: SystemNotificationService, useValue: mockSystemNotificationService },
                 { provide: Router, useValue: mockRouter },
                 { provide: Store, useValue: mockStore },
                 {

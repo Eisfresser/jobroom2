@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { SystemNotification } from '../../../shared/system-notification/system.notification.model';
+import { SystemNotification } from '../../../home/system-notification/system.notification.model';
 
 @Component({
     selector: 'jhi-system-notifications-management-delete',

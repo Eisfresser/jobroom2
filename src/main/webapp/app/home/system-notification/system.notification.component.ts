@@ -1,23 +1,31 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { SystemNotification } from './system.notification.model';
 import { JhiLanguageService } from 'ng-jhipster';
+
+import { Store } from '@ngrx/store';
+import { SystemNotificationState } from '../state-management/state/system-notification-state';
+import { GetActiveSystemNotificationsAction } from '../state-management';
 
 @Component({
     selector: 'jr2-system-notification',
     templateUrl: './system.notification.component.html',
     styleUrls: ['./system.notification.component.scss']
 })
-export class SystemNotificationComponent {
-    @Input() activeSystemNotifications: Array<SystemNotification[]>;
+export class SystemNotificationComponent implements OnInit {
+    @Input() activeSystemNotifications: SystemNotification[];
     languageService: JhiLanguageService;
 
     constructor(
-        jhiLanguageService: JhiLanguageService
+        jhiLanguageService: JhiLanguageService,
+        private store: Store<SystemNotificationState>
     ) {
         this.languageService = jhiLanguageService;
     }
 
-    // TODO: clean up & handle unauthorized
+    ngOnInit() {
+        this.store.dispatch(new GetActiveSystemNotificationsAction());
+    }
+
     getCurrentLanguageCode(activeSystemNotification: SystemNotification) {
         if (this.languageService.currentLang === 'de') {
             return activeSystemNotification.text_de;
@@ -31,5 +39,6 @@ export class SystemNotificationComponent {
         if (this.languageService.currentLang === 'en') {
             return activeSystemNotification.text_en;
         }
+        return activeSystemNotification.text_de;
     }
 }

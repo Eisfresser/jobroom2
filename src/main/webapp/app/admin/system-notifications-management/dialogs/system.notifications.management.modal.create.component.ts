@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { SystemNotification } from '../../../shared/system-notification/system.notification.model';
+import { SystemNotification } from '../../../home/system-notification/system.notification.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({

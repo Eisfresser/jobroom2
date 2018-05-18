@@ -48,11 +48,11 @@
                 <constraints nullable="false"/>
             </column>
 
-            <column name="startDate" type="datetime">
+            <column name="startdate" type="datetime">
                 <constraints nullable="false"/>
             </column>
 
-            <column name="endDate" type="datetime">
+            <column name="enddate" type="datetime">
                 <constraints nullable="false"/>
             </column>
 

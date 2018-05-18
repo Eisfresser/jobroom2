@@ -34,7 +34,7 @@ import {
     UserResolve,
     UserResolvePagingParams
 } from './';
-import { SystemNotificationService } from '../shared/system-notification/system.notification.service';
+import { SystemNotificationService } from '../home/system-notification/system.notification.service';
 import { StoreModule } from '@ngrx/store';
 import { systemNotificationReducer } from './system-notifications-management/state-management/reducers/system-notification-management-reducers';
 import { EffectsModule } from '@ngrx/effects';

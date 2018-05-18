@@ -9,7 +9,7 @@ import {
     getCandidateSearchToolState,
     getJobSearchToolState,
     HomeState,
-    JobSearchToolState
+    JobSearchToolState, getActiveSystemNotifications,
 } from './state-management';
 import { NgbTabChangeEvent } from '@ng-bootstrap/ng-bootstrap';
 import {
@@ -21,11 +21,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UserData } from './tools/job-publication-tool/service/user-data-resolver.service';
 import { Subscription } from 'rxjs/Subscription';
 import { JobAdvertisement } from '../shared/job-advertisement/job-advertisement.model';
-import { SystemNotification } from '../shared/system-notification/system.notification.model';
-import { getActiveSystemNotifications } from '../admin/system-notifications-management/state-management/state/system-notification-management.state';
-import {
-    GetActiveSystemNotificationsAction,
-} from '../admin/system-notifications-management/state-management/actions/system-notification-management.actions';
+import { SystemNotification } from './system-notification/system.notification.model';
 
 const BACKGROUND_CLASS_NAME_ARRAY = [];
 BACKGROUND_CLASS_NAME_ARRAY[ToolbarItem.JOB_SEEKERS] = 'background--jobseeker';
@@ -80,8 +76,6 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.subscription = this.activeToolbarItem$
             .subscribe((toolbarItem: ToolbarItem) =>
                 this.addBackGroundClass(BACKGROUND_CLASS_NAME_ARRAY[toolbarItem]));
-
-        this.store.dispatch(new GetActiveSystemNotificationsAction);
     }
 
     ngOnDestroy(): void {

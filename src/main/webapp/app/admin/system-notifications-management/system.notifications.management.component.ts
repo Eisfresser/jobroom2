@@ -15,8 +15,8 @@ import {
     GetAllSystemNotificationsAction,
     UpdateSystemNotificationAction
 } from './state-management/actions/system-notification-management.actions';
-import { SystemNotification } from '../../shared/system-notification/system.notification.model';
-import { SystemNotificationService } from '../../shared/system-notification/system.notification.service';
+import { SystemNotification } from '../../home/system-notification/system.notification.model';
+import { SystemNotificationService } from '../../home/system-notification/system.notification.service';
 
 @Component({
     selector: 'jhi-sys-notifications',

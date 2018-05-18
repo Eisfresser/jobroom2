@@ -8,8 +8,8 @@ import {
     DELETE_SYSTEMNOTIFICATION,
     DeleteSystemNotificationAction,
     DeleteSystemNotificationFailedAction,
-    DeleteSystemNotificationSuccessAction, GET_ACTIVE_SYSTEMNOTIFICATIONS,
-    GET_ALL_SYSTEMNOTIFICATIONS, GetActiveSystemNotificationsFailedAction, GetActiveSystemNotificationsSuccessAction,
+    DeleteSystemNotificationSuccessAction,
+    GET_ALL_SYSTEMNOTIFICATIONS,
     GetAllSystemNotificationsFailedAction,
     GetAllSystemNotificationsSuccessAction,
     UPDATE_SYSTEMNOTIFICATION,
@@ -17,7 +17,7 @@ import {
     UpdateSystemNotificationFailedAction,
     UpdateSystemNotificationSuccessAction,
 } from '../actions/system-notification-management.actions';
-import { SystemNotificationService } from '../../../../shared/system-notification/system.notification.service';
+import { SystemNotificationService } from '../../../../home/system-notification/system.notification.service';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 
@@ -44,17 +44,6 @@ export class SystemNotificationManagementEffects {
                 .pipe(
                     map((systemNotifications) => new GetAllSystemNotificationsSuccessAction(systemNotifications)),
                     catchError((error) => of(new GetAllSystemNotificationsFailedAction(error)))
-                );
-        })
-    );
-
-    @Effect()
-    loadActiveSystemNotifications$ = this.actions$.ofType(GET_ACTIVE_SYSTEMNOTIFICATIONS).pipe(
-        switchMap(() => {
-            return this.systemNotificationService.getActiveSystemNotifications()
-                .pipe(
-                    map((systemNotifications) => new GetActiveSystemNotificationsSuccessAction(systemNotifications)),
-                    catchError((error) => of(new GetActiveSystemNotificationsFailedAction(error)))
                 );
         })
     );

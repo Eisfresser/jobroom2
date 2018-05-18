@@ -31,6 +31,10 @@ import { OccupationPresentationService } from '../../../shared/reference-service
 import { getCandidateSearchToolState, HomeState } from '../state/home.state';
 import { TypeaheadMultiselectModel } from '../../../shared/input-components/typeahead/typeahead-multiselect-model';
 import { JobAdvertisementService } from '../../../shared/job-advertisement/job-advertisement.service';
+import { catchError, map, switchMap } from 'rxjs/operators';
+import { of } from 'rxjs/observable/of';
+import { SystemNotificationService } from '../../system-notification/system.notification.service';
+import { GET_ACTIVE_SYSTEMNOTIFICATIONS, GetActiveSystemNotificationsFailedAction, GetActiveSystemNotificationsSuccessAction } from '../actions/system-notification-actions';
 
 @Injectable()
 export class HomeEffects {
@@ -87,11 +91,23 @@ export class HomeEffects {
                     new UpdateOccupationTranslationAction(translatedOccupations));
         });
 
+    @Effect()
+    loadActiveSystemNotifications$ = this.actions$.ofType(GET_ACTIVE_SYSTEMNOTIFICATIONS).pipe(
+        switchMap(() => {
+            return this.systemNotificationService.getActiveSystemNotifications()
+                .pipe(
+                    map((systemNotifications) => new GetActiveSystemNotificationsSuccessAction(systemNotifications)),
+                    catchError((error) => of(new GetActiveSystemNotificationsFailedAction(error)))
+                );
+        })
+    );
+
     constructor(private actions$: Actions,
                 private router: Router,
                 private store: Store<HomeState>,
                 private occupationPresentationService: OccupationPresentationService,
                 private candidateService: CandidateService,
-                private jobAdvertisementService: JobAdvertisementService) {
+                private jobAdvertisementService: JobAdvertisementService,
+                private systemNotificationService: SystemNotificationService) {
     }
 }
