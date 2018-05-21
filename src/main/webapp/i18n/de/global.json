@@ -474,7 +474,8 @@
             "dev": "Local",
             "development": "Entwicklung",
             "staging": "Staging",
-            "test": "Test"
+            "test": "Test",
+            "training": "Training"
         },
         "title": "Job-Room",
         "workForm": {

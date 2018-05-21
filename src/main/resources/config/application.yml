@@ -143,6 +143,7 @@ jhipster:
             - development
             - test
             - staging
+            - training
 
 # ===================================================================
 # Application specific properties
