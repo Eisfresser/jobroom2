@@ -7,7 +7,7 @@ export class ElasticsearchReindexService {
 
     private readonly documentUrls = {
         'users': 'api/elasticsearch/index',
-        'jobs': 'jobadservice/api/jobAdvertisements/elasticsearch/index',
+        'jobs': 'jobadservice/api/elasticsearch/index',
         'candidates': 'candidateservice/api/elasticsearch/index',
         'reference-data': 'referenceservice/api/elasticsearch/index',
     };
