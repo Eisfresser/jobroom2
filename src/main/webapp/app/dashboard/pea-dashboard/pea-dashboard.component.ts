@@ -97,7 +97,7 @@ export class PeaDashboardComponent implements OnInit, OnChanges {
     private mapJobAdvertisementsToViews(lang: string): JobAdvertisementView[] {
         return this.jobAdvertisementList
             .map((jobAdvertisement: JobAdvertisement): JobAdvertisementView => ({
-                id: jobAdvertisement.id,
+                id: jobAdvertisement.stellennummerEgov,
                 avam: jobAdvertisement.stellennummerAvam,
                 publicationDate: jobAdvertisement.publication.startDate,
                 title: JobAdvertisementUtils.getJobDescription(jobAdvertisement, lang).title,
