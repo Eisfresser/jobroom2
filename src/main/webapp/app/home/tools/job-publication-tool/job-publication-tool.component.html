@@ -384,7 +384,11 @@
                     <legend>{{ 'home.tools.job-publication.contact.title' | translate }}</legend>
 
                     <div class="form-group">
-                        <select class="form-control custom-select" formControlName="language">
+                        <label for="contact-person-language" class="col-form-label">
+                            {{ 'home.tools.job-publication.contact.language' | translate }}
+                        </label>
+
+                        <select id="contact-person-language" class="form-control custom-select" formControlName="language">
                             <option *ngFor="let languageOption of languageOptionTranslations$ | async" [value]="languageOption.key">
                                 {{ languageOption.value }}
                             </option>
@@ -550,15 +554,12 @@
                     <legend>{{ 'home.tools.job-publication.application.title' | translate }}</legend>
 
                     <div class="form-group">
-                        <label for="app-paper" class="col-form-label">
-                            {{ 'home.tools.job-publication.application.paper-application-url' | translate }}
+                        <label for="app-form" class="col-form-label">
+                            {{ 'home.tools.job-publication.application.online-form' | translate }}
                             <span class="optional">{{ 'home.tools.job-publication.optional' | translate }}</span>
                         </label>
-                        <button class="btn btn-sm btn-info float-right" (click)="copyAddressFromCompany()">
-                            {{ 'home.tools.job-publication.application.copy-from-business' | translate}}
-                        </button>
                         <div>
-                            <input type="text" [jr2TextSizeLimit]="255" class="form-control" id="app-paper" formControlName="paperApplicationAddress"/>
+                            <input type="text" [jr2TextSizeLimit]="255" class="form-control" id="app-form" formControlName="electronicApplicationUrl" [placeholder]="'home.tools.job-publication.placeholders.url' | translate"/>
                         </div>
                     </div>
 
@@ -569,16 +570,6 @@
                         </label>
                         <div>
                             <input type="email" [jr2TextSizeLimit]="50" class="form-control" id="app-email" formControlName="electronicApplicationEmail" [placeholder]="'home.tools.job-publication.placeholders.email' | translate"/>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="app-form" class="col-form-label">
-                            {{ 'home.tools.job-publication.application.online-form' | translate }}
-                            <span class="optional">{{ 'home.tools.job-publication.optional' | translate }}</span>
-                        </label>
-                        <div>
-                            <input type="text" [jr2TextSizeLimit]="255" class="form-control" id="app-form" formControlName="electronicApplicationUrl" [placeholder]="'home.tools.job-publication.placeholders.url' | translate"/>
                         </div>
                     </div>
 
@@ -595,6 +586,19 @@
                                                  [errorCodes]="['phoneValidator']"
                                                  [keys]="['home.tools.job-publication.messages.validate.phone-format']">
                         </jr2-input-error-message>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="app-paper" class="col-form-label">
+                            {{ 'home.tools.job-publication.application.paper-application-url' | translate }}
+                            <span class="optional">{{ 'home.tools.job-publication.optional' | translate }}</span>
+                        </label>
+                        <button class="btn btn-sm btn-info float-right" (click)="copyAddressFromCompany()">
+                            {{ 'home.tools.job-publication.application.copy-from-business' | translate}}
+                        </button>
+                        <div>
+                            <input type="text" [jr2TextSizeLimit]="255" class="form-control" id="app-paper" formControlName="paperApplicationAddress"/>
+                        </div>
                     </div>
 
                     <div class="form-group">

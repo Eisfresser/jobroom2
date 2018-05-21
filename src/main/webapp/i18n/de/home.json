@@ -34,12 +34,12 @@
                         "label": "Erg\u00e4nzende Angaben",
                         "placeholder": "max. 240 Zeichen"
                     },
-                    "email": "Email address for electronic application",
-                    "online-form": "Online form for electronic application",
-                    "copy-from-business": "Take address from business",
-                    "paper-application-url": "Address for paper application",
-                    "phone": "Phone number for application",
-                    "title": "Application channels"
+                    "email": "E-Mail",
+                    "online-form": "Online-Formular",
+                    "copy-from-business": "Wie oben",
+                    "paper-application-url": "Postadresse",
+                    "phone": "Telefon",
+                    "title": "Bewerbungsformen"
                 },
                 "company": {
                     "country": "Land",
@@ -50,7 +50,7 @@
                     "postbox-zipcode": "Postfach PLZ / Ort",
                     "street": "Strasse",
                     "title": "Unternehmen",
-                    "name": "Business name",
+                    "name": "Unternehmen",
                     "zipcode": "PLZ / Ort",
                     "surrogate": "This bussiness is surrogate for a employer"
                 },
@@ -60,20 +60,21 @@
                 "contact": {
                     "email": "E-Mail",
                     "first-name": "Vorname",
+                    "language": "Sprache",
                     "last-name": "Nachname",
                     "phone": "Telefon",
                     "salutation": "Anrede",
                     "title": "Kontakt"
                 },
                 "public-contact": {
-                    "title": "Jobseeker contact",
-                    "copy": "Take from contact"
+                    "title": "Kontakt f\u00fcr Stellensuchende",
+                    "copy": "Wie oben"
                 },
                 "date-placeholder": "TT.MM.JJJJ",
                 "employment": {
-                    "title": "Employment"
+                    "title": "Arbeitsstelle"
                 },
-                "degree": "Education",
+                "degree": "Ausbildung",
                 "description": {
                     "characters-counter-text": "{{count}} Zeichen verbleibend.",
                     "label": "T\u00e4tigkeit / Anforderungen",
@@ -90,7 +91,7 @@
                 "experience.NO_EXPERIENCE": "keine Erfahrung",
                 "job-description": "Stellenbeschreibung",
                 "job-description-lang": {
-                    "label": "Job description language"
+                    "label": "Sprache der Stellenbeschreibung"
                 },
                 "job-title": "Stellenbezeichnung",
                 "language-skills": "Sprachkenntnisse",
@@ -134,7 +135,7 @@
                 },
                 "publication": {
                     "eures": "EURES Portal",
-                    "eures.url": "https://ec.europa.eu/eures/public/de",
+                    "eures.url": "https://ec.europa.eu/eures/public/de/",
                     "jobroom": "Job-Room Website",
                     "jobroom.url": "http://www.job-room.ch",
                     "title": "Publikationsmedien",
@@ -159,7 +160,7 @@
                     "title": "Stellenantritt"
                 },
                 "shortEmployment": {
-                    "label": "Is a short employment (duration < 14 days)"
+                    "label": "Kurzeinsatz (bis zu 14 Kalendertage)"
                 },
                 "reset": "Zur\u00fccksetzen",
                 "submit": "Stelle publizieren",

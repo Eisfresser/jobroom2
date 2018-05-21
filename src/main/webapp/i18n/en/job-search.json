@@ -43,7 +43,7 @@
             "badge": {
                 "permanent": "Permanent",
                 "temporary": "Temporary",
-                "restricted": "meldepflichtig"
+                "restricted": "obloigation d'annonce"
             }
         },
         "job-search-list": {

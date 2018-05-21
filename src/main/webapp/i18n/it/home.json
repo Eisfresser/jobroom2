@@ -34,12 +34,12 @@
                         "label": "Dati complementari",
                         "placeholder": "max. 240 caratteri"
                     },
-                    "email": "Email address for electronic application",
-                    "online-form": "Online form for electronic application",
+                    "email": "E-mail",
+                    "online-form": "Modulo online",
                     "copy-from-business": "Take address from business",
-                    "paper-application-url": "Address for paper application",
-                    "phone": "Phone number for application",
-                    "title": "Application channels"
+                    "paper-application-url": "Indirizzo postale",
+                    "phone": "Telefono",
+                    "title": "Tipologie di candidatura"
                 },
                 "company": {
                     "country": "Paese",
@@ -50,7 +50,7 @@
                     "postbox-zipcode": "Casella postale NPA / luogo",
                     "street": "Via",
                     "title": "Impresa",
-                    "name": "Business name",
+                    "name": "Impresa",
                     "zipcode": "NPA / luogo",
                     "surrogate": "This bussiness is surrogate for a employer"
                 },
@@ -60,20 +60,21 @@
                 "contact": {
                     "email": "E-mail",
                     "first-name": "Nome",
+                    "language": "Lingua",
                     "last-name": "Cognome",
                     "phone": "Telefono",
                     "salutation": "Forma di cortesia",
                     "title": "Contatto"
                 },
                 "public-contact": {
-                    "title": "Jobseeker contact",
-                    "copy": "Take from contact"
+                    "title": "Contatto per candidati",
+                    "copy": "Sovraindicato"
                 },
                 "date-placeholder": "GG.MM.AAAA",
                 "employment": {
-                    "title": "Employment"
+                    "title": "Posto di lavoro"
                 },
-                "degree": "Education",
+                "degree": "Formazione",
                 "description": {
                     "characters-counter-text": "{{count}} caratteri disponibili",
                     "label": "Attivit\u00e0 / requisiti",
@@ -90,7 +91,7 @@
                 "experience.NO_EXPERIENCE": "senza esperienza",
                 "job-description": "Descrizione del posto",
                 "job-description-lang": {
-                    "label": "Job description language"
+                    "label": "Lingua della descrizione"
                 },
                 "job-title": "Denominazione del posto",
                 "language-skills": "Conoscenze linguistiche",
@@ -159,7 +160,7 @@
                     "title": "Inizio dell'attivit\u00e0"
                 },
                 "shortEmployment": {
-                    "label": "Is a short employment (duration < 14 days)"
+                    "label": "Durata non supera i 14 giorni civili"
                 },
                 "reset": "Ripristina",
                 "submit": "Pubblica posto",

@@ -34,11 +34,11 @@
                         "label": "Supplementary information",
                         "placeholder": "Max. 240 characters"
                     },
-                    "email": "Email address for electronic application",
-                    "online-form": "Online form for electronic application",
-                    "copy-from-business": "Take address from business",
-                    "paper-application-url": "Address for paper application",
-                    "phone": "Phone number for application",
+                    "email": "Email",
+                    "online-form": "Online form",
+                    "copy-from-business": "As above",
+                    "paper-application-url": "Postal address",
+                    "phone": "Telephone number",
                     "title": "Application channels"
                 },
                 "company": {
@@ -50,7 +50,7 @@
                     "postbox-zipcode": "PO box postal code / city",
                     "street": "Street",
                     "title": "Business",
-                    "name": "Business name",
+                    "name": "Business",
                     "zipcode": "Postal code / city",
                     "surrogate": "This bussiness is surrogate for a employer"
                 },
@@ -60,6 +60,7 @@
                 "contact": {
                     "email": "Email",
                     "first-name": "First name",
+                    "language": "Language",
                     "last-name": "Last name",
                     "phone": "Telephone number",
                     "salutation": "Salutation",
@@ -67,13 +68,13 @@
                 },
                 "public-contact": {
                     "title": "Jobseeker contact",
-                    "copy": "Take from contact"
+                    "copy": "As above"
                 },
                 "date-placeholder": "DD.MM.YYYY",
                 "employment": {
                     "title": "Employment"
                 },
-                "degree": "Education",
+                "degree": "Training",
                 "description": {
                     "characters-counter-text": "{{count}} characters available",
                     "label": "Duties / requirements",
@@ -159,7 +160,7 @@
                     "title": "Employment start"
                 },
                 "shortEmployment": {
-                    "label": "Is a short employment (duration < 14 days)"
+                    "label": "Short employment (up to 14 calendar days)"
                 },
                 "reset": "Reset",
                 "submit": "Publish job",

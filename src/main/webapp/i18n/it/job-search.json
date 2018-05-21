@@ -43,7 +43,7 @@
             "badge": {
                 "permanent": "A tempo indeterminato",
                 "temporary": "A tempo determinato",
-                "restricted": "meldepflichtig"
+                "restricted": "registration requirement"
             }
         },
         "job-search-list": {

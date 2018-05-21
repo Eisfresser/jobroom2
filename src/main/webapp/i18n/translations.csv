@@ -603,12 +603,12 @@ home,home.tools.candidateSearchTab,Kandidaten finden,Find candidates,Trouver des
 home,home.tools.job-publication.application.additional-info.characters-counter-text,{{count}} Zeichen verbleibend,{{count}} characters available,{{count}} caractères disponibles,{{count}} caratteri disponibili
 home,home.tools.job-publication.application.additional-info.label,Ergänzende Angaben,Supplementary information,Indications complémentaires,Dati complementari
 home,home.tools.job-publication.application.additional-info.placeholder,max. 240 Zeichen,Max. 240 characters,max. 240 caractères,max. 240 caratteri
-home,home.tools.job-publication.application.email,Email address for electronic application,Email address for electronic application,Email address for electronic application,Email address for electronic application
-home,home.tools.job-publication.application.online-form,Online form for electronic application,Online form for electronic application,Online form for electronic application,Online form for electronic application
-home,home.tools.job-publication.application.copy-from-business,Take address from business,Take address from business,Take address from business,Take address from business
-home,home.tools.job-publication.application.paper-application-url,Address for paper application,Address for paper application,Address for paper application,Address for paper application
-home,home.tools.job-publication.application.phone,Phone number for application,Phone number for application,Phone number for application,Phone number for application
-home,home.tools.job-publication.application.title,Application channels,Application channels,Application channels,Application channels
+home,home.tools.job-publication.application.email,E-Mail,Email,Courriel,E-mail
+home,home.tools.job-publication.application.online-form,Online-Formular,Online form,Formulaire en ligne,Modulo online
+home,home.tools.job-publication.application.copy-from-business,Wie oben,As above,Take address from business,Take address from business
+home,home.tools.job-publication.application.paper-application-url,Postadresse,Postal address,Adresse postale,Indirizzo postale
+home,home.tools.job-publication.application.phone,Telefon,Telephone number,Téléphone,Telefono
+home,home.tools.job-publication.application.title,Bewerbungsformen,Application channels,Types de postulation,Tipologie di candidatura
 home,home.tools.job-publication.company.country,Land,Country,Pays,Paese
 home,home.tools.job-publication.company.house-number,Nr.,No.,N°,N.
 home,home.tools.job-publication.company.postbox-city,Ort,City,Lieu,Luogo
@@ -617,21 +617,22 @@ home,home.tools.job-publication.company.postbox-zip,Postfach PLZ,PO box postal c
 home,home.tools.job-publication.company.postbox-zipcode,Postfach PLZ / Ort,PO box postal code / city,Case postale NPA / lieu,Casella postale NPA / luogo
 home,home.tools.job-publication.company.street,Strasse,Street,Rue,Via
 home,home.tools.job-publication.company.title,Unternehmen,Business,Entreprise,Impresa
-home,home.tools.job-publication.company.name,Business name,Business name,Business name,Business name
+home,home.tools.job-publication.company.name,Unternehmen,Business,Entreprise,Impresa
 home,home.tools.job-publication.company.zipcode,PLZ / Ort,Postal code / city,NPA / lieu,NPA / luogo
 home,home.tools.job-publication.company.surrogate,This bussiness is surrogate for a employer,This bussiness is surrogate for a employer,This bussiness is surrogate for a employer,This bussiness is surrogate for a employer
 home,home.tools.job-publication.employer.title,Employer,Employer,Employer,Employer
 home,home.tools.job-publication.contact.email,E-Mail,Email,Courriel,E-mail
 home,home.tools.job-publication.contact.first-name,Vorname,First name,Prénom,Nome
+home,home.tools.job-publication.contact.language,Sprache,Language,Langue,Lingua
 home,home.tools.job-publication.contact.last-name,Nachname,Last name,Nom,Cognome
 home,home.tools.job-publication.contact.phone,Telefon,Telephone number,Téléphone,Telefono
 home,home.tools.job-publication.contact.salutation,Anrede,Salutation,Salutation,Forma di cortesia
 home,home.tools.job-publication.contact.title,Kontakt,Contact,Contact,Contatto
-home,home.tools.job-publication.public-contact.title,Jobseeker contact,Jobseeker contact,Jobseeker contact,Jobseeker contact
-home,home.tools.job-publication.public-contact.copy,Take from contact,Take from contact,Take from contact,Take from contact
+home,home.tools.job-publication.public-contact.title,Kontakt für Stellensuchende,Jobseeker contact,Contact pour candidats,Contatto per candidati
+home,home.tools.job-publication.public-contact.copy,Wie oben,As above,Comme ci-haut,Sovraindicato
 home,home.tools.job-publication.date-placeholder,TT.MM.JJJJ,DD.MM.YYYY,JJ.MM.AAAA,GG.MM.AAAA
-home,home.tools.job-publication.employment.title,Employment,Employment,Employment,Employment
-home,home.tools.job-publication.degree,Education,Education,Education,Education
+home,home.tools.job-publication.employment.title,Arbeitsstelle,Employment,Emploi,Posto di lavoro
+home,home.tools.job-publication.degree,Ausbildung,Training,Formation,Formazione
 home,home.tools.job-publication.description.characters-counter-text,{{count}} Zeichen verbleibend.,{{count}} characters available,{{count}} caractères disponibles,{{count}} caratteri disponibili
 home,home.tools.job-publication.description.label,Tätigkeit / Anforderungen,Duties / requirements,Activité / exigences,Attività / requisiti
 home,home.tools.job-publication.description.add,Add new job description language,Add new job description language,Add new job description language,Add new job description language
@@ -645,7 +646,7 @@ home,home.tools.job-publication.experience.LESS_THAN_1_YEAR,weniger als 1 Jahr,l
 home,home.tools.job-publication.experience.MORE_THAN_3_YEARS,mehr als 3 Jahre,more than 3 years,plus de 3 années,più di 3 anni
 home,home.tools.job-publication.experience.NO_EXPERIENCE,keine Erfahrung,no experience,sans expérience,senza esperienza
 home,home.tools.job-publication.job-description,Stellenbeschreibung,Job description,Descriptif du poste,Descrizione del posto
-home,home.tools.job-publication.job-description-lang.label,Job description language,Job description language,Job description language,Job description language
+home,home.tools.job-publication.job-description-lang.label,Sprache der Stellenbeschreibung,Job description language,Langue du descriptif,Lingua della descrizione
 home,home.tools.job-publication.job-title,Stellenbezeichnung,Job title,Désignation du poste,Denominazione del posto
 home,home.tools.job-publication.language-skills,Sprachkenntnisse,Languages,Connaissances linguistiques,Conoscenze linguistiche
 home,home.tools.job-publication.language-skills.spoken.error,Language skill is required,Language skill is required,Des connaissances linguistiques sont requises,Conoscenze linguistiche obbligatorie
@@ -688,7 +689,7 @@ home,home.tools.job-publication.employmentStartDate.by-arrangement,ab,from,du,da
 home,home.tools.job-publication.employmentStartDate.immediately,ab sofort,immediately,tout de suite,da subito
 home,home.tools.job-publication.employmentStartDate.label,Stellenantritt ab Datum,Employment start date,Entrée en fonction le [date],Inizio dell'attività da Data
 home,home.tools.job-publication.employmentStartDate.title,Stellenantritt,Employment start,"Entrée en fonction  ",Inizio dell'attività
-home,home.tools.job-publication.shortEmployment.label,"Is a short employment (duration < 14 days)","Is a short employment (duration < 14 days)","Is a short employment (duration < 14 days)","Is a short employment (duration < 14 days)"
+home,home.tools.job-publication.shortEmployment.label,"Kurzeinsatz (bis zu 14 Kalendertage)","Short employment (up to 14 calendar days)","Emploi de courte durée (jusqu'à 14 jours civils)","Durata non supera i 14 giorni civili"
 home,home.tools.job-publication.reset,Zurücksetzen,Reset,Rétablir,Ripristina
 home,home.tools.job-publication.submit,Stelle publizieren,Publish job,Publier un emploi,Pubblica posto
 home,home.tools.job-publication.submit.error,Die Stellenanzeige konnte nicht gespeichert werden.,Job ad could not be saved.,L'annonce n'a pas pu être sauvegardé.,Annuncio non salvata.
@@ -762,7 +763,7 @@ job-search,job-search.filter.working-time.label,Arbeitspensum,Workload,Taux d'oc
 job-search,job-search.filter.restricted-jobs.label,Nur meldepflichtige Stellen anzeigen,Nur meldepflichtige Stellen anzeigen,Nur meldepflichtige Stellen anzeigen,Nur meldepflichtige Stellen anzeigen
 job-search,job-search.job-search-list-item.badge.permanent,Unbefristet,Permanent,Indéterminé,A tempo indeterminato
 job-search,job-search.job-search-list-item.badge.temporary,Befristet,Temporary,Durée limitée,A tempo determinato
-job-search,job-search.job-search-list-item.badge.restricted,meldepflichtig,meldepflichtig,meldepflichtig,meldepflichtig
+job-search,job-search.job-search-list-item.badge.restricted,meldepflichtig,obloigation d'annonce,obligo di annuncio,registration requirement
 job-search,job-search.job-search-list.error-message,Suche nach Stellen fehlgeschlagen,Failed to load job result list!,Les résultats de la recherche d'emplois n'ont pas pu être chargés,Impossibile caricare l'ultima lista di posti!
 job-search,job-search.job-search-list.title.many,{{count}} Stellen,{{count}} jobs,{{count}} emplois,{{count}} posti
 job-search,job-search.job-search-list.title.many.with-locality,{{count}} Stellen in {{locality}},{{count}} jobs in {{locality}},{{count}} emplois à {{locality}},{{count}} posti in {{locality}}
