@@ -636,7 +636,7 @@ home,home.tools.job-publication.employment.title,Arbeitsstelle,Employment,Emploi
 home,home.tools.job-publication.degree,Ausbildung,Training,Formation,Formazione
 home,home.tools.job-publication.description.characters-counter-text,{{count}} Zeichen verbleibend.,{{count}} characters available,{{count}} caractères disponibles,{{count}} caratteri disponibili
 home,home.tools.job-publication.description.label,Tätigkeit / Anforderungen,Duties / requirements,Activité / exigences,Attività / requisiti
-home,home.tools.job-publication.description.add,Add new job description language,Add new job description language,Add new job description language,Add new job description language
+home,home.tools.job-publication.description.add,Beschreibung in anderer Sprache hinzufügen,Add description in different language,Ajouter description en une autre langue,Descrizione in un'altra lingua
 home,home.tools.job-publication.description.placeholder,max. 10000 Zeichen,max. 10000 characters,max. 10000 caractères,max. 10000 caratteri
 home,home.tools.job-publication.disclaimer,"Ich bestätige, dass der Arbeitgeber die orts- und branchenüblichen Lohn- und Arbeitsbedingungen einhält.",I certify that the employer complies with local and industry standards for wage and working conditions.,Je confirme que l'employeur respecte les conditions de travail et de salaire usuelles dans la branche et la localité en question.,Confermo che il datore di lavoro rispetta le condizioni salariali e lavorative usuali nel ramo e nel luogo in questione.
 home,home.tools.job-publication.disclaimer.error,"Bitte bestätigen Sie, dass der Arbeitgeber die orts- und branchenüblichen Lohn- und Arbeitsbedingungen einhält.",Please confirm that the employer complies with local and industry standards for wage and working conditions.,Veuillez confirmer que l'employeur respecte bien les conditions de travail et de salaire en vigueur dans la branche et la localité en question.,Confermare che il datore di lavoro rispetta le condizioni salariali e lavorative del luogo e del ramo in questione.
@@ -675,7 +675,7 @@ home,home.tools.job-publication.placeholders.email,muster@email.ch,example@email
 home,home.tools.job-publication.placeholders.phone,031 999 99 99 oder +41 31 999 99 99,031 999 99 99 or +41 31 999 99 99,031 999 99 99 ou +41 31 999 99 99,031 999 99 99 o +41 31 999 99 99
 home,home.tools.job-publication.placeholders.url,http://www.muster.ch,http://www.example.ch,http://www.exemple.ch,http://www.esempio.ch
 home,home.tools.job-publication.publication.eures,EURES Portal,EURES Portal,Portal EURES," Portale EURES"
-home,home.tools.job-publication.publication.eures.url,https://ec.europa.eu/eures/public/de/,https://ec.europa.eu/eures/public/en,https://ec.europa.eu/eures/public/fr,https://ec.europa.eu/eures/public/it
+home,home.tools.job-publication.publication.eures.url,https://ec.europa.eu/eures/public/de/,https://ec.europa.eu/eures/public/en/,https://ec.europa.eu/eures/public/fr/,https://ec.europa.eu/eures/public/it/
 home,home.tools.job-publication.publication.jobroom,Job-Room Website," Job-Room Website"," Site Job-Room"," Sito Job-Room"
 home,home.tools.job-publication.publication.jobroom.url,http://www.job-room.ch,http://www.job-room.ch,http://www.job-room.ch,http://www.job-room.ch
 home,home.tools.job-publication.publication.title,Publikationsmedien,Publication media,Moyens de publication,Mezzi di pubblicazione
@@ -761,7 +761,7 @@ job-search,job-search.filter.sort.option.DATE_DESC,Sortiere nach Datum absteigen
 job-search,job-search.filter.sort.option.RELEVANCE_DESC,Sortiere nach Relevanz,Sort by relevance,Tri selon pertinence,Classifica per pertinenza
 job-search,job-search.filter.title,Suchergebnisse filtern,Filter search result,Filtrer les résultats,Filtra risultati della ricerca
 job-search,job-search.filter.working-time.label,Arbeitspensum,Workload,Taux d'occupation,Grado di occupazione
-job-search,job-search.filter.restricted-jobs.label,Nur meldepflichtige Stellen anzeigen,Nur meldepflichtige Stellen anzeigen,Nur meldepflichtige Stellen anzeigen,Nur meldepflichtige Stellen anzeigen
+job-search,job-search.filter.restricted-jobs.label,Stellen innerhalb Informationsvorsprung,Stellen innerhalb Informationsvorsprung,Stellen innerhalb Informationsvorsprung,Stellen innerhalb Informationsvorsprung
 job-search,job-search.job-search-list-item.badge.permanent,Unbefristet,Permanent,Indéterminé,A tempo indeterminato
 job-search,job-search.job-search-list-item.badge.temporary,Befristet,Temporary,Durée limitée,A tempo determinato
 job-search,job-search.job-search-list-item.badge.restricted,meldepflichtig,obloigation d'annonce,obligo di annuncio,registration requirement

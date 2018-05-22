@@ -78,7 +78,7 @@
                 "description": {
                     "characters-counter-text": "{{count}} caratteri disponibili",
                     "label": "Attivit\u00e0 / requisiti",
-                    "add": "Add new job description language",
+                    "add": "Descrizione in un'altra lingua",
                     "placeholder": "max. 10000 caratteri"
                 },
                 "disclaimer": "Confermo che il datore di lavoro rispetta le condizioni salariali e lavorative usuali nel ramo e nel luogo in questione.",
@@ -135,7 +135,7 @@
                 },
                 "publication": {
                     "eures": " Portale EURES",
-                    "eures.url": "https://ec.europa.eu/eures/public/it",
+                    "eures.url": "https://ec.europa.eu/eures/public/it/",
                     "jobroom": " Sito Job-Room",
                     "jobroom.url": "http://www.job-room.ch",
                     "title": "Mezzi di pubblicazione",

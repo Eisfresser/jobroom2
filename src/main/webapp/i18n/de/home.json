@@ -78,7 +78,7 @@
                 "description": {
                     "characters-counter-text": "{{count}} Zeichen verbleibend.",
                     "label": "T\u00e4tigkeit / Anforderungen",
-                    "add": "Add new job description language",
+                    "add": "Beschreibung in anderer Sprache hinzuf\u00fcgen",
                     "placeholder": "max. 10000 Zeichen"
                 },
                 "disclaimer": "Ich best\u00e4tige, dass der Arbeitgeber die orts- und branchen\u00fcblichen Lohn- und Arbeitsbedingungen einh\u00e4lt.",

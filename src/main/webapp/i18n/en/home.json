@@ -78,7 +78,7 @@
                 "description": {
                     "characters-counter-text": "{{count}} characters available",
                     "label": "Duties / requirements",
-                    "add": "Add new job description language",
+                    "add": "Add description in different language",
                     "placeholder": "max. 10000 characters"
                 },
                 "disclaimer": "I certify that the employer complies with local and industry standards for wage and working conditions.",
@@ -135,7 +135,7 @@
                 },
                 "publication": {
                     "eures": "EURES Portal",
-                    "eures.url": "https://ec.europa.eu/eures/public/en",
+                    "eures.url": "https://ec.europa.eu/eures/public/en/",
                     "jobroom": " Job-Room Website",
                     "jobroom.url": "http://www.job-room.ch",
                     "title": "Publication media",
