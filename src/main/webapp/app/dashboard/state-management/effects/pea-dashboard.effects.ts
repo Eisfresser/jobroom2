@@ -18,7 +18,7 @@ import {
     getJobAdvertisementDashboardState, JobAdvertisementFilter,
     PEADashboardState
 } from '../state/pea-dashboard.state';
-import { JobPublicationSearchRequest } from '../../../shared/job-publication/job-publication-search-request';
+import { PEAJobAdsSearchRequest } from '../../../shared/job-advertisement/pea-job-ads-search-request';
 import { createJobAdvertisementCancellationRequest } from '../util/cancellation-request.mapper';
 import { JobAdvertisementService } from '../../../shared/job-advertisement/job-advertisement.service';
 import { JobAdvertisement } from '../../../shared/job-advertisement/job-advertisement.model';
@@ -44,7 +44,7 @@ export class PEADashboardEffects {
             this.store.select(getJobAdvertisementDashboardState),
             this.principal.getAuthenticationState())
         .switchMap(([action, state, identity]: [LoadNextJobAdvertisementsDashboardPageAction, PEADashboardState, any]) =>
-            this.jobAdvertisementService.search(
+            this.jobAdvertisementService.searchPEAJobAds(
                 this.createSearchRequest(state.jobAdvertisementFilter, action.payload.page, identity))
                 .map((resp) => this.toJobAdvertisementsLoadedActionAction(resp, action.payload.page))
                 .catch(() => Observable.of(new JobAdvertisementsLoadErrorAction()))
@@ -57,7 +57,7 @@ export class PEADashboardEffects {
             this.store.select(getJobAdvertisementDashboardState),
             this.principal.getAuthenticationState())
         .switchMap(([action, state, identity]: [FilterJobAdvertisementsDashboardAction, PEADashboardState, any]) =>
-            this.jobAdvertisementService.search(
+            this.jobAdvertisementService.searchPEAJobAds(
                 this.createSearchRequest(action.payload, state.page, identity))
                 .map(this.toJobAdvertisementsLoadedActionAction)
                 .catch(() => Observable.of(new JobAdvertisementsLoadErrorAction()))
@@ -69,22 +69,23 @@ export class PEADashboardEffects {
                 private jobAdvertisementService: JobAdvertisementService) {
     }
 
-    private createSearchRequest(filter: JobAdvertisementFilter, page: number, identity): JobPublicationSearchRequest {
+    private createSearchRequest(filter: JobAdvertisementFilter, page: number, identity): PEAJobAdsSearchRequest {
         const { jobTitle, onlineSinceDays } = filter;
         return {
-            email: identity.email,
+            body: {
+                companyName: identity.organizationName,
+                jobTitle,
+                onlineSinceDays
+            },
             page,
-            size: ITEMS_PER_PAGE,
-            jobTitle,
-            onlineSinceDays
+            size: ITEMS_PER_PAGE
         };
     }
 
     private toJobAdvertisementsLoadedActionAction(response, page = 0): JobAdvertisementsLoadedAction {
-        const resp = response.json;
         return new JobAdvertisementsLoadedAction({
-            jobAdvertisements: resp.content,
-            totalCount: +resp.totalElements,
+            jobAdvertisements: response.json,
+            totalCount: +response.headers.get('X-Total-Count'),
             page
         });
     }

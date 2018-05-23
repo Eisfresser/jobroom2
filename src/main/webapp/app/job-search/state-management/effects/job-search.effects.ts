@@ -73,7 +73,7 @@ export class JobSearchEffects {
         .debounceTime(this.debounce || 300, this.scheduler || async)
         .withLatestFrom(this.store.select(getJobSearchState))
         .switchMap(([action, state]) =>
-            this.jobSearchService.searchJobAds(toJobSearchRequest(action as LoadJobTriggerAction, state))
+            this.jobSearchService.search(toJobSearchRequest(action as LoadJobTriggerAction, state))
                 .map(toJobListLoadedAction)
                 .catch((err: any) => Observable.of(new ShowJobListErrorAction(err)))
         );
@@ -83,7 +83,7 @@ export class JobSearchEffects {
         .ofType(LOAD_NEXT_PAGE)
         .withLatestFrom(this.store.select(getJobSearchState))
         .switchMap(([action, state]) =>
-            this.jobSearchService.searchJobAds(toNextPageRequest(state))
+            this.jobSearchService.search(toNextPageRequest(state))
                 .map((response: ResponseWrapper) => new NextPageLoadedAction(response.json))
                 .catch((err: any) => Observable.of(new ShowJobListErrorAction(err)))
         );
@@ -140,7 +140,7 @@ export class JobSearchEffects {
     }
 
     private loadInitialJobs(state: JobSearchState): Observable<JobListLoadedAction | ShowJobListErrorAction> {
-        return this.jobSearchService.searchJobAds(toInitialSearchRequest(state))
+        return this.jobSearchService.search(toInitialSearchRequest(state))
             .map(toJobListLoadedAction)
             .catch((err: any) => Observable.of(new ShowJobListErrorAction(err)));
     }

@@ -37,7 +37,7 @@ describe('JobSearchEffects', () => {
     let actions$: Observable<any>;
     let store: Store<JobSearchState>;
 
-    const mockJobAdvertisementService = jasmine.createSpyObj('mockJobAdvertisementService', ['searchJobAds']);
+    const mockJobAdvertisementService = jasmine.createSpyObj('mockJobAdvertisementService', ['search']);
     const mockRouter = new MockRouter();
 
     beforeEach(() => {
@@ -70,7 +70,7 @@ describe('JobSearchEffects', () => {
 
             actions$ = hot('-a', { a: action });
             const response = cold('-a|', { a: responseWrapper });
-            mockJobAdvertisementService.searchJobAds.and.returnValue(response);
+            mockJobAdvertisementService.search.and.returnValue(response);
 
             const jobListLoadedAction = new actions.JobListLoadedAction({
                 jobList,
@@ -156,7 +156,7 @@ describe('JobSearchEffects', () => {
 
             actions$ = hot('-a---', { a: action });
             const response = cold('-a|', { a: responseWrapper });
-            mockJobAdvertisementService.searchJobAds.and.returnValue(response);
+            mockJobAdvertisementService.search.and.returnValue(response);
 
             const jobListLoadedAction = new actions.JobListLoadedAction({
                 jobList,
@@ -176,7 +176,7 @@ describe('JobSearchEffects', () => {
 
             actions$ = hot('-a---', { a: action });
             const response = cold('-#|', {}, 'error');
-            mockJobAdvertisementService.searchJobAds.and.returnValue(response);
+            mockJobAdvertisementService.search.and.returnValue(response);
 
             const showJobListErrorAction = new actions.ShowJobListErrorAction('error');
             const expected = cold('-----b', { b: showJobListErrorAction });
@@ -197,7 +197,7 @@ describe('JobSearchEffects', () => {
 
             actions$ = hot('-a', { a: action });
             const response = cold('-a|', { a: responseWrapper });
-            mockJobAdvertisementService.searchJobAds.and.returnValue(response);
+            mockJobAdvertisementService.search.and.returnValue(response);
 
             const nextPageLoadedAction = new actions.NextPageLoadedAction(jobList);
             const expected = cold('--b', { b: nextPageLoadedAction });
@@ -210,7 +210,7 @@ describe('JobSearchEffects', () => {
 
             actions$ = hot('-a', { a: action });
             const response = cold('-#', {}, 'error');
-            mockJobAdvertisementService.searchJobAds.and.returnValue(response);
+            mockJobAdvertisementService.search.and.returnValue(response);
 
             const showJobListErrorAction = new actions.ShowJobListErrorAction('error');
             const expected = cold('--b', { b: showJobListErrorAction });

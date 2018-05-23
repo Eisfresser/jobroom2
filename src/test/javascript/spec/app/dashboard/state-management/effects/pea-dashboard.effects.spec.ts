@@ -22,10 +22,10 @@ describe('PEADashboardEffects', () => {
     let actions$: Observable<any>;
     let store: Store<DashboardState>;
 
-    const mockJobAdvertisementService = jasmine.createSpyObj('mockJobAdvertisementService', ['search']);
+    const mockJobAdvertisementService = jasmine.createSpyObj('mockJobAdvertisementService', ['searchPEAJobAds']);
     const mockPrincipal = jasmine.createSpyObj('mockPrincipal', ['getAuthenticationState']);
 
-    mockPrincipal.getAuthenticationState.and.returnValue(Observable.of({ email: 'email' }));
+    mockPrincipal.getAuthenticationState.and.returnValue(Observable.of({ organizationId: '111' }));
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -58,14 +58,11 @@ describe('PEADashboardEffects', () => {
             const jobAdvertisements = [
                 createJobAdvertisement()
             ];
-            const responseWrapper = new ResponseWrapper(new HttpHeaders({ 'X-Total-Count': '100' }), {
-                content: jobAdvertisements,
-                totalElements: 100
-            }, 200);
+            const responseWrapper = new ResponseWrapper(new HttpHeaders({ 'X-Total-Count': '100' }), jobAdvertisements, 200);
 
             actions$ = hot('-a', { a: action });
             const response = cold('-a|', { a: responseWrapper });
-            mockJobAdvertisementService.search.and.returnValue(response);
+            mockJobAdvertisementService.searchPEAJobAds.and.returnValue(response);
 
             const jobPublicationsLoadedAction = new JobAdvertisementsLoadedAction({
                 jobAdvertisements,
@@ -80,7 +77,7 @@ describe('PEADashboardEffects', () => {
         it('should return JobAdvertisementsLoadErrorAction on error', () => {
             actions$ = hot('-a', { a: action });
             const response = cold('-#');
-            mockJobAdvertisementService.search.and.returnValue(response);
+            mockJobAdvertisementService.searchPEAJobAds.and.returnValue(response);
 
             const errorAction = new JobAdvertisementsLoadErrorAction();
             const expected = cold('--b', { b: errorAction });
@@ -99,14 +96,11 @@ describe('PEADashboardEffects', () => {
             const jobAdvertisements = [
                 createJobAdvertisement()
             ];
-            const responseWrapper = new ResponseWrapper(new HttpHeaders({ 'X-Total-Count': '100' }), {
-                content: jobAdvertisements,
-                totalElements: 100
-            }, 200);
+            const responseWrapper = new ResponseWrapper(new HttpHeaders({ 'X-Total-Count': '100' }), jobAdvertisements, 200);
 
             actions$ = hot('-a', { a: action });
             const response = cold('-a|', { a: responseWrapper });
-            mockJobAdvertisementService.search.and.returnValue(response);
+            mockJobAdvertisementService.searchPEAJobAds.and.returnValue(response);
 
             const jobPublicationsLoadedAction = new JobAdvertisementsLoadedAction({
                 jobAdvertisements,
@@ -121,7 +115,7 @@ describe('PEADashboardEffects', () => {
         it('should return JobAdvertisementsLoadErrorAction on error', () => {
             actions$ = hot('-a', { a: action });
             const response = cold('-#');
-            mockJobAdvertisementService.search.and.returnValue(response);
+            mockJobAdvertisementService.searchPEAJobAds.and.returnValue(response);
 
             const errorAction = new JobAdvertisementsLoadErrorAction();
             const expected = cold('--b', { b: errorAction });

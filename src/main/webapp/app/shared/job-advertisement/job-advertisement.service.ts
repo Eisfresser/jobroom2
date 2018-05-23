@@ -6,7 +6,7 @@ import { CreateJobAdvertisement, JobAdvertisement, JobAdvertisementStatus } from
 import { createPageableURLSearchParams } from '../model/request-util';
 import { JobAdvertisementCancelRequest } from './job-advertisement-cancel-request';
 import { JobAdvertisementSearchRequest, JobAdvertisementSearchRequestBody } from './job-advertisement-search-request';
-import { JobPublicationSearchRequest } from '../job-publication/job-publication-search-request';
+import { PEAJobAdsSearchRequest } from './pea-job-ads-search-request';
 
 @Injectable()
 export class JobAdvertisementService {
@@ -24,16 +24,14 @@ export class JobAdvertisementService {
             .map((resp: HttpResponse<JobAdvertisement>) => new ResponseWrapper(resp.headers, resp.body, resp.status));
     }
 
-    // TODO: add search params
-    search(request: JobPublicationSearchRequest): Observable<ResponseWrapper> {
+    searchPEAJobAds(request: PEAJobAdsSearchRequest): Observable<ResponseWrapper> {
         const params = createPageableURLSearchParams(request);
 
-        return this.http.get(this.resourceUrl, { params, observe: 'response' })
+        return this.http.post(`${this.searchUrl}/pea`, request.body, { params, observe: 'response' })
             .map((resp) => new ResponseWrapper(resp.headers, resp.body, resp.status));
     }
 
-    // TODO: rename
-    searchJobAds(request: JobAdvertisementSearchRequest): Observable<ResponseWrapper> {
+    search(request: JobAdvertisementSearchRequest): Observable<ResponseWrapper> {
         const params = createPageableURLSearchParams(request);
 
         return this.http.post(this.searchUrl, request.body, { params, observe: 'response' })

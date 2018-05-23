@@ -28,7 +28,8 @@ import { JobAdvertisementCancelDialogService } from '../dialogs/job-advertisemen
 
 interface JobAdvertisementView {
     id: string;
-    avam: string;
+    stellennummerEgov: string;
+    stellennummerAvam: string;
     publicationDate: string;
     title: string;
     location: string;
@@ -97,8 +98,9 @@ export class PeaDashboardComponent implements OnInit, OnChanges {
     private mapJobAdvertisementsToViews(lang: string): JobAdvertisementView[] {
         return this.jobAdvertisementList
             .map((jobAdvertisement: JobAdvertisement): JobAdvertisementView => ({
-                id: jobAdvertisement.stellennummerEgov,
-                avam: jobAdvertisement.stellennummerAvam,
+                id: jobAdvertisement.id,
+                stellennummerEgov: jobAdvertisement.stellennummerEgov,
+                stellennummerAvam: jobAdvertisement.stellennummerAvam,
                 publicationDate: jobAdvertisement.publication.startDate,
                 title: JobAdvertisementUtils.getJobDescription(jobAdvertisement, lang).title,
                 location: jobAdvertisement.jobContent.location.city,

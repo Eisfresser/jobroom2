@@ -49,8 +49,8 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let jobAdvertisement of jobAdvertisementList$ | async">
-                            <th scope="row">{{ jobAdvertisement.id }}</th>
-                            <td>{{ jobAdvertisement.avam }}</td>
+                            <th scope="row">{{ jobAdvertisement.stellennummerEgov }}</th>
+                            <td>{{ jobAdvertisement.stellennummerAvam }}</td>
                             <td>{{ jobAdvertisement.publicationDate | date:'dd.MM.yyyy' }}</td>
                             <td>{{ jobAdvertisement.title }}</td>
                             <td>{{ jobAdvertisement.location }}</td>
