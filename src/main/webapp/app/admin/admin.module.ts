@@ -40,6 +40,13 @@ import { systemNotificationReducer } from './system-notifications-management/sta
 import { EffectsModule } from '@ngrx/effects';
 import { SystemNotificationManagementEffects } from './system-notifications-management/state-management/effects/system-notification-management.effects';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ApiUserManagementComponent } from './api-user-management/api-user-management.component';
+import { ApiUserService } from './api-user-management/service/api-user.service';
+import { ApiUserManagementEffects } from './api-user-management/state-management/effect/api-user-management.effects';
+import { apiUserManagementReducer } from './api-user-management/state-management/reducer/api-user-management.reducer';
+import { ApiUserDialogService } from './api-user-management/service/api-user-dialog.service';
+import { ApiUserManagementDialogComponent } from './api-user-management/dialogs/api-user-management-dialog.component';
+import { ApiUserManagementListComponent } from './api-user-management/api-user-management-list/api-user-management-list.component';
 
 /* jhipster-needle-add-admin-module-import - JHipster will add admin modules imports here */
 
@@ -50,7 +57,9 @@ import { ReactiveFormsModule } from '@angular/forms';
         StoreModule.forFeature('SystemNotifications', systemNotificationReducer),
         EffectsModule.forFeature([SystemNotificationManagementEffects]),
         ReactiveFormsModule,
-        JobroomElasticsearchReindexModule
+        JobroomElasticsearchReindexModule,
+        StoreModule.forFeature('apiUserManagement', apiUserManagementReducer),
+        EffectsModule.forFeature([ApiUserManagementEffects])
         /* jhipster-needle-add-admin-module - JHipster will add admin modules here */
     ],
     declarations: [
@@ -72,7 +81,11 @@ import { ReactiveFormsModule } from '@angular/forms';
         SystemNotificationsManagementComponent,
         SystemNotificationsManagementModalCreateComponent,
         SystemNotificationsManagementModalDeleteComponent,
-        SystemNotificationsManagementModalDetailComponent
+        SystemNotificationsManagementModalDetailComponent,
+        JhiMetricsMonitoringModalComponent,
+        ApiUserManagementComponent,
+        ApiUserManagementDialogComponent,
+        ApiUserManagementListComponent
     ],
     entryComponents: [
         UserMgmtDialogComponent,
@@ -81,7 +94,8 @@ import { ReactiveFormsModule } from '@angular/forms';
         SystemNotificationsManagementModalDeleteComponent,
         SystemNotificationsManagementModalDetailComponent,
         JhiHealthModalComponent,
-        JhiMetricsMonitoringModalComponent
+        JhiMetricsMonitoringModalComponent,
+        ApiUserManagementDialogComponent
     ],
     providers: [
         AuditsService,
@@ -94,6 +108,8 @@ import { ReactiveFormsModule } from '@angular/forms';
         UserResolvePagingParams,
         UserResolve,
         UserModalService,
+        ApiUserService,
+        ApiUserDialogService
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

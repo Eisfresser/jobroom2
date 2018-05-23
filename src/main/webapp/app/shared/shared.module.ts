@@ -21,6 +21,7 @@ import { LanguageFilterService } from './input-components/language-filter/langua
 import { ScrollToTopComponent } from './components/scroll-to-top/scroll-to-top.component';
 import { JobAdvertisementService } from './job-advertisement/job-advertisement.service';
 import { Jobroom2LanguageService } from './language/jobroom2-language.service';
+import { ShortenPipe } from './pipes/shorten.pipe';
 
 @NgModule({
     imports: [
@@ -38,7 +39,8 @@ import { Jobroom2LanguageService } from './language/jobroom2-language.service';
         DetailsPagePaginationControlsComponent,
         DetailsPagePaginationComponent,
         TextSizeLimitDirective,
-        ScrollToTopComponent
+        ScrollToTopComponent,
+        ShortenPipe
     ],
     providers: [
         LoginService,
@@ -75,7 +77,8 @@ import { Jobroom2LanguageService } from './language/jobroom2-language.service';
         DetailsPagePaginationControlsComponent,
         DetailsPagePaginationComponent,
         TextSizeLimitDirective,
-        ScrollToTopComponent
+        ScrollToTopComponent,
+        ShortenPipe
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 

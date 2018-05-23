@@ -198,7 +198,8 @@
                 "metrics": "Metriken",
                 "systemNotifications": "System Mitteilungen",
                 "tracker": "Benutzer Aktivit\u00e4ten",
-                "userManagement": "Benutzerverwaltung"
+                "userManagement": "Benutzerverwaltung",
+                "api-user-management": "API-Schl\u00fcssel-Verwaltung"
             },
             "dashboard": "Dashboard",
             "entities": {

@@ -150,6 +150,14 @@
                                             <span
                                                 jhiTranslate="global.menu.admin.database">Database</span>
                                         </a>
+
+                                        <a class="dropdown-item"
+                                           (click)="collapseNavbar()"
+                                           routerLink="api-user-management"
+                                           routerLinkActive="active">
+                                            <span class="fa fa-key" aria-hidden="true"></span>
+                                            <span jhiTranslate="global.menu.admin.api-user-management">Api user management</span>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -333,6 +341,14 @@
                                           aria-hidden="true"></span>
                                     <span
                                         jhiTranslate="global.menu.admin.database">Database</span>
+                                </a>
+
+                                <a class="dropdown-item"
+                                   (click)="collapseNavbar()"
+                                   routerLink="api-user-management"
+                                   routerLinkActive="active">
+                                    <span class="fa fa-key" aria-hidden="true"></span>
+                                    <span jhiTranslate="global.menu.admin.api-user-management">Api user management</span>
                                 </a>
                             </div>
                         </div>

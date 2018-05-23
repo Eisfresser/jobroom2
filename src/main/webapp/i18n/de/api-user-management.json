@@ -1,0 +1,26 @@
+{
+    "api-user-management": {
+        "title": "Manage api users",
+        "new": "Create new api user",
+        "search": "Search api users",
+        "dialog": {
+            "title": "Create or update api user"
+        },
+        "id": "Id",
+        "user-name": "User name",
+        "email": "E-Mail",
+        "company": {
+            "name": "Business name"
+        },
+        "contact": "Contact",
+        "contact.email": "Contact email",
+        "password": "Passwort",
+        "password.generate": "Generate password",
+        "active-date": "Last access date",
+        "active": "Aktiv",
+        "confirm": "Speichern",
+        "dismiss": "Abbrechen",
+        "activated": "activated",
+        "deactivated": "Deaktiviert"
+    }
+}

@@ -14,6 +14,7 @@ import {
 } from './';
 
 import { UserRouteAccessService } from '../shared';
+import { apiUserManagementRoutes } from './api-user-management/api-user-management.route';
 
 const ADMIN_ROUTES = [
     auditsRoute,
@@ -24,7 +25,8 @@ const ADMIN_ROUTES = [
     gatewayRoute,
     ...userMgmtRoute,
     metricsRoute,
-    systemNotificationsManagementRoute
+    systemNotificationsManagementRoute,
+    ...apiUserManagementRoutes
 ];
 
 export const adminState: Routes = [

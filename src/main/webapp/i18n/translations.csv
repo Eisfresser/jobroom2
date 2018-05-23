@@ -320,6 +320,7 @@ global,global.menu.admin.metrics,Metriken,Metrics,Mesures,Metriche
 global,global.menu.admin.systemNotifications,System Mitteilungen,System notifications,Notification système,Notifica di sistema
 global,global.menu.admin.tracker,Benutzer Aktivitäten,User tracker,Activité des utilisateurs,Tracciamento utente
 global,global.menu.admin.userManagement,Benutzerverwaltung,User management,Gestion des utilisateurs,Gestione utenti
+global,global.menu.admin.api-user-management,API-Schlüssel-Verwaltung,API-Schlüssel-Verwaltung,API-Schlüssel-Verwaltung,API-Schlüssel-Verwaltung
 global,global.menu.dashboard,Dashboard,Dashboard,Dashboard,Dashboard
 global,global.menu.entities.jhipster-needle-menu-add-entry,JHipster will add additional entities here (do not translate!),JHipster will add additional entities here (do not translate!),JHipster will add additional entities here (do not translate!),JHipster will add additional entities here (do not translate!)
 global,global.menu.entities.job,Stelle,Job,Emploi,Posto
@@ -1056,3 +1057,21 @@ user-management,userManagement.phone,Telefon,Telephone,Téléphone,Telefono
 user-management,userManagement.profiles,Profile,Profiles,Profils,Profili
 user-management,userManagement.search.placeholder,"Benutzer nach Name, E-Mail-Adresse oder Organization suchen","Search for user by username, name, email or organization","Search for user by username, name, email or organization","Search for user by username, name, email or organization"
 user-management,userManagement.updated,Ein Benutzer mit ID {{ param }} wurde geändert,A user was updated with identifier {{ param }},L'utilisateur portant l'ID {{ param }} a été modifié.,Sono stato aggiornati i dati dell'utente identificato da {{ param }}
+api-user-management,api-user-management.title,Manage api users,Manage api users,Manage api users,Manage api users
+api-user-management,api-user-management.new,Create new api user,Create new api user,Create new api user,Create new api user
+api-user-management,api-user-management.search,Search api users,Search api users,Search api users,Search api users
+api-user-management,api-user-management.dialog.title,Create or update api user,Create or update api user,Create or update api user,Create or update api user
+api-user-management,api-user-management.id,Id,Id,Id,Id
+api-user-management,api-user-management.user-name,User name,User name,User name,User name
+api-user-management,api-user-management.email,E-Mail,Email,Courriel,E-mail
+api-user-management,api-user-management.company.name,Business name,Business name,Business name,Business name
+api-user-management,api-user-management.contact,Contact,Contact,Contact,Contact
+api-user-management,api-user-management.contact.email,Contact email,Contact email,Contact email,Contact email
+api-user-management,api-user-management.password,Passwort,Password,Mot de passe,Password
+api-user-management,api-user-management.password.generate,Generate password,Generate password,Generate password,Generate password
+api-user-management,api-user-management.active-date,Last access date,Last access date,Last access date,Last access date
+api-user-management,api-user-management.active,Aktiv,Active,Activé,Attivato
+api-user-management,api-user-management.confirm,Speichern,Save,Sauvegarder,Salva
+api-user-management,api-user-management.dismiss,Abbrechen,Cancel,Interrompre,Interrompere
+api-user-management,api-user-management.activated,activated,Aktiv,Active,Activé,Attivato
+api-user-management,api-user-management.deactivated,Deaktiviert,Deactivated,Désactivé,Disattivato
