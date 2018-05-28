@@ -15,7 +15,7 @@ describe('CandidateService', () => {
 
     it('should get JobExperience by occupationCode', () => {
         // GIVEN
-        const occupationCodes = ['avam:22222', 'sbn3:222'];
+        const occupationCodes = ['AVAM:22222', 'SBN3:222'];
         const jobExperiences: JobExperience[] = [
             {
                 occupation: {

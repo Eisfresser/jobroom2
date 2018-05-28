@@ -29,10 +29,10 @@ export class CandidateService {
                     const { value, type } = occupationCode;
                     const { avamCode, bfsCode, sbn3Code, sbn5Code } = jobExperience.occupation;
 
-                    return (avamCode === value && type === 'avam')
-                        || (bfsCode === value && type === 'bfs')
-                        || (sbn3Code === value && type === 'sbn3')
-                        || (sbn5Code === value && type === 'sbn5')
+                    return (avamCode === value && type.toLowerCase() === 'avam')
+                        || (bfsCode === value && type.toLowerCase() === 'bfs')
+                        || (sbn3Code === value && type.toLowerCase() === 'sbn3')
+                        || (sbn5Code === value && type.toLowerCase() === 'sbn5')
                 }
         ;
 
