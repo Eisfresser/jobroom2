@@ -2,20 +2,22 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import { TypeaheadMultiselectModel } from '../../../shared/input-components';
-import { OccupationPresentationService } from '../../../shared/reference-service';
-import { LocalityService } from '../../../shared/reference-service/locality.service';
 import {
     LocalityInputType,
-    LocalitySuggestion
-} from '../../../shared/reference-service/locality-autocomplete';
-import { JobSearchToolSubmittedAction } from '../../state-management';
-import { Store } from '@ngrx/store';
-import { JobSearchToolState } from '../../state-management/state/job-search-tool.state';
-import { Subscription } from 'rxjs/Subscription';
+    LocalityService,
+    LocalitySuggestion,
+    OccupationPresentationService
+} from '../../../shared/reference-service';
 import {
     JobSearchToolCountAction,
+    JobSearchToolState,
+    JobSearchToolSubmittedAction,
     ResetJobSearchToolCountAction
-} from '../../state-management/actions/job-search-tool.actions';
+} from '../../state-management';
+import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs/Subscription';
+import { TranslateService } from '@ngx-translate/core';
+import { LocaleAwareDecimalPipe } from '../../../shared/pipes/locale-aware-number.pipe';
 
 @Component({
     selector: 'jr2-job-search-tool',
@@ -36,7 +38,9 @@ export class JobSearchToolComponent implements OnInit, OnDestroy {
     constructor(private occupationPresentationService: OccupationPresentationService,
                 private localityService: LocalityService,
                 private store: Store<JobSearchToolState>,
-                private fb: FormBuilder) {
+                private fb: FormBuilder,
+                private translateService: TranslateService,
+                private localeAwareDecimalPipe: LocaleAwareDecimalPipe) {
     }
 
     ngOnInit(): void {
@@ -68,7 +72,14 @@ export class JobSearchToolComponent implements OnInit, OnDestroy {
         this.store.dispatch(new JobSearchToolSubmittedAction(formValue));
     }
 
-    getBadgeKey() {
+    getBadgeText() {
+        return this.translateService.stream(this.getBadgeKey(), {
+            count: this.localeAwareDecimalPipe.transform(this.jobSearchToolModel.totalCount),
+            since: this.jobSearchToolModel.onlineSince
+        });
+    }
+
+    private getBadgeKey() {
         const totalCount = this.jobSearchToolModel.totalCount;
 
         let key = 'home.tools.job-search.search-badge';

@@ -5,6 +5,8 @@ import { LocalityService, OccupationPresentationService } from '../../../../../.
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 import { initialState } from '../../../../../../../main/webapp/app/home/state-management/state/job-search-tool.state';
+import { TranslateModule } from '@ngx-translate/core';
+import { LocaleAwareDecimalPipe } from '../../../../../../../main/webapp/app/shared/pipes/locale-aware-number.pipe';
 
 describe('JobSearchToolComponent', () => {
     const mockOccupationOccupationPresentationService = jasmine.createSpyObj('mockOccupationOccupationPresentationService', ['fetchJobSearchOccupationSuggestions']);
@@ -18,12 +20,16 @@ describe('JobSearchToolComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [ReactiveFormsModule],
+            imports: [
+                ReactiveFormsModule,
+                TranslateModule.forRoot()
+            ],
             declarations: [JobSearchToolComponent],
             providers: [
                 { provide: OccupationPresentationService, useValue: mockOccupationOccupationPresentationService },
                 { provide: LocalityService, useValue: mockLocalityService },
-                { provide: Store, useValue: mockStore }
+                { provide: Store, useValue: mockStore },
+                LocaleAwareDecimalPipe
             ]
         })
             .overrideTemplate(JobSearchToolComponent, '')

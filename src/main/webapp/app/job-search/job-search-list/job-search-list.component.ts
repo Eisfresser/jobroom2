@@ -1,17 +1,21 @@
 import { AfterViewInit, Component, HostListener, Input, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { JobSearchState, LoadNextPageAction } from '../state-management';
-import { Observable } from 'rxjs/Observable';
 import {
     getJobListScrollY,
-    getSearchError
-} from '../state-management/state/job-search.state';
-import {
+    getSearchError,
     HideJobListErrorAction,
+    JobSearchState,
+    LoadNextPageAction,
     SaveScrollYAction
-} from '../state-management/actions/job-search.actions';
+} from '../state-management';
+import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
-import { JobAdvertisement, JobDescription } from '../../shared/job-advertisement/job-advertisement.model';
+import {
+    JobAdvertisement,
+    JobDescription
+} from '../../shared/job-advertisement/job-advertisement.model';
+import { TranslateService } from '@ngx-translate/core';
+import { LocaleAwareDecimalPipe } from '../../shared/pipes/locale-aware-number.pipe';
 
 @Component({
     selector: 'jr2-job-search-list',
@@ -35,7 +39,9 @@ export class JobSearchListComponent implements OnDestroy, AfterViewInit {
         this.scrollY = window.scrollY;
     }
 
-    constructor(private store: Store<JobSearchState>) {
+    constructor(private store: Store<JobSearchState>,
+                private translateService: TranslateService,
+                private localeAwareDecimalPipe: LocaleAwareDecimalPipe) {
         this.displayError$ = store.select(getSearchError);
         this.subscription = this.store
             .select(getJobListScrollY)
@@ -64,7 +70,15 @@ export class JobSearchListComponent implements OnDestroy, AfterViewInit {
         this.store.dispatch(new LoadNextPageAction());
     }
 
-    getTitleKey() {
+    getTitle() {
+        return this.translateService.stream(this.getTitleKey(), {
+            count: this.localeAwareDecimalPipe.transform(this.getMaxCount()),
+            query: this.baseQueryString,
+            locality: this.localityQueryString
+        });
+    }
+
+    private getTitleKey() {
         let key = 'job-search.job-search-list.title';
 
         if (this.totalCount === 0) {

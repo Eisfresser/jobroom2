@@ -23,7 +23,9 @@ import {
 import { customLocalityAutocompleteMapper } from '../../../candidate-search/candidate-search-filter/candidate-search-filter.component';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
-import { TypeaheadMultiselectModel } from '../../../shared/input-components/typeahead/typeahead-multiselect-model';
+import { TypeaheadMultiselectModel } from '../../../shared/input-components';
+import { TranslateService } from '@ngx-translate/core';
+import { LocaleAwareDecimalPipe } from '../../../shared/pipes/locale-aware-number.pipe';
 
 @Component({
     selector: 'jr2-candidate-search-tool',
@@ -45,7 +47,9 @@ export class CandidateSearchToolComponent implements OnInit, OnDestroy, OnChange
     constructor(private occupationPresentationService: OccupationPresentationService,
                 private store: Store<CandidateSearchToolState>,
                 private fb: FormBuilder,
-                private localityService: LocalityService) {
+                private localityService: LocalityService,
+                private translateService: TranslateService,
+                private localeAwareDecimalPipe: LocaleAwareDecimalPipe) {
     }
 
     ngOnChanges(changes: SimpleChanges): void {
@@ -78,7 +82,13 @@ export class CandidateSearchToolComponent implements OnInit, OnDestroy, OnChange
         this.store.dispatch(new CandidateSearchToolSubmittedAction(formValue));
     }
 
-    getBadgeKey() {
+    getBadgeText() {
+        return this.translateService.stream(this.getBadgeKey(), {
+            count: this.localeAwareDecimalPipe.transform(this.candidateSearchToolModel.totalCount)
+        });
+    }
+
+    private getBadgeKey() {
         const totalCount = this.candidateSearchToolModel.totalCount;
 
         let key = 'home.tools.candidate-search.search-badge';

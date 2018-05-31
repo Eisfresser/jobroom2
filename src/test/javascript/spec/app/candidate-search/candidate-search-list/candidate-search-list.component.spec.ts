@@ -4,7 +4,9 @@ import { JobroomTestModule } from '../../../test.module';
 import { Store } from '@ngrx/store';
 import { LoadNextPageAction } from '../../../../../../main/webapp/app/candidate-search/state-management/actions/candidate-search.actions';
 import { Observable } from 'rxjs/Observable';
-import { WINDOW } from '../../../../../../main/webapp/app/shared/shared-libs.module';
+import { WINDOW } from '../../../../../../main/webapp/app/shared';
+import { TranslateModule } from '@ngx-translate/core';
+import { LocaleAwareDecimalPipe } from '../../../../../../main/webapp/app/shared/pipes/locale-aware-number.pipe';
 
 describe('CandidateSearchListComponent', () => {
     const mockStore = jasmine.createSpyObj('mockStore', ['select', 'dispatch']);
@@ -17,11 +19,15 @@ describe('CandidateSearchListComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [JobroomTestModule],
+            imports: [
+                JobroomTestModule,
+                TranslateModule.forRoot()
+            ],
             declarations: [CandidateSearchListComponent],
             providers: [
                 { provide: Store, useValue: mockStore },
-                { provide: WINDOW, useValue: mockWindow }
+                { provide: WINDOW, useValue: mockWindow },
+                LocaleAwareDecimalPipe
             ]
         })
             .overrideTemplate(CandidateSearchListComponent, '')

@@ -6,6 +6,8 @@ import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 import { initialState } from '../../../../../../../main/webapp/app/home/state-management/state/candidate-search-tool.state';
 import { OccupationPresentationService } from '../../../../../../../main/webapp/app/shared/reference-service';
+import { TranslateModule } from '@ngx-translate/core';
+import { LocaleAwareDecimalPipe } from '../../../../../../../main/webapp/app/shared/pipes/locale-aware-number.pipe';
 
 describe('CandidateSearchToolComponent', () => {
     let component: CandidateSearchToolComponent;
@@ -19,7 +21,10 @@ describe('CandidateSearchToolComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [ReactiveFormsModule],
+            imports: [
+                ReactiveFormsModule,
+                TranslateModule.forRoot()
+            ],
             declarations: [CandidateSearchToolComponent],
             providers: [
                 {
@@ -27,7 +32,8 @@ describe('CandidateSearchToolComponent', () => {
                     useValue: mockOccupationPresentationService
                 },
                 { provide: LocalityService, useValue: mockLocalityService },
-                { provide: Store, useValue: mockStore }
+                { provide: Store, useValue: mockStore },
+                LocaleAwareDecimalPipe
             ]
         }).overrideTemplate(CandidateSearchToolComponent, '').compileComponents();
 

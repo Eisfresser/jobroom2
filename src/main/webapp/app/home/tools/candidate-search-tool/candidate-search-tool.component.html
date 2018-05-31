@@ -41,7 +41,7 @@
         </div>
         <div class="candidate-search__radar">
             <div class="candidate-radar d-none d-md-inline-block" *ngIf="candidateSearchToolModel.totalCount > -1">
-                <div [innerHTML]="getBadgeKey() | translate: { count: candidateSearchToolModel.totalCount | jr2Number }"></div>
+                <div [innerHTML]="getBadgeText() | async"></div>
                 <button class="btn-link" (click)="search(candidateSearchForm.value)">{{ 'home.tools.candidate-search.search-badge.show' | translate }}</button>
             </div>
         </div>

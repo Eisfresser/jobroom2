@@ -18,7 +18,9 @@ import {
     SaveScrollYAction
 } from '../state-management/actions/candidate-search.actions';
 import { Subscription } from 'rxjs/Subscription';
-import { WINDOW } from '../../shared/shared-libs.module';
+import { WINDOW } from '../../shared';
+import { TranslateService } from '@ngx-translate/core';
+import { LocaleAwareDecimalPipe } from '../../shared/pipes/locale-aware-number.pipe';
 
 @Component({
     selector: 'jr2-candidate-search-list',
@@ -43,7 +45,9 @@ export class CandidateSearchListComponent implements OnDestroy, AfterViewInit {
 
     constructor(private store: Store<CandidateSearchState>,
                 @Inject(WINDOW)
-                private window: Window) {
+                private window: Window,
+                private translateService: TranslateService,
+                private localeAwareDecimalPipe: LocaleAwareDecimalPipe) {
         this.subscription = this.store
             .select(getCandidateListScrollY)
             .subscribe((scrollY: number) => {
@@ -67,7 +71,15 @@ export class CandidateSearchListComponent implements OnDestroy, AfterViewInit {
         this.store.dispatch(new HideCandidateListErrorAction());
     }
 
-    getTitleKey() {
+    getTitle() {
+        return this.translateService.stream(this.getTitleKey(), {
+            count: this.localeAwareDecimalPipe.transform(this.totalCount),
+            query: this.occupationNames,
+            locality: this.residenceFilterString
+        });
+    }
+
+    private getTitleKey() {
         let key = 'candidate-search.candidate-search-list.title';
 
         if (this.totalCount === 0) {
