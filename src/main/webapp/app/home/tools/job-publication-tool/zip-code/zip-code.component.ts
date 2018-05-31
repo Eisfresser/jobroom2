@@ -32,6 +32,7 @@ export interface Translations {
 })
 export class ZipCodeComponent implements OnInit, OnChanges {
     private static readonly ZIP_CODE_REGEX = /^[a-z0-9][a-z0-9\- ]{0,10}[a-z0-9]$/i;
+    private static readonly ABROAD_LOCALITY_POSTAL_CODE = '----';
 
     @Input()
     group: FormGroup;
@@ -56,6 +57,7 @@ export class ZipCodeComponent implements OnInit, OnChanges {
             a.city.localeCompare(b.city) || a.zipCode.localeCompare(b.zipCode);
 
         return localityAutocomplete.localities
+            .filter((locality) => locality.zipCode !== ZipCodeComponent.ABROAD_LOCALITY_POSTAL_CODE)
             .sort(localityComparator)
             .map((locality) => ({
                 zip: locality.zipCode,
