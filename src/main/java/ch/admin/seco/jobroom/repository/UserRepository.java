@@ -6,7 +6,6 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Stream;
 
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
@@ -22,8 +21,6 @@ import ch.admin.seco.jobroom.domain.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, UUID> {
 
-    String USERS_BY_LOGIN_CACHE = "usersByLogin";
-
     Optional<User> findOneByActivationKey(String activationKey);
 
     List<User> findAllByActivatedIsFalseAndCreatedDateBefore(Instant dateTime);
@@ -38,7 +35,6 @@ public interface UserRepository extends JpaRepository<User, UUID> {
     Optional<User> findOneWithAuthoritiesById(UUID id);
 
     @EntityGraph(attributePaths = "authorities")
-    @Cacheable(cacheNames = USERS_BY_LOGIN_CACHE)
     Optional<User> findOneWithAuthoritiesByLogin(String login);
 
     Page<User> findAllByLoginNot(Pageable pageable, String login);
