@@ -335,7 +335,7 @@ global,global.menu.dashboard,Dashboard,Dashboard,Dashboard,Dashboard
 global,global.menu.entities.jhipster-needle-menu-add-entry,JHipster will add additional entities here (do not translate!),JHipster will add additional entities here (do not translate!),JHipster will add additional entities here (do not translate!),JHipster will add additional entities here (do not translate!)
 global,global.menu.entities.job,Stelle,Job,Emploi,Posto
 global,global.menu.entities.main,Entitäten,Entities,Entités,Entità
-global,global.menu.home,Startseite,Home,Page d'accueil,Home
+global,global.menu.home,Startseite,Home,Page d'accueil,Pagina principale
 global,global.menu.jhipster-needle-menu-add-element,JHipster will add additional menu entries here (do not translate!),JHipster will add additional menu entries here (do not translate!),JHipster will add additional menu entries here (do not translate!),JHipster will add additional menu entries here (do not translate!)
 global,global.menu.language,Sprache,Language,Langue,Lingua
 global,global.messages.error.dontmatch,Das bestätigte Passwort entspricht nicht dem neuen Passwort!,The confirmed password and the new password do not match!,La confirmation du mot de passe ne correspond pas au nouveau mot de passe !,La password e la sua conferma non corrispondono!
@@ -687,8 +687,11 @@ home,home.tools.job-publication.placeholders.phone,031 999 99 99 oder +41 31 999
 home,home.tools.job-publication.placeholders.url,http://www.muster.ch,http://www.example.ch,http://www.exemple.ch,http://www.esempio.ch
 home,home.tools.job-publication.publication.eures,EURES Portal,EURES Portal,Portal EURES," Portale EURES"
 home,home.tools.job-publication.publication.eures.url,https://ec.europa.eu/eures/public/de/,https://ec.europa.eu/eures/public/en/,https://ec.europa.eu/eures/public/fr/,https://ec.europa.eu/eures/public/it/
-home,home.tools.job-publication.publication.jobroom,Job-Room Website," Job-Room Website"," Site Job-Room"," Sito Job-Room"
+home,home.tools.job-publication.publication.jobroom,Job-Room,Job-Room,Job-Room,Sito Job-Room
+home,home.tools.job-publication.publication.jobroom.and,und,and,et,e
 home,home.tools.job-publication.publication.jobroom.url,http://www.job-room.ch,http://www.job-room.ch,http://www.job-room.ch,http://www.job-room.ch
+home,home.tools.job-publication.publication.jobdesk,Job-Desk,Job-Desk,Job-Desk,Job-Desk
+home,home.tools.job-publication.publication.jobroom.url,http://www.job-desk.ch,http://www.job-desk.ch,http://www.job-desk.ch,http://www.job-desk.ch
 home,home.tools.job-publication.publication.title,Publikationsmedien,Publication media,Moyens de publication,Mezzi di pubblicazione
 home,home.tools.job-publication.publication.public.label,Job-Room public website,Job-Room public website,Job-Room public website,Job-Room public website
 home,home.tools.job-publication.publication.restricted.label,Job-Room restricted area,Job-Room restricted area,Job-Room restricted area,Job-Room restricted area
