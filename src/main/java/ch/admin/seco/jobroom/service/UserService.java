@@ -45,7 +45,6 @@ import ch.admin.seco.jobroom.web.rest.errors.InvalidPasswordException;
 @Transactional
 public class UserService {
 
-    private static final String USERS_CACHE = UserRepository.USERS_BY_LOGIN_CACHE;
     private final Logger log = LoggerFactory.getLogger(UserService.class);
 
     private final UserRepository userRepository;
@@ -90,7 +89,6 @@ public class UserService {
                 user.setActivated(true);
                 user.setActivationKey(null);
                 userSearchRepository.save(userDocumentMapper.userToUserDocument(user));
-                cacheManager.getCache(USERS_CACHE).evict(user.getLogin());
                 log.debug("Activated user: {}", user);
                 return user;
             });
@@ -105,7 +103,6 @@ public class UserService {
                 user.setPassword(passwordEncoder.encode(newPassword));
                 user.setResetKey(null);
                 user.setResetDate(null);
-                cacheManager.getCache(USERS_CACHE).evict(user.getLogin());
                 return user;
             });
     }
@@ -116,7 +113,6 @@ public class UserService {
             .map(user -> {
                 user.setResetKey(RandomUtil.generateResetKey());
                 user.setResetDate(Instant.now());
-                cacheManager.getCache(USERS_CACHE).evict(user.getLogin());
                 return user;
             });
     }
@@ -213,7 +209,6 @@ public class UserService {
                 user.setLangKey(langKey);
                 user.setImageUrl(imageUrl);
                 userSearchRepository.save(userDocumentMapper.userToUserDocument(user));
-                cacheManager.getCache(USERS_CACHE).evict(user.getLogin());
                 log.debug("Changed Information for User: {}", user);
             });
     }
@@ -248,11 +243,8 @@ public class UserService {
                 if (nonNull(userDTO.getOrganizationId())) {
                     organizationRepository.findByExternalId(userDTO.getOrganizationId())
                         .ifPresent(user::setOrganization);
-                } else {
-                    user.setOrganization(null);
                 }
                 userSearchRepository.save(userDocumentMapper.userToUserDocument(user));
-                cacheManager.getCache(USERS_CACHE).evict(user.getLogin());
                 log.debug("Changed Information for User: {}", user);
                 return user;
             })
@@ -263,7 +255,6 @@ public class UserService {
         userRepository.findOneByLogin(login).ifPresent(user -> {
             userRepository.delete(user);
             userSearchRepository.delete(userDocumentMapper.userToUserDocument(user));
-            cacheManager.getCache(USERS_CACHE).evict(login);
             log.debug("Deleted User: {}", user);
         });
     }
@@ -274,7 +265,6 @@ public class UserService {
                 .ifPresent(user -> {
                     String encryptedPassword = passwordEncoder.encode(password);
                     user.setPassword(encryptedPassword);
-                    cacheManager.getCache(UserRepository.USERS_BY_LOGIN_CACHE).evict(user.getLogin());
                     log.debug("Changed password for User: {}", user);
                 });
     }
@@ -282,7 +272,6 @@ public class UserService {
     public void updatePassword(String login, String encryptedPassword) {
         userRepository.findOneByLogin(login).ifPresent(user -> {
             user.setPassword(encryptedPassword);
-            cacheManager.getCache(USERS_CACHE).evict(user.getLogin());
             log.debug("Changed password for User: {}", user);
         });
     }
@@ -319,7 +308,6 @@ public class UserService {
             log.debug("Deleting not activated user {}", user.getLogin());
             userRepository.delete(user);
             userSearchRepository.delete(userDocumentMapper.userToUserDocument(user));
-            cacheManager.getCache(USERS_CACHE).evict(user.getLogin());
         }
     }
 
@@ -342,5 +330,4 @@ public class UserService {
             throw new InvalidPasswordException();
         }
     }
-
 }
