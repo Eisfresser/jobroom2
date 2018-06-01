@@ -235,6 +235,14 @@
                          aria-labelledby="navbarDropdownMenuLink">
                         <div class="megamenu-menu">
                             <div>
+                                <a class="dropdown-item" routerLink="home"
+                                   routerLinkActive="active">
+                                    <span class="fa fa-fw fa-home"
+                                          aria-hidden="true"></span>
+                                    <span jhiTranslate="global.menu.home"
+                                          (click)="collapseNavbar()">Home</span>
+                                </a>
+
                                 <span class="dropdown-title">Admin</span>
                                 <a class="dropdown-item" routerLink="gateway"
                                    routerLinkActive="active">

@@ -248,6 +248,8 @@ public class UserService {
                 if (nonNull(userDTO.getOrganizationId())) {
                     organizationRepository.findByExternalId(userDTO.getOrganizationId())
                         .ifPresent(user::setOrganization);
+                } else {
+                    user.setOrganization(null);
                 }
                 userSearchRepository.save(userDocumentMapper.userToUserDocument(user));
                 cacheManager.getCache(USERS_CACHE).evict(user.getLogin());

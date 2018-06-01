@@ -61,9 +61,8 @@ export class UserMgmtDialogComponent implements OnInit {
 
     save() {
         this.isSaving = true;
-        if (this.userOrganization) {
-            this.user.organizationId = this.userOrganization.externalId;
-        }
+        this.user.organizationId = this.userOrganization ? this.userOrganization.externalId : null;
+
         if (this.user.id !== null) {
             this.userService.update(this.user).subscribe((response) => this.onSaveSuccess(response), () => this.onSaveError());
         } else {
