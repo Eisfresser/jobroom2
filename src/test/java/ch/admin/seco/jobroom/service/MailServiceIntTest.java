@@ -33,6 +33,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import ch.admin.seco.jobroom.JobroomApp;
 import ch.admin.seco.jobroom.config.Constants;
 import ch.admin.seco.jobroom.domain.User;
+import ch.admin.seco.jobroom.service.mapper.MailSenderDataMapper;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = JobroomApp.class)
@@ -47,6 +48,9 @@ public class MailServiceIntTest {
     @Autowired
     private SpringTemplateEngine templateEngine;
 
+    @Autowired
+    private MailSenderDataMapper mailSenderDataMapper;
+
     @Spy
     private JavaMailSenderImpl javaMailSender;
 
@@ -59,7 +63,7 @@ public class MailServiceIntTest {
     public void setup() {
         MockitoAnnotations.initMocks(this);
         doNothing().when(javaMailSender).send(any(MimeMessage.class));
-        mailService = new MailService(jHipsterProperties, javaMailSender, messageSource, templateEngine);
+        mailService = new MailService(jHipsterProperties, javaMailSender, messageSource, templateEngine, mailSenderDataMapper);
     }
 
     @Test

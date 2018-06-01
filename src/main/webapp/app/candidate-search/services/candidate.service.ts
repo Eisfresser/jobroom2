@@ -142,4 +142,9 @@ export class CandidateService {
 
         return jobExperiences[0];
     }
+
+    canSendAnonymousContactEmail(candidate: Candidate): Observable<boolean> {
+        return Observable.fromPromise(this.principal.hasAnyAuthority(['ROLE_COMPANY']))
+            .map((hasCompanyRole) => hasCompanyRole && candidate && !!candidate.email)
+    }
 }

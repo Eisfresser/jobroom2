@@ -1,0 +1,230 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h2>{{ 'candidate-detail.anonymous-contact.title' | translate }}</h2>
+        <button type="button" class="close" aria-label="Close"
+                (click)="activeModal.dismiss()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="anonymousContactForm" class="form-horizontal"
+              (submit)="sendMessage()">
+            <div
+                class="{{anonymousContactForm.get('subject').disabled ? 'form-group--icon' : 'input-group' }}">
+                <input formControlName="subject" class="form-control">
+
+                <a *ngIf="anonymousContactForm.get('subject').disabled"
+                   class="fa-stack form-control--icon" (click)="edit('subject')">
+                    <span aria-hidden="true" class="fa fa-pencil fa-stack-1x"></span>
+                </a>
+
+                <div class="input-group-append"
+                     *ngIf="anonymousContactForm.get('subject').enabled">
+                    <button type="button" class="btn btn-sm" aria-hidden="true"
+                            (click)="discardChanges('subject')">
+                        <span class="fa fa-times"></span>
+                    </button>
+                    <button type="button" class="btn btn-sm" aria-hidden="true"
+                            [disabled]="anonymousContactForm.get('subject').invalid"
+                            (click)="applyChanges('subject')">
+                        <span class="fa fa-check-square"></span>
+                    </button>
+                </div>
+            </div>
+            <div
+                class="{{anonymousContactForm.get('body').disabled ? 'form-group--icon' : 'input-group' }}">
+                <textarea formControlName="body" class="form-control" rows="8"
+                          aria-describedby="maxChar"
+                          [jr2TextSizeLimit]="MESSAGE_BODY_MAX_LENGTH"></textarea>
+
+                <a *ngIf="anonymousContactForm.get('body').disabled"
+                   class="fa-stack form-control--icon" (click)="edit('body')">
+                    <span aria-hidden="true" class="fa fa-pencil fa-stack-1x"></span>
+                </a>
+
+                <div class="input-group-append"
+                     *ngIf="anonymousContactForm.get('body').enabled">
+                    <button type="button" class="btn btn-sm" aria-hidden="true"
+                            (click)="discardChanges('body')">
+                        <span class="fa fa-times"></span>
+                    </button>
+                    <button type="button" class="btn btn-sm" aria-hidden="true"
+                            [disabled]="anonymousContactForm.get('body').invalid"
+                            (click)="applyChanges('body')">
+                        <span class="fa fa-check-square"></span>
+                    </button>
+                </div>
+            </div>
+
+            <span>
+                {{ 'candidate-detail.anonymous-contact.contact-via' | translate }}
+            </span>
+
+            <div class="mt-4">
+                <div class="form-row">
+                    <div class="form-check col-2">
+                        <input formControlName="sendPhone" type="checkbox">
+                        <label class="form-check-label">
+                            {{ 'candidate-detail.anonymous-contact.contact-via.phone' |
+                            translate }}
+                        </label>
+                    </div>
+                    <div *ngIf="anonymousContactForm.get('sendPhone').value"
+                         class="col-10 {{anonymousContactForm.get('phone').enabled ? 'input-group' : ''}}">
+
+                        <ng-container
+                            *ngIf="anonymousContactForm.get('phone').disabled">
+                            <span>{{ anonymousContactForm.get('phone').value }}</span>
+
+                            <a *ngIf="anonymousContactForm.get('phone').disabled"
+                               class="float-right" (click)="edit('phone')">
+                                <span aria-hidden="true" class="fa fa-pencil"></span>
+                            </a>
+                        </ng-container>
+
+                        <ng-container
+                            *ngIf="anonymousContactForm.get('phone').enabled">
+                            <input formControlName="phone" class="form-control">
+
+                            <div class="input-group-append"
+                                 *ngIf="anonymousContactForm.get('phone').enabled">
+                                <button type="button" class="btn btn-sm"
+                                        aria-hidden="true"
+                                        (click)="discardChanges('phone')">
+                                    <span class="fa fa-times"></span>
+                                </button>
+                                <button type="button" class="btn btn-sm"
+                                        aria-hidden="true"
+                                        [disabled]="anonymousContactForm.get('phone').invalid"
+                                        (click)="applyChanges('phone')">
+                                    <span class="fa fa-check-square"></span>
+                                </button>
+                            </div>
+                        </ng-container>
+
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-check col-2">
+                        <input formControlName="sendEmail" type="checkbox">
+                        <label class="form-check-label">
+                            {{ 'candidate-detail.anonymous-contact.contact-via.email' |
+                            translate }}
+                        </label>
+                    </div>
+                    <div *ngIf="anonymousContactForm.get('sendEmail').value"
+                         class="col-10 {{anonymousContactForm.get('email').enabled ? 'input-group' : ''}}">
+
+                        <ng-container
+                            *ngIf="anonymousContactForm.get('email').disabled">
+                            <span>{{ anonymousContactForm.get('email').value }}</span>
+
+                            <a class="float-right" (click)="edit('email')">
+                                <span aria-hidden="true" class="fa fa-pencil"></span>
+                            </a>
+                        </ng-container>
+
+                        <ng-container
+                            *ngIf="anonymousContactForm.get('email').enabled">
+                            <input formControlName="email" class="form-control">
+
+                            <div class="input-group-append">
+                                <button type="button" class="btn btn-sm"
+                                        aria-hidden="true"
+                                        (click)="discardChanges('email')">
+                                    <span class="fa fa-times"></span>
+                                </button>
+                                <button type="button" class="btn btn-sm"
+                                        aria-hidden="true"
+                                        [disabled]="anonymousContactForm.get('email').invalid"
+                                        (click)="applyChanges('email')">
+                                    <span class="fa fa-check-square"></span>
+                                </button>
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+
+                <div class="form-check">
+                    <input formControlName="sendAddress" type="checkbox">
+                    <label class="form-check-label">
+                        {{ 'candidate-detail.anonymous-contact.send-to' | translate }}
+                    </label>
+                </div>
+
+                <ng-container *ngIf="anonymousContactForm.get('company').disabled">
+                    <div>
+                        <span>{{ emailContent.company?.name }}</span>
+                        <a class="float-right" (click)="edit('company')">
+                            <span aria-hidden="true" class="fa fa-pencil"></span>
+                        </a>
+                    </div>
+                    <span
+                        class="d-block"> {{ emailContent.company?.contactPerson }} </span>
+                    <span class="d-block">{{ emailContent.company?.street }} {{ emailContent.company?.houseNumber}}</span>
+                    <span class="d-block">{{ emailContent.company?.zipCode }} {{ emailContent.company?.city }}</span>
+                    <span class="d-block">{{ emailContent.company?.country }}</span>
+                </ng-container>
+
+                <ng-container formGroupName="company"
+                              *ngIf="anonymousContactForm.get('company').enabled">
+                    <div class="input-group">
+                        <input formControlName="name" class="form-control">
+                        <div class="input-group-append">
+                            <button type="button" class="btn btn-sm" aria-hidden="true"
+                                    (click)="discardChanges('company')">
+                                <span class="fa fa-times"></span>
+                            </button>
+                            <button type="button" class="btn btn-sm" aria-hidden="true"
+                                    [disabled]="anonymousContactForm.get('company').invalid"
+                                    (click)="applyChanges('company')">
+                                <span class="fa fa-check-square"></span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-11">
+                            <input formControlName="contactPerson" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-9">
+                            <input formControlName="street" class="form-control">
+                        </div>
+                        <div class="form-group col-2">
+                            <input formControlName="houseNumber" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-3">
+                            <input formControlName="zipCode" class="form-control">
+                        </div>
+                        <div class="form-group col-8">
+                            <input formControlName="city" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-11">
+                            <input formControlName="country" class="form-control">
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+        </form>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="activeModal.close()">
+            {{ 'candidate-detail.anonymous-contact.dismiss' | translate }}
+        </button>
+        <button type="submit" class="btn btn-primary" [disabled]="anonymousContactForm.invalid"
+                (click)="sendMessage()">
+            {{ 'candidate-detail.anonymous-contact.confirm' | translate }}
+        </button>
+    </div>
+</div>

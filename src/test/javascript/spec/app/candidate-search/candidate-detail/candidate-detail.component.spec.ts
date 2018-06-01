@@ -2,9 +2,11 @@ import { CandidateDetailComponent } from '../../../../../../main/webapp/app/cand
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { JobroomTestModule } from '../../../test.module';
 import { cold } from 'jasmine-marbles';
-import { ReferenceService } from '../../../../../../main/webapp/app/shared/reference-service/reference.service';
+import {
+    OccupationPresentationService,
+    ReferenceService
+} from '../../../../../../main/webapp/app/shared/reference-service';
 import { CandidateService } from '../../../../../../main/webapp/app/candidate-search/services/candidate.service';
-import { OccupationPresentationService } from '../../../../../../main/webapp/app/shared/reference-service';
 import { TranslateService } from '@ngx-translate/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
@@ -13,6 +15,7 @@ import { candidateSearchReducer } from '../../../../../../main/webapp/app/candid
 import { MockPrincipal } from '../../../helpers/mock-principal.service';
 import { Principal } from '../../../../../../main/webapp/app/shared';
 import { CandidateProfileDetailLoadedAction } from '../../../../../../main/webapp/app/candidate-search/state-management/actions/candidate-search.actions';
+import { CandidateAnonymousContactDialogService } from '../../../../../../main/webapp/app/candidate-search/dialog/candidate-anonymous-contact-dialog.service';
 
 describe('CandidateDetailComponent', () => {
     let component: CandidateDetailComponent;
@@ -35,6 +38,7 @@ describe('CandidateDetailComponent', () => {
     const mockReferenceService = jasmine.createSpyObj('mockReferenceService', ['resolveJobCenter']);
     const mockCandidateService = jasmine.createSpyObj('mockCandidateService', ['findCandidate']);
     const mockOccupationOccupationPresentationService = jasmine.createSpyObj('mockOccupationOccupationPresentationService', ['findOccupationLabelsByAvamCode']);
+    const mockCandidateAnonymousContactDialogService = jasmine.createSpyObj('mockCandidateAnonymousContactDialogService', ['open']);
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -51,9 +55,13 @@ describe('CandidateDetailComponent', () => {
                 },
                 {
                     provide: TranslateService, useValue: {
-                    currentLang: 'en',
-                    onLangChange: Observable.never()
-                }
+                        currentLang: 'en',
+                        onLangChange: Observable.never()
+                    }
+                },
+                {
+                    provide: CandidateAnonymousContactDialogService,
+                    useValue: mockCandidateAnonymousContactDialogService
                 }
             ]
         })

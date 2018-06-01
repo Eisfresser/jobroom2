@@ -24,6 +24,9 @@ candidate-detail,candidate-detail.additional-information.preferredWorkRegions.la
 candidate-detail,candidate-detail.additional-information.title,Weitere Angaben,Additional information,Autres indications,Altri dati
 candidate-detail,candidate-detail.additional-information.workForm.label,Arbeitsform,Work form,Forme de travail,Tipologia lavorativa
 candidate-detail,candidate-detail.back,Zurück zu den Suchergebnissen,Back to search results,Retour aux résultats,"Torna ai risultati della ricerca "
+candidate-detail,candidate-detail.candidate-anonymous-contact,Kandidat/-in kontaktieren,Kandidat/-in kontaktieren,Kandidat/-in kontaktieren,Kandidat/-in kontaktieren
+candidate-detail,candidate-detail.candidate-anonymous-contact.subject,Sehr geehrte(r) Kandidat(in),Sehr geehrte(r) Kandidat(in),Sehr geehrte(r) Kandidat(in),Sehr geehrte(r) Kandidat(in)
+candidate-detail,candidate-detail.candidate-anonymous-contact.body,"Mit Freude habe ich Ihr aussagekräftige Profil auf job-room.ch entdeckt.\n Ich könnte mir vorstellen, dass Sie sehr gut in unser Team passen und würde mich sehr freuen, wenn Sie sich bei uns melden würden.","Mit Freude habe ich Ihr aussagekräftige Profil auf job-room.ch entdeckt.\n Ich könnte mir vorstellen, dass Sie sehr gut in unser Team passen und würde mich sehr freuen, wenn Sie sich bei uns melden würden.","Mit Freude habe ich Ihr aussagekräftige Profil auf job-room.ch entdeckt.\n Ich könnte mir vorstellen, dass Sie sehr gut in unser Team passen und würde mich sehr freuen, wenn Sie sich bei uns melden würden.","Mit Freude habe ich Ihr aussagekräftige Profil auf job-room.ch entdeckt.\n Ich könnte mir vorstellen, dass Sie sehr gut in unser Team passen und würde mich sehr freuen, wenn Sie sich bei uns melden würden."
 candidate-detail,candidate-detail.candidate-copy-link,Link kopieren,Copy link,Copier le lien,Copia link
 candidate-detail,candidate-detail.candidate-print,Drucken,Print,Imprimer,Stampa
 candidate-detail,candidate-detail.candidate-save,Kandidatenprofil speichern,Save candidate profile,Sauvegarder le profil du candidat,Salva candidato
@@ -51,6 +54,13 @@ candidate-detail,candidate-detail.personal-information.name.label,Name / Vorname
 candidate-detail,candidate-detail.personal-information.nationality.label,Staatsangehörigkeit,Nationality,"Nationalité ",Cittadinanza
 candidate-detail,candidate-detail.personal-information.phone.label,Telefon,Telephone,Téléphone,Telefono
 candidate-detail,candidate-detail.personal-information.title,Personalien / Kontaktdaten des Kandidaten,Personal information / Candidate contact details,Coordonnées du candidat,Generalità / coordinate del candidato
+candidate-detail,candidate-detail.anonymous-contact.dismiss,Abbrechen,Cancel,Interrompre,Interrompere
+candidate-detail,candidate-detail.anonymous-contact.confirm,Confirm,Confirm,Confirm,Confirm
+candidate-detail,candidate-detail.anonymous-contact.title,Kandidat-/in kontaktieren,Kandidat-/in kontaktieren,Kandidat-/in kontaktieren,Kandidat-/in kontaktieren
+candidate-detail,candidate-detail.anonymous-contact.contact-via,Bitte kontaktieren Sie mich per:,Bitte kontaktieren Sie mich per:,Bitte kontaktieren Sie mich per:,Bitte kontaktieren Sie mich per:
+candidate-detail,candidate-detail.anonymous-contact.contact-via.phone,Telefon,Telefon,Telefon,Telefon
+candidate-detail,candidate-detail.anonymous-contact.contact-via.email,E-Mail,E-Mail,E-Mail,E-Mail
+candidate-detail,candidate-detail.anonymous-contact.send-to,Schicken Sie Ihre Bewerbungsunterlagen an:,Schicken Sie Ihre Bewerbungsunterlagen an:,Schicken Sie Ihre Bewerbungsunterlagen an:,Schicken Sie Ihre Bewerbungsunterlagen an:
 candidate-search,candidate-search.availability.BY_ARRANGEMENT,Nach Vereinbarung,By agreement,À convenir,Previo accordo
 candidate-search,candidate-search.availability.IMMEDIATE,Ab sofort,Immediately,Tout de suite,Da subito
 candidate-search,candidate-search.availability.label,Verfügbarkeit,Availability,Disponibilité,Disponibilità

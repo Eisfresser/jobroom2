@@ -23,8 +23,7 @@ import {
     getSelectedCandidateProfile,
     getTotalCandidateCount
 } from '../state-management/state/candidate-search.state';
-import { Contact, Gender, Graduation } from '../../shared';
-import { Principal } from '../../shared/auth/principal.service';
+import { Contact, Gender, Graduation, Principal } from '../../shared';
 import {
     MailToOpenedAction,
     PhoneToOpenedAction,
@@ -33,6 +32,8 @@ import {
 import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import { TOOLTIP_AUTO_HIDE_TIMEOUT } from '../../app.constants';
 import { LanguageSkill } from '../../shared/job-advertisement/job-advertisement.model';
+import { CandidateAnonymousContactDialogService } from '../dialog/candidate-anonymous-contact-dialog.service';
+import { EmailContent } from '../services/mail.service';
 
 interface EnrichedJobExperience extends JobExperience {
     occupationLabels: {
@@ -47,6 +48,7 @@ interface EnrichedJobExperience extends JobExperience {
     styleUrls: ['./candidate-detail.component.scss']
 })
 export class CandidateDetailComponent implements OnInit {
+
     candidateProfile$: Observable<CandidateProfile>;
     jobExperiences$: Observable<Array<EnrichedJobExperience>>;
     jobCenter$: Observable<JobCenter>;
@@ -58,6 +60,7 @@ export class CandidateDetailComponent implements OnInit {
     preferredWorkCantons$: Observable<Array<string>>;
     contact$: Observable<Contact>;
     languageSkills$: Observable<LanguageSkill[]>;
+    emailContent$: Observable<EmailContent>;
 
     @ViewChild(NgbTooltip)
     clipboardTooltip: NgbTooltip;
@@ -70,7 +73,8 @@ export class CandidateDetailComponent implements OnInit {
                 private occupationPresentationService: OccupationPresentationService,
                 private translateService: TranslateService,
                 private principal: Principal,
-                private store: Store<CandidateSearchState>) {
+                private store: Store<CandidateSearchState>,
+                private anonymousContactDialogService: CandidateAnonymousContactDialogService) {
     }
 
     ngOnInit() {
@@ -84,7 +88,12 @@ export class CandidateDetailComponent implements OnInit {
                 : Observable.empty());
 
         this.candidateProtectedData$ = this.candidateProfile$
-            .flatMap((candidateProfile) => this.candidateService.findCandidate(candidateProfile));
+            .flatMap((candidateProfile) => this.candidateService.findCandidate(candidateProfile)
+                .map((candidate) => {
+                    this.buildEmailContent(candidate);
+                    return candidate;
+                })
+            );
 
         this.candidateProfiles$ = this.store.select(getCandidateProfileList);
         this.candidateProfileListTotalSize$ = this.store.select(getTotalCandidateCount);
@@ -174,6 +183,28 @@ export class CandidateDetailComponent implements OnInit {
         return Observable.of([]);
     }
 
+    private buildEmailContent(candidate: Candidate): void {
+        this.emailContent$ = this.candidateService.canSendAnonymousContactEmail(candidate)
+            .filter((canSendEmail) => canSendEmail)
+            .flatMap(() => {
+                const identity$ = Observable.fromPromise(this.principal.identity());
+                const translations$ = this.translateService.stream([
+                    'candidate-detail.candidate-anonymous-contact.subject',
+                    'candidate-detail.candidate-anonymous-contact.body']);
+                return Observable.combineLatest(identity$, translations$)
+                    .map(([identity, translations]) => {
+                        return {
+                            to: candidate.email,
+                            subject: translations['candidate-detail.candidate-anonymous-contact.subject'],
+                            body: translations['candidate-detail.candidate-anonymous-contact.body'],
+                            phone: identity ? identity.phone : null,
+                            email: identity ? identity.email : null,
+                            company: null
+                        };
+                    });
+            });
+    }
+
     printCandidateDetails(): void {
         this.store.dispatch(new PrintCandidateAction());
     }
@@ -240,5 +271,9 @@ export class CandidateDetailComponent implements OnInit {
         if (!this.copyToClipboardElementRef.nativeElement.contains(targetElement)) {
             this.clipboardTooltip.close();
         }
+    }
+
+    openAnonymousContactDialog(emailContent: EmailContent): void {
+        this.anonymousContactDialogService.open(emailContent);
     }
 }

@@ -18,6 +18,8 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import ch.admin.seco.jobroom.domain.User;
+import ch.admin.seco.jobroom.service.dto.AnonymousContactMessageDTO;
+import ch.admin.seco.jobroom.service.mapper.MailSenderDataMapper;
 
 /**
  * Service for sending emails.
@@ -30,6 +32,7 @@ public class MailService {
     private static final String USER = "user";
     private static final String BASE_URL = "baseUrl";
     private final Logger log = LoggerFactory.getLogger(MailService.class);
+
     private final JHipsterProperties jHipsterProperties;
 
     private final JavaMailSender javaMailSender;
@@ -38,13 +41,17 @@ public class MailService {
 
     private final SpringTemplateEngine templateEngine;
 
+    private final MailSenderDataMapper mailSenderDataMapper;
+
     public MailService(JHipsterProperties jHipsterProperties, JavaMailSender javaMailSender,
-        MessageSource messageSource, SpringTemplateEngine templateEngine) {
+        MessageSource messageSource, SpringTemplateEngine templateEngine,
+        MailSenderDataMapper mailSenderDataMapper) {
 
         this.jHipsterProperties = jHipsterProperties;
         this.javaMailSender = javaMailSender;
         this.messageSource = messageSource;
         this.templateEngine = templateEngine;
+        this.mailSenderDataMapper = mailSenderDataMapper;
     }
 
     @Async
@@ -99,5 +106,20 @@ public class MailService {
     public void sendPasswordResetMail(User user) {
         log.debug("Sending password reset email to '{}'", user.getEmail());
         sendEmailFromTemplate(user, "passwordResetEmail", "email.reset.title");
+    }
+
+    @Async
+    public void sendEmailFromTemplate(MailSenderData mailSenderData, String templateName) {
+        Context context = new Context();
+        context.setVariables(mailSenderData.getContext());
+        String content = templateEngine.process(templateName, context);
+        sendEmail(mailSenderData.getTo(), mailSenderData.getSubject(), content, false, true);
+    }
+
+    @Async
+    public void sendAnonymousContactMail(AnonymousContactMessageDTO anonymousContactMessage) {
+        log.debug("Sending anonymous contact email from to '{}'", anonymousContactMessage.getTo());
+        final MailSenderData mailSenderData = mailSenderDataMapper.fromAnonymousContactMessageDto(anonymousContactMessage);
+        sendEmailFromTemplate(mailSenderData, "anonymousContactEmail");
     }
 }

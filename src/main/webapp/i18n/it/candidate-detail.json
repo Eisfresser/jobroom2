@@ -23,6 +23,9 @@
             }
         },
         "back": "Torna ai risultati della ricerca ",
+        "candidate-anonymous-contact": "Kandidat/-in kontaktieren",
+        "candidate-anonymous-contact.subject": "Sehr geehrte(r) Kandidat(in)",
+        "candidate-anonymous-contact.body": "Mit Freude habe ich Ihr aussagekr\u00e4ftige Profil auf job-room.ch entdeckt.\\n Ich k\u00f6nnte mir vorstellen, dass Sie sehr gut in unser Team passen und w\u00fcrde mich sehr freuen, wenn Sie sich bei uns melden w\u00fcrden.",
         "candidate-copy-link": "Copia link",
         "candidate-print": "Stampa",
         "candidate-save": "Salva candidato",
@@ -87,6 +90,15 @@
                 "label": "Telefono"
             },
             "title": "Generalit\u00e0 / coordinate del candidato"
+        },
+        "anonymous-contact": {
+            "dismiss": "Interrompere",
+            "confirm": "Confirm",
+            "title": "Kandidat-/in kontaktieren",
+            "contact-via": "Bitte kontaktieren Sie mich per:",
+            "contact-via.phone": "Telefon",
+            "contact-via.email": "E-Mail",
+            "send-to": "Schicken Sie Ihre Bewerbungsunterlagen an:"
         }
     }
 }

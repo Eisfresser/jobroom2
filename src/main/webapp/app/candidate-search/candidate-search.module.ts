@@ -7,11 +7,11 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { candidateSearchReducer } from './state-management/reducers/candidate-search.reducers';
 import { CandidateSearchFilterComponent } from './candidate-search-filter/candidate-search-filter.component';
-import { JobroomSharedModule } from '../shared/shared.module';
+import { JobroomSharedModule } from '../shared';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LanguageSkillService } from './services/language-skill.service';
 import { CandidateSearchToolbarComponent } from './candidate-search-toolbar/candidate-search-toolbar.component';
-import { JobSearchSharedModule } from '../shared/job-search/job-search-shared.module';
+import { JobSearchSharedModule } from '../shared/job-search';
 import { CandidateDetailComponent } from './candidate-detail/candidate-detail.component';
 import { CandidateService } from './services/candidate.service';
 import { DetailsPagePaginationEffects } from '../shared/components/details-page-pagination/state-management/effects/details-page-pagination.effects';
@@ -24,6 +24,9 @@ import { CantonService } from './services/canton.service';
 import { RouterEffects } from './state-management/effects/router.effects';
 import { UserTrackingEffects } from '../shared/state-management/effects/user-tracking.effects';
 import { UserTrackingService } from '../shared/user-tracking/user-tracking.service';
+import { CandidateAnonymousContactDialogService } from './dialog/candidate-anonymous-contact-dialog.service';
+import { CandidateAnonymousContactDialogComponent } from './dialog/candidate-anonymous-contact-dialog.component';
+import { MailService } from './services/mail.service';
 
 @NgModule({
     imports: [
@@ -48,13 +51,19 @@ import { UserTrackingService } from '../shared/user-tracking/user-tracking.servi
         CandidateSearchComponent,
         CandidateSearchFilterComponent,
         CandidateSearchToolbarComponent,
-        CandidateDetailComponent
+        CandidateDetailComponent,
+        CandidateAnonymousContactDialogComponent
     ],
     providers: [
         LanguageSkillService,
         CandidateService,
         CantonService,
-        UserTrackingService
+        UserTrackingService,
+        CandidateAnonymousContactDialogService,
+        MailService
+    ],
+    entryComponents: [
+        CandidateAnonymousContactDialogComponent
     ]
 })
 export class CandidateSearchModule {

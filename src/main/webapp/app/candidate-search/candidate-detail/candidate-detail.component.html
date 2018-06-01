@@ -193,6 +193,12 @@
                     <!--<i class="fa fa-star-o" aria-hidden="true"></i> {{ 'candidate-detail.candidate-save' | translate }}-->
                     <!--</a>-->
                     <!--</li>-->
+                    <li class="nav-item" *ngIf="emailContent$ | async as emailContent">
+                        <a class="nav-link" (click)="openAnonymousContactDialog(emailContent)">
+                            <i class="fa fa-envelope" aria-hidden="true"></i>
+                            {{ 'candidate-detail.candidate-anonymous-contact' | translate }}
+                        </a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link" #copyToClipboard ngxClipboard [cbContent]="getCandidateUrl()" (cbOnSuccess)="onCopyLink($event)"
                             [ngbTooltip]="'global.messages.tooltip.link-copy.success' | translate" triggers="manual">
@@ -201,7 +207,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{'mailto:?body=' + getEncodedCandidateUrl()}}" (click)="onSendLink()">
-                            <i class="fa fa-envelope"></i> {{ 'candidate-detail.candidate-send-link' | translate }}
+                            <i class="fa fa-share"></i> {{ 'candidate-detail.candidate-send-link' | translate }}
                         </a>
                     </li>
                     <li class="nav-item">
