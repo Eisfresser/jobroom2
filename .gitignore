@@ -145,3 +145,8 @@ Desktop.ini
 ######################
 .eslintcache
 yarn.lock
+
+######################
+# H2
+######################
+.h2.server.properties

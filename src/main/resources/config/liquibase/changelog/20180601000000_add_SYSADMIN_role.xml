@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <!--
+        Add SYSADMIN role
+    -->
+    <changeSet id="20180601-1" author="miwr">
+        <insert tableName="jhi_authority">
+            <column name="name" value="ROLE_SYSADMIN"/>
+        </insert>
+        <insert tableName="jhi_user_authority">
+            <column name="user_id" value="8d9b707a-ddf4-11e5-b86d-9a79f06e9478"/>
+            <column name="authority_name" value="ROLE_SYSADMIN"/>
+        </insert>
+        <insert tableName="jhi_user_authority">
+            <column name="user_id" value="8d9b77f0-ddf4-11e5-b86d-9a79f06e9478"/>
+            <column name="authority_name" value="ROLE_SYSADMIN"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>
