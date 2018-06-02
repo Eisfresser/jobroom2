@@ -1,5 +1,7 @@
 package ch.admin.seco.jobroom.config;
 
+import static ch.admin.seco.jobroom.repository.UserRepository.USERS_BY_LOGIN_CACHE;
+
 import javax.annotation.PreDestroy;
 
 import com.hazelcast.config.Config;
@@ -86,7 +88,7 @@ public class CacheConfiguration {
             // In development, everything goes through 127.0.0.1, with a different port
             if (env.acceptsProfiles(JHipsterConstants.SPRING_PROFILE_DEVELOPMENT)) {
                 log.debug("Application is running with the \"dev\" profile, Hazelcast " +
-                    "cluster will only work with localhost instances");
+                        "cluster will only work with localhost instances");
 
                 System.setProperty("hazelcast.local.localAddress", "127.0.0.1");
                 config.getNetworkConfig().setPort(serverProperties.getPort() + 5701);
@@ -107,6 +109,7 @@ public class CacheConfiguration {
             }
         }
         config.getMapConfigs().put("default", initializeDefaultMapConfig());
+        config.getMapConfigs().put(USERS_BY_LOGIN_CACHE, initializeUserMapConfig());
 
         // Full reference is available at: http://docs.hazelcast.org/docs/management-center/3.9/manual/html/Deploying_and_Starting.html
         config.setManagementCenterConfig(initializeDefaultManagementCenterConfig(jHipsterProperties));
@@ -149,12 +152,20 @@ public class CacheConfiguration {
          */
         mapConfig.setMaxSizeConfig(new MaxSizeConfig(0, MaxSizeConfig.MaxSizePolicy.USED_HEAP_SIZE));
 
+        mapConfig.setTimeToLiveSeconds(3600);
+
         return mapConfig;
     }
 
     private MapConfig initializeDomainMapConfig(JHipsterProperties jHipsterProperties) {
         MapConfig mapConfig = new MapConfig();
         mapConfig.setTimeToLiveSeconds(jHipsterProperties.getCache().getHazelcast().getTimeToLiveSeconds());
+        return mapConfig;
+    }
+
+    private MapConfig initializeUserMapConfig() {
+        MapConfig mapConfig = new MapConfig();
+        mapConfig.setTimeToLiveSeconds(60);
         return mapConfig;
     }
 }

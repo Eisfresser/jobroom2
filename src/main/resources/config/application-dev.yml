@@ -18,6 +18,7 @@ logging:
         ROOT: DEBUG
         io.github.jhipster: DEBUG
         ch.admin.seco.jobroom: DEBUG
+        com.netflix.discovery: OFF
 
 eureka:
     instance:
@@ -121,7 +122,7 @@ jhipster:
         version: V_1_1 # To use HTTP/2 you will need SSL support (see above the "server.ssl" configuration)
     cache: # Cache configuration
         hazelcast: # Hazelcast distributed cache
-            time-to-live-seconds: 3600
+            time-to-live-seconds: 20
             backup-count: 1
             management-center: # Full reference is available at: http://docs.hazelcast.org/docs/management-center/3.9/manual/html/Deploying_and_Starting.html
                 enabled: false

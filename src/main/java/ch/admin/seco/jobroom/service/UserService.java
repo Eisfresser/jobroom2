@@ -45,6 +45,7 @@ import ch.admin.seco.jobroom.web.rest.errors.InvalidPasswordException;
 @Transactional
 public class UserService {
 
+    private static final String USERS_CACHE = UserRepository.USERS_BY_LOGIN_CACHE;
     private final Logger log = LoggerFactory.getLogger(UserService.class);
 
     private final UserRepository userRepository;
@@ -64,13 +65,13 @@ public class UserService {
     private final UserSearchService userSearchService;
 
     public UserService(UserRepository userRepository,
-        PasswordEncoder passwordEncoder,
-        UserSearchRepository userSearchRepository,
-        OrganizationRepository organizationRepository,
-        AuthorityRepository authorityRepository,
-        CacheManager cacheManager,
-        UserDocumentMapper userDocumentMapper,
-        UserSearchService userSearchService) {
+            PasswordEncoder passwordEncoder,
+            UserSearchRepository userSearchRepository,
+            OrganizationRepository organizationRepository,
+            AuthorityRepository authorityRepository,
+            CacheManager cacheManager,
+            UserDocumentMapper userDocumentMapper,
+            UserSearchService userSearchService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.userSearchRepository = userSearchRepository;
@@ -84,37 +85,40 @@ public class UserService {
     public Optional<User> activateRegistration(String key) {
         log.debug("Activating user for activation key {}", key);
         return userRepository.findOneByActivationKey(key)
-            .map(user -> {
-                // activate given user for the registration key.
-                user.setActivated(true);
-                user.setActivationKey(null);
-                userSearchRepository.save(userDocumentMapper.userToUserDocument(user));
-                log.debug("Activated user: {}", user);
-                return user;
-            });
+                .map(user -> {
+                    // activate given user for the registration key.
+                    user.setActivated(true);
+                    user.setActivationKey(null);
+                    userSearchRepository.save(userDocumentMapper.userToUserDocument(user));
+                    cacheManager.getCache(USERS_CACHE).evict(user.getLogin());
+                    log.debug("Activated user: {}", user);
+                    return user;
+                });
     }
 
     public Optional<User> completePasswordReset(String newPassword, String key) {
         log.debug("Reset user password for reset key {}", key);
 
         return userRepository.findOneByResetKey(key)
-            .filter(user -> user.getResetDate().isAfter(Instant.now().minusSeconds(86400)))
-            .map(user -> {
-                user.setPassword(passwordEncoder.encode(newPassword));
-                user.setResetKey(null);
-                user.setResetDate(null);
-                return user;
-            });
+                .filter(user -> user.getResetDate().isAfter(Instant.now().minusSeconds(86400)))
+                .map(user -> {
+                    user.setPassword(passwordEncoder.encode(newPassword));
+                    user.setResetKey(null);
+                    user.setResetDate(null);
+                    cacheManager.getCache(USERS_CACHE).evict(user.getLogin());
+                    return user;
+                });
     }
 
     public Optional<User> requestPasswordReset(String login) {
         return userRepository.findOneByLogin(login)
-            .filter(User::getActivated)
-            .map(user -> {
-                user.setResetKey(RandomUtil.generateResetKey());
-                user.setResetDate(Instant.now());
-                return user;
-            });
+                .filter(User::getActivated)
+                .map(user -> {
+                    user.setResetKey(RandomUtil.generateResetKey());
+                    user.setResetDate(Instant.now());
+                    cacheManager.getCache(USERS_CACHE).evict(user.getLogin());
+                    return user;
+                });
     }
 
     public User registerUser(UserDTO userDTO, String password) {
@@ -141,7 +145,7 @@ public class UserService {
         newUser.setAuthorities(authorities);
         if (nonNull(userDTO.getOrganizationId())) {
             organizationRepository.findByExternalId(userDTO.getOrganizationId())
-                .ifPresent(newUser::setOrganization);
+                    .ifPresent(newUser::setOrganization);
         }
         userRepository.save(newUser);
         userSearchRepository.save(userDocumentMapper.userToUserDocument(newUser));
@@ -165,10 +169,10 @@ public class UserService {
         }
         if (userDTO.getAuthorities() != null) {
             Set<Authority> authorities = userDTO.getAuthorities().stream()
-                .map(authorityRepository::findById)
-                .filter(Optional::isPresent)
-                .map(Optional::get)
-                .collect(Collectors.toSet());
+                    .map(authorityRepository::findById)
+                    .filter(Optional::isPresent)
+                    .map(Optional::get)
+                    .collect(Collectors.toSet());
             user.setAuthorities(authorities);
         }
         String encryptedPassword = passwordEncoder.encode(RandomUtil.generatePassword());
@@ -178,7 +182,7 @@ public class UserService {
         user.setActivated(true);
         if (nonNull(userDTO.getOrganizationId())) {
             organizationRepository.findByExternalId(userDTO.getOrganizationId())
-                .ifPresent(user::setOrganization);
+                    .ifPresent(user::setOrganization);
         }
         userRepository.save(user);
         userSearchRepository.save(userDocumentMapper.userToUserDocument(user));
@@ -199,18 +203,19 @@ public class UserService {
      */
     public void updateUser(String firstName, String lastName, String email, String phone, Gender gender, String langKey, String imageUrl) {
         SecurityUtils.getCurrentUserLogin()
-            .flatMap(userRepository::findOneByLogin)
-            .ifPresent(user -> {
-                user.setFirstName(firstName);
-                user.setLastName(lastName);
-                user.setEmail(email);
-                user.setPhone(phone);
-                user.setGender(gender);
-                user.setLangKey(langKey);
-                user.setImageUrl(imageUrl);
-                userSearchRepository.save(userDocumentMapper.userToUserDocument(user));
-                log.debug("Changed Information for User: {}", user);
-            });
+                .flatMap(userRepository::findOneByLogin)
+                .ifPresent(user -> {
+                    user.setFirstName(firstName);
+                    user.setLastName(lastName);
+                    user.setEmail(email);
+                    user.setPhone(phone);
+                    user.setGender(gender);
+                    user.setLangKey(langKey);
+                    user.setImageUrl(imageUrl);
+                    userSearchRepository.save(userDocumentMapper.userToUserDocument(user));
+                    cacheManager.getCache(USERS_CACHE).evict(user.getLogin());
+                    log.debug("Changed Information for User: {}", user);
+                });
     }
 
     /**
@@ -221,40 +226,44 @@ public class UserService {
      */
     public Optional<UserDTO> updateUser(UserDTO userDTO) {
         return Optional.of(userRepository
-            .findById(userDTO.getId()))
-            .filter(Optional::isPresent)
-            .map(Optional::get)
-            .map(user -> {
-                user.setLogin(userDTO.getLogin());
-                user.setFirstName(userDTO.getFirstName());
-                user.setLastName(userDTO.getLastName());
-                user.setEmail(userDTO.getEmail());
-                user.setPhone(userDTO.getPhone());
-                user.setGender(userDTO.getGender());
-                user.setImageUrl(userDTO.getImageUrl());
-                user.setActivated(userDTO.isActivated());
-                user.setLangKey(userDTO.getLangKey());
-                Set<Authority> managedAuthorities = user.getAuthorities();
-                managedAuthorities.clear();
-                managedAuthorities.addAll(
-                    userDTO.getAuthorities().stream()
-                        .map(authorityRepository::getOne)
-                        .collect(Collectors.toSet()));
-                if (nonNull(userDTO.getOrganizationId())) {
-                    organizationRepository.findByExternalId(userDTO.getOrganizationId())
-                        .ifPresent(user::setOrganization);
-                }
-                userSearchRepository.save(userDocumentMapper.userToUserDocument(user));
-                log.debug("Changed Information for User: {}", user);
-                return user;
-            })
-            .map(UserDTO::new);
+                .findById(userDTO.getId()))
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .map(user -> {
+                    user.setLogin(userDTO.getLogin());
+                    user.setFirstName(userDTO.getFirstName());
+                    user.setLastName(userDTO.getLastName());
+                    user.setEmail(userDTO.getEmail());
+                    user.setPhone(userDTO.getPhone());
+                    user.setGender(userDTO.getGender());
+                    user.setImageUrl(userDTO.getImageUrl());
+                    user.setActivated(userDTO.isActivated());
+                    user.setLangKey(userDTO.getLangKey());
+                    Set<Authority> managedAuthorities = user.getAuthorities();
+                    managedAuthorities.clear();
+                    managedAuthorities.addAll(
+                            userDTO.getAuthorities().stream()
+                                    .map(authorityRepository::getOne)
+                                    .collect(Collectors.toSet()));
+                    if (nonNull(userDTO.getOrganizationId())) {
+                        organizationRepository.findByExternalId(userDTO.getOrganizationId())
+                                .ifPresent(user::setOrganization);
+                    } else {
+                        user.setOrganization(null);
+                    }
+                    userSearchRepository.save(userDocumentMapper.userToUserDocument(user));
+                    cacheManager.getCache(USERS_CACHE).evict(user.getLogin());
+                    log.debug("Changed Information for User: {}", user);
+                    return user;
+                })
+                .map(UserDTO::new);
     }
 
     public void deleteUser(String login) {
         userRepository.findOneByLogin(login).ifPresent(user -> {
             userRepository.delete(user);
             userSearchRepository.delete(userDocumentMapper.userToUserDocument(user));
+            cacheManager.getCache(USERS_CACHE).evict(login);
             log.debug("Deleted User: {}", user);
         });
     }
@@ -265,6 +274,7 @@ public class UserService {
                 .ifPresent(user -> {
                     String encryptedPassword = passwordEncoder.encode(password);
                     user.setPassword(encryptedPassword);
+                    cacheManager.getCache(UserRepository.USERS_BY_LOGIN_CACHE).evict(user.getLogin());
                     log.debug("Changed password for User: {}", user);
                 });
     }
@@ -272,6 +282,7 @@ public class UserService {
     public void updatePassword(String login, String encryptedPassword) {
         userRepository.findOneByLogin(login).ifPresent(user -> {
             user.setPassword(encryptedPassword);
+            cacheManager.getCache(USERS_CACHE).evict(user.getLogin());
             log.debug("Changed password for User: {}", user);
         });
     }
@@ -283,7 +294,7 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public Optional<User> getUserWithAuthoritiesByLogin(String login) {
-        return userRepository.findOneWithAuthoritiesByLogin(login);
+        return userRepository.findOneWithAuthoritiesByLoginFromCache(login);
     }
 
     @Transactional(readOnly = true)
@@ -293,7 +304,7 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public Optional<User> getUserWithAuthorities() {
-        return SecurityUtils.getCurrentUserLogin().flatMap(userRepository::findOneWithAuthoritiesByLogin);
+        return SecurityUtils.getCurrentUserLogin().flatMap(userRepository::findOneWithAuthoritiesByLoginFromCache);
     }
 
     /**
@@ -308,6 +319,7 @@ public class UserService {
             log.debug("Deleting not activated user {}", user.getLogin());
             userRepository.delete(user);
             userSearchRepository.delete(userDocumentMapper.userToUserDocument(user));
+            cacheManager.getCache(USERS_CACHE).evict(user.getLogin());
         }
     }
 
@@ -330,4 +342,5 @@ public class UserService {
             throw new InvalidPasswordException();
         }
     }
+
 }
