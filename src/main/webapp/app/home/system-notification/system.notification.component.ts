@@ -4,7 +4,7 @@ import { JhiLanguageService } from 'ng-jhipster';
 
 import { Store } from '@ngrx/store';
 import { SystemNotificationState } from '../state-management/state/system-notification-state';
-import { GetActiveSystemNotificationsAction } from '../state-management';
+import { HideSystemNotificationAction } from '../state-management';
 
 @Component({
     selector: 'jr2-system-notification',
@@ -23,7 +23,6 @@ export class SystemNotificationComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.store.dispatch(new GetActiveSystemNotificationsAction());
     }
 
     getCurrentLanguageCode(activeSystemNotification: SystemNotification) {
@@ -40,5 +39,9 @@ export class SystemNotificationComponent implements OnInit {
             return activeSystemNotification.text_en;
         }
         return activeSystemNotification.text_de;
+    }
+
+    close(systemNotificationId: number): void {
+        this.store.dispatch(new HideSystemNotificationAction(systemNotificationId));
     }
 }

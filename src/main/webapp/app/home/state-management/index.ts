@@ -13,7 +13,12 @@ import {
     SelectCompanyTabAction,
     SelectToolbarItemAction
 } from './actions/layout.actions';
-import { GetActiveSystemNotificationsAction, GetActiveSystemNotificationsFailedAction, GetActiveSystemNotificationsSuccessAction } from './actions/system-notification-actions';
+import {
+    GetActiveSystemNotificationsAction,
+    GetActiveSystemNotificationsFailedAction,
+    GetActiveSystemNotificationsSuccessAction,
+    HideSystemNotificationAction
+} from './actions/system-notification-actions';
 export { SystemNotificationState } from './state/system-notification-state';
 
 export * from './actions/job-search-tool.actions';
@@ -44,4 +49,5 @@ export type Actions =
     | SelectAgencyTabAction
     | GetActiveSystemNotificationsAction
     | GetActiveSystemNotificationsSuccessAction
-    | GetActiveSystemNotificationsFailedAction;
+    | GetActiveSystemNotificationsFailedAction
+    | HideSystemNotificationAction;

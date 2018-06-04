@@ -23,6 +23,7 @@ export const getSystemNotificationsEntities = createSelector(getSystemNotificati
 export const getActiveSystemNotifications = createSelector(
     getSystemNotificationsEntities,
     (entities) => {
-        return Object.keys(entities).map((id) => entities[id]);
+        return Object.keys(entities)
+            .map((id) => entities[id]);
     }
-)
+);

@@ -1,4 +1,4 @@
-import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDateStruct, NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
 
 export class DateUtils {
@@ -16,20 +16,33 @@ export class DateUtils {
         return new Date(dateStruct.year, dateStruct.month - 1, dateStruct.day);
     }
 
-    static dateStringToToNgbDateStruct(date: string): NgbDateStruct {
+    static dateStringToNgbDateStruct(date: string): NgbDateStruct {
         if (!date) {
             return null;
         }
 
-        if (!/\d{4}-\d{2}-\d{2}/.test(date)) {
+        const { year, month, day } = DateUtils.dateStringToNgbDateTimeStruct(date);
+        return { year, month, day };
+    }
+
+    static dateStringToNgbDateTimeStruct(date: string): NgbDateStruct & NgbTimeStruct {
+        if (!date) {
+            return null;
+        }
+
+        const parsedDate = moment(date);
+
+        if (!parsedDate.isValid()) {
             throw 'Wrong date format';
         }
 
-        const [year, month, day] = date.split('-');
         return {
-            year: +year,
-            month: +month,
-            day: +day
+            year: parsedDate.year(),
+            month: parsedDate.month() + 1,
+            day: parsedDate.date(),
+            hour: parsedDate.hour(),
+            minute: parsedDate.minute(),
+            second: parsedDate.second()
         };
     }
 

@@ -53,13 +53,13 @@ describe('DateUtils', () => {
         });
     });
 
-    describe('dateStringToToNgbDateStruct', () => {
+    describe('dateStringToNgbDateStruct', () => {
         it('should map date string To NgbDateStruct', () => {
             // GIVEN
             const date = '2017-12-19';
 
             // WHEN
-            const result = DateUtils.dateStringToToNgbDateStruct(date);
+            const result = DateUtils.dateStringToNgbDateStruct(date);
 
             // THEN
             expect(result).toEqual({
@@ -74,7 +74,7 @@ describe('DateUtils', () => {
             const date = '';
 
             // WHEN
-            const result = DateUtils.dateStringToToNgbDateStruct(date);
+            const result = DateUtils.dateStringToNgbDateStruct(date);
 
             // THEN
             expect(result).toBeNull();
@@ -85,7 +85,49 @@ describe('DateUtils', () => {
             const date = 'sfaw32234-4324-2dd34';
 
             // WHEN
-            const result = () => DateUtils.dateStringToToNgbDateStruct(date);
+            const result = () => DateUtils.dateStringToNgbDateStruct(date);
+
+            // THEN
+            expect(result).toThrow();
+        });
+    });
+
+    describe('dateStringToNgbDateTimeStruct', () => {
+        it('should map date string To NgbDateStruct & NgbTimeStruct', () => {
+            // GIVEN
+            const date = '2017-12-19T12:13:14';
+
+            // WHEN
+            const result = DateUtils.dateStringToNgbDateTimeStruct(date);
+
+            // THEN
+            expect(result).toEqual({
+                year: 2017,
+                month: 12,
+                day: 19,
+                hour: 12,
+                minute: 13,
+                second: 14
+            })
+        });
+
+        it('should not map empty date string To NgbDateStruct & NgbTimeStruct', () => {
+            // GIVEN
+            const date = '';
+
+            // WHEN
+            const result = DateUtils.dateStringToNgbDateTimeStruct(date);
+
+            // THEN
+            expect(result).toBeNull();
+        });
+
+        it('should throw error for wrong date format', () => {
+            // GIVEN
+            const date = 'sfaw32234-4324-2dd34';
+
+            // WHEN
+            const result = () => DateUtils.dateStringToNgbDateTimeStruct(date);
 
             // THEN
             expect(result).toThrow();

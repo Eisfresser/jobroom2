@@ -65,11 +65,11 @@ export class JobPublicationMapper {
             workload: [jobAdvertisement.jobContent.employment.workloadPercentageMin, jobAdvertisement.jobContent.employment.workloadPercentageMax],
             employmentStartDate: {
                 immediate: jobAdvertisement.jobContent.employment.immediately,
-                date: DateUtils.dateStringToToNgbDateStruct(jobAdvertisement.jobContent.employment.startDate)
+                date: DateUtils.dateStringToNgbDateStruct(jobAdvertisement.jobContent.employment.startDate)
             },
             employmentEndDate: {
                 permanent: jobAdvertisement.jobContent.employment.permanent,
-                date: DateUtils.dateStringToToNgbDateStruct(jobAdvertisement.jobContent.employment.endDate)
+                date: DateUtils.dateStringToNgbDateStruct(jobAdvertisement.jobContent.employment.endDate)
             },
             shortEmployment: jobAdvertisement.jobContent.employment.shortEmployment,
             workForms: JobPublicationMapper.mapWorkFormsToBooleans(jobAdvertisement.jobContent.employment.workForms)

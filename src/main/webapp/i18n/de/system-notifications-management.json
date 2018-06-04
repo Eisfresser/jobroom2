@@ -5,6 +5,7 @@
     "systemNotificationsManagement": {
         "title": "Titel",
         "type": "Typ",
+        "date-placeholder": "TT.MM.JJJJ",
         "startDate": "Von",
         "endDate": "Bis",
         "status": "Status",

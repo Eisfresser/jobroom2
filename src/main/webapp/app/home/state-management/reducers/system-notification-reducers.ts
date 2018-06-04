@@ -1,5 +1,5 @@
 import { initialState, SystemNotificationState } from '../state/system-notification-state';
-import { GET_ACTIVE_SYSTEMNOTIFICATIONS_FAILED, GET_ACTIVE_SYSTEMNOTIFICATIONS_SUCCESS } from '../actions/system-notification-actions';
+import { GET_ACTIVE_SYSTEMNOTIFICATIONS_FAILED, GET_ACTIVE_SYSTEMNOTIFICATIONS_SUCCESS, HIDE_SYSTEMNOTIFICATION } from '../actions/system-notification-actions';
 import { SystemNotification } from '../../system-notification/system.notification.model';
 import { Actions } from '../index';
 
@@ -39,6 +39,14 @@ export function systemNotificationReducer(state = initialState, action: Actions)
             };
             break
         }
+
+        case HIDE_SYSTEMNOTIFICATION: {
+            const entities = Object.assign({}, state.entities);
+            delete entities[action.payload];
+            newState = Object.assign({}, state, { entities });
+            break;
+        }
+
         default:
             newState = state;
     }

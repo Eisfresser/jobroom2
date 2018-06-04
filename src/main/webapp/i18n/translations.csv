@@ -1031,6 +1031,7 @@ settings,settings.title,Einstellungen für Benutzer [<b>{{username}}</b>],User s
 system-notifications-management,system-notifications-management.title,System Mitteilungen,System notifications,notifications système,notifiche di sistema
 system-notifications-management,systemNotificationsManagement.title,Titel,Title,Title,Title
 system-notifications-management,systemNotificationsManagement.type,Typ,Type,Type,Type
+system-notifications-management,systemNotificationsManagement.date-placeholder,TT.MM.JJJJ,DD.MM.YYYY,JJ.MM.AAAA,GG.MM.AAAA
 system-notifications-management,systemNotificationsManagement.startDate,Von,From,From,From
 system-notifications-management,systemNotificationsManagement.endDate,Bis,To,To,To
 system-notifications-management,systemNotificationsManagement.status,Status,Status,Status,Status
