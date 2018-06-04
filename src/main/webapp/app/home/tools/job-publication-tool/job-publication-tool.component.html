@@ -624,13 +624,17 @@
                     <legend>{{ 'home.tools.job-publication.publication.title' | translate }}</legend>
 
                     <div class="checkbox">
-                    <input id="jr" type="checkbox" formControlName="publicDisplay"/>
-                    <label for="jr">
-                        <a href="{{ 'home.tools.job-publication.publication.jobroom.url' | translate }}" target="_blank">{{ 'home.tools.job-publication.publication.jobroom' | translate }}</a>
-                        &nbsp&nbsp{{ 'home.tools.job-publication.publication.jobroom.and' | translate }}&nbsp&nbsp
-                        <a href="{{ 'home.tools.job-publication.publication.jobdesk.url' | translate }}" target="_blank">{{ 'home.tools.job-publication.publication.jobdesk' | translate }}</a>
-                    </label>
-        </div>
+                        <input id="jr" type="checkbox" formControlName="publicDisplay"/>
+                        <label for="jr">
+                            <a href="{{ 'home.tools.job-publication.publication.jobroom.url' | translate }}" target="_blank">
+                                {{ 'home.tools.job-publication.publication.jobroom' | translate }}
+                            </a>
+                            {{ 'home.tools.job-publication.publication.jobroom.and' | translate }}
+                            <a href="{{ 'home.tools.job-publication.publication.jobdesk.url' | translate }}" target="_blank">
+                                {{ 'home.tools.job-publication.publication.jobdesk' | translate }}
+                            </a>
+                        </label>
+                    </div>
 
                     <div class="checkbox">
                         <input id="eu" type="checkbox" formControlName="eures"/>

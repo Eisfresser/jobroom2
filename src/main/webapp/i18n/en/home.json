@@ -136,8 +136,10 @@
                 "publication": {
                     "eures": "EURES Portal",
                     "eures.url": "https://ec.europa.eu/eures/public/en/",
-                    "jobroom": " Job-Room Website",
-                    "jobroom.url": "http://www.job-room.ch",
+                    "jobroom": "Job-Room",
+                    "jobroom.and": "and",
+                    "jobroom.url": "http://www.job-desk.ch",
+                    "jobdesk": "Job-Desk",
                     "title": "Publication media",
                     "public": {
                         "label": "Job-Room public website"
