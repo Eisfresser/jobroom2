@@ -138,8 +138,9 @@
                     "eures.url": "https://ec.europa.eu/eures/public/it/",
                     "jobroom": "Sito Job-Room",
                     "jobroom.and": "e",
-                    "jobroom.url": "http://www.job-desk.ch",
+                    "jobroom.url": "https://www.job-room.ch",
                     "jobdesk": "Job-Desk",
+                    "jobdesk.url": "http://www.job-desk.ch",
                     "title": "Mezzi di pubblicazione",
                     "public": {
                         "label": "Job-Room public website"

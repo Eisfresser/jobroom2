@@ -689,9 +689,9 @@ home,home.tools.job-publication.publication.eures,EURES Portal,EURES Portal,Port
 home,home.tools.job-publication.publication.eures.url,https://ec.europa.eu/eures/public/de/,https://ec.europa.eu/eures/public/en/,https://ec.europa.eu/eures/public/fr/,https://ec.europa.eu/eures/public/it/
 home,home.tools.job-publication.publication.jobroom,Job-Room,Job-Room,Job-Room,Sito Job-Room
 home,home.tools.job-publication.publication.jobroom.and,und,and,et,e
-home,home.tools.job-publication.publication.jobroom.url,http://www.job-room.ch,http://www.job-room.ch,http://www.job-room.ch,http://www.job-room.ch
+home,home.tools.job-publication.publication.jobroom.url,https://www.job-room.ch,https://www.job-room.ch,https://www.job-room.ch,https://www.job-room.ch
 home,home.tools.job-publication.publication.jobdesk,Job-Desk,Job-Desk,Job-Desk,Job-Desk
-home,home.tools.job-publication.publication.jobroom.url,http://www.job-desk.ch,http://www.job-desk.ch,http://www.job-desk.ch,http://www.job-desk.ch
+home,home.tools.job-publication.publication.jobdesk.url,http://www.job-desk.ch,http://www.job-desk.ch,http://www.job-desk.ch,http://www.job-desk.ch
 home,home.tools.job-publication.publication.title,Publikationsmedien,Publication media,Moyens de publication,Mezzi di pubblicazione
 home,home.tools.job-publication.publication.public.label,Job-Room public website,Job-Room public website,Job-Room public website,Job-Room public website
 home,home.tools.job-publication.publication.restricted.label,Job-Room restricted area,Job-Room restricted area,Job-Room restricted area,Job-Room restricted area
