@@ -12,9 +12,14 @@
                         file="config/liquibase/authorities.csv"
                         separator=";"
                         tableName="jhi_authority"/>
-        <loadUpdateData primaryKey="user_id, authority_name" encoding="UTF-8"
-                        file="config/liquibase/users_authorities.csv"
-                        separator=";"
-                        tableName="jhi_user_authority"/>
+
+        <insert tableName="jhi_user_authority">
+            <column name="user_id" value="8d9b707a-ddf4-11e5-b86d-9a79f06e9478"/>
+            <column name="authority_name" value="ROLE_SYSADMIN"/>
+        </insert>
+        <insert tableName="jhi_user_authority">
+            <column name="user_id" value="8d9b77f0-ddf4-11e5-b86d-9a79f06e9478"/>
+            <column name="authority_name" value="ROLE_SYSADMIN"/>
+        </insert>
     </changeSet>
 </databaseChangeLog>
