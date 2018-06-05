@@ -31,12 +31,14 @@ import { createJobAdvertisement } from '../../../shared/job-publication/utils';
 import { JobAdvertisementService } from '../../../../../../../main/webapp/app/shared/job-advertisement/job-advertisement.service';
 import { UserLoginAction } from '../../../../../../../main/webapp/app/shared/state-management/actions/core.actions';
 import { User } from '../../../../../../../main/webapp/app/shared';
+import { OccupationPresentationService } from '../../../../../../../main/webapp/app/shared/reference-service/occupation-presentation.service';
 
 describe('JobSearchEffects', () => {
     let effects: JobSearchEffects;
     let actions$: Observable<any>;
     let store: Store<JobSearchState>;
 
+    const mockOccupationPresentationService = jasmine.createSpyObj('occupationPresentationService', ['findOccupationLabelsByCode']);
     const mockJobAdvertisementService = jasmine.createSpyObj('mockJobAdvertisementService', ['search']);
     const mockRouter = new MockRouter();
 
@@ -51,7 +53,8 @@ describe('JobSearchEffects', () => {
                 { provide: JobAdvertisementService, useValue: mockJobAdvertisementService },
                 { provide: Router, useValue: mockRouter },
                 { provide: JOB_SEARCH_SCHEDULER, useFactory: getTestScheduler },
-                { provide: JOB_SEARCH_DEBOUNCE, useValue: 30 }
+                { provide: JOB_SEARCH_DEBOUNCE, useValue: 30 },
+                { provide: OccupationPresentationService, useValue: mockOccupationPresentationService }
             ],
         });
 

@@ -21,7 +21,8 @@ import {
     NextPageLoadedAction,
     ShowJobListErrorAction,
     TOOLBAR_CHANGED,
-    ToolbarChangedAction
+    ToolbarChangedAction,
+    UpdateOccupationTranslationAction
 } from '../actions/job-search.actions';
 import { Scheduler } from 'rxjs/Scheduler';
 import { async } from 'rxjs/scheduler/async';
@@ -38,10 +39,12 @@ import {
 import { JobAdvertisementService } from '../../../shared/job-advertisement/job-advertisement.service';
 import { JobAdvertisement } from '../../../shared/job-advertisement/job-advertisement.model';
 import { JobAdvertisementSearchRequest } from '../../../shared/job-advertisement/job-advertisement-search-request';
-import { USER_LOGIN, UserLoginAction } from '../../../shared/state-management/actions/core.actions';
-
+import { USER_LOGIN, UserLoginAction, LANGUAGE_CHANGED, LanguageChangedAction } from '../../../shared/state-management/actions/core.actions';
 export const JOB_SEARCH_DEBOUNCE = new InjectionToken<number>('JOB_SEARCH_DEBOUNCE');
 export const JOB_SEARCH_SCHEDULER = new InjectionToken<Scheduler>('JOB_SEARCH_SCHEDULER');
+import { getSearchQuery } from '../state/job-search.state';
+import { TypeaheadMultiselectModel } from '../../../shared/input-components/typeahead/typeahead-multiselect-model';
+import { OccupationPresentationService } from '../../../shared/reference-service/occupation-presentation.service';
 
 type LoadJobTriggerAction =
     ToolbarChangedAction
@@ -49,6 +52,7 @@ type LoadJobTriggerAction =
     | JobSearchToolChangedAction;
 
 const JOB_DETAIL_FEATURE = 'job-detail';
+const OCCUPATION_CLASSIFICATION = 'classification';
 
 @Injectable()
 export class JobSearchEffects {
@@ -119,6 +123,13 @@ export class JobSearchEffects {
             this.router.navigate(['/job-detail', action.payload.item.id]);
         });
 
+    @Effect()
+    languageChange$: Observable<Action> = this.actions$
+        .ofType(LANGUAGE_CHANGED)
+        .withLatestFrom(this.store.select(getSearchQuery))
+        .filter(([action, state]) => !!state.baseQuery)
+        .switchMap(([action, state]) => this.mapActionAndStateToUpdateOccupationTranslationAction(action, state));
+
     constructor(private actions$: Actions,
                 private jobSearchService: JobAdvertisementService,
                 private store: Store<JobSearchState>,
@@ -128,7 +139,26 @@ export class JobSearchEffects {
                 @Optional()
                 @Inject(JOB_SEARCH_SCHEDULER)
                 private scheduler: Scheduler,
-                private router: Router) {
+                private router: Router,
+                private occupationPresentationService: OccupationPresentationService) {
+    }
+
+    private mapActionAndStateToUpdateOccupationTranslationAction(action: Action, state: any) {
+        const { baseQuery } = state;
+        const language = (action as LanguageChangedAction).payload;
+        const translations = baseQuery.map((occupation: TypeaheadMultiselectModel) =>
+            this.translateIfOccupationHasTypeClassification(occupation, language));
+
+        return Observable.forkJoin(translations)
+            .map((translatedOccupations: Array<TypeaheadMultiselectModel>) =>
+                new UpdateOccupationTranslationAction(translatedOccupations));
+    }
+
+    private translateIfOccupationHasTypeClassification(occupation: TypeaheadMultiselectModel, language: string): Observable<TypeaheadMultiselectModel> {
+        return occupation.type === OCCUPATION_CLASSIFICATION ?
+            this.occupationPresentationService.findOccupationLabelsByCode(occupation.code, language)
+                .map((label) => new TypeaheadMultiselectModel(occupation.type, occupation.code, label.default))
+            : Observable.from([occupation]);
     }
 
     private hasPreviousSearchTrigger(): Observable<boolean> {
@@ -165,7 +195,6 @@ function toNextPageRequest(state: JobSearchState): JobAdvertisementSearchRequest
 function toJobSearchRequest(action: LoadJobTriggerAction, state: JobSearchState): JobAdvertisementSearchRequest {
     if (action.type === TOOLBAR_CHANGED || action.type === JOB_SEARCH_TOOL_CHANGED) {
         return createJobSearchRequest(action.payload, state.searchFilter);
-    } else {
-        return createJobSearchRequest(state.searchQuery, action.payload);
     }
+    return createJobSearchRequest(state.searchQuery, action.payload);
 }

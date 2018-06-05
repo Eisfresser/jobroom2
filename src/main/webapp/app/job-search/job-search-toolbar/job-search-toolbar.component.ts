@@ -1,4 +1,6 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+    Component, Input, OnDestroy, OnInit, OnChanges, SimpleChanges
+} from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import {
     LocalityService,
@@ -9,17 +11,18 @@ import { Store } from '@ngrx/store';
 import { JobSearchState, ToolbarChangedAction } from '../state-management';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { JobSearchQuery } from '../state-management';
-import { Subscription } from 'rxjs/Subscription';
 import { LocalityInputType } from '../../shared/reference-service';
 import { TypeaheadMultiselectModel } from '../../shared/input-components';
 import { ResetFilterAction } from '../state-management';
+import { Subject } from 'rxjs/Subject';
 
 @Component({
     selector: 'jr2-job-search-toolbar',
     templateUrl: './job-search-toolbar.component.html',
     styleUrls: ['./job-search-toolbar.component.scss']
 })
-export class JobSearchToolbarComponent implements OnInit, OnDestroy {
+export class JobSearchToolbarComponent implements OnInit, OnDestroy, OnChanges {
+
     @Input() loading: boolean;
     @Input() searchQuery: JobSearchQuery;
 
@@ -33,14 +36,22 @@ export class JobSearchToolbarComponent implements OnInit, OnDestroy {
         }
     }
 
-    toolbarForm: FormGroup;
+    private unsubscribe$ = new Subject<void>();
 
-    private subscription: Subscription;
+    toolbarForm: FormGroup;
 
     constructor(private occupationPresentationService: OccupationPresentationService,
                 private localityService: LocalityService,
                 private store: Store<JobSearchState>,
                 private fb: FormBuilder) {
+    }
+
+    ngOnChanges(changes: SimpleChanges): void {
+        const model = changes['searchQuery'];
+        if (model && !model.isFirstChange()) {
+            const { baseQuery } = model.currentValue;
+            this.toolbarForm.get('baseQuery').patchValue(baseQuery, { emitEvent: false });
+        }
     }
 
     ngOnInit(): void {
@@ -49,13 +60,16 @@ export class JobSearchToolbarComponent implements OnInit, OnDestroy {
             localityQuery: [[...this.searchQuery.localityQuery]]
         });
 
-        this.subscription = this.toolbarForm.valueChanges.subscribe((formValue: any) =>
-            this.search(formValue)
-        );
+        this.toolbarForm.valueChanges
+            .takeUntil(this.unsubscribe$)
+            .subscribe((formValue: any) =>
+                this.search(formValue)
+            );
     }
 
     ngOnDestroy(): void {
-        this.subscription.unsubscribe();
+        this.unsubscribe$.next();
+        this.unsubscribe$.complete();
     }
 
     search(formValue: any) {

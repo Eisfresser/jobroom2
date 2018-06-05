@@ -10,7 +10,8 @@ import {
     JOB_SEARCH_TOOL_SUBMITTED,
     JobSearchToolCountAction,
     JobSearchToolCountedAction,
-    JobSearchToolSubmittedAction
+    JobSearchToolSubmittedAction,
+    JobSearchUpdateOccupationTranslationAction
 } from '../actions/job-search-tool.actions';
 import {
     CANDIDATE_SEARCH_TOOL_COUNT,
@@ -28,13 +29,19 @@ import {
     LanguageChangedAction
 } from '../../../shared/state-management/actions/core.actions';
 import { OccupationPresentationService } from '../../../shared/reference-service/occupation-presentation.service';
-import { getCandidateSearchToolState, HomeState } from '../state/home.state';
+import {
+    getCandidateSearchToolState,
+    getJobSearchToolState,
+    HomeState
+} from '../state/home.state';
 import { TypeaheadMultiselectModel } from '../../../shared/input-components/typeahead/typeahead-multiselect-model';
 import { JobAdvertisementService } from '../../../shared/job-advertisement/job-advertisement.service';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 import { SystemNotificationService } from '../../system-notification/system.notification.service';
 import { GET_ACTIVE_SYSTEMNOTIFICATIONS, GetActiveSystemNotificationsFailedAction, GetActiveSystemNotificationsSuccessAction } from '../actions/system-notification-actions';
+
+const OCCUPATION_CLASSIFICATION = 'classification';
 
 @Injectable()
 export class HomeEffects {
@@ -91,7 +98,7 @@ export class HomeEffects {
                     new UpdateOccupationTranslationAction(translatedOccupations));
         });
 
-    @Effect()
+  @Effect()
     loadActiveSystemNotifications$ = this.actions$.ofType(GET_ACTIVE_SYSTEMNOTIFICATIONS).pipe(
         switchMap(() => {
             return this.systemNotificationService.getActiveSystemNotifications()
@@ -102,6 +109,13 @@ export class HomeEffects {
         })
     );
 
+    @Effect()
+    jobSearchLanguageChange$: Observable<Action> = this.actions$
+        .ofType(LANGUAGE_CHANGED)
+        .withLatestFrom(this.store.select(getJobSearchToolState))
+        .filter(([action, state]) => !!state.baseQuery)
+        .switchMap(([action, state]) => this.mapActionAndStateToUpdateOccupationTranslationAction(action, state));
+
     constructor(private actions$: Actions,
                 private router: Router,
                 private store: Store<HomeState>,
@@ -109,5 +123,23 @@ export class HomeEffects {
                 private candidateService: CandidateService,
                 private jobAdvertisementService: JobAdvertisementService,
                 private systemNotificationService: SystemNotificationService) {
+    }
+
+    private mapActionAndStateToUpdateOccupationTranslationAction(action: Action, state: any) {
+        const { baseQuery } = state;
+        const language = (action as LanguageChangedAction).payload;
+        const translations = baseQuery.map((occupation: TypeaheadMultiselectModel) =>
+            this.translateIfOccupationHasTypeClassification(occupation, language));
+
+        return Observable.forkJoin(translations)
+            .map((translatedOccupations: Array<TypeaheadMultiselectModel>) =>
+                new JobSearchUpdateOccupationTranslationAction(translatedOccupations));
+    }
+
+    private translateIfOccupationHasTypeClassification(occupation: TypeaheadMultiselectModel, language: string): Observable<TypeaheadMultiselectModel> {
+        return occupation.type === OCCUPATION_CLASSIFICATION ?
+            this.occupationPresentationService.findOccupationLabelsByCode(occupation.code, language)
+                .map((label) => new TypeaheadMultiselectModel(occupation.type, occupation.code, label.default))
+            : Observable.from([occupation]);
     }
 }

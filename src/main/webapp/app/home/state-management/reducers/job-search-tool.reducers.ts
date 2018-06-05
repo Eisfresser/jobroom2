@@ -3,7 +3,8 @@ import { Actions, JOB_SEARCH_TOOL_SUBMITTED } from '../index';
 import {
     JOB_SEARCH_TOOL_COUNT,
     JOB_SEARCH_TOOL_COUNTED,
-    RESET_JOB_SEARCH_TOOL_COUNT
+    RESET_JOB_SEARCH_TOOL_COUNT,
+    JOB_SEARCH_UPDATE_OCCUPATION_TRANSLATION
 } from '../actions/job-search-tool.actions';
 import * as core from '../../../shared/state-management/actions/core.actions';
 
@@ -22,7 +23,9 @@ export function jobSearchToolReducer(state = initialState, action: Actions | cor
         case RESET_JOB_SEARCH_TOOL_COUNT:
             newState = Object.assign({}, initialState);
             break;
-
+        case JOB_SEARCH_UPDATE_OCCUPATION_TRANSLATION:
+            newState = Object.assign({}, state, { baseQuery: action.payload });
+            break;
         default:
             newState = state;
     }

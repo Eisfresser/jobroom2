@@ -72,8 +72,6 @@ export const getBaseQuery = createSelector(getSearchQuery, (searchQuery: JobSear
 export const getLocalityQuery = createSelector(getSearchQuery, (searchQuery: JobSearchQuery) => searchQuery.localityQuery);
 export const getSearchError = createSelector(getJobSearchState, (state: JobSearchState) => state.searchError);
 export const getSearchFilter = createSelector(getJobSearchState, (state: JobSearchState) => state.searchFilter);
-export const getContractType = createSelector(getSearchFilter, (filter: JobSearchFilter) => filter.contractType);
-export const getFilterWorkingTime = createSelector(getSearchFilter, (filter: JobSearchFilter) => filter.workingTime);
 export const getLoading = createSelector(getJobSearchState, (state: JobSearchState) => state.loading);
 export const getJobListScrollY = createSelector(getJobSearchState, (state: JobSearchState) => state.jobListScrollY);
 export const getSelectedJob = createSelector(getJobSearchState, (state: JobSearchState) => state.selectedJob);

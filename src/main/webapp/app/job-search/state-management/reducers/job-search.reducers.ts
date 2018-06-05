@@ -11,7 +11,8 @@ import {
     SAVE_SCROLL_Y,
     SHOW_JOB_LIST_ERROR,
     TOOLBAR_CHANGED,
-    RESET_FILTER
+    RESET_FILTER,
+    UPDATE_OCCUPATION_TRANSLATION
 } from '../actions/job-search.actions';
 import * as core from '../../../shared/state-management/actions/core.actions';
 
@@ -80,6 +81,11 @@ export function jobSearchReducer(state = initialState, action: Actions | core.La
                         ? Object.assign({}, job, { visited: true })
                         : job
                 )
+            });
+            break;
+        case UPDATE_OCCUPATION_TRANSLATION:
+            newState = Object.assign({}, state, {
+                searchQuery: Object.assign({}, state.searchQuery, { baseQuery: action.payload })
             });
             break;
 

@@ -74,7 +74,8 @@ describe('JobSearchToolbarComponent', () => {
     describe('handleLocalitySelect', () => {
         it('should add non existing locality', () => {
             // GIVEN
-            component.toolbarForm.get('localityQuery').setValue([new TypeaheadMultiselectModel(LocalityInputType.LOCALITY, '371', 'Biel')]);
+            component.toolbarForm.get('localityQuery')
+                .setValue([new TypeaheadMultiselectModel(LocalityInputType.LOCALITY, '371', 'Biel')]);
 
             // WHEN
             component.handleLocalitySelect({

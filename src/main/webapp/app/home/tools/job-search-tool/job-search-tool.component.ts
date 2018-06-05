@@ -1,4 +1,7 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+    Component, Input, OnChanges, OnDestroy, OnInit,
+    SimpleChanges
+} from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import { TypeaheadMultiselectModel } from '../../../shared/input-components';
@@ -24,7 +27,7 @@ import { LocaleAwareDecimalPipe } from '../../../shared/pipes/locale-aware-numbe
     templateUrl: './job-search-tool.component.html',
     styleUrls: ['./job-search-tool.component.scss']
 })
-export class JobSearchToolComponent implements OnInit, OnDestroy {
+export class JobSearchToolComponent implements OnInit, OnDestroy, OnChanges {
     @Input() jobSearchToolModel: JobSearchToolState;
 
     jobSearchForm: FormGroup;
@@ -52,6 +55,14 @@ export class JobSearchToolComponent implements OnInit, OnDestroy {
         this.subscription = this.jobSearchForm.valueChanges
             .distinctUntilChanged()
             .subscribe((formValue) => this.filterChanged(formValue));
+    }
+
+    ngOnChanges(changes: SimpleChanges): void {
+        const model = changes['jobSearchToolModel'];
+        if (model && !model.isFirstChange()) {
+            const { baseQuery } = model.currentValue;
+            this.jobSearchForm.get('baseQuery').patchValue(baseQuery, { emitEvent: false });
+        }
     }
 
     ngOnDestroy(): void {

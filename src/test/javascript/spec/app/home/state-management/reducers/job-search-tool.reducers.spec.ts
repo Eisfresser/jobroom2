@@ -3,13 +3,11 @@ import { jobSearchToolReducer } from '../../../../../../../main/webapp/app/home/
 import {
     JobSearchToolCountAction,
     JobSearchToolCountedAction,
-    JobSearchToolSubmittedAction
+    JobSearchToolSubmittedAction, JobSearchUpdateOccupationTranslationAction
 } from '../../../../../../../main/webapp/app/home/state-management/actions/job-search-tool.actions';
 import { LocalityInputType } from '../../../../../../../main/webapp/app/shared/reference-service/locality-autocomplete';
 import { TypeaheadMultiselectModel } from '../../../../../../../main/webapp/app/shared/input-components';
 import { OccupationInputType } from '../../../../../../../main/webapp/app/shared/reference-service/occupation-presentation.service';
-import { LanguageChangedAction } from '../../../../../../../main/webapp/app/shared/state-management/actions/core.actions';
-import { ONLINE_SINCE_DEFAULT_VALUE } from '../../../../../../../main/webapp/app/shared/constants/job-search.constants';
 
 describe('jobSearchToolReducer', () => {
     it('should reset JobSearchToolState for JOB_SEARCH_TOOL_SUBMITTED action', () => {
@@ -70,5 +68,17 @@ describe('jobSearchToolReducer', () => {
 
         // THEN
         expect(newState.totalCount).toEqual(totalCount);
+    });
+
+    it('should update JobSearchToolState.occupations for JOB_SEARCH_UPDATE_OCCUPATION_TRANSLATION action', () => {
+        // GIVEN
+        const baseQuery = [new TypeaheadMultiselectModel('classification', 'avam:7632', 'java_de')];
+        const action = new JobSearchUpdateOccupationTranslationAction(baseQuery);
+
+        // WHEN
+        const newState = jobSearchToolReducer(initialState, action);
+
+        // THEN
+        expect(newState.baseQuery).toEqual(baseQuery);
     });
 });

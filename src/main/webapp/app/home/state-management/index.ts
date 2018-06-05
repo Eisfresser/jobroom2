@@ -1,12 +1,16 @@
 import {
-    JobSearchToolCountAction, JobSearchToolCountedAction, JobSearchToolSubmittedAction,
-    ResetJobSearchToolCountAction
+    JobSearchToolCountAction,
+    JobSearchToolCountedAction,
+    JobSearchToolSubmittedAction,
+    ResetJobSearchToolCountAction,
+    JobSearchUpdateOccupationTranslationAction
 } from './actions/job-search-tool.actions';
 import {
     CandidateSearchToolCountAction,
     CandidateSearchToolCountedAction,
     CandidateSearchToolSubmittedAction,
-    ResetCandidateSearchToolCountAction, UpdateOccupationTranslationAction
+    ResetCandidateSearchToolCountAction,
+    UpdateOccupationTranslationAction
 } from './actions/candidate-search-tool.actions';
 import {
     SelectAgencyTabAction,
@@ -50,4 +54,5 @@ export type Actions =
     | GetActiveSystemNotificationsAction
     | GetActiveSystemNotificationsSuccessAction
     | GetActiveSystemNotificationsFailedAction
+    | JobSearchUpdateOccupationTranslationAction
     | HideSystemNotificationAction;

@@ -1,6 +1,7 @@
 import { Action } from '@ngrx/store';
 import { JobSearchFilter, JobSearchQuery } from '..';
 import { JobAdvertisement } from '../../../shared/job-advertisement/job-advertisement.model';
+import { TypeaheadMultiselectModel } from '../../../shared/input-components/typeahead/typeahead-multiselect-model';
 
 export const INIT_JOB_SEARCH = 'JOBS:INIT_JOB_SEARCH';
 export const LOAD_NEXT_PAGE = 'JOBS:LOAD_NEXT_PAGE';
@@ -14,6 +15,7 @@ export const TOOLBAR_CHANGED = 'JOBS:TOOLBAR_CHANGED';
 export const JOB_SEARCH_TOOL_CHANGED = 'JOBS:JOB_SEARCH_TOOL_CHANGED';
 export const SAVE_SCROLL_Y = 'JOBS:SAVE_SCROLL_Y';
 export const RESET_FILTER = 'JOBS:RESET';
+export const UPDATE_OCCUPATION_TRANSLATION = 'JOBS:UPDATE_OCCUPATION_TRANSLATION';
 
 export class InitJobSearchAction implements Action {
     readonly type = INIT_JOB_SEARCH;
@@ -99,6 +101,13 @@ export class ResetFilterAction implements Action {
     }
 }
 
+export class UpdateOccupationTranslationAction implements Action {
+    readonly type = UPDATE_OCCUPATION_TRANSLATION;
+
+    constructor(public payload: Array<TypeaheadMultiselectModel>) {
+    }
+}
+
 export type Actions =
     | InitJobSearchAction
     | ToolbarChangedAction
@@ -112,4 +121,5 @@ export type Actions =
     | HideJobListErrorAction
     | SaveScrollYAction
     | ResetFilterAction
+    | UpdateOccupationTranslationAction
     ;

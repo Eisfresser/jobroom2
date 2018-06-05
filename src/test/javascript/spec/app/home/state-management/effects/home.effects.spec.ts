@@ -15,7 +15,10 @@ import { initialState as initialCandidateToolState } from '../../../../../../../
 import { initialState as initialJobToolState } from '../../../../../../../main/webapp/app/home/state-management/state/job-search-tool.state';
 import { cold, hot } from 'jasmine-marbles';
 import { JobSearchToolCountedAction } from '../../../../../../../main/webapp/app/home/state-management/index';
-import { JobSearchToolCountAction } from '../../../../../../../main/webapp/app/home/state-management/actions/job-search-tool.actions';
+import {
+    JobSearchToolCountAction,
+    JobSearchUpdateOccupationTranslationAction
+} from '../../../../../../../main/webapp/app/home/state-management/actions/job-search-tool.actions';
 import { LanguageChangedAction } from '../../../../../../../main/webapp/app/shared/state-management/actions/core.actions';
 import {
     GenderAwareOccupationLabel,
@@ -150,6 +153,43 @@ describe('HomeEffects', () => {
 
             const expected = cold('---b--', { b: updateOccupationTranslationAction });
             expect(effects.languageChange$).toBeObservable(expected);
+        });
+
+        it('should return a new JobSearchUpdateOccupationTranslationAction if state.occupation exists', () => {
+            function willFindOccupationLabelByCodeReturnGermanOccupationLabel() {
+                const germanLabel = () => cold('-a|', {
+                    a: {
+                        'default': 'java_de',
+                        female: 'java_f',
+                        male: 'java_m'
+                    }
+                });
+                mockOccupationPresentationService.findOccupationLabelsByCode.and.returnValue(germanLabel());
+            }
+
+            function willStateBeMockedWithEnglishOccupationLabel() {
+                const baseQuery = [new TypeaheadMultiselectModel('classification', 'avam:7632', 'java')];
+                mockState$ = Observable.of({ baseQuery });
+            }
+
+            function performLanguageChangeAction() {
+                actions$ = hot('-a---', { a: new LanguageChangedAction('de') });
+            }
+
+            function expectedTranslationUpdate() {
+                return cold('---b--', {
+                    b: new JobSearchUpdateOccupationTranslationAction(
+                        [new TypeaheadMultiselectModel('classification', 'avam:7632', 'java_de')]
+                    )
+                });
+            }
+
+            willStateBeMockedWithEnglishOccupationLabel();
+            willFindOccupationLabelByCodeReturnGermanOccupationLabel();
+
+            performLanguageChangeAction();
+
+            expect(effects.jobSearchLanguageChange$).toBeObservable(expectedTranslationUpdate());
         });
     })
 });
