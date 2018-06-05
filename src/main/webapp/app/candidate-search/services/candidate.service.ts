@@ -126,6 +126,13 @@ export class CandidateService {
             return null;
         }
 
+        const keywordHitJobExperience = jobExperiences
+            .find((jobExperience) => jobExperience.remark && jobExperience.remark.indexOf('<em>') > -1);
+
+        if (keywordHitJobExperience) {
+            return keywordHitJobExperience;
+        }
+
         const lastJobExperience = jobExperiences
             .find((jobExperience) => jobExperience.lastJob);
 
