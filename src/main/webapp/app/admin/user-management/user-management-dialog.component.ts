@@ -15,6 +15,7 @@ import {
 } from '../../shared/organization/organization.model';
 import { OrganizationService } from '../../shared/organization/organization.service';
 import { Observable } from 'rxjs/Observable';
+import { Principal } from '../../shared/auth/principal.service';
 
 @Component({
     selector: 'jhi-user-mgmt-dialog',
@@ -34,6 +35,7 @@ export class UserMgmtDialogComponent implements OnInit {
         public activeModal: NgbActiveModal,
         private languageHelper: JhiLanguageHelper,
         private userService: UserService,
+        private principal: Principal,
         private eventManager: JhiEventManager,
         private organizationService: OrganizationService
     ) {}
@@ -42,7 +44,12 @@ export class UserMgmtDialogComponent implements OnInit {
         this.isSaving = false;
         this.authorities = [];
         this.userService.authorities().subscribe((authorities) => {
-            this.authorities = authorities;
+            if (this.principal.hasAnyAuthorityDirect(['ROLE_SYSADMIN'])) {
+                this.authorities = authorities;
+            } else {
+                authorities.splice(authorities.indexOf('ROLE_SYSADMIN'), 1);
+                this.authorities = authorities
+            }
         });
         this.languageHelper.getAll().then((languages) => {
             this.languages = languages;

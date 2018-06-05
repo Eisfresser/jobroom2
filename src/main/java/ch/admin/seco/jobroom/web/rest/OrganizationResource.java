@@ -172,7 +172,7 @@ public class OrganizationResource {
 
     @PostMapping("/organizations/housekeeping")
     @Timed
-    @Secured(AuthoritiesConstants.ADMIN)
+    @Secured(AuthoritiesConstants.SYSADMIN)
     public ResponseEntity<Void> housekeeping(@RequestParam LocalDateTime beforeDateTime) {
         log.info("REST request to start housekeeping for Organizations by user : {}", SecurityUtils.getCurrentUserLogin());
         organizationService.housekeeping(beforeDateTime);

@@ -115,7 +115,7 @@ export class NavbarComponent implements OnInit {
     }
 
     isAdmin(): boolean {
-        return this.principal.hasAnyAuthorityDirect(['ROLE_ADMIN']);
+        return this.principal.hasAnyAuthorityDirect(['ROLE_ADMIN', 'ROLE_SYSADMIN']);
     }
 
     getCurrentLanguage() {

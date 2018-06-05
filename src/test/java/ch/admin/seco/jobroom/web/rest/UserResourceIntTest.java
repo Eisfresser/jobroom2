@@ -591,8 +591,8 @@ public class UserResourceIntTest {
             .andExpect(jsonPath("$").isArray())
             .andExpect(jsonPath("$").value(containsInAnyOrder(
                 "ROLE_USER",
+                "ROLE_SYSADMIN",
                 "ROLE_ADMIN",
-                    "ROLE_SYSADMIN",
                 "ROLE_PRIVATE_EMPLOYMENT_AGENT",
                 "ROLE_PUBLIC_EMPLOYMENT_SERVICE",
                 "ROLE_JOBSEEKER_CLIENT"

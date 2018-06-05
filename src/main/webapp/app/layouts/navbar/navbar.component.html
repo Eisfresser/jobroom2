@@ -48,7 +48,7 @@
                                 </a>
                             </ng-container>
 
-                            <div *jhiHasAnyAuthority="'ROLE_ADMIN'" class="dropdown-menu"
+                            <div *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_SYSADMIN']" class="dropdown-menu"
                                  aria-labelledby="navbarDropdownMenuLink">
                                 <div class="megamenu-menu">
                                     <div>
@@ -64,6 +64,7 @@
                                         <a class="dropdown-item"
                                            routerLink="user-management"
                                            routerLinkActive="active"
+                                           *jhiHasAnyAuthority="'ROLE_SYSADMIN'"
                                            (click)="collapseNavbar()">
                                             <span class="fa fa-fw fa-user"
                                                   aria-hidden="true"></span>
@@ -73,6 +74,7 @@
 
                                         <a class="dropdown-item" routerLink="jhi-metrics"
                                            routerLinkActive="active"
+                                           *jhiHasAnyAuthority="'ROLE_SYSADMIN'"
                                            (click)="collapseNavbar()">
                                             <span class="fa fa-fw fa-tachometer"
                                                   aria-hidden="true"></span>
@@ -81,6 +83,7 @@
                                         </a>
                                         <a class="dropdown-item" routerLink="jhi-health"
                                            routerLinkActive="active"
+                                           *jhiHasAnyAuthority="'ROLE_SYSADMIN'"
                                            (click)="collapseNavbar()">
                                             <span class="fa fa-fw fa-heart"
                                                   aria-hidden="true"></span>
@@ -89,6 +92,7 @@
                                         <a class="dropdown-item"
                                            routerLink="jhi-configuration"
                                            routerLinkActive="active"
+                                           *jhiHasAnyAuthority="'ROLE_SYSADMIN'"
                                            (click)="collapseNavbar()">
                                             <span class="fa fa-fw fa-list"
                                                   aria-hidden="true"></span>
@@ -97,6 +101,7 @@
                                         </a>
                                         <a class="dropdown-item" routerLink="audits"
                                            routerLinkActive="active"
+                                           *jhiHasAnyAuthority="'ROLE_SYSADMIN'"
                                            (click)="collapseNavbar()">
                                             <span class="fa fa-fw fa-bell"
                                                   aria-hidden="true"></span>
@@ -104,6 +109,7 @@
                                         </a>
                                         <a class="dropdown-item" routerLink="logs"
                                            routerLinkActive="active"
+                                           *jhiHasAnyAuthority="'ROLE_SYSADMIN'"
                                            (click)="collapseNavbar()">
                                             <span class="fa fa-fw fa-tasks"
                                                   aria-hidden="true"></span>
@@ -120,7 +126,7 @@
                                                 jhiTranslate="global.menu.admin.apidocs">API</span>
                                         </a>
 
-                                        <a class="dropdown-item" routerLinkActive="active"
+                                        <a class="dropdown-item" routerLinkActive="active" *jhiHasAnyAuthority="'ROLE_SYSADMIN'"
                                            (click)="isReindexMenuCollapsed = !isReindexMenuCollapsed">
                                             <span class="fa fa-fw fa-search"
                                                   aria-hidden="true"></span>
@@ -153,6 +159,7 @@
 
                                         <a class="dropdown-item"
                                            (click)="collapseNavbar()"
+                                           *jhiHasAnyAuthority="'ROLE_SYSADMIN'"
                                            routerLink="api-user-management"
                                            routerLinkActive="active">
                                             <span class="fa fa-key" aria-hidden="true"></span>
@@ -231,7 +238,7 @@
                         </a>
                     </ng-template>
 
-                    <div *jhiHasAnyAuthority="'ROLE_ADMIN'" class="dropdown-menu" [ngClass]="{show: !isNavbarCollapsed}"
+                    <div *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_SYSADMIN']" class="dropdown-menu" [ngClass]="{show: !isNavbarCollapsed}"
                          aria-labelledby="navbarDropdownMenuLink">
                         <div class="megamenu-menu">
                             <div>
@@ -245,6 +252,7 @@
 
                                 <span class="dropdown-title">Admin</span>
                                 <a class="dropdown-item" routerLink="gateway"
+                                   *jhiHasAnyAuthority="'ROLE_SYSADMIN'"
                                    routerLinkActive="active">
                                     <span class="fa fa-fw fa-road"
                                           aria-hidden="true"></span>
@@ -253,6 +261,7 @@
                                 </a>
 
                                 <a class="dropdown-item"
+                                   *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_SYSADMIN']"
                                    routerLink="user-management"
                                    routerLinkActive="active"
                                    (click)="collapseNavbar()">
@@ -263,6 +272,7 @@
                                 </a>
 
                                 <a class="dropdown-item"
+                                   *jhiHasAnyAuthority="'ROLE_SYSADMIN'"
                                    routerLink="system-notifications-management"
                                    routerLinkActive="active"
                                    (click)="collapseNavbar()">
@@ -273,6 +283,7 @@
                                 </a>
 
                                 <a class="dropdown-item" routerLink="jhi-metrics"
+                                   *jhiHasAnyAuthority="'ROLE_SYSADMIN'"
                                    routerLinkActive="active"
                                    (click)="collapseNavbar()">
                                     <span class="fa fa-fw fa-tachometer"
@@ -281,6 +292,7 @@
                                         jhiTranslate="global.menu.admin.metrics">Metrics</span>
                                 </a>
                                 <a class="dropdown-item" routerLink="jhi-health"
+                                   *jhiHasAnyAuthority="'ROLE_SYSADMIN'"
                                    routerLinkActive="active"
                                    (click)="collapseNavbar()">
                                     <span class="fa fa-fw fa-heart"
@@ -288,6 +300,7 @@
                                     <span jhiTranslate="global.menu.admin.health">Health</span>
                                 </a>
                                 <a class="dropdown-item"
+                                   *jhiHasAnyAuthority="'ROLE_SYSADMIN'"
                                    routerLink="jhi-configuration"
                                    routerLinkActive="active"
                                    (click)="collapseNavbar()">
@@ -297,6 +310,7 @@
                                         jhiTranslate="global.menu.admin.configuration">Configuration</span>
                                 </a>
                                 <a class="dropdown-item" routerLink="audits"
+                                   *jhiHasAnyAuthority="'ROLE_SYSADMIN'"
                                    routerLinkActive="active"
                                    (click)="collapseNavbar()">
                                     <span class="fa fa-fw fa-bell"
@@ -304,6 +318,7 @@
                                     <span jhiTranslate="global.menu.admin.audits">Audits</span>
                                 </a>
                                 <a class="dropdown-item" routerLink="logs"
+                                   *jhiHasAnyAuthority="'ROLE_SYSADMIN'"
                                    routerLinkActive="active"
                                    (click)="collapseNavbar()">
                                     <span class="fa fa-fw fa-tasks"
@@ -321,13 +336,13 @@
                                         jhiTranslate="global.menu.admin.apidocs">API</span>
                                 </a>
 
-                                <a class="dropdown-item" routerLinkActive="active"
+                                <a class="dropdown-item" routerLinkActive="active"  *jhiHasAnyAuthority="'ROLE_SYSADMIN'"
                                    (click)="isReindexMenuCollapsed = !isReindexMenuCollapsed">
                                     <span class="fa fa-fw fa-search"
                                           aria-hidden="true"></span>
                                     <span jhiTranslate="global.menu.admin.elasticsearch-reindex">Elasticsearch Reindex</span>
                                     <div (click)="collapseNavbar()" [ngbCollapse]="isReindexMenuCollapsed" class="navbar__nested-nav">
-                                        <a class="nav-link"  routerLink="elasticsearch-reindex" jhiTranslate="global.menu.admin.elasticsearch-reindex.all">All</a>
+                                        <a   class="nav-link"  routerLink="elasticsearch-reindex" jhiTranslate="global.menu.admin.elasticsearch-reindex.all">All</a>
                                         <a class="nav-link" jhiTranslate="global.menu.admin.elasticsearch-reindex.users"
                                            [routerLink]="['elasticsearch-reindex', { document: 'users' }]">Users</a>
                                         <a class="nav-link" jhiTranslate="global.menu.admin.elasticsearch-reindex.jobs"
@@ -350,10 +365,10 @@
                                     <span
                                         jhiTranslate="global.menu.admin.database">Database</span>
                                 </a>
-
                                 <a class="dropdown-item"
                                    (click)="collapseNavbar()"
                                    routerLink="api-user-management"
+                                   *jhiHasAnyAuthority="'ROLE_SYSADMIN'"
                                    routerLinkActive="active">
                                     <span class="fa fa-key" aria-hidden="true"></span>
                                     <span jhiTranslate="global.menu.admin.api-user-management">Api user management</span>
