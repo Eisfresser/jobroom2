@@ -8,6 +8,14 @@
         "date-placeholder": "GG.MM.AAAA",
         "startDate": "From",
         "endDate": "To",
+        "messages": {
+            "validate": {
+                "date-format": "Il formato della data non \u00e8 corretto. Formato corretto: GG.MM.AAAA",
+                "endDate": {
+                    "date-before": "La data deve situarsi nel futuro."
+                }
+            }
+        },
         "status": "Status",
         "actions": "Actions",
         "home": {

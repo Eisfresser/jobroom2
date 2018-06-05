@@ -46,7 +46,6 @@
                            class="form-control"
                            name="startDate"
                            placeholder="{{ 'systemNotificationsManagement.date-placeholder' | translate }}"
-                           [minDate]="startDateMin"
                            ngbDatepicker
                            formControlName="startDate">
                     <button class="input-group-addon"
@@ -54,6 +53,11 @@
                             type="button">
                         <i class="fa fa-calendar-o" aria-hidden="true"></i>
                     </button>
+                </div>
+                <div *ngIf="createForm.get('startDate').invalid">
+                    <small class="form-text text-danger" *ngIf="createForm.get('startDate').errors.ngbDate.invalid">
+                        {{ 'systemNotificationsManagement.messages.validate.date-format' | translate}}
+                    </small>
                 </div>
             </div>
             <div class="form-group col-md-4">
@@ -77,6 +81,14 @@
                             type="button">
                         <i class="fa fa-calendar-o" aria-hidden="true"></i>
                     </button>
+                </div>
+                <div *ngIf="createForm.get('endDate').invalid">
+                    <small class="form-text text-danger" *ngIf="createForm.get('endDate').errors.ngbDate.invalid">
+                        {{ 'systemNotificationsManagement.messages.validate.date-format' | translate}}
+                    </small>
+                    <small class="form-text text-danger" *ngIf="createForm.get('endDate').errors.ngbDate.requiredBefore">
+                        {{ 'systemNotificationsManagement.messages.validate.endDate.date-before' | translate}}
+                    </small>
                 </div>
             </div>
             <div class="form-group col-md-4">

@@ -8,6 +8,14 @@
         "date-placeholder": "TT.MM.JJJJ",
         "startDate": "Von",
         "endDate": "Bis",
+        "messages": {
+            "validate": {
+                "date-format": "Datumsformat ung\u00fcltig, richtiges Format: TT.MM.JJJJ",
+                "endDate": {
+                    "date-before": "Datum muss in der Zukunft liegen."
+                }
+            }
+        },
         "status": "Status",
         "actions": "Aktionen",
         "home": {

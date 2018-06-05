@@ -1034,6 +1034,8 @@ system-notifications-management,systemNotificationsManagement.type,Typ,Type,Type
 system-notifications-management,systemNotificationsManagement.date-placeholder,TT.MM.JJJJ,DD.MM.YYYY,JJ.MM.AAAA,GG.MM.AAAA
 system-notifications-management,systemNotificationsManagement.startDate,Von,From,From,From
 system-notifications-management,systemNotificationsManagement.endDate,Bis,To,To,To
+system-notifications-management,systemNotificationsManagement.messages.validate.date-format,"Datumsformat ungültig, richtiges Format: TT.MM.JJJJ","Invalid date format, correct format: DD.MM.YYYY",Le format de la date n’est pas conforme. Format correct: JJ.MM.AAAA,Il formato della data non è corretto. Formato corretto: GG.MM.AAAA
+system-notifications-management,systemNotificationsManagement.messages.validate.endDate.date-before,Datum muss in der Zukunft liegen.,Date must be in the future.,La date doit se situer dans le futur.,La data deve situarsi nel futuro.
 system-notifications-management,systemNotificationsManagement.status,Status,Status,Status,Status
 system-notifications-management,systemNotificationsManagement.actions,Aktionen,Actions,Actions,Actions
 system-notifications-management,systemNotificationsManagement.home.create,Neue Systemmitteilung erfassen,Create a new system notification,Créer un nouvel notification système,Crea un nuovo notifiche di sistema

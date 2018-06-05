@@ -18,7 +18,6 @@ export class SystemNotificationsManagementModalDetailComponent implements OnInit
     @Output() updateEvent = new EventEmitter<SystemNotification>();
 
     updateForm: FormGroup;
-    startDateMin = DateUtils.mapDateToNgbDateStruct();
     endDateMin = DateUtils.mapDateToNgbDateStruct();
 
     private unsubscribe$ = new Subject<void>();

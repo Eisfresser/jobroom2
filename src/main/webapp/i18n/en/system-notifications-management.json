@@ -8,6 +8,14 @@
         "date-placeholder": "DD.MM.YYYY",
         "startDate": "From",
         "endDate": "To",
+        "messages": {
+            "validate": {
+                "date-format": "Invalid date format, correct format: DD.MM.YYYY",
+                "endDate": {
+                    "date-before": "Date must be in the future."
+                }
+            }
+        },
         "status": "Status",
         "actions": "Actions",
         "home": {
