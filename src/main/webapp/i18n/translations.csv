@@ -1067,14 +1067,15 @@ api-user-management,api-user-management.new,Create new api user,Create new api u
 api-user-management,api-user-management.search,Search api users,Search api users,Search api users,Search api users
 api-user-management,api-user-management.dialog.title,Create or update api user,Create or update api user,Create or update api user,Create or update api user
 api-user-management,api-user-management.id,Id,Id,Id,Id
-api-user-management,api-user-management.user-name,User name,User name,User name,User name
-api-user-management,api-user-management.email,E-Mail,Email,Courriel,E-mail
-api-user-management,api-user-management.company.name,Business name,Business name,Business name,Business name
-api-user-management,api-user-management.contact,Contact,Contact,Contact,Contact
-api-user-management,api-user-management.contact.email,Contact email,Contact email,Contact email,Contact email
-api-user-management,api-user-management.password,Passwort,Password,Mot de passe,Password
+api-user-management,api-user-management.username,Username,Username,Username,Username
+api-user-management,api-user-management.companyEmail,Business email,Business email,Business email,Business email
+api-user-management,api-user-management.companyName,Business name,Business name,Business name,Business name
+api-user-management,api-user-management.technicalContactName,Technical contact,Technical contact,Technical contact,Technical contact
+api-user-management,api-user-management.technicalContactEmail,Technical contact email,Technical contact email,Technical contact email,Technical contact email
+api-user-management,api-user-management.password,Password,Password,Password,Password
 api-user-management,api-user-management.password.generate,Generate password,Generate password,Generate password,Generate password
-api-user-management,api-user-management.active-date,Last access date,Last access date,Last access date,Last access date
+api-user-management,api-user-management.createDate,Create date,Create date,Create date,Create date
+api-user-management,api-user-management.lastAccessDate,Last access date,Last access date,Last access date,Last access date
 api-user-management,api-user-management.active,Aktiv,Active,Activé,Attivato
 api-user-management,api-user-management.confirm,Speichern,Save,Sauvegarder,Salva
 api-user-management,api-user-management.dismiss,Abbrechen,Cancel,Interrompre,Interrompere

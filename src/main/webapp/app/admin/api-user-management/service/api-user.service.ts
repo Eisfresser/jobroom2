@@ -6,13 +6,13 @@ import { SERVER_API_URL } from '../../../app.constants';
 
 export interface ApiUser {
     id?: string;
-    password: string;
-    active: boolean;
     username: string;
-    email: string;
+    password: string;
+    companyEmail: string;
     companyName: string
-    contactName: string;
-    contactEmail: string;
+    technicalContactName: string;
+    technicalContactEmail: string;
+    active: boolean;
     lastAccessDate?: Date;
 }
 

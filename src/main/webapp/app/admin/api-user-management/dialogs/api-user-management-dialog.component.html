@@ -10,7 +10,7 @@
         <form [formGroup]="apiUserForm" (ngSubmit)="submit(apiUserForm.value)">
             <div class="form-group">
                 <label class="form-control-label">
-                    {{ 'api-user-management.user-name' | translate }}
+                    {{ 'api-user-management.username' | translate }}
                 </label>
                 <input formControlName="username" class="form-control">
 
@@ -22,23 +22,7 @@
             </div>
             <div class="form-group">
                 <label class="form-control-label">
-                    {{ 'api-user-management.email' | translate }}
-                </label>
-                <input formControlName="email" class="form-control">
-
-                <div *ngIf="apiUserForm.get('email').touched && apiUserForm.get('email').invalid">
-                    <small *ngIf="apiUserForm.get('email').hasError('required')" class="form-text text-danger">
-                        {{ 'entity.validation.required' | translate }}
-                    </small>
-
-                    <small *ngIf="apiUserForm.get('email').hasError('pattern')" class="form-text text-danger">
-                        {{ 'global.messages.validate.email.invalid' | translate }}
-                    </small>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="form-control-label">
-                    {{ 'api-user-management.company.name' | translate }}
+                    {{ 'api-user-management.companyName' | translate }}
                 </label>
                 <input formControlName="companyName" class="form-control">
 
@@ -50,11 +34,27 @@
             </div>
             <div class="form-group">
                 <label class="form-control-label">
-                    {{ 'api-user-management.contact' | translate }}
+                    {{ 'api-user-management.companyEmail' | translate }}
                 </label>
-                <input formControlName="contactName" class="form-control">
+                <input formControlName="companyEmail" class="form-control">
 
-                <div *ngIf="apiUserForm.get('contactName').touched && apiUserForm.get('contactName').hasError('required')">
+                <div *ngIf="apiUserForm.get('companyEmail').touched && apiUserForm.get('companyEmail').invalid">
+                    <small *ngIf="apiUserForm.get('companyEmail').hasError('required')" class="form-text text-danger">
+                        {{ 'entity.validation.required' | translate }}
+                    </small>
+
+                    <small *ngIf="apiUserForm.get('compoanyEmail').hasError('pattern')" class="form-text text-danger">
+                        {{ 'global.messages.validate.email.invalid' | translate }}
+                    </small>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-control-label">
+                    {{ 'api-user-management.technicalContactName' | translate }}
+                </label>
+                <input formControlName="technicalContactName" class="form-control">
+
+                <div *ngIf="apiUserForm.get('technicalContactName').touched && apiUserForm.get('technicalContactName').hasError('required')">
                     <small class="form-text text-danger">
                         {{ 'entity.validation.required' | translate }}
                     </small>
@@ -62,16 +62,16 @@
             </div>
             <div class="form-group">
                 <label class="form-control-label">
-                    {{ 'api-user-management.contact.email' | translate }}
+                    {{ 'api-user-management.technicalContactEmail' | translate }}
                 </label>
-                <input formControlName="contactEmail" class="form-control">
+                <input formControlName="technicalContactEmail" class="form-control">
 
-                <div *ngIf="apiUserForm.get('contactEmail').touched && apiUserForm.get('contactEmail').invalid">
-                    <small *ngIf="apiUserForm.get('contactEmail').hasError('required')" class="form-text text-danger">
+                <div *ngIf="apiUserForm.get('technicalContactEmail').touched && apiUserForm.get('technicalContactEmail').invalid">
+                    <small *ngIf="apiUserForm.get('technicalContactEmail').hasError('required')" class="form-text text-danger">
                         {{ 'entity.validation.required' | translate }}
                     </small>
 
-                    <small *ngIf="apiUserForm.get('contactEmail').hasError('pattern')" class="form-text text-danger">
+                    <small *ngIf="apiUserForm.get('technicalContactEmail').hasError('pattern')" class="form-text text-danger">
                         {{ 'global.messages.validate.email.invalid' | translate }}
                     </small>
                 </div>
@@ -97,8 +97,7 @@
             </div>
             <div class="form-check">
                 <label class="form-check-label">
-                    <input formControlName="active" type="checkbox"
-                           class="form-check-input"/>
+                    <input formControlName="active" type="checkbox" class="form-check-input"/>
                     {{ 'api-user-management.active' | translate }}
                 </label>
             </div>

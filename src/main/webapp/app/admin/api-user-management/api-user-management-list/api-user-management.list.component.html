@@ -3,13 +3,13 @@
         <thead>
         <tr>
             <th scope="col">{{ 'api-user-management.id' | translate }}</th>
-            <th scope="col">{{ 'api-user-management.user-name' | translate }}</th>
-            <th scope="col">{{ 'api-user-management.email' | translate }}</th>
-            <th scope="col">{{ 'api-user-management.company.name' | translate }}</th>
-            <th scope="col">{{ 'api-user-management.contact' | translate }}</th>
-            <th scope="col">{{ 'api-user-management.contact.email' | translate }}</th>
-            <th scope="col">{{ 'api-user-management.password' | translate }}</th>
-            <th scope="col">{{ 'api-user-management.active-date' | translate }}</th>
+            <th scope="col">{{ 'api-user-management.username' | translate }}</th>
+            <th scope="col">{{ 'api-user-management.companyName' | translate }}</th>
+            <th scope="col">{{ 'api-user-management.companyEmail' | translate }}</th>
+            <th scope="col">{{ 'api-user-management.technicalContactName' | translate }}</th>
+            <th scope="col">{{ 'api-user-management.technicalContactEmail' | translate }}</th>
+            <th scope="col">{{ 'api-user-management.createDate' | translate }}</th>
+            <th scope="col">{{ 'api-user-management.lastAccessDate' | translate }}</th>
             <th scope="col">{{ 'api-user-management.active' | translate }}</th>
             <th scope="col"></th>
         </tr>
@@ -18,17 +18,15 @@
         <tr *ngFor="let apiUser of apiUsers">
             <td>{{ apiUser.id | shorten:7 }}</td>
             <td>{{ apiUser.username }}</td>
-            <td>{{ apiUser.email }}</td>
             <td>{{ apiUser.companyName }}</td>
-            <td>{{ apiUser.contactName }}</td>
-            <td>{{ apiUser.contactEmail}}</td>
-            <td>{{ apiUser.password }}</td>
-            <td>{{ apiUser.lastAccessDate | date:'dd/MM/yy HH:mm' }}</td>
+            <td>{{ apiUser.companyEmail }}</td>
+            <td>{{ apiUser.technicalContactName }}</td>
+            <td>{{ apiUser.technicalContactEmail}}</td>
+            <td>{{ apiUser.createDate | date:'dd.MM.yyyy' }}</td>
+            <td>{{ apiUser.lastAccessDate | date:'dd.MM.yyyy' }}</td>
             <td>
-                <button class="btn btn-danger btn-sm" (click)="setActive(apiUser, true)" *ngIf="!apiUser.active"
-                        jhiTranslate="api-user-management.deactivated">Deactivated</button>
-                <button class="btn btn-success btn-sm" (click)="setActive(apiUser, false)" *ngIf="apiUser.active"
-                        jhiTranslate="api-user-management.activated">Activated</button>
+                <button class="btn btn-danger btn-sm" (click)="setActive(apiUser, true)" *ngIf="!apiUser.active" jhiTranslate="api-user-management.deactivated">Deactivated</button>
+                <button class="btn btn-success btn-sm" (click)="setActive(apiUser, false)" *ngIf="apiUser.active" jhiTranslate="api-user-management.activated">Activated</button>
             </td>
             <td>
                 <button class="btn-primary btn-sm" (click)="openUpdateDialog(apiUser)">
