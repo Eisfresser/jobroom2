@@ -12,7 +12,8 @@ export class PeaDashboardGuard implements CanActivate {
             .then((account) =>
                 this.principal.hasAnyAuthority([
                     'ROLE_PRIVATE_EMPLOYMENT_AGENT',
-                    'ROLE_PUBLIC_EMPLOYMENT_SERVICE'
+                    'ROLE_PUBLIC_EMPLOYMENT_SERVICE',
+                    'ROLE_COMPANY'
                 ]));
     }
 }

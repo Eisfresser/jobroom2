@@ -595,7 +595,8 @@ public class UserResourceIntTest {
                 "ROLE_ADMIN",
                 "ROLE_PRIVATE_EMPLOYMENT_AGENT",
                 "ROLE_PUBLIC_EMPLOYMENT_SERVICE",
-                "ROLE_JOBSEEKER_CLIENT"
+                "ROLE_JOBSEEKER_CLIENT",
+                "ROLE_COMPANY"
             )));
     }
 

@@ -208,7 +208,7 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a *jhiHasAnyAuthority="'ROLE_PRIVATE_EMPLOYMENT_AGENT'"
+                                    <a *jhiHasAnyAuthority="['ROLE_PRIVATE_EMPLOYMENT_AGENT', 'ROLE_COMPANY']"
                                        routerLink="dashboard" id="dashboard" (click)="collapseNavbar()">
                                         <span jhiTranslate="global.menu.dashboard">Dashboard</span>
                                     </a>
@@ -416,7 +416,7 @@
                             </a>
                         </li>
                         <li>
-                            <a class="dropdown-item dropdown-item--account" *jhiHasAnyAuthority="'ROLE_PRIVATE_EMPLOYMENT_AGENT'"
+                            <a class="dropdown-item dropdown-item--account" *jhiHasAnyAuthority="['ROLE_PRIVATE_EMPLOYMENT_AGENT', 'ROLE_COMPANY']"
                                routerLink="dashboard" id="dashboard-desktop" (click)="collapseNavbar()">
                                 <span jhiTranslate="global.menu.dashboard">Dashboard</span>
                             </a>
