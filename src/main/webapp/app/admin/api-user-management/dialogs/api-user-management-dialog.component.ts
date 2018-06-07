@@ -22,10 +22,10 @@ export class ApiUserManagementDialogComponent implements OnInit {
     ngOnInit(): void {
         this.apiUserForm = this.fb.group({
             username: [this.apiUser ? this.apiUser.username : '', Validators.required],
-            email: [this.apiUser ? this.apiUser.email : '', [Validators.required, Validators.pattern(EMAIL_REGEX)]],
+            companyEmail: [this.apiUser ? this.apiUser.companyEmail : '', [Validators.required, Validators.pattern(EMAIL_REGEX)]],
             companyName: [this.apiUser ? this.apiUser.companyName : '', Validators.required],
-            contactName: [this.apiUser ? this.apiUser.contactName : '', Validators.required],
-            contactEmail: [this.apiUser ? this.apiUser.contactEmail : '', [Validators.required, Validators.pattern(EMAIL_REGEX)]],
+            technicalContactName: [this.apiUser ? this.apiUser.technicalContactName : '', Validators.required],
+            technicalContactEmail: [this.apiUser ? this.apiUser.technicalContactEmail : '', [Validators.required, Validators.pattern(EMAIL_REGEX)]],
             active: [this.apiUser ? this.apiUser.active : true],
             password: [this.apiUser ? this.apiUser.password : '', Validators.required]
         });
