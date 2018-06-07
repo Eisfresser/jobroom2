@@ -1,7 +1,7 @@
 <div class="system-notification" *ngFor="let activeSystemNotification of activeSystemNotifications">
     <span class="warning-icon"><i class="fa fa-exclamation"></i></span>
-    <span class="system-notification-text ml-3">{{getCurrentLanguageCode(activeSystemNotification)}}</span>
-    <a class="float-right mr-3" (click)="close(activeSystemNotification.id)">
+    <span class="system-notification-text">{{getCurrentLanguageCode(activeSystemNotification)}}</span>
+    <a class="close-icon" (click)="close(activeSystemNotification.id)">
         <i class="fa fa-times"></i>
     </a>
 </div>

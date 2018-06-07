@@ -1,9 +1,17 @@
 .system-notification:first-child {
-    margin-top: -1.5rem;
+    margin-top: -0.8rem;
+}
+
+@media screen and (max-width: 767px){
+    .system-notification:first-child {
+        margin-top: 0.6rem;
+    }
 }
 
 .system-notification {
     background-color: #fde9a4;
+    margin: 0.3rem 0.6rem;
+    line-height: 2;
 
     .warning-icon {
         color: white;
@@ -11,5 +19,16 @@
         display: inline-block;
         text-align: center;
         background-color: #f46401;
+    }
+
+    .system-notification-text {
+        font-weight: 300;
+        margin-left: 0.5rem;
+    }
+
+    .close-icon {
+        margin-right: 0.5rem;
+        color: grey;
+        float: right;
     }
 }
