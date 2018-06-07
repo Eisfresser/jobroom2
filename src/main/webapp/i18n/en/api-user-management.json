@@ -7,16 +7,15 @@
             "title": "Create or update api user"
         },
         "id": "Id",
-        "user-name": "User name",
-        "email": "Email",
-        "company": {
-            "name": "Business name"
-        },
-        "contact": "Contact",
-        "contact.email": "Contact email",
+        "username": "Username",
+        "companyEmail": "Business email",
+        "companyName": "Business name",
+        "technicalContactName": "Technical contact",
+        "technicalContactEmail": "Technical contact email",
         "password": "Password",
         "password.generate": "Generate password",
-        "active-date": "Last access date",
+        "createDate": "Create date",
+        "lastAccessDate": "Last access date",
         "active": "Active",
         "confirm": "Save",
         "dismiss": "Cancel",
