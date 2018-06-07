@@ -140,15 +140,6 @@ describe('Component Tests', () => {
             expect(mockActiveModal.dismissSpy).toHaveBeenCalledWith('cancel');
         });
 
-        it('should redirect user when register', () => {
-            // WHEN
-            comp.register();
-
-            // THEN
-            expect(mockActiveModal.dismissSpy).toHaveBeenCalledWith('to state register');
-            expect(mockRouter.navigateSpy).toHaveBeenCalledWith(['/register']);
-        });
-
         it('should redirect user when request password', () => {
             // WHEN
             comp.requestResetPassword();

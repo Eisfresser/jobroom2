@@ -6,7 +6,6 @@ export class MockLoginService extends SpyObject {
 
     loginSpy: Spy;
     logoutSpy: Spy;
-    registerSpy: Spy;
     requestResetPasswordSpy: Spy;
     cancelSpy: Spy;
 
@@ -15,7 +14,6 @@ export class MockLoginService extends SpyObject {
 
         this.setLoginSpy({});
         this.logoutSpy = this.spy('logout').andReturn(this);
-        this.registerSpy = this.spy('register').andReturn(this);
         this.requestResetPasswordSpy = this.spy('requestResetPassword').andReturn(this);
         this.cancelSpy = this.spy('cancel').andReturn(this);
     }

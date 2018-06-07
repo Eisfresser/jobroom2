@@ -51,7 +51,7 @@ export class JhiLoginModalComponent implements AfterViewInit {
         }).then(() => {
             this.authenticationError = false;
             this.activeModal.dismiss('login success');
-            if (this.router.url === '/register' || (/^\/activate\//.test(this.router.url)) ||
+            if ((/^\/activate\//.test(this.router.url)) ||
                 (/^\/reset\//.test(this.router.url))) {
                 this.router.navigate(['']);
             }
@@ -71,11 +71,6 @@ export class JhiLoginModalComponent implements AfterViewInit {
         }).catch(() => {
             this.authenticationError = true;
         });
-    }
-
-    register() {
-        this.activeModal.dismiss('to state register');
-        this.router.navigate(['/register']);
     }
 
     requestResetPassword() {
