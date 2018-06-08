@@ -4,9 +4,9 @@
     xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
 
-    <changeSet id="20180502000000-1" author="mabi" >
+    <changeSet id="20180607000000-1" author="mabi">
         <insert tableName="jhi_authority">
-            <column name="name" value="ROLE_JOBSEEKER_CLIENT"/>
+            <column name="name" value="ROLE_COMPANY"/>
         </insert>
     </changeSet>
 </databaseChangeLog>
