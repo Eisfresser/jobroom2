@@ -148,21 +148,32 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
 
         const publicContact = this.jobPublicationForm.get('publicContact');
 
-        const makeRequired = (): void => {
+        const makeRequired = (name: string): void => {
+            const field = publicContact.get(name);
+            field.setValidators([Validators.required, ...publicContactFieldValidators[name]]);
+            field.updateValueAndValidity({ emitEvent: false });
+        };
+
+        const makeFieldsRequired = (): void => {
             publicContactFieldNames.forEach((name) => {
-                const field = publicContact.get(name);
-                field.setValidators([Validators.required, ...publicContactFieldValidators[name]]);
-                field.updateValueAndValidity({ emitEvent: false });
+                if (publicContact.get('phoneNumber').value && name === 'email'
+                    || publicContact.get('email').value && name === 'phoneNumber') {
+                    return;
+                }
+
+                makeRequired(name)
             });
         };
 
+        const resetValidator = (name: string): void => {
+            const field = publicContact.get(name);
+            field.clearValidators();
+            field.setValidators(publicContactFieldValidators[name]);
+            field.updateValueAndValidity({ emitEvent: false });
+        };
+
         const resetValidators = (): void => {
-            publicContactFieldNames.forEach((name) => {
-                const field = publicContact.get(name);
-                field.clearValidators();
-                field.setValidators(publicContactFieldValidators[name]);
-                field.updateValueAndValidity({ emitEvent: false });
-            });
+            publicContactFieldNames.forEach((name) => resetValidator(name));
         };
 
         const isFilled = (value) => publicContactFieldNames
@@ -172,14 +183,29 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
         publicContact.valueChanges
             .takeUntil(this.unsubscribe$)
             .startWith(publicContact.value)
-            .distinctUntilChanged((a, b) => isFilled(a) === isFilled(b))
+            .distinctUntilChanged()
             .subscribe((value) => {
                 if (isFilled(value)) {
-                    makeRequired();
+                    makeFieldsRequired();
                 } else {
                     resetValidators();
                 }
             });
+
+        const resetRelatedFieldValidator = (fieldName: string, relatedFieldName: string): void => {
+            publicContact.get(fieldName).valueChanges
+                .takeUntil(this.unsubscribe$)
+                .startWith(publicContact.get(fieldName).value)
+                .distinctUntilChanged()
+                .subscribe((value) => {
+                    if (value) {
+                        resetValidator(relatedFieldName);
+                    }
+                });
+        };
+
+        resetRelatedFieldValidator('phoneNumber', 'email');
+        resetRelatedFieldValidator('email', 'phoneNumber');
     }
 
     private configureEmployerSection(formModel: JobPublicationForm) {
