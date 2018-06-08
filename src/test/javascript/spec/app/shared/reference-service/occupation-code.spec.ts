@@ -1,4 +1,4 @@
-import { OccupationCode } from '../../../../../../main/webapp/app/shared/reference-service/occupation-code';
+import { OccupationCode } from '../../../../../../main/webapp/app/shared/reference-service';
 
 describe('OccupationCode', () => {
 

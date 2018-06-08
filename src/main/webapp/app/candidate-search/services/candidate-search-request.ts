@@ -30,5 +30,6 @@ export interface CandidateLanguageSkill {
 
 export interface OccupationCode {
     type: string,
-    value: number
+    value: number,
+    mapping?: OccupationCode
 }

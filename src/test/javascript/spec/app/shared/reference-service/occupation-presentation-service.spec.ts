@@ -125,7 +125,7 @@ describe('OccupationPresentationService', () => {
                         id: '10',
                         code: 10,
                         label: 'Informatiker',
-                        type: 'avam',
+                        type: 'AVAM',
                         mappings: null,
                         classifier: '',
                         language: 'de'
@@ -134,7 +134,7 @@ describe('OccupationPresentationService', () => {
                         id: '20',
                         code: 20,
                         label: 'Bioinformatiker',
-                        type: 'x28',
+                        type: 'X28',
                         mappings: null,
                         classifier: '',
                         language: 'de'
@@ -143,8 +143,8 @@ describe('OccupationPresentationService', () => {
                         id: '30',
                         code: 30,
                         label: 'Wirtschaftinformatiker',
-                        type: 'x28',
-                        mappings: { 'avam': 111 },
+                        type: 'X28',
+                        mappings: { 'AVAM': 111 },
                         classifier: '',
                         language: 'de'
                     } as OccupationLabelSuggestion,
@@ -154,7 +154,7 @@ describe('OccupationPresentationService', () => {
                         id: '300',
                         code: 300,
                         label: 'Berufe der Informatik',
-                        type: 'sbn3',
+                        type: 'SBN3',
                         classifier: '',
                         language: 'de'
                     } as OccupationLabel
@@ -168,10 +168,10 @@ describe('OccupationPresentationService', () => {
 
             // then
             expect(suggestion).toEqual([
-                new TypeaheadMultiselectModel(OccupationInputType.OCCUPATION, 'avam:10', 'Informatiker', 0),
-                new TypeaheadMultiselectModel(OccupationInputType.OCCUPATION, 'x28:20', 'Bioinformatiker', 1),
-                new TypeaheadMultiselectModel(OccupationInputType.OCCUPATION, 'x28:30,avam:111', 'Wirtschaftinformatiker', 2),
-                new TypeaheadMultiselectModel(OccupationInputType.CLASSIFICATION, 'sbn3:300', 'Berufe der Informatik', 3)
+                new TypeaheadMultiselectModel(OccupationInputType.OCCUPATION, 'AVAM:10', 'Informatiker', 0),
+                new TypeaheadMultiselectModel(OccupationInputType.OCCUPATION, 'X28:20', 'Bioinformatiker', 1),
+                new TypeaheadMultiselectModel(OccupationInputType.OCCUPATION, 'X28:30,AVAM:111', 'Wirtschaftinformatiker', 2),
+                new TypeaheadMultiselectModel(OccupationInputType.CLASSIFICATION, 'SBN3:300', 'Berufe der Informatik', 3)
             ]);
         });
     });
@@ -204,10 +204,10 @@ describe('OccupationPresentationService', () => {
                         id: '10',
                         code: 10,
                         label: 'Informatiker',
-                        type: 'avam',
+                        type: 'AVAM',
                         mappings: {
-                            x28: 1,
-                            bfs: 12
+                            X28: 1,
+                            BFS: 12
                         },
                         classifier: '',
                         language: 'de'
@@ -223,7 +223,7 @@ describe('OccupationPresentationService', () => {
 
             // then
             expect(suggestion).toEqual([
-                new TypeaheadMultiselectModel(OccupationInputType.OCCUPATION, 'bfs:12', 'Informatiker', 0)
+                new TypeaheadMultiselectModel(OccupationInputType.OCCUPATION, 'AVAM:10,BFS:12', 'Informatiker', 0)
             ]);
         });
     });

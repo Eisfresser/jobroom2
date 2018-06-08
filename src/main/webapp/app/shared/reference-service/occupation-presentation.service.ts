@@ -86,13 +86,12 @@ export class OccupationPresentationService {
             (type: string) =>
                 (startIdx: number) =>
                     (o: OccupationLabel | OccupationLabelSuggestion, idx: number) => {
-                        const defaultCode = new OccupationCode(o.code, o.type).toString();
-                        const avamCode = o['mappings'] && o['mappings'].avam && o.type === 'x28'
-                            ? new OccupationCode(o['mappings'].avam, 'avam').toString()
+                        const avamMapping = o['mappings'] && o['mappings'].AVAM && o.type === 'X28'
+                            ? { value: o['mappings'].AVAM, type: 'AVAM' }
                             : null;
-                        const code = avamCode ? `${defaultCode},${avamCode}` : defaultCode;
+                        const code = new OccupationCode(o.code, o.type, null, avamMapping);
 
-                        return new TypeaheadMultiselectModel(type, code, o.label, idx + startIdx);
+                        return new TypeaheadMultiselectModel(type, code.toString(), o.label, idx + startIdx);
                     };
 
         const occupationMapper = occupationLabelMapper(OccupationInputType.OCCUPATION);
@@ -114,13 +113,12 @@ export class OccupationPresentationService {
             (type: string) =>
                 (startIdx: number) =>
                     (o: OccupationLabel | OccupationLabelSuggestion, idx: number) => {
-                        const defaultCode = new OccupationCode(o.code, o.type).toString();
-                        const bfsCode = o['mappings'] && o['mappings'].bfs && o.type === 'avam'
-                            ? new OccupationCode(o['mappings'].bfs, 'bfs').toString()
+                        const bfsCodeMapping = o['mappings'] && o['mappings'].BFS && o.type === 'AVAM'
+                            ? { value: o['mappings'].BFS, type: 'BFS' }
                             : null;
-                        const code = bfsCode ? bfsCode : defaultCode;
+                        const code = new OccupationCode(o.code, o.type, null, bfsCodeMapping);
 
-                        return new TypeaheadMultiselectModel(type, code, o.label, idx + startIdx);
+                        return new TypeaheadMultiselectModel(type, code.toString(), o.label, idx + startIdx);
                     };
 
         const occupationMapper = occupationLabelMapper(OccupationInputType.OCCUPATION);
@@ -135,7 +133,7 @@ export class OccupationPresentationService {
 
                 return [...mappedOccupations, ...mappedClassifications];
             })
-    }
+    };
 
     fetchJobPublicationOccupationSuggestions = (prefix$: Observable<string>): Observable<Array<OccupationOption>> =>
         prefix$

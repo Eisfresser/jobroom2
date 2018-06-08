@@ -6,21 +6,20 @@ import { CandidateSearchFilter } from '../../../../../../../main/webapp/app/cand
 import {
     Availability,
     Canton,
-    CEFR_Level, Degree,
+    CEFR_Level,
+    Degree,
     DrivingLicenceCategory,
     Experience,
     Graduation,
+    ITEMS_PER_PAGE,
     LanguageSkill,
     WorkForm
 } from '../../../../../../../main/webapp/app/shared';
-import { ITEMS_PER_PAGE } from '../../../../../../../main/webapp/app/shared';
 import {
     CandidateSearchToolState,
     initialState
 } from '../../../../../../../main/webapp/app/home/state-management/state/candidate-search-tool.state';
-import {
-    TypeaheadMultiselectModel
-} from '../../../../../../../main/webapp/app/shared/input-components';
+import { TypeaheadMultiselectModel } from '../../../../../../../main/webapp/app/shared/input-components';
 import { CandidateSearchRequest } from '../../../../../../../main/webapp/app/candidate-search/services/candidate-search-request';
 
 describe('createCandidateSearchRequestFromFilter', () => {
@@ -39,18 +38,34 @@ describe('createCandidateSearchRequestFromFilter', () => {
         expect(candidateSearchRequest.size).toEqual(ITEMS_PER_PAGE)
     });
 
-    it('should map CandidateSearchFilter with occupation code', () => {
-        // GIVEN
-        const occupations = [new TypeaheadMultiselectModel('occupation', 'bfs:564236', 'Java')];
-        const filter: CandidateSearchFilter = Object.assign(
-            {}, defaultFilter, { occupations });
+    describe('should map CandidateSearchFilter with occupation', () => {
+        it('AVAM code', () => {
+            // GIVEN
+            const occupations = [new TypeaheadMultiselectModel('occupation', 'avam:123', 'Java')];
+            const filter: CandidateSearchFilter = Object.assign(
+                {}, defaultFilter, { occupations });
 
-        // WHEN
-        const candidateSearchRequest: CandidateSearchRequest = createCandidateSearchRequestFromFilter(filter);
+            // WHEN
+            const candidateSearchRequest: CandidateSearchRequest = createCandidateSearchRequestFromFilter(filter);
 
-        // THEN
-        expect(candidateSearchRequest.occupationCodes[0].value).toEqual(564236);
-        expect(candidateSearchRequest.occupationCodes[0].type).toEqual('bfs');
+            // THEN
+            expect(candidateSearchRequest.occupationCodes[0].value).toEqual(123);
+            expect(candidateSearchRequest.occupationCodes[0].type).toEqual('avam');
+        });
+
+        it('additional mapping', () => {
+            // GIVEN
+            const occupations = [new TypeaheadMultiselectModel('occupation', 'avam:123,bfs:12355', 'Java')];
+            const filter: CandidateSearchFilter = Object.assign(
+                {}, defaultFilter, { occupations });
+
+            // WHEN
+            const candidateSearchRequest: CandidateSearchRequest = createCandidateSearchRequestFromFilter(filter);
+
+            // THEN
+            expect(candidateSearchRequest.occupationCodes[0].mapping.value).toEqual(12355);
+            expect(candidateSearchRequest.occupationCodes[0].mapping.type).toEqual('bfs');
+        })
     });
 
     it('should map CandidateSearchFilter with skills', () => {
