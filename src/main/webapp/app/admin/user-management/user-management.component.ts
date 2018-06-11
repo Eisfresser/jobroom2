@@ -3,6 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { JhiEventManager, JhiParseLinks, JhiAlertService } from 'ng-jhipster';
 
 import { ITEMS_PER_PAGE, Principal, User, UserService, ResponseWrapper } from '../../shared';
+import { OrganizationService } from '../../shared/organization/organization.service';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
     selector: 'jhi-user-mgmt',
@@ -11,7 +13,7 @@ import { ITEMS_PER_PAGE, Principal, User, UserService, ResponseWrapper } from '.
 export class UserMgmtComponent implements OnInit, OnDestroy {
 
     currentAccount: any;
-    users: User[];
+    users$: Observable<User[]>;
     error: any;
     success: any;
     routeData: any;
@@ -27,6 +29,7 @@ export class UserMgmtComponent implements OnInit, OnDestroy {
 
     constructor(
         private userService: UserService,
+        private organizationService: OrganizationService,
         private parseLinks: JhiParseLinks,
         private alertService: JhiAlertService,
         private principal: Principal,
@@ -77,25 +80,40 @@ export class UserMgmtComponent implements OnInit, OnDestroy {
     }
 
     loadAll() {
+        let usersResponse: Observable<ResponseWrapper>;
         if (this.currentSearch) {
-            this.userService.search({
+            usersResponse = this.userService.search({
                 page: this.page - 1,
                 query: this.currentSearch,
                 size: this.itemsPerPage,
                 sort: this.sort()
-            }).subscribe(
-                (res: ResponseWrapper) => this.onSuccess(res.json, res.headers),
-                (res: ResponseWrapper) => this.onError(res.json)
-            );
-            return;
+            });
+        } else {
+            usersResponse = this.userService.query({
+                page: this.page - 1,
+                size: this.itemsPerPage,
+                sort: this.sort()
+            });
         }
-        this.userService.query({
-            page: this.page - 1,
-            size: this.itemsPerPage,
-            sort: this.sort()}).subscribe(
-            (res: ResponseWrapper) => this.onSuccess(res.json, res.headers),
-            (res: ResponseWrapper) => this.onError(res.json)
-        );
+
+        const users$ = usersResponse
+            .do((res: ResponseWrapper) => this.onSuccess(res.headers))
+            .catch((res: ResponseWrapper) => {
+                this.onError(res.json);
+                return Observable.of(null);
+            })
+            .filter((res) => !!res)
+            .map((res) => res.json);
+
+        this.users$ = users$
+            .map((users) => users
+                .map((user) => {
+                    const organization = user.organizationId
+                        ? this.organizationService.findByExternalId(user.organizationId)
+                        : null;
+
+                    return Object.assign(user, { organization })
+                }));
     }
 
     trackIdentity(index, item: User) {
@@ -152,11 +170,10 @@ export class UserMgmtComponent implements OnInit, OnDestroy {
         this.loadAll();
     }
 
-    private onSuccess(data, headers) {
+    private onSuccess(headers) {
         this.links = this.parseLinks.parse(headers.get('link'));
         this.totalItems = headers.get('X-Total-Count');
         this.queryCount = this.totalItems;
-        this.users = data;
     }
 
     private onError(error) {

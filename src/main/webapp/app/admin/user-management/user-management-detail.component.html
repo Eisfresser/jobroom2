@@ -40,7 +40,7 @@
         </dd>
         <ng-container *ngIf="userOrganization$ | async as userOrganization">
             <dt><span jhiTranslate="userManagement.organization">Organization</span></dt>
-            <dd>{{ userOrganization.name }}</dd>
+            <dd>{{ userOrganization.name }}, {{ userOrganization.zipCode }} {{ userOrganization.city }}</dd>
         </ng-container>
     </dl>
     <button type="submit"

@@ -85,6 +85,9 @@
     <div *ngIf="identity$ | async as identity" class="base__related">
         <div class="dashboard__subtitle">{{ 'dashboard.job-publication.user-information.title' | translate }}</div>
         <strong>{{ identity.firstName }} {{ identity.lastName }}</strong><br>
-        {{ (organization$ | async)?.name }}
+        <p *ngIf="organization$ | async as organization">
+            {{ organization.name }} <br>
+            {{ organization.zipCode }} {{ organization.city }}
+        </p>
     </div>
 </div>
