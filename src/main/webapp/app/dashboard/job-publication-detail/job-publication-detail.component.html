@@ -47,14 +47,14 @@
                 </div>
             </div>
 
-            <div *ngIf="jobAdvertisement.stellennummerAvam || jobAdvertisement.id" class="job-detail__pes alv-logo-box flex-height md-whiteframe-1dp">
+            <div *ngIf="jobAdvertisement.stellennummerAvam || jobAdvertisement.stellennummerEgov" class="job-detail__pes alv-logo-box flex-height md-whiteframe-1dp">
                 <div class="job-detail__content">
                     <strong>{{ 'job-publication-details.contact.accountNumber' | translate }}:</strong><br>
                     <ng-container *ngIf="jobAdvertisement.stellennummerAvam">
                         {{ 'job-publication-details.contact.avam' | translate }}: {{ jobAdvertisement.stellennummerAvam }}<br>
                     </ng-container>
-                    <ng-container *ngIf="jobAdvertisement.id">
-                        {{ 'job-publication-details.contact.jobRoom' | translate }}: {{ jobAdvertisement.id }}
+                    <ng-container *ngIf="jobAdvertisement.stellennummerEgov">
+                        {{ 'job-publication-details.contact.jobRoom' | translate }}: {{ jobAdvertisement.stellennummerEgov }}
                     </ng-container>
                 </div>
             </div>
