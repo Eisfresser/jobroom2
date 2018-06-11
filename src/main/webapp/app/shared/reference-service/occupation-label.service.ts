@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { OccupationCode } from './occupation-code';
 
 const DEFAULT_RESPONSE_SIZE = '10';
 const OCCUPATION_LABEL_RESOURCE_SEARCH_URL = 'referenceservice/api/_search/occupations/label';
@@ -79,7 +80,8 @@ export class OccupationLabelService {
     }
 
     getOccupationLabelsByKey(key: string): Observable<OccupationLabelData> {
-        return this.http.get<OccupationLabelData>(`${OCCUPATION_LABEL_RESOURCE_URL}/${key.replace(':', '/')}`);
+        const code = OccupationCode.fromString(key);
+        return this.http.get<OccupationLabelData>(`${OCCUPATION_LABEL_RESOURCE_URL}/${code.type}/${code.value}`);
     }
 
     getOccupationMappingByAvamCode(code: number): Observable<OccupationLabelMapping> {
