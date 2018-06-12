@@ -6,8 +6,10 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.core.io.Resource;
+import org.springframework.validation.annotation.Validated;
 
 @ConfigurationProperties(prefix = "security.eiam.wsclient")
+@Validated
 public class EiamWsClientProperties {
 
     @NotBlank
@@ -227,6 +229,15 @@ public class EiamWsClientProperties {
         public void setPrivateKeyName(String privateKeyName) {
             this.privateKeyName = privateKeyName;
         }
+
+        @Override
+        public String toString() {
+            return "KeystoreProperties{" +
+                "location=" + location +
+                ", password='" + password + '\'' +
+                ", privateKeyName='" + privateKeyName + '\'' +
+                '}';
+        }
     }
 
     public static class TruststoreProperties {
@@ -251,5 +262,30 @@ public class EiamWsClientProperties {
         public void setPassword(String password) {
             this.password = password;
         }
+
+        @Override
+        public String toString() {
+            return "TruststoreProperties{" +
+                "location=" + location +
+                ", password='" + password + '\'' +
+                '}';
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "EiamWsClientProperties{" +
+            "endpointAddress='" + endpointAddress + '\'' +
+            ", clientName='" + clientName + '\'' +
+            ", validationEnabled=" + validationEnabled +
+            ", keystore=" + keystore +
+            ", truststore=" + truststore +
+            ", allowAllHostnameVerifier=" + allowAllHostnameVerifier +
+            ", connectTimeout=" + connectTimeout +
+            ", connectionRequestTimeout=" + connectionRequestTimeout +
+            ", sockedTimeout=" + sockedTimeout +
+            ", maxConnTotal=" + maxConnTotal +
+            ", monitoringUserExternalId='" + monitoringUserExternalId + '\'' +
+            '}';
     }
 }

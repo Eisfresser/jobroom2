@@ -33,6 +33,7 @@ public class EiamWsClientConfig {
     @Autowired
     public EiamWsClientConfig(EiamWsClientProperties eiamWsClientProperties) {
         this.eiamWsClientProperties = eiamWsClientProperties;
+        LOGGER.info("Received the eiamWsClientProperties: {}", eiamWsClientProperties);
     }
 
     @Bean
@@ -47,15 +48,17 @@ public class EiamWsClientConfig {
 
     @Bean
     public WebServiceTemplate eiamClientWebsericeTemplate() throws Exception {
+        LOGGER.info("About to create the eiamClientWebsericeTemplate");
         WebServiceTemplate webServiceTemplate = new WebServiceTemplate();
         webServiceTemplate.setMarshaller(jaxb2Marshaller());
         webServiceTemplate.setUnmarshaller(jaxb2Marshaller());
         webServiceTemplate.setDefaultUri(eiamWsClientProperties.getEndpointAddress());
         webServiceTemplate.setFaultMessageResolver(new SoapFaultMessageResolver());
         webServiceTemplate.setMessageSender(new HttpComponentsMessageSender(httpClient()));
-        webServiceTemplate.setInterceptors(new ClientInterceptor[]{payloadValidatingInterceptor()});
+        webServiceTemplate.setInterceptors(new ClientInterceptor[] {payloadValidatingInterceptor()});
         webServiceTemplate.setMessageFactory(messageFactory());
         webServiceTemplate.afterPropertiesSet();
+        LOGGER.info("created the eiamClientWebsericeTemplate");
         return webServiceTemplate;
     }
 
@@ -72,9 +75,9 @@ public class EiamWsClientConfig {
 
         WebServiceHttpClientBuilder httpClientBuilder = new WebServiceHttpClientBuilder();
         httpClientBuilder
-                .setTimeouts(eiamWsClientProperties.getConnectTimeout(), eiamWsClientProperties.getSockedTimeout(), eiamWsClientProperties.getConnectionRequestTimeout())
-                .setPoolSize(eiamWsClientProperties.getMaxConnTotal())
-                .setSSLContextBuilder(prepareSSLContextBuilder());
+            .setTimeouts(eiamWsClientProperties.getConnectTimeout(), eiamWsClientProperties.getSockedTimeout(), eiamWsClientProperties.getConnectionRequestTimeout())
+            .setPoolSize(eiamWsClientProperties.getMaxConnTotal())
+            .setSSLContextBuilder(prepareSSLContextBuilder());
         if (eiamWsClientProperties.isAllowAllHostnameVerifier()) {
             httpClientBuilder.allowAllHostnameVerifier();
         }
@@ -111,8 +114,8 @@ public class EiamWsClientConfig {
     private Jaxb2Marshaller jaxb2Marshaller() {
         Jaxb2Marshaller jaxb2Marshaller = new Jaxb2Marshaller();
         String[] packagesToScan = {
-                "ch.adnovum.nevisidm.ws.services.v1_32",
-                "ch.adnovum.nevisidm.ws.services.v1"
+            "ch.adnovum.nevisidm.ws.services.v1_32",
+            "ch.adnovum.nevisidm.ws.services.v1"
         };
         jaxb2Marshaller.setPackagesToScan(packagesToScan);
         return jaxb2Marshaller;
