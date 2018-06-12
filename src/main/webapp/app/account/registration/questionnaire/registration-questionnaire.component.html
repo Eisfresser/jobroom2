@@ -1,0 +1,119 @@
+<div class="registration-questionnaire">
+    <form [formGroup]="roleForm" (ngSubmit)="next()" novalidate>
+
+        <div class="registration-questionnaire__header">
+            <h2 jhiTranslate="registrationQuestionnaire.header"></h2>
+            <p jhiTranslate="registrationQuestionnaire.placeholder"></p>
+        </div>
+
+        <div class="registration-questionnaire__paragraph">
+            <fieldset>
+                <div class="radio col-form-label">
+                    <input
+                        class="form-check-input"
+                        type="radio"
+                        formControlName="role"
+                        id="ravCustomer"
+                        value="rav">
+                    <label
+                        for="ravCustomer"
+                        jhiTranslate="registrationQuestionnaire.ravCustomer">
+                    </label>
+                </div>
+                <div class="radio col-form-label">
+                    <input
+                        type="radio"
+                        formControlName="role"
+                        id="employer"
+                        value="employer">
+                    <label
+                        for="employer"
+                        jhiTranslate="registrationQuestionnaire.employer"></label>
+                </div>
+                <div class="radio col-form-label">
+                    <input
+                        id="recruitmentAgency"
+                        type="radio"
+                        formControlName="role"
+                        value="agency">
+                    <label
+                        for="recruitmentAgency"
+                        jhiTranslate="registrationQuestionnaire.recruitmentAgency.message">
+                    </label>
+                </div>
+            </fieldset>
+        </div>
+
+        <div *ngIf="userExistSectionVisible$ | async"
+             class="registration-questionnaire__paragraph">
+            <fieldset>
+
+                <div class="radio col-form-label">
+                    <input
+                        type="radio"
+                        formControlName="user"
+                        id="newAgency"
+                        value="false">
+                    <label
+                        for="newAgency"
+                        jhiTranslate="registrationQuestionnaire.recruitmentAgency.new"></label>
+                </div>
+                <div class="radio col-form-label">
+                    <input
+                        type="radio"
+                        formControlName="user"
+                        id="existingAgency"
+                        value="true">
+                    <label
+                        for="existingAgency"
+                        jhiTranslate="registrationQuestionnaire.recruitmentAgency.existing">
+                    </label>
+                </div>
+            </fieldset>
+        </div>
+
+        <div *ngIf="termsAndConditionsSectionVisible$ | async">
+            <fieldset class="registration-questionnaire__paragraph">
+                <div class="checkbox">
+                    <input
+                        type="checkbox"
+                        formControlName="termsAndConditions"
+                        id="termsAndConditions"
+                        [checked]="termsAndConditionsChecked$ | async">
+                    <label
+                        for="termsAndConditions"
+                        jhiTranslate="registrationQuestionnaire.termsOfUse.accept">
+                    </label>
+                </div>
+                <div class="checkbox-indent">
+                    <a href="#" jhiTranslate="registrationQuestionnaire.termsOfUse.link"></a>
+                </div>
+
+                <div class="registration-questionnaire__actions">
+                    <div class="form__actions">
+                        <div class="fill-space"></div>
+                        <button type="button"
+                                class="btn btn-secondary btn-lg"
+                                jhiTranslate="entity.action.cancel"
+                                (click) = "cancel()">
+                        </button>
+                        <button type="submit"
+                                class="btn btn-primary btn-lg"
+                                jhiTranslate="navigation.next"
+                                [disabled]="nextButtonActive$ | async">
+                        </button>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+
+    </form>
+</div>
+
+
+
+
+
+
+
+

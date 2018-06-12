@@ -1,6 +1,5 @@
 package ch.admin.seco.jobroom.security.jwt;
 
-import static ch.admin.seco.jobroom.security.jwt.ClaimMapper.mapUserAndAuthoritiesToClaims;
 import static io.jsonwebtoken.Jwts.builder;
 import static java.time.LocalDateTime.now;
 import static java.time.ZoneId.systemDefault;
@@ -11,6 +10,7 @@ import java.util.Date;
 import io.github.jhipster.config.JHipsterProperties;
 import io.github.jhipster.config.JHipsterProperties.Security.Authentication.Jwt;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
 import org.springframework.security.core.Authentication;
@@ -18,7 +18,9 @@ import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.stereotype.Component;
 
 import ch.admin.seco.jobroom.domain.User;
-import ch.admin.seco.jobroom.security.DomainUserPrincipal;
+import ch.admin.seco.jobroom.domain.UserInfo;
+import ch.admin.seco.jobroom.security.EiamUserPrincipal;
+import ch.admin.seco.jobroom.security.LoginFormUserPrincipal;
 
 @Component
 public class TokenProvider {
@@ -40,7 +42,20 @@ public class TokenProvider {
 
     public String createToken(Authentication authentication, boolean rememberMe) {
         final Date expirationDate = calculateExpirationDate(rememberMe);
-        Claims claims = mapUserAndAuthoritiesToClaims().apply(getUser(authentication), authentication.getAuthorities());
+        Claims claims;
+        if (authentication.getPrincipal() instanceof LoginFormUserPrincipal) {
+            LoginFormUserPrincipal principal = (LoginFormUserPrincipal) authentication.getPrincipal();
+            User user = principal.getUser();
+            claims = NoEiamClaimMapper.mapUserAndAuthoritiesToClaims().apply(user, authentication.getAuthorities());
+        } else if (authentication.getPrincipal() instanceof EiamUserPrincipal) {
+            EiamUserPrincipal principal = (EiamUserPrincipal) authentication.getPrincipal();
+            UserInfo user = principal.getUser();
+            claims = ClaimMapper.mapUserAndAuthoritiesToClaims().apply(user, authentication.getAuthorities());
+        } else if (authentication.getPrincipal() instanceof String) {
+            claims = Jwts.claims();
+        } else {
+            throw new IllegalArgumentException("The principal in the authentication is of an unknown type " + authentication.getPrincipal().getClass().getSimpleName());
+        }
         return createToken(authentication.getName(), expirationDate, claims);
     }
 
@@ -48,14 +63,6 @@ public class TokenProvider {
         String token = createToken(authentication, false);
         Date expirationDate = calculateExpirationDate(false);
         return createAccessToken(token, expirationDate);
-    }
-
-    private User getUser(Authentication authentication) {
-        if (authentication.getPrincipal() instanceof DomainUserPrincipal) {
-            final DomainUserPrincipal principal = (DomainUserPrincipal) authentication.getPrincipal();
-            return principal.getUser();
-        }
-        return null;
     }
 
     private DefaultOAuth2AccessToken createAccessToken(String token, Date expirationDate) {

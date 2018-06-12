@@ -23,6 +23,9 @@
                 },
                 "label": "Online since"
             },
+            "restricted-jobs": {
+                "label": "Stellen innerhalb Informationsvorsprung"
+            },
             "sort": {
                 "label": "Sort",
                 "option": {
@@ -34,16 +37,13 @@
             "title": "Filter search result",
             "working-time": {
                 "label": "Workload"
-            },
-            "restricted-jobs": {
-                "label": "Stellen innerhalb Informationsvorsprung"
             }
         },
         "job-search-list-item": {
             "badge": {
                 "permanent": "Permanent",
-                "temporary": "Temporary",
-                "restricted": "obloigation d'annonce"
+                "restricted": "obloigation d'annonce",
+                "temporary": "Temporary"
             }
         },
         "job-search-list": {

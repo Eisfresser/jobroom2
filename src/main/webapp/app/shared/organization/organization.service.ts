@@ -35,7 +35,10 @@ export class OrganizationService {
 
     query(req?: any): Observable<ResponseWrapper> {
         const params = createRequestOption(req);
-        return this.http.get<Organization[]>(this.resourceUrl, { params, observe: 'response' })
+        return this.http.get<Organization[]>(this.resourceUrl, {
+            params,
+            observe: 'response'
+        })
             .map((res: HttpResponse<Organization[]>) => this.convertResponse(res));
     }
 
@@ -55,6 +58,17 @@ export class OrganizationService {
             .set('resultSize', resultSize.toString());
 
         return this.http.get<OrganizationAutocomplete>(`${this.resourceSearchUrl}/suggest`, { params });
+        /*
+                return Observable.of({
+                    organizations: [<OrganizationSuggestion>{
+                        externalId: '1231232',
+                        name: 'mimacom',
+                        street: 'Galgenfeldweg 16',
+                        city: 'Bern',
+                        zipCode: '3003'
+                    }]
+                });
+        */
     }
 
     private convertResponse(res: HttpResponse<Organization>): ResponseWrapper {

@@ -23,6 +23,9 @@
                 },
                 "label": "En ligne depuis"
             },
+            "restricted-jobs": {
+                "label": "Stellen innerhalb Informationsvorsprung"
+            },
             "sort": {
                 "label": "Tri",
                 "option": {
@@ -34,16 +37,13 @@
             "title": "Filtrer les r\u00e9sultats",
             "working-time": {
                 "label": "Taux d'occupation"
-            },
-            "restricted-jobs": {
-                "label": "Stellen innerhalb Informationsvorsprung"
             }
         },
         "job-search-list-item": {
             "badge": {
                 "permanent": "Ind\u00e9termin\u00e9",
-                "temporary": "Dur\u00e9e limit\u00e9e",
-                "restricted": "obligo di annuncio"
+                "restricted": "obligo di annuncio",
+                "temporary": "Dur\u00e9e limit\u00e9e"
             }
         },
         "job-search-list": {

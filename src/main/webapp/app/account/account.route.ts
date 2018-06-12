@@ -5,7 +5,14 @@ import {
     passwordRoute,
     passwordResetFinishRoute,
     passwordResetInitRoute,
-    settingsRoute
+    registrationRoute,
+    reloginRoute,
+    settingsRoute,
+    registrationQuestionnaireRoute,
+    jobseekerDialogRoute,
+    registrationCompanyDialogRoute,
+    registrationPavDialogRoute,
+    registrationAccessCodeRoute
 } from './';
 
 const ACCOUNT_ROUTES = [
@@ -13,7 +20,14 @@ const ACCOUNT_ROUTES = [
     passwordRoute,
     passwordResetFinishRoute,
     passwordResetInitRoute,
-    settingsRoute
+    registrationRoute,
+    reloginRoute,
+    settingsRoute,
+    registrationQuestionnaireRoute,
+    jobseekerDialogRoute,
+    registrationCompanyDialogRoute,
+    registrationPavDialogRoute,
+    registrationAccessCodeRoute
 ];
 
 export const accountState: Routes = [{

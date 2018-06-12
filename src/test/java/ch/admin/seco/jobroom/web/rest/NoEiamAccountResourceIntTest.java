@@ -51,11 +51,11 @@ import ch.admin.seco.jobroom.web.rest.vm.KeyAndPasswordVM;
 /**
  * Test class for the AccountResource REST controller.
  *
- * @see AccountResource
+ * @see NoEiamAccountResource
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = JobroomApp.class)
-public class AccountResourceIntTest {
+public class NoEiamAccountResourceIntTest {
 
     @Autowired
     private UserRepository userRepository;
@@ -89,12 +89,12 @@ public class AccountResourceIntTest {
     public void setup() {
         MockitoAnnotations.initMocks(this);
         doNothing().when(mockMailService).sendActivationEmail(any());
-        AccountResource accountResource =
-                new AccountResource(userRepository, userService, mockMailService);
+        NoEiamAccountResource noEiamAccountResource =
+                new NoEiamAccountResource(userRepository, userService, mockMailService);
 
-        AccountResource accountUserMockResource =
-                new AccountResource(userRepository, mockUserService, mockMailService);
-        this.restMvc = MockMvcBuilders.standaloneSetup(accountResource)
+        NoEiamAccountResource accountUserMockResource =
+                new NoEiamAccountResource(userRepository, mockUserService, mockMailService);
+        this.restMvc = MockMvcBuilders.standaloneSetup(noEiamAccountResource)
                 .setMessageConverters(httpMessageConverters)
                 .setControllerAdvice(exceptionTranslator)
                 .build();
@@ -127,7 +127,7 @@ public class AccountResourceIntTest {
     public void testGetExistingAccount() throws Exception {
         Set<Authority> authorities = new HashSet<>();
         Authority authority = new Authority();
-        authority.setName(AuthoritiesConstants.ADMIN);
+        authority.setName(AuthoritiesConstants.ROLE_ADMIN);
         authorities.add(authority);
 
         User user = new User();
@@ -150,7 +150,7 @@ public class AccountResourceIntTest {
                 .andExpect(jsonPath("$.email").value("john.doe@jhipster.com"))
                 .andExpect(jsonPath("$.imageUrl").value("http://placehold.it/50x50"))
                 .andExpect(jsonPath("$.langKey").value("en"))
-                .andExpect(jsonPath("$.authorities").value(AuthoritiesConstants.ADMIN));
+                .andExpect(jsonPath("$.authorities").value(AuthoritiesConstants.ROLE_ADMIN));
     }
 
     @Test
@@ -216,7 +216,7 @@ public class AccountResourceIntTest {
                 null,                   // createdDate
                 null,                   // lastModifiedBy
                 null,                   // lastModifiedDate
-                Collections.singleton(AuthoritiesConstants.ADMIN)
+                Collections.singleton(AuthoritiesConstants.ROLE_ADMIN)
         );
 
         restMvc.perform(
@@ -264,7 +264,7 @@ public class AccountResourceIntTest {
                 null,                   // createdDate
                 null,                   // lastModifiedBy
                 null,                   // lastModifiedDate
-                Collections.singleton(AuthoritiesConstants.ADMIN)
+                Collections.singleton(AuthoritiesConstants.ROLE_ADMIN)
         );
 
         restMvc.perform(
@@ -311,7 +311,7 @@ public class AccountResourceIntTest {
                 null,                   // createdDate
                 null,                   // lastModifiedBy
                 null,                   // lastModifiedDate
-                Collections.singleton(AuthoritiesConstants.ADMIN)
+                Collections.singleton(AuthoritiesConstants.ROLE_ADMIN)
         );
 
         restMvc.perform(
@@ -351,7 +351,7 @@ public class AccountResourceIntTest {
                 null,                   // createdDate
                 null,                   // lastModifiedBy
                 null,                   // lastModifiedDate
-                Collections.singleton(AuthoritiesConstants.ADMIN)
+                Collections.singleton(AuthoritiesConstants.ROLE_ADMIN)
         );
 
         restMvc.perform(

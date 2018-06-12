@@ -1,25 +1,33 @@
 {
     "api-user-management": {
-        "title": "Manage api users",
-        "new": "Create new api user",
-        "search": "Search api users",
+        "activated": "Active",
+        "active": "Activ\u00e9",
+        "active-date": "Last access date",
+        "company": {
+            "name": "Business name"
+        },
+        "confirm": "Sauvegarder",
+        "contact": "Contact",
+        "contact.email": "Contact email",
+        "deactivated": "D\u00e9sactiv\u00e9",
         "dialog": {
             "title": "Create or update api user"
         },
+        "dismiss": "Interrompre",
+        "email": "Courriel",
         "id": "Id",
+        "new": "Create new api user",
+        "password": "Password",
+        "password.generate": "Generate password",
+        "search": "Search api users",
+        "title": "Manage api users",
+        "user-name": "User name",
         "username": "Username",
         "companyEmail": "Business email",
         "companyName": "Business name",
         "technicalContactName": "Technical contact",
         "technicalContactEmail": "Technical contact email",
-        "password": "Password",
-        "password.generate": "Generate password",
         "createDate": "Create date",
-        "lastAccessDate": "Last access date",
-        "active": "Activ\u00e9",
-        "confirm": "Sauvegarder",
-        "dismiss": "Interrompre",
-        "activated": "Active",
-        "deactivated": "D\u00e9sactiv\u00e9"
+        "lastAccessDate": "Last access date"
     }
 }

@@ -18,11 +18,12 @@ import { HomeRoutingModule } from './home-routing.module';
 import { HomeRouterEffects } from './state-management/effects/router.effects';
 import { UserDataResolverService } from './tools/job-publication-tool/service/user-data-resolver.service';
 import { ScrollToFirstInvalidDirective } from './tools/job-publication-tool/scroll-to-first-invalid.directive';
-import { InputErrorMessageComponent } from './tools/job-publication-tool/input-error-message/input-error-message.component';
 import { JobDescriptionComponent } from './tools/job-publication-tool/job-description/job-description.component';
 import { JobAdvertisementResolverService } from './tools/job-publication-tool/service/job-advertisement-resolver.service';
 import { SystemNotificationComponent } from './system-notification/system.notification.component';
 import { SystemNotificationService } from './system-notification/system.notification.service';
+import { AuthResolverService } from './tools/auth-resolver.service';
+import { BackgroundUtils } from '../shared/utils/background-utils';
 
 @NgModule({
     imports: [
@@ -46,14 +47,15 @@ import { SystemNotificationService } from './system-notification/system.notifica
         LanguageSkillsComponent,
         ZipCodeComponent,
         ScrollToFirstInvalidDirective,
-        InputErrorMessageComponent,
         JobDescriptionComponent
     ],
     entryComponents: [],
     providers: [
         JobAdvertisementResolverService,
         UserDataResolverService,
-        SystemNotificationService
+        SystemNotificationService,
+        AuthResolverService,
+        BackgroundUtils
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

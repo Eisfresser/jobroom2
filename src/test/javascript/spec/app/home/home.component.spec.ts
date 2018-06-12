@@ -5,11 +5,14 @@ import { Store } from '@ngrx/store';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AgenciesTab, CompaniesTab } from '../../../../../main/webapp/app/home/state-management/state/layout.state';
 import { NgbTabChangeEvent } from '@ng-bootstrap/ng-bootstrap';
+import { BackgroundUtils } from '../../../../../main/webapp/app/shared/utils/background-utils';
 
 describe('HomeComponent', () => {
     const mockStore = jasmine.createSpyObj('mockStore', ['select', 'dispatch']);
     const mockRouter = jasmine.createSpyObj('mockRouter', ['navigate']);
     const mockActivatedRoute = jasmine.createSpyObj('mockActivatedRoute', ['data']);
+    const mockBackgroundUtils = jasmine.createSpyObj('mockBackgroundUtils', ['addBackGroundClass', 'removeAllBackgroundClasses']);
+
     mockStore.select.and.returnValue(Observable.of([]));
     mockActivatedRoute.data = Observable.of({});
 
@@ -22,7 +25,8 @@ describe('HomeComponent', () => {
             providers: [
                 { provide: Store, useValue: mockStore },
                 { provide: Router, useValue: mockRouter },
-                { provide: ActivatedRoute, useValue: mockActivatedRoute }
+                { provide: ActivatedRoute, useValue: mockActivatedRoute },
+                { provide: BackgroundUtils, useValue: mockBackgroundUtils }
             ]
         })
             .overrideTemplate(HomeComponent, '')

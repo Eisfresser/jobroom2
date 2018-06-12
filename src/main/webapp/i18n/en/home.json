@@ -34,9 +34,9 @@
                         "label": "Supplementary information",
                         "placeholder": "Max. 240 characters"
                     },
+                    "copy-from-business": "As above",
                     "email": "Email",
                     "online-form": "Online form",
-                    "copy-from-business": "As above",
                     "paper-application-url": "Postal address",
                     "phone": "Telephone number",
                     "title": "Application channels"
@@ -44,18 +44,15 @@
                 "company": {
                     "country": "Country",
                     "house-number": "No.",
+                    "name": "Business",
                     "postbox-city": "City",
                     "postbox-number": "PO box no.",
                     "postbox-zip": "PO box postal code",
                     "postbox-zipcode": "PO box postal code / city",
                     "street": "Street",
+                    "surrogate": "This bussiness is surrogate for a employer",
                     "title": "Business",
-                    "name": "Business",
-                    "zipcode": "Postal code / city",
-                    "surrogate": "This bussiness is surrogate for a employer"
-                },
-                "employer": {
-                    "title": "Employer"
+                    "zipcode": "Postal code / city"
                 },
                 "contact": {
                     "email": "Email",
@@ -66,27 +63,38 @@
                     "salutation": "Salutation",
                     "title": "Contact"
                 },
-                "public-contact": {
-                    "title": "Jobseeker contact",
-                    "copy": "As above"
-                },
                 "date-placeholder": "DD.MM.YYYY",
-                "employment": {
-                    "title": "Employment"
-                },
                 "degree": "Training",
                 "description": {
+                    "add": "Add description in different language",
                     "characters-counter-text": "{{count}} characters available",
                     "label": "Duties / requirements",
-                    "add": "Add description in different language",
                     "placeholder": "max. 10000 characters"
                 },
                 "disclaimer": "I certify that the employer complies with local and industry standards for wage and working conditions.",
                 "disclaimer.error": "Please confirm that the employer complies with local and industry standards for wage and working conditions.",
                 "driving-licence": "Driving licence",
+                "employer": {
+                    "title": "Employer"
+                },
+                "employment": {
+                    "title": "Employment"
+                },
+                "employmentEndDate": {
+                    "label": "Temporary employment to date",
+                    "permanent": "permanent",
+                    "temporary": "temporary until",
+                    "title": "Employment duration"
+                },
+                "employmentStartDate": {
+                    "by-arrangement": "from",
+                    "immediately": "immediately",
+                    "label": "Employment start date",
+                    "title": "Employment start"
+                },
                 "experience": "Work experience",
-                "experience.MORE_THAN_1_YEAR": "1 - 3 years",
                 "experience.LESS_THAN_1_YEAR": "less than 1 year",
+                "experience.MORE_THAN_1_YEAR": "1 - 3 years",
                 "experience.MORE_THAN_3_YEARS": "more than 3 years",
                 "experience.NO_EXPERIENCE": "no experience",
                 "job-description": "Job description",
@@ -95,8 +103,8 @@
                 },
                 "job-title": "Job title",
                 "language-skills": "Languages",
-                "language-skills.spoken.error": "Language skill is required",
                 "language-skills.add": "Add new language skill",
+                "language-skills.spoken.error": "Language skill is required",
                 "locality": {
                     "additional-text": "Additional text",
                     "additional-text.placeholder": "e.g. in the field throughout Switzerland",
@@ -133,39 +141,31 @@
                     "phone": "031 999 99 99 or +41 31 999 99 99",
                     "url": "http://www.example.ch"
                 },
+                "public-contact": {
+                    "copy": "As above",
+                    "title": "Jobseeker contact"
+                },
                 "publication": {
                     "eures": "EURES Portal",
+                    "eures.label": "EURES",
                     "eures.url": "https://ec.europa.eu/eures/public/en/",
+                    "jobdesk": "Job-Desk",
+                    "jobdesk.url": "http://www.job-desk.ch",
                     "jobroom": "Job-Room",
                     "jobroom.and": "and",
                     "jobroom.url": "https://www.job-room.ch",
-                    "jobdesk": "Job-Desk",
-                    "jobdesk.url": "http://www.job-desk.ch",
-                    "title": "Publication media",
                     "public": {
                         "label": "Job-Room public website"
                     },
                     "restricted": {
                         "label": "Job-Room restricted area"
                     },
-                    "eures.label": "EURES"
+                    "title": "Publication media"
                 },
-                "employmentEndDate": {
-                    "label": "Temporary employment to date",
-                    "permanent": "permanent",
-                    "temporary": "temporary until",
-                    "title": "Employment duration"
-                },
-                "employmentStartDate": {
-                    "by-arrangement": "from",
-                    "immediately": "immediately",
-                    "label": "Employment start date",
-                    "title": "Employment start"
-                },
+                "reset": "Reset",
                 "shortEmployment": {
                     "label": "Short employment (up to 14 calendar days)"
                 },
-                "reset": "Reset",
                 "submit": "Publish job",
                 "submit.error": "Job ad could not be saved.",
                 "submit.success": "Thank you for posting this job ad, which will now be checked by a regional employment centre (RAV). You will be informed by email as soon as it is published.",

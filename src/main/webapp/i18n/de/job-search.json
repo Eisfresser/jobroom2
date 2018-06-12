@@ -23,6 +23,9 @@
                 },
                 "label": "Online seit"
             },
+            "restricted-jobs": {
+                "label": "Stellen innerhalb Informationsvorsprung"
+            },
             "sort": {
                 "label": "Sortierung",
                 "option": {
@@ -34,16 +37,13 @@
             "title": "Suchergebnisse filtern",
             "working-time": {
                 "label": "Arbeitspensum"
-            },
-            "restricted-jobs": {
-                "label": "Stellen innerhalb Informationsvorsprung"
             }
         },
         "job-search-list-item": {
             "badge": {
                 "permanent": "Unbefristet",
-                "temporary": "Befristet",
-                "restricted": "meldepflichtig"
+                "restricted": "meldepflichtig",
+                "temporary": "Befristet"
             }
         },
         "job-search-list": {

@@ -1,0 +1,13 @@
+{
+    "registrationAvgDialog": {
+        "title": "Bitte suchen Sie Ihre Unternehmung im VZ AVG.",
+        "postal": {
+            "description": "Nach Ihrer Anforderung werden wir Ihnen <b>per Post</b> einen Freischaltcode an die im AVG Register eingetragenen Postadresse senden:"
+        },
+        "login": {
+            "description": "Mit dem zugesendeten Freischaltcode k\u00f6nnen Sie sich anschliessend \u00fcber den Login in Ihr Benutzerkonto einloggen."
+        },
+        "requestActivationCode": "Freischaltcode beantragt",
+        "returnToHomepage": "Zur\u00fcck zur Startseite"
+    }
+}

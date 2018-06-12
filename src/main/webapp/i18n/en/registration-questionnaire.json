@@ -1,0 +1,20 @@
+{
+    "registrationQuestionnaire": {
+        "employer": "I would like to use arbeit.swiss as an <b>employer</b>",
+        "header": "Complete registration",
+        "placeholder": " damit wir Sie korrekt zuordnen k\u00f6nnen.",
+        "ravCustomer": "I would like to use arbeit.swiss as a <b>RAV customer</b>",
+        "recruitmentAgency": {
+            "existing": "I am an existing job-room user",
+            "message": "I would like to use arbeit.swiss as a <b>recruitment agency</b>",
+            "new": "I sign up for the first time in arbeit.swiss or job-room",
+            "msg": "I would like to use arbeit.swiss as a <b>recruitment agency</b>"
+        },
+        "termsOfUse": {
+            "accept": "I agree to the terms and conditions",
+            "link": "View terms and conditions"
+        },
+        "title": "Registration",
+        "tile": "Registration"
+    }
+}

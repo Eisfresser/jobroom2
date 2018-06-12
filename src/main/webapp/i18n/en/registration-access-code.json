@@ -1,0 +1,11 @@
+{
+    "registrationAccessCode": {
+        "title": "Enter access code",
+        "header": "Access code",
+        "placeholder": "Enter access code",
+        "accessCode": "Access code",
+        "accessCode.error.required": "Access code is required",
+        "accessCode.error.minlength": "Access code needs to consist of 8 characters",
+        "accessCode.error.invalid": "Access code is invalid"
+    }
+}

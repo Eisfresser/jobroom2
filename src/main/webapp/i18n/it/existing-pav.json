@@ -1,0 +1,22 @@
+{
+    "registration": {
+        "existing-pav": {
+            "username": {
+                "label": "Email Address",
+                "placeholder": "Email Address"
+            },
+            "password": {
+                "label": "IT - Password",
+                "placeholder": "IT - Password"
+            },
+            "identificaton": {
+                "mismatch": {
+                    "error": "IT -We were not able to find login data based on the entered values. Please make sure you entered your email address and password correctly."
+                }
+            },
+            "text": "IT - Bitte geben Sie Ihre Anmeldedaten ein, mit welchen Sie sich bisher in Job-Room anmeldeten.",
+            "login": "Login",
+            "cancel": "Cancel"
+        }
+    }
+}

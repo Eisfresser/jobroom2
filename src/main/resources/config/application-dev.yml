@@ -169,3 +169,41 @@ jhipster:
 # ===================================================================
 
 # application:
+
+security:
+    saml:
+        idpConfigPath: classpath:config/security/local-shibboleth-idp-metadata.xml
+        keystorePath: classpath:config/security/local-keystore.jks
+        keystorePassword: 'mima01'
+        keystorePrivateKeyName: 'saml2-sp'
+        keystorePrivateKeyPassword: 'mima01'
+        externalContextScheme: 'http'
+        externalContextServerName: 'localhost'
+        externalContextServerPort: '8080'
+        externalContextPath: '/'
+        accessRequestUrl: 'https://sts-r.alv.admin.ch/_pep/accessRequest?appl=ALV-jobroom&returnURL=https%3A%2F%2Fdev.job-room.ch%2F%23%2Fregister'
+        entityId: 'urn:wrong.url:sp:seco:JOBROOM-LOCAL'
+        #entityAlias: ''
+    user:
+        logout_url: 'http://localhost:8080/saml/logout'
+        profile_url: 'http://www.cowsays.com/cow_messages/4701'
+    accessCodeMailRecipient: service-desk-mail-address@mail.ch
+    eiam:
+        wsclient:
+            clientName: ALV
+            #endpointAddress: http://localhost:8991/mockAdminServicePortBinding
+            endpointAddress: https://services.gate-r.eiam.admin.ch/nevisidm/services/v1_32/AdminService
+            #endpointAddress: https://services.gate-a.eiam.admin.ch/nevisidm/services/v1_32/AdminService
+            keystore:
+                location: file://TO_YOUR_LOCAL_DIRECTORY/eiam-client.jks
+                password: MUST_BE_PROVIDED_BY_THE_CONFIG_SERVER
+                privateKeyName: dev.job-room.ch
+            truststore:
+                location: classpath:eiam/jks/eiam-client-truststore.jks
+                password: MUST_BE_PROVIDED_BY_THE_CONFIG_SERVER
+    uid:
+        wsclient:
+            endpointAddress: https://www.uid-wse-a.admin.ch/V3.0/PublicServices.svc
+            truststore:
+                location: classpath:uid/jks/uid-client-truststore.jks
+                password: MUST_BE_PROVIDED_BY_THE_CONFIG_SERVER

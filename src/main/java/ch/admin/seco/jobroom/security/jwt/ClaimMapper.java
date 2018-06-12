@@ -3,10 +3,10 @@ package ch.admin.seco.jobroom.security.jwt;
 import static ch.admin.seco.jobroom.security.jwt.ClaimMapper.ClaimKey.auth;
 import static ch.admin.seco.jobroom.security.jwt.ClaimMapper.ClaimKey.companyId;
 import static ch.admin.seco.jobroom.security.jwt.ClaimMapper.ClaimKey.email;
-import static ch.admin.seco.jobroom.security.jwt.ClaimMapper.ClaimKey.extId;
 import static ch.admin.seco.jobroom.security.jwt.ClaimMapper.ClaimKey.firstName;
 import static ch.admin.seco.jobroom.security.jwt.ClaimMapper.ClaimKey.lastName;
 import static ch.admin.seco.jobroom.security.jwt.ClaimMapper.ClaimKey.phone;
+import static ch.admin.seco.jobroom.security.jwt.ClaimMapper.ClaimKey.userExternalId;
 import static ch.admin.seco.jobroom.security.jwt.ClaimMapper.ClaimKey.userId;
 import static ch.admin.seco.jobroom.security.jwt.TokenToAuthenticationConverter.KEY_VALUE_DELIMITER;
 import static java.util.stream.Collectors.joining;
@@ -20,7 +20,7 @@ import io.jsonwebtoken.Jwts;
 
 import org.springframework.security.core.GrantedAuthority;
 
-import ch.admin.seco.jobroom.domain.User;
+import ch.admin.seco.jobroom.domain.UserInfo;
 
 final class ClaimMapper {
 
@@ -28,10 +28,10 @@ final class ClaimMapper {
     }
 
     enum ClaimKey {
-        auth, extId, companyId, firstName, lastName, email, phone, userId;
+        auth, userExternalId, companyId, firstName, lastName, email, phone, userId;
     }
 
-    static BiFunction<User, Collection<? extends GrantedAuthority>, Claims> mapUserAndAuthoritiesToClaims() {
+    static BiFunction<UserInfo, Collection<? extends GrantedAuthority>, Claims> mapUserAndAuthoritiesToClaims() {
         return (user, authorities) -> {
             Claims claims = Jwts.claims();
             joinAuthorityNamesWithComma().accept(claims, authorities);
@@ -40,7 +40,7 @@ final class ClaimMapper {
         };
     }
 
-    private static BiConsumer<Claims, User> mapUserToClaims() {
+    private static BiConsumer<Claims, UserInfo> mapUserToClaims() {
         return (claims, user) -> {
             if (user != null) {
                 claims.put(firstName.name(), user.getFirstName());
@@ -48,9 +48,9 @@ final class ClaimMapper {
                 claims.put(email.name(), user.getEmail());
                 claims.put(userId.name(), user.getId());
                 claims.put(phone.name(), user.getPhone());
-                claims.put(extId.name(), null); //TODO to be changed to user.getExtId() after an implementation of EIAM will be provided;
-                if (user.getOrganization() != null) {
-                    claims.put(companyId.name(), user.getOrganization().getId());
+                claims.put(userExternalId.name(), user.getUserExternalId());
+                if (user.getCompany() != null) {
+                    claims.put(companyId.name(), user.getCompany().getId());
                 }
             }
         };

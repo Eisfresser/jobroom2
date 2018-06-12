@@ -34,9 +34,9 @@
                         "label": "Dati complementari",
                         "placeholder": "max. 240 caratteri"
                     },
+                    "copy-from-business": "Take address from business",
                     "email": "E-mail",
                     "online-form": "Modulo online",
-                    "copy-from-business": "Take address from business",
                     "paper-application-url": "Indirizzo postale",
                     "phone": "Telefono",
                     "title": "Tipologie di candidatura"
@@ -44,18 +44,15 @@
                 "company": {
                     "country": "Paese",
                     "house-number": "N.",
+                    "name": "Impresa",
                     "postbox-city": "Luogo",
                     "postbox-number": "N. casella postale",
                     "postbox-zip": "Casella postale NPA",
                     "postbox-zipcode": "Casella postale NPA / luogo",
                     "street": "Via",
+                    "surrogate": "This bussiness is surrogate for a employer",
                     "title": "Impresa",
-                    "name": "Impresa",
-                    "zipcode": "NPA / luogo",
-                    "surrogate": "This bussiness is surrogate for a employer"
-                },
-                "employer": {
-                    "title": "Employer"
+                    "zipcode": "NPA / luogo"
                 },
                 "contact": {
                     "email": "E-mail",
@@ -66,27 +63,38 @@
                     "salutation": "Forma di cortesia",
                     "title": "Contatto"
                 },
-                "public-contact": {
-                    "title": "Contatto per candidati",
-                    "copy": "Sovraindicato"
-                },
                 "date-placeholder": "GG.MM.AAAA",
-                "employment": {
-                    "title": "Posto di lavoro"
-                },
                 "degree": "Formazione",
                 "description": {
+                    "add": "Descrizione in un'altra lingua",
                     "characters-counter-text": "{{count}} caratteri disponibili",
                     "label": "Attivit\u00e0 / requisiti",
-                    "add": "Descrizione in un'altra lingua",
                     "placeholder": "max. 10000 caratteri"
                 },
                 "disclaimer": "Confermo che il datore di lavoro rispetta le condizioni salariali e lavorative usuali nel ramo e nel luogo in questione.",
                 "disclaimer.error": "Confermare che il datore di lavoro rispetta le condizioni salariali e lavorative del luogo e del ramo in questione.",
                 "driving-licence": "Patente",
+                "employer": {
+                    "title": "Employer"
+                },
+                "employment": {
+                    "title": "Posto di lavoro"
+                },
+                "employmentEndDate": {
+                    "label": "a tempo determinato fino al",
+                    "permanent": "a tempo indeterminato",
+                    "temporary": "a tempo determinato fino al",
+                    "title": "Durata dell'assunzione"
+                },
+                "employmentStartDate": {
+                    "by-arrangement": "dal",
+                    "immediately": "da subito",
+                    "label": "Inizio dell'attivit\u00e0 da Data",
+                    "title": "Inizio dell'attivit\u00e0"
+                },
                 "experience": "Esperienza professionale",
-                "experience.MORE_THAN_1_YEAR": "1 - 3 anni",
                 "experience.LESS_THAN_1_YEAR": "meno di 1 anno",
+                "experience.MORE_THAN_1_YEAR": "1 - 3 anni",
                 "experience.MORE_THAN_3_YEARS": "pi\u00f9 di 3 anni",
                 "experience.NO_EXPERIENCE": "senza esperienza",
                 "job-description": "Descrizione del posto",
@@ -95,8 +103,8 @@
                 },
                 "job-title": "Denominazione del posto",
                 "language-skills": "Conoscenze linguistiche",
-                "language-skills.spoken.error": "Conoscenze linguistiche obbligatorie",
                 "language-skills.add": "Add new language skill",
+                "language-skills.spoken.error": "Conoscenze linguistiche obbligatorie",
                 "locality": {
                     "additional-text": "Testo aggiuntivo",
                     "additional-text.placeholder": "p. es. servizio esterno in tutta la Svizzera",
@@ -133,39 +141,31 @@
                     "phone": "031 999 99 99 o +41 31 999 99 99",
                     "url": "http://www.esempio.ch"
                 },
+                "public-contact": {
+                    "copy": "Sovraindicato",
+                    "title": "Contatto per candidati"
+                },
                 "publication": {
                     "eures": " Portale EURES",
+                    "eures.label": "EURES",
                     "eures.url": "https://ec.europa.eu/eures/public/it/",
+                    "jobdesk": "Job-Desk",
+                    "jobdesk.url": "http://www.job-desk.ch",
                     "jobroom": "Sito Job-Room",
                     "jobroom.and": "e",
                     "jobroom.url": "https://www.job-room.ch",
-                    "jobdesk": "Job-Desk",
-                    "jobdesk.url": "http://www.job-desk.ch",
-                    "title": "Mezzi di pubblicazione",
                     "public": {
                         "label": "Job-Room public website"
                     },
                     "restricted": {
                         "label": "Job-Room restricted area"
                     },
-                    "eures.label": "EURES"
+                    "title": "Mezzi di pubblicazione"
                 },
-                "employmentEndDate": {
-                    "label": "a tempo determinato fino al",
-                    "permanent": "a tempo indeterminato",
-                    "temporary": "a tempo determinato fino al",
-                    "title": "Durata dell'assunzione"
-                },
-                "employmentStartDate": {
-                    "by-arrangement": "dal",
-                    "immediately": "da subito",
-                    "label": "Inizio dell'attivit\u00e0 da Data",
-                    "title": "Inizio dell'attivit\u00e0"
-                },
+                "reset": "Ripristina",
                 "shortEmployment": {
                     "label": "Durata non supera i 14 giorni civili"
                 },
-                "reset": "Ripristina",
                 "submit": "Pubblica posto",
                 "submit.error": "Annuncio non salvata.",
                 "submit.success": "Grazie di aver annunciato il posto vacante que sar\u00e0 esaminato dall'URC. Ricever\u00e0 un'e-mail non appena il posto vacante verr\u00e0 pubblicato.",

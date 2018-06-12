@@ -1,0 +1,18 @@
+{
+    "userRoleSelection": {
+        "employer": "",
+        "header": "",
+        "placeholder": "",
+        "ravCustomer": "",
+        "recruitmentAgency": {
+            "existing": "",
+            "message": "",
+            "new": ""
+        },
+        "termsOfUse": {
+            "accept": "",
+            "link": ""
+        },
+        "title": ""
+    }
+}

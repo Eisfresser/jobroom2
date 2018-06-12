@@ -1,13 +1,20 @@
 package ch.admin.seco.jobroom.config;
 
+import static ch.admin.seco.jobroom.security.saml.dsl.SAMLConfigurer.saml;
+
+import java.util.Map;
+
 import io.github.jhipster.config.JHipsterProperties;
 import io.github.jhipster.config.JHipsterProperties.Security.Authentication.Jwt;
 import org.zalando.problem.spring.web.advice.security.SecurityProblemSupport;
 
 import org.springframework.beans.factory.BeanInitializationException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -27,117 +34,193 @@ import org.springframework.security.web.util.matcher.NegatedRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.web.filter.CorsFilter;
 
+import ch.admin.seco.jobroom.repository.UserInfoRepository;
 import ch.admin.seco.jobroom.security.AuthoritiesConstants;
 import ch.admin.seco.jobroom.security.MD5PasswordEncoder;
 import ch.admin.seco.jobroom.security.jwt.JWTConfigurer;
+import ch.admin.seco.jobroom.security.saml.AbstractSecurityConfig;
+import ch.admin.seco.jobroom.security.saml.DefaultSamlBasedUserDetailsProvider;
+import ch.admin.seco.jobroom.security.saml.SamlProperties;
+import ch.admin.seco.jobroom.security.saml.infrastructure.EiamSamlUserDetailsService;
+import ch.admin.seco.jobroom.security.saml.infrastructure.SamlBasedUserDetailsProvider;
+import ch.admin.seco.jobroom.security.saml.utils.IamService;
 
 @Configuration
 @EnableWebSecurity
 @Import(SecurityProblemSupport.class)
-public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+public class SecurityConfiguration {
 
-    private final AuthenticationManagerBuilder authenticationManagerBuilder;
+    @Configuration
+    @Profile("no-eiam")
+    static class NoEiamSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final UserDetailsService userDetailsService;
+        private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
-    private final JHipsterProperties jHipsterProperties;
+        private final UserDetailsService loginFormUserDetailsService;
 
-    private final CorsFilter corsFilter;
+        private final JHipsterProperties jHipsterProperties;
 
-    private final SecurityProblemSupport problemSupport;
+        private final CorsFilter corsFilter;
 
-    public SecurityConfiguration(AuthenticationManagerBuilder authenticationManagerBuilder,
-                                 UserDetailsService userDetailsService,
-                                 CorsFilter corsFilter,
-                                 SecurityProblemSupport problemSupport,
-                                 JHipsterProperties jHipsterProperties
-    ) {
-        this.authenticationManagerBuilder = authenticationManagerBuilder;
-        this.userDetailsService = userDetailsService;
-        this.jHipsterProperties = jHipsterProperties;
-        this.corsFilter = corsFilter;
-        this.problemSupport = problemSupport;
-    }
+        private final SecurityProblemSupport problemSupport;
 
-    @Bean
-    public AuthenticationManager authenticationManager() {
-        try {
-            return authenticationManagerBuilder
-                .userDetailsService(userDetailsService)
-                .passwordEncoder(passwordEncoder())
+        @Bean
+        public PasswordEncoder passwordEncoder() {
+            return new MD5PasswordEncoder();
+        }
+
+
+        @Bean
+        public AuthenticationManager authenticationManager() {
+            try {
+                return authenticationManagerBuilder
+                    .userDetailsService(loginFormUserDetailsService)
+                    .passwordEncoder(passwordEncoder())
+                    .and()
+                    .build();
+            } catch (Exception e) {
+                throw new BeanInitializationException("Security configuration failed", e);
+            }
+        }
+
+        NoEiamSecurityConfig(AuthenticationManagerBuilder authenticationManagerBuilder, UserDetailsService loginFormUserDetailsService, CorsFilter corsFilter, SecurityProblemSupport problemSupport, JHipsterProperties jHipsterProperties) {
+            this.authenticationManagerBuilder = authenticationManagerBuilder;
+            this.loginFormUserDetailsService = loginFormUserDetailsService;
+            this.jHipsterProperties = jHipsterProperties;
+            this.corsFilter = corsFilter;
+            this.problemSupport = problemSupport;
+        }
+
+        @Override
+        public void configure(WebSecurity web) {
+            web.ignoring()
+                .antMatchers(HttpMethod.OPTIONS, "/**")
+                .antMatchers("/app/**/*.{js,html}")
+                .antMatchers("/i18n/**")
+                .antMatchers("/content/**")
+                .antMatchers("/swagger-ui/index.html")
+                .antMatchers("/test/**")
+                .antMatchers("/h2-console/**");
+        }
+
+        @Override
+        protected void configure(HttpSecurity http) throws Exception {
+            RequestMatcher notResourcesMatcher = new NegatedRequestMatcher(new AntPathRequestMatcher("/*service/**"));
+            HeaderWriter notResourcesHeaderWriter = new DelegatingRequestMatcherHeaderWriter(notResourcesMatcher, new CacheControlHeadersWriter());
+
+            // formatter:off
+            http
+                .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
+                .exceptionHandling()
+                .authenticationEntryPoint(problemSupport)
+                .accessDeniedHandler(problemSupport)
                 .and()
-                .build();
-        } catch (Exception e) {
-            throw new BeanInitializationException("Security configuration failed", e);
+                .csrf()
+                .disable()
+                .headers()
+                .cacheControl().disable()
+                .addHeaderWriter(notResourcesHeaderWriter)
+                .frameOptions()
+                .disable()
+                .and()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .authorizeRequests()
+                .antMatchers("/api/register").permitAll()
+                .antMatchers("/api/activate").permitAll()
+                .antMatchers("/api/authenticate").permitAll()
+                .antMatchers("/api/account/reset-password/init").permitAll()
+                .antMatchers("/api/account/reset-password/finish").permitAll()
+                .antMatchers("/api/active-system-notifications").permitAll()
+                .antMatchers("/api/profile-info").permitAll()
+                .antMatchers("/api/messages/send-anonymous-message").hasAuthority(AuthoritiesConstants.ROLE_COMPANY)
+                .antMatchers("/api/**").authenticated()
+                .antMatchers("/management/health").permitAll()
+                .antMatchers("/management/info").permitAll()
+                .antMatchers("/management/**").hasAuthority(AuthoritiesConstants.ROLE_ADMIN)
+                .antMatchers("/v2/api-docs/**").permitAll()
+                .antMatchers("/swagger-resources/configuration/ui").permitAll()
+                .antMatchers("/swagger-ui/index.html").hasAuthority(AuthoritiesConstants.ROLE_ADMIN)
+                .and()
+                .apply(securityConfigurerAdapter());
+        }
+
+        private JWTConfigurer securityConfigurerAdapter() {
+            final Jwt jwt = this.jHipsterProperties.getSecurity()
+                .getAuthentication()
+                .getJwt();
+            return new JWTConfigurer(jwt);
         }
     }
 
-    @Override
-    public void configure(WebSecurity web) {
-        web.ignoring()
-            .antMatchers(HttpMethod.OPTIONS, "/**")
-            .antMatchers("/app/**/*.{js,html}")
-            .antMatchers("/i18n/**")
-            .antMatchers("/content/**")
-            .antMatchers("/swagger-ui/index.html")
-            .antMatchers("/test/**")
-            .antMatchers("/h2-console/**");
-    }
+    @Configuration
+    @ConfigurationProperties(prefix = "security")
+    @Profile("!no-eiam")
+    static class SamlSecurityConfig extends AbstractSecurityConfig {
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        RequestMatcher notResourcesMatcher = new NegatedRequestMatcher(new AntPathRequestMatcher("/*service/**"));
-        HeaderWriter notResourcesHeaderWriter = new DelegatingRequestMatcherHeaderWriter(notResourcesMatcher, new CacheControlHeadersWriter());
+        @Autowired
+        private UserInfoRepository userInfoRepository;
 
-        // formatter:off
-        http
-            .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
-            .exceptionHandling()
-            .authenticationEntryPoint(problemSupport)
-            .accessDeniedHandler(problemSupport)
-            .and()
-            .csrf()
-            .disable()
-            .headers()
-            .cacheControl().disable()
-            .addHeaderWriter(notResourcesHeaderWriter)
-            .frameOptions()
-            .disable()
-            .and()
-            .sessionManagement()
-            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            .and()
-            .authorizeRequests()
-            .antMatchers("/api/register").permitAll()
-            .antMatchers("/api/activate").permitAll()
-            .antMatchers("/api/authenticate").permitAll()
-            .antMatchers("/api/account/reset-password/init").permitAll()
-            .antMatchers("/api/account/reset-password/finish").permitAll()
-            .antMatchers("/api/active-system-notifications").permitAll()
-            .antMatchers("/api/profile-info").permitAll()
-            .antMatchers("/api/messages/send-anonymous-message").hasAuthority(AuthoritiesConstants.COMPANY)
-            .antMatchers("/api/**").authenticated()
-            .antMatchers("/management/health").permitAll()
-            .antMatchers("/management/info").permitAll()
-            .antMatchers("/management/**").hasAuthority(AuthoritiesConstants.SYSADMIN)
-            .antMatchers("/v2/api-docs/**").permitAll()
-            .antMatchers("/swagger-resources/configuration/ui").permitAll()
-            .antMatchers("/swagger-ui/index.html").hasAuthority(AuthoritiesConstants.SYSADMIN)
-            .and()
-            .apply(securityConfigurerAdapter());
+        // this is set via @ConfigurationProperties
+        private Map<String, String> rolemapping;
 
-    }
+        @Autowired
+        private IamService iamService;
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new MD5PasswordEncoder();
-    }
+        @Autowired
+        private SamlProperties samlProperties;
 
+        @Bean
+        public PasswordEncoder passwordEncoder() {
+            return new MD5PasswordEncoder();
+        }
 
-    private JWTConfigurer securityConfigurerAdapter() {
-        final Jwt jwt = this.jHipsterProperties.getSecurity()
-                                               .getAuthentication()
-                                               .getJwt();
-        return new JWTConfigurer(jwt);
+        @Override
+        protected void configure(HttpSecurity http) throws Exception {
+            super.configure(http);
+
+            http.sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+                .and()
+                .apply(saml(samlProperties.getAccessRequestUrl()))
+                .serviceProvider()
+                /*-*/.keyStore()
+                /*----*/.storeFilePath(samlProperties.getKeystorePath())
+                /*----*/.password(samlProperties.getKeystorePassword())
+                /*----*/.keyname(samlProperties.getKeystorePrivateKeyName())
+                /*----*/.keyPassword(samlProperties.getKeystorePrivateKeyPassword())
+                /*----*/.and()
+                /*-*/.protocol(samlProperties.getExternalContextScheme())
+                /*-*/.hostname(samlProperties.getExternalContextServerName() + ":" + samlProperties.getExternalContextServerPort())
+                /*-*/.basePath(samlProperties.getExternalContextPath())
+                /*-*/.entityId(samlProperties.getEntityId())
+                /*-*/.entityAlias(samlProperties.getEntityAlias())
+                /*-*/.withEmptyStorage(false)
+                /*-*/.excludeCredential(false)
+                .and()
+                .identityProvider()
+                /*-*/.discoveryEnabled(false)
+                /*-*/.signMetadata(true)
+                /*-*/.metadataFilePath(samlProperties.getIdpConfigPath())
+                .and()
+                .userDetailsService(this.eiamSamlUserDetailsService());
+        }
+
+        private EiamSamlUserDetailsService eiamSamlUserDetailsService() {
+            return new EiamSamlUserDetailsService(samlBasedUserDetailsProvider(), userInfoRepository);
+        }
+
+        private SamlBasedUserDetailsProvider samlBasedUserDetailsProvider() {
+            return new DefaultSamlBasedUserDetailsProvider(iamService, rolemapping);
+        }
+
+        public Map<String, String> getRolemapping() {
+            return rolemapping;
+        }
+
+        public void setRolemapping(Map<String, String> rolemapping) {
+            this.rolemapping = rolemapping;
+        }
     }
 }

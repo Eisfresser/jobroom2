@@ -67,6 +67,10 @@ export class JhiAlertErrorComponent implements OnDestroy {
                     this.addErrorAlert('Not found', 'error.url.not.found');
                     break;
 
+                case 401:
+                    this.addErrorAlert('Unauthorized', 'error.http.401');
+                    break;
+
                 default:
                     if (httpErrorResponse.error !== '' && httpErrorResponse.error.message) {
                         this.addErrorAlert(httpErrorResponse.error.message);

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title th:text="#{email.accessCodeLetter.title}">Job-Room Zugriffscode-Brief verschicken</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link rel="shortcut icon" th:href="@{|${baseUrl}/favicon.ico|}" />
+    </head>
+    <body>
+        <p th:text="#{email.greeting}">
+            Hello,
+        </p>
+        <p th:text="#{email.accessCodeLetter.text}">
+            Ein neuer Benutzer hat sich in Job-Room registriert. Bitte drucken Sie das angehängte Dokument aus und senden Sie den Brief per Post an die im Brief aufgeführte Adresse.
+        </p>
+        <p>
+            <span th:text="#{email.greeting2}">Regards,</span>
+            <br/>
+            <em th:text="#{email.signature}">the Job-Room Team</em>
+        </p>
+    </body>
+</html>

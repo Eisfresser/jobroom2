@@ -12,6 +12,11 @@ public final class Constants {
     public static final String ANONYMOUS_USER = "anonymoususer";
     public static final String DEFAULT_LANGUAGE = "de";
 
+    public static final String TYPE_EMPLOYER = "EMPLOYER";
+    public static final String TYPE_AGENT = "AGENT";
+    public static final String TYPE_UNKOWN = "UNKNOWN";
+    public static final String USER_TYPE_REGEX = "^(EMPLOYER|AGENT|UNKNOWN)$";
+
     private Constants() {
     }
 }

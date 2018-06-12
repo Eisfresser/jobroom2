@@ -23,6 +23,9 @@
                 },
                 "label": "Online dal"
             },
+            "restricted-jobs": {
+                "label": "Stellen innerhalb Informationsvorsprung"
+            },
             "sort": {
                 "label": "Classificazione",
                 "option": {
@@ -34,16 +37,13 @@
             "title": "Filtra risultati della ricerca",
             "working-time": {
                 "label": "Grado di occupazione"
-            },
-            "restricted-jobs": {
-                "label": "Stellen innerhalb Informationsvorsprung"
             }
         },
         "job-search-list-item": {
             "badge": {
                 "permanent": "A tempo indeterminato",
-                "temporary": "A tempo determinato",
-                "restricted": "registration requirement"
+                "restricted": "registration requirement",
+                "temporary": "A tempo determinato"
             }
         },
         "job-search-list": {

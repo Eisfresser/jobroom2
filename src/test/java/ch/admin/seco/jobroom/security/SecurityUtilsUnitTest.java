@@ -71,7 +71,7 @@ public class SecurityUtilsUnitTest {
         securityContext.setAuthentication(new UsernamePasswordAuthenticationToken("user", "user", singletonList(new SimpleGrantedAuthority(USER))));
 
         boolean hasRoleUser = isCurrentUserInRole(USER);
-        boolean hasRoleAdmin = isCurrentUserInRole(ADMIN);
+        boolean hasRoleAdmin = isCurrentUserInRole(ROLE_ADMIN);
 
         assertThat(hasRoleUser).isTrue();
         assertThat(hasRoleAdmin).isFalse();

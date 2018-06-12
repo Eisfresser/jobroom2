@@ -34,9 +34,9 @@
                         "label": "Erg\u00e4nzende Angaben",
                         "placeholder": "max. 240 Zeichen"
                     },
+                    "copy-from-business": "Wie oben",
                     "email": "E-Mail",
                     "online-form": "Online-Formular",
-                    "copy-from-business": "Wie oben",
                     "paper-application-url": "Postadresse",
                     "phone": "Telefon",
                     "title": "Bewerbungsformen"
@@ -44,18 +44,15 @@
                 "company": {
                     "country": "Land",
                     "house-number": "Nr.",
+                    "name": "Unternehmen",
                     "postbox-city": "Ort",
                     "postbox-number": "Postfach-Nr.",
                     "postbox-zip": "Postfach PLZ",
                     "postbox-zipcode": "Postfach PLZ / Ort",
                     "street": "Strasse",
+                    "surrogate": "This bussiness is surrogate for a employer",
                     "title": "Unternehmen",
-                    "name": "Unternehmen",
-                    "zipcode": "PLZ / Ort",
-                    "surrogate": "This bussiness is surrogate for a employer"
-                },
-                "employer": {
-                    "title": "Employer"
+                    "zipcode": "PLZ / Ort"
                 },
                 "contact": {
                     "email": "E-Mail",
@@ -66,27 +63,38 @@
                     "salutation": "Anrede",
                     "title": "Kontakt"
                 },
-                "public-contact": {
-                    "title": "Kontakt f\u00fcr Stellensuchende",
-                    "copy": "Wie oben"
-                },
                 "date-placeholder": "TT.MM.JJJJ",
-                "employment": {
-                    "title": "Arbeitsstelle"
-                },
                 "degree": "Ausbildung",
                 "description": {
+                    "add": "Beschreibung in anderer Sprache hinzuf\u00fcgen",
                     "characters-counter-text": "{{count}} Zeichen verbleibend.",
                     "label": "T\u00e4tigkeit / Anforderungen",
-                    "add": "Beschreibung in anderer Sprache hinzuf\u00fcgen",
                     "placeholder": "max. 10000 Zeichen"
                 },
                 "disclaimer": "Ich best\u00e4tige, dass der Arbeitgeber die orts- und branchen\u00fcblichen Lohn- und Arbeitsbedingungen einh\u00e4lt.",
                 "disclaimer.error": "Bitte best\u00e4tigen Sie, dass der Arbeitgeber die orts- und branchen\u00fcblichen Lohn- und Arbeitsbedingungen einh\u00e4lt.",
                 "driving-licence": "F\u00fchrerausweis",
+                "employer": {
+                    "title": "Employer"
+                },
+                "employment": {
+                    "title": "Arbeitsstelle"
+                },
+                "employmentEndDate": {
+                    "label": "Anstellungsdauer befristet bis Datum",
+                    "permanent": "unbefristet",
+                    "temporary": "befristet bis",
+                    "title": "Anstellungsdauer"
+                },
+                "employmentStartDate": {
+                    "by-arrangement": "ab",
+                    "immediately": "ab sofort",
+                    "label": "Stellenantritt ab Datum",
+                    "title": "Stellenantritt"
+                },
                 "experience": "Berufserfahrung",
-                "experience.MORE_THAN_1_YEAR": "1 - 3 Jahre",
                 "experience.LESS_THAN_1_YEAR": "weniger als 1 Jahr",
+                "experience.MORE_THAN_1_YEAR": "1 - 3 Jahre",
                 "experience.MORE_THAN_3_YEARS": "mehr als 3 Jahre",
                 "experience.NO_EXPERIENCE": "keine Erfahrung",
                 "job-description": "Stellenbeschreibung",
@@ -95,8 +103,8 @@
                 },
                 "job-title": "Stellenbezeichnung",
                 "language-skills": "Sprachkenntnisse",
-                "language-skills.spoken.error": "Language skill is required",
                 "language-skills.add": "Add new language skill",
+                "language-skills.spoken.error": "Language skill is required",
                 "locality": {
                     "additional-text": "Zusatztext",
                     "additional-text.placeholder": "z. B. Aussendienst in der ganzen Schweiz",
@@ -133,39 +141,31 @@
                     "phone": "031 999 99 99 oder +41 31 999 99 99",
                     "url": "http://www.muster.ch"
                 },
+                "public-contact": {
+                    "copy": "Wie oben",
+                    "title": "Kontakt f\u00fcr Stellensuchende"
+                },
                 "publication": {
                     "eures": "EURES Portal",
+                    "eures.label": "EURES",
                     "eures.url": "https://ec.europa.eu/eures/public/de/",
+                    "jobdesk": "Job-Desk",
+                    "jobdesk.url": "http://www.job-desk.ch",
                     "jobroom": "Job-Room",
                     "jobroom.and": "und",
                     "jobroom.url": "https://www.job-room.ch",
-                    "jobdesk": "Job-Desk",
-                    "jobdesk.url": "http://www.job-desk.ch",
-                    "title": "Publikationsmedien",
                     "public": {
                         "label": "Job-Room public website"
                     },
                     "restricted": {
                         "label": "Job-Room restricted area"
                     },
-                    "eures.label": "EURES"
+                    "title": "Publikationsmedien"
                 },
-                "employmentEndDate": {
-                    "label": "Anstellungsdauer befristet bis Datum",
-                    "permanent": "unbefristet",
-                    "temporary": "befristet bis",
-                    "title": "Anstellungsdauer"
-                },
-                "employmentStartDate": {
-                    "by-arrangement": "ab",
-                    "immediately": "ab sofort",
-                    "label": "Stellenantritt ab Datum",
-                    "title": "Stellenantritt"
-                },
+                "reset": "Zur\u00fccksetzen",
                 "shortEmployment": {
                     "label": "Kurzeinsatz (bis zu 14 Kalendertage)"
                 },
-                "reset": "Zur\u00fccksetzen",
                 "submit": "Stelle publizieren",
                 "submit.error": "Die Stellenanzeige konnte nicht gespeichert werden.",
                 "submit.success": "Besten Dank f\u00fcr Ihre Stellenmeldung. Ihr Inserat wird nun von einem Regionalen Arbeitsvermittlungszentrum (RAV) gepr\u00fcft. Sie werden per E-Mail informiert, sobald die Stelle ver\u00f6ffentlicht wurde.",

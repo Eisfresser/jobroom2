@@ -5,7 +5,6 @@ import static java.util.UUID.randomUUID;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 
 import java.util.List;
-import java.util.UUID;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -14,7 +13,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import ch.admin.seco.jobroom.domain.Organization;
 import ch.admin.seco.jobroom.domain.User;
 import ch.admin.seco.jobroom.security.AuthoritiesConstants;
-import ch.admin.seco.jobroom.security.DomainUserPrincipal;
+import ch.admin.seco.jobroom.security.LoginFormUserPrincipal;
 
 class TestAuthenticationFactory {
     static Authentication anonymousAuthentication() {
@@ -23,7 +22,7 @@ class TestAuthenticationFactory {
     }
 
     static Authentication domainUserAuthentication() {
-        DomainUserPrincipal principal = new DomainUserPrincipal(jobRoomUser());
+        LoginFormUserPrincipal principal = new LoginFormUserPrincipal(jobRoomUser());
         List<SimpleGrantedAuthority> authorities = singletonList(new SimpleGrantedAuthority(AuthoritiesConstants.ANONYMOUS));
         return new UsernamePasswordAuthenticationToken(principal, EMPTY, authorities);
     }

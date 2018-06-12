@@ -158,15 +158,15 @@
         "item-count": "Mostra {{first}} - {{second}} di {{total}} articoli.",
         "job-publication": {
             "status": {
+                "APPROVED": "Approved",
+                "ARCHIVE": "Archive",
+                "CANCELLED": "Canceled",
                 "CREATED": "Created",
                 "INSPECTING": "Inspecting",
-                "APPROVED": "Approved",
-                "REJECTED": "Rejected",
-                "REFINING": "Refining",
-                "PUBLISHED_RESTRICTED": "Published restricted",
                 "PUBLISHED_PUBLIC": "Published public",
-                "CANCELLED": "Canceled",
-                "ARCHIVE": "Archive"
+                "PUBLISHED_RESTRICTED": "Published restricted",
+                "REFINING": "Refining",
+                "REJECTED": "Rejected"
             }
         },
         "menu": {
@@ -175,10 +175,12 @@
                 "logout": "Esci",
                 "main": "Utente",
                 "password": "Password",
+                "registration": "Crea Account",
                 "sessions": "Sessioni",
                 "settings": "Impostazioni"
             },
             "admin": {
+                "api-user-management": "API-Schl\u00fcssel-Verwaltung",
                 "apidocs": "API",
                 "audits": "Cambiamenti",
                 "configuration": "Configurazione",
@@ -197,8 +199,7 @@
                 "metrics": "Metriche",
                 "systemNotifications": "Notifica di sistema",
                 "tracker": "Tracciamento utente",
-                "userManagement": "Gestione utenti",
-                "api-user-management": "API-Schl\u00fcssel-Verwaltung"
+                "userManagement": "Gestione utenti"
             },
             "dashboard": "Dashboard",
             "entities": {
@@ -313,6 +314,7 @@
                 "ja": "Giapponese",
                 "km": "Khmer",
                 "ku": "Curdo",
+                "label": "Lingua",
                 "level": {
                     "BASIC": "Conoscenza di base",
                     "INTERMEDIATE": "Buona conoscenza",
@@ -340,8 +342,7 @@
                 "tr": "Turco",
                 "vi": "Vietnamita",
                 "written": "Scritto",
-                "zh": "Cinese",
-                "label": "Lingua"
+                "zh": "Cinese"
             },
             "languages": "Conoscenze linguistiche",
             "region": {

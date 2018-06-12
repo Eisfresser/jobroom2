@@ -13,6 +13,7 @@
             "title": "Benutzer"
         },
         "email": "E-Mail",
+        "extid": "ExtId",
         "firstName": "Vorname",
         "home": {
             "createLabel": "Neuen Benutzer erstellen",

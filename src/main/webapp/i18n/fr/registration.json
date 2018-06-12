@@ -1,0 +1,25 @@
+{
+    "registration": {
+        "basics": {
+            "text": "Text in Franz\u00f6sisch.",
+            "title": "FR-Grundlagen"
+        },
+        "button": {
+            "text": "FR-Jetzt Benutzer registrieren"
+        },
+        "chlogin": {
+            "link": "<a href=\"URL-Franz\u00f6sisch\" target=\"_blank\">Link text in Franz\u00f6sisch</a>",
+            "text": "Text in Franz\u00f6sisch.",
+            "title": "FR-Registrierung mit E-Mail, Passwort und SMS-Code (CH-Login)"
+        },
+        "click": {
+            "text": "FR-Klicken Sie hier, um mit der Benutzerregistrierung zu beginnen."
+        },
+        "suisseid": {
+            "link": "<a href=\"URL-Franz\u00f6sisch\" target=\"_blank\">Link text in Franz\u00f6sisch</a>",
+            "text": "Text in Franz\u00f6sisch.",
+            "title": "FR-Registrierung mit SuisseID"
+        },
+        "title": "FR-Anleitung zur Benutzerregistrierung"
+    }
+}

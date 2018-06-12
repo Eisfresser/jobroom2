@@ -34,9 +34,9 @@
                         "label": "Indications compl\u00e9mentaires",
                         "placeholder": "max. 240 caract\u00e8res"
                     },
+                    "copy-from-business": "Take address from business",
                     "email": "Courriel",
                     "online-form": "Formulaire en ligne",
-                    "copy-from-business": "Take address from business",
                     "paper-application-url": "Adresse postale",
                     "phone": "T\u00e9l\u00e9phone",
                     "title": "Types de postulation"
@@ -44,18 +44,15 @@
                 "company": {
                     "country": "Pays",
                     "house-number": "N\u00b0",
+                    "name": "Entreprise",
                     "postbox-city": "Lieu",
                     "postbox-number": "Num\u00e9ro de case postale",
                     "postbox-zip": "Case postale NPA",
                     "postbox-zipcode": "Case postale NPA / lieu",
                     "street": "Rue",
+                    "surrogate": "This bussiness is surrogate for a employer",
                     "title": "Entreprise",
-                    "name": "Entreprise",
-                    "zipcode": "NPA / lieu",
-                    "surrogate": "This bussiness is surrogate for a employer"
-                },
-                "employer": {
-                    "title": "Employer"
+                    "zipcode": "NPA / lieu"
                 },
                 "contact": {
                     "email": "Courriel",
@@ -66,27 +63,38 @@
                     "salutation": "Salutation",
                     "title": "Contact"
                 },
-                "public-contact": {
-                    "title": "Contact pour candidats",
-                    "copy": "Comme ci-haut"
-                },
                 "date-placeholder": "JJ.MM.AAAA",
-                "employment": {
-                    "title": "Emploi"
-                },
                 "degree": "Formation",
                 "description": {
+                    "add": "Ajouter description en une autre langue",
                     "characters-counter-text": "{{count}} caract\u00e8res disponibles",
                     "label": "Activit\u00e9 / exigences",
-                    "add": "Ajouter description en une autre langue",
                     "placeholder": "max. 10000 caract\u00e8res"
                 },
                 "disclaimer": "Je confirme que l'employeur respecte les conditions de travail et de salaire usuelles dans la branche et la localit\u00e9 en question.",
                 "disclaimer.error": "Veuillez confirmer que l'employeur respecte bien les conditions de travail et de salaire en vigueur dans la branche et la localit\u00e9 en question.",
                 "driving-licence": "Permis de conduire",
+                "employer": {
+                    "title": "Employer"
+                },
+                "employment": {
+                    "title": "Emploi"
+                },
+                "employmentEndDate": {
+                    "label": "Engagement limit\u00e9 au [date]",
+                    "permanent": "illimit\u00e9",
+                    "temporary": "limit\u00e9 au",
+                    "title": "Dur\u00e9e de l'engagement"
+                },
+                "employmentStartDate": {
+                    "by-arrangement": "du",
+                    "immediately": "tout de suite",
+                    "label": "Entr\u00e9e en fonction le [date]",
+                    "title": "Entr\u00e9e en fonction  "
+                },
                 "experience": "Exp\u00e9rience professionnelle",
-                "experience.MORE_THAN_1_YEAR": "1 - 3 ann\u00e9es",
                 "experience.LESS_THAN_1_YEAR": "moins de 1 ann\u00e9e",
+                "experience.MORE_THAN_1_YEAR": "1 - 3 ann\u00e9es",
                 "experience.MORE_THAN_3_YEARS": "plus de 3 ann\u00e9es",
                 "experience.NO_EXPERIENCE": "sans exp\u00e9rience",
                 "job-description": "Descriptif du poste",
@@ -95,8 +103,8 @@
                 },
                 "job-title": "D\u00e9signation du poste",
                 "language-skills": "Connaissances linguistiques",
-                "language-skills.spoken.error": "Des connaissances linguistiques sont requises",
                 "language-skills.add": "Add new language skill",
+                "language-skills.spoken.error": "Des connaissances linguistiques sont requises",
                 "locality": {
                     "additional-text": "Texte compl\u00e9mentaire",
                     "additional-text.placeholder": "p. ex. service externe dans toute la Suisse",
@@ -133,39 +141,31 @@
                     "phone": "031 999 99 99 ou +41 31 999 99 99",
                     "url": "http://www.exemple.ch"
                 },
+                "public-contact": {
+                    "copy": "Comme ci-haut",
+                    "title": "Contact pour candidats"
+                },
                 "publication": {
                     "eures": "Portal EURES",
+                    "eures.label": "EURES",
                     "eures.url": "https://ec.europa.eu/eures/public/fr/",
+                    "jobdesk": "Job-Desk",
+                    "jobdesk.url": "http://www.job-desk.ch",
                     "jobroom": "Job-Room",
                     "jobroom.and": "et",
                     "jobroom.url": "https://www.job-room.ch",
-                    "jobdesk": "Job-Desk",
-                    "jobdesk.url": "http://www.job-desk.ch",
-                    "title": "Moyens de publication",
                     "public": {
                         "label": "Job-Room public website"
                     },
                     "restricted": {
                         "label": "Job-Room restricted area"
                     },
-                    "eures.label": "EURES"
+                    "title": "Moyens de publication"
                 },
-                "employmentEndDate": {
-                    "label": "Engagement limit\u00e9 au [date]",
-                    "permanent": "illimit\u00e9",
-                    "temporary": "limit\u00e9 au",
-                    "title": "Dur\u00e9e de l'engagement"
-                },
-                "employmentStartDate": {
-                    "by-arrangement": "du",
-                    "immediately": "tout de suite",
-                    "label": "Entr\u00e9e en fonction le [date]",
-                    "title": "Entr\u00e9e en fonction  "
-                },
+                "reset": "R\u00e9tablir",
                 "shortEmployment": {
                     "label": "Emploi de courte dur\u00e9e (jusqu'\u00e0 14 jours civils)"
                 },
-                "reset": "R\u00e9tablir",
                 "submit": "Publier un emploi",
                 "submit.error": "L'annonce n'a pas pu \u00eatre sauvegard\u00e9.",
                 "submit.success": "Merci d'avoir annonc\u00e9 le poste vacant que l'ORP va examiner. Vous recevrez un courriel d\u00e8s sa publication.",

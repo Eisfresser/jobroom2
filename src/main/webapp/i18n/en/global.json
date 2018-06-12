@@ -158,15 +158,15 @@
         "item-count": "Showing {{first}} - {{second}} of {{total}} items.",
         "job-publication": {
             "status": {
+                "APPROVED": "Approved",
+                "ARCHIVE": "Archive",
+                "CANCELLED": "Canceled",
                 "CREATED": "Created",
                 "INSPECTING": "Inspecting",
-                "APPROVED": "Approved",
-                "REJECTED": "Rejected",
-                "REFINING": "Refining",
-                "PUBLISHED_RESTRICTED": "Published restricted",
                 "PUBLISHED_PUBLIC": "Published public",
-                "CANCELLED": "Canceled",
-                "ARCHIVE": "Archive"
+                "PUBLISHED_RESTRICTED": "Published restricted",
+                "REFINING": "Refining",
+                "REJECTED": "Rejected"
             }
         },
         "menu": {
@@ -175,10 +175,12 @@
                 "logout": "Sign out",
                 "main": "Account",
                 "password": "Password",
+                "registration": "Register",
                 "sessions": "Sessions",
                 "settings": "Settings"
             },
             "admin": {
+                "api-user-management": "API-Schl\u00fcssel-Verwaltung",
                 "apidocs": "API",
                 "audits": "Audits",
                 "configuration": "Configuration",
@@ -197,8 +199,7 @@
                 "metrics": "Metrics",
                 "systemNotifications": "System notifications",
                 "tracker": "User tracker",
-                "userManagement": "User management",
-                "api-user-management": "API-Schl\u00fcssel-Verwaltung"
+                "userManagement": "User management"
             },
             "dashboard": "Dashboard",
             "entities": {
@@ -313,6 +314,7 @@
                 "ja": "Japanese",
                 "km": "Khmer",
                 "ku": "Kurdish",
+                "label": "Language",
                 "level": {
                     "BASIC": "Basic knowledge",
                     "INTERMEDIATE": "Good knowledge",
@@ -340,8 +342,7 @@
                 "tr": "Turkish",
                 "vi": "Vietnamese",
                 "written": "Written",
-                "zh": "Chinese",
-                "label": "Language"
+                "zh": "Chinese"
             },
             "languages": "Languages",
             "region": {

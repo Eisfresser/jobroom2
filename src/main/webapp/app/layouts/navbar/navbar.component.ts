@@ -27,6 +27,7 @@ export class NavbarComponent implements OnInit {
     isNavbarCollapsed: boolean;
     languages: any[];
     swaggerEnabled: boolean;
+    noEiam: boolean;
     modalRef: NgbModalRef;
     version: string;
     isReindexMenuCollapsed: boolean;
@@ -58,6 +59,7 @@ export class NavbarComponent implements OnInit {
         this.profileService.getProfileInfo().subscribe((profileInfo) => {
             this.inProduction = profileInfo.inProduction;
             this.swaggerEnabled = profileInfo.swaggerEnabled;
+            this.noEiam = profileInfo.noEiam;
         });
     }
 
@@ -93,6 +95,12 @@ export class NavbarComponent implements OnInit {
     }
 
     logout() {
+        this.collapseNavbar();
+        this.loginService.logout();
+        document.location.href = 'saml/logout';
+    }
+
+    logoutNoEiam() {
         this.collapseNavbar();
         this.loginService.logout();
         this.router.navigate(['']);

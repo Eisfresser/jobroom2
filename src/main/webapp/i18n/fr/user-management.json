@@ -13,6 +13,7 @@
             "title": "Utilisateur"
         },
         "email": "Courriel",
+        "extid": "ExtId",
         "firstName": "Pr\u00e9nom",
         "home": {
             "createLabel": "Cr\u00e9er un nouvel utilisateur",

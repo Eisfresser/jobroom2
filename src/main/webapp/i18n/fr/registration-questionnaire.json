@@ -1,0 +1,20 @@
+{
+    "registrationQuestionnaire": {
+        "employer": "",
+        "header": "",
+        "placeholder": "Please answer the following questions so that we can assign you correctly.",
+        "ravCustomer": "",
+        "recruitmentAgency": {
+            "existing": "",
+            "message": "",
+            "new": "",
+            "msg": ""
+        },
+        "termsOfUse": {
+            "accept": "",
+            "link": ""
+        },
+        "title": "",
+        "tile": ""
+    }
+}

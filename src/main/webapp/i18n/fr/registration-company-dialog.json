@@ -1,0 +1,22 @@
+{
+    "registrationCompanyDialog": {
+        "title": "FR - Bitte geben Sie nun Ihre Unternehmens-Identifikationsnummer (UID) an.",
+        "placeholder": "CHE-123.456.789",
+        "postal": {
+            "description": " we will send you <b>by post</b> an unlock code to the postal address associated with your UID:"
+        },
+        "login": {
+            "description": "FR - Mit dem zugesendeten Freischaltcode k\u00f6nnen Sie sich anschliessend \u00fcber den Login in Ihr Benutzerkonto einloggen."
+        },
+        "requestActivationCode": "FR - Freischaltcode per Post anfordern",
+        "activationCodeRequested": "FR - Freischaltcode erfolgreich beantragt",
+        "returnToHomepage": "FR - Zur\u00fcck zur Startseite",
+        "findButton": "FR - Suchen",
+        "validation": {
+            "error": {
+                "uid": "FR - Ung\u00fcltiges UID-Format, g\u00fcltiges Format: CHE-123.456.789",
+                "notFound": "FR - Es wurde kein Unternehmen mit der eingegebenen UID gefunden."
+            }
+        }
+    }
+}

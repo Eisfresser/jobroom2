@@ -1,5 +1,7 @@
 package ch.admin.seco.jobroom.service;
 
+import java.io.File;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 
@@ -18,8 +20,10 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import ch.admin.seco.jobroom.domain.User;
+import ch.admin.seco.jobroom.domain.UserInfo;
 import ch.admin.seco.jobroom.service.dto.AnonymousContactMessageDTO;
 import ch.admin.seco.jobroom.service.mapper.MailSenderDataMapper;
+import ch.admin.seco.jobroom.service.pdf.PdfCreatorService;
 
 /**
  * Service for sending emails.
@@ -31,6 +35,7 @@ public class MailService {
 
     private static final String USER = "user";
     private static final String BASE_URL = "baseUrl";
+
     private final Logger log = LoggerFactory.getLogger(MailService.class);
 
     private final JHipsterProperties jHipsterProperties;
@@ -43,19 +48,27 @@ public class MailService {
 
     private final MailSenderDataMapper mailSenderDataMapper;
 
+    private PdfCreatorService pdfCreatorService;
+
     public MailService(JHipsterProperties jHipsterProperties, JavaMailSender javaMailSender,
         MessageSource messageSource, SpringTemplateEngine templateEngine,
-        MailSenderDataMapper mailSenderDataMapper) {
+        MailSenderDataMapper mailSenderDataMapper, PdfCreatorService pdfCreatorService) {
 
         this.jHipsterProperties = jHipsterProperties;
         this.javaMailSender = javaMailSender;
         this.messageSource = messageSource;
         this.templateEngine = templateEngine;
         this.mailSenderDataMapper = mailSenderDataMapper;
+        this.pdfCreatorService = pdfCreatorService;
     }
 
     @Async
     public void sendEmail(String to, String subject, String content, boolean isMultipart, boolean isHtml) {
+        sendEmail(to, subject, content, isMultipart, isHtml, null, null);
+    }
+
+    @Async
+    public void sendEmail(String to, String subject, String content, boolean isMultipart, boolean isHtml, String attachmentFilename, String attachmentFilePath) {
         log.debug("Send email[multipart '{}' and html '{}'] to '{}' with subject '{}' and content={}",
             isMultipart, isHtml, to, subject, content);
 
@@ -67,6 +80,12 @@ public class MailService {
             message.setFrom(jHipsterProperties.getMail().getFrom());
             message.setSubject(subject);
             message.setText(content, isHtml);
+            if (attachmentFilename != null && attachmentFilePath != null) {
+                File attachment = new File(attachmentFilePath);
+                if (attachment.exists()) {
+                    message.addAttachment(attachmentFilename, attachment);
+                }
+            }
             javaMailSender.send(mimeMessage);
             log.debug("Sent email to User '{}'", to);
         } catch (Exception e) {
@@ -88,6 +107,26 @@ public class MailService {
         String subject = messageSource.getMessage(titleKey, null, locale);
         sendEmail(user.getEmail(), subject, content, false, true);
 
+    }
+
+    @Async
+    public void sendEmailFromTemplate(String emailAddress, String templateName, String titleKey, String languageKey) {
+        Locale locale = Locale.forLanguageTag(languageKey);
+        Context context = new Context(locale);
+        context.setVariable(BASE_URL, jHipsterProperties.getMail().getBaseUrl());
+        String content = templateEngine.process(templateName, context);
+        String subject = messageSource.getMessage(titleKey, null, locale);
+        sendEmail(emailAddress, subject, content, true, true);
+    }
+
+    @Async
+    public void sendEmailFromTemplate(String emailAddress, String templateName, String titleKey, String languageKey, String attachmentFilename, String attachmentFilePath) {
+        Locale locale = Locale.forLanguageTag(languageKey);
+        Context context = new Context(locale);
+        context.setVariable(BASE_URL, jHipsterProperties.getMail().getBaseUrl());
+        String content = templateEngine.process(templateName, context);
+        String subject = messageSource.getMessage(titleKey, null, locale);
+        sendEmail(emailAddress, subject, content, true, true, attachmentFilename, attachmentFilePath);
     }
 
     @Async
@@ -122,4 +161,19 @@ public class MailService {
         final MailSenderData mailSenderData = mailSenderDataMapper.fromAnonymousContactMessageDto(anonymousContactMessage);
         sendEmailFromTemplate(mailSenderData, "anonymousContactEmail");
     }
+
+    @Async
+    public void sendAccessCodeLetterMail(String emailAddress, UserInfo userInfo) {
+        log.debug("Sending access code letter email to the service desk '{}'", emailAddress);
+        String attachmentFilename = "Zugriffscode_Brief.pdf";
+        String pathToPdf = null;
+        try {
+            pathToPdf = pdfCreatorService.createAccessCodePdf(userInfo);
+        } catch (IOException e) {
+            //TODO: what else should we do? We could send another mail with the user details, so that the SD can manually create the letter or we could send a mail with a link to page, where the letter can be regenerated and manually downloaded
+            log.error("The access code letter for the user " + userInfo.getFirstName() + " " + userInfo.getLastName() + " could not be generated.", e);
+        }
+        sendEmailFromTemplate(emailAddress, "accessCodeLetterEmail", "email.accessCodeLetter.title", "de", attachmentFilename, pathToPdf);
+    }
+
 }

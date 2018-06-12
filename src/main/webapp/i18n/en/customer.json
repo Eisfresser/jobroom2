@@ -1,0 +1,30 @@
+{
+    "customer": {
+        "title": "Registration for Customers"
+    },
+    "registration": {
+        "customer": {
+            "birthdate": {
+                "label": "Date of Birth"
+            },
+            "identificaton": {
+                "mismatch": {
+                    "error": "We were not able to find RAV data based on the entered values. Please make sure you entered your personal number and birth date correctly."
+                }
+            },
+            "pn": {
+                "label": "Personal number",
+                "placeholder": "12345678"
+            },
+            "text": "EN Hilfetext Personennummer",
+            "title": "Identification",
+            "messages": {
+                "validate": {
+                    "pn": "Please provide a number with 8 digits"
+                }
+            },
+            "login": "Login",
+            "cancel": "Cancel"
+        }
+    }
+}

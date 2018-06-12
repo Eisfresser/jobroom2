@@ -1,0 +1,20 @@
+{
+    "registrationQuestionnaire": {
+        "employer": "",
+        "header": "",
+        "placeholder": "",
+        "ravCustomer": "",
+        "recruitmentAgency": {
+            "existing": "",
+            "message": "",
+            "new": "",
+            "msg": ""
+        },
+        "termsOfUse": {
+            "accept": "",
+            "link": ""
+        },
+        "title": "",
+        "tile": ""
+    }
+}

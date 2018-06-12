@@ -21,7 +21,12 @@
     <include
         file="config/liquibase/changelog/20180607000000_add_COMPANY_role.xml"
         relativeToChangelogFile="false"/>
-
+    <include
+        file="config/liquibase/changelog/20180531140350_added_entity_UserInfo_and_Company.xml"
+        relativeToChangelogFile="false"/>
+    <include
+        file="config/liquibase/changelog/20180607094957_changed_company_ext_id_size.xml"
+        relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>

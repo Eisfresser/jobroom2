@@ -3,11 +3,32 @@
         "title": "System notifications"
     },
     "systemNotificationsManagement": {
-        "title": "Title",
-        "type": "Type",
+        "actions": "Actions",
+        "activated": "Activated",
+        "create": {
+            "modal": {
+                "title": "Create new System Notification"
+            }
+        },
         "date-placeholder": "DD.MM.YYYY",
-        "startDate": "From",
+        "deactivated": "Deactivated",
+        "delete": {
+            "modal": {
+                "text": "Are you sure you want to delete this system notification?",
+                "title": "Delete System Notification"
+            },
+            "question": "Do you really want to delete the system notification?"
+        },
+        "edit": {
+            "modal": {
+                "title": "Edit System Notification"
+            }
+        },
         "endDate": "To",
+        "home": {
+            "create": "Create a new system notification",
+            "title": "System notifications"
+        },
         "messages": {
             "validate": {
                 "date-format": "Invalid date format, correct format: DD.MM.YYYY",
@@ -16,37 +37,16 @@
                 }
             }
         },
+        "startDate": "From",
         "status": "Status",
-        "actions": "Actions",
-        "home": {
-            "create": "Create a new system notification",
-            "title": "System notifications"
-        },
-        "activated": "Activated",
-        "deactivated": "Deactivated",
-        "delete": {
-            "question": "Do you really want to delete the system notification?",
-            "modal": {
-                "title": "Delete System Notification",
-                "text": "Are you sure you want to delete this system notification?"
-            }
-        },
-        "create": {
-            "modal": {
-                "title": "Create new System Notification"
-            }
-        },
-        "edit": {
-            "modal": {
-                "title": "Edit System Notification"
-            }
-        },
         "systemnotification": {
             "type": {
-                "systemerror": "System error",
                 "interruption": "Interruption",
-                "maintenance": "maintenance"
+                "maintenance": "maintenance",
+                "systemerror": "System error"
             }
-        }
+        },
+        "title": "Title",
+        "type": "Type"
     }
 }

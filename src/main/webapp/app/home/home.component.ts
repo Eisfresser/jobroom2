@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, Renderer2 } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import {
@@ -22,11 +22,7 @@ import { UserData } from './tools/job-publication-tool/service/user-data-resolve
 import { Subscription } from 'rxjs/Subscription';
 import { JobAdvertisement } from '../shared/job-advertisement/job-advertisement.model';
 import { SystemNotification } from './system-notification/system.notification.model';
-
-const BACKGROUND_CLASS_NAME_ARRAY = [];
-BACKGROUND_CLASS_NAME_ARRAY[ToolbarItem.JOB_SEEKERS] = 'background--jobseeker';
-BACKGROUND_CLASS_NAME_ARRAY[ToolbarItem.COMPANIES] = 'background--companies';
-BACKGROUND_CLASS_NAME_ARRAY[ToolbarItem.RECRUITMENT_AGENCIES] = 'background--pea';
+import { BackgroundUtils } from '../shared/utils/background-utils';
 
 @Component({
     selector: 'jhi-home',
@@ -55,7 +51,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     constructor(private store: Store<HomeState>,
                 private route: ActivatedRoute,
                 private router: Router,
-                private renderer: Renderer2) {
+                private backgroundUtils: BackgroundUtils) {
         this.activeSystemNotifications$ = store.select(getActiveSystemNotifications);
         this.jobSearchToolModel$ = store.select(getJobSearchToolState);
         this.candidateSearchToolModel$ = store.select(getCandidateSearchToolState);
@@ -74,12 +70,11 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.subscription = this.activeToolbarItem$
-            .subscribe((toolbarItem: ToolbarItem) =>
-                this.addBackGroundClass(BACKGROUND_CLASS_NAME_ARRAY[toolbarItem]));
+            .subscribe((toolbarItem: ToolbarItem) => this.backgroundUtils.addBackGroundClass(toolbarItem));
     }
 
     ngOnDestroy(): void {
-        this.removeAllBackgroundClass();
+        this.backgroundUtils.removeAllBackgroundClasses();
         if (this.subscription) {
             this.subscription.unsubscribe();
         }
@@ -101,17 +96,5 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     collapseSubnavbar() {
         this.isSubnavCollapsed = true;
-    }
-
-    private addBackGroundClass(className: string) {
-        this.removeAllBackgroundClass();
-        if (className) {
-            this.renderer.addClass(document.body, className);
-        }
-    }
-
-    private removeAllBackgroundClass(exclude = null) {
-        BACKGROUND_CLASS_NAME_ARRAY
-            .forEach((className) => this.renderer.removeClass(document.body, className));
     }
 }

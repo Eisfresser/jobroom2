@@ -27,6 +27,8 @@
             <thead>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
                 <th jhiSortBy="login"><span jhiTranslate="userManagement.login">Login</span> <span class="fa fa-sort"></span></th>
+                <th jhiSortBy="extid"><span jhiTranslate="userManagement.extid">Ext Id</span> <span
+                    class="fa fa-sort"></span></th>
                 <th jhiSortBy="lastName"><span jhiTranslate="userManagement.lastName">LastName</span> <span
                     class="fa fa-sort"></span></th>
                 <th jhiSortBy="firstName"><span jhiTranslate="userManagement.firstName">FirstName</span> <span

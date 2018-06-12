@@ -1,0 +1,25 @@
+{
+    "registration": {
+        "basics": {
+            "text": "Text in English.",
+            "title": "Basic Information"
+        },
+        "button": {
+            "text": "Register user now"
+        },
+        "chlogin": {
+            "link": "<a href=\"URL-Englisch\" target=\"_blank\">Link text in Englisch</a>",
+            "text": "Text in Englisch.",
+            "title": "Register with email, password and SMS code (CH login)"
+        },
+        "click": {
+            "text": "Press button to start the user registration."
+        },
+        "suisseid": {
+            "link": "<a href=\"https://www.easygov.swiss/easygov/#/generalInformation/registrationBySuisseID\" target=\"_blank\">Follow the instructions to register with your SuisseID.</a>",
+            "text": "If you own a SuisseID you can also use it to log into arbeit.swiss.",
+            "title": "Register with SuisseID"
+        },
+        "title": "Instructions for the user registration"
+    }
+}

@@ -5,6 +5,9 @@
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
 
     <changeSet id="20180502000000-1" author="mabi" >
+        <preConditions onFail="CONTINUE">
+            <sqlCheck expectedResult="0">SELECT COUNT(name) FROM jhi_authority WHERE name = 'ROLE_JOBSEEKER_CLIENT'</sqlCheck>
+        </preConditions>
         <insert tableName="jhi_authority">
             <column name="name" value="ROLE_JOBSEEKER_CLIENT"/>
         </insert>

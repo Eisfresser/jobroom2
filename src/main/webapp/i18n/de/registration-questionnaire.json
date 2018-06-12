@@ -1,0 +1,20 @@
+{
+    "registrationQuestionnaire": {
+        "employer": "Ich m\u00f6chte arbeit.swiss als <b>Arbeitgeber</b> nutzen",
+        "header": "Registrierung abschliessen",
+        "placeholder": "Bitte beantworten Sie die folgenden Fragen",
+        "ravCustomer": "Ich m\u00f6chte arbeit.swiss als <b>RAV-Kunde</b> nutzen",
+        "recruitmentAgency": {
+            "existing": "Ich bin ein bestehender Job-Room Nutzer",
+            "message": "Ich m\u00f6chte arbeit.swiss als <b>privater Arbeitsvermittler</b> nutzen",
+            "new": "Ich melde mich zum ersten Mal bei arbeit.swiss bzw. job-room an",
+            "msg": "Ich m\u00f6chte arbeit.swiss als [<b>privater Arbeitsvermittler</b>] nutzen"
+        },
+        "termsOfUse": {
+            "accept": "Ich akzeptiere die Nutzungsbedingungen",
+            "link": "Nutzungsbedingungen anzeigen"
+        },
+        "title": "Registrierung",
+        "tile": "Registrierung"
+    }
+}

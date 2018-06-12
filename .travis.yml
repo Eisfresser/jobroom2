@@ -35,12 +35,11 @@ install:
 - yarn install
 script:
 - yarn test
-- ./gradlew check jacocoTestReport sonarqube -Pprod
+- ./gradlew check -x test jacocoTestReport -Pprod
 after_success:
 - bash <(curl -s https://codecov.io/bash)
 before_deploy:
 - chmod +x .travis/deploy.sh
-deploy:
 deploy:
 - provider: script
   skip_cleanup: true
@@ -48,6 +47,13 @@ deploy:
     && curl https://dev.job-room.ch:8443/deploy/jr2 --insecure"
   on:
     branch: develop
+
+- provider: script
+  skip_cleanup: true
+  script: "./gradlew bootWar publish -Pprod -Pzipkin -x test -Pversion=EIAM-SNAPSHOT --stacktrace
+    && curl https://dev.job-room.ch:8443/deploy/jr2 --insecure"
+  on:
+    branch: feature/eiam-integration-poc
 
 - provider: script
   skip_cleanup: true

@@ -1,0 +1,12 @@
+{
+    "relogin": {
+        "button": {
+            "text": "FR-Jetzt abmelden"
+        },
+        "click": {
+            "text": " your registration will be complete."
+        },
+        "text": "FR-Sie besitzen nun die Zugriffsrechte f\u00fcr arbeit.swiss. Diese stehen Ihnen jedoch erst nach dem n\u00e4chsten Login zur Verf\u00fcgung. Bitte melden Sie sich ab. Danach ist der Registrationsprozess abgeschlossen und Sie k\u00f6nnen arbeit.swiss \u00f6ffnen und sich anmelden.",
+        "title": "FR-Registration abschliessen"
+    }
+}

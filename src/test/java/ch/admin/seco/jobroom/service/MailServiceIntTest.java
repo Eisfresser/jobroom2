@@ -7,6 +7,7 @@ import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
 
 import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
 
 import javax.mail.Multipart;
 import javax.mail.internet.MimeBodyPart;
@@ -32,13 +33,17 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import ch.admin.seco.jobroom.JobroomApp;
 import ch.admin.seco.jobroom.config.Constants;
+import ch.admin.seco.jobroom.domain.Company;
 import ch.admin.seco.jobroom.domain.User;
+import ch.admin.seco.jobroom.domain.UserInfo;
 import ch.admin.seco.jobroom.service.mapper.MailSenderDataMapper;
+import ch.admin.seco.jobroom.service.pdf.PdfCreatorService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = JobroomApp.class)
 public class MailServiceIntTest {
 
+    public static final String ACCESS_CODE_MAIL_RECIPIENT = "servicedesk@jobroom.ch";
     @Autowired
     private JHipsterProperties jHipsterProperties;
 
@@ -59,11 +64,14 @@ public class MailServiceIntTest {
 
     private MailService mailService;
 
+    private PdfCreatorService pdfCreatorService;
+
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
         doNothing().when(javaMailSender).send(any(MimeMessage.class));
-        mailService = new MailService(jHipsterProperties, javaMailSender, messageSource, templateEngine, mailSenderDataMapper);
+        pdfCreatorService = new PdfCreatorService(messageSource);
+        mailService = new MailService(jHipsterProperties, javaMailSender, messageSource, templateEngine, mailSenderDataMapper, pdfCreatorService);
     }
 
     @Test
@@ -191,6 +199,30 @@ public class MailServiceIntTest {
     public void testSendEmailWithException() throws Exception {
         doThrow(MailSendException.class).when(javaMailSender).send(any(MimeMessage.class));
         mailService.sendEmail("john.doe@example.com", "testSubject", "testContent", false, false);
+    }
+
+    @Test
+    public void testSendAccessCodeLetterMail() throws Exception {
+        Company userOrganization = new Company();
+        userOrganization.setCity("Dübendorf");
+        userOrganization.setStreet("Stadtstrasse 21");
+        userOrganization.setZipCode("8600");
+        userOrganization.setName("Stellenvermittlung24");
+        UserInfo user = new UserInfo();
+        user.setAccessCode("CODEXX");
+        user.addCompany(userOrganization);
+        user.setLangKey(Constants.DEFAULT_LANGUAGE);
+        user.setEmail("john.doe@example.com");
+
+        mailService.sendAccessCodeLetterMail(ACCESS_CODE_MAIL_RECIPIENT, user);
+
+        verify(javaMailSender).send((MimeMessage) messageCaptor.capture());
+        MimeMessage message = (MimeMessage) messageCaptor.getValue();
+        assertThat(message.getAllRecipients()[0].toString()).isEqualTo(ACCESS_CODE_MAIL_RECIPIENT);
+        assertThat(message.getFrom()[0].toString()).isEqualTo("test@localhost");
+        assertThat(((MimeMultipart)message.getContent()).getCount()).isEqualTo(2);
+        assertThat(message.getDataHandler().getContentType().startsWith("multipart/mixed"));
+        assertThat(((MimeMultipart) message.getContent()).getBodyPart(1).getContent() instanceof FileInputStream);
     }
 
 }

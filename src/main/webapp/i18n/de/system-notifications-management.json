@@ -3,11 +3,32 @@
         "title": "System Mitteilungen"
     },
     "systemNotificationsManagement": {
-        "title": "Titel",
-        "type": "Typ",
+        "actions": "Aktionen",
+        "activated": "Aktiv",
+        "create": {
+            "modal": {
+                "title": "Neue Systemmitteilung erstellen"
+            }
+        },
         "date-placeholder": "TT.MM.JJJJ",
-        "startDate": "Von",
+        "deactivated": "Deaktiviert",
+        "delete": {
+            "modal": {
+                "text": "M\u00f6chten Sie die Systemmitteilung wirklich l\u00f6schen?",
+                "title": "Systemmitteilung l\u00f6schen"
+            },
+            "question": "M\u00f6chten sie die Systemmitteilung wirklich \u00f6schen?"
+        },
+        "edit": {
+            "modal": {
+                "title": "Systemmitteilung editieren"
+            }
+        },
         "endDate": "Bis",
+        "home": {
+            "create": "Neue Systemmitteilung erfassen",
+            "title": "System Mitteilungen"
+        },
         "messages": {
             "validate": {
                 "date-format": "Datumsformat ung\u00fcltig, richtiges Format: TT.MM.JJJJ",
@@ -16,37 +37,16 @@
                 }
             }
         },
+        "startDate": "Von",
         "status": "Status",
-        "actions": "Aktionen",
-        "home": {
-            "create": "Neue Systemmitteilung erfassen",
-            "title": "System Mitteilungen"
-        },
-        "activated": "Aktiv",
-        "deactivated": "Deaktiviert",
-        "delete": {
-            "question": "M\u00f6chten sie die Systemmitteilung wirklich \u00f6schen?",
-            "modal": {
-                "title": "Systemmitteilung l\u00f6schen",
-                "text": "M\u00f6chten Sie die Systemmitteilung wirklich l\u00f6schen?"
-            }
-        },
-        "create": {
-            "modal": {
-                "title": "Neue Systemmitteilung erstellen"
-            }
-        },
-        "edit": {
-            "modal": {
-                "title": "Systemmitteilung editieren"
-            }
-        },
         "systemnotification": {
             "type": {
-                "systemerror": "Systemfehler",
                 "interruption": "Unterbrechung",
-                "maintenance": "Wartung"
+                "maintenance": "Wartung",
+                "systemerror": "Systemfehler"
             }
-        }
+        },
+        "title": "Titel",
+        "type": "Typ"
     }
 }

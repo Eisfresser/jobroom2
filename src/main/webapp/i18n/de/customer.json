@@ -1,0 +1,30 @@
+{
+    "customer": {
+        "title": "Registrierung f\u00fcr Kunden"
+    },
+    "registration": {
+        "customer": {
+            "birthdate": {
+                "label": "Geburtstag"
+            },
+            "identificaton": {
+                "mismatch": {
+                    "error": "Wir konnten keine RAV-Daten anhand Ihrer Angaben finden. Bitte \u00fcberpr\u00fcfen Sie, dass Personennummer und Geburtsdatum korrekt eingegeben wurden."
+                }
+            },
+            "pn": {
+                "label": "Personennummer",
+                "placeholder": "12345678"
+            },
+            "text": "Bitte identifizieren Sie sich mit ihrer Personennummer und ihrem Geburtsdatum. Die Personennummer finden sie auf dem Brief, welchen Sie bei der Anmeldung vom RAV erhalten haben.",
+            "title": "Identifizierung",
+            "messages": {
+                "validate": {
+                    "pn": "Bitte eine Zahl mit 8 Stellen eingeben"
+                }
+            },
+            "login": "Login",
+            "cancel": "Abbrechen"
+        }
+    }
+}

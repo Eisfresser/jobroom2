@@ -1,0 +1,22 @@
+{
+    "registrationCompanyDialog": {
+        "title": "Please enter your company identification number (UID).",
+        "placeholder": "CHE-123.456.789",
+        "postal": {
+            "description": "Upon your request"
+        },
+        "login": {
+            "description": "You can then log in to your user account via the login using the sent activation code."
+        },
+        "requestActivationCode": "Request activation code by post",
+        "activationCodeRequested": "Activation code requested successfully",
+        "returnToHomepage": "Return to homepage",
+        "findButton": "Search",
+        "validation": {
+            "error": {
+                "uid": "Invalid format of the UID, correct format: CHE-123.456.789",
+                "notFound": "No company with the given UID found."
+            }
+        }
+    }
+}

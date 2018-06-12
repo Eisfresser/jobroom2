@@ -1,0 +1,10 @@
+<bindings version="2.0" xmlns="http://java.sun.com/xml/ns/jaxb"
+          xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+>
+
+    <!-- needed for JaxB to generate the @XmlRootElement -->
+    <globalBindings>
+        <xjc:simple/>
+    </globalBindings>
+
+</bindings>

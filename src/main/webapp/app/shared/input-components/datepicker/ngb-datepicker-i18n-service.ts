@@ -5,7 +5,7 @@ import { NgbDatepickerI18n } from '@ng-bootstrap/ng-bootstrap';
 
 const I18N_VALUES = {
     months: {
-        'de': ['Jän', 'Feb', 'März', 'Apr', 'Mai', 'Juni', 'Juli', 'Aug', 'Sept', 'Okt', 'Nov', 'Dez'],
+        'de': ['Jan', 'Feb', 'März', 'Apr', 'Mai', 'Juni', 'Juli', 'Aug', 'Sept', 'Okt', 'Nov', 'Dez'],
         'fr': ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Aou', 'Sep', 'Oct', 'Nov', 'Déc'],
         'it': ['Genn', 'Febbr', 'Mar', 'Apr', 'Magg', 'Giugno', 'Luglio', 'Ag', 'Sett', 'Ott', 'Nov', 'Dic'],
         'en': ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']

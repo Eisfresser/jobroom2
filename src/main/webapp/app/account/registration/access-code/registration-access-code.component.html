@@ -1,0 +1,38 @@
+<div class="registration-questionnaire">
+    <form (ngSubmit)="registerEmployerOrAgent()">
+        <div class="registration-questionnaire__paragraph">
+
+            <h2 jhiTranslate="registrationAccessCode.placeholder"></h2>
+
+            <div class="form-group">
+                <label for="accessCode"
+                       class="form-control-label"
+                       jhiTranslate="registrationAccessCode.accessCode"></label>
+                <input type="text"
+                       id="accessCode"
+                       class="form-control"
+                       [minlength]="8"
+                       [maxlength]="8"
+                       [formControl]="form.get('accessCode')" #accessCodeInput>
+                <jr2-input-error-message [formGroup]="form"
+                                         path="accessCode"
+                                         [errorCodes]="['required', 'minlength']"
+                                         [keys]="['registrationAccessCode.accessCode.error.required',
+                                                  'registrationAccessCode.accessCode.error.minlength']">
+                </jr2-input-error-message>
+                <div *ngIf="accessCodeInvalid && form.pristine"
+                     class="alert alert-danger"
+                     jhiTranslate="registrationAccessCode.accessCode.error.invalid">
+                </div>
+            </div>
+            <div class="registration-questionnaire__actions">
+                <button type="submit"
+                        class="btn btn-primary btn-lg"
+                        jhiTranslate="navigation.next"
+                        (click)="accessCodeInput.select()"
+                        [disabled]="form.invalid">
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,12 @@
+{
+    "relogin": {
+        "button": {
+            "text": "Logout now"
+        },
+        "click": {
+            "text": "Press button to logout. With your next login"
+        },
+        "text": "You now have the necessary access rights for arbeit.swiss. But the access rights are only available after the next login. Please logout. With that the registration process is complete and you can come back to arbeit.swiss and login as a registered user.",
+        "title": "Complete registration"
+    }
+}

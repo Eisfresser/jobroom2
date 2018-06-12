@@ -22,10 +22,19 @@
                 "label": "Arbeitsform"
             }
         },
+        "anonymous-contact": {
+            "confirm": "Confirm",
+            "contact-via": "Bitte kontaktieren Sie mich per:",
+            "contact-via.email": "E-Mail",
+            "contact-via.phone": "Telefon",
+            "dismiss": "Abbrechen",
+            "send-to": "Schicken Sie Ihre Bewerbungsunterlagen an:",
+            "title": "Kandidat-/in kontaktieren"
+        },
         "back": "Zur\u00fcck zu den Suchergebnissen",
         "candidate-anonymous-contact": "Kandidat/-in kontaktieren",
-        "candidate-anonymous-contact.subject": "Sehr geehrte(r) Kandidat(in)",
         "candidate-anonymous-contact.body": "Mit Freude habe ich Ihr aussagekr\u00e4ftige Profil auf job-room.ch entdeckt.\\n Ich k\u00f6nnte mir vorstellen, dass Sie sehr gut in unser Team passen und w\u00fcrde mich sehr freuen, wenn Sie sich bei uns melden w\u00fcrden.",
+        "candidate-anonymous-contact.subject": "Sehr geehrte(r) Kandidat(in)",
         "candidate-copy-link": "Link kopieren",
         "candidate-print": "Drucken",
         "candidate-save": "Kandidatenprofil speichern",
@@ -90,15 +99,6 @@
                 "label": "Telefon"
             },
             "title": "Personalien / Kontaktdaten des Kandidaten"
-        },
-        "anonymous-contact": {
-            "dismiss": "Abbrechen",
-            "confirm": "Confirm",
-            "title": "Kandidat-/in kontaktieren",
-            "contact-via": "Bitte kontaktieren Sie mich per:",
-            "contact-via.phone": "Telefon",
-            "contact-via.email": "E-Mail",
-            "send-to": "Schicken Sie Ihre Bewerbungsunterlagen an:"
         }
     }
 }

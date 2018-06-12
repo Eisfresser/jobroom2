@@ -158,15 +158,15 @@
         "item-count": "Ergebnis {{first}} - {{second}} von {{total}} Elemente.",
         "job-publication": {
             "status": {
+                "APPROVED": "Approved",
+                "ARCHIVE": "Archive",
+                "CANCELLED": "Canceled",
                 "CREATED": "Created",
                 "INSPECTING": "Inspecting",
-                "APPROVED": "Approved",
-                "REJECTED": "Rejected",
-                "REFINING": "Refining",
-                "PUBLISHED_RESTRICTED": "Published restricted",
                 "PUBLISHED_PUBLIC": "Published public",
-                "CANCELLED": "Canceled",
-                "ARCHIVE": "Archive"
+                "PUBLISHED_RESTRICTED": "Published restricted",
+                "REFINING": "Refining",
+                "REJECTED": "Rejected"
             }
         },
         "menu": {
@@ -175,10 +175,12 @@
                 "logout": "Abmelden",
                 "main": "Zugang",
                 "password": "Passwort",
+                "registration": "Registrieren",
                 "sessions": "Sitzungen",
                 "settings": "Einstellungen"
             },
             "admin": {
+                "api-user-management": "API-Schl\u00fcssel-Verwaltung",
                 "apidocs": "API",
                 "audits": "Audits",
                 "configuration": "Konfiguration",
@@ -197,8 +199,7 @@
                 "metrics": "Metriken",
                 "systemNotifications": "System Mitteilungen",
                 "tracker": "Benutzer Aktivit\u00e4ten",
-                "userManagement": "Benutzerverwaltung",
-                "api-user-management": "API-Schl\u00fcssel-Verwaltung"
+                "userManagement": "Benutzerverwaltung"
             },
             "dashboard": "Dashboard",
             "entities": {
@@ -313,6 +314,7 @@
                 "ja": "Japanisch",
                 "km": "Khmer",
                 "ku": "Kurdisch",
+                "label": "Sprache",
                 "level": {
                     "BASIC": "Grundkenntnisse",
                     "INTERMEDIATE": "Gute Kenntnisse",
@@ -340,8 +342,7 @@
                 "tr": "T\u00fcrkisch",
                 "vi": "Vietnamesisch",
                 "written": "Schriftlich",
-                "zh": "Chinesisch",
-                "label": "Sprache"
+                "zh": "Chinesisch"
             },
             "languages": "Sprachkenntnisse",
             "region": {

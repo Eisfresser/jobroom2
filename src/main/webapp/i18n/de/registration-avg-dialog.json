@@ -1,0 +1,13 @@
+{
+    "registrationAvgDialog": {
+        "title": "Please search for your company in the VZ AVG.",
+        "postal": {
+            "description": "Upon your request, we will send you <b>by post</b> an unlock code to the postal address associated with your company:"
+        },
+        "login": {
+            "description": "You can then log in to your user account via the login using the sent activation code."
+        },
+        "requestActivationCode": "Request activation code",
+        "returnToHomepage": "Return to homepage"
+    }
+}

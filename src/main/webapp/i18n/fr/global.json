@@ -158,15 +158,15 @@
         "item-count": "Affichage {{first}} - {{second}} de {{total}} \u00e9l\u00e9ments.",
         "job-publication": {
             "status": {
+                "APPROVED": "Approved",
+                "ARCHIVE": "Archive",
+                "CANCELLED": "Canceled",
                 "CREATED": "Created",
                 "INSPECTING": "Inspecting",
-                "APPROVED": "Approved",
-                "REJECTED": "Rejected",
-                "REFINING": "Refining",
-                "PUBLISHED_RESTRICTED": "Published restricted",
                 "PUBLISHED_PUBLIC": "Published public",
-                "CANCELLED": "Canceled",
-                "ARCHIVE": "Archive"
+                "PUBLISHED_RESTRICTED": "Published restricted",
+                "REFINING": "Refining",
+                "REJECTED": "Rejected"
             }
         },
         "menu": {
@@ -175,10 +175,12 @@
                 "logout": "D\u00e9connexion",
                 "main": "Compte",
                 "password": "Mot de passe",
+                "registration": "Enregistrement",
                 "sessions": "Sessions",
                 "settings": "Param\u00e8tres"
             },
             "admin": {
+                "api-user-management": "API-Schl\u00fcssel-Verwaltung",
                 "apidocs": "API",
                 "audits": "Audits",
                 "configuration": "Configuration",
@@ -197,8 +199,7 @@
                 "metrics": "Mesures",
                 "systemNotifications": "Notification syst\u00e8me",
                 "tracker": "Activit\u00e9 des utilisateurs",
-                "userManagement": "Gestion des utilisateurs",
-                "api-user-management": "API-Schl\u00fcssel-Verwaltung"
+                "userManagement": "Gestion des utilisateurs"
             },
             "dashboard": "Dashboard",
             "entities": {
@@ -313,6 +314,7 @@
                 "ja": "Japonais",
                 "km": "Khmer",
                 "ku": "Kurde",
+                "label": "Langue",
                 "level": {
                     "BASIC": "Connaissances de base",
                     "INTERMEDIATE": "Bonnes connaissances",
@@ -340,8 +342,7 @@
                 "tr": "Turc",
                 "vi": "Vietnamien",
                 "written": "\u00c9crit",
-                "zh": "Chinois",
-                "label": "Langue"
+                "zh": "Chinois"
             },
             "languages": "Connaissances linguistiques",
             "region": {

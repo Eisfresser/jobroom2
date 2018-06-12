@@ -1,0 +1,2805 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="AdminService_v1_32" targetNamespace="http://adnovum.ch/nevisidm/ws/services/v1_32" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://adnovum.ch/nevisidm/ws/services/v1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:sns="http://adnovum.ch/nevisidm/ws/services/v1_32" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <types>
+    <xsd:schema>
+      <xsd:import namespace="http://adnovum.ch/nevisidm/ws/services/v1" schemaLocation="nevisidm_servicetypes_v1_32.xsd"/>
+    </xsd:schema>
+    <xsd:schema targetNamespace="http://docs.oasis-open.org/ws-sx/ws-trust/200512/wsdl">
+      <xsd:complexType name="DummyTypeAdmin">
+        <xsd:sequence>
+          <xsd:element name="DummyElementAdmin" type="xsd:string"/>
+        </xsd:sequence>
+      </xsd:complexType>
+    </xsd:schema>
+  </types>
+  <message name="assignPoliciesResponse">
+    <part name="parameters" element="tns:assignPoliciesResponse">
+    </part>
+  </message>
+  <message name="createEnterpriseRole">
+    <part name="parameters" element="tns:createEnterpriseRole">
+    </part>
+  </message>
+  <message name="getHistoryOfUserLoginInfo">
+    <part name="parameters" element="tns:getHistoryOfUserLoginInfo">
+    </part>
+  </message>
+  <message name="getUsersByLoginId">
+    <part name="parameters" element="tns:getUsersByLoginId">
+    </part>
+  </message>
+  <message name="updateUnit">
+    <part name="parameters" element="tns:updateUnit">
+    </part>
+  </message>
+  <message name="queryUnitsResponse">
+    <part name="parameters" element="tns:queryUnitsResponse">
+    </part>
+  </message>
+  <message name="createCredentialResponse">
+    <part name="parameters" element="tns:createCredentialResponse">
+    </part>
+  </message>
+  <message name="assignPolicies">
+    <part name="parameters" element="tns:assignPolicies">
+    </part>
+  </message>
+  <message name="queryProfiles">
+    <part name="parameters" element="tns:queryProfiles">
+    </part>
+  </message>
+  <message name="queryProperties">
+    <part name="parameters" element="tns:queryProperties">
+    </part>
+  </message>
+  <message name="getEnterpriseRoles">
+    <part name="parameters" element="tns:getEnterpriseRoles">
+    </part>
+  </message>
+  <message name="updateMobileSignatureResponse">
+    <part name="parameters" element="tns:updateMobileSignatureResponse">
+    </part>
+  </message>
+  <message name="queryClientsResponse">
+    <part name="parameters" element="tns:queryClientsResponse">
+    </part>
+  </message>
+  <message name="queryPropertiesResponse">
+    <part name="parameters" element="tns:queryPropertiesResponse">
+    </part>
+  </message>
+  <message name="assignCredential">
+    <part name="parameters" element="tns:assignCredential">
+    </part>
+  </message>
+  <message name="createTemplate">
+    <part name="parameters" element="tns:createTemplate">
+    </part>
+  </message>
+  <message name="queryTemplates">
+    <part name="parameters" element="tns:queryTemplates">
+    </part>
+  </message>
+  <message name="updateDataroomOfAuthorizationResponse">
+    <part name="parameters" element="tns:updateDataroomOfAuthorizationResponse">
+    </part>
+  </message>
+  <message name="createPolicyResponse">
+    <part name="parameters" element="tns:createPolicyResponse">
+    </part>
+  </message>
+  <message name="queryRoles">
+    <part name="parameters" element="tns:queryRoles">
+    </part>
+  </message>
+  <message name="getHistoryOfUser">
+    <part name="parameters" element="tns:getHistoryOfUser">
+    </part>
+  </message>
+  <message name="BusinessException">
+    <part name="fault" element="tns:BusinessException">
+    </part>
+  </message>
+  <message name="revealSecurityQuestionsResponse">
+    <part name="parameters" element="tns:revealSecurityQuestionsResponse">
+    </part>
+  </message>
+  <message name="queryPersonalQuestions">
+    <part name="parameters" element="tns:queryPersonalQuestions">
+    </part>
+  </message>
+  <message name="updateUserResponse">
+    <part name="parameters" element="tns:updateUserResponse">
+    </part>
+  </message>
+  <message name="queryApplications">
+    <part name="parameters" element="tns:queryApplications">
+    </part>
+  </message>
+  <message name="deleteTemplate">
+    <part name="parameters" element="tns:deleteTemplate">
+    </part>
+  </message>
+  <message name="addAuthorizationsToProfiles">
+    <part name="parameters" element="tns:addAuthorizationsToProfiles">
+    </part>
+  </message>
+  <message name="createMobileSignatureResponse">
+    <part name="parameters" element="tns:createMobileSignatureResponse">
+    </part>
+  </message>
+  <message name="unassignCredential">
+    <part name="parameters" element="tns:unassignCredential">
+    </part>
+  </message>
+  <message name="getHistoryOfCredential">
+    <part name="parameters" element="tns:getHistoryOfCredential">
+    </part>
+  </message>
+  <message name="bulkGetAllUsersResponse">
+    <part name="params" element="tns:bulkGetAllUsersResponseMessage">
+    </part>
+  </message>
+  <message name="addEnterpriseRoleToProfileResponse">
+    <part name="parameters" element="tns:addEnterpriseRoleToProfileResponse">
+    </part>
+  </message>
+  <message name="queryApplicationClientAssignments">
+    <part name="parameters" element="tns:queryApplicationClientAssignments">
+    </part>
+  </message>
+  <message name="unassignRolesFromEnterpriseRole">
+    <part name="parameters" element="tns:unassignRolesFromEnterpriseRole">
+    </part>
+  </message>
+  <message name="addRoleToApplication">
+    <part name="parameters" element="tns:addRoleToApplication">
+    </part>
+  </message>
+  <message name="getUsersByProfileExtIdResponse">
+    <part name="parameters" element="tns:getUsersByProfileExtIdResponse">
+    </part>
+  </message>
+  <message name="updateEnterpriseRoleResponse">
+    <part name="parameters" element="tns:updateEnterpriseRoleResponse">
+    </part>
+  </message>
+  <message name="createUserWithProfileResponse">
+    <part name="parameters" element="tns:createUserWithProfileResponse">
+    </part>
+  </message>
+  <message name="deleteCredential">
+    <part name="parameters" element="tns:deleteCredential">
+    </part>
+  </message>
+  <message name="updateCredentialResponse">
+    <part name="parameters" element="tns:updateCredentialResponse">
+    </part>
+  </message>
+  <message name="queryPolicies">
+    <part name="parameters" element="tns:queryPolicies">
+    </part>
+  </message>
+  <message name="getUnits">
+    <part name="parameters" element="tns:getUnits">
+    </part>
+  </message>
+  <message name="getHistoryOfUnitResponse">
+    <part name="parameters" element="tns:getHistoryOfUnitResponse">
+    </part>
+  </message>
+  <message name="createUserResponse">
+    <part name="parameters" element="tns:createUserResponse">
+    </part>
+  </message>
+  <message name="createUnitResponse">
+    <part name="parameters" element="tns:createUnitResponse">
+    </part>
+  </message>
+  <message name="deleteUnit">
+    <part name="parameters" element="tns:deleteUnit">
+    </part>
+  </message>
+  <message name="createUserWithCredentials">
+    <part name="parameters" element="tns:createUserWithCredentials">
+    </part>
+  </message>
+  <message name="queryApplicationsResponse">
+    <part name="parameters" element="tns:queryApplicationsResponse">
+    </part>
+  </message>
+  <message name="getUnitsResponse">
+    <part name="parameters" element="tns:getUnitsResponse">
+    </part>
+  </message>
+  <message name="addAuthorizationToProfile">
+    <part name="parameters" element="tns:addAuthorizationToProfile">
+    </part>
+  </message>
+  <message name="removeAuthorizationsFromProfiles">
+    <part name="parameters" element="tns:removeAuthorizationsFromProfiles">
+    </part>
+  </message>
+  <message name="createProfileResponse">
+    <part name="parameters" element="tns:createProfileResponse">
+    </part>
+  </message>
+  <message name="queryUnits">
+    <part name="parameters" element="tns:queryUnits">
+    </part>
+  </message>
+  <message name="sendUserNotification">
+    <part name="parameters" element="tns:sendUserNotification">
+    </part>
+  </message>
+  <message name="updatePolicy">
+    <part name="parameters" element="tns:updatePolicy">
+    </part>
+  </message>
+  <message name="removeEnterpriseRoleFromProfile">
+    <part name="parameters" element="tns:removeEnterpriseRoleFromProfile">
+    </part>
+  </message>
+  <message name="queryRolesResponse">
+    <part name="parameters" element="tns:queryRolesResponse">
+    </part>
+  </message>
+  <message name="addRoleToApplicationResponse">
+    <part name="parameters" element="tns:addRoleToApplicationResponse">
+    </part>
+  </message>
+  <message name="queryPersonalQuestionsResponse">
+    <part name="parameters" element="tns:queryPersonalQuestionsResponse">
+    </part>
+  </message>
+  <message name="deleteApplication">
+    <part name="parameters" element="tns:deleteApplication">
+    </part>
+  </message>
+  <message name="createClientResponse">
+    <part name="parameters" element="tns:createClientResponse">
+    </part>
+  </message>
+  <message name="removeEnterpriseRoleFromProfileResponse">
+    <part name="parameters" element="tns:removeEnterpriseRoleFromProfileResponse">
+    </part>
+  </message>
+  <message name="getPersonalQuestionsResponse">
+    <part name="parameters" element="tns:getPersonalQuestionsResponse">
+    </part>
+  </message>
+  <message name="resetCredential">
+    <part name="parameters" element="tns:resetCredential">
+    </part>
+  </message>
+  <message name="updateClient">
+    <part name="parameters" element="tns:updateClient">
+    </part>
+  </message>
+  <message name="deleteEnterpriseRole">
+    <part name="parameters" element="tns:deleteEnterpriseRole">
+    </part>
+  </message>
+  <message name="updateProfile">
+    <part name="parameters" element="tns:updateProfile">
+    </part>
+  </message>
+  <message name="getHistoryOfCredentialResponse">
+    <part name="parameters" element="tns:getHistoryOfCredentialResponse">
+    </part>
+  </message>
+  <message name="updatePersonalQuestionResponse">
+    <part name="parameters" element="tns:updatePersonalQuestionResponse">
+    </part>
+  </message>
+  <message name="removeAuthorizationFromProfile">
+    <part name="parameters" element="tns:removeAuthorizationFromProfile">
+    </part>
+  </message>
+  <message name="updateCredential">
+    <part name="parameters" element="tns:updateCredential">
+    </part>
+  </message>
+  <message name="queryUnitsAndFilterResponse">
+    <part name="parameters" element="tns:queryUnitsAndFilterResponse">
+    </part>
+  </message>
+  <message name="unassignRolesFromEnterpriseRoleResponse">
+    <part name="parameters" element="tns:unassignRolesFromEnterpriseRoleResponse">
+    </part>
+  </message>
+  <message name="deleteApplicationResponse">
+    <part name="parameters" element="tns:deleteApplicationResponse">
+    </part>
+  </message>
+  <message name="createMobileSignature">
+    <part name="parameters" element="tns:createMobileSignature">
+    </part>
+  </message>
+  <message name="getEnterpriseRolesResponse">
+    <part name="parameters" element="tns:getEnterpriseRolesResponse">
+    </part>
+  </message>
+  <message name="removeAuthorizationsFromProfilesResponse">
+    <part name="parameters" element="tns:removeAuthorizationsFromProfilesResponse">
+    </part>
+  </message>
+  <message name="sendUserNotificationResponse">
+    <part name="parameters" element="tns:sendUserNotificationResponse">
+    </part>
+  </message>
+  <message name="deleteCredentialResponse">
+    <part name="parameters" element="tns:deleteCredentialResponse">
+    </part>
+  </message>
+  <message name="assignRolesToEnterpriseRoleResponse">
+    <part name="parameters" element="tns:assignRolesToEnterpriseRoleResponse">
+    </part>
+  </message>
+  <message name="updateEnterpriseRole">
+    <part name="parameters" element="tns:updateEnterpriseRole">
+    </part>
+  </message>
+  <message name="updatePersonalQuestion">
+    <part name="parameters" element="tns:updatePersonalQuestion">
+    </part>
+  </message>
+  <message name="createUserWithProfile">
+    <part name="parameters" element="tns:createUserWithProfile">
+    </part>
+  </message>
+  <message name="createUnit">
+    <part name="parameters" element="tns:createUnit">
+    </part>
+  </message>
+  <message name="getDocumentForCredentialResponse">
+    <part name="parameters" element="tns:getDocomentForCredentialResponse">
+    </part>
+  </message>
+  <message name="getUsersByLoginIdResponse">
+    <part name="parameters" element="tns:getUsersByLoginIdResponse">
+    </part>
+  </message>
+  <message name="deleteUser">
+    <part name="parameters" element="tns:deleteUser">
+    </part>
+  </message>
+  <message name="deleteProfile">
+    <part name="parameters" element="tns:deleteProfile">
+    </part>
+  </message>
+  <message name="queryCredentialsResponse">
+    <part name="parameters" element="tns:queryCredentialsResponse">
+    </part>
+  </message>
+  <message name="getAuthorizersResponse">
+    <part name="parameters" element="tns:getAuthorizersResponse">
+    </part>
+  </message>
+  <message name="bulkGetAllUsers">
+    <part name="params" element="tns:bulkGetAllUsersRequestMessage">
+    </part>
+  </message>
+  <message name="createClient">
+    <part name="parameters" element="tns:createClient">
+    </part>
+  </message>
+  <message name="addAuthorizationToProfileResponse">
+    <part name="parameters" element="tns:addAuthorizationToProfileResponse">
+    </part>
+  </message>
+  <message name="removeRoleFromApplication">
+    <part name="parameters" element="tns:removeRoleFromApplication">
+    </part>
+  </message>
+  <message name="queryUsersResponse">
+    <part name="parameters" element="tns:queryUsersResponse">
+    </part>
+  </message>
+  <message name="createUserWithProfileAndCredentials">
+    <part name="parameters" element="tns:createUserWithProfileAndCredentials">
+    </part>
+  </message>
+  <message name="createPUKCredentialResponse">
+    <part name="parameters" element="tns:createPUKCredentialResponse">
+    </part>
+  </message>
+  <message name="getHistoryOfUnit">
+    <part name="parameters" element="tns:getHistoryOfUnit">
+    </part>
+  </message>
+  <message name="createApplicationResponse">
+    <part name="parameters" element="tns:createApplicationResponse">
+    </part>
+  </message>
+  <message name="getHistoryOfUserResponse">
+    <part name="parameters" element="tns:getHistoryOfUserResponse">
+    </part>
+  </message>
+  <message name="unassignCredentialResponse">
+    <part name="parameters" element="tns:unassignCredentialResponse">
+    </part>
+  </message>
+  <message name="getHistoryOfUserLoginInfoResponse">
+    <part name="parameters" element="tns:getHistoryOfUserLoginInfoResponse">
+    </part>
+  </message>
+  <message name="queryUnitsAndFilter">
+    <part name="parameters" element="tns:queryUnitsAndFilter">
+    </part>
+  </message>
+  <message name="queryEnterpriseRolesResponse">
+    <part name="parameters" element="tns:queryEnterpriseRolesResponse">
+    </part>
+  </message>
+  <message name="unlockCredentialResponse">
+    <part name="parameters" element="tns:unlockCredentialResponse">
+    </part>
+  </message>
+  <message name="createPersonalQuestion">
+    <part name="parameters" element="tns:createPersonalQuestion">
+    </part>
+  </message>
+  <message name="assignRolesToEnterpriseRole">
+    <part name="parameters" element="tns:assignRolesToEnterpriseRole">
+    </part>
+  </message>
+  <message name="createUserWithProfileAndCredentialsResponse">
+    <part name="parameters" element="tns:createUserWithProfileAndCredentialsResponse">
+    </part>
+  </message>
+  <message name="TechnicalException">
+    <part name="fault" element="tns:TechnicalException">
+    </part>
+  </message>
+  <message name="getUsersByExtId">
+    <part name="parameters" element="tns:getUsersByExtId">
+    </part>
+  </message>
+  <message name="updatePolicyResponse">
+    <part name="parameters" element="tns:updatePolicyResponse">
+    </part>
+  </message>
+  <message name="updateMobileSignature">
+    <part name="parameters" element="tns:updateMobileSignature">
+    </part>
+  </message>
+  <message name="updateUnitResponse">
+    <part name="parameters" element="tns:updateUnitResponse">
+    </part>
+  </message>
+  <message name="queryProfilesResponse">
+    <part name="parameters" element="tns:queryProfilesResponse">
+    </part>
+  </message>
+  <message name="deleteProfileResponse">
+    <part name="parameters" element="tns:deleteProfileResponse">
+    </part>
+  </message>
+  <message name="createTemplateResponse">
+    <part name="parameters" element="tns:createTemplateResponse">
+    </part>
+  </message>
+  <message name="unlockCredential">
+    <part name="parameters" element="tns:unlockCredential">
+    </part>
+  </message>
+  <message name="queryCredentials">
+    <part name="parameters" element="tns:queryCredentials">
+    </part>
+  </message>
+  <message name="createApplication">
+    <part name="parameters" element="tns:createApplication">
+    </part>
+  </message>
+  <message name="createPUKCredential">
+    <part name="parameters" element="tns:createPUKCredential">
+    </part>
+  </message>
+  <message name="queryClients">
+    <part name="parameters" element="tns:queryClients">
+    </part>
+  </message>
+  <message name="assignCredentialResponse">
+    <part name="parameters" element="tns:assignCredentialResponse">
+    </part>
+  </message>
+  <message name="deleteTemplateResponse">
+    <part name="parameters" element="tns:deleteTemplateResponse">
+    </part>
+  </message>
+  <message name="updateApplication">
+    <part name="parameters" element="tns:updateApplication">
+    </part>
+  </message>
+  <message name="deleteUnitResponse">
+    <part name="parameters" element="tns:deleteUnitResponse">
+    </part>
+  </message>
+  <message name="deleteUserResponse">
+    <part name="parameters" element="tns:deleteUserResponse">
+    </part>
+  </message>
+  <message name="updateTemplate">
+    <part name="parameters" element="tns:updateTemplate">
+    </part>
+  </message>
+  <message name="createUser">
+    <part name="parameters" element="tns:createUser">
+    </part>
+  </message>
+  <message name="revokePoliciesResponse">
+    <part name="parameters" element="tns:revokePoliciesResponse">
+    </part>
+  </message>
+  <message name="getDocumentForCredential">
+    <part name="parameters" element="tns:getDocumentForCredential">
+    </part>
+  </message>
+  <message name="createProfile">
+    <part name="parameters" element="tns:createProfile">
+    </part>
+  </message>
+  <message name="getHistoryOfCredentialLoginInfo">
+    <part name="parameters" element="tns:getHistoryOfCredentialLoginInfo">
+    </part>
+  </message>
+  <message name="checkPasswordPolicyResponse">
+    <part name="parameters" element="tns:checkPasswordPolicyResponse">
+    </part>
+  </message>
+  <message name="createCredential">
+    <part name="parameters" element="tns:createCredential">
+    </part>
+  </message>
+  <message name="updateDataroomOfAuthorization">
+    <part name="parameters" element="tns:updateDataroomOfAuthorization">
+    </part>
+  </message>
+  <message name="createPolicy">
+    <part name="parameters" element="tns:createPolicy">
+    </part>
+  </message>
+  <message name="getHistoryOfCredentialLoginInfoResponse">
+    <part name="parameters" element="tns:getHistoryOfCredentialLoginInfoResponse">
+    </part>
+  </message>
+  <message name="updateUser">
+    <part name="parameters" element="tns:updateUser">
+    </part>
+  </message>
+  <message name="resetCredentialResponse">
+    <part name="parameters" element="tns:resetCredentialResponse">
+    </part>
+  </message>
+  <message name="queryTemplatesResponse">
+    <part name="parameters" element="tns:queryTemplatesResponse">
+    </part>
+  </message>
+  <message name="updateProfileResponse">
+    <part name="parameters" element="tns:updateProfileResponse">
+    </part>
+  </message>
+  <message name="getUsersByExtIdResponse">
+    <part name="parameters" element="tns:getUsersByExtIdResponse">
+    </part>
+  </message>
+  <message name="removeAuthorizationFromProfileResponse">
+    <part name="parameters" element="tns:removeAuthorizationFromProfileResponse">
+    </part>
+  </message>
+  <message name="updateTemplateResponse">
+    <part name="parameters" element="tns:updateTemplateResponse">
+    </part>
+  </message>
+  <message name="getUsersByProfileExtId">
+    <part name="parameters" element="tns:getUsersByProfileExtId">
+    </part>
+  </message>
+  <message name="createUserWithCredentialsResponse">
+    <part name="parameters" element="tns:createUserWithCredentialsResponse">
+    </part>
+  </message>
+  <message name="revokePolicies">
+    <part name="parameters" element="tns:revokePolicies">
+    </part>
+  </message>
+  <message name="queryEnterpriseRoles">
+    <part name="parameters" element="tns:queryEnterpriseRoles">
+    </part>
+  </message>
+  <message name="deleteCredentialsResponse">
+    <part name="parameters" element="tns:deleteCredentialsResponse">
+    </part>
+  </message>
+  <message name="getPersonalQuestions">
+    <part name="parameters" element="tns:getPersonalQuestions">
+    </part>
+  </message>
+  <message name="getHistoryOfProfile">
+    <part name="parameters" element="tns:getHistoryOfProfile">
+    </part>
+  </message>
+  <message name="createPersonalQuestionResponse">
+    <part name="parameters" element="tns:createPersonalQuestionResponse">
+    </part>
+  </message>
+  <message name="queryPoliciesResponse">
+    <part name="parameters" element="tns:queryPoliciesResponse">
+    </part>
+  </message>
+  <message name="getAuthorizers">
+    <part name="parameters" element="tns:getAuthorizers">
+    </part>
+  </message>
+  <message name="deleteEnterpriseRoleResponse">
+    <part name="parameters" element="tns:deleteEnterpriseRoleResponse">
+    </part>
+  </message>
+  <message name="queryApplicationClientAssignmentsResponse">
+    <part name="parameters" element="tns:queryApplicationClientAssignmentsResponse">
+    </part>
+  </message>
+  <message name="updateApplicationResponse">
+    <part name="parameters" element="tns:updateApplicationResponse">
+    </part>
+  </message>
+  <message name="updateClientResponse">
+    <part name="parameters" element="tns:updateClientResponse">
+    </part>
+  </message>
+  <message name="deletePersonalQuestion">
+    <part name="parameters" element="tns:deletePersonalQuestion">
+    </part>
+  </message>
+  <message name="deletePersonalQuestionResponse">
+    <part name="parameters" element="tns:deletePersonalQuestionResponse">
+    </part>
+  </message>
+  <message name="deleteCredentials">
+    <part name="parameters" element="tns:deleteCredentials">
+    </part>
+  </message>
+  <message name="removeRoleFromApplicationResponse">
+    <part name="parameters" element="tns:removeRoleFromApplicationResponse">
+    </part>
+  </message>
+  <message name="getHistoryOfProfileResponse">
+    <part name="parameters" element="tns:getHistoryOfProfileResponse">
+    </part>
+  </message>
+  <message name="queryUsers">
+    <part name="parameters" element="tns:queryUsers">
+    </part>
+  </message>
+  <message name="createEnterpriseRoleResponse">
+    <part name="parameters" element="tns:createEnterpriseRoleResponse">
+    </part>
+  </message>
+  <message name="checkPasswordPolicy">
+    <part name="parameters" element="tns:checkPasswordPolicy">
+    </part>
+  </message>
+  <message name="revealSecurityQuestions">
+    <part name="parameters" element="tns:revealSecurityQuestions">
+    </part>
+  </message>
+  <message name="addEnterpriseRoleToProfile">
+    <part name="parameters" element="tns:addEnterpriseRoleToProfile">
+    </part>
+  </message>
+  <message name="addAuthorizationsToProfilesResponse">
+    <part name="parameters" element="tns:addAuthorizationsToProfilesResponse">
+    </part>
+  </message>
+  <portType name="AdminService">
+    <operation name="createUser">
+      <input message="sns:createUser">
+    </input>
+      <output message="sns:createUserResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="createUserWithProfile">
+      <input message="sns:createUserWithProfile">
+    </input>
+      <output message="sns:createUserWithProfileResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="createUserWithCredentials">
+      <input message="sns:createUserWithCredentials">
+    </input>
+      <output message="sns:createUserWithCredentialsResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="createUserWithProfileAndCredentials">
+      <input message="sns:createUserWithProfileAndCredentials">
+    </input>
+      <output message="sns:createUserWithProfileAndCredentialsResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="updateUser">
+      <input message="sns:updateUser">
+    </input>
+      <output message="sns:updateUserResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="deleteUser">
+      <input message="sns:deleteUser">
+    </input>
+      <output message="sns:deleteUserResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="createProfile">
+      <input message="sns:createProfile">
+    </input>
+      <output message="sns:createProfileResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="updateProfile">
+      <input message="sns:updateProfile">
+    </input>
+      <output message="sns:updateProfileResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="deleteProfile">
+      <input message="sns:deleteProfile">
+    </input>
+      <output message="sns:deleteProfileResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="addAuthorizationToProfile">
+      <input message="sns:addAuthorizationToProfile">
+    </input>
+      <output message="sns:addAuthorizationToProfileResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="removeAuthorizationFromProfile">
+      <input message="sns:removeAuthorizationFromProfile">
+    </input>
+      <output message="sns:removeAuthorizationFromProfileResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="createCredential">
+      <input message="sns:createCredential">
+    </input>
+      <output message="sns:createCredentialResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="createPUKCredential">
+      <input message="sns:createPUKCredential">
+    </input>
+      <output message="sns:createPUKCredentialResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="updateCredential">
+      <input message="sns:updateCredential">
+    </input>
+      <output message="sns:updateCredentialResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="resetCredential">
+      <input message="sns:resetCredential">
+    </input>
+      <output message="sns:resetCredentialResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="unlockCredential">
+      <input message="sns:unlockCredential">
+    </input>
+      <output message="sns:unlockCredentialResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="deleteCredential">
+      <input message="sns:deleteCredential">
+    </input>
+      <output message="sns:deleteCredentialResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="deleteCredentials">
+      <input message="sns:deleteCredentials">
+    </input>
+      <output message="sns:deleteCredentialsResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="assignCredential">
+      <input message="sns:assignCredential">
+    </input>
+      <output message="sns:assignCredentialResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="unassignCredential">
+      <input message="sns:unassignCredential">
+    </input>
+      <output message="sns:unassignCredentialResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="createMobileSignature">
+      <input message="sns:createMobileSignature">
+    </input>
+      <output message="sns:createMobileSignatureResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="updateMobileSignature">
+      <input message="sns:updateMobileSignature">
+    </input>
+      <output message="sns:updateMobileSignatureResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="createUnit">
+      <input message="sns:createUnit">
+    </input>
+      <output message="sns:createUnitResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="updateUnit">
+      <input message="sns:updateUnit">
+    </input>
+      <output message="sns:updateUnitResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="deleteUnit">
+      <input message="sns:deleteUnit">
+    </input>
+      <output message="sns:deleteUnitResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="createApplication">
+      <input message="sns:createApplication">
+    </input>
+      <output message="sns:createApplicationResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="updateApplication">
+      <input message="sns:updateApplication">
+    </input>
+      <output message="sns:updateApplicationResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="deleteApplication">
+      <input message="sns:deleteApplication">
+    </input>
+      <output message="sns:deleteApplicationResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="addRoleToApplication">
+      <input message="sns:addRoleToApplication">
+    </input>
+      <output message="sns:addRoleToApplicationResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="removeRoleFromApplication">
+      <input message="sns:removeRoleFromApplication">
+    </input>
+      <output message="sns:removeRoleFromApplicationResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="assignPolicies">
+      <input message="sns:assignPolicies">
+    </input>
+      <output message="sns:assignPoliciesResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="revokePolicies">
+      <input message="sns:revokePolicies">
+    </input>
+      <output message="sns:revokePoliciesResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="createClient">
+      <input message="sns:createClient">
+    </input>
+      <output message="sns:createClientResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="updateClient">
+      <input message="sns:updateClient">
+    </input>
+      <output message="sns:updateClientResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="createPolicy">
+      <input message="sns:createPolicy">
+    </input>
+      <output message="sns:createPolicyResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="updatePolicy">
+      <input message="sns:updatePolicy">
+    </input>
+      <output message="sns:updatePolicyResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="createTemplate">
+      <input message="sns:createTemplate">
+    </input>
+      <output message="sns:createTemplateResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="updateTemplate">
+      <input message="sns:updateTemplate">
+    </input>
+      <output message="sns:updateTemplateResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="deleteTemplate">
+      <input message="sns:deleteTemplate">
+    </input>
+      <output message="sns:deleteTemplateResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="createEnterpriseRole">
+      <input message="sns:createEnterpriseRole">
+    </input>
+      <output message="sns:createEnterpriseRoleResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="updateEnterpriseRole">
+      <input message="sns:updateEnterpriseRole">
+    </input>
+      <output message="sns:updateEnterpriseRoleResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="deleteEnterpriseRole">
+      <input message="sns:deleteEnterpriseRole">
+    </input>
+      <output message="sns:deleteEnterpriseRoleResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="assignRolesToEnterpriseRole">
+      <input message="sns:assignRolesToEnterpriseRole">
+    </input>
+      <output message="sns:assignRolesToEnterpriseRoleResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="unassignRolesFromEnterpriseRole">
+      <input message="sns:unassignRolesFromEnterpriseRole">
+    </input>
+      <output message="sns:unassignRolesFromEnterpriseRoleResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="addEnterpriseRoleToProfile">
+      <input message="sns:addEnterpriseRoleToProfile">
+    </input>
+      <output message="sns:addEnterpriseRoleToProfileResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="removeEnterpriseRoleFromProfile">
+      <input message="sns:removeEnterpriseRoleFromProfile">
+    </input>
+      <output message="sns:removeEnterpriseRoleFromProfileResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="revealSecurityQuestions">
+      <input message="sns:revealSecurityQuestions">
+    </input>
+      <output message="sns:revealSecurityQuestionsResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="createPersonalQuestion">
+      <input message="sns:createPersonalQuestion">
+    </input>
+      <output message="sns:createPersonalQuestionResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="updatePersonalQuestion">
+      <input message="sns:updatePersonalQuestion">
+    </input>
+      <output message="sns:updatePersonalQuestionResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="deletePersonalQuestion">
+      <input message="sns:deletePersonalQuestion">
+    </input>
+      <output message="sns:deletePersonalQuestionResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="queryClients">
+      <input message="sns:queryClients">
+    </input>
+      <output message="sns:queryClientsResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="queryCredentials">
+      <input message="sns:queryCredentials">
+    </input>
+      <output message="sns:queryCredentialsResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="queryUsers">
+      <input message="sns:queryUsers">
+    </input>
+      <output message="sns:queryUsersResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="getUsersByLoginId">
+      <input message="sns:getUsersByLoginId">
+    </input>
+      <output message="sns:getUsersByLoginIdResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="getUsersByExtId">
+      <input message="sns:getUsersByExtId">
+    </input>
+      <output message="sns:getUsersByExtIdResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="getUsersByProfileExtId">
+      <input message="sns:getUsersByProfileExtId">
+    </input>
+      <output message="sns:getUsersByProfileExtIdResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="queryProfiles">
+      <input message="sns:queryProfiles">
+    </input>
+      <output message="sns:queryProfilesResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="queryUnits">
+      <input message="sns:queryUnits">
+    </input>
+      <output message="sns:queryUnitsResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="getUnits">
+      <input message="sns:getUnits">
+    </input>
+      <output message="sns:getUnitsResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="queryRoles">
+      <input message="sns:queryRoles">
+    </input>
+      <output message="sns:queryRolesResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="queryApplications">
+      <input message="sns:queryApplications">
+    </input>
+      <output message="sns:queryApplicationsResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="queryProperties">
+      <input message="sns:queryProperties">
+    </input>
+      <output message="sns:queryPropertiesResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="queryUnitsAndFilter">
+      <input message="sns:queryUnitsAndFilter">
+    </input>
+      <output message="sns:queryUnitsAndFilterResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="queryPolicies">
+      <input message="sns:queryPolicies">
+    </input>
+      <output message="sns:queryPoliciesResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="queryEnterpriseRoles">
+      <input message="sns:queryEnterpriseRoles">
+    </input>
+      <output message="sns:queryEnterpriseRolesResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="getEnterpriseRoles">
+      <input message="sns:getEnterpriseRoles">
+    </input>
+      <output message="sns:getEnterpriseRolesResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="queryPersonalQuestions">
+      <input message="sns:queryPersonalQuestions">
+    </input>
+      <output message="sns:queryPersonalQuestionsResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="getPersonalQuestions">
+      <input message="sns:getPersonalQuestions">
+    </input>
+      <output message="sns:getPersonalQuestionsResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="queryApplicationClientAssignments">
+      <input message="sns:queryApplicationClientAssignments">
+    </input>
+      <output message="sns:queryApplicationClientAssignmentsResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="bulkGetAllUsers">
+      <input message="sns:bulkGetAllUsers">
+    </input>
+      <output message="sns:bulkGetAllUsersResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="getDocumentForCredential">
+      <input message="sns:getDocumentForCredential">
+    </input>
+      <output message="sns:getDocumentForCredentialResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="sendUserNotification">
+      <input message="sns:sendUserNotification">
+    </input>
+      <output message="sns:sendUserNotificationResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="getHistoryOfUser">
+      <input message="sns:getHistoryOfUser">
+    </input>
+      <output message="sns:getHistoryOfUserResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="getHistoryOfUserLoginInfo">
+      <input message="sns:getHistoryOfUserLoginInfo">
+    </input>
+      <output message="sns:getHistoryOfUserLoginInfoResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="getHistoryOfProfile">
+      <input message="sns:getHistoryOfProfile">
+    </input>
+      <output message="sns:getHistoryOfProfileResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="getHistoryOfCredential">
+      <input message="sns:getHistoryOfCredential">
+    </input>
+      <output message="sns:getHistoryOfCredentialResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="getHistoryOfCredentialLoginInfo">
+      <input message="sns:getHistoryOfCredentialLoginInfo">
+    </input>
+      <output message="sns:getHistoryOfCredentialLoginInfoResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="getHistoryOfUnit">
+      <input message="sns:getHistoryOfUnit">
+    </input>
+      <output message="sns:getHistoryOfUnitResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="queryTemplates">
+      <input message="sns:queryTemplates">
+    </input>
+      <output message="sns:queryTemplatesResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="checkPasswordPolicy">
+      <input message="sns:checkPasswordPolicy">
+    </input>
+      <output message="sns:checkPasswordPolicyResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="addAuthorizationsToProfiles">
+      <input message="sns:addAuthorizationsToProfiles">
+    </input>
+      <output message="sns:addAuthorizationsToProfilesResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="removeAuthorizationsFromProfiles">
+      <input message="sns:removeAuthorizationsFromProfiles">
+    </input>
+      <output message="sns:removeAuthorizationsFromProfilesResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="updateDataroomOfAuthorization">
+      <input message="sns:updateDataroomOfAuthorization">
+    </input>
+      <output message="sns:updateDataroomOfAuthorizationResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+    <operation name="getAuthorizers">
+      <input message="sns:getAuthorizers">
+    </input>
+      <output message="sns:getAuthorizersResponse">
+    </output>
+      <fault name="BusinessException" message="sns:BusinessException">
+    </fault>
+      <fault name="TechnicalException" message="sns:TechnicalException">
+    </fault>
+    </operation>
+  </portType>
+  <binding name="AdminServicePortBinding" type="sns:AdminService">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="createUser">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="createUserWithProfile">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="createUserWithCredentials">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="createUserWithProfileAndCredentials">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="updateUser">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="deleteUser">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="createProfile">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="updateProfile">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="deleteProfile">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="addAuthorizationToProfile">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="removeAuthorizationFromProfile">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="createCredential">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="createPUKCredential">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="updateCredential">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="resetCredential">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="unlockCredential">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="deleteCredential">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="deleteCredentials">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="assignCredential">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="unassignCredential">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="createMobileSignature">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="updateMobileSignature">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="createUnit">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="updateUnit">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="deleteUnit">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="createApplication">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="updateApplication">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="deleteApplication">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="addRoleToApplication">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="removeRoleFromApplication">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="assignPolicies">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="revokePolicies">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="createClient">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="updateClient">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="createPolicy">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="updatePolicy">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="createTemplate">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="updateTemplate">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="deleteTemplate">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="createEnterpriseRole">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="updateEnterpriseRole">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="deleteEnterpriseRole">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="assignRolesToEnterpriseRole">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="unassignRolesFromEnterpriseRole">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="addEnterpriseRoleToProfile">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="removeEnterpriseRoleFromProfile">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="createPersonalQuestion">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="updatePersonalQuestion">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="deletePersonalQuestion">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="revealSecurityQuestions">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="queryClients">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="queryCredentials">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="queryUsers">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="getUsersByLoginId">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="getUsersByExtId">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="getUsersByProfileExtId">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="queryProfiles">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="queryUnits">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="queryUnitsAndFilter">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="getUnits">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="queryRoles">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="queryApplications">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="queryProperties">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="queryPolicies">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="queryTemplates">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="queryEnterpriseRoles">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="getEnterpriseRoles">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="queryPersonalQuestions">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="getPersonalQuestions">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="queryApplicationClientAssignments">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="bulkGetAllUsers">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="getDocumentForCredential">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="sendUserNotification">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="getHistoryOfUser">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="getHistoryOfUserLoginInfo">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="getHistoryOfProfile">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="getHistoryOfCredential">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="getHistoryOfCredentialLoginInfo">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="getHistoryOfUnit">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="checkPasswordPolicy">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="addAuthorizationsToProfiles">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="removeAuthorizationsFromProfiles">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="updateDataroomOfAuthorization">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="getAuthorizers">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="BusinessException">
+        <soap:fault name="BusinessException" use="literal"/>
+      </fault>
+      <fault name="TechnicalException">
+        <soap:fault name="TechnicalException" use="literal"/>
+      </fault>
+    </operation>
+  </binding>
+  <service name="AdminService_v1_32">
+    <port name="AdminServicePort" binding="sns:AdminServicePortBinding">
+      <soap:address location="http://vmeiam31i01l.ssz.admin.ch:8080/nevisidm/services/v1_32/AdminService"/>
+    </port>
+  </service>
+</definitions>

@@ -1,0 +1,25 @@
+{
+    "registration": {
+        "basics": {
+            "text": "Text in Italienisch.",
+            "title": "IT-Grundlagen"
+        },
+        "button": {
+            "text": "IT-Jetzt Benutzer registrieren"
+        },
+        "chlogin": {
+            "link": "<a href=\"URL-Italienisch\" target=\"_blank\">Link text in Italienisch</a>",
+            "text": "Text in Italienisch.",
+            "title": "IT-Registrierung mit E-Mail, Passwort und SMS-Code (CH-Login)"
+        },
+        "click": {
+            "text": "IT-Klicken Sie hier, um mit der Benutzerregistrierung zu beginnen."
+        },
+        "suisseid": {
+            "link": "<a href=\"URL-Italienisch\" target=\"_blank\">Link text in Italienisch</a>",
+            "text": "Text in Italienisch.",
+            "title": "IT-Registrierung mit SuisseID"
+        },
+        "title": "IT-Anleitung zur Benutzerregistrierung"
+    }
+}

@@ -1,0 +1,64 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <div class="modal-title" jhiTranslate="registration.existing-pav.text">Login</div>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="close()">&times;
+        </button>
+    </div>
+    <div class="modal-body">
+        <div *ngIf="mismatchInfo" class="missmatch-info"
+             jhiTranslate="registration.existing-pav.identificaton.mismatch.error"></div>
+
+        <form [formGroup]="loginForm" role="form" novalidate>
+
+            <div class="form-group">
+                <label for="username" class="col-form-label">
+                    {{ 'registration.existing-pav.username.label' | translate }}
+                </label>
+                <div>
+                    <input class="form-control"
+                           type="text"
+                           formControlName="username"
+                           [placeholder]="'registration.existing-pav.username.placeholder'|translate"
+                           id="username">
+                    <jr2-input-error-message [formGroup]="loginForm"
+                                             path="username"
+                                             [errorCodes]="['required']"
+                                             [keys]="['home.tools.job-publication.messages.validate.required']">
+                    </jr2-input-error-message>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="password" class="col-form-label">
+                    {{ 'registration.existing-pav.password.label' | translate }}
+                </label>
+                <div>
+                    <input class="form-control"
+                           type="password"
+                           formControlName="password"
+                           [placeholder]="'registration.existing-pav.password.placeholder'|translate"
+                           id="password">
+                    <jr2-input-error-message [formGroup]="loginForm"
+                                             path="password"
+                                             [errorCodes]="['required']"
+                                             [keys]="['home.tools.job-publication.messages.validate.required']">
+                    </jr2-input-error-message>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button (click)="onSubmit()" class="btn btn-primary btn-lg"
+                [disabled]="checkButtonDisabled()">
+            {{ 'registration.existing-pav.login' | translate }}
+        </button>
+        <button (click)="close()" class="btn btn-secondary btn-lg">
+            {{ 'registration.existing-pav.cancel' | translate }}
+        </button>
+    </div>
+</div>
+
+
+
+

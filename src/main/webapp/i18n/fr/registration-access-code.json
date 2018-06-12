@@ -1,0 +1,11 @@
+{
+    "registrationAccessCode": {
+        "title": "",
+        "header": "",
+        "placeholder": "",
+        "accessCode": "",
+        "accessCode.error.required": "",
+        "accessCode.error.minlength": "",
+        "accessCode.error.invalid": ""
+    }
+}

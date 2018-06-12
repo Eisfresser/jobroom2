@@ -702,7 +702,7 @@ public class UserResourceIntTest {
         Authority authorityB = new Authority();
         assertThat(authorityA).isEqualTo(authorityB);
 
-        authorityB.setName(AuthoritiesConstants.ADMIN);
+        authorityB.setName(AuthoritiesConstants.ROLE_ADMIN);
         assertThat(authorityA).isNotEqualTo(authorityB);
 
         authorityA.setName(AuthoritiesConstants.USER);

@@ -9,11 +9,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import ch.admin.seco.jobroom.domain.User;
 
-public class DomainUserPrincipal implements UserDetails {
+public class LoginFormUserPrincipal implements UserDetails {
 
     private final User user;
 
-    public DomainUserPrincipal(User user) {
+    public LoginFormUserPrincipal(User user) {
         this.user = user;
     }
 
