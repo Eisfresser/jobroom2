@@ -195,6 +195,23 @@ public class EiamWsClientProperties {
         return this.keystore != null || this.truststore != null;
     }
 
+    @Override
+    public String toString() {
+        return "EiamWsClientProperties{" +
+            "endpointAddress='" + endpointAddress + '\'' +
+            ", clientName='" + clientName + '\'' +
+            ", validationEnabled=" + validationEnabled +
+            ", keystore=" + keystore +
+            ", truststore=" + truststore +
+            ", allowAllHostnameVerifier=" + allowAllHostnameVerifier +
+            ", connectTimeout=" + connectTimeout +
+            ", connectionRequestTimeout=" + connectionRequestTimeout +
+            ", sockedTimeout=" + sockedTimeout +
+            ", maxConnTotal=" + maxConnTotal +
+            ", monitoringUserExternalId='" + monitoringUserExternalId + '\'' +
+            '}';
+    }
+
     public static class KeystoreProperties {
 
         @NotNull
@@ -272,20 +289,4 @@ public class EiamWsClientProperties {
         }
     }
 
-    @Override
-    public String toString() {
-        return "EiamWsClientProperties{" +
-            "endpointAddress='" + endpointAddress + '\'' +
-            ", clientName='" + clientName + '\'' +
-            ", validationEnabled=" + validationEnabled +
-            ", keystore=" + keystore +
-            ", truststore=" + truststore +
-            ", allowAllHostnameVerifier=" + allowAllHostnameVerifier +
-            ", connectTimeout=" + connectTimeout +
-            ", connectionRequestTimeout=" + connectionRequestTimeout +
-            ", sockedTimeout=" + sockedTimeout +
-            ", maxConnTotal=" + maxConnTotal +
-            ", monitoringUserExternalId='" + monitoringUserExternalId + '\'' +
-            '}';
-    }
 }
