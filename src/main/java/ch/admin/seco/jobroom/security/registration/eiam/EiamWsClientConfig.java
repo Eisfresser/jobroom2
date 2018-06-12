@@ -63,6 +63,7 @@ public class EiamWsClientConfig {
     }
 
     private PayloadValidatingInterceptor payloadValidatingInterceptor() throws Exception {
+        LOGGER.info("created the payloadValidatingInterceptor()");
         PayloadValidatingInterceptor payloadValidatingInterceptor = new PayloadValidatingInterceptor();
         payloadValidatingInterceptor.setSchema(new ClassPathResource("/eiam/wsdl/nevisidm_servicetypes_v1_32.xsd"));
         payloadValidatingInterceptor.setValidateRequest(eiamWsClientProperties.isValidationEnabled());
@@ -72,7 +73,7 @@ public class EiamWsClientConfig {
     }
 
     private HttpClient httpClient() throws Exception {
-
+        LOGGER.info("About to create the httpClient()");
         WebServiceHttpClientBuilder httpClientBuilder = new WebServiceHttpClientBuilder();
         httpClientBuilder
             .setTimeouts(eiamWsClientProperties.getConnectTimeout(), eiamWsClientProperties.getSockedTimeout(), eiamWsClientProperties.getConnectionRequestTimeout())
@@ -112,6 +113,7 @@ public class EiamWsClientConfig {
     }
 
     private Jaxb2Marshaller jaxb2Marshaller() {
+        LOGGER.info("About to create the jaxb2Marshaller()");
         Jaxb2Marshaller jaxb2Marshaller = new Jaxb2Marshaller();
         String[] packagesToScan = {
             "ch.adnovum.nevisidm.ws.services.v1_32",
@@ -122,6 +124,7 @@ public class EiamWsClientConfig {
     }
 
     private SaajSoapMessageFactory messageFactory() {
+        LOGGER.info("About to create the messageFactory()");
         ImprovedSaajSoapMessageFactory improvedSaajSoapMessageFactory = new ImprovedSaajSoapMessageFactory();
         improvedSaajSoapMessageFactory.afterPropertiesSet();
         return improvedSaajSoapMessageFactory;
