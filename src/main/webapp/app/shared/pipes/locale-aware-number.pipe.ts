@@ -12,7 +12,15 @@ export class LocaleAwareDecimalPipe implements PipeTransform {
     }
 
     transform(value: any, digits?: string): string | null {
-        const wrapped = new DecimalPipe(mapLangToLocale(this.translateService.currentLang));
-        return wrapped.transform(value, digits);
+        if (this.translateService.currentLang === 'en') {
+            const wrapped = new DecimalPipe(mapLangToLocale(this.translateService.currentLang));
+            return wrapped.transform(value, digits);
+        }
+
+        return value
+            ? value.toString()
+                .replace(/(\d+?)(?=(\d{3})+(?!\d)|$)/g, (num) => num.length >= 2 ? `${num} ` : num)
+                .trim()
+            : null;
     }
 }
