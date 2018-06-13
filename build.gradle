@@ -131,7 +131,6 @@ task generateEiamWsClient(type:Exec) {
     args 'build/generated-sources/eiam'
     args '-J-Duser.language=en'
 }
-
 apply from: 'gradle/checkstyle.gradle'
 apply from: 'gradle/docker.gradle'
 apply from: 'gradle/docker-compose.gradle'

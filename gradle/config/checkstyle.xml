@@ -102,14 +102,14 @@
         <!--<property name="file" value="${main.basedir}/spring-boot-parent/src/checkstyle/import-control.xml" />-->
         <!--<property name="path" value="^.*[\\/]src[\\/]main[\\/].*$" />-->
         <!--</module>-->
-        <module name="com.puppycrawl.tools.checkstyle.checks.imports.ImportOrderCheck">
+       <!-- <module name="com.puppycrawl.tools.checkstyle.checks.imports.ImportOrderCheck">
             <property name="groups"
                       value="java,/^javax?\./,*,org.springframework,ch.admin"/>
             <property name="ordered" value="true"/>
             <property name="separated" value="true"/>
             <property name="option" value="top"/>
             <property name="sortStaticImportsAlphabetically" value="true"/>
-        </module>
+        </module>-->
 
         <!-- Javadoc Comments -->
         <!--<module name="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocTypeCheck">-->
@@ -131,7 +131,7 @@
             name="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocTagContinuationIndentationCheck">
             <property name="offset" value="0"/>
         </module>
-        <module name="com.puppycrawl.tools.checkstyle.checks.javadoc.AtclauseOrderCheck">
+     <!--   <module name="com.puppycrawl.tools.checkstyle.checks.javadoc.AtclauseOrderCheck">
             <property name="target" value="CLASS_DEF, INTERFACE_DEF, ENUM_DEF"/>
             <property name="tagOrder"
                       value="@param, @author, @since, @see, @version, @serial, @deprecated"/>
@@ -140,7 +140,7 @@
             <property name="target" value="METHOD_DEF, CTOR_DEF, VARIABLE_DEF"/>
             <property name="tagOrder"
                       value="@param, @return, @throws, @since, @deprecated, @see"/>
-        </module>
+        </module>-->
 
         <!-- Miscellaneous -->
         <module
