@@ -1,19 +1,8 @@
 package ch.admin.seco.jobroom.security.saml.dsl;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Timer;
-import java.util.regex.Pattern;
-
-import javax.servlet.http.HttpServletRequest;
-
+import ch.admin.seco.jobroom.security.saml.JobroomAuthenticationSuccessHandler;
+import ch.admin.seco.jobroom.security.saml.utils.HttpStatusEntryPoint;
+import ch.admin.seco.jobroom.security.saml.utils.XmlHttpRequestedWithMatcher;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
 import org.opensaml.saml2.core.AuthnContext;
@@ -26,7 +15,6 @@ import org.opensaml.xml.parse.StaticBasicParserPool;
 import org.opensaml.xml.parse.XMLParserException;
 import org.opensaml.xml.security.x509.CertPathPKIXTrustEvaluator;
 import org.opensaml.xml.security.x509.PKIXTrustEvaluator;
-
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
@@ -34,44 +22,20 @@ import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.saml.SAMLAuthenticationProvider;
-import org.springframework.security.saml.SAMLBootstrap;
-import org.springframework.security.saml.SAMLDiscovery;
-import org.springframework.security.saml.SAMLEntryPoint;
-import org.springframework.security.saml.SAMLLogoutFilter;
-import org.springframework.security.saml.SAMLLogoutProcessingFilter;
-import org.springframework.security.saml.SAMLProcessingFilter;
+import org.springframework.security.saml.*;
 import org.springframework.security.saml.context.SAMLContextProvider;
 import org.springframework.security.saml.context.SAMLContextProviderLB;
 import org.springframework.security.saml.key.JKSKeyManager;
 import org.springframework.security.saml.key.KeyManager;
 import org.springframework.security.saml.log.SAMLDefaultLogger;
-import org.springframework.security.saml.metadata.CachingMetadataManager;
-import org.springframework.security.saml.metadata.ExtendedMetadata;
-import org.springframework.security.saml.metadata.ExtendedMetadataDelegate;
-import org.springframework.security.saml.metadata.MetadataDisplayFilter;
-import org.springframework.security.saml.metadata.MetadataGenerator;
-import org.springframework.security.saml.metadata.MetadataGeneratorFilter;
-import org.springframework.security.saml.processor.HTTPArtifactBinding;
-import org.springframework.security.saml.processor.HTTPPAOS11Binding;
-import org.springframework.security.saml.processor.HTTPPostBinding;
-import org.springframework.security.saml.processor.HTTPRedirectDeflateBinding;
-import org.springframework.security.saml.processor.HTTPSOAP11Binding;
-import org.springframework.security.saml.processor.SAMLBinding;
-import org.springframework.security.saml.processor.SAMLProcessor;
-import org.springframework.security.saml.processor.SAMLProcessorImpl;
+import org.springframework.security.saml.metadata.*;
+import org.springframework.security.saml.processor.*;
 import org.springframework.security.saml.storage.EmptyStorageFactory;
 import org.springframework.security.saml.trust.MetadataCredentialResolver;
 import org.springframework.security.saml.trust.PKIXInformationResolver;
 import org.springframework.security.saml.userdetails.SAMLUserDetailsService;
 import org.springframework.security.saml.util.VelocityFactory;
-import org.springframework.security.saml.websso.ArtifactResolutionProfile;
-import org.springframework.security.saml.websso.ArtifactResolutionProfileImpl;
-import org.springframework.security.saml.websso.SingleLogoutProfileImpl;
-import org.springframework.security.saml.websso.WebSSOProfile;
-import org.springframework.security.saml.websso.WebSSOProfileConsumerImpl;
-import org.springframework.security.saml.websso.WebSSOProfileImpl;
-import org.springframework.security.saml.websso.WebSSOProfileOptions;
+import org.springframework.security.saml.websso.*;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.DefaultSecurityFilterChain;
 import org.springframework.security.web.FilterChainProxy;
@@ -85,9 +49,10 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
-import ch.admin.seco.jobroom.security.saml.JobroomAuthenticationSuccessHandler;
-import ch.admin.seco.jobroom.security.saml.utils.HttpStatusEntryPoint;
-import ch.admin.seco.jobroom.security.saml.utils.XmlHttpRequestedWithMatcher;
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.util.*;
+import java.util.regex.Pattern;
 
 public final class SAMLConfigurer extends SecurityConfigurerAdapter<DefaultSecurityFilterChain, HttpSecurity> {
 
@@ -258,7 +223,8 @@ public final class SAMLConfigurer extends SecurityConfigurerAdapter<DefaultSecur
     private WebSSOProfileOptions webSSOProfileOptions() {
         WebSSOProfileOptions webSSOProfileOptions = new WebSSOProfileOptions();
         webSSOProfileOptions.setIncludeScoping(false);
-        webSSOProfileOptions.setAuthnContexts(PASSWORD_ALLOWED_AUTHN_CTX);
+        // TODO removed since we want to try the default behaviour (2FA) in eiam
+        //webSSOProfileOptions.setAuthnContexts(PASSWORD_ALLOWED_AUTHN_CTX);
         return webSSOProfileOptions;
     }
 

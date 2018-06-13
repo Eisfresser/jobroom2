@@ -108,6 +108,42 @@ jhipster:
             enabled: true
             report-frequency: 60 # in seconds
 
+security:
+    saml:
+        idpConfigPath: classpath:config/security/local-shibboleth-idp-metadata.xml
+        keystorePath: classpath:config/security/local-keystore.jks
+        keystorePassword: 'DUMMY'
+        keystorePrivateKeyName: 'saml2-sp'
+        keystorePrivateKeyPassword: 'DUMMY'
+        externalContextScheme: 'http'
+        externalContextServerName: 'localhost'
+        externalContextServerPort: '8080'
+        externalContextPath: '/'
+        accessRequestUrl: '#'
+        entityId: 'urn:wrong.url:sp:seco:JOBROOM-LOCAL'
+        #entityAlias: ''
+    user:
+        logout_url: 'http://localhost:8080/saml/logout'
+        profile_url: 'http://www.cowsays.com/cow_messages/4701'
+    accessCodeMailRecipient: service-desk-mail-address@mail.ch
+    eiam:
+        wsclient:
+            clientName: ALV
+            endpointAddress: 'DUMMY'
+            keystore:
+                location: 'DUMMY'
+                password: 'DUMMY'
+                privateKeyName: 'DUMMY'
+            truststore:
+                location: 'DUMMY'
+                password: 'DUMMY'
+    uid:
+        wsclient:
+            endpointAddress: 'DUMMY'
+            truststore:
+                location: 'DUMMY'
+                password: 'DUMMY'
+
 # ===================================================================
 # Application specific properties
 # Add your own application properties here, see the ApplicationProperties class
