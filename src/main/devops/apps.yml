@@ -18,24 +18,6 @@ services:
             placement:
                 constraints: [node.labels.type == java]
 
-#    jobroom-app-eiam:
-#        build: dockerfiles/jobroom-eiam
-#        image: localhost:5000/jr2_jobroom-app
-#        env_file: apps-env.properties
-#        environment:
-#            SPRING_LIQUIBASE_DROPFIRST: 'false'
-#            SERVER_PORT: 8444
-#        ports:
-#            - 8444:8444
-#        networks:
-#            - jobroom_data2
-#        secrets:
-#            - source: bootstrap.yml-1
-#              target: bootstrap.yml
-#        deploy:
-#            placement:
-#                constraints: [node.labels.type == java]
-
     jobservice-app:
         build: dockerfiles/jobservice
         image: localhost:5000/jr2_jobservice-app

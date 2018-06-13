@@ -203,6 +203,7 @@ security:
                 password: MUST_BE_PROVIDED_BY_THE_CONFIG_SERVER
     uid:
         wsclient:
+            monitoring-uid: 115635627
             endpointAddress: https://www.uid-wse-a.admin.ch/V3.0/PublicServices.svc
             truststore:
                 location: classpath:uid/jks/uid-client-truststore.jks

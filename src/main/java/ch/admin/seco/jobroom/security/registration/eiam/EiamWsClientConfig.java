@@ -1,12 +1,8 @@
 package ch.admin.seco.jobroom.security.registration.eiam;
 
-import javax.xml.soap.SOAPException;
-import javax.xml.soap.SOAPMessage;
-
 import org.apache.http.client.HttpClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -20,6 +16,9 @@ import org.springframework.ws.client.support.interceptor.PayloadValidatingInterc
 import org.springframework.ws.soap.client.core.SoapFaultMessageResolver;
 import org.springframework.ws.soap.saaj.SaajSoapMessageFactory;
 import org.springframework.ws.transport.http.HttpComponentsMessageSender;
+
+import javax.xml.soap.SOAPException;
+import javax.xml.soap.SOAPMessage;
 
 @Configuration
 @EnableConfigurationProperties({EiamWsClientProperties.class})
@@ -42,13 +41,12 @@ public class EiamWsClientConfig {
     }
 
     @Bean
-    public EiamAdminServiceHealthIndicator eiamAdminServiceHealthIndicator() throws Exception {
-        return new EiamAdminServiceHealthIndicator(eiamClient(), eiamWsClientProperties.getMonitoringUserExternalId());
+    public EiamClientHealthIndicator eiamClientHealthIndicator() throws Exception {
+        return new EiamClientHealthIndicator(eiamClient(), eiamWsClientProperties.getMonitoringUserExternalId());
     }
 
     @Bean
     public WebServiceTemplate eiamClientWebsericeTemplate() throws Exception {
-        LOGGER.info("About to create the eiamClientWebsericeTemplate");
         WebServiceTemplate webServiceTemplate = new WebServiceTemplate();
         webServiceTemplate.setMarshaller(jaxb2Marshaller());
         webServiceTemplate.setUnmarshaller(jaxb2Marshaller());
@@ -58,12 +56,10 @@ public class EiamWsClientConfig {
         webServiceTemplate.setInterceptors(new ClientInterceptor[] {payloadValidatingInterceptor()});
         webServiceTemplate.setMessageFactory(messageFactory());
         webServiceTemplate.afterPropertiesSet();
-        LOGGER.info("created the eiamClientWebsericeTemplate");
         return webServiceTemplate;
     }
 
     private PayloadValidatingInterceptor payloadValidatingInterceptor() throws Exception {
-        LOGGER.info("created the payloadValidatingInterceptor()");
         PayloadValidatingInterceptor payloadValidatingInterceptor = new PayloadValidatingInterceptor();
         payloadValidatingInterceptor.setSchema(new ClassPathResource("/eiam/wsdl/nevisidm_servicetypes_v1_32.xsd"));
         payloadValidatingInterceptor.setValidateRequest(eiamWsClientProperties.isValidationEnabled());
@@ -73,7 +69,6 @@ public class EiamWsClientConfig {
     }
 
     private HttpClient httpClient() throws Exception {
-        LOGGER.info("About to create the httpClient()");
         WebServiceHttpClientBuilder httpClientBuilder = new WebServiceHttpClientBuilder();
         httpClientBuilder
             .setTimeouts(eiamWsClientProperties.getConnectTimeout(), eiamWsClientProperties.getSockedTimeout(), eiamWsClientProperties.getConnectionRequestTimeout())
@@ -113,7 +108,6 @@ public class EiamWsClientConfig {
     }
 
     private Jaxb2Marshaller jaxb2Marshaller() {
-        LOGGER.info("About to create the jaxb2Marshaller()");
         Jaxb2Marshaller jaxb2Marshaller = new Jaxb2Marshaller();
         String[] packagesToScan = {
             "ch.adnovum.nevisidm.ws.services.v1_32",
@@ -124,7 +118,6 @@ public class EiamWsClientConfig {
     }
 
     private SaajSoapMessageFactory messageFactory() {
-        LOGGER.info("About to create the messageFactory()");
         ImprovedSaajSoapMessageFactory improvedSaajSoapMessageFactory = new ImprovedSaajSoapMessageFactory();
         improvedSaajSoapMessageFactory.afterPropertiesSet();
         return improvedSaajSoapMessageFactory;

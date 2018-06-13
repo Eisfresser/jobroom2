@@ -1,11 +1,11 @@
 package ch.admin.seco.jobroom.security.registration.uid;
 
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.core.io.Resource;
+
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.core.io.Resource;
 
 @ConfigurationProperties(prefix = "security.uid.wsclient")
 public class UidClientProperties {
@@ -82,6 +82,9 @@ public class UidClientProperties {
      */
     private int maxConnTotal = 20;
 
+    @NotNull
+    private Long monitoringUid;
+
     public boolean isValidationEnabled() {
         return validationEnabled;
     }
@@ -144,6 +147,14 @@ public class UidClientProperties {
 
     public void setTruststore(TruststoreProperties truststore) {
         this.truststore = truststore;
+    }
+
+    public Long getMonitoringUid() {
+        return monitoringUid;
+    }
+
+    public void setMonitoringUid(Long monitoringUid) {
+        this.monitoringUid = monitoringUid;
     }
 
     public static class TruststoreProperties {
