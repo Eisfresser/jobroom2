@@ -1,12 +1,11 @@
 package ch.admin.seco.jobroom.security.registration.eiam;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.core.io.Resource;
-import org.springframework.validation.annotation.Validated;
-
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.core.io.Resource;
+import org.springframework.validation.annotation.Validated;
 
 @ConfigurationProperties(prefix = "security.eiam.wsclient")
 @Validated

@@ -7,6 +7,8 @@ ENV SPRING_OUTPUT_ANSI_ENABLED=ALWAYS \
 # add directly the jar
 COPY jobroom.war /jobroom.war
 
+COPY /home/ubuntu/config/eiam /eiam
+
 EXPOSE 8080 5701/udp
 CMD echo "The application will start in ${SLEEP}s..." && \
     sleep ${SLEEP} && \
