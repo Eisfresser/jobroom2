@@ -24,7 +24,7 @@ spring:
     application:
         name: jobroom
     profiles:
-        active: default,no-eiam,eiam-mock,uid-mock,sles-mock
+        active: default,no-eiam,eiam-mock,uid-mock,stes-mock
     jackson:
         serialization.write_dates_as_timestamps: false
     cache:

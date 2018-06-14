@@ -27,6 +27,9 @@
     <include
         file="config/liquibase/changelog/20180607094957_changed_company_ext_id_size.xml"
         relativeToChangelogFile="false"/>
+    <include
+        file="config/liquibase/changelog/20180614141000_rename_table_for_entity_UserInfo.xml"
+        relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>
