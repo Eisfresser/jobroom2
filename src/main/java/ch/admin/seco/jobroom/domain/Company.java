@@ -33,7 +33,7 @@ public class Company implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @EmbeddedId
-    @AttributeOverride(name = "value", column = @Column(name = "ID"))
+    @AttributeOverride(name = "value", column = @Column(name = "id"))
     @Valid
     private CompanyId id;
 

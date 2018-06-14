@@ -32,7 +32,7 @@ public class Accountability implements Serializable {
 
     @Enumerated(EnumType.STRING)
     @NotNull
-    @Column(name = "ACCOUNTABILITY_TYPE")
+    @Column(name = "accountability_type")
     private AccountabilityType type;
 
     @ManyToOne(fetch = FetchType.LAZY)

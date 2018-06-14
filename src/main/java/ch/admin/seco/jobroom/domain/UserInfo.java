@@ -64,10 +64,10 @@ public class UserInfo implements Serializable {
 
     @Email
     @Size(min = 5, max = 100)
-    @Column(length = 100)
+    @Column(name = "email", length = 100)
     private String email;
 
-    @Column(length = 50)
+    @Column(name = "phone", length = 50)
     private String phone;
 
     @Size(min = 2, max = 6)
@@ -75,10 +75,10 @@ public class UserInfo implements Serializable {
     private String langKey;
 
     @Enumerated(EnumType.STRING)
-    @Column(length = 15)
+    @Column(name = "registration_status", length = 15)
     private RegistrationStatus registrationStatus;
 
-    @Column(length = 15)
+    @Column(name = "access_code", length = 15)
     private String accessCode;
 
     @ElementCollection
