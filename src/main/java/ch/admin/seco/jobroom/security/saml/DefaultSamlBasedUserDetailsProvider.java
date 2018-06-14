@@ -56,7 +56,9 @@ public class DefaultSamlBasedUserDetailsProvider implements SamlBasedUserDetails
         if (existingDbUser.isPresent()) {   // existing user
             UserInfo existingUserInfo = existingDbUser.get();
             updateUserInfo(userInfoFromSaml, existingUserInfo);
-            this.userInfoRepository.save(existingUserInfo);
+            existingUserInfo = this.userInfoRepository.save(existingUserInfo);
+            // Hack to make sure we load all the accountabilities
+            existingUserInfo.getAccountabilities().size();
             eiamUserPrincipal.setUser(existingUserInfo);
             eiamUserPrincipal.setNeedsRegistration(false);
         } else {
