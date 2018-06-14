@@ -40,7 +40,7 @@ export class JobseekerDialogComponent implements OnInit {
         const birthday: NgbDateStruct = this.registerForm.get('customerBirthday').value;
         this.registrationService.registerJobSeeker(
             {
-                personalNumber: parseInt(this.registerForm.get('customerPN').value, 10),
+                personNumber: parseInt(this.registerForm.get('customerPN').value, 10),
                 birthdate: new Date(birthday.year, birthday.month - 1, birthday.day)
             }).subscribe((res: HttpResponse<any>) => {
             this.mismatchInfo = !res.body;

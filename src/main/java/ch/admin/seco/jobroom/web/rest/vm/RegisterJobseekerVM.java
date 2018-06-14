@@ -12,7 +12,7 @@ public class RegisterJobseekerVM {
 
     @Digits(integer = 20, fraction = 0)
     @NotNull
-    private long personNumber;
+    private Long personNumber;
 
     @NotNull
     private LocalDate birthdate;

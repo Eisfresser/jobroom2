@@ -1,4 +1,4 @@
 export interface JobSeekerDetails {
-    personalNumber: number;
+    personNumber: number;
     birthdate: Date;
 }
