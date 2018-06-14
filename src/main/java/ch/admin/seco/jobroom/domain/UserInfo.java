@@ -36,7 +36,7 @@ import ch.admin.seco.jobroom.domain.enumeration.RegistrationStatus;
  * by the eIAM.
  */
 @Entity
-@Table(name = "USER")
+@Table(name = "user")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class UserInfo implements Serializable {
 
