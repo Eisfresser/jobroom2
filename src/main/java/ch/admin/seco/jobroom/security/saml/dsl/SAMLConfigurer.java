@@ -1,6 +1,5 @@
 package ch.admin.seco.jobroom.security.saml.dsl;
 
-import ch.admin.seco.jobroom.security.saml.JobroomAuthenticationSuccessHandler;
 import ch.admin.seco.jobroom.security.saml.utils.HttpStatusEntryPoint;
 import ch.admin.seco.jobroom.security.saml.utils.XmlHttpRequestedWithMatcher;
 import org.apache.commons.httpclient.HttpClient;
@@ -249,12 +248,22 @@ public final class SAMLConfigurer extends SecurityConfigurerAdapter<DefaultSecur
         samlWebSSOProcessingFilter.setAuthenticationManager(authenticationManagerBuilder.build());
         samlWebSSOProcessingFilter.setContextProvider(contextProvider);
         samlWebSSOProcessingFilter.setSAMLProcessor(samlProcessor);
-
-        JobroomAuthenticationSuccessHandler jobroomAuthenticationSuccessHandler = new JobroomAuthenticationSuccessHandler(this.targetUrlEiamAccessRequest);
-        jobroomAuthenticationSuccessHandler.setAlwaysUseDefaultTargetUrl(true);
-        jobroomAuthenticationSuccessHandler.setDefaultTargetUrl(TARGET_URL_AFTER_AUTHENTICATION);
-        samlWebSSOProcessingFilter.setAuthenticationSuccessHandler(jobroomAuthenticationSuccessHandler);
+        samlWebSSOProcessingFilter.setAuthenticationSuccessHandler(authenticationSuccessHandler());
+        samlWebSSOProcessingFilter.setAuthenticationFailureHandler(authenticationFailureHandler());
         return samlWebSSOProcessingFilter;
+    }
+
+    private JobroomAuthenticationFailureHandler authenticationFailureHandler() {
+        JobroomAuthenticationFailureHandler authenticationFailureHandler = new JobroomAuthenticationFailureHandler(this.targetUrlEiamAccessRequest);
+        authenticationFailureHandler.setUseForward(false);
+        return authenticationFailureHandler;
+    }
+
+    private JobroomAuthenticationSuccessHandler authenticationSuccessHandler() {
+        JobroomAuthenticationSuccessHandler authenticationSuccessHandler = new JobroomAuthenticationSuccessHandler();
+        authenticationSuccessHandler.setAlwaysUseDefaultTargetUrl(true);
+        authenticationSuccessHandler.setDefaultTargetUrl(TARGET_URL_AFTER_AUTHENTICATION);
+        return authenticationSuccessHandler;
     }
 
     private MetadataGeneratorFilter metadataGeneratorFilter(SAMLEntryPoint samlEntryPoint, ExtendedMetadata extendedMetadata) {

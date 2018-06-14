@@ -1,23 +1,20 @@
-package ch.admin.seco.jobroom.security.saml;
-
-import java.io.IOException;
-import java.util.stream.Collectors;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.springframework.security.core.Authentication;
-import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
+package ch.admin.seco.jobroom.security.saml.dsl;
 
 import ch.admin.seco.jobroom.domain.UserInfo;
 import ch.admin.seco.jobroom.domain.enumeration.RegistrationStatus;
 import ch.admin.seco.jobroom.security.AuthoritiesConstants;
 import ch.admin.seco.jobroom.security.EiamUserPrincipal;
-import ch.admin.seco.jobroom.security.saml.dsl.SAMLConfigurer;
+import ch.admin.seco.jobroom.security.saml.MissingPrincipalException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.stream.Collectors;
 
 /**
  * The success handler is called after the user has been authenticated successfully. It is
@@ -32,12 +29,6 @@ import ch.admin.seco.jobroom.security.saml.dsl.SAMLConfigurer;
 public class JobroomAuthenticationSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
 
     private final static Logger LOG = LoggerFactory.getLogger(JobroomAuthenticationSuccessHandler.class);
-
-    private final String targetUrlEiamAccessRequest;
-
-    public JobroomAuthenticationSuccessHandler(String targetUrlEiamAccessRequest) {
-        this.targetUrlEiamAccessRequest = targetUrlEiamAccessRequest;
-    }
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
@@ -55,8 +46,7 @@ public class JobroomAuthenticationSuccessHandler extends SavedRequestAwareAuthen
                 throw new MissingPrincipalException();
             }
         } else {
-            // if user has no Jobroom role, he/she must be sent to the access request page of eIAM
-            redirectTo(this.targetUrlEiamAccessRequest, request, response);
+            throw new IllegalStateException("User must have job-rooms ALLOW role");
         }
     }
 

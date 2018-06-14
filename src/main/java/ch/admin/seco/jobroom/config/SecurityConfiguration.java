@@ -1,13 +1,16 @@
 package ch.admin.seco.jobroom.config;
 
-import static ch.admin.seco.jobroom.security.saml.dsl.SAMLConfigurer.saml;
-
-import java.util.Map;
-
+import ch.admin.seco.jobroom.repository.UserInfoRepository;
+import ch.admin.seco.jobroom.security.AuthoritiesConstants;
+import ch.admin.seco.jobroom.security.MD5PasswordEncoder;
+import ch.admin.seco.jobroom.security.jwt.JWTConfigurer;
+import ch.admin.seco.jobroom.security.saml.AbstractSecurityConfig;
+import ch.admin.seco.jobroom.security.saml.DefaultSamlBasedUserDetailsProvider;
+import ch.admin.seco.jobroom.security.saml.SamlProperties;
+import ch.admin.seco.jobroom.security.saml.infrastructure.EiamSamlUserDetailsService;
+import ch.admin.seco.jobroom.security.saml.infrastructure.SamlBasedUserDetailsProvider;
 import io.github.jhipster.config.JHipsterProperties;
 import io.github.jhipster.config.JHipsterProperties.Security.Authentication.Jwt;
-import org.zalando.problem.spring.web.advice.security.SecurityProblemSupport;
-
 import org.springframework.beans.factory.BeanInitializationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -33,17 +36,11 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.NegatedRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.web.filter.CorsFilter;
+import org.zalando.problem.spring.web.advice.security.SecurityProblemSupport;
 
-import ch.admin.seco.jobroom.repository.UserInfoRepository;
-import ch.admin.seco.jobroom.security.AuthoritiesConstants;
-import ch.admin.seco.jobroom.security.MD5PasswordEncoder;
-import ch.admin.seco.jobroom.security.jwt.JWTConfigurer;
-import ch.admin.seco.jobroom.security.saml.AbstractSecurityConfig;
-import ch.admin.seco.jobroom.security.saml.DefaultSamlBasedUserDetailsProvider;
-import ch.admin.seco.jobroom.security.saml.SamlProperties;
-import ch.admin.seco.jobroom.security.saml.infrastructure.EiamSamlUserDetailsService;
-import ch.admin.seco.jobroom.security.saml.infrastructure.SamlBasedUserDetailsProvider;
-import ch.admin.seco.jobroom.security.saml.utils.IamService;
+import java.util.Map;
+
+import static ch.admin.seco.jobroom.security.saml.dsl.SAMLConfigurer.saml;
 
 @Configuration
 @EnableWebSecurity
@@ -166,9 +163,6 @@ public class SecurityConfiguration {
         private Map<String, String> rolemapping;
 
         @Autowired
-        private IamService iamService;
-
-        @Autowired
         private SamlProperties samlProperties;
 
         @Bean
@@ -208,11 +202,11 @@ public class SecurityConfiguration {
         }
 
         private EiamSamlUserDetailsService eiamSamlUserDetailsService() {
-            return new EiamSamlUserDetailsService(samlBasedUserDetailsProvider(), userInfoRepository);
+            return new EiamSamlUserDetailsService(samlBasedUserDetailsProvider());
         }
 
         private SamlBasedUserDetailsProvider samlBasedUserDetailsProvider() {
-            return new DefaultSamlBasedUserDetailsProvider(iamService, rolemapping);
+            return new DefaultSamlBasedUserDetailsProvider(userInfoRepository, rolemapping);
         }
 
         public Map<String, String> getRolemapping() {

@@ -1,35 +1,30 @@
 package ch.admin.seco.jobroom.security.saml;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.springframework.security.core.userdetails.UserDetails;
-
 import ch.admin.seco.jobroom.domain.UserInfo;
+import ch.admin.seco.jobroom.repository.UserInfoRepository;
 import ch.admin.seco.jobroom.security.EiamUserPrincipal;
+import ch.admin.seco.jobroom.security.saml.dsl.NotEiamEnrichedSamlUserAuthenticationException;
 import ch.admin.seco.jobroom.security.saml.infrastructure.EiamEnrichedSamlUser;
 import ch.admin.seco.jobroom.security.saml.infrastructure.SamlBasedUserDetailsProvider;
 import ch.admin.seco.jobroom.security.saml.infrastructure.SamlUser;
-import ch.admin.seco.jobroom.security.saml.utils.IamService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.*;
 
 public class DefaultSamlBasedUserDetailsProvider implements SamlBasedUserDetailsProvider {
 
     private final static Logger LOG = LoggerFactory.getLogger(DefaultSamlBasedUserDetailsProvider.class);
 
-    private IamService iamService;
+    private final UserInfoRepository userInfoRepository;
 
-    private Map<String, String> rolemapping;
+    private final Map<String, String> rolemapping;
 
-    public DefaultSamlBasedUserDetailsProvider(IamService iamService, Map<String, String> rolemapping) {
-        this.iamService = iamService;
+    public DefaultSamlBasedUserDetailsProvider(UserInfoRepository userInfoRepository, Map<String, String> rolemapping) {
+        this.userInfoRepository = userInfoRepository;
         this.rolemapping = rolemapping;
     }
-
     /**
      * The user's details are mainly taken from the SAML assertion, but are enriched with
      * data from to other sources. The data is combined from these sources:
@@ -43,46 +38,54 @@ public class DefaultSamlBasedUserDetailsProvider implements SamlBasedUserDetails
     @Override
     public UserDetails createUserDetailsFromSaml(SamlUser samlUser) {
         if (!(samlUser instanceof EiamEnrichedSamlUser)) {
-            throw new IllegalArgumentException("EIAMEnrichedSAMLUser needed for getting userExtId");
+            throw new NotEiamEnrichedSamlUserAuthenticationException(samlUser);
         }
-
-        EiamEnrichedSamlUser eIamSamlUser = (EiamEnrichedSamlUser) samlUser;
-        if (!eIamSamlUser.getUserExtId().isPresent()) {
-            throw new IllegalArgumentException("EIAMEnrichedSAMLUser has no userExtId");
-        }
-
-        return toEiamUserPrincipal(eIamSamlUser);
+        return toEiamUserPrincipal((EiamEnrichedSamlUser) samlUser);
     }
 
     private EiamUserPrincipal toEiamUserPrincipal(EiamEnrichedSamlUser eiamEnrichedSamlUser) {
-        // create a new principal with the information from the SAML assertion
+        final String userExternalId = eiamEnrichedSamlUser.getUserExtId().get();
         EiamUserPrincipal eiamUserPrincipal = new EiamUserPrincipal();
+        List<String> jobRoomRoles = mapEiamRolesToJobRoomRoles(eiamEnrichedSamlUser.getRoles());
+        eiamUserPrincipal.setAuthoritiesFromStringCollection(jobRoomRoles);
+        eiamUserPrincipal.setAuthenticationMethod(eiamEnrichedSamlUser.getAuthnContext());
+        eiamUserPrincipal.setUserDefaultProfileExtId(eiamEnrichedSamlUser.getDefaultProfileExtId().get());
+
+        UserInfo userInfoFromSaml = toUserInfo(eiamEnrichedSamlUser);
+        Optional<UserInfo> existingDbUser = userInfoRepository.findOneByUserExternalId(userExternalId);
+        if (existingDbUser.isPresent()) {   // existing user
+            UserInfo existingUserInfo = existingDbUser.get();
+            updateUserInfo(userInfoFromSaml, existingUserInfo);
+            this.userInfoRepository.save(existingUserInfo);
+            eiamUserPrincipal.setUser(existingUserInfo);
+            eiamUserPrincipal.setNeedsRegistration(false);
+        } else {
+            eiamUserPrincipal.setUser(userInfoFromSaml);
+            eiamUserPrincipal.setNeedsRegistration(true);
+        }
+        if (LOG.isDebugEnabled()) {
+            LOG.debug(userInfoFromSaml.toString());
+        }
+        return eiamUserPrincipal;
+    }
+
+    private UserInfo toUserInfo(EiamEnrichedSamlUser eiamEnrichedSamlUser) {
         UserInfo userInfo = new UserInfo();
         userInfo.setUserExternalId(eiamEnrichedSamlUser.getUserExtId().get());
         userInfo.setLastName(eiamEnrichedSamlUser.getSurname().get());
         userInfo.setFirstName(eiamEnrichedSamlUser.getGivenname().get());
         userInfo.setEmail(eiamEnrichedSamlUser.getEmail().get());
         userInfo.setLangKey(eiamEnrichedSamlUser.getLanguage().get().toLowerCase());
-        eiamUserPrincipal.setUser(userInfo);
-        List<String> jobRoomRoles = mapEiamRolesToJobRoomRoles(eiamEnrichedSamlUser.getRoles());
-        eiamUserPrincipal.setAuthoritiesFromStringCollection(jobRoomRoles);
-        eiamUserPrincipal.setAuthenticationMethod(eiamEnrichedSamlUser.getAuthnContext());
-        eiamUserPrincipal.setUserDefaultProfileExtId(eiamEnrichedSamlUser.getDefaultProfileExtId().get());
+        return userInfo;
+    }
 
-        if (LOG.isDebugEnabled()) {
-            LOG.debug(userInfo.toString());
-        }
-
-        // add information which is only available through the eIAM webservice (currently only the phone)
-        EiamUserPrincipal result;
-        try {
-            result = this.iamService.populateWithEiamData(eiamUserPrincipal);
-        } catch (Throwable e) {
-            // TODO: question is, if we can live without the phone and thus just ignore a problem here
-            LOG.error("The retrieval of the phone number via eIAM webservice failed for user with extId {}", userInfo.getUserExternalId());
-            result = eiamUserPrincipal;
-        }
-        return result;
+    private void updateUserInfo(UserInfo fromUserInfo, UserInfo toUserInfo) {
+        toUserInfo.setUserExternalId(fromUserInfo.getUserExternalId());
+        toUserInfo.setLastName(fromUserInfo.getLastName());
+        toUserInfo.setFirstName(fromUserInfo.getFirstName());
+        toUserInfo.setEmail(fromUserInfo.getEmail());
+        toUserInfo.setPhone(fromUserInfo.getPhone());
+        toUserInfo.setLangKey(fromUserInfo.getLangKey());
     }
 
     private List<String> mapEiamRolesToJobRoomRoles(List<String> eiamRoles) {
