@@ -1,31 +1,5 @@
 package ch.admin.seco.jobroom.security.registration;
 
-import java.security.SecureRandom;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
-
-import org.apache.commons.codec.binary.Base32;
-import org.apache.commons.lang3.RandomStringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.core.env.Environment;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.TransactionSystemException;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Assert;
-import org.springframework.util.StringUtils;
-
 import ch.admin.seco.jobroom.config.Constants;
 import ch.admin.seco.jobroom.domain.Company;
 import ch.admin.seco.jobroom.domain.Organization;
@@ -43,6 +17,7 @@ import ch.admin.seco.jobroom.security.EiamUserPrincipal;
 import ch.admin.seco.jobroom.security.MD5PasswordEncoder;
 import ch.admin.seco.jobroom.security.registration.eiam.exceptions.RoleCouldNotBeAddedException;
 import ch.admin.seco.jobroom.security.registration.stes.StesService;
+import ch.admin.seco.jobroom.security.registration.stes.StesVerificationResult;
 import ch.admin.seco.jobroom.security.registration.uid.UidClient;
 import ch.admin.seco.jobroom.security.registration.uid.dto.FirmData;
 import ch.admin.seco.jobroom.security.registration.uid.exceptions.CompanyNotFoundException;
@@ -52,6 +27,26 @@ import ch.admin.seco.jobroom.security.saml.utils.IamService;
 import ch.admin.seco.jobroom.service.MailService;
 import ch.admin.seco.jobroom.service.dto.RegistrationResultDTO;
 import ch.admin.seco.jobroom.web.rest.vm.RegisterJobseekerVM;
+import org.apache.commons.codec.binary.Base32;
+import org.apache.commons.lang3.RandomStringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.core.env.Environment;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.TransactionSystemException;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
+import org.springframework.util.StringUtils;
+
+import java.security.SecureRandom;
+import java.util.*;
 
 @Service
 @ConfigurationProperties(prefix = "security")
@@ -161,13 +156,12 @@ public class RegistrationService {
 
 
     public boolean validatePersonNumber(RegisterJobseekerVM jobseekerDetails) throws StesServiceException {
-        boolean isDataValid;
         try {
-            isDataValid = this.stesService.verifyStesRegistrationData(jobseekerDetails);
+            StesVerificationResult stesVerificationResult = this.stesService.verifyStesRegistrationData(jobseekerDetails);
+            return stesVerificationResult.isVerified();
         } catch (Exception e) {
             throw new StesServiceException(e);
         }
-        return isDataValid;
     }
 
     @Transactional
