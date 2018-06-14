@@ -57,7 +57,7 @@ public final class SAMLConfigurer extends SecurityConfigurerAdapter<DefaultSecur
 
     private static final String TARGET_URL_AFTER_AUTHENTICATION = "/#/auth";
     private static final String TARGET_URL_AFTER_LOGOUT = "/#/home";
-    public static final String TARGET_URL_REGISTRATION_PROCESS = "/#/register";
+    public static final String TARGET_URL_REGISTRATION_PROCESS = "/#/registrationQuestionnaire";
     public static final String TARGET_URL_ENTER_ACCESS_CODE = "/#/accessCode";
     public static final String TARGET_URL_FORCE_TWO_FACTOR_AUTH = "/samllogin?strong=true";
 
