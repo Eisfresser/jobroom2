@@ -11,7 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.saml.SAMLCredential;
 import org.springframework.security.saml.userdetails.SAMLUserDetailsService;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import javax.xml.namespace.QName;
@@ -42,7 +41,6 @@ public class EiamSamlUserDetailsService implements SAMLUserDetailsService {
     }
 
     @Override
-    @Transactional
     public Object loadUserBySAML(SAMLCredential credential) {
         String extId = credential.getNameID().getValue();
         LOGGER.debug("Authenticating user with extId {}", extId);

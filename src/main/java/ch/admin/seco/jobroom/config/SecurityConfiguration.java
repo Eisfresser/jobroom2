@@ -35,6 +35,7 @@ import org.springframework.security.web.header.writers.DelegatingRequestMatcherH
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.NegatedRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
+import org.springframework.transaction.support.TransactionTemplate;
 import org.springframework.web.filter.CorsFilter;
 import org.zalando.problem.spring.web.advice.security.SecurityProblemSupport;
 
@@ -165,6 +166,9 @@ public class SecurityConfiguration {
         @Autowired
         private SamlProperties samlProperties;
 
+        @Autowired
+        private TransactionTemplate transactionTemplate;
+
         @Bean
         public PasswordEncoder passwordEncoder() {
             return new MD5PasswordEncoder();
@@ -206,7 +210,7 @@ public class SecurityConfiguration {
         }
 
         private SamlBasedUserDetailsProvider samlBasedUserDetailsProvider() {
-            return new DefaultSamlBasedUserDetailsProvider(userInfoRepository, rolemapping);
+            return new DefaultSamlBasedUserDetailsProvider(userInfoRepository, rolemapping, this.transactionTemplate);
         }
 
         public Map<String, String> getRolemapping() {

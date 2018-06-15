@@ -10,6 +10,8 @@ import ch.admin.seco.jobroom.security.saml.infrastructure.SamlUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.transaction.support.TransactionCallback;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import java.util.*;
 
@@ -21,9 +23,12 @@ public class DefaultSamlBasedUserDetailsProvider implements SamlBasedUserDetails
 
     private final Map<String, String> rolemapping;
 
-    public DefaultSamlBasedUserDetailsProvider(UserInfoRepository userInfoRepository, Map<String, String> rolemapping) {
+    private final TransactionTemplate transactionTemplate;
+
+    public DefaultSamlBasedUserDetailsProvider(UserInfoRepository userInfoRepository, Map<String, String> rolemapping, TransactionTemplate transactionTemplate) {
         this.userInfoRepository = userInfoRepository;
         this.rolemapping = rolemapping;
+        this.transactionTemplate = transactionTemplate;
     }
     /**
      * The user's details are mainly taken from the SAML assertion, but are enriched with
@@ -40,7 +45,7 @@ public class DefaultSamlBasedUserDetailsProvider implements SamlBasedUserDetails
         if (!(samlUser instanceof EiamEnrichedSamlUser)) {
             throw new NotEiamEnrichedSamlUserAuthenticationException(samlUser);
         }
-        return toEiamUserPrincipal((EiamEnrichedSamlUser) samlUser);
+        return this.transactionTemplate.execute((TransactionCallback<UserDetails>) status -> toEiamUserPrincipal((EiamEnrichedSamlUser) samlUser));
     }
 
     private EiamUserPrincipal toEiamUserPrincipal(EiamEnrichedSamlUser eiamEnrichedSamlUser) {
