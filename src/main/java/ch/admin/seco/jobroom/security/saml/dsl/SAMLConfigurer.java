@@ -222,8 +222,7 @@ public final class SAMLConfigurer extends SecurityConfigurerAdapter<DefaultSecur
     private WebSSOProfileOptions webSSOProfileOptions() {
         WebSSOProfileOptions webSSOProfileOptions = new WebSSOProfileOptions();
         webSSOProfileOptions.setIncludeScoping(false);
-        // TODO removed since we want to try the default behaviour (2FA) in eiam
-        //webSSOProfileOptions.setAuthnContexts(PASSWORD_ALLOWED_AUTHN_CTX);
+        webSSOProfileOptions.setAuthnContexts(DEFAULT_AUTHN_CTX);
         return webSSOProfileOptions;
     }
 
