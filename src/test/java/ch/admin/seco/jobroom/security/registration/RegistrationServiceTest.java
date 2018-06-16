@@ -1,5 +1,40 @@
 package ch.admin.seco.jobroom.security.registration;
 
+import static org.junit.Assert.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.UUID;
+
+import feign.FeignException;
+import feign.Response;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
+
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.util.StringUtils;
+
 import ch.admin.seco.jobroom.config.Constants;
 import ch.admin.seco.jobroom.domain.Company;
 import ch.admin.seco.jobroom.domain.Organization;
@@ -25,32 +60,6 @@ import ch.admin.seco.jobroom.security.saml.utils.IamService;
 import ch.admin.seco.jobroom.service.MailService;
 import ch.admin.seco.jobroom.service.dto.RegistrationResultDTO;
 import ch.admin.seco.jobroom.web.rest.vm.RegisterJobseekerVM;
-import feign.FeignException;
-import feign.Response;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.util.StringUtils;
-
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.*;
-
-import static org.junit.Assert.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.*;
 
 @RunWith(SpringRunner.class)
 public class RegistrationServiceTest {
@@ -65,7 +74,9 @@ public class RegistrationServiceTest {
     private static final String VALID_UID_PREFIX = "CHE";
     private static final String VALID_AVG_ID = "12345";
     private static final long VALID_PERS_NO = 1234;
-    private static final LocalDate BIRTH_DATE_NOW = LocalDate.now();
+    private static final int BIRTHDATE_YEAR = 1999;
+    private static final int BIRTHDATE_MONTH = 9;
+    private static final int BIRTHDATE_DAY = 19;
     private static final String VALID_PASSWORD = "p@ssw0rd";
     private static final String VALID_LOGIN = "hamu@mail.ch";
     private static final String INVALID_PASSWORD = "wrongPassword";
@@ -512,7 +523,9 @@ public class RegistrationServiceTest {
 
     private RegisterJobseekerVM getDummyInputData() {
         RegisterJobseekerVM inputData = new RegisterJobseekerVM();
-        inputData.setBirthdate(BIRTH_DATE_NOW);
+        inputData.setBirthdateYear(BIRTHDATE_YEAR);
+        inputData.setBirthdateMonth(BIRTHDATE_MONTH);
+        inputData.setBirthdateDay(BIRTHDATE_DAY);
         inputData.setPersonNumber(VALID_PERS_NO);
         return inputData;
     }

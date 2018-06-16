@@ -1,4 +1,6 @@
 export interface JobSeekerDetails {
     personNumber: number;
-    birthdate: Date;
+    birthdateYear: number;
+    birthdateMonth: number;
+    birthdateDay: number;
 }

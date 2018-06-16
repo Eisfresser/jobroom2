@@ -41,7 +41,9 @@ export class JobseekerDialogComponent implements OnInit {
         this.registrationService.registerJobSeeker(
             {
                 personNumber: parseInt(this.registerForm.get('customerPN').value, 10),
-                birthdate: new Date(birthday.year, birthday.month - 1, birthday.day)
+                birthdateYear: birthday.year,
+                birthdateMonth: birthday.month,
+                birthdateDay: birthday.day
             }).subscribe((res: HttpResponse<any>) => {
             this.mismatchInfo = !res.body;
             if (this.mismatchInfo) {

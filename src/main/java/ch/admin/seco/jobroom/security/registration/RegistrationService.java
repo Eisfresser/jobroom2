@@ -17,6 +17,7 @@ import ch.admin.seco.jobroom.security.EiamUserPrincipal;
 import ch.admin.seco.jobroom.security.MD5PasswordEncoder;
 import ch.admin.seco.jobroom.security.registration.eiam.exceptions.RoleCouldNotBeAddedException;
 import ch.admin.seco.jobroom.security.registration.stes.StesService;
+import ch.admin.seco.jobroom.security.registration.stes.StesVerificationRequest;
 import ch.admin.seco.jobroom.security.registration.stes.StesVerificationResult;
 import ch.admin.seco.jobroom.security.registration.uid.UidClient;
 import ch.admin.seco.jobroom.security.registration.uid.dto.FirmData;
@@ -46,6 +47,7 @@ import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
 import java.security.SecureRandom;
+import java.time.LocalDate;
 import java.util.*;
 
 @Service
@@ -157,7 +159,9 @@ public class RegistrationService {
 
     public boolean validatePersonNumber(RegisterJobseekerVM jobseekerDetails) throws StesServiceException {
         try {
-            StesVerificationResult stesVerificationResult = this.stesService.verifyStesRegistrationData(jobseekerDetails);
+            LocalDate birthdate = LocalDate.of(jobseekerDetails.getBirthdateYear(), jobseekerDetails.getBirthdateMonth(), jobseekerDetails.getBirthdateDay());
+            StesVerificationRequest jobseekerRequestData = new StesVerificationRequest(jobseekerDetails.getPersonNumber(), birthdate);
+            StesVerificationResult stesVerificationResult = this.stesService.verifyStesRegistrationData(jobseekerRequestData);
             return stesVerificationResult.isVerified();
         } catch (Exception e) {
             throw new StesServiceException(e);
