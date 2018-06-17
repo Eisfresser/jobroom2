@@ -2,6 +2,7 @@ package ch.admin.seco.jobroom.service.pdf;
 
 
 import java.awt.Color;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Locale;
 
@@ -10,10 +11,14 @@ import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import org.apache.pdfbox.pdmodel.graphics.image.LosslessFactory;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import org.apache.pdfbox.text.PDFTextStripper;
 
 import org.springframework.context.MessageSource;
+import org.springframework.core.io.ClassPathResource;
+
+import javax.imageio.ImageIO;
 
 public abstract class PdfDocument<T> {
 
@@ -117,10 +122,12 @@ public abstract class PdfDocument<T> {
     }
 
     PdfDocument addDefaultHeader() throws IOException {
-        // Image logo
-        PDImageXObject pdImage = PDImageXObject
-            .createFromFile(ClassLoader.getSystemResource("images/arbeit.swiss_" + locale.toLanguageTag() + ".png").getFile(),
-                this.document);
+        ClassPathResource cp = new ClassPathResource("images/arbeit.swiss_" + locale.toLanguageTag() + ".png");
+        if (!cp.exists()) {
+            cp = new ClassPathResource("images/arbeit.swiss_de.png");
+        }
+        BufferedImage awtImage = ImageIO.read(cp.getInputStream());
+        PDImageXObject pdImage = LosslessFactory.createFromImage(this.document, awtImage);
         contentStream.drawImage(pdImage, 380, 700, 140, 88);
         return this.setPosition(385, 680)
             .setFont(FONT_NORMAL, FONT_SMALL, COLOR_SECONDARY)

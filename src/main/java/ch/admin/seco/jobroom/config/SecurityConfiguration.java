@@ -11,6 +11,7 @@ import ch.admin.seco.jobroom.security.saml.infrastructure.EiamSamlUserDetailsSer
 import ch.admin.seco.jobroom.security.saml.infrastructure.SamlBasedUserDetailsProvider;
 import io.github.jhipster.config.JHipsterProperties;
 import io.github.jhipster.config.JHipsterProperties.Security.Authentication.Jwt;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.BeanInitializationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -190,7 +191,7 @@ public class SecurityConfiguration {
                 /*----*/.keyPassword(samlProperties.getKeystorePrivateKeyPassword())
                 /*----*/.and()
                 /*-*/.protocol(samlProperties.getExternalContextScheme())
-                /*-*/.hostname(samlProperties.getExternalContextServerName() + ":" + samlProperties.getExternalContextServerPort())
+                /*-*/.hostname(buildHostname())
                 /*-*/.basePath(samlProperties.getExternalContextPath())
                 /*-*/.entityId(samlProperties.getEntityId())
                 /*-*/.entityAlias(samlProperties.getEntityAlias())
@@ -203,6 +204,13 @@ public class SecurityConfiguration {
                 /*-*/.metadataFilePath(samlProperties.getIdpConfigPath())
                 .and()
                 .userDetailsService(this.eiamSamlUserDetailsService());
+        }
+
+        private String buildHostname() {
+            if (StringUtils.isBlank(samlProperties.getExternalContextServerPort())) {
+                return samlProperties.getExternalContextServerName();
+            }
+            return samlProperties.getExternalContextServerName() + ":" + samlProperties.getExternalContextServerPort();
         }
 
         private EiamSamlUserDetailsService eiamSamlUserDetailsService() {

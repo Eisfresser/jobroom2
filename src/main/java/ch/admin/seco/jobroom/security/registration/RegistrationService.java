@@ -96,10 +96,12 @@ public class RegistrationService {
     @Transactional
     public void insertNewJobseeker() throws UserAlreadyExistsException, NoValidPrincipalException, RoleCouldNotBeAddedException {
         EiamUserPrincipal principal = getPrincipalFromSession();
-        ensureUserIsNew(principal.getUser());
+        UserInfo userInfo = principal.getUser();
+        ensureUserIsNew(userInfo);
         addJobseekerRoleToEiam(principal);
         addJobseekerRoleToSession(principal);
-        this.userInfoRepository.save(principal.getUser());
+        userInfo.setRegistrationStatus(RegistrationStatus.REGISTERED);
+        this.userInfoRepository.save(userInfo);
     }
 
     @Transactional
@@ -172,7 +174,8 @@ public class RegistrationService {
     public RegistrationResultDTO registerEmployerOrAgent() throws NoValidPrincipalException, RoleCouldNotBeAddedException {
         RegistrationResultDTO result = new RegistrationResultDTO(false, Constants.TYPE_UNKOWN);
         EiamUserPrincipal principal = getPrincipalFromSession();
-        RegistrationStatus registrationStatus = principal.getUser().getRegistrationStatus();
+        UserInfo userInfo = principal.getUser();
+        RegistrationStatus registrationStatus = userInfo.getRegistrationStatus();
         if (registrationStatus.equals(RegistrationStatus.VALIDATION_EMP)) {
             result.setEmployerType();
             addCompanyRoleToEiam(principal);
@@ -182,9 +185,10 @@ public class RegistrationService {
             addAgentRoleToEiam(principal);
             addAgentRoleToSession(principal);
         } else {
-            throw new RoleCouldNotBeAddedException("User with id=" + principal.getUser().getId() + " tried to register as employer/agent, but has a wrong registration status: " + registrationStatus);
+            throw new RoleCouldNotBeAddedException("User with id=" + userInfo.getId() + " tried to register as employer/agent, but has a wrong registration status: " + registrationStatus);
         }
-        this.userInfoRepository.save(principal.getUser());
+        userInfo.setRegistrationStatus(RegistrationStatus.REGISTERED);
+        this.userInfoRepository.save(userInfo);
         result.setSuccess(true);
         return result;
     }
@@ -223,7 +227,8 @@ public class RegistrationService {
      * Makes sure, that the company exists in the database and return the company object.
      * If the company exists alread, it is just returned, otherwise it is inserted into
      * the database and then returned.
-     * @param firm  UID register firm data
+     *
+     * @param firm UID register firm data
      * @return either the inserted or the already existing company from the database (Company table)
      */
     private Company storeCompany(FirmData firm) {
@@ -240,7 +245,8 @@ public class RegistrationService {
      * Makes sure, that the company exists in the database and return the company object.
      * If the company exists alread, it is just returned, otherwise it is inserted into
      * the database and then returned.
-     * @param organization  AVG organisation read from the Organization database table
+     *
+     * @param organization AVG organisation read from the Organization database table
      * @return either the inserted or the already existing company from the database (Company table)
      */
     private Company storeCompany(Organization organization) {
