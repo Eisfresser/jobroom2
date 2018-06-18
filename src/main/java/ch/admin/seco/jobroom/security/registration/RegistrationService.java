@@ -140,16 +140,21 @@ public class RegistrationService {
     }
 
     @Transactional
-    public void registerExistingAgent() throws RoleCouldNotBeAddedException {
+    public void registerExistingAgent(String username, String password) throws RoleCouldNotBeAddedException, InvalidOldLoginException {
+        if (!validateOldLogin(username, password)) {
+            throw new InvalidOldLoginException();
+        }
         EiamUserPrincipal principal = this.currentUserService.getPrincipal();
         addAgentRoleToEiam(principal);
         addAgentRoleToSession();
         UserInfo userInfo = getUserInfo(principal.getId());
-        userInfo.closeRegistration();
+        Optional<User> oldUser = this.userRepository.findOneWithAuthoritiesByLogin(username);
+        Organization avgCompany = oldUser.get().getOrganization();
+        Company company = storeCompany(avgCompany);
+        userInfo.registerExistingAgent(company);
     }
 
-    @Transactional
-    public boolean validateOldLogin(String username, String password) {
+    private boolean validateOldLogin(String username, String password) {
         Assert.notNull(username, "A username must be provided.");
         Assert.notNull(password, "A password must be provided.");
         Optional<User> oldUser = this.userRepository.findOneWithAuthoritiesByLogin(username);

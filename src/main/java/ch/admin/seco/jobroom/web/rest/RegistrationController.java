@@ -1,10 +1,7 @@
 package ch.admin.seco.jobroom.web.rest;
 
 import ch.admin.seco.jobroom.config.Constants;
-import ch.admin.seco.jobroom.security.registration.InvalidAccessCodeException;
-import ch.admin.seco.jobroom.security.registration.InvalidPersonenNumberException;
-import ch.admin.seco.jobroom.security.registration.RegistrationService;
-import ch.admin.seco.jobroom.security.registration.StesServiceException;
+import ch.admin.seco.jobroom.security.registration.*;
 import ch.admin.seco.jobroom.security.registration.eiam.exceptions.RoleCouldNotBeAddedException;
 import ch.admin.seco.jobroom.security.registration.uid.dto.FirmData;
 import ch.admin.seco.jobroom.security.registration.uid.exceptions.CompanyNotFoundException;
@@ -142,12 +139,12 @@ public class RegistrationController {
     @PostMapping("/registerExistingAgent")
     @Timed
     public boolean registerExistingAgent(@Valid @RequestBody LoginVM loginData) throws RoleCouldNotBeAddedException {
-        if (this.registrationService.validateOldLogin(loginData.getUsername(), loginData.getPassword())) {
-            this.registrationService.registerExistingAgent();
-            //TODO: check 2-factor and send auth request if needed; otherwise send to job admin page
+        try {
+            this.registrationService.registerExistingAgent(loginData.getUsername(), loginData.getPassword());
             return true;
+        } catch (InvalidOldLoginException e) {
+            return false;
         }
-        return false;
     }
 
 }

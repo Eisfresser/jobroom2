@@ -186,6 +186,11 @@ public class UserInfo implements Serializable {
         this.changeRegistrationStatus(RegistrationStatus.VALIDATION_PAV);
     }
 
+    public void registerExistingAgent(Company company) {
+        this.addCompany(company);
+        this.changeRegistrationStatus(RegistrationStatus.REGISTERED);
+    }
+
     private void changeRegistrationStatus(RegistrationStatus registrationStatus) {
         this.registrationStatus = registrationStatus;
     }
@@ -229,5 +234,4 @@ public class UserInfo implements Serializable {
             ", registrationStatus='" + (registrationStatus != null ? registrationStatus.name() : "null") + '\'' +
             "}";
     }
-
 }

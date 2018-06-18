@@ -206,55 +206,26 @@ public class RegistrationServiceTest {
     }
 
     @Test
-    public void registerAgent() throws RoleCouldNotBeAddedException {
-        registrationService.registerExistingAgent();
+    public void registerExistingAgent() throws RoleCouldNotBeAddedException, InvalidOldLoginException {
+        when(mockUserRepository.findOneWithAuthoritiesByLogin(anyString())).thenReturn(getOldDummyUser());
+
+        when(mockCompanyRepository.save(any())).thenReturn(getDummyCompany());
+
+        registrationService.registerExistingAgent(VALID_LOGIN, VALID_PASSWORD);
 
         verify(mockIamService).addAgentRoleToUser(anyString(), anyString());
         verify(currentUserService).addRoleToSession(AuthoritiesConstants.ROLE_PRIVATE_EMPLOYMENT_AGENT);
     }
 
-    @Test
-    public void validateOldLogin() {
-        when(mockUserRepository.findOneWithAuthoritiesByLogin(anyString())).thenReturn(getOldDummyUser());
 
-        boolean result = this.registrationService.validateOldLogin(VALID_LOGIN, VALID_PASSWORD);
-
-        verify(mockUserRepository).findOneWithAuthoritiesByLogin(anyString());
-        assertTrue(result);
-    }
-
-    @Test
-    public void validateOldLoginUserNotExist() {
+    @Test(expected = InvalidOldLoginException.class)
+    public void validateOldLoginWrongPassword() throws RoleCouldNotBeAddedException, InvalidOldLoginException {
         when(mockUserRepository.findOneWithAuthoritiesByLogin(anyString())).thenReturn(Optional.empty());
 
-        boolean result = this.registrationService.validateOldLogin(VALID_LOGIN, VALID_PASSWORD);
-
-        verify(mockUserRepository).findOneWithAuthoritiesByLogin(anyString());
-        assertTrue(!result);
-    }
-
-    @Test
-    public void validateOldLoginWrongPassword() {
         when(mockUserRepository.findOneWithAuthoritiesByLogin(anyString())).thenReturn(getOldDummyUser());
 
-        boolean result = this.registrationService.validateOldLogin(VALID_LOGIN, INVALID_PASSWORD);
+        this.registrationService.registerExistingAgent(VALID_LOGIN, INVALID_PASSWORD);
 
-        verify(mockUserRepository).findOneWithAuthoritiesByLogin(anyString());
-        assertTrue(!result);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void validateOldLoginNoUsername() {
-        this.registrationService.validateOldLogin(null, INVALID_PASSWORD);
-
-        verify(mockUserRepository, never()).findOneWithAuthoritiesByLogin(anyString());
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void validateOldLoginNoPassword() {
-        this.registrationService.validateOldLogin(VALID_LOGIN, null);
-
-        verify(mockUserRepository, never()).findOneWithAuthoritiesByLogin(anyString());
     }
 
     private void setupSecurityContextMockWithRegistrationStatus(RegistrationStatus registrationStatus) {
@@ -299,6 +270,7 @@ public class RegistrationServiceTest {
         user.setLogin(VALID_LOGIN);
         MD5PasswordEncoder md5PasswordEncoder = new MD5PasswordEncoder();
         user.setPassword(md5PasswordEncoder.encode(VALID_PASSWORD));
+        user.setOrganization(getDummyOrganization().get());
         return Optional.of(user);
     }
 
