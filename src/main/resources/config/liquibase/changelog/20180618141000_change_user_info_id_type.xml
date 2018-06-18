@@ -5,15 +5,24 @@
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
 
     <changeSet id="20180618141000-1" author="pado">
+
+        <dropForeignKeyConstraint baseTableName="accountability"
+                                  constraintName="fk_accountability_user_id"/>
+        <modifyDataType
+            columnName="user_id"
+            newDataType="varchar(36)"
+            tableName="accountability"/>
+
         <modifyDataType
             columnName="id"
             newDataType="varchar(36)"
             tableName="user_info"/>
 
-        <modifyDataType
-            columnName="user_id"
-            newDataType="varchar(36)"
-            tableName="accountability"/>
+        <addForeignKeyConstraint baseColumnNames="user_id"
+                                 baseTableName="accountability"
+                                 constraintName="fk_accountability_user_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="user_info"/>
     </changeSet>
 
 </databaseChangeLog>
