@@ -8,6 +8,7 @@ import ch.admin.seco.jobroom.service.CurrentUserService;
 import com.codahale.metrics.annotation.Timed;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -42,11 +43,12 @@ public class AccountResource {
      */
     @GetMapping("/account")
     @Timed
+    @Transactional
     public AccountDTO getAccount() {
         EiamUserPrincipal principal = this.currentUserService.getPrincipal();
-        Optional<UserInfo> userInfo = this.userInfoRepository.findOneByUserExternalId(principal.getUserExtId());
+        Optional<UserInfo> userInfo = this.userInfoRepository.findOneWithAccountabilites(principal.getId());
         if (!userInfo.isPresent()) {
-            throw new IllegalStateException("User not found: " + principal.getUserExtId());
+            throw new IllegalStateException("User not found: " + principal.getId().getValue());
         }
         return new AccountDTO(
             userInfo.get().getId().getValue(),
