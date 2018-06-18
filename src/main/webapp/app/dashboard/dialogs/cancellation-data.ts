@@ -1,11 +1,6 @@
+import { CancellationReason } from '../../shared/job-advertisement/job-advertisement.model';
+
 export interface CancellationData {
     id: string;
-    cancellationReason: {
-        positionOccupied: boolean;
-        occupiedWith: {
-            jobCenter: boolean;
-            privateAgency: boolean;
-            self: boolean
-        }
-    };
+    cancellationReason: CancellationReason
 }

@@ -53,9 +53,9 @@ export class JobAdvertisementService {
     }
 
     cancel(jobAdCancelRequest: JobAdvertisementCancelRequest): Observable<number> {
-        const { reasonCode } = jobAdCancelRequest;
+        const { code } = jobAdCancelRequest;
         return this.http.patch(`${this.resourceUrl}/${jobAdCancelRequest.id}/cancel`,
-            { reasonCode }, { observe: 'response' })
+            { code }, { observe: 'response' })
             .map((result) => result.status);
     }
 

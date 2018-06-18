@@ -38,7 +38,10 @@
             "occupied": "Il posto \u00e8 stato assegnato",
             "occupied.jobCenter": "in collaborazione con l'Ufficio regionale di collocamento (URC)",
             "occupied.privateAgency": "in collaborazione con le agenzie private di collocamento",
-            "occupied.self": "Il posto \u00e8 stato assegnato senza interventi esterni"
+            "occupied.self": "Il posto \u00e8 stato assegnato senza interventi esterni",
+            "occupied.jobroom": "a un candidato di Job-Room",
+            "occupied.not-jobroom": "a un'altra persona",
+            "change-or-repost": "Sie m\u00f6chten die Ausschreibung \u00e4ndern oder neu erfassen"
         },
         "title": "Cancellare il posto vacante"
     },

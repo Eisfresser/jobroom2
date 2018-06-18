@@ -18,6 +18,7 @@ import { CancellationData } from '../../../../../../../main/webapp/app/dashboard
 import { HttpClientModule } from '@angular/common/http';
 import { JobAdvertisementService } from '../../../../../../../main/webapp/app/shared/job-advertisement/job-advertisement.service';
 import { createJobAdvertisement } from '../../../shared/job-publication/utils';
+import { CancellationReason } from '../../../../../../../main/webapp/app/shared/job-advertisement/job-advertisement.model';
 
 describe('JobPublicationCancelEffects', () => {
     let effects: JobPublicationDetailEffects;
@@ -83,14 +84,7 @@ describe('JobPublicationCancelEffects', () => {
         it('should return a new CancellationSucceededAction with the updated job publication on success', () => {
             const cancellationData: CancellationData = {
                 id: 'id',
-                cancellationReason: {
-                    positionOccupied: true,
-                    occupiedWith: {
-                        jobCenter: true,
-                        privateAgency: false,
-                        self: false
-                    }
-                }
+                cancellationReason: CancellationReason.OCCUPIED_JOBROOM
             };
             const jobAdvertisement = createJobAdvertisement('id', 'id-avam');
 
@@ -112,14 +106,7 @@ describe('JobPublicationCancelEffects', () => {
         it('should return a new CancellationFailedAction on error', () => {
             const cancellationData: CancellationData = {
                 id: 'id',
-                cancellationReason: {
-                    positionOccupied: true,
-                    occupiedWith: {
-                        jobCenter: true,
-                        privateAgency: false,
-                        self: false
-                    }
-                }
+                cancellationReason: CancellationReason.OCCUPIED_JOBROOM
             };
 
             const action = new SubmitCancellationAction(cancellationData);

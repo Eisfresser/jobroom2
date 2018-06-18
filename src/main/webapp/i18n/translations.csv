@@ -167,6 +167,9 @@ dashboard,job-publication-cancel.job.occupied,Sie konnten die Stelle besetzen,Yo
 dashboard,job-publication-cancel.job.occupied.jobCenter,in Zusammenarbeit mit der regionalen Arbeitsvermittlung (RAV),in cooperation with the regional employment centre (RAV),en collaboration avec l'Office régional de placement (ORP),in collaborazione con l'Ufficio regionale di collocamento (URC)
 dashboard,job-publication-cancel.job.occupied.privateAgency,in Zusammenarbeit mit der privaten Arbeitsvermittlung (pAV),in cooperation with the private employment agency (pAV),en collaboration avec un placeur privé,in collaborazione con le agenzie private di collocamento
 dashboard,job-publication-cancel.job.occupied.self,Sie konnten die Stelle selber besetzen,You were able to fill the position yourself,Vous avez pourvu le poste par vos propres soins.,Il posto è stato assegnato senza interventi esterni
+dashboard,job-publication-cancel.job.occupied.jobroom,mit einer Kandidatin/einem Kandidaten aus Job-Room,with a candidate from Job-Room,avec un/une candidat/e de Job-Room,a un candidato di Job-Room
+dashboard,job-publication-cancel.job.occupied.not-jobroom,anderweitig,with a candidate not from Job-Room,par un autre moyen que Job-Room,a un'altra persona
+dashboard,job-publication-cancel.job.change-or-repost,Sie möchten die Ausschreibung ändern oder neu erfassen,You want to change or repost the position,Sie möchten die Ausschreibung ändern oder neu erfassen,Sie möchten die Ausschreibung ändern oder neu erfassen
 dashboard,job-publication-cancel.title,Stellenanzeige abmelden,Cancel job posting,Retirer l'annonce,Cancellare il posto vacante
 dashboard,job-publication-details.application.additionalInfo,Ergänzende Angaben,Additional Information,Indications complémentaires,Informazioni complementari
 dashboard,job-publication-details.application.email,E-Mail,Email,Courriel,E-mail

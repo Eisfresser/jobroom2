@@ -14,11 +14,12 @@ export enum JobAdvertisementStatus {
 }
 
 export enum CancellationReason {
-    OCCUPIED_SELF,
-    OCCUPIED_JOB_CENTER,
-    OCCUPIED_PRIVATE_AGENCY,
-    OCCUPIED_BOTH,
-    NOT_OCCUPIED
+    OCCUPIED_JOBCENTER,
+    OCCUPIED_AGENCY,
+    OCCUPIED_JOBROOM,
+    OCCUPIED_OTHER,
+    NOT_OCCUPIED,
+    CHANGE_OR_REPOSE
 }
 
 export enum SourceSystem {

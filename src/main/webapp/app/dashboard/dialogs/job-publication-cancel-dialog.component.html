@@ -13,7 +13,7 @@
 
             <div class="form-check">
                 <label class="form-check-label">
-                    <input class="form-check-input" type="radio" formControlName="positionOccupied"  name="positionOccupied" [value]="true">
+                    <input class="form-check-input" type="radio" formControlName="positionOccupied"  name="positionOccupied" value="occupied">
                     {{ 'job-publication-cancel.job.occupied' | translate }}
                 </label>
             </div>
@@ -30,18 +30,40 @@
                         {{ 'job-publication-cancel.job.occupied.privateAgency' | translate }}
                     </label>
                 </div>
+            </div>
+
+            <div class="form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" type="radio" formControlName="positionOccupied"  name="positionOccupied" value="self">
+                    {{ 'job-publication-cancel.job.occupied.self' | translate }}
+                </label>
+            </div>
+            <div formGroupName="selfOccupiedWith" class="ml-3">
                 <div class="form-check">
                     <label class="form-check-label">
-                        <input class="form-check-input" formControlName="self" type="checkbox">
-                        {{ 'job-publication-cancel.job.occupied.self' | translate }}
+                        <input class="form-check-input" formControlName="jobRoom" type="checkbox">
+                        {{ 'job-publication-cancel.job.occupied.jobroom' | translate }}
+                    </label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" formControlName="notJobRoom" type="checkbox">
+                        {{ 'job-publication-cancel.job.occupied.not-jobroom' | translate }}
                     </label>
                 </div>
             </div>
 
             <div class="form-check">
                 <label class="form-check-label">
-                    <input class="form-check-input" type="radio" formControlName="positionOccupied" name="positionOccupied" [value]="false">
+                    <input class="form-check-input" type="radio" formControlName="positionOccupied" name="positionOccupied" value="notOccupied">
                     {{ 'job-publication-cancel.job.not-occupied' | translate }}
+                </label>
+            </div>
+
+            <div class="form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" type="radio" formControlName="positionOccupied" name="positionOccupied" value="changeOrRepost">
+                    {{ 'job-publication-cancel.job.change-or-repost' | translate }}
                 </label>
             </div>
 
