@@ -1,19 +1,18 @@
 package ch.admin.seco.jobroom.service.pdf;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
+import ch.admin.seco.jobroom.JobroomApp;
+import ch.admin.seco.jobroom.config.Constants;
+import ch.admin.seco.jobroom.domain.Company;
+import ch.admin.seco.jobroom.domain.UserInfo;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.MessageSource;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import ch.admin.seco.jobroom.JobroomApp;
-import ch.admin.seco.jobroom.domain.Company;
-import ch.admin.seco.jobroom.domain.UserInfo;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = JobroomApp.class)
@@ -35,7 +34,7 @@ public class PdfCreatorServiceTest {
         userOrganization.setStreet("Stadtstrasse 21");
         userOrganization.setZipCode("8600");
         userOrganization.setName("Stellenvermittlung24");
-        registeringUser = new UserInfo();
+        registeringUser = new UserInfo("Hans","Muster","hans.muster@example.com","extId",Constants.DEFAULT_LANGUAGE);
         registeringUser.setAccessCode("CODEXX");
         registeringUser.addCompany(userOrganization);
     }

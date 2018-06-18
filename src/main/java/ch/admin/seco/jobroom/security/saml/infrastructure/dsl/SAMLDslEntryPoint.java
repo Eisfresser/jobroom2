@@ -1,4 +1,5 @@
-package ch.admin.seco.jobroom.security.saml.dsl;
+package ch.admin.seco.jobroom.security.saml.infrastructure.dsl;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

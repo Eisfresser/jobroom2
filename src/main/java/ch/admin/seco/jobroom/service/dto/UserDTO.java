@@ -1,11 +1,10 @@
 package ch.admin.seco.jobroom.service.dto;
 
-import java.time.Instant;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
-import java.util.UUID;
-import java.util.stream.Collectors;
+import ch.admin.seco.jobroom.config.Constants;
+import ch.admin.seco.jobroom.domain.Authority;
+import ch.admin.seco.jobroom.domain.Organization;
+import ch.admin.seco.jobroom.domain.User;
+import ch.admin.seco.jobroom.domain.enumeration.Gender;
 
 import javax.persistence.Column;
 import javax.persistence.EnumType;
@@ -14,20 +13,17 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-
-import org.springframework.security.core.GrantedAuthority;
-
-import ch.admin.seco.jobroom.config.Constants;
-import ch.admin.seco.jobroom.domain.Authority;
-import ch.admin.seco.jobroom.domain.Company;
-import ch.admin.seco.jobroom.domain.Organization;
-import ch.admin.seco.jobroom.domain.User;
-import ch.admin.seco.jobroom.domain.enumeration.Gender;
-import ch.admin.seco.jobroom.security.EiamUserPrincipal;
+import java.time.Instant;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 /**
  * A DTO representing a user, with his authorities.
  */
+@Deprecated
 public class UserDTO {
 
     private UUID id;
@@ -90,16 +86,6 @@ public class UserDTO {
         setOrganizationData(user.getOrganization());
     }
 
-    public UserDTO(EiamUserPrincipal principal) {
-        this(principal.getUser().getId(), principal.getUser().getEmail(), principal.getUser().getFirstName(), principal.getUser().getLastName(),
-            principal.getUser().getEmail(), principal.getUser().getPhone(), null, true, null, principal.getUser().getLangKey(),
-            null, null, null, null,
-            principal.getAuthorities().stream().map(GrantedAuthority::getAuthority)
-                .collect(Collectors.toSet())
-        );
-        setCompanyData(principal.getUser().getCompany());
-    }
-
     public UserDTO(UUID id, String login, String firstName, String lastName,
         String email, String phone, Gender gender, boolean activated, String imageUrl, String langKey,
         String createdBy, Instant createdDate, String lastModifiedBy, Instant lastModifiedDate,
@@ -129,12 +115,7 @@ public class UserDTO {
         }
     }
 
-    private void setCompanyData(Company company) {
-        if (Objects.nonNull(company)) {
-            this.organizationId = company.getExternalId();
-            this.organizationName = company.getName();
-        }
-    }
+
 
     public UUID getId() {
         return id;

@@ -1,4 +1,4 @@
-package ch.admin.seco.jobroom.security.saml.dsl;
+package ch.admin.seco.jobroom.security.saml.infrastructure.dsl;
 
 import ch.admin.seco.jobroom.security.saml.infrastructure.SamlUser;
 import org.springframework.security.core.AuthenticationException;

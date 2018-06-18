@@ -1,23 +1,5 @@
 package ch.admin.seco.jobroom.web.rest;
 
-import java.util.Optional;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-
-import com.codahale.metrics.annotation.Timed;
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.springframework.context.annotation.Profile;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
 import ch.admin.seco.jobroom.domain.User;
 import ch.admin.seco.jobroom.repository.UserRepository;
 import ch.admin.seco.jobroom.security.SecurityUtils;
@@ -29,6 +11,16 @@ import ch.admin.seco.jobroom.web.rest.errors.InvalidPasswordException;
 import ch.admin.seco.jobroom.web.rest.errors.LoginNotFoundException;
 import ch.admin.seco.jobroom.web.rest.vm.KeyAndPasswordVM;
 import ch.admin.seco.jobroom.web.rest.vm.ManagedUserVM;
+import com.codahale.metrics.annotation.Timed;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Profile;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import java.util.Optional;
 
 /**
  * REST controller for managing the current user's account.
@@ -47,7 +39,6 @@ public class NoEiamAccountResource {
     private final MailService mailService;
 
     public NoEiamAccountResource(UserRepository userRepository, UserService userService, MailService mailService) {
-
         this.userRepository = userRepository;
         this.userService = userService;
         this.mailService = mailService;
@@ -110,7 +101,7 @@ public class NoEiamAccountResource {
             throw new InternalServerErrorException("User could not be found");
         }
         userService.updateUser(userDTO.getFirstName(), userDTO.getLastName(), userDTO.getEmail(), userDTO.getPhone(), userDTO.getGender(),
-                userDTO.getLangKey(), userDTO.getImageUrl());
+            userDTO.getLangKey(), userDTO.getImageUrl());
     }
 
     /**
@@ -138,8 +129,8 @@ public class NoEiamAccountResource {
     @Timed
     public void requestPasswordReset(@RequestBody String login) {
         mailService.sendPasswordResetMail(
-                userService.requestPasswordReset(login)
-                        .orElseThrow(LoginNotFoundException::new)
+            userService.requestPasswordReset(login)
+                .orElseThrow(LoginNotFoundException::new)
         );
     }
 
@@ -148,7 +139,7 @@ public class NoEiamAccountResource {
      *
      * @param keyAndPassword the generated key and the new password
      * @throws InvalidPasswordException 400 (Bad Request) if the password is incorrect
-     * @throws RuntimeException 500 (Internal Server Error) if the password could not be reset
+     * @throws RuntimeException         500 (Internal Server Error) if the password could not be reset
      */
     @PostMapping(path = "/account/reset-password/finish")
     @Timed
@@ -157,7 +148,7 @@ public class NoEiamAccountResource {
             throw new InvalidPasswordException();
         }
         Optional<User> user =
-                userService.completePasswordReset(keyAndPassword.getNewPassword(), keyAndPassword.getKey());
+            userService.completePasswordReset(keyAndPassword.getNewPassword(), keyAndPassword.getKey());
 
         if (!user.isPresent()) {
             throw new InternalServerErrorException("No user was found for this reset key");
@@ -166,7 +157,7 @@ public class NoEiamAccountResource {
 
     private boolean checkPasswordLength(String password) {
         return !StringUtils.isEmpty(password) &&
-                password.length() >= ManagedUserVM.PASSWORD_MIN_LENGTH &&
-                password.length() <= ManagedUserVM.PASSWORD_MAX_LENGTH;
+            password.length() >= ManagedUserVM.PASSWORD_MIN_LENGTH &&
+            password.length() <= ManagedUserVM.PASSWORD_MAX_LENGTH;
     }
 }

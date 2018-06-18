@@ -1,6 +1,5 @@
-package ch.admin.seco.jobroom.security.saml.dsl;
+package ch.admin.seco.jobroom.security.saml.infrastructure.dsl;
 
-import ch.admin.seco.jobroom.domain.UserInfo;
 import ch.admin.seco.jobroom.domain.enumeration.RegistrationStatus;
 import ch.admin.seco.jobroom.security.AuthoritiesConstants;
 import ch.admin.seco.jobroom.security.EiamUserPrincipal;
@@ -51,16 +50,12 @@ public class JobroomAuthenticationSuccessHandler extends SavedRequestAwareAuthen
     }
 
     private void handleAuthenticatedUser(Authentication authentication, EiamUserPrincipal principal, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        if (principal.isNeedsRegistration()) {
+        RegistrationStatus registrationStatus = principal.getRegistrationStatus();
+        if (registrationStatus.equals(RegistrationStatus.UNREGISTERED)) {
             // first-time user -> send to registration process
             redirectTo(SAMLConfigurer.TARGET_URL_REGISTRATION_PROCESS, request, response);
         } else {
-            UserInfo userInfo = principal.getUser();
-            if (userInfo.getRegistrationStatus() == RegistrationStatus.UNREGISTERED) {
-                throw new IllegalArgumentException("The user's needsRegistration flag is set to 'false', but it's status is UNREGISTERED");
-            }
-            if (userInfo.getRegistrationStatus() == RegistrationStatus.VALIDATION_EMP
-                || userInfo.getRegistrationStatus() == RegistrationStatus.VALIDATION_PAV) {
+            if (registrationStatus == RegistrationStatus.VALIDATION_EMP || registrationStatus == RegistrationStatus.VALIDATION_PAV) {
                 // PAV and company users need 2-factor authentication!
                 if (principal.hasOnlyOneFactorAuthentication()) {
                     // send to 2 factor setup in eIAM

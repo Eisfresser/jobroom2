@@ -73,18 +73,11 @@ public class PdfDocumentTest {
     }
 
     @Test
-    public void insertTextLine() throws IOException {
-        String testText = "Test text";
-        this.testPdfDocument
-            .insertTextLine(testText);
-        assertThat(this.testPdfDocument.getText()).isEqualTo(testText + '\n');
-    }
-
-    @Test
     public void addDefaultHeader() throws IOException {
         this.testPdfDocument.addDefaultHeader();
-        assertThat(this.testPdfDocument.getText()).isEqualTo("Staatssekretariat für Wirtschaft SECO\nHolzikofenweg 36" +
-            "\nCH-3003 Bern\n");
+        assertThat(this.testPdfDocument.getText())
+            .contains("Staatssekretariat für Wirtschaft SECO")
+            .contains("Holzikofenweg 36");
     }
 
 }

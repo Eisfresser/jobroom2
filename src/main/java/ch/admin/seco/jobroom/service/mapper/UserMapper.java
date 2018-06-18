@@ -1,16 +1,15 @@
 package ch.admin.seco.jobroom.service.mapper;
 
+import ch.admin.seco.jobroom.domain.Authority;
+import ch.admin.seco.jobroom.domain.User;
+import ch.admin.seco.jobroom.service.dto.UserDTO;
+import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
-
-import org.springframework.stereotype.Service;
-
-import ch.admin.seco.jobroom.domain.Authority;
-import ch.admin.seco.jobroom.domain.User;
-import ch.admin.seco.jobroom.service.dto.UserDTO;
 
 /**
  * Mapper for the entity User and its DTO called UserDTO.
@@ -19,6 +18,7 @@ import ch.admin.seco.jobroom.service.dto.UserDTO;
  * support is still in beta, and requires a manual step with an IDE.
  */
 @Service
+@Deprecated
 public class UserMapper {
 
     public UserDTO userToUserDTO(User user) {

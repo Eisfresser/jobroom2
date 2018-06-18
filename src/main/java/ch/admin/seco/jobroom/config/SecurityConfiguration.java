@@ -42,7 +42,7 @@ import org.zalando.problem.spring.web.advice.security.SecurityProblemSupport;
 
 import java.util.Map;
 
-import static ch.admin.seco.jobroom.security.saml.dsl.SAMLConfigurer.saml;
+import static ch.admin.seco.jobroom.security.saml.infrastructure.dsl.SAMLConfigurer.saml;
 
 @Configuration
 @EnableWebSecurity

@@ -1,21 +1,20 @@
 package ch.admin.seco.jobroom.repository;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
-import java.util.Optional;
-
+import ch.admin.seco.jobroom.JobroomApp;
+import ch.admin.seco.jobroom.config.Constants;
+import ch.admin.seco.jobroom.domain.Company;
+import ch.admin.seco.jobroom.domain.UserInfo;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import ch.admin.seco.jobroom.JobroomApp;
-import ch.admin.seco.jobroom.domain.Company;
-import ch.admin.seco.jobroom.domain.UserInfo;
+import java.util.Optional;
+
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 @Transactional
 @RunWith(SpringRunner.class)
@@ -33,6 +32,15 @@ public class UserInfoRepositoryTest {
 
     @Autowired
     private CompanyRepository companyRepository;
+
+    @Test
+    public void findById() {
+        UserInfo userInfo = userInfoRepository.save(getDummyUser(VALID_USER_EXT_ID_1));
+
+        Optional<UserInfo> userInfoRepositoryOne = userInfoRepository.findById(userInfo.getId());
+
+        assertTrue(userInfoRepositoryOne.isPresent());
+    }
 
     @Test
     public void findOneByUserExternalId() {
@@ -68,11 +76,7 @@ public class UserInfoRepositoryTest {
     }
 
     private UserInfo getDummyUser(String extId) {
-        UserInfo user = new UserInfo();
-        user.setFirstName("Hans");
-        user.setLastName("Muster");
-        user.setUserExternalId(extId);
-        return user;
+        return new UserInfo("Hans", "Muster", "hans.muster@example.com", extId, Constants.DEFAULT_LANGUAGE);
     }
 
     private Company getDummyCompany() {

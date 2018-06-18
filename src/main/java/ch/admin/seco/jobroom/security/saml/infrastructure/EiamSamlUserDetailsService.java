@@ -1,6 +1,6 @@
 package ch.admin.seco.jobroom.security.saml.infrastructure;
 
-import ch.admin.seco.jobroom.security.saml.dsl.SAMLConfigurer;
+import ch.admin.seco.jobroom.security.saml.infrastructure.dsl.SAMLConfigurer;
 import org.apache.commons.lang.StringUtils;
 import org.opensaml.saml2.core.Assertion;
 import org.opensaml.saml2.core.Attribute;
@@ -11,7 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.saml.SAMLCredential;
 import org.springframework.security.saml.userdetails.SAMLUserDetailsService;
-import org.springframework.util.Assert;
 
 import javax.xml.namespace.QName;
 import java.util.List;
@@ -36,7 +35,6 @@ public class EiamSamlUserDetailsService implements SAMLUserDetailsService {
     private final SamlBasedUserDetailsProvider samlBasedUserDetailsProvider;
 
     public EiamSamlUserDetailsService(SamlBasedUserDetailsProvider samlBasedUserDetailsProvider) {
-        Assert.notNull(samlBasedUserDetailsProvider, "a user detail provider must be set");
         this.samlBasedUserDetailsProvider = samlBasedUserDetailsProvider;
     }
 
@@ -44,8 +42,7 @@ public class EiamSamlUserDetailsService implements SAMLUserDetailsService {
     public Object loadUserBySAML(SAMLCredential credential) {
         String extId = credential.getNameID().getValue();
         LOGGER.debug("Authenticating user with extId {}", extId);
-        SamlUser samlUser = toSamlUser(credential);
-        return samlBasedUserDetailsProvider.createUserDetailsFromSaml(samlUser);
+        return this.samlBasedUserDetailsProvider.createUserDetailsFromSaml(toSamlUser(credential));
     }
 
     private SamlUser toSamlUser(SAMLCredential credential) {

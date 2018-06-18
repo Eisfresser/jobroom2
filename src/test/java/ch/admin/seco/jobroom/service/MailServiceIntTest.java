@@ -1,19 +1,12 @@
 package ch.admin.seco.jobroom.service;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.verify;
-
-import java.io.ByteArrayOutputStream;
-import java.io.FileInputStream;
-
-import javax.mail.Multipart;
-import javax.mail.internet.MimeBodyPart;
-import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMultipart;
-
+import ch.admin.seco.jobroom.JobroomApp;
+import ch.admin.seco.jobroom.config.Constants;
+import ch.admin.seco.jobroom.domain.Company;
+import ch.admin.seco.jobroom.domain.User;
+import ch.admin.seco.jobroom.domain.UserInfo;
+import ch.admin.seco.jobroom.service.mapper.MailSenderDataMapper;
+import ch.admin.seco.jobroom.service.pdf.PdfCreatorService;
 import io.github.jhipster.config.JHipsterProperties;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,22 +15,24 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
-import org.thymeleaf.spring5.SpringTemplateEngine;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.MessageSource;
 import org.springframework.mail.MailSendException;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.thymeleaf.spring5.SpringTemplateEngine;
 
-import ch.admin.seco.jobroom.JobroomApp;
-import ch.admin.seco.jobroom.config.Constants;
-import ch.admin.seco.jobroom.domain.Company;
-import ch.admin.seco.jobroom.domain.User;
-import ch.admin.seco.jobroom.domain.UserInfo;
-import ch.admin.seco.jobroom.service.mapper.MailSenderDataMapper;
-import ch.admin.seco.jobroom.service.pdf.PdfCreatorService;
+import javax.mail.Multipart;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
+import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = JobroomApp.class)
@@ -71,7 +66,7 @@ public class MailServiceIntTest {
         MockitoAnnotations.initMocks(this);
         doNothing().when(javaMailSender).send(any(MimeMessage.class));
         pdfCreatorService = new PdfCreatorService(messageSource);
-        mailService = new MailService(jHipsterProperties, javaMailSender, messageSource, templateEngine, mailSenderDataMapper, pdfCreatorService);
+        mailService = new MailService(jHipsterProperties, javaMailSender, messageSource, templateEngine, pdfCreatorService);
     }
 
     @Test
@@ -140,13 +135,13 @@ public class MailServiceIntTest {
         user.setLogin("john");
         user.setEmail("john.doe@example.com");
         user.setLangKey("en");
-        mailService.sendEmailFromTemplate(user, "testEmail", "email.test.title");
+        mailService.sendEmailFromTemplate(user, "mails/testEmail", "email.test.title");
         verify(javaMailSender).send((MimeMessage) messageCaptor.capture());
         MimeMessage message = (MimeMessage) messageCaptor.getValue();
         assertThat(message.getSubject()).isEqualTo("test title");
         assertThat(message.getAllRecipients()[0].toString()).isEqualTo(user.getEmail());
         assertThat(message.getFrom()[0].toString()).isEqualTo("test@localhost");
-        assertThat(message.getContent().toString()).isEqualTo("<html>test title, http://127.0.0.1:8080, john</html>\n");
+        assertThat(message.getContent().toString()).contains("<html>test title, http://127.0.0.1:8080, john</html>");
         assertThat(message.getDataHandler().getContentType()).isEqualTo("text/html;charset=UTF-8");
     }
 
@@ -208,11 +203,9 @@ public class MailServiceIntTest {
         userOrganization.setStreet("Stadtstrasse 21");
         userOrganization.setZipCode("8600");
         userOrganization.setName("Stellenvermittlung24");
-        UserInfo user = new UserInfo();
+        UserInfo user = new UserInfo("Hans","Muster","john.doe@example.com","extid",Constants.DEFAULT_LANGUAGE);
         user.setAccessCode("CODEXX");
         user.addCompany(userOrganization);
-        user.setLangKey(Constants.DEFAULT_LANGUAGE);
-        user.setEmail("john.doe@example.com");
 
         mailService.sendAccessCodeLetterMail(ACCESS_CODE_MAIL_RECIPIENT, user);
 

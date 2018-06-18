@@ -1,11 +1,10 @@
 package ch.admin.seco.jobroom.security;
 
-import java.util.Optional;
-
+import ch.admin.seco.jobroom.config.Constants;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.stereotype.Component;
 
-import ch.admin.seco.jobroom.config.Constants;
+import java.util.Optional;
 
 /**
  * Implementation of AuditorAware based on Spring Security.
@@ -15,6 +14,6 @@ public class SpringSecurityAuditorAware implements AuditorAware<String> {
 
     @Override
     public Optional<String> getCurrentAuditor() {
-        return Optional.ofNullable(SecurityUtils.getCurrentUserLogin().orElse(Constants.SYSTEM_ACCOUNT));
+        return Optional.of(SecurityUtils.getCurrentUserLogin().orElse(Constants.SYSTEM_ACCOUNT));
     }
 }

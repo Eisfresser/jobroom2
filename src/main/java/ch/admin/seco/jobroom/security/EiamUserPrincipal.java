@@ -1,30 +1,69 @@
 package ch.admin.seco.jobroom.security;
 
+import ch.admin.seco.jobroom.domain.UserInfoId;
+import ch.admin.seco.jobroom.domain.enumeration.RegistrationStatus;
+import ch.admin.seco.jobroom.security.saml.infrastructure.dsl.SAMLConfigurer;
+import com.google.common.base.Preconditions;
+import org.apache.commons.lang.NotImplementedException;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.apache.commons.lang.NotImplementedException;
-
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
-import ch.admin.seco.jobroom.domain.UserInfo;
-import ch.admin.seco.jobroom.security.saml.dsl.SAMLConfigurer;
-
 public class EiamUserPrincipal implements UserDetails {
 
-    private UserInfo user;
+    private final UserInfoId id;
+
+    private final String firstName;
+
+    private final String lastName;
+
+    private final String email;
+
+    private final String userExtId;
+
+    private final String langKey;
 
     private List<GrantedAuthority> authorities = new ArrayList<>();
-
-    private boolean needsRegistration = false;
 
     private String authenticationMethod;
 
     private String userDefaultProfileExtId;
+
+    private RegistrationStatus registrationStatus;
+
+    public EiamUserPrincipal(UserInfoId id, String firstName, String lastName, String email, String userExtId, String langKey) {
+        this.id = Preconditions.checkNotNull(id);
+        this.firstName = Preconditions.checkNotNull(firstName);
+        this.lastName = Preconditions.checkNotNull(lastName);
+        this.email = Preconditions.checkNotNull(email);
+        this.userExtId = Preconditions.checkNotNull(userExtId);
+        this.langKey = langKey;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getUserExtId() {
+        return userExtId;
+    }
+
+    public String getLangKey() {
+        return langKey;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -38,7 +77,7 @@ public class EiamUserPrincipal implements UserDetails {
 
     @Override
     public String getUsername() {
-        return user.getUserExternalId();
+        return this.userExtId;
     }
 
     @Override
@@ -61,22 +100,6 @@ public class EiamUserPrincipal implements UserDetails {
         return true;
     }
 
-    public UserInfo getUser() {
-        return user;
-    }
-
-    public void setUser(UserInfo user) {
-        this.user = user;
-    }
-
-    public boolean isNeedsRegistration() {
-        return needsRegistration;
-    }
-
-    public void setNeedsRegistration(boolean needsRegistration) {
-        this.needsRegistration = needsRegistration;
-    }
-
     public void setAuthoritiesFromStringCollection(Collection<String> authorities) {
         this.authorities = authorities.stream()
             .map(SimpleGrantedAuthority::new)
@@ -95,10 +118,6 @@ public class EiamUserPrincipal implements UserDetails {
         this.authenticationMethod = authenticationMethod;
     }
 
-    public String getAuthenticationMethod() {
-        return authenticationMethod;
-    }
-
     public boolean hasOnlyOneFactorAuthentication() {
         return SAMLConfigurer.ONE_FACTOR_AUTHN_CTX.equals(authenticationMethod);
     }
@@ -110,4 +129,17 @@ public class EiamUserPrincipal implements UserDetails {
     public String getUserDefaultProfileExtId() {
         return userDefaultProfileExtId;
     }
+
+    public void setRegistrationStatus(RegistrationStatus registrationStatus) {
+        this.registrationStatus = registrationStatus;
+    }
+
+    public RegistrationStatus getRegistrationStatus() {
+        return registrationStatus;
+    }
+
+    public UserInfoId getId() {
+        return id;
+    }
+
 }

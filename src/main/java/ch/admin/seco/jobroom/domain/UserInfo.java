@@ -1,31 +1,23 @@
 package ch.admin.seco.jobroom.domain;
 
-import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
-import java.util.UUID;
+import ch.admin.seco.jobroom.domain.enumeration.AccountabilityType;
+import ch.admin.seco.jobroom.domain.enumeration.RegistrationStatus;
+import org.apache.commons.codec.binary.Base32;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-import javax.persistence.CollectionTable;
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.Table;
+import javax.persistence.*;
+import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
+import java.security.SecureRandom;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.GenericGenerator;
-
-import ch.admin.seco.jobroom.domain.enumeration.AccountabilityType;
-import ch.admin.seco.jobroom.domain.enumeration.RegistrationStatus;
+import static ch.admin.seco.jobroom.domain.enumeration.RegistrationStatus.UNREGISTERED;
 
 /**
  * Additional information about a user. The eIAM is master, which means users are registered
@@ -40,13 +32,16 @@ import ch.admin.seco.jobroom.domain.enumeration.RegistrationStatus;
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class UserInfo implements Serializable {
 
+    private static final int RANDOM_NUMBER_LENGTH = 5;
+
+    private static final int ACCESS_CODE_LENGTH = 8; // note that this number is related to the RANDOM_NUMBER_LENGTH
+
     private static final long serialVersionUID = 1L;
 
-    @Id
-    @Column(name = "id", columnDefinition = "uuid")
-    @GeneratedValue
-    @GenericGenerator(name = "UUIDGenerator", strategy = "uuid2")
-    private UUID id;
+    @EmbeddedId
+    @AttributeOverride(name = "value", column = @Column(name = "id"))
+    @Valid
+    private UserInfoId id;
 
     @Size(max = 10)
     @Column(name = "external_id", length = 10)
@@ -86,52 +81,42 @@ public class UserInfo implements Serializable {
     @Column(name = "accountability_id")
     private Set<Accountability> accountabilities = new HashSet<>();
 
-    public UUID getId() {
-        return id;
+    public UserInfo(String firstName, String lastName, String email, String userExternalId, String langKey) {
+        this.id = new UserInfoId();
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.userExternalId = userExternalId;
+        this.langKey = langKey;
+        this.registrationStatus = UNREGISTERED;
     }
 
-    public void setId(UUID id) {
-        this.id = id;
+    private UserInfo() {
+        // FOR JPA
+    }
+
+    public UserInfoId getId() {
+        return id;
     }
 
     public String getUserExternalId() {
         return userExternalId;
     }
 
-    public void setUserExternalId(String userExternalId) {
-        this.userExternalId = userExternalId;
-    }
-
     public String getFirstName() {
         return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
     }
 
     public String getLastName() {
         return lastName;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getPhone() {
         return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
     }
 
     public String getLangKey() {
@@ -154,11 +139,19 @@ public class UserInfo implements Serializable {
         return accountabilities;
     }
 
+    public void update(String firstName, String lastName, String email, String langKey) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.langKey = langKey;
+    }
+
     /**
      * Get the user's company. Since through the multiple accountability, the user could be
      * related to multiple companies, this method returns the company referenced by the
      * first found accountability with type USER.
-     * @return  the user's company (referenced by the first USER accountability); if no company is found the return value is <code>null</code>
+     *
+     * @return the user's company (referenced by the first USER accountability); if no company is found the return value is <code>null</code>
      */
     public Company getCompany() {
         if (accountabilities.isEmpty()) {
@@ -176,8 +169,33 @@ public class UserInfo implements Serializable {
         return registrationStatus;
     }
 
-    public void setRegistrationStatus(RegistrationStatus registrationStatus) {
+    public void closeRegistration() {
+        this.changeRegistrationStatus(RegistrationStatus.REGISTERED);
+        this.accessCode = null;
+    }
+
+    public void requestAccessAsEmployer(Company company) {
+        this.addCompany(company);
+        this.setAccessCode(createAccessCode());
+        this.changeRegistrationStatus(RegistrationStatus.VALIDATION_EMP);
+    }
+
+    public void requestAccessAsAgent(Company company) {
+        this.addCompany(company);
+        this.setAccessCode(createAccessCode());
+        this.changeRegistrationStatus(RegistrationStatus.VALIDATION_PAV);
+    }
+
+    private void changeRegistrationStatus(RegistrationStatus registrationStatus) {
         this.registrationStatus = registrationStatus;
+    }
+
+    private String createAccessCode() {
+        SecureRandom random = new SecureRandom();
+        byte[] bytes = new byte[RANDOM_NUMBER_LENGTH];
+        random.nextBytes(bytes);
+        Base32 base32 = new Base32();
+        return base32.encodeToString(bytes);
     }
 
     @Override

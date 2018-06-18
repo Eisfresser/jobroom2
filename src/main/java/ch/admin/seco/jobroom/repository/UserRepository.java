@@ -1,11 +1,6 @@
 package ch.admin.seco.jobroom.repository;
 
-import java.time.Instant;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
-import java.util.stream.Stream;
-
+import ch.admin.seco.jobroom.domain.User;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,12 +9,17 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import ch.admin.seco.jobroom.domain.User;
+import java.time.Instant;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+import java.util.stream.Stream;
 
 /**
  * Spring Data JPA repository for the User entity.
  */
 @Repository
+@Deprecated
 public interface UserRepository extends JpaRepository<User, UUID> {
 
     String USERS_BY_LOGIN_CACHE = "usersByLogin";

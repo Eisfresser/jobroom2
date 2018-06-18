@@ -1,29 +1,24 @@
 package ch.admin.seco.jobroom.service;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.util.Locale;
-
-import javax.mail.internet.MimeMessage;
-
+import ch.admin.seco.jobroom.domain.User;
+import ch.admin.seco.jobroom.domain.UserInfo;
+import ch.admin.seco.jobroom.service.pdf.PdfCreatorService;
 import io.github.jhipster.config.JHipsterProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.thymeleaf.context.Context;
-import org.thymeleaf.spring5.SpringTemplateEngine;
-
 import org.springframework.context.MessageSource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.context.Context;
+import org.thymeleaf.spring5.SpringTemplateEngine;
 
-import ch.admin.seco.jobroom.domain.User;
-import ch.admin.seco.jobroom.domain.UserInfo;
-import ch.admin.seco.jobroom.service.dto.AnonymousContactMessageDTO;
-import ch.admin.seco.jobroom.service.mapper.MailSenderDataMapper;
-import ch.admin.seco.jobroom.service.pdf.PdfCreatorService;
+import javax.mail.internet.MimeMessage;
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.Locale;
 
 /**
  * Service for sending emails.
@@ -46,19 +41,16 @@ public class MailService {
 
     private final SpringTemplateEngine templateEngine;
 
-    private final MailSenderDataMapper mailSenderDataMapper;
-
     private PdfCreatorService pdfCreatorService;
 
     public MailService(JHipsterProperties jHipsterProperties, JavaMailSender javaMailSender,
-        MessageSource messageSource, SpringTemplateEngine templateEngine,
-        MailSenderDataMapper mailSenderDataMapper, PdfCreatorService pdfCreatorService) {
+                       MessageSource messageSource, SpringTemplateEngine templateEngine,
+                       PdfCreatorService pdfCreatorService) {
 
         this.jHipsterProperties = jHipsterProperties;
         this.javaMailSender = javaMailSender;
         this.messageSource = messageSource;
         this.templateEngine = templateEngine;
-        this.mailSenderDataMapper = mailSenderDataMapper;
         this.pdfCreatorService = pdfCreatorService;
     }
 
@@ -98,6 +90,7 @@ public class MailService {
     }
 
     @Async
+    @Deprecated
     public void sendEmailFromTemplate(User user, String templateName, String titleKey) {
         Locale locale = Locale.forLanguageTag(user.getLangKey());
         Context context = new Context(locale);
@@ -107,16 +100,6 @@ public class MailService {
         String subject = messageSource.getMessage(titleKey, null, locale);
         sendEmail(user.getEmail(), subject, content, false, true);
 
-    }
-
-    @Async
-    public void sendEmailFromTemplate(String emailAddress, String templateName, String titleKey, String languageKey) {
-        Locale locale = Locale.forLanguageTag(languageKey);
-        Context context = new Context(locale);
-        context.setVariable(BASE_URL, jHipsterProperties.getMail().getBaseUrl());
-        String content = templateEngine.process(templateName, context);
-        String subject = messageSource.getMessage(titleKey, null, locale);
-        sendEmail(emailAddress, subject, content, true, true);
     }
 
     @Async
@@ -130,50 +113,40 @@ public class MailService {
     }
 
     @Async
+    @Deprecated
     public void sendActivationEmail(User user) {
         log.debug("Sending activation email to '{}'", user.getEmail());
-        sendEmailFromTemplate(user, "activationEmail", "email.activation.title");
+        sendEmailFromTemplate(user, "mails/activationEmail", "email.activation.title");
     }
 
     @Async
+    @Deprecated
     public void sendCreationEmail(User user) {
         log.debug("Sending creation email to '{}'", user.getEmail());
-        sendEmailFromTemplate(user, "creationEmail", "email.activation.title");
+        sendEmailFromTemplate(user, "mails/creationEmail", "email.activation.title");
     }
 
     @Async
+    @Deprecated
     public void sendPasswordResetMail(User user) {
         log.debug("Sending password reset email to '{}'", user.getEmail());
-        sendEmailFromTemplate(user, "passwordResetEmail", "email.reset.title");
-    }
-
-    @Async
-    public void sendEmailFromTemplate(MailSenderData mailSenderData, String templateName) {
-        Context context = new Context();
-        context.setVariables(mailSenderData.getContext());
-        String content = templateEngine.process(templateName, context);
-        sendEmail(mailSenderData.getTo(), mailSenderData.getSubject(), content, false, true);
-    }
-
-    @Async
-    public void sendAnonymousContactMail(AnonymousContactMessageDTO anonymousContactMessage) {
-        log.debug("Sending anonymous contact email from to '{}'", anonymousContactMessage.getTo());
-        final MailSenderData mailSenderData = mailSenderDataMapper.fromAnonymousContactMessageDto(anonymousContactMessage);
-        sendEmailFromTemplate(mailSenderData, "anonymousContactEmail");
+        sendEmailFromTemplate(user, "mails/passwordResetEmail", "email.reset.title");
     }
 
     @Async
     public void sendAccessCodeLetterMail(String emailAddress, UserInfo userInfo) {
         log.debug("Sending access code letter email to the service desk '{}'", emailAddress);
         String attachmentFilename = "Zugriffscode_Brief.pdf";
-        String pathToPdf = null;
+        String pathToPdf = generatePdf(userInfo);
+        sendEmailFromTemplate(emailAddress, "mails/accessCodeLetterEmail", "email.accessCodeLetter.title", "de", attachmentFilename, pathToPdf);
+    }
+
+    private String generatePdf(UserInfo userInfo) {
         try {
-            pathToPdf = pdfCreatorService.createAccessCodePdf(userInfo);
+            return pdfCreatorService.createAccessCodePdf(userInfo);
         } catch (IOException e) {
-            //TODO: what else should we do? We could send another mail with the user details, so that the SD can manually create the letter or we could send a mail with a link to page, where the letter can be regenerated and manually downloaded
-            log.error("The access code letter for the user " + userInfo.getFirstName() + " " + userInfo.getLastName() + " could not be generated.", e);
+            throw new IllegalStateException("The access code letter for the user " + userInfo.getFirstName() + " " + userInfo.getLastName() + " could not be generated.", e);
         }
-        sendEmailFromTemplate(emailAddress, "accessCodeLetterEmail", "email.accessCodeLetter.title", "de", attachmentFilename, pathToPdf);
     }
 
 }

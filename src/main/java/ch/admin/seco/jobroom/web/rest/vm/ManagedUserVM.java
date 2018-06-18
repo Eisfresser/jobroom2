@@ -1,13 +1,12 @@
 package ch.admin.seco.jobroom.web.rest.vm;
 
+import ch.admin.seco.jobroom.domain.enumeration.Gender;
+import ch.admin.seco.jobroom.service.dto.UserDTO;
+
+import javax.validation.constraints.Size;
 import java.time.Instant;
 import java.util.Set;
 import java.util.UUID;
-
-import javax.validation.constraints.Size;
-
-import ch.admin.seco.jobroom.domain.enumeration.Gender;
-import ch.admin.seco.jobroom.service.dto.UserDTO;
 
 /**
  * View Model extending the UserDTO, which is meant to be used in the user management UI.

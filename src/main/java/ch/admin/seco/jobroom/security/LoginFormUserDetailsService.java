@@ -1,17 +1,15 @@
 package ch.admin.seco.jobroom.security;
 
-import java.util.Locale;
-
+import ch.admin.seco.jobroom.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.context.annotation.Profile;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import ch.admin.seco.jobroom.repository.UserRepository;
+import java.util.Locale;
 
 /**
  * Authenticate a user from the database.
@@ -35,6 +33,6 @@ public class LoginFormUserDetailsService implements UserDetailsService {
         return userRepository.findOneWithAuthoritiesByLogin(login.toLowerCase(Locale.ENGLISH))
             .map(LoginFormUserPrincipal::new)
             .orElseThrow(() ->
-                new BadCredentialsException("The credentials are invalid!"));
+                new UsernameNotFoundException("No User found with login: " + login));
     }
 }
