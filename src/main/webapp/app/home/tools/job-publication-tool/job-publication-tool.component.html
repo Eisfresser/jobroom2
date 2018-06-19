@@ -613,10 +613,10 @@
                         </div>
                     </div>
 
-                    <jr2-input-error-message [formGroup]="jobPublicationForm" path="application"
-                                             [errorCodes]="['atLeastOneRequired']"
-                                             [keys]="['home.tools.job-publication.messages.validate.at-list-one-required']">
-                    </jr2-input-error-message>
+                    <small class="form-text text-danger"
+                           *ngIf="(form.submitted || jobPublicationForm.get('application').touched) && jobPublicationForm.get('application').invalid"
+                           jhiTranslate="home.tools.job-publication.messages.validate.at-list-one-required">
+                    </small>
                 </fieldset>
 
                 <!-- Publication -->
