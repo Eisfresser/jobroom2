@@ -253,13 +253,13 @@ public final class SAMLConfigurer extends SecurityConfigurerAdapter<DefaultSecur
     }
 
     private JobroomAuthenticationFailureHandler authenticationFailureHandler() {
-        JobroomAuthenticationFailureHandler authenticationFailureHandler = new JobroomAuthenticationFailureHandler(this.targetUrlEiamAccessRequest);
+        JobroomAuthenticationFailureHandler authenticationFailureHandler = new JobroomAuthenticationFailureHandler();
         authenticationFailureHandler.setUseForward(false);
         return authenticationFailureHandler;
     }
 
     private JobroomAuthenticationSuccessHandler authenticationSuccessHandler() {
-        JobroomAuthenticationSuccessHandler authenticationSuccessHandler = new JobroomAuthenticationSuccessHandler();
+        JobroomAuthenticationSuccessHandler authenticationSuccessHandler = new JobroomAuthenticationSuccessHandler(this.targetUrlEiamAccessRequest);
         authenticationSuccessHandler.setAlwaysUseDefaultTargetUrl(true);
         authenticationSuccessHandler.setDefaultTargetUrl(TARGET_URL_AFTER_AUTHENTICATION);
         return authenticationSuccessHandler;
@@ -301,8 +301,8 @@ public final class SAMLConfigurer extends SecurityConfigurerAdapter<DefaultSecur
     private SAMLLogoutFilter samlLogoutFilter(SAMLContextProvider contextProvider, SAMLProcessor samlProcessor) {
         SAMLLogoutFilter samlLogoutFilter = new SAMLLogoutFilter(
             successLogoutHandler(),
-            new LogoutHandler[] {logoutHandler()},
-            new LogoutHandler[] {logoutHandler()}
+            new LogoutHandler[]{logoutHandler()},
+            new LogoutHandler[]{logoutHandler()}
         );
         samlLogoutFilter.setProfile(singleLogoutProfile(samlProcessor));
         samlLogoutFilter.setContextProvider(contextProvider);

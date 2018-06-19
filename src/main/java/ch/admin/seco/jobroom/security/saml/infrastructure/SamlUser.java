@@ -14,7 +14,7 @@ public class SamlUser {
 
     private final String authnContext;
 
-    public SamlUser(String nameId, Map<String, List<String>> attributes, String authnContext) {
+    SamlUser(String nameId, Map<String, List<String>> attributes, String authnContext) {
         this.nameId = nameId;
         this.attributes = attributes;
         this.authnContext = authnContext;
@@ -50,12 +50,12 @@ public class SamlUser {
     @Override
     public String toString() {
         return "SamlUser{" +
-                "nameId='" + nameId + '\'' +
-                ", givenname='" + toStringhelper(getGivenname()) + '\'' +
-                ", surname='" + toStringhelper(getSurname()) + '\'' +
-                ", email='" + toStringhelper(getEmail()) + '\'' +
-                ", attributes=" + attributes +
-                '}';
+            "nameId='" + nameId + '\'' +
+            ", givenname='" + toStringhelper(getGivenname()) + '\'' +
+            ", surname='" + toStringhelper(getSurname()) + '\'' +
+            ", email='" + toStringhelper(getEmail()) + '\'' +
+            ", attributes=" + attributes +
+            '}';
     }
 
     Optional<String> getAttributeSingleValue(String key) {
@@ -67,9 +67,6 @@ public class SamlUser {
     }
 
     final Object toStringhelper(Optional<?> optional) {
-        if (optional.isPresent()) {
-            return optional.get();
-        }
-        return null;
+        return optional.orElse(null);
     }
 }

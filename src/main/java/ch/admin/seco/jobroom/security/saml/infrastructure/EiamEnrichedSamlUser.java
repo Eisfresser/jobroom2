@@ -9,30 +9,30 @@ public class EiamEnrichedSamlUser extends SamlUser {
 
     private static final String SCHEMAS_EIAM_2013_12_PREFIX = "http://schemas.eiam.admin.ch/ws/2013/12/identity/claims/";
 
-    public EiamEnrichedSamlUser(String nameId, Map<String, List<String>> attributes, String authnContext) {
+    EiamEnrichedSamlUser(String nameId, Map<String, List<String>> attributes, String authnContext) {
         super(nameId, attributes, authnContext);
     }
 
     @Override
     public String toString() {
         return "EIAMSAMLUser{" +
-                "nameId='" + getNameId() + '\'' +
-                ", roles=" + getRoles() +
-                ", displayName='" + toStringhelper(getDisplayName()) + '\'' +
-                ", language='" + toStringhelper(getLanguage()) + '\'' +
-                ", loginId='" + toStringhelper(getLoginId()) + '\'' +
-                ", clientExtId='" + toStringhelper(getClientExtId()) + '\'' +
-                ", userExtId='" + toStringhelper(getUserExtId()) + '\'' +
-                ", unitExtId='" + toStringhelper(getUnitExtId()) + '\'' +
-                ", unitName='" + toStringhelper(getUnitName()) + '\'' +
-                ", distinguishedName='" + toStringhelper(getDistinguishedName()) + '\'' +
-                ", isDefaultProfile='" + isDefaultProfile() + '\'' +
-                ", profileName='" + toStringhelper(getProfileName()) + '\'' +
-                ", defaultProfileExtId='" + toStringhelper(getDefaultProfileExtId()) + '\'' +
-                ", sessionProfileExtId='" + toStringhelper(getSessionProfileExtId()) + '\'' +
-                ", homeRealm='" + toStringhelper(getHomeRealm()) + '\'' +
-                ", homeName='" + toStringhelper(getHomeName()) + '\'' +
-                '}' + super.toString();
+            "nameId='" + getNameId() + '\'' +
+            ", roles=" + getRoles() +
+            ", displayName='" + toStringhelper(getDisplayName()) + '\'' +
+            ", language='" + toStringhelper(getLanguage()) + '\'' +
+            ", loginId='" + toStringhelper(getLoginId()) + '\'' +
+            ", clientExtId='" + toStringhelper(getClientExtId()) + '\'' +
+            ", userExtId='" + toStringhelper(getUserExtId()) + '\'' +
+            ", unitExtId='" + toStringhelper(getUnitExtId()) + '\'' +
+            ", unitName='" + toStringhelper(getUnitName()) + '\'' +
+            ", distinguishedName='" + toStringhelper(getDistinguishedName()) + '\'' +
+            ", isDefaultProfile='" + isDefaultProfile() + '\'' +
+            ", profileName='" + toStringhelper(getProfileName()) + '\'' +
+            ", defaultProfileExtId='" + toStringhelper(getDefaultProfileExtId()) + '\'' +
+            ", sessionProfileExtId='" + toStringhelper(getSessionProfileExtId()) + '\'' +
+            ", homeRealm='" + toStringhelper(getHomeRealm()) + '\'' +
+            ", homeName='" + toStringhelper(getHomeName()) + '\'' +
+            '}' + super.toString();
     }
 
     public Optional<String> getDisplayName() {

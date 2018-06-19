@@ -3,10 +3,11 @@ package ch.admin.seco.jobroom.security.saml.infrastructure.dsl;
 import ch.admin.seco.jobroom.domain.enumeration.RegistrationStatus;
 import ch.admin.seco.jobroom.security.AuthoritiesConstants;
 import ch.admin.seco.jobroom.security.EiamUserPrincipal;
-import ch.admin.seco.jobroom.security.saml.MissingPrincipalException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 
 import javax.servlet.ServletException;
@@ -29,6 +30,12 @@ public class JobroomAuthenticationSuccessHandler extends SavedRequestAwareAuthen
 
     private final static Logger LOG = LoggerFactory.getLogger(JobroomAuthenticationSuccessHandler.class);
 
+    private final String targetUrlEiamAccessRequest;
+
+    JobroomAuthenticationSuccessHandler(String targetUrlEiamAccessRequest) {
+        this.targetUrlEiamAccessRequest = targetUrlEiamAccessRequest;
+    }
+
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
         throws ServletException, IOException {
@@ -37,16 +44,16 @@ public class JobroomAuthenticationSuccessHandler extends SavedRequestAwareAuthen
             LOG.debug("Found roles: " + authentication.getAuthorities().stream().map(Object::toString).collect(Collectors.joining(", ")));
         }
 
-        if (hasJobRoomAllowRole(authentication)) {
-            if (authentication.getPrincipal() instanceof EiamUserPrincipal) {
-                EiamUserPrincipal principal = (EiamUserPrincipal) authentication.getPrincipal();
-                handleAuthenticatedUser(authentication, principal, request, response);
-            } else {
-                throw new MissingPrincipalException();
-            }
-        } else {
-            throw new IllegalStateException("User must have job-rooms ALLOW role");
+        if (authentication.getPrincipal() instanceof User) {
+            redirectTo(this.targetUrlEiamAccessRequest, request, response);
+            return;
         }
+
+        if (!(authentication.getPrincipal() instanceof EiamUserPrincipal)) {
+            throw new AuthenticationServiceException("Expected Principal to be of type EiamUserPrincipal but was " + authentication.getPrincipal().getClass());
+        }
+        EiamUserPrincipal principal = (EiamUserPrincipal) authentication.getPrincipal();
+        handleAuthenticatedUser(authentication, principal, request, response);
     }
 
     private void handleAuthenticatedUser(Authentication authentication, EiamUserPrincipal principal, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -54,33 +61,29 @@ public class JobroomAuthenticationSuccessHandler extends SavedRequestAwareAuthen
         if (registrationStatus.equals(RegistrationStatus.UNREGISTERED)) {
             // first-time user -> send to registration process
             redirectTo(SAMLConfigurer.TARGET_URL_REGISTRATION_PROCESS, request, response);
-        } else {
-            if (registrationStatus == RegistrationStatus.VALIDATION_EMP || registrationStatus == RegistrationStatus.VALIDATION_PAV) {
-                // PAV and company users need 2-factor authentication!
-                if (principal.hasOnlyOneFactorAuthentication()) {
-                    // send to 2 factor setup in eIAM
-                    redirectTo(SAMLConfigurer.TARGET_URL_FORCE_TWO_FACTOR_AUTH, request, response);
-                    authentication.setAuthenticated(false);
-                } else {
-                    // if user has 2-factor authentication -> show page for entering access code
-                    redirectTo(SAMLConfigurer.TARGET_URL_ENTER_ACCESS_CODE, request, response);
-                }
-            } else {
-                // make sure PAV and company users are authenticated with 2-factor!
-                // this is a functionality which should be provided by a future PeP implementation
-                if ((isAgent(authentication) || isEmployer(authentication)) && principal.hasOnlyOneFactorAuthentication()) {
-                    // send to 2 factor setup in eIAM
-                    redirectTo(SAMLConfigurer.TARGET_URL_FORCE_TWO_FACTOR_AUTH, request, response);
-                    authentication.setAuthenticated(false);
-                }
-                // if user is registered in jobroom process with default authentication success handler
-                super.onAuthenticationSuccess(request, response, authentication);
-            }
+            return;
         }
-    }
-
-    private boolean hasJobRoomAllowRole(Authentication authentication) {
-        return authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals(AuthoritiesConstants.ROLE_ALLOW));
+        if (registrationStatus == RegistrationStatus.VALIDATION_EMP || registrationStatus == RegistrationStatus.VALIDATION_PAV) {
+            // PAV and company users need 2-factor authentication!
+            if (principal.hasOnlyOneFactorAuthentication()) {
+                // send to 2 factor setup in eIAM
+                redirectTo(SAMLConfigurer.TARGET_URL_FORCE_TWO_FACTOR_AUTH, request, response);
+                authentication.setAuthenticated(false);
+            } else {
+                // if user has 2-factor authentication -> show page for entering access code
+                redirectTo(SAMLConfigurer.TARGET_URL_ENTER_ACCESS_CODE, request, response);
+            }
+        } else {
+            // make sure PAV and company users are authenticated with 2-factor!
+            // this is a functionality which should be provided by a future PeP implementation
+            if ((isAgent(authentication) || isEmployer(authentication)) && principal.hasOnlyOneFactorAuthentication()) {
+                // send to 2 factor setup in eIAM
+                redirectTo(SAMLConfigurer.TARGET_URL_FORCE_TWO_FACTOR_AUTH, request, response);
+                authentication.setAuthenticated(false);
+            }
+            // if user is registered in jobroom process with default authentication success handler
+            super.onAuthenticationSuccess(request, response, authentication);
+        }
     }
 
     private boolean isAgent(Authentication authentication) {
@@ -92,7 +95,7 @@ public class JobroomAuthenticationSuccessHandler extends SavedRequestAwareAuthen
     }
 
     private void redirectTo(String targetUrl, HttpServletRequest request, HttpServletResponse response) throws IOException {
-        logger.debug("Redirecting to target url: " + targetUrl);
+        logger.info("Redirecting to target url: " + targetUrl);
         getRedirectStrategy().sendRedirect(request, response, targetUrl);
         clearAuthenticationAttributes(request);
     }

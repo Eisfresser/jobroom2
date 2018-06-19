@@ -16,6 +16,7 @@ import javax.xml.namespace.QName;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
@@ -32,6 +33,8 @@ public class EiamSamlUserDetailsService implements SAMLUserDetailsService {
 
     private static final String EIAM_ISSUER_NAME = "uri:eiam.admin.ch:feds";
 
+    private static final String CH_LOGIN_ISSUER_NAME = "urn:eiam.admin.ch:idp:e-id:CH-LOGIN";
+
     private final SamlBasedUserDetailsProvider samlBasedUserDetailsProvider;
 
     public EiamSamlUserDetailsService(SamlBasedUserDetailsProvider samlBasedUserDetailsProvider) {
@@ -46,24 +49,29 @@ public class EiamSamlUserDetailsService implements SAMLUserDetailsService {
     }
 
     private SamlUser toSamlUser(SAMLCredential credential) {
-        final Map<String, List<String>> attributes = extractAttributes(credential.getAttributes());
-        if (LOGGER.isDebugEnabled()) {
-            printOutAttributes(attributes);
-        }
-        final String nameId = credential.getNameID().getValue();
-        SamlUser samlUser = doCreateSamlUser(attributes, nameId, getAuthnContext(credential).orElse(SAMLConfigurer.ONE_FACTOR_AUTHN_CTX));
+        SamlUser samlUser = doCreateSamlUser(credential);
         LOGGER.trace("SamlUser User: {}", samlUser);
         return samlUser;
     }
 
-    private SamlUser doCreateSamlUser(Map<String, List<String>> attributes, String nameId, String authnContext) {
-        if (isCredentialEnrichedByEIAM(attributes)) {
-            LOGGER.debug("Credential was enriched by EIAM: creating an EiamEnrichedSamlUser");
-           return new EiamEnrichedSamlUser(nameId, attributes, authnContext);
-        } else {
-            LOGGER.debug("Credential wasn't enriched by EIAM: creating a SamlUser");
-            return new SamlUser(nameId, attributes, authnContext);
+    private SamlUser doCreateSamlUser(SAMLCredential credential) {
+        final String nameId = credential.getNameID().getValue();
+        final String authnContext = getAuthnContext(credential).orElse(SAMLConfigurer.ONE_FACTOR_AUTHN_CTX);
+        Map<String, List<String>> eiamAttributes = extractAttributes(credential.getAttributes(), EIAM_ISSUER_NAME);
+        if (eiamAttributes.containsKey(USER_EXT_ID_ATTRIBUTE_NAME)) {
+            LOGGER.info("Credential was enriched by EIAM Issuer FEDS: creating an EiamEnrichedSamlUser");
+            printOutAttributes(eiamAttributes);
+            return new EiamEnrichedSamlUser(nameId, eiamAttributes, authnContext);
         }
+
+        eiamAttributes = extractAttributes(credential.getAttributes(), CH_LOGIN_ISSUER_NAME);
+        if (eiamAttributes.containsKey(USER_EXT_ID_ATTRIBUTE_NAME)) {
+            LOGGER.info("Credential was enriched by EIAM Issuer: CH_LOGIN: creating an SamlUser");
+            printOutAttributes(eiamAttributes);
+            return new SamlUser(nameId, eiamAttributes, authnContext);
+        }
+
+        throw new UnknownSamlCredentialAuthenticationException("The received SAMLCredential is nether enriched with FEDS nor CH-LOGIN attributes");
     }
 
     private Optional<String> getAuthnContext(SAMLCredential credential) {
@@ -86,31 +94,25 @@ public class EiamSamlUserDetailsService implements SAMLUserDetailsService {
     }
 
     private void printOutAttributes(Map<String, List<String>> attributes) {
-        attributes.forEach((key, value) -> LOGGER.debug("SAMLCredential attribute Name: {} -> Values: {}", key, value));
+        if (LOGGER.isDebugEnabled()) {
+            attributes.forEach((key, value) -> LOGGER.debug("SAMLCredential attribute Name: {} -> Values: {}", key, value));
+        }
     }
 
-    private static boolean isCredentialEnrichedByEIAM(Map<String, List<String>> attributes) {
-        return attributes.containsKey(USER_EXT_ID_ATTRIBUTE_NAME);
-    }
-
-    private static Map<String, List<String>> extractAttributes(List<Attribute> credentialAttributes) {
+    private static Map<String, List<String>> extractAttributes(List<Attribute> credentialAttributes, String issuerNamespace) {
         return credentialAttributes
+            .stream()
+            .filter(matchesIssuer(issuerNamespace))
+            .collect(Collectors.toMap(Attribute::getName, attribute -> attribute.getAttributeValues()
                 .stream()
-                .filter(attribute -> isAttributeFromEiam(attribute) || isAttributeFromPEP(attribute))
-                .collect(Collectors.toMap(Attribute::getName, attribute -> attribute.getAttributeValues()
-                        .stream()
-                        .filter(xmlObject -> xmlObject instanceof XSString)
-                        .map(xmlObject -> (XSString) xmlObject)
-                        .map(XSString::getValue)
-                        .collect(Collectors.toList())));
+                .filter(xmlObject -> xmlObject instanceof XSString)
+                .map(xmlObject -> (XSString) xmlObject)
+                .map(XSString::getValue)
+                .collect(Collectors.toList())));
     }
 
-    private static boolean isAttributeFromEiam(Attribute attribute) {
-        return EIAM_ISSUER_NAME.equals(extractOriginalIssuer(attribute));
-    }
-
-    private static boolean isAttributeFromPEP(Attribute attribute) {
-        return StringUtils.isBlank(extractOriginalIssuer(attribute));
+    private static Predicate<Attribute> matchesIssuer(String issuerNamespace) {
+        return attribute -> issuerNamespace.equals(extractOriginalIssuer(attribute));
     }
 
     private static String extractOriginalIssuer(Attribute attribute) {

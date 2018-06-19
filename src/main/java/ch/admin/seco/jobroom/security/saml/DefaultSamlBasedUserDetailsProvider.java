@@ -2,13 +2,16 @@ package ch.admin.seco.jobroom.security.saml;
 
 import ch.admin.seco.jobroom.domain.UserInfo;
 import ch.admin.seco.jobroom.repository.UserInfoRepository;
+import ch.admin.seco.jobroom.security.AuthoritiesConstants;
 import ch.admin.seco.jobroom.security.EiamUserPrincipal;
 import ch.admin.seco.jobroom.security.saml.infrastructure.EiamEnrichedSamlUser;
 import ch.admin.seco.jobroom.security.saml.infrastructure.SamlBasedUserDetailsProvider;
 import ch.admin.seco.jobroom.security.saml.infrastructure.SamlUser;
-import ch.admin.seco.jobroom.security.saml.infrastructure.dsl.NotEiamEnrichedSamlUserAuthenticationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.authentication.InsufficientAuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionCallback;
@@ -36,7 +39,7 @@ public class DefaultSamlBasedUserDetailsProvider implements SamlBasedUserDetails
     @Override
     public UserDetails createUserDetailsFromSaml(SamlUser samlUser) {
         if (!(samlUser instanceof EiamEnrichedSamlUser)) {
-            throw new NotEiamEnrichedSamlUserAuthenticationException(samlUser);
+            return new User(samlUser.getNameId(), "N/A", Collections.emptyList());
         }
 
         return this.transactionTemplate.execute((TransactionCallback<UserDetails>) status -> toEiamUserPrincipal((EiamEnrichedSamlUser) samlUser));
@@ -60,6 +63,10 @@ public class DefaultSamlBasedUserDetailsProvider implements SamlBasedUserDetails
         }
     }
 
+    private boolean hasJobRoomAllowRole(Collection<? extends GrantedAuthority> authorities) {
+        return authorities.stream().anyMatch(a -> a.getAuthority().equals(AuthoritiesConstants.ROLE_ALLOW));
+    }
+
     private EiamUserPrincipal prepareEiamUserPrincipal(EiamEnrichedSamlUser eiamEnrichedSamlUser, UserInfo userInfo) {
         EiamUserPrincipal eiamUserPrincipal = new EiamUserPrincipal(
             userInfo.getId(),
@@ -73,6 +80,10 @@ public class DefaultSamlBasedUserDetailsProvider implements SamlBasedUserDetails
         eiamUserPrincipal.setAuthenticationMethod(eiamEnrichedSamlUser.getAuthnContext());
         eiamUserPrincipal.setUserDefaultProfileExtId(eiamEnrichedSamlUser.getDefaultProfileExtId().get());
         eiamUserPrincipal.setRegistrationStatus(userInfo.getRegistrationStatus());
+
+        if (!hasJobRoomAllowRole(eiamUserPrincipal.getAuthorities())) {
+            throw new InsufficientAuthenticationException("User with ext-id: " + eiamEnrichedSamlUser.getUserExtId() + " doesn't have the ALLOW role");
+        }
         return eiamUserPrincipal;
     }
 
