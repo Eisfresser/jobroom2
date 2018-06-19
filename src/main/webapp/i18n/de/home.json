@@ -126,6 +126,7 @@
                         },
                         "phone-format": "Bitte g\u00fcltige Telefonnummer eingeben z. B. 031 999 99 99 oder +41 31 999 99 99",
                         "required": "Pflichtfeld",
+                        "at-list-one-required": "Select at least one application channel",
                         "zip-format": "PLZ ung\u00fcltig",
                         "zip-or-city-format": "PLZ/Ort ung\u00fcltig"
                     }

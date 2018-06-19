@@ -1,27 +1,38 @@
 import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
-    Component, ElementRef,
+    Component,
+    ElementRef,
     Input,
     OnDestroy,
-    OnInit, ViewChild
+    OnInit,
+    ViewChild
 } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import {
-    AbstractControl, FormArray,
-    FormBuilder, FormGroup,
+    AbstractControl,
+    FormArray,
+    FormBuilder,
+    FormGroup,
+    ValidationErrors,
+    ValidatorFn,
     Validators
 } from '@angular/forms';
 import { Subject } from 'rxjs/Subject';
 import {
-    DateUtils, Degree,
+    DateUtils,
+    Degree,
     EMAIL_REGEX,
     Gender,
     POSTBOX_NUMBER_REGEX,
     ResponseWrapper,
-    URL_REGEX, WorkForm
+    URL_REGEX,
+    WorkForm
 } from '../../../shared';
-import { LanguageSkillService } from '../../../candidate-search/services/language-skill.service';
+import {
+    languages,
+    LanguageSkillService
+} from '../../../candidate-search/services/language-skill.service';
 import {
     FormatterFn,
     OccupationOption,
@@ -36,12 +47,18 @@ import { JobPublicationMapper } from './job-publication-mapper';
 import { Organization } from '../../../shared/organization/organization.model';
 import { UserData } from './service/user-data-resolver.service';
 import { JobAdvertisementService } from '../../../shared/job-advertisement/job-advertisement.service';
-import { JobAdvertisement, Salutation, WorkExperience } from '../../../shared/job-advertisement/job-advertisement.model';
+import {
+    JobAdvertisement,
+    Salutation,
+    WorkExperience
+} from '../../../shared/job-advertisement/job-advertisement.model';
 import { CompanyFormModel, JobPublicationForm } from './job-publication-form.model';
 import { LanguageFilterService } from '../../../shared/input-components/language-filter/language-filter.service';
-import { languages } from '../../../candidate-search/services/language-skill.service';
 import { Store } from '@ngrx/store';
-import { CoreState, getLanguage } from '../../../shared/state-management/state/core.state';
+import {
+    CoreState,
+    getLanguage
+} from '../../../shared/state-management/state/core.state';
 
 @Component({
     selector: 'jr2-job-publication-tool',
@@ -232,6 +249,19 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
     }
 
     private createJobPublicationForm(formModel: JobPublicationForm): FormGroup {
+        const atLeastOneRequired = (validator: ValidatorFn, excludeControl: string) => (group: FormGroup): ValidationErrors | null => {
+            const hasAtLeastOne = group && group.controls && Object.keys(group.controls)
+                .filter((controlName) => controlName !== excludeControl)
+                .some((controlName) => {
+                    const control = group.controls[controlName];
+                    return control.valid && !validator(control)
+                });
+
+            return hasAtLeastOne ? null : {
+                atLeastOneRequired: true,
+            };
+        };
+
         return this.fb.group({
             jobDescriptions: [formModel.jobDescriptions],
             occupation: this.fb.group({
@@ -302,7 +332,7 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
                 phoneNumber: [formModel.application.phoneNumber],
                 additionalInfo: [formModel.application.additionalInfo,
                     [Validators.maxLength(this.APPLICATION_ADDITIONAL_INFO_MAX_LENGTH)]],
-            }),
+            }, { validator: atLeastOneRequired(Validators.required, 'additionalInfo') }),
             publication: this.fb.group({
                 publicDisplay: [formModel.publication.publicDisplay],
                 eures: [formModel.publication.eures],
