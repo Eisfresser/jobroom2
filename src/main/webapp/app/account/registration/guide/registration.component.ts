@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { registrationQuestionnaireRoute } from '../questionnaire/registration-questionnaire.route';
 
 @Component({
     selector: 'jr2-registration',
@@ -8,7 +7,7 @@ import { registrationQuestionnaireRoute } from '../questionnaire/registration-qu
 })
 export class RegistrationComponent implements OnInit {
 
-    selectPagePath = '/#/' + registrationQuestionnaireRoute.path;
+    selectPagePath = '/samllogin';
 
     constructor() {
     }
