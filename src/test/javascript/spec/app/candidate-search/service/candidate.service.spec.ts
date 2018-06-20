@@ -4,7 +4,7 @@ import {
     Experience,
     Graduation,
     ISCED_1997
-} from '../../../../../../main/webapp/app/shared/model/shared-types';
+} from '../../../../../../main/webapp/app/shared';
 
 describe('CandidateService', () => {
     let candidateService: CandidateService;
@@ -88,6 +88,83 @@ describe('CandidateService', () => {
 
         // THEN
         expect(relevantJobExperience.occupationLabel).toEqual('relevant2');
+    });
+
+    it('should get JobExperience by occupationMapping', () => {
+        // GIVEN
+        const occupationCodes = ['AVAM:22222,BFS:11'];
+        const jobExperiences: JobExperience[] = [
+            {
+                occupation: {
+                    avamCode: 22221,
+                    bfsCode: 22,
+                    sbn3Code: 222,
+                    sbn5Code: 11111
+                },
+                occupationLabel: 'non-relevant',
+                experience: Experience.LESS_THAN_1_YEAR,
+                graduation: Graduation.ACCEPTED,
+                degree: null,
+                education: ISCED_1997.ISCED1,
+                remark: null,
+                lastJob: true,
+                wanted: true
+            },
+            {
+                occupation: {
+                    avamCode: 11111,
+                    bfsCode: 11,
+                    sbn3Code: 111,
+                    sbn5Code: 11111
+                },
+                occupationLabel: 'relevant-by-occupation-mapping',
+                experience: Experience.LESS_THAN_1_YEAR,
+                graduation: Graduation.ACCEPTED,
+                degree: null,
+                education: ISCED_1997.ISCED1,
+                remark: null,
+                lastJob: true,
+                wanted: true
+            },
+            {
+                occupation: {
+                    avamCode: 22222,
+                    bfsCode: 10,
+                    sbn3Code: 222,
+                    sbn5Code: 11111
+                },
+                occupationLabel: 'relevant-by-occupation-code',
+                experience: Experience.LESS_THAN_1_YEAR,
+                graduation: Graduation.ACCEPTED,
+                degree: null,
+                education: ISCED_1997.ISCED1,
+                remark: null,
+                lastJob: true,
+                wanted: true
+            },
+            {
+                occupation: {
+                    avamCode: 22222,
+                    bfsCode: 11,
+                    sbn3Code: 222,
+                    sbn5Code: 11111
+                },
+                occupationLabel: 'relevant-by-both',
+                experience: Experience.LESS_THAN_1_YEAR,
+                graduation: Graduation.ACCEPTED,
+                degree: null,
+                education: ISCED_1997.ISCED1,
+                remark: null,
+                lastJob: true,
+                wanted: true
+            }
+        ];
+
+        // WHEN
+        const relevantJobExperience = candidateService.getRelevantJobExperience(occupationCodes, jobExperiences);
+
+        // THEN
+        expect(relevantJobExperience.occupationLabel).toEqual('relevant-by-occupation-mapping');
     });
 
     it('should return null when no jobExperiences', () => {

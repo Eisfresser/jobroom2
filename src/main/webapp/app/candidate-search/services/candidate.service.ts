@@ -2,13 +2,15 @@ import { Injectable } from '@angular/core';
 import { Candidate, CandidateProfile, JobExperience } from './candidate';
 import { Observable } from 'rxjs/Observable';
 import { CandidateSearchRequest } from './candidate-search-request';
-import { ResponseWrapper } from '../../shared';
+import {
+    createPageableURLSearchParams,
+    Experience,
+    Principal,
+    ResponseWrapper
+} from '../../shared';
 import { CandidateSearchFilter } from '../state-management/state/candidate-search.state';
-import { createPageableURLSearchParams } from '../../shared/model/request-util';
-import { Experience } from '../../shared/model/shared-types';
 import { JhiBase64Service } from 'ng-jhipster';
-import { Principal } from '../../shared/auth/principal.service';
-import { OccupationCode } from '../../shared/reference-service/occupation-code';
+import { OccupationCode, OccupationMapping } from '../../shared/reference-service';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 
 @Injectable()
@@ -23,18 +25,22 @@ export class CandidateService {
     }
 
     static getBestMatchingJobExperience(occupationCodes: Array<string>, jobExperiences: JobExperience[]) {
+        const isMatched = (jobExperience: JobExperience, code: OccupationCode | OccupationMapping) => {
+            const { value, type } = code;
+            const { avamCode, bfsCode, sbn3Code, sbn5Code } = jobExperience.occupation;
+            return (avamCode === value && type.toLowerCase() === 'avam')
+                || (bfsCode === value && type.toLowerCase() === 'bfs')
+                || (sbn3Code === value && type.toLowerCase() === 'sbn3')
+                || (sbn5Code === value && type.toLowerCase() === 'sbn5');
+        };
         const hasOccupationCode =
             (occupationCode: OccupationCode) =>
                 (jobExperience: JobExperience) => {
-                    const { value, type } = occupationCode;
-                    const { avamCode, bfsCode, sbn3Code, sbn5Code } = jobExperience.occupation;
-
-                    return (avamCode === value && type.toLowerCase() === 'avam')
-                        || (bfsCode === value && type.toLowerCase() === 'bfs')
-                        || (sbn3Code === value && type.toLowerCase() === 'sbn3')
-                        || (sbn5Code === value && type.toLowerCase() === 'sbn5')
-                }
-        ;
+                    const matchedByPrimaryOccupation = isMatched(jobExperience, occupationCode);
+                    return occupationCode.mapping
+                        ? matchedByPrimaryOccupation || isMatched(jobExperience, occupationCode.mapping)
+                        : matchedByPrimaryOccupation;
+                };
 
         const matchingExperiences = occupationCodes
             .map(OccupationCode.fromString)
