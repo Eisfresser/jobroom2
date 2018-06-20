@@ -9,7 +9,7 @@ export interface ApiUser {
     username: string;
     password: string;
     companyEmail: string;
-    companyName: string
+    companyName: string;
     technicalContactName: string;
     technicalContactEmail: string;
     active: boolean;
@@ -19,7 +19,8 @@ export interface ApiUser {
 export interface ApiUserSearchRequest {
     page: number;
     size: number;
-    filter: string;
+    query: string;
+    sort: string
 }
 
 @Injectable()
@@ -32,7 +33,7 @@ export class ApiUserService {
 
     search(searchRequest: ApiUserSearchRequest): Observable<ResponseWrapper> {
         const params = createPageableURLSearchParams(searchRequest);
-        const body = { query: searchRequest.filter };
+        const body = { query: searchRequest.query };
 
         return this.http.post<ResponseWrapper>(`${this.resourceUrl}/_search`, body, {
             params,

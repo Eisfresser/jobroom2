@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    Component,
+    EventEmitter,
+    Input,
+    Output
+} from '@angular/core';
 import { ApiUser } from '../service/api-user.service';
 import {
     LoadNextApiUsersPageAction,
@@ -6,7 +12,10 @@ import {
     UpdateApiUserAction
 } from '../state-management/action/api-user-management.actions';
 import { Store } from '@ngrx/store';
-import { ApiUserManagementState } from '../state-management/state/api-user-management.state';
+import {
+    ApiUserManagementFilter,
+    ApiUserManagementState
+} from '../state-management/state/api-user-management.state';
 import { ITEMS_PER_PAGE } from '../../../shared';
 import { ApiUserDialogService } from '../service/api-user-dialog.service';
 
@@ -16,14 +25,33 @@ import { ApiUserDialogService } from '../service/api-user-dialog.service';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ApiUserManagementListComponent {
+
     readonly PAGE_SIZE = ITEMS_PER_PAGE;
+    readonly KEYWORD_FIELDS = ['username', 'createDate', 'lastAccessDate', 'active'];
 
     @Input() apiUsers: ApiUser[];
     @Input() totalCount: number;
     @Input() page: number;
+    @Input() apiUserFilter: ApiUserManagementFilter;
+
+    @Output() sortOrderEmitter = new EventEmitter<ApiUserManagementFilter>();
+
+    sortByField = 'username';
+    reverse: false;
 
     constructor(private store: Store<ApiUserManagementState>,
                 private apiUserDialogService: ApiUserDialogService) {
+    }
+
+    sortApiUsers(): void {
+        const sort = `${this.getSortPath()},${this.reverse ? 'asc' : 'desc'}`;
+        this.sortOrderEmitter.emit(Object.assign({}, this.apiUserFilter, { sort }));
+    }
+
+    private getSortPath(): string {
+        return this.KEYWORD_FIELDS.indexOf(this.sortByField) >= 0
+            ? `apiUser.${this.sortByField}`
+            : `apiUser.${this.sortByField}.keyword`;
     }
 
     loadPage(page: number): void {
@@ -32,6 +60,10 @@ export class ApiUserManagementListComponent {
 
     setActive(apiUser: ApiUser, active: boolean) {
         this.store.dispatch(new ToggleStatusAction(Object.assign({}, apiUser, { active })));
+    }
+
+    trackById(index, item: ApiUser) {
+        return item.id;
     }
 
     openUpdateDialog(apiUser: ApiUser) {

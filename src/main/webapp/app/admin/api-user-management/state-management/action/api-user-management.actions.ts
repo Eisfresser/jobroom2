@@ -1,5 +1,6 @@
 import { Action } from '@ngrx/store';
 import { ApiUser } from '../../service/api-user.service';
+import { ApiUserManagementFilter } from '../state/api-user-management.state';
 
 export const FILTER_API_USERS = 'API_USERS_MANAGEMENT:FILTER_API_USERS';
 export const LOAD_NEXT_API_USERS_PAGE = 'API_USERS_MANAGEMENT:LOAD_NEXT_API_USERS_PAGE';
@@ -12,7 +13,7 @@ export const TOGGLE_STATUS = 'API_USERS_MANAGEMENT:TOGGLE_STATUS';
 export class FilterApiUsersAction implements Action {
     readonly type = FILTER_API_USERS;
 
-    constructor(public payload: { filter: string }) {
+    constructor(public payload: ApiUserManagementFilter) {
     }
 }
 

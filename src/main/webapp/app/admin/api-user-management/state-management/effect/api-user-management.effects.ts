@@ -15,6 +15,7 @@ import {
 } from '../action/api-user-management.actions';
 import { Store } from '@ngrx/store';
 import {
+    ApiUserManagementFilter,
     ApiUserManagementState,
     getApiUserManagementState
 } from '../state/api-user-management.state';
@@ -39,6 +40,7 @@ export class ApiUserManagementEffects {
     @Effect()
     filterApiUsers$ = this.actions$
         .ofType(FILTER_API_USERS)
+        .distinctUntilChanged()
         .withLatestFrom(this.store.select(getApiUserManagementState))
         .flatMap(([action, state]: [FilterApiUsersAction, ApiUserManagementState]) => {
             return this.apiUserService.search(this.createSearchRequest(state.filter, state.page))
@@ -75,9 +77,11 @@ export class ApiUserManagementEffects {
                 .catch(() => Observable.empty());
         });
 
-    private createSearchRequest(filter: string, page: number) {
+    private createSearchRequest(apiUserFilter: ApiUserManagementFilter, page: number) {
+        const { query, sort } = apiUserFilter;
         return {
-            filter,
+            query,
+            sort,
             page,
             size: ITEMS_PER_PAGE
         }

@@ -2,13 +2,14 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { ApiUser, ApiUserService } from './service/api-user.service';
 import {
+    ApiUserManagementFilter,
     ApiUserManagementState,
+    getApiUserManagementFilter,
     getApiUserManagementPage,
     getApiUserManagementTotalCount,
     getApiUsers
 } from './state-management/state/api-user-management.state';
 import { Store } from '@ngrx/store';
-import { ITEMS_PER_PAGE } from '../../shared';
 import {
     CreateApiUserAction,
     FilterApiUsersAction,
@@ -29,6 +30,7 @@ export class ApiUserManagementComponent implements OnInit {
     apiUsers$: Observable<ApiUser[]>;
     totalCount$: Observable<number>;
     page$: Observable<number>;
+    searchFilter$: Observable<ApiUserManagementFilter>;
 
     constructor(private store: Store<ApiUserManagementState>,
                 private fb: FormBuilder,
@@ -44,11 +46,19 @@ export class ApiUserManagementComponent implements OnInit {
         this.apiUsers$ = this.store.select(getApiUsers);
         this.totalCount$ = this.store.select(getApiUserManagementTotalCount);
         this.page$ = this.store.select(getApiUserManagementPage);
+        this.searchFilter$ = this.store.select(getApiUserManagementFilter);
+
         this.store.dispatch(new LoadNextApiUsersPageAction({ page: 0 }));
     }
 
-    filter(): void {
-        this.store.dispatch(new FilterApiUsersAction(Object.assign({}, this.apiUsersFilterForm.value)));
+    onSortOrderChange(apiUserFilter: ApiUserManagementFilter): void {
+        this.store.dispatch(new FilterApiUsersAction(apiUserFilter))
+    }
+
+    filter(apiUserFilter: ApiUserManagementFilter): void {
+        this.store.dispatch(new FilterApiUsersAction(Object.assign({}, apiUserFilter, {
+            query: this.apiUsersFilterForm.value
+        })));
     }
 
     openCreateNewDialog(): void {

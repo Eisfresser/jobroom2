@@ -11,7 +11,7 @@ export function apiUserManagementReducer(state = initialState, action: Actions) 
     switch (action.type) {
         case FILTER_API_USERS:
             newState = Object.assign({}, state, {
-                filter: action.payload.filter,
+                filter: action.payload,
                 totalCount: 0,
                 page: 0
             });

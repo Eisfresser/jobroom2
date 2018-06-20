@@ -1,8 +1,13 @@
 import { ApiUser } from '../../service/api-user.service';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 
+export interface ApiUserManagementFilter {
+    query: string;
+    sort: string;
+}
+
 export interface ApiUserManagementState {
-    filter: string;
+    filter: ApiUserManagementFilter;
     apiUsers: ApiUser[];
     totalCount: number;
     page: number;
@@ -10,7 +15,10 @@ export interface ApiUserManagementState {
 }
 
 export const initialState: ApiUserManagementState = {
-    filter: null,
+    filter: {
+        query: null,
+        sort: 'apiUser.username,asc'
+    },
     apiUsers: [],
     totalCount: 0,
     page: 0,

@@ -1142,9 +1142,8 @@ user-management,userManagement.search.placeholder,"Benutzer nach Name, E-Mail-Ad
 user-management,userManagement.updated,Ein Benutzer mit ID {{ param }} wurde geändert,A user was updated with identifier {{ param }},L'utilisateur portant l'ID {{ param }} a été modifié.,Sono stato aggiornati i dati dell'utente identificato da {{ param }}
 api-user-management,api-user-management.title,Manage api users,Manage api users,Manage api users,Manage api users
 api-user-management,api-user-management.new,Create new api user,Create new api user,Create new api user,Create new api user
-api-user-management,api-user-management.search,Search api users,Search api users,Search api users,Search api users
+api-user-management,api-user-management.search,"Search for api user by username, business name, business email, technical contact, technical contact email","Search for api user by username, business name, business email, technical contact, technical contact email","Search for api user by username, business name, business email, technical contact, technical contact email","Search for api user by username, business name, business email, technical contact, technical contact email"
 api-user-management,api-user-management.dialog.title,Create or update api user,Create or update api user,Create or update api user,Create or update api user
-api-user-management,api-user-management.id,Id,Id,Id,Id
 api-user-management,api-user-management.username,Username,Username,Username,Username
 api-user-management,api-user-management.companyEmail,Business email,Business email,Business email,Business email
 api-user-management,api-user-management.companyName,Business name,Business name,Business name,Business name
