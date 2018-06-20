@@ -1,18 +1,9 @@
 package ch.admin.seco.jobroom.web.rest;
 
-import static ch.admin.seco.jobroom.security.jwt.TokenResolver.AUTHORIZATION_HEADER;
-import static ch.admin.seco.jobroom.security.jwt.TokenResolver.TOKEN_PREFIX;
-import static org.springframework.http.ResponseEntity.ok;
-
-import java.util.Optional;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
-
+import ch.admin.seco.jobroom.security.jwt.TokenProvider;
+import ch.admin.seco.jobroom.web.rest.vm.LoginVM;
 import com.codahale.metrics.annotation.Timed;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -24,14 +15,16 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import ch.admin.seco.jobroom.security.jwt.TokenProvider;
-import ch.admin.seco.jobroom.web.rest.vm.LoginVM;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
+import java.util.Optional;
+
+import static ch.admin.seco.jobroom.security.jwt.JWTConfigurer.TokenResolver.AUTHORIZATION_HEADER;
+import static ch.admin.seco.jobroom.security.jwt.JWTConfigurer.TokenResolver.TOKEN_PREFIX;
+import static org.springframework.http.ResponseEntity.ok;
 
 /**
  * Controller to authenticate users.
@@ -39,13 +32,13 @@ import ch.admin.seco.jobroom.web.rest.vm.LoginVM;
 @RestController
 @RequestMapping("/api")
 @Profile("no-eiam")
-public class UserNoEiamJWTController {
+public class NoEiamAuthenticatonController {
 
     private final TokenProvider tokenProvider;
 
     private final AuthenticationManager authenticationManager;
 
-    public UserNoEiamJWTController(TokenProvider tokenProvider, AuthenticationManager authenticationManager) {
+    public NoEiamAuthenticatonController(TokenProvider tokenProvider, AuthenticationManager authenticationManager) {
         this.tokenProvider = tokenProvider;
         this.authenticationManager = authenticationManager;
     }
@@ -62,7 +55,7 @@ public class UserNoEiamJWTController {
     @PostMapping(value = "/authenticate", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     @Timed
     public ResponseEntity authorizeOauth(@RequestParam String username, @RequestParam String password,
-        HttpServletRequest request) {
+                                         HttpServletRequest request) {
         Authentication authentication = authenticateWithUsernamePasswordAndRequest(username, password, request);
         final DefaultOAuth2AccessToken accessToken = tokenProvider.createAccessToken(authentication);
         return ok(accessToken);

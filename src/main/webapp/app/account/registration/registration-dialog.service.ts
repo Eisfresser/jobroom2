@@ -4,12 +4,14 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { RegistrationPavDialogComponent } from './pav/registration-pav-dialog.component';
 import { ExistingPavDialogComponent } from './existing-pav/existing-pav-dialog.component';
 import { Router } from '@angular/router';
+import { Principal } from '../../shared';
 
 @Injectable()
 export class RegistrationDialogService {
 
     constructor(private modalService: NgbModal,
-                private router: Router) {
+                private router: Router,
+                private principal: Principal) {
     }
 
     openRegisterJobSeekerDialog() {
@@ -18,7 +20,9 @@ export class RegistrationDialogService {
         });
 
         modalRef.result.then(() => {
-            this.router.navigate(['/jobseekers'])
+            this.principal.identity(true).then((result) => {
+                this.router.navigate(['/jobseekers']);
+            });
         }, (error) => {
             // cancel dialog
         });
@@ -30,7 +34,7 @@ export class RegistrationDialogService {
         });
 
         modalRef.result.then(() => {
-            this.router.navigate(['/home'])
+            this.router.navigate(['/home']);
         }, (error) => {
             // cancel dialog
         });
@@ -42,9 +46,12 @@ export class RegistrationDialogService {
         });
 
         modalRef.result.then(() => {
-            this.router.navigate(['/agents', 'candidates'])
+            this.principal.identity(true).then((result) => {
+                this.router.navigate(['/agents', 'candidates'])
+            });
         }, (error) => {
             // cancel dialog
         });
     }
+
 }

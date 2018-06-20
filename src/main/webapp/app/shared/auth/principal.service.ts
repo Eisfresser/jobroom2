@@ -1,17 +1,24 @@
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
-import { AccountService } from './account.service';
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs/Observable';
+import {Subject} from 'rxjs/Subject';
+import {AuthServerProvider} from './auth-jwt.service';
+import {SERVER_API_URL} from "../../app.constants";
+import {HttpClient} from "@angular/common/http";
 
 @Injectable()
 export class Principal {
-    private userIdentity: any;
+
+    private userIdentity: CurrentUser;
+
     private authenticated = false;
+
     private authenticationState = new Subject<any>();
 
     constructor(
-        private account: AccountService
-    ) {}
+        private  authServerProvider: AuthServerProvider,
+        private http: HttpClient
+    ) {
+    }
 
     authenticate(identity) {
         this.userIdentity = identity;
@@ -37,18 +44,6 @@ export class Principal {
         return false;
     }
 
-    hasAuthority(authority: string): Promise<boolean> {
-        if (!this.authenticated) {
-           return Promise.resolve(false);
-        }
-
-        return this.identity().then((id) => {
-            return Promise.resolve(id.authorities && id.authorities.includes(authority));
-        }, () => {
-            return Promise.resolve(false);
-        });
-    }
-
     identity(force?: boolean): Promise<any> {
         if (force === true) {
             this.userIdentity = undefined;
@@ -61,38 +56,65 @@ export class Principal {
         }
 
         // retrieve the userIdentity data from the server, update the identity object, and then resolve.
-        return this.account.get().toPromise().then((response) => {
-            const account = response.body;
-            if (account) {
-                this.userIdentity = account;
-                this.authenticated = true;
-            } else {
+        return this.http.get<CurrentUser>(SERVER_API_URL + 'api/current-user', {observe: 'response'})
+            .toPromise()
+            .then((response) => {
+                this.extractAndStoreJwt(response.headers.get('Authorization'));
+                const currentUser = response.body;
+                if (currentUser) {
+                    this.userIdentity = currentUser;
+                    this.authenticated = true;
+                } else {
+                    this.userIdentity = null;
+                    this.authenticated = false;
+                }
+                this.authenticationState.next(this.userIdentity);
+                return this.userIdentity;
+            }).catch((err) => {
                 this.userIdentity = null;
                 this.authenticated = false;
-            }
-            this.authenticationState.next(this.userIdentity);
-            return this.userIdentity;
-        }).catch((err) => {
-            this.userIdentity = null;
-            this.authenticated = false;
-            this.authenticationState.next(this.userIdentity);
-            return null;
-        });
+                this.authenticationState.next(this.userIdentity);
+                return null;
+            });
+    }
+
+    private extractAndStoreJwt(bearerToken: String) {
+        if (bearerToken && bearerToken.slice(0, 7) === 'Bearer ') {
+            const jwt = bearerToken.slice(7, bearerToken.length);
+            this.authServerProvider.storeAuthenticationToken(jwt, false);
+        }
     }
 
     isAuthenticated(): boolean {
         return this.authenticated;
     }
 
-    isIdentityResolved(): boolean {
-        return this.userIdentity !== undefined;
-    }
-
     getAuthenticationState(): Observable<any> {
         return this.authenticationState.asObservable();
     }
 
-    getImageUrl(): String {
-        return this.isIdentityResolved() ? this.userIdentity.imageUrl : null;
-    }
+}
+
+interface CurrentUser {
+
+    id: String
+
+    login: String
+
+    firstName: String
+
+    lastName: String
+
+    email: String
+
+    langKey: String
+
+    authorities: Array<String>
+
+    organizationId: String
+
+    organizationName: String
+
+    imageUrl: String
+
 }

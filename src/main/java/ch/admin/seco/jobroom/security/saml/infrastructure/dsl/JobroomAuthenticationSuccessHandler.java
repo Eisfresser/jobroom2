@@ -1,8 +1,10 @@
 package ch.admin.seco.jobroom.security.saml.infrastructure.dsl;
 
+import ch.admin.seco.jobroom.domain.UserInfo;
 import ch.admin.seco.jobroom.domain.enumeration.RegistrationStatus;
+import ch.admin.seco.jobroom.repository.UserInfoRepository;
 import ch.admin.seco.jobroom.security.AuthoritiesConstants;
-import ch.admin.seco.jobroom.security.EiamUserPrincipal;
+import ch.admin.seco.jobroom.security.UserPrincipal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationServiceException;
@@ -32,8 +34,11 @@ public class JobroomAuthenticationSuccessHandler extends SavedRequestAwareAuthen
 
     private final String targetUrlEiamAccessRequest;
 
-    JobroomAuthenticationSuccessHandler(String targetUrlEiamAccessRequest) {
+    private final UserInfoRepository userInfoRepository;
+
+    JobroomAuthenticationSuccessHandler(String targetUrlEiamAccessRequest, UserInfoRepository userInfoRepository) {
         this.targetUrlEiamAccessRequest = targetUrlEiamAccessRequest;
+        this.userInfoRepository = userInfoRepository;
     }
 
     @Override
@@ -49,15 +54,17 @@ public class JobroomAuthenticationSuccessHandler extends SavedRequestAwareAuthen
             return;
         }
 
-        if (!(authentication.getPrincipal() instanceof EiamUserPrincipal)) {
-            throw new AuthenticationServiceException("Expected Principal to be of type EiamUserPrincipal but was " + authentication.getPrincipal().getClass());
+        if (!(authentication.getPrincipal() instanceof UserPrincipal)) {
+            throw new AuthenticationServiceException("Expected Principal to be of type UserPrincipal but was " + authentication.getPrincipal().getClass());
         }
-        EiamUserPrincipal principal = (EiamUserPrincipal) authentication.getPrincipal();
+        UserPrincipal principal = (UserPrincipal) authentication.getPrincipal();
         handleAuthenticatedUser(authentication, principal, request, response);
     }
 
-    private void handleAuthenticatedUser(Authentication authentication, EiamUserPrincipal principal, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        RegistrationStatus registrationStatus = principal.getRegistrationStatus();
+    private void handleAuthenticatedUser(Authentication authentication, UserPrincipal userPrincipal, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        UserInfo userInfo = userInfoRepository.findById(userPrincipal.getId())
+            .orElseThrow(() -> new IllegalStateException("No user found with Id: " + userPrincipal.getId().getValue()));
+        RegistrationStatus registrationStatus = userInfo.getRegistrationStatus();
         if (registrationStatus.equals(RegistrationStatus.UNREGISTERED)) {
             // first-time user -> send to registration process
             redirectTo(SAMLConfigurer.TARGET_URL_REGISTRATION_PROCESS, request, response);
@@ -65,7 +72,7 @@ public class JobroomAuthenticationSuccessHandler extends SavedRequestAwareAuthen
         }
         if (registrationStatus == RegistrationStatus.VALIDATION_EMP || registrationStatus == RegistrationStatus.VALIDATION_PAV) {
             // PAV and company users need 2-factor authentication!
-            if (principal.hasOnlyOneFactorAuthentication()) {
+            if (userPrincipal.hasOnlyOneFactorAuthentication()) {
                 // send to 2 factor setup in eIAM
                 redirectTo(SAMLConfigurer.TARGET_URL_FORCE_TWO_FACTOR_AUTH, request, response);
                 authentication.setAuthenticated(false);
@@ -76,7 +83,7 @@ public class JobroomAuthenticationSuccessHandler extends SavedRequestAwareAuthen
         } else {
             // make sure PAV and company users are authenticated with 2-factor!
             // this is a functionality which should be provided by a future PeP implementation
-            if ((isAgent(authentication) || isEmployer(authentication)) && principal.hasOnlyOneFactorAuthentication()) {
+            if ((isAgent(authentication) || isEmployer(authentication)) && userPrincipal.hasOnlyOneFactorAuthentication()) {
                 // send to 2 factor setup in eIAM
                 redirectTo(SAMLConfigurer.TARGET_URL_FORCE_TWO_FACTOR_AUTH, request, response);
                 authentication.setAuthenticated(false);

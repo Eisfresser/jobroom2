@@ -5,14 +5,13 @@ import ch.admin.seco.jobroom.domain.Company;
 import ch.admin.seco.jobroom.domain.Organization;
 import ch.admin.seco.jobroom.domain.User;
 import ch.admin.seco.jobroom.domain.UserInfo;
-import ch.admin.seco.jobroom.domain.enumeration.RegistrationStatus;
 import ch.admin.seco.jobroom.repository.CompanyRepository;
 import ch.admin.seco.jobroom.repository.OrganizationRepository;
 import ch.admin.seco.jobroom.repository.UserInfoRepository;
 import ch.admin.seco.jobroom.repository.UserRepository;
 import ch.admin.seco.jobroom.security.AuthoritiesConstants;
-import ch.admin.seco.jobroom.security.EiamUserPrincipal;
 import ch.admin.seco.jobroom.security.MD5PasswordEncoder;
+import ch.admin.seco.jobroom.security.UserPrincipal;
 import ch.admin.seco.jobroom.security.registration.eiam.exceptions.RoleCouldNotBeAddedException;
 import ch.admin.seco.jobroom.security.registration.stes.StesService;
 import ch.admin.seco.jobroom.security.registration.stes.StesVerificationResult;
@@ -106,7 +105,9 @@ public class RegistrationServiceTest {
     @Before
     public void setup() {
         registrationService.setAccessCodeMailRecipient("servicedesk@jobroom.ch");
-        setupSecurityContextMock();
+        setupSecurityContextMockWithRegistrationStatus();
+        UserInfo userInfo = this.getDummyUser();
+        when(this.mockUserInfoRepository.findById(any())).thenReturn(Optional.of(userInfo));
     }
 
     @Test
@@ -195,9 +196,14 @@ public class RegistrationServiceTest {
 
     @Test
     public void registerEmployer() throws RoleCouldNotBeAddedException, InvalidAccessCodeException {
-        setupSecurityContextMockWithRegistrationStatus(RegistrationStatus.VALIDATION_EMP);  // overwrite with one that has registration status set
 
-        RegistrationResultDTO registrationResultDTO = this.registrationService.registerAsEmployerOrAgent(VALID_ACCESS_CODE);
+        setupSecurityContextMockWithRegistrationStatus();  // overwrite with one that has registration status set
+        UserInfo userInfo = this.getDummyUser();
+        userInfo.requestAccessAsEmployer(getDummyCompany());
+        when(this.mockUserInfoRepository.findById(any())).thenReturn(Optional.of(userInfo));
+
+
+        RegistrationResultDTO registrationResultDTO = this.registrationService.registerAsEmployerOrAgent(userInfo.getAccessCode());
 
         verify(mockIamService).addCompanyRoleToUser(anyString(), anyString());
         assertTrue(registrationResultDTO.isSuccess());
@@ -228,33 +234,17 @@ public class RegistrationServiceTest {
 
     }
 
-    private void setupSecurityContextMockWithRegistrationStatus(RegistrationStatus registrationStatus) {
-        UserInfo userInfo = this.getDummyUser();
-
-
+    private void setupSecurityContextMockWithRegistrationStatus() {
         Collection<GrantedAuthority> authorities = new HashSet<>(2);
         SimpleGrantedAuthority userAuthority = new SimpleGrantedAuthority(USER_ROLE_USER);
         authorities.add(userAuthority);
         SimpleGrantedAuthority registeredAuthority = new SimpleGrantedAuthority(USER_ROLE_REGISTERED);
         authorities.add(registeredAuthority);
 
-        EiamUserPrincipal eiamUserPrincipal = Mockito.mock(EiamUserPrincipal.class);
-        when(eiamUserPrincipal.getUserExtId()).thenReturn(EXT_ID);
-        when(eiamUserPrincipal.getUserDefaultProfileExtId()).thenReturn(PROFILE_EXT_ID);
-
-
-        if (registrationStatus != null) {
-            when(eiamUserPrincipal.getRegistrationStatus()).thenReturn(registrationStatus);
-        }
-
-        when(this.currentUserService.getPrincipal()).thenReturn(eiamUserPrincipal);
-
-        when(this.mockUserInfoRepository.findOneByUserExternalId(any())).thenReturn(Optional.of(userInfo));
-        when(this.mockUserInfoRepository.findById(any())).thenReturn(Optional.of(userInfo));
-    }
-
-    private void setupSecurityContextMock() {
-        setupSecurityContextMockWithRegistrationStatus(null);
+        UserPrincipal userPrincipal = Mockito.mock(UserPrincipal.class);
+        when(userPrincipal.getUserExtId()).thenReturn(EXT_ID);
+        when(userPrincipal.getUserDefaultProfileExtId()).thenReturn(PROFILE_EXT_ID);
+        when(this.currentUserService.getPrincipal()).thenReturn(userPrincipal);
     }
 
     public UserInfo getDummyUser() {

@@ -9,8 +9,8 @@ import ch.admin.seco.jobroom.repository.OrganizationRepository;
 import ch.admin.seco.jobroom.repository.UserInfoRepository;
 import ch.admin.seco.jobroom.repository.UserRepository;
 import ch.admin.seco.jobroom.security.AuthoritiesConstants;
-import ch.admin.seco.jobroom.security.EiamUserPrincipal;
 import ch.admin.seco.jobroom.security.MD5PasswordEncoder;
+import ch.admin.seco.jobroom.security.UserPrincipal;
 import ch.admin.seco.jobroom.security.registration.eiam.exceptions.RoleCouldNotBeAddedException;
 import ch.admin.seco.jobroom.security.registration.stes.StesService;
 import ch.admin.seco.jobroom.security.registration.stes.StesVerificationRequest;
@@ -35,6 +35,8 @@ import org.springframework.util.StringUtils;
 
 import java.time.LocalDate;
 import java.util.Optional;
+
+import static ch.admin.seco.jobroom.domain.UserInfo_.registrationStatus;
 
 @Service
 @ConfigurationProperties(prefix = "security")
@@ -83,7 +85,7 @@ public class RegistrationService {
         if (!this.validatePersonNumber(birthdate, personNumber)) {
             throw new InvalidPersonenNumberException(personNumber, birthdate);
         }
-        EiamUserPrincipal principal = this.currentUserService.getPrincipal();
+        UserPrincipal principal = this.currentUserService.getPrincipal();
         UserInfo userInfo = getUserInfo(principal.getId());
         addJobseekerRoleToEiam(principal);
         addJobseekerRoleToSession();
@@ -92,8 +94,8 @@ public class RegistrationService {
 
     @Transactional
     public void requestAccessAsEmployer(Long uid) throws UidClientException, UidNotUniqueException, CompanyNotFoundException {
-        EiamUserPrincipal principal = this.currentUserService.getPrincipal();
-        UserInfo userInfo = getUserInfo(principal.getId());
+        UserPrincipal userPrincipal = this.currentUserService.getPrincipal();
+        UserInfo userInfo = getUserInfo(userPrincipal.getId());
         FirmData firmData = this.uidClient.getCompanyByUid(uid);
         Company company = storeCompany(firmData);
         userInfo.requestAccessAsEmployer(company);
@@ -102,8 +104,8 @@ public class RegistrationService {
 
     @Transactional
     public void requestAccessAsAgent(String avgId) throws CompanyNotFoundException {
-        EiamUserPrincipal principal = this.currentUserService.getPrincipal();
-        UserInfo userInfo = getUserInfo(principal.getId());
+        UserPrincipal userPrincipal = this.currentUserService.getPrincipal();
+        UserInfo userInfo = getUserInfo(userPrincipal.getId());
         Optional<Organization> avgCompany = this.organizationRepository.findByExternalId(avgId);
         if (!avgCompany.isPresent()) {
             throw new CompanyNotFoundException();
@@ -120,21 +122,20 @@ public class RegistrationService {
             throw new InvalidAccessCodeException();
         }
         RegistrationResultDTO result = new RegistrationResultDTO(false, Constants.TYPE_UNKOWN);
-        EiamUserPrincipal principal = this.currentUserService.getPrincipal();
-        RegistrationStatus registrationStatus = principal.getRegistrationStatus();
-        if (registrationStatus.equals(RegistrationStatus.VALIDATION_EMP)) {
+        UserPrincipal userPrincipal = this.currentUserService.getPrincipal();
+        UserInfo userInfo = getUserInfo(userPrincipal.getId());
+        if (RegistrationStatus.VALIDATION_EMP.equals(userInfo.getRegistrationStatus())) {
             result.setEmployerType();
-            addCompanyRoleToEiam(principal);
+            addCompanyRoleToEiam(userPrincipal);
             addCompanyRoleToSession();
-        } else if (registrationStatus.equals(RegistrationStatus.VALIDATION_PAV)) {
+        } else if (RegistrationStatus.VALIDATION_PAV.equals(userInfo.getRegistrationStatus())) {
             result.setAgentType();
-            addAgentRoleToEiam(principal);
+            addAgentRoleToEiam(userPrincipal);
             addAgentRoleToSession();
         } else {
-            throw new RoleCouldNotBeAddedException("User with id=" + principal.getUserExtId() + " tried to register as employer/agent, but has a wrong registration status: " + registrationStatus);
+            throw new RoleCouldNotBeAddedException("User with id=" + userPrincipal.getUserExtId() + " tried to register as employer/agent, but has a wrong registration status: " + registrationStatus);
         }
         result.setSuccess(true);
-        UserInfo userInfo = getUserInfo(principal.getId());
         userInfo.closeRegistration();
         return result;
     }
@@ -144,10 +145,10 @@ public class RegistrationService {
         if (!validateOldLogin(username, password)) {
             throw new InvalidOldLoginException();
         }
-        EiamUserPrincipal principal = this.currentUserService.getPrincipal();
-        addAgentRoleToEiam(principal);
+        UserPrincipal userPrincipal = this.currentUserService.getPrincipal();
+        addAgentRoleToEiam(userPrincipal);
         addAgentRoleToSession();
-        UserInfo userInfo = getUserInfo(principal.getId());
+        UserInfo userInfo = getUserInfo(userPrincipal.getId());
         Optional<User> oldUser = this.userRepository.findOneWithAuthoritiesByLogin(username);
         Organization avgCompany = oldUser.get().getOrganization();
         Company company = storeCompany(avgCompany);
@@ -224,28 +225,18 @@ public class RegistrationService {
         }
     }
 
-    /**
-     * Adding the role to the eIAM stores the role permanently for the user.
-     *
-     * @param principal session principal contains the necessary information to store the role in eIAM
-     * @throws RoleCouldNotBeAddedException something went wrong during the eIAM webservice call (user should probably try later again)
-     */
-    private void addJobseekerRoleToEiam(EiamUserPrincipal principal) throws RoleCouldNotBeAddedException {
-        this.iamService.addJobSeekerRoleToUser(principal.getUserExtId(), principal.getUserDefaultProfileExtId());
+    private void addJobseekerRoleToEiam(UserPrincipal userPrincipal) throws RoleCouldNotBeAddedException {
+        this.iamService.addJobSeekerRoleToUser(userPrincipal.getUserExtId(), userPrincipal.getUserDefaultProfileExtId());
     }
 
-    private void addCompanyRoleToEiam(EiamUserPrincipal principal) throws RoleCouldNotBeAddedException {
-        this.iamService.addCompanyRoleToUser(principal.getUserExtId(), principal.getUserDefaultProfileExtId());
+    private void addCompanyRoleToEiam(UserPrincipal userPrincipal) throws RoleCouldNotBeAddedException {
+        this.iamService.addCompanyRoleToUser(userPrincipal.getUserExtId(), userPrincipal.getUserDefaultProfileExtId());
     }
 
-    private void addAgentRoleToEiam(EiamUserPrincipal principal) throws RoleCouldNotBeAddedException {
-        this.iamService.addAgentRoleToUser(principal.getUserExtId(), principal.getUserDefaultProfileExtId());
+    private void addAgentRoleToEiam(UserPrincipal userPrincipal) throws RoleCouldNotBeAddedException {
+        this.iamService.addAgentRoleToUser(userPrincipal.getUserExtId(), userPrincipal.getUserDefaultProfileExtId());
     }
 
-    /**
-     * Adding the role to the session saves the user another re-login after the
-     * registration process is completed.
-     */
     private void addJobseekerRoleToSession() {
         this.currentUserService.addRoleToSession(AuthoritiesConstants.ROLE_JOBSEEKER_CLIENT);
     }
@@ -293,8 +284,8 @@ public class RegistrationService {
     private boolean validateAccessCode(String accessCode) {
         Assert.notNull(accessCode, "An access code must be provided.");
         Assert.isTrue(accessCode.length() == ACCESS_CODE_LENGTH, "The access code has an invalid length.");
-        EiamUserPrincipal principal = this.currentUserService.getPrincipal();
-        UserInfo userInfo = getUserInfo(principal.getId());
+        UserPrincipal userPrincipal = this.currentUserService.getPrincipal();
+        UserInfo userInfo = getUserInfo(userPrincipal.getId());
         String storedAccessCode = userInfo.getAccessCode();
         if (StringUtils.isEmpty(storedAccessCode)) {
             throw new IllegalArgumentException("User with extId=" + userInfo.getUserExternalId() + " has no access code stored in the database");

@@ -5,8 +5,6 @@ import { Observable } from 'rxjs/Observable';
 import { JobroomTestModule } from '../../../test.module';
 import { PasswordComponent } from '../../../../../../main/webapp/app/account/password/password.component';
 import { PasswordService } from '../../../../../../main/webapp/app/account/password/password.service';
-import { Principal } from '../../../../../../main/webapp/app/shared/auth/principal.service';
-import { AccountService } from '../../../../../../main/webapp/app/shared/auth/account.service';
 
 describe('Component Tests', () => {
 
@@ -21,8 +19,6 @@ describe('Component Tests', () => {
                 imports: [JobroomTestModule],
                 declarations: [PasswordComponent],
                 providers: [
-                    Principal,
-                    AccountService,
                     PasswordService
                 ]
             })

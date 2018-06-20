@@ -1,5 +1,6 @@
 package ch.admin.seco.jobroom.security.saml.infrastructure.dsl;
 
+import ch.admin.seco.jobroom.repository.UserInfoRepository;
 import ch.admin.seco.jobroom.security.saml.utils.HttpStatusEntryPoint;
 import ch.admin.seco.jobroom.security.saml.utils.XmlHttpRequestedWithMatcher;
 import org.apache.commons.httpclient.HttpClient;
@@ -55,7 +56,7 @@ import java.util.regex.Pattern;
 
 public final class SAMLConfigurer extends SecurityConfigurerAdapter<DefaultSecurityFilterChain, HttpSecurity> {
 
-    private static final String TARGET_URL_AFTER_AUTHENTICATION = "/#/auth";
+    private static final String TARGET_URL_AFTER_AUTHENTICATION = "/#/home";
     private static final String TARGET_URL_AFTER_LOGOUT = "/#/home";
     public static final String TARGET_URL_REGISTRATION_PROCESS = "/#/registrationQuestionnaire";
     public static final String TARGET_URL_ENTER_ACCESS_CODE = "/#/accessCode";
@@ -77,6 +78,8 @@ public final class SAMLConfigurer extends SecurityConfigurerAdapter<DefaultSecur
 
     private final String targetUrlEiamAccessRequest;
 
+    private final UserInfoRepository userInfoRepository;
+
     private IdentityProvider identityProvider = new IdentityProvider();
     private ServiceProvider serviceProvider = new ServiceProvider();
 
@@ -97,8 +100,10 @@ public final class SAMLConfigurer extends SecurityConfigurerAdapter<DefaultSecur
         }
     };
 
-    private SAMLConfigurer(String accessRequestUrl) {
+
+    private SAMLConfigurer(String accessRequestUrl, UserInfoRepository userInfoRepository) {
         this.targetUrlEiamAccessRequest = accessRequestUrl;
+        this.userInfoRepository = userInfoRepository;
     }
 
     @Override
@@ -138,8 +143,8 @@ public final class SAMLConfigurer extends SecurityConfigurerAdapter<DefaultSecur
             .authenticationProvider(samlAuthenticationProvider);
     }
 
-    public static SAMLConfigurer saml(String accessRequestUrl) {
-        return new SAMLConfigurer(accessRequestUrl);
+    public static SAMLConfigurer saml(String accessRequestUrl, UserInfoRepository userInfoRepository) {
+        return new SAMLConfigurer(accessRequestUrl, userInfoRepository);
     }
 
     public SAMLConfigurer userDetailsService(SAMLUserDetailsService samlUserDetailsService) {
@@ -259,7 +264,7 @@ public final class SAMLConfigurer extends SecurityConfigurerAdapter<DefaultSecur
     }
 
     private JobroomAuthenticationSuccessHandler authenticationSuccessHandler() {
-        JobroomAuthenticationSuccessHandler authenticationSuccessHandler = new JobroomAuthenticationSuccessHandler(this.targetUrlEiamAccessRequest);
+        JobroomAuthenticationSuccessHandler authenticationSuccessHandler = new JobroomAuthenticationSuccessHandler(this.targetUrlEiamAccessRequest, this.userInfoRepository);
         authenticationSuccessHandler.setAlwaysUseDefaultTargetUrl(true);
         authenticationSuccessHandler.setDefaultTargetUrl(TARGET_URL_AFTER_AUTHENTICATION);
         return authenticationSuccessHandler;

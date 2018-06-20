@@ -26,7 +26,7 @@ public class FeignJWTRequestInterceptor implements RequestInterceptor {
         if (authentication != null) {
             String token = this.tokenProvider.createToken(authentication, false);
             LOG.debug("Prepared JWT token for Feign");
-            template.header(TokenResolver.AUTHORIZATION_HEADER, TokenResolver.TOKEN_PREFIX + token);
+            template.header(JWTConfigurer.TokenResolver.AUTHORIZATION_HEADER, JWTConfigurer.TokenResolver.TOKEN_PREFIX + token);
         }
     }
 }

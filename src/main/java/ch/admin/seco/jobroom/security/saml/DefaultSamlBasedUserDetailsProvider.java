@@ -3,7 +3,7 @@ package ch.admin.seco.jobroom.security.saml;
 import ch.admin.seco.jobroom.domain.UserInfo;
 import ch.admin.seco.jobroom.repository.UserInfoRepository;
 import ch.admin.seco.jobroom.security.AuthoritiesConstants;
-import ch.admin.seco.jobroom.security.EiamUserPrincipal;
+import ch.admin.seco.jobroom.security.UserPrincipal;
 import ch.admin.seco.jobroom.security.saml.infrastructure.EiamEnrichedSamlUser;
 import ch.admin.seco.jobroom.security.saml.infrastructure.SamlBasedUserDetailsProvider;
 import ch.admin.seco.jobroom.security.saml.infrastructure.SamlUser;
@@ -45,7 +45,7 @@ public class DefaultSamlBasedUserDetailsProvider implements SamlBasedUserDetails
         return this.transactionTemplate.execute((TransactionCallback<UserDetails>) status -> toEiamUserPrincipal((EiamEnrichedSamlUser) samlUser));
     }
 
-    private EiamUserPrincipal toEiamUserPrincipal(EiamEnrichedSamlUser eiamEnrichedSamlUser) {
+    private UserPrincipal toEiamUserPrincipal(EiamEnrichedSamlUser eiamEnrichedSamlUser) {
         UserInfo userInfo = determineUserInfo(eiamEnrichedSamlUser);
         return prepareEiamUserPrincipal(eiamEnrichedSamlUser, userInfo);
     }
@@ -67,8 +67,8 @@ public class DefaultSamlBasedUserDetailsProvider implements SamlBasedUserDetails
         return authorities.stream().anyMatch(a -> a.getAuthority().equals(AuthoritiesConstants.ROLE_ALLOW));
     }
 
-    private EiamUserPrincipal prepareEiamUserPrincipal(EiamEnrichedSamlUser eiamEnrichedSamlUser, UserInfo userInfo) {
-        EiamUserPrincipal eiamUserPrincipal = new EiamUserPrincipal(
+    private UserPrincipal prepareEiamUserPrincipal(EiamEnrichedSamlUser eiamEnrichedSamlUser, UserInfo userInfo) {
+        UserPrincipal userPrincipal = new UserPrincipal(
             userInfo.getId(),
             eiamEnrichedSamlUser.getGivenname().get(),
             eiamEnrichedSamlUser.getSurname().get(),
@@ -76,15 +76,14 @@ public class DefaultSamlBasedUserDetailsProvider implements SamlBasedUserDetails
             eiamEnrichedSamlUser.getUserExtId().get(),
             eiamEnrichedSamlUser.getLanguage().get().toLowerCase()
         );
-        eiamUserPrincipal.setAuthoritiesFromStringCollection(mapEiamRolesToJobRoomRoles(eiamEnrichedSamlUser.getRoles()));
-        eiamUserPrincipal.setAuthenticationMethod(eiamEnrichedSamlUser.getAuthnContext());
-        eiamUserPrincipal.setUserDefaultProfileExtId(eiamEnrichedSamlUser.getDefaultProfileExtId().get());
-        eiamUserPrincipal.setRegistrationStatus(userInfo.getRegistrationStatus());
+        userPrincipal.setAuthoritiesFromStringCollection(mapEiamRolesToJobRoomRoles(eiamEnrichedSamlUser.getRoles()));
+        userPrincipal.setAuthenticationMethod(eiamEnrichedSamlUser.getAuthnContext());
+        userPrincipal.setUserDefaultProfileExtId(eiamEnrichedSamlUser.getDefaultProfileExtId().get());
 
-        if (!hasJobRoomAllowRole(eiamUserPrincipal.getAuthorities())) {
+        if (!hasJobRoomAllowRole(userPrincipal.getAuthorities())) {
             throw new InsufficientAuthenticationException("User with ext-id: " + eiamEnrichedSamlUser.getUserExtId() + " doesn't have the ALLOW role");
         }
-        return eiamUserPrincipal;
+        return userPrincipal;
     }
 
     private void updateDbUser(EiamEnrichedSamlUser eiamEnrichedSamlUser, UserInfo userInfo) {

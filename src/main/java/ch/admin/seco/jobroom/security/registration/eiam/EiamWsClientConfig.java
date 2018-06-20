@@ -37,7 +37,7 @@ public class EiamWsClientConfig {
 
     @Bean
     public EiamClient eiamClient() throws Exception {
-        return new DefaultEiamClient(eiamClientWebsericeTemplate(), eiamWsClientProperties.getClientName());
+        return new DefaultEiamClient(edamClientWebserviceTemplate(), eiamWsClientProperties.getClientName());
     }
 
     @Bean
@@ -46,7 +46,7 @@ public class EiamWsClientConfig {
     }
 
     @Bean
-    public WebServiceTemplate eiamClientWebsericeTemplate() throws Exception {
+    public WebServiceTemplate edamClientWebserviceTemplate() throws Exception {
         WebServiceTemplate webServiceTemplate = new WebServiceTemplate();
         webServiceTemplate.setMarshaller(jaxb2Marshaller());
         webServiceTemplate.setUnmarshaller(jaxb2Marshaller());

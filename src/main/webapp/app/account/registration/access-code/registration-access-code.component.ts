@@ -4,6 +4,7 @@ import { BackgroundUtils } from '../../../shared/utils/background-utils';
 import { RegistrationService } from '../registration.service';
 import { HttpResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { Principal } from '../../../shared';
 
 const EMPTY_ACCESS_CODE = '';
 const INVALID_ACCESS_CODE = 'invalidAccessCode';
@@ -23,6 +24,7 @@ export class RegistrationAccessCodeComponent implements OnInit, OnDestroy {
     constructor(private registrationService: RegistrationService,
                 private backgroundUtils: BackgroundUtils,
                 private fb: FormBuilder,
+                private principal: Principal,
                 private router: Router) {
     }
 
@@ -41,13 +43,15 @@ export class RegistrationAccessCodeComponent implements OnInit, OnDestroy {
         this.registrationService.registerEmployerOrAgent(this.form.get('accessCode').value)
             .subscribe((res: HttpResponse<RegistrationResult>) => {
                 if (res.body.success) {
-                    if (res.body.type === USER_TYPE_EMPLOYER) {
-                        this.router.navigate(['/companies/jobpublication']);
-                    } else if (res.body.type === USER_TYPE_AGENT) {
-                        this.router.navigate(['/agents/candidates']);
-                    } else {
-                        this.router.navigate(['/home']);
-                    }
+                    this.principal.identity(true).then((result) => {
+                        if (res.body.type === USER_TYPE_EMPLOYER) {
+                            this.router.navigate(['/companies/jobpublication']);
+                        } else if (res.body.type === USER_TYPE_AGENT) {
+                            this.router.navigate(['/agents/candidates']);
+                        } else {
+                            this.router.navigate(['/home']);
+                        }
+                    });
                 } else {
                     this.accessCodeInvalid = true;
                     this.form.get('accessCode').reset(this.form.get('accessCode').value);

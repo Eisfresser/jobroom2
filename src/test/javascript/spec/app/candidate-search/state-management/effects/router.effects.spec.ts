@@ -14,9 +14,8 @@ import { TypeaheadMultiselectModel } from '../../../../../../../main/webapp/app/
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { CandidateService } from '../../../../../../../main/webapp/app/candidate-search/services/candidate.service';
 import { JhiBase64Service } from 'ng-jhipster';
-import { Principal } from '../../../../../../../main/webapp/app/shared';
-import { AccountService } from '../../../../../../../main/webapp/app/shared';
 import { HttpClient } from '@angular/common/http';
+import { JobroomTestModule } from '../../../../test.module';
 
 describe('RouterEffects', () => {
     const testFilter = `eyJza2lsbHMiOltdLCJsYW5ndWFnZVNraWxscyI6W3siY29kZSI6ImRlIiwid3JpdHRlbiI6MSw
@@ -33,14 +32,13 @@ describe('RouterEffects', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
-                StoreModule.forRoot({ candidateSearch: candidateSearchReducer })
+                StoreModule.forRoot({ candidateSearch: candidateSearchReducer }),
+                JobroomTestModule
             ],
             providers: [
                 JhiBase64Service,
                 CandidateService,
                 RouterEffects,
-                Principal,
-                AccountService,
                 provideMockActions(() => actions$),
                 { provide: Router, useValue: mockRouter },
                 { provide: HttpClient, useValue: null }

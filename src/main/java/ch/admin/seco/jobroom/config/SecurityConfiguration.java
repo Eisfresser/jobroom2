@@ -2,6 +2,7 @@ package ch.admin.seco.jobroom.config;
 
 import ch.admin.seco.jobroom.repository.UserInfoRepository;
 import ch.admin.seco.jobroom.security.AuthoritiesConstants;
+import ch.admin.seco.jobroom.security.LoginFormUserDetailsService;
 import ch.admin.seco.jobroom.security.MD5PasswordEncoder;
 import ch.admin.seco.jobroom.security.jwt.JWTConfigurer;
 import ch.admin.seco.jobroom.security.saml.AbstractSecurityConfig;
@@ -27,7 +28,6 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.header.HeaderWriter;
@@ -55,7 +55,7 @@ public class SecurityConfiguration {
 
         private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
-        private final UserDetailsService loginFormUserDetailsService;
+        private final LoginFormUserDetailsService loginFormUserDetailsService;
 
         private final JHipsterProperties jHipsterProperties;
 
@@ -82,7 +82,7 @@ public class SecurityConfiguration {
             }
         }
 
-        NoEiamSecurityConfig(AuthenticationManagerBuilder authenticationManagerBuilder, UserDetailsService loginFormUserDetailsService, CorsFilter corsFilter, SecurityProblemSupport problemSupport, JHipsterProperties jHipsterProperties) {
+        NoEiamSecurityConfig(AuthenticationManagerBuilder authenticationManagerBuilder, LoginFormUserDetailsService loginFormUserDetailsService, CorsFilter corsFilter, SecurityProblemSupport problemSupport, JHipsterProperties jHipsterProperties) {
             this.authenticationManagerBuilder = authenticationManagerBuilder;
             this.loginFormUserDetailsService = loginFormUserDetailsService;
             this.jHipsterProperties = jHipsterProperties;
@@ -182,7 +182,7 @@ public class SecurityConfiguration {
             http.sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                 .and()
-                .apply(saml(samlProperties.getAccessRequestUrl()))
+                .apply(saml(samlProperties.getAccessRequestUrl(), this.userInfoRepository))
                 .serviceProvider()
                 /*-*/.keyStore()
                 /*----*/.storeFilePath(samlProperties.getKeystorePath())

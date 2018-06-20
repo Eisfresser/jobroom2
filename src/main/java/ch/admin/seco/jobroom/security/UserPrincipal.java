@@ -1,10 +1,8 @@
 package ch.admin.seco.jobroom.security;
 
 import ch.admin.seco.jobroom.domain.UserInfoId;
-import ch.admin.seco.jobroom.domain.enumeration.RegistrationStatus;
 import ch.admin.seco.jobroom.security.saml.infrastructure.dsl.SAMLConfigurer;
 import com.google.common.base.Preconditions;
-import org.apache.commons.lang.NotImplementedException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,7 +12,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class EiamUserPrincipal implements UserDetails {
+public class UserPrincipal implements UserDetails {
 
     private final UserInfoId id;
 
@@ -34,9 +32,9 @@ public class EiamUserPrincipal implements UserDetails {
 
     private String userDefaultProfileExtId;
 
-    private RegistrationStatus registrationStatus;
+    private String password;
 
-    public EiamUserPrincipal(UserInfoId id, String firstName, String lastName, String email, String userExtId, String langKey) {
+    public UserPrincipal(UserInfoId id, String firstName, String lastName, String email, String userExtId, String langKey) {
         this.id = Preconditions.checkNotNull(id);
         this.firstName = Preconditions.checkNotNull(firstName);
         this.lastName = Preconditions.checkNotNull(lastName);
@@ -72,7 +70,7 @@ public class EiamUserPrincipal implements UserDetails {
 
     @Override
     public String getPassword() {
-        throw new NotImplementedException();
+        return this.password;
     }
 
     @Override
@@ -130,16 +128,11 @@ public class EiamUserPrincipal implements UserDetails {
         return userDefaultProfileExtId;
     }
 
-    public void setRegistrationStatus(RegistrationStatus registrationStatus) {
-        this.registrationStatus = registrationStatus;
-    }
-
-    public RegistrationStatus getRegistrationStatus() {
-        return registrationStatus;
-    }
-
     public UserInfoId getId() {
         return id;
     }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }
