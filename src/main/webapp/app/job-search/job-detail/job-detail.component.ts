@@ -9,17 +9,21 @@ import { Observable } from 'rxjs/Observable';
 import {
     JobCenter,
     ReferenceService
-} from '../../shared/reference-service/reference.service';
+} from '../../shared/reference-service';
 import {
     getJobList,
     getSelectedJob,
     getTotalJobCount,
     JobSearchState
-} from '../state-management/state/job-search.state';
+} from '../state-management';
 import { Store } from '@ngrx/store';
 import { TOOLTIP_AUTO_HIDE_TIMEOUT } from '../../app.constants';
 import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
-import { JobAdvertisement, JobDescription, SourceSystem } from '../../shared/job-advertisement/job-advertisement.model';
+import {
+    JobAdvertisement,
+    JobDescription,
+    SourceSystem
+} from '../../shared/job-advertisement/job-advertisement.model';
 import { JobAdvertisementUtils } from '../../dashboard/job-advertisement.utils';
 import { CoreState, getLanguage } from '../../shared/state-management/state/core.state';
 
@@ -47,7 +51,8 @@ export class JobDetailComponent implements AfterViewInit {
     constructor(private referenceService: ReferenceService,
                 private store: Store<JobSearchState>,
                 private coreStore: Store<CoreState>) {
-        this.job$ = this.store.select(getSelectedJob);
+        this.job$ = this.store.select(getSelectedJob)
+            .map(this.fixApplicationUrl);
         this.jobList$ = this.store.select(getJobList);
         this.jobListTotalSize$ = this.store.select(getTotalJobCount);
         this.jobCenter$ = this.job$
@@ -59,6 +64,17 @@ export class JobDetailComponent implements AfterViewInit {
         this.jobDescription$ = coreStore.select(getLanguage)
             .combineLatest(this.job$)
             .map(([lang, job]: [string, JobAdvertisement]) => JobAdvertisementUtils.getJobDescription(job, lang));
+    }
+
+    private fixApplicationUrl(jobAdvertisement: JobAdvertisement) {
+        const applyChannel = jobAdvertisement.jobContent.applyChannel;
+        if (applyChannel && applyChannel.formUrl
+            && (!applyChannel.formUrl.startsWith('http://') || !applyChannel.formUrl.startsWith('https://'))) {
+            jobAdvertisement.jobContent.applyChannel = Object.assign(applyChannel, {
+                formUrl: `http://${applyChannel.formUrl}`
+            });
+        }
+        return jobAdvertisement;
     }
 
     isExternalJobDisclaimerShown(job: JobAdvertisement) {

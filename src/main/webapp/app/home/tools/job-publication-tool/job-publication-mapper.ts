@@ -1,7 +1,10 @@
 import { DateUtils, Degree, WorkForm } from '../../../shared';
 import {
-    CreateJobAdvertisement, JobAdvertisement,
-    LanguageSkill, Salutation, WorkExperience
+    CreateJobAdvertisement,
+    JobAdvertisement,
+    LanguageSkill,
+    Salutation,
+    WorkExperience
 } from '../../../shared/job-advertisement/job-advertisement.model';
 import { JobPublicationForm } from './job-publication-form.model';
 import * as moment from 'moment';
@@ -231,7 +234,7 @@ export class JobPublicationMapper {
                 mailAddress: jobPublicationForm.application.paperApplicationAddress,
                 emailAddress: jobPublicationForm.application.electronicApplicationEmail,
                 phoneNumber: jobPublicationForm.application.phoneNumber,
-                formUrl: jobPublicationForm.application.electronicApplicationUrl,
+                formUrl: JobPublicationMapper.fixUrlScheme(jobPublicationForm.application.electronicApplicationUrl),
                 additionalInfo: jobPublicationForm.application.additionalInfo
             };
         }
@@ -271,5 +274,11 @@ export class JobPublicationMapper {
         return Object.keys(WorkForm)
             .filter((key) => isNaN(parseInt(key, 10)))
             .map((key) => workForms.includes(key)) as [boolean, boolean, boolean, boolean];
+    }
+
+    private static fixUrlScheme(url: string): string {
+        return url && (!url.startsWith('http://') || !url.startsWith('https://'))
+            ? `http://${url}`
+            : url;
     }
 }
