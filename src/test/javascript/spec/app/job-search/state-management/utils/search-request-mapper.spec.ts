@@ -31,7 +31,7 @@ describe('createJobSearchRequest', () => {
         const jobSearchRequest: JobAdvertisementSearchRequest = createJobSearchRequest(defaultQuery, defaultFilter);
 
         // THEN
-        expect(jobSearchRequest.sort).toEqual(['score', 'date_desc']);
+        expect(jobSearchRequest.sort).toEqual(['score']);
     });
 
     it('should map JobSearchFilter with sort by date asc', () => {
@@ -42,7 +42,7 @@ describe('createJobSearchRequest', () => {
         const jobSearchRequest: JobAdvertisementSearchRequest = createJobSearchRequest(defaultQuery, filter);
 
         // THEN
-        expect(jobSearchRequest.sort).toEqual(['date_asc', 'score']);
+        expect(jobSearchRequest.sort).toEqual(['date_asc']);
     });
 
     it('should map JobSearchFilter with sort by date desc', () => {
@@ -53,7 +53,7 @@ describe('createJobSearchRequest', () => {
         const jobSearchRequest: JobAdvertisementSearchRequest = createJobSearchRequest(defaultQuery, filter);
 
         // THEN
-        expect(jobSearchRequest.sort).toEqual(['date_desc', 'score']);
+        expect(jobSearchRequest.sort).toEqual(['date_desc']);
     });
 
     it('should map JobSearchFilter with default contract type', () => {

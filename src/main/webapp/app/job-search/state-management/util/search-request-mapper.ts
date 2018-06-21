@@ -95,11 +95,11 @@ function mapContractType(contractType: ContractType): boolean {
 function mapSort(sort: Sort): string {
     let sortArray;
     if (sort === Sort.DATE_ASC) {
-        sortArray = ['date_asc', 'score'];
+        sortArray = ['date_asc'];
     } else if (sort === Sort.DATE_DESC) {
-        sortArray = ['date_desc', 'score'];
+        sortArray = ['date_desc'];
     } else {
-        sortArray = ['score', 'date_desc'];
+        sortArray = ['score'];
     }
 
     return sortArray;
