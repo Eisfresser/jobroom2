@@ -5,6 +5,12 @@ import { JhiEventManager } from 'ng-jhipster';
 
 import { LoginService } from './login.service';
 import { StateStorageService } from '../auth/state-storage.service';
+import { Store } from '@ngrx/store';
+import {
+    getActiveToolbarItem,
+    HomeState
+} from '../../home/state-management/state/home.state';
+import { ToolbarItem } from '../../home/state-management/state/layout.state';
 
 @Component({
     selector: 'jhi-login-modal',
@@ -16,6 +22,7 @@ export class JhiLoginModalComponent implements AfterViewInit {
     rememberMe: boolean;
     username: string;
     credentials: any;
+    activeToolbar: string;
 
     constructor(
         private eventManager: JhiEventManager,
@@ -24,9 +31,11 @@ export class JhiLoginModalComponent implements AfterViewInit {
         private elementRef: ElementRef,
         private renderer: Renderer,
         private router: Router,
-        public activeModal: NgbActiveModal
-    ) {
+        public activeModal: NgbActiveModal,
+        private store: Store<HomeState>) {
         this.credentials = {};
+        store.select(getActiveToolbarItem)
+            .subscribe(toolbarItem => this.activeToolbar = ToolbarItem[toolbarItem]);
     }
 
     ngAfterViewInit() {

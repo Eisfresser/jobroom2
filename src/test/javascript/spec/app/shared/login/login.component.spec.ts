@@ -9,10 +9,14 @@ import { StateStorageService } from '../../../../../../main/webapp/app/shared/au
 import { JobroomTestModule } from '../../../test.module';
 import { MockLoginService } from '../../../helpers/mock-login.service';
 import { MockStateStorageService } from '../../../helpers/mock-state-storage.service';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs/Observable';
 
 describe('Component Tests', () => {
 
     describe('LoginComponent', () => {
+        const mockStore = jasmine.createSpyObj('mockStore', ['select']);
+        mockStore.select.and.returnValue(Observable.of([]));
 
         let comp: JhiLoginModalComponent;
         let fixture: ComponentFixture<JhiLoginModalComponent>;
@@ -34,6 +38,10 @@ describe('Component Tests', () => {
                     {
                         provide: StateStorageService,
                         useClass: MockStateStorageService
+                    },
+                    {
+                        provide: Store,
+                        useValue: mockStore
                     }
                 ]
             })

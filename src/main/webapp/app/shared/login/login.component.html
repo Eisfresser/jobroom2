@@ -1,5 +1,6 @@
 <div class="modal-header">
-    <h4 class="modal-title w-100 text-center" jhiTranslate="login.title">Sign in</h4>
+    <h4 class="modal-title w-100 text-center" jhiTranslate="{{'login.title.' + activeToolbar}}">Sign in</h4>
+
     <button aria-label="Close" data-dismiss="modal" class="close" type="button" (click)="activeModal.dismiss('closed')">
         <span aria-hidden="true">x</span>
     </button>
@@ -12,7 +13,7 @@
 
         <div class="row mb-3">
             <div class="col-sm-8 ml-auto">
-                <a [href]="'login.form.information.pea.url' | translate" target="_blank">{{'login.form.information.pea.text' | translate}}</a>
+                <a [href]="'login.form.information.pea.url' | translate" target="_blank">{{'login.form.information.pea.text.' + activeToolbar | translate}}</a>
             </div>
         </div>
 

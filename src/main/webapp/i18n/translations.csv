@@ -905,6 +905,9 @@ job,jobserviceApp.job.deleted,Stelle mit ID {{ param }} gelöscht,A job is delet
 job,jobserviceApp.job.updated,Stelle mit ID {{ param }} aktualisiert,A job is updated with identifier {{ param }},L'emploi portant l'ID {{ param }} a été mis à jour,È stato aggiornato un posto identificato da {{ param }}
 login,login.form.button,Anmelden,Sign in,Connexion,Accedi
 login,login.form.information.pea.text,Vorgehen zur Registrierung für private Arbeitsvermittler,Registration procedure for private placement officers,Procédure d’enregistrement pour les agences de placement privées,Procedura di registrazione per le agenzie di collocamento private
+login,login.form.information.pea.text.JOB_SEEKERS,Vorgehen zur Registrierung für Stellensuchende,Registration procedure for job seekers,Procédure d’enregistrement pour demandeur d'emploi,Procedura di registrazione per persone in cerca d'impiego
+login,login.form.information.pea.text.COMPANIES,Vorgehen zur Registrierung für Arbeitsgaber,Registration procedure for employers,Procédure d’enregistrement pour employeurs,Procedura di registrazione per datori di lavoro
+login,login.form.information.pea.text.RECRUITMENT_AGENCIES,Vorgehen zur Registrierung für private Arbeitsvermittler,Registration procedure for private placement officers,Procédure d’enregistrement pour les agences de placement privées,Procedura di registrazione per le agenzie di collocamento private
 login,login.form.information.pea.url,https://www.arbeit.swiss/secoalv/de/home/menue/arbeitsvermittler/dienstleistungen-der-rav/job-room-konto.html,https://www.arbeit.swiss/secoalv/en/home/menue/arbeitsvermittler/dienstleistungen-der-rav.html,https://www.arbeit.swiss/secoalv/fr/home/menue/arbeitsvermittler/dienstleistungen-der-rav/job-room-konto.html,https://www.arbeit.swiss/secoalv/it/home/menue/arbeitsvermittler/dienstleistungen-der-rav/job-room-konto.html
 login,login.form.password,Passwort,Password,Mot de passe,Password
 login,login.form.password.placeholder,Ihr Passwort,Your password,Votre mot de passe,La tua password
@@ -912,6 +915,9 @@ login,login.form.rememberme,Automatische Anmeldung,Remember me,Garder la session
 login,login.messages.error.authentication,<strong>Anmeldung fehlgeschlagen!</strong> Überprüfen Sie bitte Ihre Angaben und versuchen Sie es erneut.,<strong>Failed to sign in!</strong> Please check your login credentials and try again.,<strong>Erreur d'authentification !</strong> Veuillez vérifier vos identifiants de connexion.,<strong>Accesso non riuscito!</strong> Si prega di controllare le credenziali e riprovare.
 login,login.password.forgot,Passwort vergessen,Did you forget your password?,Avez-vous oublié votre mot de passe ?,Password dimenticata?
 login,login.title,Login für private Arbeitsvermittler,Sign in for private employment agencies,Connexion pour agences privées de placement,Accesso per agenzie private di collocamento
+login,login.title.JOB_SEEKERS,Login für Stellensuchende,Sign in for job seekers,Connexion pour demandeur d'emploi,Accesso per persone in cerca d'impiego
+login,login.title.COMPANIES,Login für Arbeitsgaber,Sign in for employers,Connexion pour employeurs,Accesso per datori di lavoro
+login,login.title.RECRUITMENT_AGENCIES,Login für private Arbeitsvermittler,Sign in for private employment agencies,Connexion pour agences privées de placement,Accesso per agenzie private di collocamento
 logs,audits.filter.button.clear,Clear,Clear,Effacer,Clear
 logs,audits.filter.button.close,Close,Close,Fermer,Close
 logs,audits.filter.button.today,Heute,Today,Aujourd'hui,Oggi
