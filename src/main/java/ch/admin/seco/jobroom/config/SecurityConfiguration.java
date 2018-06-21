@@ -13,7 +13,6 @@ import ch.admin.seco.jobroom.security.saml.infrastructure.SamlBasedUserDetailsPr
 import io.github.jhipster.config.JHipsterProperties;
 import io.github.jhipster.config.JHipsterProperties.Security.Authentication.Jwt;
 import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.factory.BeanInitializationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -49,11 +48,10 @@ import static ch.admin.seco.jobroom.security.saml.infrastructure.dsl.SAMLConfigu
 @Import(SecurityProblemSupport.class)
 public class SecurityConfiguration {
 
+
     @Configuration
     @Profile("no-eiam")
     static class NoEiamSecurityConfig extends WebSecurityConfigurerAdapter {
-
-        private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
         private final LoginFormUserDetailsService loginFormUserDetailsService;
 
@@ -63,31 +61,28 @@ public class SecurityConfiguration {
 
         private final SecurityProblemSupport problemSupport;
 
+        NoEiamSecurityConfig(LoginFormUserDetailsService loginFormUserDetailsService, CorsFilter corsFilter, SecurityProblemSupport problemSupport, JHipsterProperties jHipsterProperties) {
+            this.loginFormUserDetailsService = loginFormUserDetailsService;
+            this.jHipsterProperties = jHipsterProperties;
+            this.corsFilter = corsFilter;
+            this.problemSupport = problemSupport;
+        }
+
         @Bean
         public PasswordEncoder passwordEncoder() {
             return new MD5PasswordEncoder();
         }
 
-
         @Bean
-        public AuthenticationManager authenticationManager() {
-            try {
-                return authenticationManagerBuilder
-                    .userDetailsService(loginFormUserDetailsService)
-                    .passwordEncoder(passwordEncoder())
-                    .and()
-                    .build();
-            } catch (Exception e) {
-                throw new BeanInitializationException("Security configuration failed", e);
-            }
+        public AuthenticationManager authenticationManager() throws Exception {
+            return super.authenticationManager();
         }
 
-        NoEiamSecurityConfig(AuthenticationManagerBuilder authenticationManagerBuilder, LoginFormUserDetailsService loginFormUserDetailsService, CorsFilter corsFilter, SecurityProblemSupport problemSupport, JHipsterProperties jHipsterProperties) {
-            this.authenticationManagerBuilder = authenticationManagerBuilder;
-            this.loginFormUserDetailsService = loginFormUserDetailsService;
-            this.jHipsterProperties = jHipsterProperties;
-            this.corsFilter = corsFilter;
-            this.problemSupport = problemSupport;
+        @Override
+        protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+            auth
+                .userDetailsService(this.loginFormUserDetailsService)
+                .passwordEncoder(passwordEncoder());
         }
 
         @Override
@@ -158,21 +153,47 @@ public class SecurityConfiguration {
     @Profile("!no-eiam")
     static class SamlSecurityConfig extends AbstractSecurityConfig {
 
-        @Autowired
-        private UserInfoRepository userInfoRepository;
+        private final UserInfoRepository userInfoRepository;
+
+        private final SamlProperties samlProperties;
+
+        private final TransactionTemplate transactionTemplate;
+
+        private final JHipsterProperties jHipsterProperties;
+
+        private final LoginFormUserDetailsService loginFormUserDetailsService;
+
+        private final SecurityProblemSupport problemSupport;
 
         // this is set via @ConfigurationProperties
         private Map<String, String> rolemapping;
 
         @Autowired
-        private SamlProperties samlProperties;
-
-        @Autowired
-        private TransactionTemplate transactionTemplate;
+        SamlSecurityConfig(UserInfoRepository userInfoRepository, SamlProperties samlProperties, TransactionTemplate transactionTemplate, JHipsterProperties jHipsterProperties, LoginFormUserDetailsService loginFormUserDetailsService, SecurityProblemSupport problemSupport) {
+            super(problemSupport);
+            this.userInfoRepository = userInfoRepository;
+            this.samlProperties = samlProperties;
+            this.transactionTemplate = transactionTemplate;
+            this.jHipsterProperties = jHipsterProperties;
+            this.loginFormUserDetailsService = loginFormUserDetailsService;
+            this.problemSupport = problemSupport;
+        }
 
         @Bean
         public PasswordEncoder passwordEncoder() {
             return new MD5PasswordEncoder();
+        }
+
+        @Bean
+        public AuthenticationManager authenticationManager() throws Exception {
+            return super.authenticationManager();
+        }
+
+        @Override
+        protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+            auth
+                .userDetailsService(this.loginFormUserDetailsService)
+                .passwordEncoder(passwordEncoder());
         }
 
         @Override
@@ -182,7 +203,9 @@ public class SecurityConfiguration {
             http.sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                 .and()
-                .apply(saml(samlProperties.getAccessRequestUrl(), this.userInfoRepository))
+                .apply(this.securityConfigurerAdapter())
+                .and()
+                .apply(saml(samlProperties.getAccessRequestUrl(), this.userInfoRepository, this.problemSupport))
                 .serviceProvider()
                 /*-*/.keyStore()
                 /*----*/.storeFilePath(samlProperties.getKeystorePath())
@@ -204,6 +227,13 @@ public class SecurityConfiguration {
                 /*-*/.metadataFilePath(samlProperties.getIdpConfigPath())
                 .and()
                 .userDetailsService(this.eiamSamlUserDetailsService());
+        }
+
+        private JWTConfigurer securityConfigurerAdapter() {
+            final Jwt jwt = this.jHipsterProperties.getSecurity()
+                .getAuthentication()
+                .getJwt();
+            return new JWTConfigurer(jwt);
         }
 
         private String buildHostname() {
@@ -229,4 +259,5 @@ public class SecurityConfiguration {
             this.rolemapping = rolemapping;
         }
     }
+
 }

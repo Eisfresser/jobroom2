@@ -25,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = JobroomApp.class)
-public class NoEiamAuthenticatonControllerIntTest {
+public class JwtAuthenticationControllerIntTest {
 
     @Autowired
     private TokenProvider tokenProvider;
@@ -49,7 +49,7 @@ public class NoEiamAuthenticatonControllerIntTest {
 
     @Before
     public void setup() {
-        NoEiamAuthenticatonController userJWTController = new NoEiamAuthenticatonController(tokenProvider, authenticationManager);
+        JwtAuthenticationController userJWTController = new JwtAuthenticationController(tokenProvider, authenticationManager);
         this.mockMvc = MockMvcBuilders.standaloneSetup(userJWTController)
             .setControllerAdvice(exceptionTranslator)
             .build();

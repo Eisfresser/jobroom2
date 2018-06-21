@@ -1,7 +1,6 @@
 package ch.admin.seco.jobroom.security.saml.infrastructure.dsl;
 
 import ch.admin.seco.jobroom.repository.UserInfoRepository;
-import ch.admin.seco.jobroom.security.saml.utils.HttpStatusEntryPoint;
 import ch.admin.seco.jobroom.security.saml.utils.XmlHttpRequestedWithMatcher;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
@@ -17,7 +16,6 @@ import org.opensaml.xml.security.x509.CertPathPKIXTrustEvaluator;
 import org.opensaml.xml.security.x509.PKIXTrustEvaluator;
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.Resource;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -80,6 +78,8 @@ public final class SAMLConfigurer extends SecurityConfigurerAdapter<DefaultSecur
 
     private final UserInfoRepository userInfoRepository;
 
+    private final AuthenticationEntryPoint fallbackAuthenticationEntryPoint;
+
     private IdentityProvider identityProvider = new IdentityProvider();
     private ServiceProvider serviceProvider = new ServiceProvider();
 
@@ -94,6 +94,7 @@ public final class SAMLConfigurer extends SecurityConfigurerAdapter<DefaultSecur
     private WebSSOProfile webSSOProfile;
     private SAMLUserDetailsService samlUserDetailsService;
 
+
     private ObjectPostProcessor<Object> objectPostProcessor = new ObjectPostProcessor<Object>() {
         public <T> T postProcess(T object) {
             return object;
@@ -101,9 +102,10 @@ public final class SAMLConfigurer extends SecurityConfigurerAdapter<DefaultSecur
     };
 
 
-    private SAMLConfigurer(String accessRequestUrl, UserInfoRepository userInfoRepository) {
+    private SAMLConfigurer(String accessRequestUrl, UserInfoRepository userInfoRepository, AuthenticationEntryPoint fallbackAuthenticationEntryPoint) {
         this.targetUrlEiamAccessRequest = accessRequestUrl;
         this.userInfoRepository = userInfoRepository;
+        this.fallbackAuthenticationEntryPoint = fallbackAuthenticationEntryPoint;
     }
 
     @Override
@@ -143,8 +145,8 @@ public final class SAMLConfigurer extends SecurityConfigurerAdapter<DefaultSecur
             .authenticationProvider(samlAuthenticationProvider);
     }
 
-    public static SAMLConfigurer saml(String accessRequestUrl, UserInfoRepository userInfoRepository) {
-        return new SAMLConfigurer(accessRequestUrl, userInfoRepository);
+    public static SAMLConfigurer saml(String accessRequestUrl, UserInfoRepository userInfoRepository, AuthenticationEntryPoint fallbackAuthenticationEntryPoint) {
+        return new SAMLConfigurer(accessRequestUrl, userInfoRepository, fallbackAuthenticationEntryPoint);
     }
 
     public SAMLConfigurer userDetailsService(SAMLUserDetailsService samlUserDetailsService) {
@@ -388,7 +390,7 @@ public final class SAMLConfigurer extends SecurityConfigurerAdapter<DefaultSecur
 
     private AuthenticationEntryPoint prepareEntryPoint(SAMLEntryPoint samlEntryPoint) {
         LinkedHashMap<RequestMatcher, AuthenticationEntryPoint> entryPoints = new LinkedHashMap<RequestMatcher, AuthenticationEntryPoint>();
-        entryPoints.put(new XmlHttpRequestedWithMatcher(), new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED));
+        entryPoints.put(new XmlHttpRequestedWithMatcher(), this.fallbackAuthenticationEntryPoint);
         DelegatingAuthenticationEntryPoint defaultEntryPoint = new DelegatingAuthenticationEntryPoint(entryPoints);
         defaultEntryPoint.setDefaultEntryPoint(samlEntryPoint);
         return defaultEntryPoint;

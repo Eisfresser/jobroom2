@@ -4,7 +4,6 @@ import ch.admin.seco.jobroom.security.jwt.TokenProvider;
 import ch.admin.seco.jobroom.web.rest.vm.LoginVM;
 import com.codahale.metrics.annotation.Timed;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -31,14 +30,13 @@ import static org.springframework.http.ResponseEntity.ok;
  */
 @RestController
 @RequestMapping("/api")
-@Profile("no-eiam")
-public class NoEiamAuthenticatonController {
+public class JwtAuthenticationController {
 
     private final TokenProvider tokenProvider;
 
     private final AuthenticationManager authenticationManager;
 
-    public NoEiamAuthenticatonController(TokenProvider tokenProvider, AuthenticationManager authenticationManager) {
+    public JwtAuthenticationController(TokenProvider tokenProvider, AuthenticationManager authenticationManager) {
         this.tokenProvider = tokenProvider;
         this.authenticationManager = authenticationManager;
     }

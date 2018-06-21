@@ -1,22 +1,19 @@
 package ch.admin.seco.jobroom.security.saml;
 
-import java.io.IOException;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import ch.admin.seco.jobroom.security.AuthoritiesConstants;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.web.access.AccessDeniedHandler;
-
-import ch.admin.seco.jobroom.security.AuthoritiesConstants;
+import org.zalando.problem.spring.web.advice.security.SecurityProblemSupport;
 
 public class AbstractSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    private final SecurityProblemSupport problemSupport;
+
+    public AbstractSecurityConfig(SecurityProblemSupport problemSupport) {
+        this.problemSupport = problemSupport;
+    }
 
     @Override
     public void configure(WebSecurity web) throws Exception {
@@ -28,23 +25,19 @@ public class AbstractSecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers("/swagger-ui/index.html")
             .antMatchers("/test/**")
             .antMatchers("/h2-console/**");
-         //       .antMatchers("/api/version.html")
-         //       .antMatchers("/api/status.html")
-         //       .antMatchers("/api/appInfo");
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
 
-        http.exceptionHandling().accessDeniedHandler(forbiddenDeniedHandler());
+        http.exceptionHandling().accessDeniedHandler(this.problemSupport);
 
-        http.authorizeRequests().
-            antMatchers("/samllogin").fullyAuthenticated()
-
+        http.authorizeRequests()
+            .antMatchers("/samllogin").fullyAuthenticated()
             .antMatchers("/api/register").permitAll()
             .antMatchers("/api/activate").permitAll()
-            //.antMatchers("/api/authenticate").permitAll()
+            .antMatchers("/api/authenticate").permitAll()
             .antMatchers("/api/account/reset-password/init").permitAll()
             .antMatchers("/api/account/reset-password/finish").permitAll()
             .antMatchers("/api/profile-info").permitAll()
@@ -56,15 +49,5 @@ public class AbstractSecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers("/swagger-resources/configuration/ui").permitAll()
             .antMatchers("/swagger-ui/index.html").hasAuthority(AuthoritiesConstants.ROLE_ADMIN);
 
-    }
-
-
-    protected AccessDeniedHandler forbiddenDeniedHandler() {
-        return new AccessDeniedHandler() {
-            @Override
-            public void handle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AccessDeniedException e) throws IOException, ServletException {
-                httpServletResponse.sendError(HttpStatus.FORBIDDEN.value(), "Access Denied");
-            }
-        };
     }
 }

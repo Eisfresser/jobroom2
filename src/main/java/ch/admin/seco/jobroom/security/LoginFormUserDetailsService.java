@@ -6,7 +6,6 @@ import ch.admin.seco.jobroom.repository.UserInfoRepository;
 import ch.admin.seco.jobroom.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Profile;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -19,7 +18,6 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component("userDetailsService")
-@Profile("no-eiam")
 public class LoginFormUserDetailsService implements UserDetailsService {
 
     private final Logger log = LoggerFactory.getLogger(LoginFormUserDetailsService.class);

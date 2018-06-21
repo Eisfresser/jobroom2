@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.DefaultSecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -33,9 +34,6 @@ import java.util.stream.Stream;
 import static ch.admin.seco.jobroom.security.jwt.ClaimMapper.ClaimKey.*;
 import static io.jsonwebtoken.Jwts.parser;
 
-/**
- * Only used for no-eiam.
- */
 public class JWTConfigurer extends SecurityConfigurerAdapter<DefaultSecurityFilterChain, HttpSecurity> {
 
     private final Jwt jwt;
@@ -63,10 +61,27 @@ public class JWTConfigurer extends SecurityConfigurerAdapter<DefaultSecurityFilt
         }
 
         @Override
-        public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
-            throws IOException, ServletException {
-            tokenResolver.resolveToken(servletRequest).ifPresent(authenticateWithToken());
-            filterChain.doFilter(servletRequest, servletResponse);
+        public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+            try {
+                if (!isAlreadyAuthenticated()) {
+                    Optional<String> token = tokenResolver.resolveToken(servletRequest);
+                    token.ifPresent(authenticateWithToken());
+                }
+            } finally {
+                filterChain.doFilter(servletRequest, servletResponse);
+            }
+        }
+
+        private boolean isAlreadyAuthenticated() {
+            SecurityContext context = SecurityContextHolder.getContext();
+            if (context == null) {
+                return false;
+            }
+            Authentication authentication = context.getAuthentication();
+            if (authentication == null) {
+                return false;
+            }
+            return authentication.isAuthenticated();
         }
 
         private Consumer<String> authenticateWithToken() {
