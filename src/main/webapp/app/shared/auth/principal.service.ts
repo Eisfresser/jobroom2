@@ -1,9 +1,9 @@
-import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
-import {Subject} from 'rxjs/Subject';
-import {AuthServerProvider} from './auth-jwt.service';
-import {SERVER_API_URL} from "../../app.constants";
-import {HttpClient} from "@angular/common/http";
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
+import { AuthServerProvider } from './auth-jwt.service';
+import { SERVER_API_URL } from '../../app.constants';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class Principal {
@@ -56,7 +56,7 @@ export class Principal {
         }
 
         // retrieve the userIdentity data from the server, update the identity object, and then resolve.
-        return this.http.get<CurrentUser>(SERVER_API_URL + 'api/current-user', {observe: 'response'})
+        return this.http.get<CurrentUser>(SERVER_API_URL + 'api/current-user', { observe: 'response' })
             .toPromise()
             .then((response) => {
                 this.extractAndStoreJwt(response.headers.get('Authorization'));

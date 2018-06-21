@@ -185,7 +185,6 @@ security:
         entityId: 'urn:wrong.url:sp:seco:JOBROOM-LOCAL'
         #entityAlias: ''
     user:
-        logout_url: 'http://localhost:8080/saml/logout'
         profile_url: 'http://www.cowsays.com/cow_messages/4701'
     accessCodeMailRecipient: service-desk-mail-address@mail.ch
     eiam:

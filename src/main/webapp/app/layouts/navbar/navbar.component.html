@@ -11,17 +11,22 @@
             <div class="portal-logo__image" [ngSwitch]="getCurrentLanguage()">
                 <a routerLink="home"><span>Job-Room</span></a>
                 <a [href]="'home.title.portal-url' | translate" target="work.swiss">
-                    <img *ngSwitchCase="'de'" src="~@alv-ch/alv-styleguide/src/assets/styleguide/images/arbeit.swiss_de.svg" />
-                    <img *ngSwitchCase="'fr'" src="~@alv-ch/alv-styleguide/src/assets/styleguide/images/arbeit.swiss_fr.svg" />
-                    <img *ngSwitchCase="'it'" src="~@alv-ch/alv-styleguide/src/assets/styleguide/images/arbeit.swiss_it.svg" />
-                    <img *ngSwitchCase="'en'" src="~@alv-ch/alv-styleguide/src/assets/styleguide/images/arbeit.swiss_en.svg" />
+                    <img *ngSwitchCase="'de'"
+                         src="~@alv-ch/alv-styleguide/src/assets/styleguide/images/arbeit.swiss_de.svg"/>
+                    <img *ngSwitchCase="'fr'"
+                         src="~@alv-ch/alv-styleguide/src/assets/styleguide/images/arbeit.swiss_fr.svg"/>
+                    <img *ngSwitchCase="'it'"
+                         src="~@alv-ch/alv-styleguide/src/assets/styleguide/images/arbeit.swiss_it.svg"/>
+                    <img *ngSwitchCase="'en'"
+                         src="~@alv-ch/alv-styleguide/src/assets/styleguide/images/arbeit.swiss_en.svg"/>
                 </a>
             </div>
         </div>
 
         <!-- MOBILE MENU -->
         <div class="ml-auto d-sm-none">
-            <div id="drawerMenu" class="drawer fold" [ngClass]="{show: !isNavbarCollapsed}">
+            <div id="drawerMenu" class="drawer fold"
+                 [ngClass]="{show: !isNavbarCollapsed}">
                 <div class="drawer-contents">
                     <div class="drawer-heading">
                         <button (click)="collapseNavbar()"
@@ -40,7 +45,8 @@
                     <ul class="navbar-nav">
                         <li class="nav-item megamenu dropdown">
                             <ng-container *ngIf="isAdmin(); else nonAdminMenuButton">
-                                <a class="nav-link dropdown-toggle active" href="javascript:void(0);"
+                                <a class="nav-link dropdown-toggle active"
+                                   href="javascript:void(0);"
                                    role="button" (click)="toggleNavbar()"
                                    aria-haspopup="true" aria-expanded="false">
                                     <span class="fa fa-bars" aria-hidden="true"></span>
@@ -48,7 +54,8 @@
                                 </a>
                             </ng-container>
 
-                            <div *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_SYSADMIN']" class="dropdown-menu"
+                            <div *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_SYSADMIN']"
+                                 class="dropdown-menu"
                                  aria-labelledby="navbarDropdownMenuLink">
                                 <div class="megamenu-menu">
                                     <div>
@@ -126,21 +133,32 @@
                                                 jhiTranslate="global.menu.admin.apidocs">API</span>
                                         </a>
 
-                                        <a class="dropdown-item" routerLinkActive="active" *jhiHasAnyAuthority="'ROLE_SYSADMIN'"
+                                        <a class="dropdown-item" routerLinkActive="active"
+                                           *jhiHasAnyAuthority="'ROLE_SYSADMIN'"
                                            (click)="isReindexMenuCollapsed = !isReindexMenuCollapsed">
                                             <span class="fa fa-fw fa-search"
                                                   aria-hidden="true"></span>
-                                            <span jhiTranslate="global.menu.admin.elasticsearch-reindex">Elasticsearch Reindex</span>
-                                            <div (click)="collapseNavbar()" [ngbCollapse]="isReindexMenuCollapsed" class="navbar__nested-nav">
-                                                <a class="nav-link"  routerLink="elasticsearch-reindex" jhiTranslate="global.menu.admin.elasticsearch-reindex.all">All</a>
-                                                <a class="nav-link" jhiTranslate="global.menu.admin.elasticsearch-reindex.users"
+                                            <span
+                                                jhiTranslate="global.menu.admin.elasticsearch-reindex">Elasticsearch Reindex</span>
+                                            <div (click)="collapseNavbar()"
+                                                 [ngbCollapse]="isReindexMenuCollapsed"
+                                                 class="navbar__nested-nav">
+                                                <a class="nav-link"
+                                                   routerLink="elasticsearch-reindex"
+                                                   jhiTranslate="global.menu.admin.elasticsearch-reindex.all">All</a>
+                                                <a class="nav-link"
+                                                   jhiTranslate="global.menu.admin.elasticsearch-reindex.users"
                                                    [routerLink]="['elasticsearch-reindex', { document: 'users' }]">Users</a>
-                                                <a class="nav-link" jhiTranslate="global.menu.admin.elasticsearch-reindex.jobs"
+                                                <a class="nav-link"
+                                                   jhiTranslate="global.menu.admin.elasticsearch-reindex.jobs"
                                                    [routerLink]="['elasticsearch-reindex', { document: 'jobs' }]">Jobs</a>
-                                                <a class="nav-link" jhiTranslate="global.menu.admin.elasticsearch-reindex.candidates"
+                                                <a class="nav-link"
+                                                   jhiTranslate="global.menu.admin.elasticsearch-reindex.candidates"
                                                    [routerLink]="['elasticsearch-reindex', { document: 'candidates' }]">Candidates</a>
-                                                <a class="nav-link" jhiTranslate="global.menu.admin.elasticsearch-reindex.reference-data"
-                                                   [routerLink]="['elasticsearch-reindex', { document: 'reference-data' }]">Reference Data</a>
+                                                <a class="nav-link"
+                                                   jhiTranslate="global.menu.admin.elasticsearch-reindex.reference-data"
+                                                   [routerLink]="['elasticsearch-reindex', { document: 'reference-data' }]">Reference
+                                                    Data</a>
                                             </div>
                                         </a>
 
@@ -162,15 +180,19 @@
                                            *jhiHasAnyAuthority="'ROLE_SYSADMIN'"
                                            routerLink="api-user-management"
                                            routerLinkActive="active">
-                                            <span class="fa fa-key" aria-hidden="true"></span>
-                                            <span jhiTranslate="global.menu.admin.api-user-management">Api user management</span>
+                                            <span class="fa fa-key"
+                                                  aria-hidden="true"></span>
+                                            <span
+                                                jhiTranslate="global.menu.admin.api-user-management">Api user management</span>
                                         </a>
                                     </div>
                                 </div>
                             </div>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" [href]="'home.title.portal-url' | translate" target="work.swiss">
+                            <a class="nav-link"
+                               [href]="'home.title.portal-url' | translate"
+                               target="work.swiss">
                                 {{ 'home.title.portal' | translate }}.swiss
                             </a>
                         </li>
@@ -230,7 +252,8 @@
                                 </li>
                                 <li class="nav-item">
                                     <a *jhiHasAnyAuthority="['ROLE_PRIVATE_EMPLOYMENT_AGENT', 'ROLE_COMPANY']"
-                                       routerLink="dashboard" id="dashboard" (click)="collapseNavbar()">
+                                       routerLink="dashboard" id="dashboard"
+                                       (click)="collapseNavbar()">
                                         <span jhiTranslate="global.menu.dashboard">Dashboard</span>
                                     </a>
                                 </li>
@@ -244,9 +267,11 @@
         <!-- DESKTOP MENU -->
         <div class="ml-auto d-none d-sm-block">
             <ul class="navbar-nav">
-                <li class="nav-item megamenu dropdown" [ngClass]="{show: !isNavbarCollapsed}">
+                <li class="nav-item megamenu dropdown"
+                    [ngClass]="{show: !isNavbarCollapsed}">
                     <ng-container *ngIf="isAdmin(); else nonAdminMenuButton">
-                        <a class="nav-link dropdown-toggle active" href="javascript:void(0);"
+                        <a class="nav-link dropdown-toggle active"
+                           href="javascript:void(0);"
                            role="button" (click)="toggleNavbar()"
                            aria-haspopup="true" aria-expanded="false">
                             <span class="fa fa-bars" aria-hidden="true"></span>
@@ -259,7 +284,8 @@
                         </a>
                     </ng-template>
 
-                    <div *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_SYSADMIN']" class="dropdown-menu" [ngClass]="{show: !isNavbarCollapsed}"
+                    <div *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_SYSADMIN']"
+                         class="dropdown-menu" [ngClass]="{show: !isNavbarCollapsed}"
                          aria-labelledby="navbarDropdownMenuLink">
                         <div class="megamenu-menu">
                             <div>
@@ -318,7 +344,8 @@
                                    (click)="collapseNavbar()">
                                     <span class="fa fa-fw fa-heart"
                                           aria-hidden="true"></span>
-                                    <span jhiTranslate="global.menu.admin.health">Health</span>
+                                    <span
+                                        jhiTranslate="global.menu.admin.health">Health</span>
                                 </a>
                                 <a class="dropdown-item"
                                    *jhiHasAnyAuthority="'ROLE_SYSADMIN'"
@@ -336,7 +363,8 @@
                                    (click)="collapseNavbar()">
                                     <span class="fa fa-fw fa-bell"
                                           aria-hidden="true"></span>
-                                    <span jhiTranslate="global.menu.admin.audits">Audits</span>
+                                    <span
+                                        jhiTranslate="global.menu.admin.audits">Audits</span>
                                 </a>
                                 <a class="dropdown-item" routerLink="logs"
                                    *jhiHasAnyAuthority="'ROLE_SYSADMIN'"
@@ -344,7 +372,8 @@
                                    (click)="collapseNavbar()">
                                     <span class="fa fa-fw fa-tasks"
                                           aria-hidden="true"></span>
-                                    <span jhiTranslate="global.menu.admin.logs">Logs</span>
+                                    <span
+                                        jhiTranslate="global.menu.admin.logs">Logs</span>
                                 </a>
 
                                 <a class="dropdown-item" routerLink="docs"
@@ -357,21 +386,32 @@
                                         jhiTranslate="global.menu.admin.apidocs">API</span>
                                 </a>
 
-                                <a class="dropdown-item" routerLinkActive="active"  *jhiHasAnyAuthority="'ROLE_SYSADMIN'"
+                                <a class="dropdown-item" routerLinkActive="active"
+                                   *jhiHasAnyAuthority="'ROLE_SYSADMIN'"
                                    (click)="isReindexMenuCollapsed = !isReindexMenuCollapsed">
                                     <span class="fa fa-fw fa-search"
                                           aria-hidden="true"></span>
-                                    <span jhiTranslate="global.menu.admin.elasticsearch-reindex">Elasticsearch Reindex</span>
-                                    <div (click)="collapseNavbar()" [ngbCollapse]="isReindexMenuCollapsed" class="navbar__nested-nav">
-                                        <a   class="nav-link"  routerLink="elasticsearch-reindex" jhiTranslate="global.menu.admin.elasticsearch-reindex.all">All</a>
-                                        <a class="nav-link" jhiTranslate="global.menu.admin.elasticsearch-reindex.users"
+                                    <span
+                                        jhiTranslate="global.menu.admin.elasticsearch-reindex">Elasticsearch Reindex</span>
+                                    <div (click)="collapseNavbar()"
+                                         [ngbCollapse]="isReindexMenuCollapsed"
+                                         class="navbar__nested-nav">
+                                        <a class="nav-link"
+                                           routerLink="elasticsearch-reindex"
+                                           jhiTranslate="global.menu.admin.elasticsearch-reindex.all">All</a>
+                                        <a class="nav-link"
+                                           jhiTranslate="global.menu.admin.elasticsearch-reindex.users"
                                            [routerLink]="['elasticsearch-reindex', { document: 'users' }]">Users</a>
-                                        <a class="nav-link" jhiTranslate="global.menu.admin.elasticsearch-reindex.jobs"
+                                        <a class="nav-link"
+                                           jhiTranslate="global.menu.admin.elasticsearch-reindex.jobs"
                                            [routerLink]="['elasticsearch-reindex', { document: 'jobs' }]">Jobs</a>
-                                        <a class="nav-link" jhiTranslate="global.menu.admin.elasticsearch-reindex.candidates"
+                                        <a class="nav-link"
+                                           jhiTranslate="global.menu.admin.elasticsearch-reindex.candidates"
                                            [routerLink]="['elasticsearch-reindex', { document: 'candidates' }]">Candidates</a>
-                                        <a class="nav-link" jhiTranslate="global.menu.admin.elasticsearch-reindex.reference-data"
-                                           [routerLink]="['elasticsearch-reindex', { document: 'reference-data' }]">Reference Data</a>
+                                        <a class="nav-link"
+                                           jhiTranslate="global.menu.admin.elasticsearch-reindex.reference-data"
+                                           [routerLink]="['elasticsearch-reindex', { document: 'reference-data' }]">Reference
+                                            Data</a>
                                     </div>
                                 </a>
 
@@ -392,14 +432,16 @@
                                    *jhiHasAnyAuthority="'ROLE_SYSADMIN'"
                                    routerLinkActive="active">
                                     <span class="fa fa-key" aria-hidden="true"></span>
-                                    <span jhiTranslate="global.menu.admin.api-user-management">Api user management</span>
+                                    <span
+                                        jhiTranslate="global.menu.admin.api-user-management">Api user management</span>
                                 </a>
                             </div>
                         </div>
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" [href]="'home.contactform.url' | translate" target="_blank">
+                    <a class="nav-link" [href]="'home.contactform.url' | translate"
+                       target="_blank">
                         <span>{{'home.contactform.text' | translate}}</span>
                     </a>
                 </li>
@@ -421,46 +463,71 @@
                         <span>{{'global.menu.account.registration' | translate}}</span>
                     </a>
                 </li>
-                <li ngbDropdown class="nav-item d-none d-sm-block dropdown" *ngIf="isAuthenticated()">
-                    <a ngbDropdownToggle class="nav-link nav-link--account dropdown-toggle"
+                <li ngbDropdown class="nav-item d-none d-sm-block dropdown"
+                    *ngIf="isAuthenticated()">
+                    <a ngbDropdownToggle
+                       class="nav-link nav-link--account dropdown-toggle"
                        href="javascript:void(0);">
                         {{account?.firstName}} {{account?.lastName}}
                     </a>
-                    <ul class="dropdown-menu dropdown-menu-right dropdown-menu--account" ngbDropdownMenu>
+                    <ul class="dropdown-menu dropdown-menu-right dropdown-menu--account"
+                        ngbDropdownMenu>
                         <li>
-                            <a class="dropdown-item dropdown-item--account" routerLink="settings"
+                            <a class="dropdown-item dropdown-item--account"
                                routerLinkActive="active"
-                               (click)="collapseNavbar()">
-                                <span jhiTranslate="global.menu.account.settings">Settings</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item dropdown-item--account" routerLink="password"
-                               routerLinkActive="active"
-                               (click)="collapseNavbar()">
-                                <span jhiTranslate="global.menu.account.password">Password</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item dropdown-item--account" id="logout-desktop"
-                               routerLinkActive="active"
-                               (click)="logout()"
+                               (click)="goToEiamProfile();"
                                *ngIf="!noEiam">
-                                <span jhiTranslate="global.menu.account.logout">Sign out</span>
+                                <span
+                                    jhiTranslate="global.menu.account.settings">Settings</span>
                             </a>
                         </li>
                         <li>
-                            <a class="dropdown-item dropdown-item--account" id="logout-no-eiam-desktop"
+                            <a class="dropdown-item dropdown-item--account"
+                               routerLink="settings"
                                routerLinkActive="active"
-                               (click)="logoutNoEiam()"
+                               (click)="collapseNavbar()"
                                *ngIf="noEiam">
-                                <span jhiTranslate="global.menu.account.logout">Sign out</span>
+                                <span
+                                    jhiTranslate="global.menu.account.settings">Settings</span>
                             </a>
                         </li>
                         <li>
-                            <a class="dropdown-item dropdown-item--account" *jhiHasAnyAuthority="['ROLE_PRIVATE_EMPLOYMENT_AGENT', 'ROLE_COMPANY']"
-                               routerLink="dashboard" id="dashboard-desktop" (click)="collapseNavbar()">
-                                <span jhiTranslate="global.menu.dashboard">Dashboard</span>
+                            <a class="dropdown-item dropdown-item--account"
+                               routerLink="password"
+                               routerLinkActive="active"
+                               (click)="collapseNavbar()"
+                               *ngIf="noEiam">
+                                <span
+                                    jhiTranslate="global.menu.account.password">Password</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item dropdown-item--account"
+                               id="logout-desktop"
+                               routerLinkActive="active"
+                               (click)="logoutEiam()"
+                               *ngIf="!noEiam">
+                                <span
+                                    jhiTranslate="global.menu.account.logout">Sign out</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item dropdown-item--account"
+                               id="logout-no-eiam-desktop"
+                               routerLinkActive="active"
+                               (click)="logoutLocal()"
+                               *ngIf="noEiam">
+                                <span
+                                    jhiTranslate="global.menu.account.logout">Sign out</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item dropdown-item--account"
+                               *jhiHasAnyAuthority="['ROLE_PRIVATE_EMPLOYMENT_AGENT', 'ROLE_COMPANY']"
+                               routerLink="dashboard" id="dashboard-desktop"
+                               (click)="collapseNavbar()">
+                                <span
+                                    jhiTranslate="global.menu.dashboard">Dashboard</span>
                             </a>
                         </li>
                     </ul>
@@ -483,10 +550,12 @@
         <div class="ml-auto d-sm-none">
             <ul class="navbar-nav">
                 <li ngbDropdown class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-uppercase font-weight-bold" id="dropdownLanguage" ngbDropdownToggle>
+                    <a class="nav-link dropdown-toggle text-uppercase font-weight-bold"
+                       id="dropdownLanguage" ngbDropdownToggle>
                         {{ getCurrentLanguage() }}
                     </a>
-                    <div class="dropdown-menu" ngbDropdownMenu aria-labelledby="dropdownLanguage" >
+                    <div class="dropdown-menu" ngbDropdownMenu
+                         aria-labelledby="dropdownLanguage">
                         <a *ngFor="let language of languages"
                            [jhiActiveMenu]="language"
                            class="dropdown-item" href="javascript:void(0);"

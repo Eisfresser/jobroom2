@@ -15,7 +15,7 @@ export class ReLoginComponent implements OnInit {
 
     logout() {
         this.loginService.logout();
-        document.location.href = 'saml/logout';
+        document.location.href = 'api/redirect/logout';
     }
 
 }
