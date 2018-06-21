@@ -269,7 +269,14 @@ public class RegistrationService {
     }
 
     private String getStreetRepresentation(FirmData firmData) {
-        return firmData.getAddress().getStreet() + " " + firmData.getAddress().getStreetAddOn() + " " + firmData.getAddress().getBuildingNum();
+        String streetRepresentation =  firmData.getAddress().getStreet();
+        if (firmData.getAddress().getStreetAddOn() != null) {
+            streetRepresentation += " " + firmData.getAddress().getStreetAddOn();
+        }
+        if (firmData.getAddress().getBuildingNum() != null) {
+            streetRepresentation += " " + firmData.getAddress().getBuildingNum();
+        }
+        return streetRepresentation;
     }
 
     private void sendMailForServiceDesk(UserInfo userInfo) {

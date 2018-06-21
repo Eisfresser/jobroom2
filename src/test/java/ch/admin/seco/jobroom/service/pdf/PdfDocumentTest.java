@@ -76,8 +76,9 @@ public class PdfDocumentTest {
     public void addDefaultHeader() throws IOException {
         this.testPdfDocument.addDefaultHeader();
         assertThat(this.testPdfDocument.getText())
-            .contains("Staatssekretariat für Wirtschaft SECO")
-            .contains("Holzikofenweg 36");
+            .contains("Eidgenössisches Departement für")
+            .contains("Wirtschaft, Bildung und Forschung WBF")
+            .contains("Staatssekretariat für Wirtschaft SECO");
     }
 
 }

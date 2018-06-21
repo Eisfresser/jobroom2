@@ -1,10 +1,12 @@
 package ch.admin.seco.jobroom.service.pdf;
 
 
-import java.awt.Color;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Locale;
+
+import javax.imageio.ImageIO;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
@@ -18,13 +20,11 @@ import org.apache.pdfbox.text.PDFTextStripper;
 import org.springframework.context.MessageSource;
 import org.springframework.core.io.ClassPathResource;
 
-import javax.imageio.ImageIO;
-
 public abstract class PdfDocument<T> {
 
     abstract String create(T data, String creationDirectoryPath) throws IOException;
 
-    static final int LINE_HEIGHT = 18;
+    static final int LINE_HEIGHT = 12;
 
     protected PDDocument document = new PDDocument();
     protected PdfCoord currentPosition = new PdfCoord(0, 0);
@@ -35,8 +35,8 @@ public abstract class PdfDocument<T> {
     protected static final PDFont FONT_ITALIC = PDType1Font.HELVETICA_OBLIQUE;
     protected static final PDFont FONT_ITALIC_BOLD = PDType1Font.HELVETICA_BOLD_OBLIQUE;
 
-    protected static final int FONT_SMALL = 10;
-    protected static final int FONT_MEDIUM = 12;
+    protected static final int FONT_SMALL = 8;
+    protected static final int FONT_MEDIUM = 11;
     protected static final int FONT_LARGE = 14;
 
     protected static final Color COLOR_PRIMARY = Color.BLACK;
@@ -122,20 +122,41 @@ public abstract class PdfDocument<T> {
     }
 
     PdfDocument addDefaultHeader() throws IOException {
-        ClassPathResource cp = new ClassPathResource("images/arbeit.swiss_" + locale.toLanguageTag() + ".png");
-        if (!cp.exists()) {
-            cp = new ClassPathResource("images/arbeit.swiss_de.png");
-        }
+        ClassPathResource cp = new ClassPathResource("images/bund.png");
         BufferedImage awtImage = ImageIO.read(cp.getInputStream());
         PDImageXObject pdImage = LosslessFactory.createFromImage(this.document, awtImage);
-        contentStream.drawImage(pdImage, 380, 700, 140, 88);
-        return this.setPosition(385, 680)
-            .setFont(FONT_NORMAL, FONT_SMALL, COLOR_SECONDARY)
-            .insertTextLine(this.messageSource.getMessage("pdf.header.name", null, this.locale))
-            .newLine(12)
-            .insertTextLine(this.messageSource.getMessage("pdf.header.street", null, this.locale))
-            .newLine(12)
-            .insertTextLine(this.messageSource.getMessage("pdf.header.city", null, this.locale));
+        contentStream.drawImage(pdImage, 55, 740, 195, 50);
+        return this.setPosition(340, 780)
+            .setFont(FONT_NORMAL, FONT_SMALL, COLOR_PRIMARY)
+            .insertTextLine(this.messageSource.getMessage("pdf.header.defr1", null, this.locale))
+            .newLine(10)
+            .insertTextLine(this.messageSource.getMessage("pdf.header.defr2", null, this.locale))
+            .newLine()
+            .setFont(FONT_BOLD, FONT_SMALL, COLOR_PRIMARY)
+            .insertTextLine(this.messageSource.getMessage("pdf.header.seco1", null, this.locale))
+            .newLine(10)
+            .setFont(FONT_NORMAL, FONT_SMALL, COLOR_PRIMARY)
+            .insertTextLine(this.messageSource.getMessage("pdf.header.seco2", null, this.locale))
+            .newLine(10)
+            .insertTextLine(this.messageSource.getMessage("pdf.header.seco3", null, this.locale));
+    }
+
+    PdfDocument addDefaultFooter() throws IOException {
+        return this.setPosition(340, 30)
+            .setFont(FONT_NORMAL, FONT_SMALL, COLOR_PRIMARY)
+            .insertTextLine(this.messageSource.getMessage("pdf.footer.name", null, this.locale))
+            .newLine(10)
+            .insertTextLine(this.messageSource.getMessage("pdf.footer.place", null, this.locale))
+            .newLine(10)
+            .insertTextLine(this.messageSource.getMessage("pdf.footer.email", null, this.locale));
+    }
+
+    PdfDocument drawLine(int startX, int startY, int endX, int endY) throws IOException {
+        this.contentStream.setLineWidth(0.75f);
+        this.contentStream.moveTo(startX, startY);
+        this.contentStream.lineTo(endX, endY);
+        this.contentStream.stroke();
+        return this;
     }
 
     String getText() throws IOException {
