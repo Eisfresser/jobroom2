@@ -1,12 +1,18 @@
-import {Component, ElementRef, HostListener, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
-import {NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {JhiEventManager, JhiLanguageService} from 'ng-jhipster';
+import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { JhiEventManager, JhiLanguageService } from 'ng-jhipster';
 
-import {ProfileService} from '../profiles/profile.service';
-import {Account, JhiLanguageHelper, LoginModalService, LoginService, Principal} from '../../shared';
+import { ProfileService } from '../profiles/profile.service';
+import {
+    Account,
+    JhiLanguageHelper,
+    LoginModalService,
+    LoginService,
+    Principal
+} from '../../shared';
 
-import {VERSION} from '../../app.constants';
+import { VERSION } from '../../app.constants';
 
 @Component({
     selector: 'jhi-navbar',

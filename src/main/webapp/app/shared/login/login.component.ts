@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, Renderer, ElementRef } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Renderer } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
 import { JhiEventManager } from 'ng-jhipster';
@@ -35,7 +35,7 @@ export class JhiLoginModalComponent implements AfterViewInit {
         private store: Store<HomeState>) {
         this.credentials = {};
         store.select(getActiveToolbarItem)
-            .subscribe(toolbarItem => this.activeToolbar = ToolbarItem[toolbarItem]);
+            .subscribe((toolbarItem) => this.activeToolbar = ToolbarItem[toolbarItem]);
     }
 
     ngAfterViewInit() {
