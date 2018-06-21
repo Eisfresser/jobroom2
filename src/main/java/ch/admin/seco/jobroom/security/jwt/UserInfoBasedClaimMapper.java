@@ -37,7 +37,7 @@ public class UserInfoBasedClaimMapper implements ClaimMapper {
         claims.put(langKey.name(), userInfo.getLangKey());
         claims.put(externalId.name(), userInfo.getUserExternalId());
         if (userInfo.getCompany() != null) {
-            claims.put(companyId.name(), userInfo.getCompany().getId().getValue());
+            claims.put(companyId.name(), userInfo.getCompany().getExternalId());
         }
         return claims;
     }
