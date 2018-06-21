@@ -162,7 +162,7 @@ jhipster:
 
 security:
     user:
-        logout_url: 'saml/logout'
+        logout_url: '/saml/logout'
     rolemapping:
         ROLE_ALLOW: ALV-jobroom.ALLOW
         ROLE_REGISTRATION: ALV-jobroom.ROLE_REGISTRATION
