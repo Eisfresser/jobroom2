@@ -78,19 +78,19 @@ export class Principal {
             });
     }
 
-    private extractAndStoreJwt(bearerToken: String) {
-        if (bearerToken && bearerToken.slice(0, 7) === 'Bearer ') {
-            const jwt = bearerToken.slice(7, bearerToken.length);
-            this.authServerProvider.storeAuthenticationToken(jwt, false);
-        }
-    }
-
     isAuthenticated(): boolean {
         return this.authenticated;
     }
 
     getAuthenticationState(): Observable<any> {
         return this.authenticationState.asObservable();
+    }
+
+    private extractAndStoreJwt(bearerToken: String) {
+        if (bearerToken && bearerToken.slice(0, 7) === 'Bearer ') {
+            const jwt = bearerToken.slice(7, bearerToken.length);
+            this.authServerProvider.storeAuthenticationToken(jwt, false);
+        }
     }
 
 }

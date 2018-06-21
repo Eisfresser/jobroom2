@@ -1,4 +1,4 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -13,26 +13,28 @@ import { RegistrationQuestionnaireEffects } from './registration/questionnaire/s
 import { EffectsModule } from '@ngrx/effects';
 import { registrationQuestionnaireReducer } from './registration/questionnaire/state-management/reducers/registration-questionnaire.reducers';
 import {
-    ActivateService,
-    PasswordService,
-    PasswordResetInitService,
-    PasswordResetFinishService,
-    RegistrationService,
-    PasswordStrengthBarComponent,
-    RegistrationComponent,
-    JobseekerDialogComponent,
-    ReLoginComponent,
-    ActivateComponent,
-    PasswordComponent,
-    PasswordResetInitComponent,
-    PasswordResetFinishComponent,
-    SettingsComponent,
     accountState,
-    RegistrationPavDialogComponent, RegistrationCompanyDialogComponent
+    ActivateComponent,
+    ActivateService,
+    JobseekerDialogComponent,
+    PasswordComponent,
+    PasswordResetFinishComponent,
+    PasswordResetFinishService,
+    PasswordResetInitComponent,
+    PasswordResetInitService,
+    PasswordService,
+    PasswordStrengthBarComponent,
+    RegistrationCompanyDialogComponent,
+    RegistrationComponent,
+    RegistrationPavDialogComponent,
+    RegistrationService,
+    ReLoginComponent,
+    SettingsComponent
 } from './';
 import { RegistrationDialogService } from './registration/registration-dialog.service';
 import { RegistrationAccessCodeComponent } from './registration/access-code/registration-access-code.component';
 import { ExistingPavDialogComponent } from './registration/existing-pav/existing-pav-dialog.component';
+import { RegistrationGuardService } from './registration/registration-guard.service';
 
 @NgModule({
     imports: [
@@ -71,7 +73,8 @@ import { ExistingPavDialogComponent } from './registration/existing-pav/existing
         RegistrationService,
         BackgroundUtils,
         ModalUtils,
-        RegistrationDialogService
+        RegistrationDialogService,
+        RegistrationGuardService
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     entryComponents: [
