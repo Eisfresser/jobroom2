@@ -1,21 +1,21 @@
 {
     "registrationCompanyDialog": {
-        "title": "FR - Bitte geben Sie nun Ihre Unternehmens-Identifikationsnummer (UID) an.",
+        "title": "Veuillez indiquer votre num\u00e9ro d'identification des entreprises (IDE).",
         "placeholder": "CHE-123.456.789",
         "postal": {
-            "description": " we will send you <b>by post</b> an unlock code to the postal address associated with your UID:"
+            "description": " we will send an activation code <b>by post</b> to the address associated with your UID:"
         },
         "login": {
-            "description": "FR - Mit dem zugesendeten Freischaltcode k\u00f6nnen Sie sich anschliessend \u00fcber den Login in Ihr Benutzerkonto einloggen."
+            "description": "Vous pourrez ensuite vous connecter \u00e0 votre compte d'utilisateur au moyen du code de d\u00e9verrouillage."
         },
-        "requestActivationCode": "FR - Freischaltcode per Post anfordern",
-        "activationCodeRequested": "FR - Freischaltcode erfolgreich beantragt",
-        "returnToHomepage": "FR - Zur\u00fcck zur Startseite",
-        "findButton": "FR - Suchen",
+        "requestActivationCode": "Demander le code de d\u00e9verrouillage par voie postale",
+        "activationCodeRequested": "Le code de d\u00e9verrouillage a bien \u00e9t\u00e9 demand\u00e9.",
+        "returnToHomepage": "Retour \u00e0 la page d'accueil",
+        "findButton": "Chercher",
         "validation": {
             "error": {
-                "uid": "FR - Ung\u00fcltiges UID-Format, g\u00fcltiges Format: CHE-123.456.789",
-                "notFound": "FR - Es wurde kein Unternehmen mit der eingegebenen UID gefunden."
+                "uid": "Format de l'IDE non valable, format valable: CHE-123.456.789",
+                "notFound": "Aucune entreprise ayant l'IDE indiqu\u00e9e n'a \u00e9t\u00e9 trouv\u00e9e."
             }
         }
     }

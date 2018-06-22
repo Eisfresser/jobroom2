@@ -1,33 +1,29 @@
 {
     "api-user-management": {
-        "activated": "Activ\u00e9",
-        "active": "Attivato",
+        "activated": "Attivato",
+        "active": "Attivo",
         "active-date": "Last access date",
-        "company": {
-            "name": "Business name"
-        },
+        "companyName": "Nome dell'impresa",
+        "companyEmail": "E-mail dell'impresa",
         "confirm": "Salva",
         "contact": "Contact",
         "contact.email": "Contact email",
+        "createDate": "Data di creazione",
         "deactivated": "Disattivato",
         "dialog": {
-            "title": "Create or update api user"
+            "title": "Crea o modifica utente API"
         },
         "dismiss": "Interrompere",
         "email": "E-mail",
         "id": "Id",
-        "new": "Create new api user",
+        "lastAccessDate": "Ultimo accesso",
+        "new": "Crea nuovo utente API",
         "password": "Password",
-        "password.generate": "Generate password",
-        "search": "Search for api user by username, business name, business email, technical contact, technical contact email",
-        "title": "Manage api users",
-        "user-name": "User name",
-        "username": "Username",
-        "companyEmail": "Business email",
-        "companyName": "Business name",
-        "technicalContactName": "Technical contact",
-        "technicalContactEmail": "Technical contact email",
-        "createDate": "Create date",
-        "lastAccessDate": "Last access date"
+        "password.generate": "Genera password",
+        "search": "Cerca utente API",
+        "technicalContactEmail": "E-mail contatto tecnico",
+        "technicalContactName": "Contatto tecnico",
+        "title": "Gestisci utente API",
+        "username": "Nome utente"
     }
 }

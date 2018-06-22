@@ -2,24 +2,29 @@ page,key,de,en,fr,it
 activate,activate.messages.error,"<strong>Ihr Benutzer konnte nicht aktiviert werden.</strong> Bitte benutzen Sie die Registrierungsmaske, um sich zu registrieren.",<strong>Your user could not be activated.</strong> Please use the registration form to sign up.,<strong>Votre compte utilisateur n'a pas pu être activé.</strong> Utilisez le formulaire d'enregistrement pour en créer un nouveau.,<strong>Il tuo account non può essere attivato.</strong> Si prega di usare il modulo di registrazione per iscriversi.
 activate,activate.messages.success,"<strong>Ihr Benutzer wurde aktiviert.</strong> Bitte ","<strong>Your user account has been activated.</strong> Please ","<strong>Votre compte utilisateur a été activé.</strong> Merci de vous ",<strong>Il tuo account è stato attivato.</strong> Si prega di
 activate,activate.title,Aktivierung,Activation,Activation,Attivazione
-api-user-management,api-user-management.activated,activated,Aktiv,Active,Activé
-api-user-management,api-user-management.active,Aktiv,Active,Activé,Attivato
+api-user-management,api-user-management.activated,activated,activated,Active,Attivato
+api-user-management,api-user-management.active,Aktiv,Active,Activé,Attivo
 api-user-management,api-user-management.active-date,Last access date,Last access date,Last access date,Last access date
-api-user-management,api-user-management.company.name,Business name,Business name,Business name,Business name
+api-user-management,api-user-management.companyName,Name Geschäft,Company name,Nom du dossier,Nome dell'impresa
+api-user-management,api-user-management.companyEmail,E-Mail Geschäft,Company email,Courriel dossier,E-mail dell'impresa
 api-user-management,api-user-management.confirm,Speichern,Save,Sauvegarder,Salva
 api-user-management,api-user-management.contact,Contact,Contact,Contact,Contact
 api-user-management,api-user-management.contact.email,Contact email,Contact email,Contact email,Contact email
+api-user-management,api-user-management.createDate,Erstellungsdatum,Created on,Date de création,Data di creazione
 api-user-management,api-user-management.deactivated,Deaktiviert,Deactivated,Désactivé,Disattivato
-api-user-management,api-user-management.dialog.title,Create or update api user,Create or update api user,Create or update api user,Create or update api user
+api-user-management,api-user-management.dialog.title,API-User erstellen oder modifizieren,Create or update API user,Créer ou modifier l'utilisateur API,Crea o modifica utente API
 api-user-management,api-user-management.dismiss,Abbrechen,Cancel,Interrompre,Interrompere
 api-user-management,api-user-management.email,E-Mail,Email,Courriel,E-mail
 api-user-management,api-user-management.id,Id,Id,Id,Id
-api-user-management,api-user-management.new,Create new api user,Create new api user,Create new api user,Create new api user
+api-user-management,api-user-management.lastAccessDate,Letzter Zugriff,Last accessed on,Dernier accès,Ultimo accesso
+api-user-management,api-user-management.new,Neuen API-Benutzer erstellen,Create new API user,Créer un nouvel utilisateur API,Crea nuovo utente API
 api-user-management,api-user-management.password,Passwort,Password,Mot de passe,Password
-api-user-management,api-user-management.password.generate,Generate password,Generate password,Generate password,Generate password
-api-user-management,api-user-management.search,Search api users,Search api users,Search api users,Search api users
-api-user-management,api-user-management.title,Manage api users,Manage api users,Manage api users,Manage api users
-api-user-management,api-user-management.user-name,User name,User name,User name,User name
+api-user-management,api-user-management.password.generate,Password generieren,Generate password,Générer un mot de passe,Genera password
+api-user-management,api-user-management.search,API-Benutzer suchen,Search API users,Chercher un utilisateur API,Cerca utente API
+api-user-management,api-user-management.technicalContactEmail,E-Mail Technischer Kontakt,Technical contact email,Courriel contact technique,E-mail contatto tecnico
+api-user-management,api-user-management.technicalContactName,Technischer Kontakt,Technical contact,Contact technique,Contatto tecnico
+api-user-management,api-user-management.title,API-Benutzer verwalten,Manage API users,Gérer les utilisateurs API,Gestisci utente API
+api-user-management,api-user-management.username,Benutzername,Username,Nom d'utilisateur,Nome utente
 audits,audits.filter.button.clear,leeren,clear,effacer,cancella
 audits,audits.filter.button.close,abschliessen,close,fermer,chiudi
 audits,audits.filter.button.today,heute,today,aujourd'hui,oggi
@@ -41,17 +46,17 @@ candidate-detail,candidate-detail.additional-information.no-information,Keine An
 candidate-detail,candidate-detail.additional-information.preferredWorkRegions.label,Gesuchte Arbeitsregionen,Preferred work regions,Régions de travail recherchées,Regioni di ricerca
 candidate-detail,candidate-detail.additional-information.title,Weitere Angaben,Additional information,Autres indications,Altri dati
 candidate-detail,candidate-detail.additional-information.workForm.label,Arbeitsform,Work form,Forme de travail,Tipologia lavorativa
-candidate-detail,candidate-detail.anonymous-contact.confirm,Confirm,Confirm,Confirm,Confirm
-candidate-detail,candidate-detail.anonymous-contact.contact-via,Bitte kontaktieren Sie mich per:,Bitte kontaktieren Sie mich per:,Bitte kontaktieren Sie mich per:,Bitte kontaktieren Sie mich per:
-candidate-detail,candidate-detail.anonymous-contact.contact-via.email,E-Mail,E-Mail,E-Mail,E-Mail
-candidate-detail,candidate-detail.anonymous-contact.contact-via.phone,Telefon,Telefon,Telefon,Telefon
+candidate-detail,candidate-detail.anonymous-contact.confirm,Bestätigen,Confirm,Confirmer,Conferma
+candidate-detail,candidate-detail.anonymous-contact.contact-via,Bitte kontaktieren Sie mich per:,Please contact me by:,Veuillez prendre contact avec moi par:,Voglio essere contattato via:
+candidate-detail,candidate-detail.anonymous-contact.contact-via.email,E-Mail,email,Courriel,e-mail
+candidate-detail,candidate-detail.anonymous-contact.contact-via.phone,Telefon,Phone,Téléphone,telefono
 candidate-detail,candidate-detail.anonymous-contact.dismiss,Abbrechen,Cancel,Interrompre,Interrompere
-candidate-detail,candidate-detail.anonymous-contact.send-to,Schicken Sie Ihre Bewerbungsunterlagen an:,Schicken Sie Ihre Bewerbungsunterlagen an:,Schicken Sie Ihre Bewerbungsunterlagen an:,Schicken Sie Ihre Bewerbungsunterlagen an:
-candidate-detail,candidate-detail.anonymous-contact.title,Kandidat-/in kontaktieren,Kandidat-/in kontaktieren,Kandidat-/in kontaktieren,Kandidat-/in kontaktieren
+candidate-detail,candidate-detail.anonymous-contact.send-to,Schicken Sie Ihre Bewerbungsunterlagen an:,Send your application documents to:,Veuillez envoyer votre dossier de candidature à:,Invii il dossier di candidatura a:
+candidate-detail,candidate-detail.anonymous-contact.title,Kandidat-/in kontaktieren,Contact candidate,Prendre contact avec un/e candidat/e,Contattare il candidato
 candidate-detail,candidate-detail.back,Zurück zu den Suchergebnissen,Back to search results,Retour aux résultats,"Torna ai risultati della ricerca "
-candidate-detail,candidate-detail.candidate-anonymous-contact,Kandidat/-in kontaktieren,Kandidat/-in kontaktieren,Kandidat/-in kontaktieren,Kandidat/-in kontaktieren
-candidate-detail,candidate-detail.candidate-anonymous-contact.body,"Mit Freude habe ich Ihr aussagekräftige Profil auf job-room.ch entdeckt.\n Ich könnte mir vorstellen, dass Sie sehr gut in unser Team passen und würde mich sehr freuen, wenn Sie sich bei uns melden würden.","Mit Freude habe ich Ihr aussagekräftige Profil auf job-room.ch entdeckt.\n Ich könnte mir vorstellen, dass Sie sehr gut in unser Team passen und würde mich sehr freuen, wenn Sie sich bei uns melden würden.","Mit Freude habe ich Ihr aussagekräftige Profil auf job-room.ch entdeckt.\n Ich könnte mir vorstellen, dass Sie sehr gut in unser Team passen und würde mich sehr freuen, wenn Sie sich bei uns melden würden.","Mit Freude habe ich Ihr aussagekräftige Profil auf job-room.ch entdeckt.\n Ich könnte mir vorstellen, dass Sie sehr gut in unser Team passen und würde mich sehr freuen, wenn Sie sich bei uns melden würden."
-candidate-detail,candidate-detail.candidate-anonymous-contact.subject,Sehr geehrte(r) Kandidat(in),Sehr geehrte(r) Kandidat(in),Sehr geehrte(r) Kandidat(in),Sehr geehrte(r) Kandidat(in)
+candidate-detail,candidate-detail.candidate-anonymous-contact,Kandidat/-in kontaktieren,Contact candidate,Prendre contact avec un/e candidat/e,Contattare il candidato
+candidate-detail,candidate-detail.candidate-anonymous-contact.body,"Mit Freude habe ich Ihr aussagekräftige Profil auf job-room.ch entdeckt.\n Ich könnte mir vorstellen, dass Sie sehr gut in unser Team passen und würde mich sehr freuen, wenn Sie sich bei uns melden würden.","I discovered your profile on job-room.ch and believe you would make a valuable addition to our team.\n Please do not hesitate to contact us if you are interested.","J'ai vu votre profil sur Job-Room et il m'intéresse particulièrement. Je pense que vous pourriez être adapté à notre équipe et vous serait très reconnaissant si vous pouviez prendre contact avec moi.","Ho trovato il Suo profilo su job-room.ch e trovo che sia pertinente.\nSecondo me Lei è la persona giusta per il nostro team. La invito a mettersi in contatto con noi."
+candidate-detail,candidate-detail.candidate-anonymous-contact.subject,Sehr geehrte(r) Kandidat(in),Dear candidate,,Cher candidat/Chère candidate,Gentile candidato
 candidate-detail,candidate-detail.candidate-copy-link,Link kopieren,Copy link,Copier le lien,Copia link
 candidate-detail,candidate-detail.candidate-print,Drucken,Print,Imprimer,Stampa
 candidate-detail,candidate-detail.candidate-save,Kandidatenprofil speichern,Save candidate profile,Sauvegarder le profil du candidat,Salva candidato
@@ -222,7 +227,7 @@ existing-pav,registration.existing-pav.username.placeholder,E-Mail Adresse,Email
 existing-pav,registration.existing-pav.password.label,Passwort,Password,FR - Password,IT - Password
 existing-pav,registration.existing-pav.password.placeholder,Passwort,Password,FR - Password,IT - Password
 existing-pav,registration.existing-pav.identificaton.mismatch.error,"Wir konnten keine Login-Daten anhand Ihrer Angaben finden. Bitte überprüfen Sie, dass E-Mail Adresse und Passwort korrekt eingegeben wurden.","We were not able to find login data based on the entered values. Please make sure you entered your email address and password correctly.","FR - We were not able to find login data based on the entered values. Please make sure you entered your email address and password correctly.","IT -We were not able to find login data based on the entered values. Please make sure you entered your email address and password correctly."
-existing-pav,registration.existing-pav.text,"Bitte geben Sie Ihre Anmeldedaten ein, mit welchen Sie sich bisher in Job-Room anmeldeten.","EN - Bitte geben Sie Ihre Anmeldedaten ein, mit welchen Sie sich bisher in Job-Room anmeldeten.","FR - Bitte geben Sie Ihre Anmeldedaten ein, mit welchen Sie sich bisher in Job-Room anmeldeten.","IT - Bitte geben Sie Ihre Anmeldedaten ein, mit welchen Sie sich bisher in Job-Room anmeldeten."
+existing-pav,registration.existing-pav.text,"Bitte geben Sie Ihre Anmeldedaten ein, mit welchen Sie sich bisher in Job-Room anmeldeten.","Please enter the Job Room login details you regularly use.","FR - Bitte geben Sie Ihre Anmeldedaten ein, mit welchen Sie sich bisher in Job-Room anmeldeten.","IT - Bitte geben Sie Ihre Anmeldedaten ein, mit welchen Sie sich bisher in Job-Room anmeldeten."
 existing-pav,registration.existing-pav.login,Login,Login,Login,Login
 existing-pav,registration.existing-pav.cancel,Abbrechen,Cancel,Cancel,Cancel
 gateway,gateway.refresh.button,Aktualisieren,Refresh,Actualiser,Aggiorna
@@ -1041,16 +1046,6 @@ register,register.messages.validate.login.minlength,Ihr Benutzername muss mindes
 register,register.messages.validate.login.pattern,Ihr Benutzername darf nur Kleinbuchstaben und Ziffern enthalten,Your username can only contain lower-case letters and digits.,Votre nom d'utilisateur ne peut contenir que des lettres minuscules et des nombres.,Il nome utente può contenere solo lettere minuscole e cifre.
 register,register.messages.validate.login.required,Ihr Benutzername wird benötigt.,Your username is required.,Votre nom d'utilisateur est requis.,Il nome utente è obbligatorio.
 register,register.title,Registrierung,Registration,Création du compte utilisateur,Registrazione
-registration-questionnaire,registrationQuestionnaire.employer,Ich möchte arbeit.swiss als <b>Arbeitgeber</b> nutzen,I would like to use arbeit.swiss as an <b>employer</b>,,
-registration-questionnaire,registrationQuestionnaire.header,Registrierung abschliessen,Complete registration,,
-registration-questionnaire,registrationQuestionnaire.placeholder,"Bitte beantworten Sie die folgenden Fragen, damit wir Sie korrekt zuordnen können.",Please answer the following questions so that we can assign you correctly.,,
-registration-questionnaire,registrationQuestionnaire.ravCustomer,Ich möchte arbeit.swiss als <b>RAV-Kunde</b> nutzen,I would like to use arbeit.swiss as a <b>RAV customer</b>,,
-registration-questionnaire,registrationQuestionnaire.recruitmentAgency.existing,I am an existing Job-Room user,I am an existing job-room user,,
-registration-questionnaire,registrationQuestionnaire.recruitmentAgency.message,Ich möchte arbeit.swiss als <b>privater Arbeitsvermittler</b> nutzen,I would like to use arbeit.swiss as a <b>recruitment agency</b>,,
-registration-questionnaire,registrationQuestionnaire.recruitmentAgency.new,Ich melde mich zum ersten Mal bei arbeit.swiss bzw. job-room an,I sign up for the first time in arbeit.swiss or job-room,,
-registration-questionnaire,registrationQuestionnaire.termsOfUse.accept,Ich akzeptiere die Nutzungsbedingungen,I agree to the terms and conditions,,
-registration-questionnaire,registrationQuestionnaire.termsOfUse.link,Nutzungsbedingungen anzeigen,View terms and conditions,,
-registration-questionnaire,registrationQuestionnaire.title,Registrierung,Registration,,
 registration,registration.basics.text,"Die Benutzerregistrierung für Job-Room erfolgt über das <strong>System eIAM, der sicheren Identitäts- und Zugriffsverwaltung des Bundes</strong>. Dank eIAM können Sie mit einem einzigen Login verschiedene Informatikangebote der Bundesverwaltung nutzen. Da eIAM eine Dienstleistung des Bundesamtes für Informatik und Telekommunikation (BIT) ist, weicht das grafische Design von der Gestaltung auf Job-Room ab. Job-Room bietet Ihnen dank eIAM verschiedene Möglichkeiten, sich als Benutzer zu identifizieren.",Text in English.,Text in Französisch.,Text in Italienisch.
 registration,registration.basics.title,Grundlagen,Basic Information,FR-Grundlagen,IT-Grundlagen
 registration,registration.button.text,Jetzt Benutzer registrieren,Register user now,FR-Jetzt Benutzer registrieren,IT-Jetzt Benutzer registrieren
@@ -1146,59 +1141,38 @@ user-management,userManagement.phone,Telefon,Telephone,Téléphone,Telefono
 user-management,userManagement.profiles,Profile,Profiles,Profils,Profili
 user-management,userManagement.search.placeholder,"Benutzer nach Name, E-Mail-Adresse oder Organization suchen","Search for user by username, name, email or organization","Search for user by username, name, email or organization","Search for user by username, name, email or organization"
 user-management,userManagement.updated,Ein Benutzer mit ID {{ param }} wurde geändert,A user was updated with identifier {{ param }},L'utilisateur portant l'ID {{ param }} a été modifié.,Sono stato aggiornati i dati dell'utente identificato da {{ param }}
-api-user-management,api-user-management.title,Manage api users,Manage api users,Manage api users,Manage api users
-api-user-management,api-user-management.new,Create new api user,Create new api user,Create new api user,Create new api user
-api-user-management,api-user-management.search,"Search for api user by username, business name, business email, technical contact, technical contact email","Search for api user by username, business name, business email, technical contact, technical contact email","Search for api user by username, business name, business email, technical contact, technical contact email","Search for api user by username, business name, business email, technical contact, technical contact email"
-api-user-management,api-user-management.dialog.title,Create or update api user,Create or update api user,Create or update api user,Create or update api user
-api-user-management,api-user-management.username,Username,Username,Username,Username
-api-user-management,api-user-management.companyEmail,Business email,Business email,Business email,Business email
-api-user-management,api-user-management.companyName,Business name,Business name,Business name,Business name
-api-user-management,api-user-management.technicalContactName,Technical contact,Technical contact,Technical contact,Technical contact
-api-user-management,api-user-management.technicalContactEmail,Technical contact email,Technical contact email,Technical contact email,Technical contact email
-api-user-management,api-user-management.password,Password,Password,Password,Password
-api-user-management,api-user-management.password.generate,Generate password,Generate password,Generate password,Generate password
-api-user-management,api-user-management.createDate,Create date,Create date,Create date,Create date
-api-user-management,api-user-management.lastAccessDate,Last access date,Last access date,Last access date,Last access date
-api-user-management,api-user-management.active,Aktiv,Active,Activé,Attivato
-api-user-management,api-user-management.confirm,Speichern,Save,Sauvegarder,Salva
-api-user-management,api-user-management.dismiss,Abbrechen,Cancel,Interrompre,Interrompere
-api-user-management,api-user-management.activated,activated,Aktiv,Active,Activé,Attivato
-api-user-management,api-user-management.deactivated,Deaktiviert,Deactivated,Désactivé,Disattivato
-
-registration-questionnaire,registrationQuestionnaire.tile,Registrierung,Registration,,
-registration-questionnaire,registrationQuestionnaire.header,Registrierung abschliessen,Complete registration,,
-registration-questionnaire,registrationQuestionnaire.placeholder,Bitte beantworten Sie die folgenden Fragen, damit wir Sie korrekt zuordnen können.,Please answer the following questions so that we can assign you correctly.,,
-registration-questionnaire,registrationQuestionnaire.ravCustomer,Ich möchte arbeit.swiss als <b>RAV-Kunde</b> nutzen,I would like to use arbeit.swiss as a <b>RAV customer</b>,,,
-registration-questionnaire,registrationQuestionnaire.employer,Ich möchte arbeit.swiss als <b>Arbeitgeber</b> nutzen,I would like to use arbeit.swiss as an <b>employer</b>,,
-registration-questionnaire,registrationQuestionnaire.recruitmentAgency.msg,Ich möchte arbeit.swiss als [<b>privater Arbeitsvermittler</b>] nutzen,I would like to use arbeit.swiss as a <b>recruitment agency</b>,,
-registration-questionnaire,registrationQuestionnaire.recruitmentAgency.new,Ich melde mich zum ersten Mal bei arbeit.swiss bzw. job-room an,I sign up for the first time in arbeit.swiss or job-room,,
-registration-questionnaire,registrationQuestionnaire.recruitmentAgency.existing,Ich bin ein bestehender Job-Room Nutzer,I am an existing job-room user,,
-registration-questionnaire,registrationQuestionnaire.termsOfUse.accept,Ich akzeptiere die Nutzungsbedingungen,I agree to the terms and conditions,,
-registration-questionnaire,registrationQuestionnaire.termsOfUse.link,Nutzungsbedingungen anzeigen,View terms and conditions,,
-
-registration-company-dialog,registrationCompanyDialog.title,Bitte geben Sie nun Ihre Unternehmens-Identifikationsnummer (UID) an.,Please enter your company identification number (UID).,FR - Bitte geben Sie nun Ihre Unternehmens-Identifikationsnummer (UID) an.,IT - Bitte geben Sie nun Ihre Unternehmens-Identifikationsnummer (UID) an.
+registration-questionnaire,registrationQuestionnaire.title,Registrierung,Registration,Enregistrement,Registrazione
+registration-questionnaire,registrationQuestionnaire.header,Registrierung abschliessen,Complete registration,Terminer l'enregistrement,Completa la registrazione
+registration-questionnaire,registrationQuestionnaire.placeholder,"Bitte beantworten Sie die folgenden Fragen, damit wir Sie korrekt zuordnen können.","Please answer the following questions so that we can assign you to the appropriate category.","Veuillez répondre aux questions suivantes pour que nous puissions vous classer correctement.","Si prega di rispondere alle domande per consentire una corretta classificazione."
+registration-questionnaire,registrationQuestionnaire.ravCustomer,Ich möchte arbeit.swiss als <b>RAV-Kunde</b> nutzen,I would like to use work.swiss as a <b>RAV customer</b>,Je souhaite utiliser travail.swiss en tant que <b>client ORP</b> ,Voglio usare lavoro.swiss come <b>cliente URC</b>
+registration-questionnaire,registrationQuestionnaire.employer,Ich möchte arbeit.swiss als <b>Arbeitgeber</b> nutzen,I would like to use work.swiss as an <b>employer</b>,Je souhaite utiliser travail.swiss en tant que <b>employeur</b> ,Voglio usare lavoro.swiss come <b>datore di lavoro</b>
+registration-questionnaire,registrationQuestionnaire.recruitmentAgency.message,Ich möchte arbeit.swiss als <b>privater Arbeitsvermittler</b> nutzen,I would like to use work.swiss as an <b>employment agency</b>,Je souhaite utiliser travail.swiss en tant que <b>agence de placement privée</b> ,Voglio usare lavoro.swiss come <b>agenzia privata di collocamento</b>
+registration-questionnaire,registrationQuestionnaire.recruitmentAgency.new,Ich melde mich zum ersten Mal bei arbeit.swiss bzw. job-room an,This is my first time registering for work.swiss or Job Room,J'accède pour la première fois à travail.swiss ou Job-Room,È la prima volta che accedo alla Job-Room di lavoro.swiss
+registration-questionnaire,registrationQuestionnaire.recruitmentAgency.existing,Ich bin ein bestehender Job-Room Nutzer,I am an existing Job Room user,Je suis déjà un utilisateur de Job-Room ,Sono già un utente di Job-Room
+registration-questionnaire,registrationQuestionnaire.termsOfUse.accept,Ich akzeptiere die Nutzungsbedingungen,I agree to the terms and conditions,J'accepte les conditions d'utilisation,Accetto le condizoni di utilizzo
+registration-questionnaire,registrationQuestionnaire.termsOfUse.link,<a href="/docs/Job-Room-AGB-20180530_de.pdf" target="_blank">Nutzungsbedingungen anzeigen</a>,<a href="/docs/Job-Room-AGB-20180530_en.pdf" target="_blank">Show terms and conditions</a>,<a href="/docs/Job-Room-AGB-20180530_fr.pdf" target="_blank">Afficher les conditions d'utilisation</a>,<a href="/docs/Job-Room-AGB-20180530_it.pdf" target="_blank">Mostra le condizioni di utilizzo</a>
+registration-questionnaire,registrationQuestionnaire.error.candidate.service.failure,Das System zur Prüfung Ihrer Daten ist momentan nicht verfügbar. Bitte versuchen Sie es später wieder. Bitte kontaktieren Sie den ServiceDesk, falls das Problem weiter bestehen sollte.,The system used to validate your data is currently unavailable. Please try again later. If this problem persists, contact the service desk.,Le système permettant de vérifier vos données est momentanément indisponible. Veuillez réessayer plus tard. Prenez contact avec le Service Desk si le problème persiste.,Il sistema di verifica dei dati personali non è al momento disponibile. Si prega di riprovare più tardi. Se il problema persiste contattare il Service Desk.
+registration-company-dialog,registrationCompanyDialog.title,Bitte geben Sie nun Ihre Unternehmens-Identifikationsnummer (UID) an.,Please enter your company identification number (UID).,Veuillez indiquer votre numéro d'identification des entreprises (IDE).,Inserire il numero d'identificazione delle imprese (IDI).
 registration-company-dialog,registrationCompanyDialog.placeholder,CHE-123.456.789,CHE-123.456.789,CHE-123.456.789,CHE-123.456.789
-registration-company-dialog,registrationCompanyDialog.postal.description,Nach Ihrer Anforderung werden wir Ihnen <b>per Post</b> einen Freischaltcode an die der UID zugehörigen Postadresse senden:,Upon your request, we will send you <b>by post</b> an unlock code to the postal address associated with your UID:,FR - Nach Ihrer Anforderung werden wir Ihnen <b>per Post</b> einen Freischaltcode an die der UID zugehörigen Postadresse senden:,IT - Nach Ihrer Anforderung werden wir Ihnen <b>per Post</b> einen Freischaltcode an die der UID zugehörigen Postadresse senden:
-registration-company-dialog,registrationCompanyDialog.login.description,Mit dem zugesendeten Freischaltcode können Sie sich anschliessend über den Login in Ihr Benutzerkonto einloggen.,You can then log in to your user account via the login using the sent activation code.,FR - Mit dem zugesendeten Freischaltcode können Sie sich anschliessend über den Login in Ihr Benutzerkonto einloggen.,IT - Mit dem zugesendeten Freischaltcode können Sie sich anschliessend über den Login in Ihr Benutzerkonto einloggen.
-registration-company-dialog,registrationCompanyDialog.requestActivationCode,Freischaltcode per Post anfordern,Request activation code by post,FR - Freischaltcode per Post anfordern, IT - Freischaltcode per Post anfordern
-registration-company-dialog,registrationCompanyDialog.activationCodeRequested,Freischaltcode erfolgreich beantragt,Activation code requested successfully,FR - Freischaltcode erfolgreich beantragt,IT - Freischaltcode erfolgreich beantragt
-registration-company-dialog,registrationCompanyDialog.returnToHomepage,Zurück zur Startseite,Return to homepage,FR - Zurück zur Startseite,IT - Zurück zur Startseite
-registration-company-dialog,registrationCompanyDialog.findButton,Suchen,Search,FR - Suchen,IT - Suchen
-registration-company-dialog,registrationCompanyDialog.validation.error.uid,"Ungültiges UID-Format, gültiges Format: CHE-123.456.789","Invalid format of the UID, correct format: CHE-123.456.789","FR - Ungültiges UID-Format, gültiges Format: CHE-123.456.789","IT - Ungültiges UID-Format, gültiges Format: CHE-123.456.789"
-registration-company-dialog,registrationCompanyDialog.validation.error.notFound,Es wurde kein Unternehmen mit der eingegebenen UID gefunden.,No company with the given UID found.,FR - Es wurde kein Unternehmen mit der eingegebenen UID gefunden.,IT - Es wurde kein Unternehmen mit der eingegebenen UID gefunden.
-
-registration-pav-dialog,registrationPavDialog.title,Bitte wählen Sie Ihre Organisation aus der VZ AVG Liste aus,Please select your organisation from the VZ AVG list,FR - Bitte wählen Sie Ihre Organisation aus der VZ AVG Liste aus,IT - Bitte wählen Sie Ihre Organisation aus der VZ AVG Liste aus
-registration-pav-dialog,registrationPavDialog.placeholder,Geben Sie Ihre Organisation ein,Please enter your organisation,FR - Geben Sie Ihre Organisation ein, IT - Geben Sie Ihre Organisation ein
-registration-pav-dialog,registrationPavDialog.postal.description,Nach Ihrer Anforderung werden wir Ihnen <b>per Post</b> einen Freischaltcode an die der UID zugehörigen Postadresse senden:,Upon your request, we will send you <b>by post</b> an unlock code to the postal address associated with your UID:,FR - Nach Ihrer Anforderung werden wir Ihnen <b>per Post</b> einen Freischaltcode an die der UID zugehörigen Postadresse senden:,IT - Nach Ihrer Anforderung werden wir Ihnen <b>per Post</b> einen Freischaltcode an die der UID zugehörigen Postadresse senden:
-registration-pav-dialog,registrationPavDialog.login.description,Mit dem zugesendeten Freischaltcode können Sie sich anschliessend über den Login in Ihr Benutzerkonto einloggen.,You can then log in to your user account via the login using the sent activation code.,FR - Mit dem zugesendeten Freischaltcode können Sie sich anschliessend über den Login in Ihr Benutzerkonto einloggen.,IT - Mit dem zugesendeten Freischaltcode können Sie sich anschliessend über den Login in Ihr Benutzerkonto einloggen.
-registration-pav-dialog,registrationPavDialog.requestActivationCode,Freischaltcode per Post anfordern,Request activation code by post,FR - Freischaltcode per Post anfordern, IT - Freischaltcode per Post anfordern
-registration-pav-dialog,registrationPavDialog.activationCodeRequested,Freischaltcode erfolgreich beantragt,Activation code requested successfully,FR - Freischaltcode erfolgreich beantragt,IT - Freischaltcode erfolgreich beantragt
-registration-pav-dialog,registrationPavDialog.returnToHomepage,Zurück zur Startseite,Return to homepage,FR - Zurück zur Startseite,IT - Zurück zur Startseite
-
-registration-access-code,registrationAccessCode.title,Freischaltcode eingeben,Enter access code,,
-registration-access-code,registrationAccessCode.header,Freischaltcode,Access code,,
-registration-access-code,registrationAccessCode.placeholder,Freischaltcode eingeben,Enter access code,,
-registration-access-code,registrationAccessCode.accessCode,Freischaltcode,Access code,,
-registration-access-code,registrationAccessCode.accessCode.error.required,Freischaltcode wird benötigt,Access code is required,,
-registration-access-code,registrationAccessCode.accessCode.error.minlength,Freischaltcode muss aus 8 Stellen bestehen,Access code needs to consist of 8 characters,,
-registration-access-code,registrationAccessCode.accessCode.error.invalid,Freischaltcode ungültig,Access code is invalid,,
+registration-company-dialog,registrationCompanyDialog.postal.description,Nach Ihrer Anforderung werden wir Ihnen <b>per Post</b> einen Freischaltcode an die der UID zugehörigen Postadresse senden:,Once your request is submitted, we will send an activation code <b>by post</b> to the address associated with your UID:,Comme demandé, nous vous enverrons un code de déverrouillage <b>par voie postale</b> à l'adresse correspondant à l'IDE: ,In base alla sua richiesta, invieremo <b>per posta</b> un codice di attivazione all'indirizzo associato al suo IDI:
+registration-company-dialog,registrationCompanyDialog.login.description,Mit dem zugesendeten Freischaltcode können Sie sich anschliessend über den Login in Ihr Benutzerkonto einloggen.,You can then log in to your user account using this activation code.,Vous pourrez ensuite vous connecter à votre compte d'utilisateur au moyen du code de déverrouillage.,Con il codice di attivazione inviato potrà accedere al suo account utente tramite il login.
+registration-company-dialog,registrationCompanyDialog.requestActivationCode,Freischaltcode per Post anfordern,Request activation code by post,Demander le code de déverrouillage par voie postale,Richiedere il codice di attivazione per posta
+registration-company-dialog,registrationCompanyDialog.activationCodeRequested,Freischaltcode erfolgreich beantragt,Activation code requested,Le code de déverrouillage a bien été demandé.,Richiesta inoltrata
+registration-company-dialog,registrationCompanyDialog.returnToHomepage,Zurück zur Startseite,Return to homepage,Retour à la page d'accueil,Tornare alla pagina iniziale
+registration-company-dialog,registrationCompanyDialog.findButton,Suchen,Search,Chercher,Cercare
+registration-company-dialog,registrationCompanyDialog.validation.error.uid,"Ungültiges UID-Format, gültiges Format: CHE-123.456.789","Invalid UID format. Please use the format CHE-123.456.789","Format de l'IDE non valable, format valable: CHE-123.456.789","Formato IDI non valido, formato valido: CHE-123.456.789"
+registration-company-dialog,registrationCompanyDialog.validation.error.notFound,Es wurde kein Unternehmen mit der eingegebenen UID gefunden.,We were unable to find a company with the UID you entered.,Aucune entreprise ayant l'IDE indiquée n'a été trouvée.,Non è stata trovata nessuna impresa con l'IDI inserito
+registration-pav-dialog,registrationPavDialog.title,Bitte wählen Sie Ihre Organisation aus der VZ AVG Liste aus,Please select your organisation from the VZ AVG list.,Veuillez sélectionner votre organisation dans le répertoire des AP LSE ,Selezionare la sua organizzazione dall'elenco OE LC
+registration-pav-dialog,registrationPavDialog.placeholder,Geben Sie Ihre Organisation ein,Please enter your organisation.,Veuillez indiquer votre organisation,Inserire la sua organizzazione
+registration-pav-dialog,registrationPavDialog.postal.description,Nach Ihrer Anforderung werden wir Ihnen <b>per Post</b> einen Freischaltcode an die der UID zugehörigen Postadresse senden:,Once your request is submitted, we will send an activation code <b>by post</b> to the address associated with your UID:,Comme demandé, nous vous enverrons un code de déverrouillage <b>par voie postale</b> à l'adresse correspondant à l'IDE: ,In base alla sua richiesta invieremo <b>per posta</b> un codice di attivazione all'indirizzo associato al suo IDI:
+registration-pav-dialog,registrationPavDialog.login.description,Mit dem zugesendeten Freischaltcode können Sie sich anschliessend über den Login in Ihr Benutzerkonto einloggen.,You can then log in to your user account using this activation code.,Vous pourrez ensuite vous connecter à votre compte d'utilisateur au moyen du code de déverrouillage.,Con il codice di attivazione inviato potrai accedere al tuo account utente tramite il login.
+registration-pav-dialog,registrationPavDialog.requestActivationCode,Freischaltcode per Post anfordern,Request activation code by post,Demander le code de déverrouillage par voie postale,Richiedere il codice di attivazione per posta
+registration-pav-dialog,registrationPavDialog.activationCodeRequested,Freischaltcode erfolgreich beantragt,Activation code requested,Le code de déverrouillage a bien été demandé.,La richiesta è andata a buon fine
+registration-pav-dialog,registrationPavDialog.returnToHomepage,Zurück zur Startseite,Return to homepage,Retour à la page d'accueil,Torna alla pagina iniziale
+registration-access-code,registrationAccessCode.title,Freischaltcode eingeben,Enter activation code,Saisir le code de déverrouillage,Inserire il codice di attivazione
+registration-access-code,registrationAccessCode.header,Freischaltcode,Activation code,Code de déverrouillage,Codice di attivazione
+registration-access-code,registrationAccessCode.placeholder,Freischaltcode eingeben,Enter activation code,Saisir le code de déverrouillage,Inserire il codice di attivazione
+registration-access-code,registrationAccessCode.accessCode,Freischaltcode,Activation code,Code de déverrouillage,Codice di attivazione
+registration-access-code,registrationAccessCode.accessCode.error.required,Freischaltcode wird benötigt,Activation code is required,Un code de déverrouillage est nécessaire ,È necessario il codice di attivazione
+registration-access-code,registrationAccessCode.accessCode.error.minlength,Freischaltcode muss aus 8 Stellen bestehen,Activation code must contain 8 characters,Le code de déverrouillage doit se composer de 8 caractères,Il codice di attivazione deve avere 8 caratteri
+registration-access-code,registrationAccessCode.accessCode.error.invalid,Freischaltcode ungültig,Activation code is invalid,Code de déverrouillage non valable,Codice di attivazione non valido

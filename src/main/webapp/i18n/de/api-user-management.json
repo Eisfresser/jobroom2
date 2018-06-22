@@ -3,31 +3,27 @@
         "activated": "activated",
         "active": "Aktiv",
         "active-date": "Last access date",
-        "company": {
-            "name": "Business name"
-        },
+        "companyName": "Name Gesch\u00e4ft",
+        "companyEmail": "E-Mail Gesch\u00e4ft",
         "confirm": "Speichern",
         "contact": "Contact",
         "contact.email": "Contact email",
+        "createDate": "Erstellungsdatum",
         "deactivated": "Deaktiviert",
         "dialog": {
-            "title": "Create or update api user"
+            "title": "API-User erstellen oder modifizieren"
         },
         "dismiss": "Abbrechen",
         "email": "E-Mail",
         "id": "Id",
-        "new": "Create new api user",
-        "password": "Password",
-        "password.generate": "Generate password",
-        "search": "Search for api user by username, business name, business email, technical contact, technical contact email",
-        "title": "Manage api users",
-        "user-name": "User name",
-        "username": "Username",
-        "companyEmail": "Business email",
-        "companyName": "Business name",
-        "technicalContactName": "Technical contact",
-        "technicalContactEmail": "Technical contact email",
-        "createDate": "Create date",
-        "lastAccessDate": "Last access date"
+        "lastAccessDate": "Letzter Zugriff",
+        "new": "Neuen API-Benutzer erstellen",
+        "password": "Passwort",
+        "password.generate": "Password generieren",
+        "search": "API-Benutzer suchen",
+        "technicalContactEmail": "E-Mail Technischer Kontakt",
+        "technicalContactName": "Technischer Kontakt",
+        "title": "API-Benutzer verwalten",
+        "username": "Benutzername"
     }
 }

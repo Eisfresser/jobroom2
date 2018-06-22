@@ -3,31 +3,27 @@
         "activated": "Active",
         "active": "Activ\u00e9",
         "active-date": "Last access date",
-        "company": {
-            "name": "Business name"
-        },
+        "companyName": "Nom du dossier",
+        "companyEmail": "Courriel dossier",
         "confirm": "Sauvegarder",
         "contact": "Contact",
         "contact.email": "Contact email",
+        "createDate": "Date de cr\u00e9ation",
         "deactivated": "D\u00e9sactiv\u00e9",
         "dialog": {
-            "title": "Create or update api user"
+            "title": "Cr\u00e9er ou modifier l'utilisateur API"
         },
         "dismiss": "Interrompre",
         "email": "Courriel",
         "id": "Id",
-        "new": "Create new api user",
-        "password": "Password",
-        "password.generate": "Generate password",
-        "search": "Search for api user by username, business name, business email, technical contact, technical contact email",
-        "title": "Manage api users",
-        "user-name": "User name",
-        "username": "Username",
-        "companyEmail": "Business email",
-        "companyName": "Business name",
-        "technicalContactName": "Technical contact",
-        "technicalContactEmail": "Technical contact email",
-        "createDate": "Create date",
-        "lastAccessDate": "Last access date"
+        "lastAccessDate": "Dernier acc\u00e8s",
+        "new": "Cr\u00e9er un nouvel utilisateur API",
+        "password": "Mot de passe",
+        "password.generate": "G\u00e9n\u00e9rer un mot de passe",
+        "search": "Chercher un utilisateur API",
+        "technicalContactEmail": "Courriel contact technique",
+        "technicalContactName": "Contact technique",
+        "title": "G\u00e9rer les utilisateurs API",
+        "username": "Nom d'utilisateur"
     }
 }

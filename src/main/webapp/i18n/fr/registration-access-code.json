@@ -1,11 +1,11 @@
 {
     "registrationAccessCode": {
-        "title": "",
-        "header": "",
-        "placeholder": "",
-        "accessCode": "",
-        "accessCode.error.required": "",
-        "accessCode.error.minlength": "",
-        "accessCode.error.invalid": ""
+        "title": "Saisir le code de d\u00e9verrouillage",
+        "header": "Code de d\u00e9verrouillage",
+        "placeholder": "Saisir le code de d\u00e9verrouillage",
+        "accessCode": "Code de d\u00e9verrouillage",
+        "accessCode.error.required": "Un code de d\u00e9verrouillage est n\u00e9cessaire ",
+        "accessCode.error.minlength": "Le code de d\u00e9verrouillage doit se composer de 8 caract\u00e8res",
+        "accessCode.error.invalid": "Code de d\u00e9verrouillage non valable"
     }
 }

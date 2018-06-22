@@ -1,20 +1,25 @@
 {
     "registrationQuestionnaire": {
-        "employer": "Ich m\u00f6chte arbeit.swiss als <b>Arbeitgeber</b> nutzen",
+        "title": "Registrierung",
         "header": "Registrierung abschliessen",
-        "placeholder": "Bitte beantworten Sie die folgenden Fragen",
+        "placeholder": "Bitte beantworten Sie die folgenden Fragen, damit wir Sie korrekt zuordnen k\u00f6nnen.",
         "ravCustomer": "Ich m\u00f6chte arbeit.swiss als <b>RAV-Kunde</b> nutzen",
+        "employer": "Ich m\u00f6chte arbeit.swiss als <b>Arbeitgeber</b> nutzen",
         "recruitmentAgency": {
-            "existing": "Ich bin ein bestehender Job-Room Nutzer",
             "message": "Ich m\u00f6chte arbeit.swiss als <b>privater Arbeitsvermittler</b> nutzen",
             "new": "Ich melde mich zum ersten Mal bei arbeit.swiss bzw. job-room an",
-            "msg": "Ich m\u00f6chte arbeit.swiss als [<b>privater Arbeitsvermittler</b>] nutzen"
+            "existing": "Ich bin ein bestehender Job-Room Nutzer"
         },
         "termsOfUse": {
             "accept": "Ich akzeptiere die Nutzungsbedingungen",
-            "link": "Nutzungsbedingungen anzeigen"
+            "link": "<a href=\"/docs/Job-Room-AGB-20180530_de.pdf\" target=\"_blank\">Nutzungsbedingungen anzeigen</a>"
         },
-        "title": "Registrierung",
-        "tile": "Registrierung"
+        "error": {
+            "candidate": {
+                "service": {
+                    "failure": "Das System zur Pr\u00fcfung Ihrer Daten ist momentan nicht verf\u00fcgbar. Bitte versuchen Sie es sp\u00e4ter wieder. Bitte kontaktieren Sie den ServiceDesk"
+                }
+            }
+        }
     }
 }

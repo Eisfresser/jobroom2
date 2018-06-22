@@ -1,15 +1,15 @@
 {
     "registrationPavDialog": {
-        "title": "FR - Bitte w\u00e4hlen Sie Ihre Organisation aus der VZ AVG Liste aus",
-        "placeholder": "FR - Geben Sie Ihre Organisation ein",
+        "title": "Veuillez s\u00e9lectionner votre organisation dans le r\u00e9pertoire des AP LSE ",
+        "placeholder": "Veuillez indiquer votre organisation",
         "postal": {
             "description": " we will send you <b>by post</b> an unlock code to the postal address associated with your UID:"
         },
         "login": {
-            "description": "FR - Mit dem zugesendeten Freischaltcode k\u00f6nnen Sie sich anschliessend \u00fcber den Login in Ihr Benutzerkonto einloggen."
+            "description": "Vous pourrez ensuite vous connecter \u00e0 votre compte d'utilisateur au moyen du code de d\u00e9verrouillage."
         },
-        "requestActivationCode": "FR - Freischaltcode per Post anfordern",
-        "activationCodeRequested": "FR - Freischaltcode erfolgreich beantragt",
-        "returnToHomepage": "FR - Zur\u00fcck zur Startseite"
+        "requestActivationCode": "Demander le code de d\u00e9verrouillage par voie postale",
+        "activationCodeRequested": "Le code de d\u00e9verrouillage a bien \u00e9t\u00e9 demand\u00e9.",
+        "returnToHomepage": "Retour \u00e0 la page d'accueil"
     }
 }

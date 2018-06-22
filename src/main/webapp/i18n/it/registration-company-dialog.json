@@ -1,21 +1,21 @@
 {
     "registrationCompanyDialog": {
-        "title": "IT - Bitte geben Sie nun Ihre Unternehmens-Identifikationsnummer (UID) an.",
+        "title": "Inserire il numero d'identificazione delle imprese (IDI).",
         "placeholder": "CHE-123.456.789",
         "postal": {
-            "description": "FR - Nach Ihrer Anforderung werden wir Ihnen <b>per Post</b> einen Freischaltcode an die der UID zugeh\u00f6rigen Postadresse senden:"
+            "description": "Comme demand\u00e9"
         },
         "login": {
-            "description": "IT - Mit dem zugesendeten Freischaltcode k\u00f6nnen Sie sich anschliessend \u00fcber den Login in Ihr Benutzerkonto einloggen."
+            "description": "Con il codice di attivazione inviato potr\u00e0 accedere al suo account utente tramite il login."
         },
-        "requestActivationCode": " IT - Freischaltcode per Post anfordern",
-        "activationCodeRequested": "IT - Freischaltcode erfolgreich beantragt",
-        "returnToHomepage": "IT - Zur\u00fcck zur Startseite",
-        "findButton": "IT - Suchen",
+        "requestActivationCode": "Richiedere il codice di attivazione per posta",
+        "activationCodeRequested": "Richiesta inoltrata",
+        "returnToHomepage": "Tornare alla pagina iniziale",
+        "findButton": "Cercare",
         "validation": {
             "error": {
-                "uid": "IT - Ung\u00fcltiges UID-Format, g\u00fcltiges Format: CHE-123.456.789",
-                "notFound": "IT - Es wurde kein Unternehmen mit der eingegebenen UID gefunden."
+                "uid": "Formato IDI non valido, formato valido: CHE-123.456.789",
+                "notFound": "Non \u00e8 stata trovata nessuna impresa con l'IDI inserito"
             }
         }
     }

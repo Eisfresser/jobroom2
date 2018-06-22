@@ -23,18 +23,18 @@
             }
         },
         "anonymous-contact": {
-            "confirm": "Confirm",
-            "contact-via": "Bitte kontaktieren Sie mich per:",
-            "contact-via.email": "E-Mail",
-            "contact-via.phone": "Telefon",
+            "confirm": "Confirmer",
+            "contact-via": "Veuillez prendre contact avec moi par:",
+            "contact-via.email": "Courriel",
+            "contact-via.phone": "T\u00e9l\u00e9phone",
             "dismiss": "Interrompre",
-            "send-to": "Schicken Sie Ihre Bewerbungsunterlagen an:",
-            "title": "Kandidat-/in kontaktieren"
+            "send-to": "Veuillez envoyer votre dossier de candidature \u00e0:",
+            "title": "Prendre contact avec un/e candidat/e"
         },
         "back": "Retour aux r\u00e9sultats",
-        "candidate-anonymous-contact": "Kandidat/-in kontaktieren",
-        "candidate-anonymous-contact.body": "Mit Freude habe ich Ihr aussagekr\u00e4ftige Profil auf job-room.ch entdeckt.\\n Ich k\u00f6nnte mir vorstellen, dass Sie sehr gut in unser Team passen und w\u00fcrde mich sehr freuen, wenn Sie sich bei uns melden w\u00fcrden.",
-        "candidate-anonymous-contact.subject": "Sehr geehrte(r) Kandidat(in)",
+        "candidate-anonymous-contact": "Prendre contact avec un/e candidat/e",
+        "candidate-anonymous-contact.body": "J'ai vu votre profil sur Job-Room et il m'int\u00e9resse particuli\u00e8rement. Je pense que vous pourriez \u00eatre adapt\u00e9 \u00e0 notre \u00e9quipe et vous serait tr\u00e8s reconnaissant si vous pouviez prendre contact avec moi.",
+        "candidate-anonymous-contact.subject": "",
         "candidate-copy-link": "Copier le lien",
         "candidate-print": "Imprimer",
         "candidate-save": "Sauvegarder le profil du candidat",

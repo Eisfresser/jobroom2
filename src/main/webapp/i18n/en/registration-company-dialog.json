@@ -3,19 +3,19 @@
         "title": "Please enter your company identification number (UID).",
         "placeholder": "CHE-123.456.789",
         "postal": {
-            "description": "Upon your request"
+            "description": "Once your request is submitted"
         },
         "login": {
-            "description": "You can then log in to your user account via the login using the sent activation code."
+            "description": "You can then log in to your user account using this activation code."
         },
         "requestActivationCode": "Request activation code by post",
-        "activationCodeRequested": "Activation code requested successfully",
+        "activationCodeRequested": "Activation code requested",
         "returnToHomepage": "Return to homepage",
         "findButton": "Search",
         "validation": {
             "error": {
-                "uid": "Invalid format of the UID, correct format: CHE-123.456.789",
-                "notFound": "No company with the given UID found."
+                "uid": "Invalid UID format. Please use the format CHE-123.456.789",
+                "notFound": "We were unable to find a company with the UID you entered."
             }
         }
     }
