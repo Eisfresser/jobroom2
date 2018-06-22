@@ -16,7 +16,8 @@ export class RegistrationDialogService {
 
     openRegisterJobSeekerDialog() {
         const modalRef = this.modalService.open(JobseekerDialogComponent, {
-            size: 'lg'
+            size: 'lg',
+            backdrop: 'static'
         });
 
         modalRef.result.then(() => {
@@ -30,7 +31,8 @@ export class RegistrationDialogService {
 
     openRegisterPavDialog() {
         const modalRef = this.modalService.open(RegistrationPavDialogComponent, {
-            size: 'lg'
+            size: 'lg',
+            backdrop: 'static'
         });
 
         modalRef.result.then(() => {
@@ -42,7 +44,8 @@ export class RegistrationDialogService {
 
     openExistingPavDialog() {
         const modalRef = this.modalService.open(ExistingPavDialogComponent, {
-            size: 'lg'
+            size: 'lg',
+            backdrop: 'static'
         });
 
         modalRef.result.then(() => {

@@ -6,8 +6,8 @@ import {
 } from '@ng-bootstrap/ng-bootstrap';
 import { Injectable } from '@angular/core';
 
-const SMALL_MODAL: NgbModalOptions = { size: 'sm' },
-    LARGE_MODAL: NgbModalOptions = { size: 'lg' };
+const SMALL_MODAL: NgbModalOptions = { size: 'sm', backdrop: 'static' },
+    LARGE_MODAL: NgbModalOptions = { size: 'lg', backdrop: 'static' };
 
 @Injectable()
 export class ModalUtils {
