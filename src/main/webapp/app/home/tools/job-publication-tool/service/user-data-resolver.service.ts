@@ -1,36 +1,28 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
-import { Principal, User } from '../../../../shared';
-import { OrganizationService } from '../../../../shared/organization/organization.service';
+import { CurrentUser, Principal } from '../../../../shared';
 import { Observable } from 'rxjs/Observable';
-import { Organization } from '../../../../shared/organization/organization.model';
+import { CompanyService } from '../../../../shared/company/company.service';
+import { Company } from '../../../../shared/company/company.model';
 
-export interface UserData extends User {
-    organization?: Organization;
+export interface UserData extends CurrentUser {
+    company?: Company;
 }
 
 @Injectable()
 export class UserDataResolverService implements Resolve<UserData> {
 
     constructor(private principal: Principal,
-                private organizationService: OrganizationService) {
+                private companyService: CompanyService) {
     }
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<UserData> {
-        const identity$ = Observable.fromPromise(this.principal.identity())
-            .flatMap((identity: User) => Observable.fromPromise(this.principal.hasAnyAuthority([
-                'ROLE_PRIVATE_EMPLOYMENT_AGENT',
-                'ROLE_PUBLIC_EMPLOYMENT_SERVICE']))
-                .map((isAgent: boolean) => isAgent ? identity : null));
-
-        const organization$ = identity$
-            .flatMap((identity: User) => identity && identity.organizationId
-                ? this.organizationService.findByExternalId(identity.organizationId)
-                : Observable.of(null));
-
-        return identity$
-            .zip(organization$)
-            .map(([identity, organization]) => Object.assign({}, identity, { organization }));
+        return this.principal.currentUser()
+            .flatMap((currentUser) => {
+                return this.principal.isCompanyOrAgent()
+                    .flatMap((hasCompany) => hasCompany && currentUser.companyId ? this.companyService.findByExternalId(currentUser.companyId) : Observable.empty())
+                    .map((company) => Object.assign({}, currentUser, { company: company }));
+            });
     }
 
 }

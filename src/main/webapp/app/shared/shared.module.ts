@@ -2,9 +2,18 @@ import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { DatePipe } from '@angular/common';
 
 import {
-    AccountService, AuthServerProvider, CSRFService, HasAnyAuthorityDirective,
-    JhiLoginModalComponent, JobroomSharedCommonModule, JobroomSharedLibsModule,
-    LoginModalService, LoginService, Principal, StateStorageService, UserService
+    AccountService,
+    AuthServerProvider,
+    CSRFService,
+    HasAnyAuthorityDirective,
+    JhiLoginModalComponent,
+    JobroomSharedCommonModule,
+    JobroomSharedLibsModule,
+    LoginModalService,
+    LoginService,
+    Principal,
+    StateStorageService,
+    UserService
 } from './';
 import { LocaleAwareDatePipe } from './pipes/locale-aware-date.pipe';
 import { LocaleAwareDecimalPipe } from './pipes/locale-aware-number.pipe';
@@ -22,6 +31,7 @@ import { ScrollToTopComponent } from './components/scroll-to-top/scroll-to-top.c
 import { JobAdvertisementService } from './job-advertisement/job-advertisement.service';
 import { Jobroom2LanguageService } from './language/jobroom2-language.service';
 import { ShortenPipe } from './pipes/shorten.pipe';
+import { CompanyService } from './company/company.service';
 
 @NgModule({
     imports: [
@@ -60,6 +70,7 @@ import { ShortenPipe } from './pipes/shorten.pipe';
         dateParserFormatterProvider(),
         datepickerI18nService(),
         OrganizationService,
+        CompanyService,
         JobAdvertisementService,
         LanguageFilterService
     ],

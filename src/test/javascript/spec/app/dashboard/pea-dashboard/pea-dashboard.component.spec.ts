@@ -3,20 +3,20 @@ import { PeaDashboardComponent } from '../../../../../../main/webapp/app/dashboa
 import { ReactiveFormsModule } from '@angular/forms';
 import { MockPrincipal } from '../../../helpers/mock-principal.service';
 import { Principal } from '../../../../../../main/webapp/app/shared';
-import { OrganizationService } from '../../../../../../main/webapp/app/shared/organization/organization.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { HttpClientModule } from '@angular/common/http';
 import { JobAdvertisementService } from '../../../../../../main/webapp/app/shared/job-advertisement/job-advertisement.service';
 import { JobAdvertisementCancelDialogService } from '../../../../../../main/webapp/app/dashboard/dialogs/job-advertisement-cancel-dialog.service';
+import { CompanyService } from '../../../../../../main/webapp/app/shared/company/company.service';
 
 describe('PEA-DashboardComponent', () => {
     let component: PeaDashboardComponent;
     let fixture: ComponentFixture<PeaDashboardComponent>;
     const mockStore = jasmine.createSpyObj('mockStore', ['select', 'dispatch']);
     mockStore.select.and.returnValue(Observable.of([]));
-    const mockOrganizationService = jasmine.createSpyObj('mockOrganizationService', ['findByExternalId']);
+    const mockCompanyService = jasmine.createSpyObj('mockCompanyService', ['findByExternalId']);
     const mockJobPublicationCancelDialogService = jasmine.createSpyObj('mockJobPublicationCancelDialogService', ['open']);
     const mockTranslateService = jasmine.createSpyObj('mockTranslateService', ['v']);
 
@@ -33,8 +33,8 @@ describe('PEA-DashboardComponent', () => {
                     useClass: MockPrincipal
                 },
                 {
-                    provide: OrganizationService,
-                    useValue: mockOrganizationService
+                    provide: CompanyService,
+                    useValue: mockCompanyService
                 },
                 {
                     provide: JobAdvertisementCancelDialogService,

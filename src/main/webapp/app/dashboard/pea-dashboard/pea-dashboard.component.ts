@@ -2,15 +2,15 @@ import {
     ChangeDetectionStrategy,
     Component,
     EventEmitter,
-    Input, OnChanges,
+    Input,
+    OnChanges,
     OnInit,
-    Output, SimpleChanges
+    Output,
+    SimpleChanges
 } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ITEMS_PER_PAGE, Principal } from '../../shared';
-import { Organization } from '../../shared/organization/organization.model';
-import { OrganizationService } from '../../shared/organization/organization.service';
 import {
     JobAdvertisementFilter,
     PEADashboardState
@@ -20,11 +20,16 @@ import {
     LoadNextJobAdvertisementsDashboardPageAction,
     SubmitCancellationAction
 } from '../state-management/actions/pea-dashboard.actions';
-import { JobAdvertisement, JobAdvertisementStatus } from '../../shared/job-advertisement/job-advertisement.model';
+import {
+    JobAdvertisement,
+    JobAdvertisementStatus
+} from '../../shared/job-advertisement/job-advertisement.model';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import { JobAdvertisementService } from '../../shared/job-advertisement/job-advertisement.service';
 import { JobAdvertisementUtils } from '../job-advertisement.utils';
 import { JobAdvertisementCancelDialogService } from '../dialogs/job-advertisement-cancel-dialog.service';
+import { CompanyService } from '../../shared/company/company.service';
+import { Company } from '../../shared/company/company.model';
 
 interface JobAdvertisementView {
     id: string;
@@ -60,13 +65,13 @@ export class PeaDashboardComponent implements OnInit, OnChanges {
     pageChange = new EventEmitter<number>();
 
     identity$: Observable<any>;
-    organization$: Observable<Organization>;
+    organization$: Observable<Company>;
     jobFilterForm: FormGroup;
     jobAdvertisementList$: Observable<JobAdvertisementView[]>;
 
     constructor(private fb: FormBuilder,
                 private principal: Principal,
-                private organizationService: OrganizationService,
+                private companyService: CompanyService,
                 private store: Store<PEADashboardState>,
                 private jobAdvertisementService: JobAdvertisementService,
                 private translateService: TranslateService,
@@ -81,9 +86,9 @@ export class PeaDashboardComponent implements OnInit, OnChanges {
             onlineSinceDays: [this.jobAdvertisementFilter.onlineSinceDays]
         });
 
-        this.identity$ = Observable.fromPromise(this.principal.identity());
+        this.identity$ = this.principal.currentUser();
         this.organization$ = this.identity$
-            .flatMap((identity) => this.organizationService.findByExternalId(identity.organizationId));
+            .flatMap((currentUser) => this.companyService.findByExternalId(currentUser.companyId));
     }
 
     ngOnChanges(changes: SimpleChanges): void {

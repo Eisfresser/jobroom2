@@ -26,6 +26,18 @@ export class Principal {
         this.authenticationState.next(this.userIdentity);
     }
 
+    isAgent(): Observable<boolean> {
+        return Observable.fromPromise(this.hasAnyAuthority(['ROLE_PRIVATE_EMPLOYMENT_AGENT']));
+    }
+
+    isCompany(): Observable<boolean> {
+        return Observable.fromPromise(this.hasAnyAuthority(['ROLE_COMPANY']));
+    }
+
+    isCompanyOrAgent(): Observable<boolean> {
+        return Observable.fromPromise(this.hasAnyAuthority(['ROLE_COMPANY', 'ROLE_PRIVATE_EMPLOYMENT_AGENT']));
+    }
+
     hasAnyAuthority(authorities: string[]): Promise<boolean> {
         return Promise.resolve(this.hasAnyAuthorityDirect(authorities));
     }
@@ -44,7 +56,11 @@ export class Principal {
         return false;
     }
 
-    identity(force?: boolean): Promise<any> {
+    currentUser(force?: boolean): Observable<CurrentUser> {
+        return Observable.fromPromise(this.identity(force));
+    }
+
+    identity(force?: boolean): Promise<CurrentUser> {
         if (force === true) {
             this.userIdentity = undefined;
         }
@@ -95,26 +111,24 @@ export class Principal {
 
 }
 
-interface CurrentUser {
+export interface CurrentUser {
 
-    id: String
+    id: string
 
-    login: String
+    login: string
 
-    firstName: String
+    firstName: string
 
-    lastName: String
+    lastName: string
 
-    email: String
+    email: string
 
-    langKey: String
+    langKey: string
 
-    authorities: Array<String>
+    authorities: Array<string>
 
-    organizationId: String
+    companyId: string
 
-    organizationName: String
-
-    imageUrl: String
+    companyName: string
 
 }

@@ -8,6 +8,7 @@ import { Observable } from 'rxjs/Observable';
 import { JobAdvertisementService } from '../../../../../../../main/webapp/app/shared/job-advertisement/job-advertisement.service';
 import { LanguageFilterService } from '../../../../../../../main/webapp/app/shared/input-components/language-filter/language-filter.service';
 import { Store } from '@ngrx/store';
+import { CurrentUser } from '../../../../../../../main/webapp/app/shared';
 
 describe('JobPublicationToolComponent', () => {
     let component: JobPublicationToolComponent;
@@ -49,7 +50,7 @@ describe('JobPublicationToolComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(JobPublicationToolComponent);
         component = fixture.componentInstance;
-        component.userData = {};
+        component.userData = {} as CurrentUser;
         fixture.detectChanges();
     });
 

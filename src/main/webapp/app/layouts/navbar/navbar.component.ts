@@ -5,7 +5,7 @@ import { JhiEventManager, JhiLanguageService } from 'ng-jhipster';
 
 import { ProfileService } from '../profiles/profile.service';
 import {
-    Account,
+    CurrentUser,
     JhiLanguageHelper,
     LoginModalService,
     LoginService,
@@ -22,7 +22,7 @@ import { VERSION } from '../../app.constants';
     ]
 })
 export class NavbarComponent implements OnInit {
-    account: Account;
+    currentUser: CurrentUser;
     inProduction: boolean;
     isNavbarCollapsed: boolean;
     languages: any[];
@@ -47,8 +47,8 @@ export class NavbarComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.principal.identity().then((account) => {
-            this.account = account;
+        this.principal.identity().then((currentUser) => {
+            this.currentUser = currentUser;
         });
         this.registerAuthenticationSuccess();
 
@@ -117,8 +117,8 @@ export class NavbarComponent implements OnInit {
 
     registerAuthenticationSuccess() {
         this.eventManager.subscribe('authenticationSuccess', (message) => {
-            this.principal.identity().then((account) => {
-                this.account = account;
+            this.principal.identity().then((currentUser) => {
+                this.currentUser = currentUser;
             });
         });
     }

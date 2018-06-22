@@ -187,18 +187,18 @@ export class CandidateDetailComponent implements OnInit {
         this.emailContent$ = this.candidateService.canSendAnonymousContactEmail(candidate)
             .filter((canSendEmail) => canSendEmail)
             .flatMap(() => {
-                const identity$ = Observable.fromPromise(this.principal.identity());
+                const identity$ = this.principal.currentUser();
                 const translations$ = this.translateService.stream([
                     'candidate-detail.candidate-anonymous-contact.subject',
                     'candidate-detail.candidate-anonymous-contact.body']);
                 return Observable.combineLatest(identity$, translations$)
-                    .map(([identity, translations]) => {
+                    .map(([currentUser, translations]) => {
                         return {
                             to: candidate.email,
                             subject: translations['candidate-detail.candidate-anonymous-contact.subject'],
                             body: translations['candidate-detail.candidate-anonymous-contact.body'],
-                            phone: identity ? identity.phone : null,
-                            email: identity ? identity.email : null,
+                            phone: null,
+                            email: currentUser ? currentUser.email : null,
                             company: null
                         };
                     });

@@ -23,7 +23,6 @@ import {
     DateUtils,
     Degree,
     EMAIL_REGEX,
-    Gender,
     POSTBOX_NUMBER_REGEX,
     ResponseWrapper,
     URL_REGEX,
@@ -44,7 +43,6 @@ import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import * as countries from 'i18n-iso-countries';
 import { Subscriber } from 'rxjs/Subscriber';
 import { JobPublicationMapper } from './job-publication-mapper';
-import { Organization } from '../../../shared/organization/organization.model';
 import { UserData } from './service/user-data-resolver.service';
 import { JobAdvertisementService } from '../../../shared/job-advertisement/job-advertisement.service';
 import {
@@ -59,6 +57,7 @@ import {
     CoreState,
     getLanguage
 } from '../../../shared/state-management/state/core.state';
+import { Company } from '../../../shared/company/company.model';
 
 @Component({
     selector: 'jr2-job-publication-tool',
@@ -342,9 +341,8 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
     }
 
     private createDefaultFormModel(): JobPublicationForm {
-        const userData: UserData = this.userData || {};
-        const company: Organization = userData.organization || {};
-
+        const userData = this.userData ? this.userData : {} as UserData;
+        const company = userData.company ? userData.company : {} as Company;
         return {
             jobDescriptions: [],
             occupation: {
@@ -380,13 +378,13 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
                 }
             },
             company: {
-                name: company.name,
-                street: company.street,
+                name: company ? company.name : null,
+                street: company ? company.street : null,
                 zipCode: {
-                    zip: company.zipCode,
-                    city: company.city
+                    zip: company ? company.zipCode : null,
+                    city: company ? company.city : null,
                 },
-                houseNumber: company.houseNumber,
+                houseNumber: '',
                 postboxNumber: '',
                 postboxZipCode: {
                     zip: '',
@@ -405,11 +403,11 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
             },
             contact: {
                 language: this.translateService.currentLang,
-                salutation: this.getSalutation(userData),
-                firstName: userData.firstName,
-                lastName: userData.lastName,
-                phoneNumber: userData.phone,
-                email: userData.email
+                salutation: null,
+                firstName: userData ? userData.firstName : '',
+                lastName: userData ? userData.lastName : '',
+                phoneNumber: '',
+                email: userData ? userData.email : ''
             },
             publicContact: {
                 salutation: null,
@@ -459,14 +457,6 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
             .join(', ');
         this.jobPublicationForm.get('application.paperApplicationAddress').setValue(address);
         return false;
-    }
-
-    private getSalutation(userData: UserData): string {
-        if (!userData.gender) {
-            return null;
-        }
-
-        return userData.gender === Gender.MALE ? Salutation[Salutation.MR] : Salutation[Salutation.MS];
     }
 
     ngOnDestroy(): void {
