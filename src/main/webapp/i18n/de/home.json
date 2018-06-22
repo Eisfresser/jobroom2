@@ -34,7 +34,9 @@
                         "label": "Erg\u00e4nzende Angaben",
                         "placeholder": "max. 240 Zeichen"
                     },
-                    "copy-from-business": "Wie oben",
+                    "copy-email-from-public-contact": "Wie bei Kontakt f\u00fcr Stellensuchende",
+                    "copy-phonenumber-from-public-contact": "Wie bei Kontakt f\u00fcr Stellensuchende",
+                    "copy-from-business": "Wie Unternehmen",
                     "email": "E-Mail",
                     "online-form": "Online-Formular",
                     "paper-application-url": "Postadresse",

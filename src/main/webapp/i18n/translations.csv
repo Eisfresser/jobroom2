@@ -660,7 +660,9 @@ home,home.tools.candidateSearchTab,Kandidaten finden,Find candidates,Trouver des
 home,home.tools.job-publication.application.additional-info.characters-counter-text,{{count}} Zeichen verbleibend,{{count}} characters available,{{count}} caractères disponibles,{{count}} caratteri disponibili
 home,home.tools.job-publication.application.additional-info.label,Ergänzende Angaben,Supplementary information,Indications complémentaires,Dati complementari
 home,home.tools.job-publication.application.additional-info.placeholder,max. 240 Zeichen,Max. 240 characters,max. 240 caractères,max. 240 caratteri
-home,home.tools.job-publication.application.copy-from-business,Wie oben,As above,Take address from business,Take address from business
+home,home.tools.job-publication.application.copy-email-from-public-contact,Wie bei Kontakt für Stellensuchende,As jobseeker contact,Comme le contact pour candidats,Come Contatto per candidati
+home,home.tools.job-publication.application.copy-phonenumber-from-public-contact,Wie bei Kontakt für Stellensuchende,As jobseeker contact,Comme le contact pour candidats,Come Contatto per candidati
+home,home.tools.job-publication.application.copy-from-business,Wie Unternehmen,Take address from business,Comme l'entreprise,Come l'impresa
 home,home.tools.job-publication.application.email,E-Mail,Email,Courriel,E-mail
 home,home.tools.job-publication.application.online-form,Online-Formular,Online form,Formulaire en ligne,Modulo online
 home,home.tools.job-publication.application.paper-application-url,Postadresse,Postal address,Adresse postale,Indirizzo postale

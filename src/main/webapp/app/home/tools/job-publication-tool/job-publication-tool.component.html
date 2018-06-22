@@ -565,6 +565,9 @@
                         <label for="app-email" class="col-form-label">
                             {{ 'home.tools.job-publication.application.email' | translate }}
                         </label>
+                        <button class="btn btn-sm btn-info float-right" (click)="copyEmailFromPublicContact()">
+                            {{ 'home.tools.job-publication.application.copy-email-from-public-contact' | translate}}
+                        </button>
                         <div>
                             <input type="email" [jr2TextSizeLimit]="50" class="form-control" id="app-email" formControlName="electronicApplicationEmail" [placeholder]="'home.tools.job-publication.placeholders.email' | translate"/>
                         </div>
@@ -574,6 +577,9 @@
                         <label for="app-phone" class="col-form-label">
                             {{ 'home.tools.job-publication.application.phone' | translate }}
                         </label>
+                        <button class="btn btn-sm btn-info float-right" (click)="copyPhoneNumberFromPublicContact()">
+                            {{ 'home.tools.job-publication.application.copy-phonenumber-from-public-contact' | translate}}
+                        </button>
                         <div>
                             <jr2-phone-number-input id="app-phone" formControlName="phoneNumber" [jr2TextSizeLimit]="50" [placeholder]="'home.tools.job-publication.placeholders.phone' | translate">
                             </jr2-phone-number-input>

@@ -34,7 +34,9 @@
                         "label": "Indications compl\u00e9mentaires",
                         "placeholder": "max. 240 caract\u00e8res"
                     },
-                    "copy-from-business": "Take address from business",
+                    "copy-email-from-public-contact": "Comme le contact pour candidats",
+                    "copy-phonenumber-from-public-contact": "Comme le contact pour candidats",
+                    "copy-from-business": "Comme l'entreprise",
                     "email": "Courriel",
                     "online-form": "Formulaire en ligne",
                     "paper-application-url": "Adresse postale",

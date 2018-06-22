@@ -34,7 +34,9 @@
                         "label": "Dati complementari",
                         "placeholder": "max. 240 caratteri"
                     },
-                    "copy-from-business": "Take address from business",
+                    "copy-email-from-public-contact": "Come Contatto per candidati",
+                    "copy-phonenumber-from-public-contact": "Come Contatto per candidati",
+                    "copy-from-business": "Come l'impresa",
                     "email": "E-mail",
                     "online-form": "Modulo online",
                     "paper-application-url": "Indirizzo postale",

@@ -34,7 +34,9 @@
                         "label": "Supplementary information",
                         "placeholder": "Max. 240 characters"
                     },
-                    "copy-from-business": "As above",
+                    "copy-email-from-public-contact": "As jobseeker contact",
+                    "copy-phonenumber-from-public-contact": "As jobseeker contact",
+                    "copy-from-business": "Take address from business",
                     "email": "Email",
                     "online-form": "Online form",
                     "paper-application-url": "Postal address",

@@ -436,6 +436,18 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
         return false;
     }
 
+     copyPhoneNumberFromPublicContact() {
+        const publicContactPhoneNumber = this.jobPublicationForm.get('publicContact.phoneNumber').value;
+        this.jobPublicationForm.get('application.phoneNumber').setValue(publicContactPhoneNumber);
+        return false;
+    }
+
+    copyEmailFromPublicContact() {
+        const publicContactEmail = this.jobPublicationForm.get('publicContact.email').value;
+        this.jobPublicationForm.get('application.electronicApplicationEmail').setValue(publicContactEmail);
+        return false;
+    }
+
     copyAddressFromCompany() {
         const company: CompanyFormModel = this.jobPublicationForm.get('company').value;
         const addressParts = [company.name];
