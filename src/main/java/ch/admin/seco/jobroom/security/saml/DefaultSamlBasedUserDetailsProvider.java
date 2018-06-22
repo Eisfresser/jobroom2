@@ -1,14 +1,9 @@
 package ch.admin.seco.jobroom.security.saml;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,13 +31,13 @@ public class DefaultSamlBasedUserDetailsProvider implements SamlBasedUserDetails
 
     private final UserInfoRepository userInfoRepository;
 
-    private final Map<String, String> rolemapping;
+    private final EiamRoleMapper eiamRoleMapper;
 
     private final TransactionTemplate transactionTemplate;
 
     public DefaultSamlBasedUserDetailsProvider(UserInfoRepository userInfoRepository, Map<String, String> rolemapping, TransactionTemplate transactionTemplate) {
         this.userInfoRepository = userInfoRepository;
-        this.rolemapping = rolemapping;
+        this.eiamRoleMapper = new EiamRoleMapper(rolemapping);
         this.transactionTemplate = transactionTemplate;
     }
 
@@ -86,7 +81,7 @@ public class DefaultSamlBasedUserDetailsProvider implements SamlBasedUserDetails
             eiamEnrichedSamlUser.getUserExtId().get(),
             eiamEnrichedSamlUser.getLanguage().get().toLowerCase()
         );
-        userPrincipal.setAuthoritiesFromStringCollection(mapEiamRolesToJobRoomRoles(eiamEnrichedSamlUser.getRoles()));
+        userPrincipal.setAuthoritiesFromStringCollection(this.eiamRoleMapper.mapEiamRolesToJobRoomRoles(eiamEnrichedSamlUser.getRoles()));
         userPrincipal.setAuthenticationMethod(eiamEnrichedSamlUser.getAuthnContext());
         userPrincipal.setUserDefaultProfileExtId(eiamEnrichedSamlUser.getDefaultProfileExtId().get());
 
@@ -113,22 +108,6 @@ public class DefaultSamlBasedUserDetailsProvider implements SamlBasedUserDetails
             eiamEnrichedSamlUser.getUserExtId().get(),
             eiamEnrichedSamlUser.getLanguage().get().toLowerCase()
         );
-    }
-
-    private Set<String> mapEiamRolesToJobRoomRoles(List<String> eiamRoles) {
-        Map<String, List<String>> multimap = new HashMap<>();
-        for (Map.Entry<String, String> mappingEntry : this.rolemapping.entrySet()) {
-            String jobRoomRole = mappingEntry.getKey();
-            String eiamRole = mappingEntry.getValue();
-            multimap.computeIfAbsent(eiamRole, k -> new ArrayList<>())
-                .add(jobRoomRole);
-        }
-        Set<String> result = new HashSet<>();
-        for (String eiamRole : eiamRoles) {
-            List<String> strings = multimap.getOrDefault(eiamRole, Collections.emptyList());
-            result.addAll(strings);
-        }
-        return result;
     }
 
 }
