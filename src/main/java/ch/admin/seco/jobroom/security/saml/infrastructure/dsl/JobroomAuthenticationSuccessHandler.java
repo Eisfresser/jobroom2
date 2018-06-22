@@ -46,7 +46,7 @@ public class JobroomAuthenticationSuccessHandler extends SavedRequestAwareAuthen
     JobroomAuthenticationSuccessHandler(String targetUrlEiamAccessRequest, UserInfoRepository userInfoRepository) {
         this.targetUrlEiamAccessRequest = targetUrlEiamAccessRequest;
         this.userInfoRepository = userInfoRepository;
-        this.registrationStatusStrategyMap.put(RegistrationStatus.REGISTERED, this::onAuthenticationSuccess);
+        this.registrationStatusStrategyMap.put(RegistrationStatus.REGISTERED, super::onAuthenticationSuccess);
         this.registrationStatusStrategyMap.put(RegistrationStatus.UNREGISTERED, (request, response, authentication) -> redirectTo(SAMLConfigurer.TARGET_URL_REGISTRATION_PROCESS, request, response));
         this.registrationStatusStrategyMap.put(RegistrationStatus.VALIDATION_EMP, (request, response, authentication) -> redirectTo(SAMLConfigurer.TARGET_URL_ENTER_ACCESS_CODE, request, response));
         this.registrationStatusStrategyMap.put(RegistrationStatus.VALIDATION_PAV, (request, response, authentication) -> redirectTo(SAMLConfigurer.TARGET_URL_ENTER_ACCESS_CODE, request, response));
