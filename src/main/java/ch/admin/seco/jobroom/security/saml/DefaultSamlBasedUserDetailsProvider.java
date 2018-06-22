@@ -1,14 +1,18 @@
 package ch.admin.seco.jobroom.security.saml;
 
-import ch.admin.seco.jobroom.domain.UserInfo;
-import ch.admin.seco.jobroom.repository.UserInfoRepository;
-import ch.admin.seco.jobroom.security.AuthoritiesConstants;
-import ch.admin.seco.jobroom.security.UserPrincipal;
-import ch.admin.seco.jobroom.security.saml.infrastructure.EiamEnrichedSamlUser;
-import ch.admin.seco.jobroom.security.saml.infrastructure.SamlBasedUserDetailsProvider;
-import ch.admin.seco.jobroom.security.saml.infrastructure.SamlUser;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -17,7 +21,13 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionTemplate;
 
-import java.util.*;
+import ch.admin.seco.jobroom.domain.UserInfo;
+import ch.admin.seco.jobroom.repository.UserInfoRepository;
+import ch.admin.seco.jobroom.security.AuthoritiesConstants;
+import ch.admin.seco.jobroom.security.UserPrincipal;
+import ch.admin.seco.jobroom.security.saml.infrastructure.EiamEnrichedSamlUser;
+import ch.admin.seco.jobroom.security.saml.infrastructure.SamlBasedUserDetailsProvider;
+import ch.admin.seco.jobroom.security.saml.infrastructure.SamlUser;
 
 @Transactional
 public class DefaultSamlBasedUserDetailsProvider implements SamlBasedUserDetailsProvider {
@@ -105,19 +115,20 @@ public class DefaultSamlBasedUserDetailsProvider implements SamlBasedUserDetails
         );
     }
 
-    private List<String> mapEiamRolesToJobRoomRoles(List<String> eiamRoles) {
-        Map<String, String> reverseMap = new HashMap<>(rolemapping.size());
-        for (Map.Entry<String, String> mapping : rolemapping.entrySet()) {
-            reverseMap.put(mapping.getValue(), mapping.getKey());
+    private Set<String> mapEiamRolesToJobRoomRoles(List<String> eiamRoles) {
+        Map<String, List<String>> multimap = new HashMap<>();
+        for (Map.Entry<String, String> mappingEntry : this.rolemapping.entrySet()) {
+            String jobRoomRole = mappingEntry.getKey();
+            String eiamRole = mappingEntry.getValue();
+            multimap.computeIfAbsent(eiamRole, k -> new ArrayList<>())
+                .add(jobRoomRole);
         }
-        List<String> jobRoomRoles = new ArrayList<>();
+        Set<String> result = new HashSet<>();
         for (String eiamRole : eiamRoles) {
-            String jobRoomRole = reverseMap.get(eiamRole);
-            if (jobRoomRole != null) {
-                jobRoomRoles.add(jobRoomRole);
-            }
+            List<String> strings = multimap.getOrDefault(eiamRole, Collections.emptyList());
+            result.addAll(strings);
         }
-        return jobRoomRoles;
+        return result;
     }
 
 }
