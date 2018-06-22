@@ -1,22 +1,27 @@
 package ch.admin.seco.jobroom.security.saml.infrastructure.dsl;
 
-import ch.admin.seco.jobroom.domain.UserInfo;
-import ch.admin.seco.jobroom.domain.enumeration.RegistrationStatus;
-import ch.admin.seco.jobroom.repository.UserInfoRepository;
-import ch.admin.seco.jobroom.security.AuthoritiesConstants;
-import ch.admin.seco.jobroom.security.UserPrincipal;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.stream.Collectors;
+import ch.admin.seco.jobroom.domain.UserInfo;
+import ch.admin.seco.jobroom.domain.enumeration.RegistrationStatus;
+import ch.admin.seco.jobroom.repository.UserInfoRepository;
+import ch.admin.seco.jobroom.security.AuthoritiesConstants;
+import ch.admin.seco.jobroom.security.UserPrincipal;
 
 /**
  * The success handler is called after the user has been authenticated successfully. It is
@@ -36,9 +41,15 @@ public class JobroomAuthenticationSuccessHandler extends SavedRequestAwareAuthen
 
     private final UserInfoRepository userInfoRepository;
 
+    private final Map<RegistrationStatus, RegistrationStatusStrategy> registrationStatusStrategyMap = new HashMap<>();
+
     JobroomAuthenticationSuccessHandler(String targetUrlEiamAccessRequest, UserInfoRepository userInfoRepository) {
         this.targetUrlEiamAccessRequest = targetUrlEiamAccessRequest;
         this.userInfoRepository = userInfoRepository;
+        this.registrationStatusStrategyMap.put(RegistrationStatus.REGISTERED, this::onAuthenticationSuccess);
+        this.registrationStatusStrategyMap.put(RegistrationStatus.UNREGISTERED, (request, response, authentication) -> redirectTo(SAMLConfigurer.TARGET_URL_REGISTRATION_PROCESS, request, response));
+        this.registrationStatusStrategyMap.put(RegistrationStatus.VALIDATION_EMP, (request, response, authentication) -> redirectTo(SAMLConfigurer.TARGET_URL_ENTER_ACCESS_CODE, request, response));
+        this.registrationStatusStrategyMap.put(RegistrationStatus.VALIDATION_PAV, (request, response, authentication) -> redirectTo(SAMLConfigurer.TARGET_URL_ENTER_ACCESS_CODE, request, response));
     }
 
     @Override
@@ -64,33 +75,36 @@ public class JobroomAuthenticationSuccessHandler extends SavedRequestAwareAuthen
     private void handleAuthenticatedUser(Authentication authentication, UserPrincipal userPrincipal, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         UserInfo userInfo = userInfoRepository.findById(userPrincipal.getId())
             .orElseThrow(() -> new IllegalStateException("No user found with Id: " + userPrincipal.getId().getValue()));
-        RegistrationStatus registrationStatus = userInfo.getRegistrationStatus();
-        if (registrationStatus.equals(RegistrationStatus.UNREGISTERED)) {
-            // first-time user -> send to registration process
-            redirectTo(SAMLConfigurer.TARGET_URL_REGISTRATION_PROCESS, request, response);
+
+        if (this.isAdmin(authentication)) {
+            logger.debug("User is Admin -> redirect to home");
+            super.onAuthenticationSuccess(request, response, authentication);
             return;
         }
-        if (registrationStatus == RegistrationStatus.VALIDATION_EMP || registrationStatus == RegistrationStatus.VALIDATION_PAV) {
-            // PAV and company users need 2-factor authentication!
-            if (userPrincipal.hasOnlyOneFactorAuthentication()) {
-                // send to 2 factor setup in eIAM
-                redirectTo(SAMLConfigurer.TARGET_URL_FORCE_TWO_FACTOR_AUTH, request, response);
-                authentication.setAuthenticated(false);
-            } else {
-                // if user has 2-factor authentication -> show page for entering access code
-                redirectTo(SAMLConfigurer.TARGET_URL_ENTER_ACCESS_CODE, request, response);
-            }
-        } else {
-            // make sure PAV and company users are authenticated with 2-factor!
-            // this is a functionality which should be provided by a future PeP implementation
-            if ((isAgent(authentication) || isEmployer(authentication)) && userPrincipal.hasOnlyOneFactorAuthentication()) {
-                // send to 2 factor setup in eIAM
-                redirectTo(SAMLConfigurer.TARGET_URL_FORCE_TWO_FACTOR_AUTH, request, response);
-                authentication.setAuthenticated(false);
-            }
-            // if user is registered in jobroom process with default authentication success handler
-            super.onAuthenticationSuccess(request, response, authentication);
+
+        // make sure PAV and company users are authenticated with 2-factor!
+        // this is a functionality which should be provided by a future PeP implementation
+        if ((isAgent(authentication) || isEmployer(authentication)) && userPrincipal.hasOnlyOneFactorAuthentication()) {
+            // send to 2 factor setup in eIAM
+            redirectTo(SAMLConfigurer.TARGET_URL_FORCE_TWO_FACTOR_AUTH, request, response);
+            authentication.setAuthenticated(false);
+            return;
         }
+
+        RegistrationStatus registrationStatus = userInfo.getRegistrationStatus();
+        if (registrationStatus == null) {
+            logger.warn("User's registration status null -> redirect to home");
+            super.onAuthenticationSuccess(request, response, authentication);
+            return;
+        }
+
+        RegistrationStatusStrategy registrationStatusStrategy = this.registrationStatusStrategyMap.get(registrationStatus);
+        if (registrationStatusStrategy == null) {
+            logger.warn("No Registration redirect strategy defined for: " + registrationStatus + " -> redirect to home");
+            super.onAuthenticationSuccess(request, response, authentication);
+            return;
+        }
+        registrationStatusStrategy.handleRedirect(request, response, authentication);
     }
 
     private boolean isAgent(Authentication authentication) {
@@ -101,10 +115,22 @@ public class JobroomAuthenticationSuccessHandler extends SavedRequestAwareAuthen
         return authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals(AuthoritiesConstants.ROLE_COMPANY));
     }
 
+    private boolean isAdmin(Authentication authentication) {
+        return authentication.getAuthorities().stream()
+            .anyMatch(a -> a.getAuthority().equals(AuthoritiesConstants.ROLE_ADMIN) || a.getAuthority().equals(AuthoritiesConstants.ROLE_SYSADMIN));
+    }
+
+
     private void redirectTo(String targetUrl, HttpServletRequest request, HttpServletResponse response) throws IOException {
         logger.info("Redirecting to target url: " + targetUrl);
         getRedirectStrategy().sendRedirect(request, response, targetUrl);
         clearAuthenticationAttributes(request);
+    }
+
+    interface RegistrationStatusStrategy {
+
+        void handleRedirect(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws ServletException, IOException;
+
     }
 
 }
