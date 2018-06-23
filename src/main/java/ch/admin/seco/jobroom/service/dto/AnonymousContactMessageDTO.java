@@ -5,7 +5,7 @@ import javax.validation.constraints.NotNull;
 public class AnonymousContactMessageDTO {
 
     @NotNull
-    private String to;
+    private String candidateId;
 
     @NotNull
     private String subject;
@@ -19,12 +19,12 @@ public class AnonymousContactMessageDTO {
 
     private CompanyDTO company;
 
-    public String getTo() {
-        return to;
+    public String getCandidateId() {
+        return candidateId;
     }
 
-    public void setTo(String to) {
-        this.to = to;
+    public void setCandidateId(String candidateId) {
+        this.candidateId = candidateId;
     }
 
     public String getSubject() {

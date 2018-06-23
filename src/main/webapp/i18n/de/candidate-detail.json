@@ -29,7 +29,14 @@
             "contact-via.phone": "Telefon",
             "dismiss": "Abbrechen",
             "send-to": "Schicken Sie Ihre Bewerbungsunterlagen an:",
-            "title": "Kandidat-/in kontaktieren"
+            "title": "Kandidat-/in kontaktieren",
+            "company": "Company",
+            "contact-person": "Contact person",
+            "street": "Street",
+            "house": "No.",
+            "zip-code": "Postal code",
+            "city": "City",
+            "country": "Country"
         },
         "back": "Zur\u00fcck zu den Suchergebnissen",
         "candidate-anonymous-contact": "Kandidat/-in kontaktieren",

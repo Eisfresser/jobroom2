@@ -137,6 +137,10 @@ jhipster:
         allow-credentials: true
         max-age: 1800
     security:
+        client-authorization:
+            access-token-uri: http://localhost:8080/api/authenticate
+            client-id: admin
+            client-secret: admin
         authentication:
             jwt:
                 secret: my-secret-token-to-change-in-production

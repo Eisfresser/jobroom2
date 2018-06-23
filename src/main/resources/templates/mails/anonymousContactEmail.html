@@ -14,7 +14,7 @@
     <p th:if="${company}">
         <label th:text="${company.name}"></label><br>
         <label th:text="${company.contactPerson}"></label><br>
-        <label th:text="#{email.anonymousContact.address(${company.street}, ${company.houseNumber})}"></label><br>
+        <label th:text="#{email.anonymousContact.address(${company.street}, ${company.houseNumber?})}"></label><br>
         <label th:text="#{email.anonymousContact.address(${company.zipCode}, ${company.city})}"></label><br>
         <label th:text="${company.country}"></label>
     </p>

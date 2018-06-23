@@ -1,4 +1,4 @@
-package ch.admin.seco.jobroom.security.registration.stes;
+package ch.admin.seco.jobroom.service.dto;
 
 public class StesVerificationResult {
 

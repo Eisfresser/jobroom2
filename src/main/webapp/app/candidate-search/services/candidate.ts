@@ -1,5 +1,6 @@
 import {
-    Availability, CEFR_Level,
+    Availability,
+    CEFR_Level,
     Contact,
     Experience,
     Gender,
@@ -92,4 +93,5 @@ export interface CandidateProfile {
     jobCenterCode: string;
     jobAdvisor: Contact;
     visited?: boolean;
+    contactTypes?: string[];
 }

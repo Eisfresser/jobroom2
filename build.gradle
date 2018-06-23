@@ -106,7 +106,7 @@ sourceSets {
     }
 }
 
-task generateUidWsClient(type:Exec) {
+task generateUidWsClient(type: Exec) {
     doFirst { mkdir 'build/generated-sources/uid' }
     executable 'wsimport'
     args '-keep'
@@ -118,7 +118,7 @@ task generateUidWsClient(type:Exec) {
     args '-J-Duser.language=en'
     args '-J-Djavax.xml.accessExternalSchema=all'
 }
-task generateEiamWsClient(type:Exec) {
+task generateEiamWsClient(type: Exec) {
     doFirst { mkdir 'build/generated-sources/eiam' }
     executable 'wsimport'
     args '-keep'
@@ -227,6 +227,7 @@ dependencies {
     compile "org.springframework.cloud:spring-cloud-starter-netflix-eureka-client"
     compile "org.springframework.cloud:spring-cloud-starter-config"
     compile "org.springframework.cloud:spring-cloud-starter-openfeign"
+    compile "org.springframework.cloud:spring-cloud-starter-security"
     compile "org.springframework.cloud:spring-cloud-spring-service-connector"
     compile "org.springframework.security.oauth:spring-security-oauth2"
     compile "org.springframework.security.extensions:spring-security-saml2-core"
@@ -281,11 +282,11 @@ if (project.hasProperty('nodeInstall')) {
 
 task buildWebserviceClients() {
     def uidFolder = new File('build/generated-sources/uid')
-    if( !uidFolder.exists() ) {
+    if (!uidFolder.exists()) {
         project.tasks.getByName("generateUidWsClient").execute()
     }
     def eiamFolder = new File('build/generated-sources/eiam')
-    if( !eiamFolder.exists() ) {
+    if (!eiamFolder.exists()) {
         project.tasks.getByName("generateEiamWsClient").execute()
     }
 }

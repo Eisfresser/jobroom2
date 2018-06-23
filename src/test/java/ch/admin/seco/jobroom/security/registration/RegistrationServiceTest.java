@@ -1,5 +1,32 @@
 package ch.admin.seco.jobroom.security.registration;
 
+import static org.junit.Assert.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.eq;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Optional;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.MockitoJUnitRunner;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+
 import ch.admin.seco.jobroom.config.Constants;
 import ch.admin.seco.jobroom.domain.Company;
 import ch.admin.seco.jobroom.domain.Organization;
@@ -13,8 +40,6 @@ import ch.admin.seco.jobroom.security.AuthoritiesConstants;
 import ch.admin.seco.jobroom.security.MD5PasswordEncoder;
 import ch.admin.seco.jobroom.security.UserPrincipal;
 import ch.admin.seco.jobroom.security.registration.eiam.exceptions.RoleCouldNotBeAddedException;
-import ch.admin.seco.jobroom.security.registration.stes.StesService;
-import ch.admin.seco.jobroom.security.registration.stes.StesVerificationResult;
 import ch.admin.seco.jobroom.security.registration.uid.UidClient;
 import ch.admin.seco.jobroom.security.registration.uid.dto.AddressData;
 import ch.admin.seco.jobroom.security.registration.uid.dto.FirmData;
@@ -22,33 +47,12 @@ import ch.admin.seco.jobroom.security.registration.uid.exceptions.CompanyNotFoun
 import ch.admin.seco.jobroom.security.registration.uid.exceptions.UidClientException;
 import ch.admin.seco.jobroom.security.registration.uid.exceptions.UidNotUniqueException;
 import ch.admin.seco.jobroom.security.saml.utils.IamService;
+import ch.admin.seco.jobroom.service.CandidateService;
 import ch.admin.seco.jobroom.service.CurrentUserService;
 import ch.admin.seco.jobroom.service.MailService;
 import ch.admin.seco.jobroom.service.dto.RegistrationResultDTO;
+import ch.admin.seco.jobroom.service.dto.StesVerificationResult;
 import ch.admin.seco.jobroom.web.rest.vm.RegisterJobseekerVM;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Optional;
-
-import static org.junit.Assert.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.eq;
-import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RegistrationServiceTest {
@@ -97,7 +101,7 @@ public class RegistrationServiceTest {
     private IamService mockIamService;
 
     @Mock
-    private StesService mockStesService;
+    private CandidateService mockCandidateService;
 
     @Mock
     private CurrentUserService currentUserService;
@@ -114,7 +118,7 @@ public class RegistrationServiceTest {
     public void insertNewJobseeker() throws RoleCouldNotBeAddedException, InvalidPersonenNumberException, StesServiceException {
         StesVerificationResult stesVerificationResult = new StesVerificationResult();
         stesVerificationResult.setVerified(true);
-        when(mockStesService.verifyStesRegistrationData(any())).thenReturn(stesVerificationResult);
+        when(mockCandidateService.verifyStesRegistrationData(any())).thenReturn(stesVerificationResult);
 
         this.registrationService.registerAsJobSeeker(LocalDate.of(BIRTHDATE_YEAR, BIRTHDATE_MONTH, BIRTHDATE_DAY), VALID_PERS_NO);
 

@@ -65,8 +65,7 @@
                     <div class="form-check col-2">
                         <input formControlName="sendPhone" type="checkbox">
                         <label class="form-check-label">
-                            {{ 'candidate-detail.anonymous-contact.contact-via.phone' |
-                            translate }}
+                            {{ 'candidate-detail.anonymous-contact.contact-via.phone' | translate }}
                         </label>
                     </div>
                     <div *ngIf="anonymousContactForm.get('sendPhone').value"
@@ -76,27 +75,27 @@
                             *ngIf="anonymousContactForm.get('phone').disabled">
                             <span>{{ anonymousContactForm.get('phone').value }}</span>
 
-                            <a *ngIf="anonymousContactForm.get('phone').disabled"
-                               class="float-right" (click)="edit('phone')">
+                            <a *ngIf="anonymousContactForm.get('phone').disabled && anonymousContactForm.get('sendPhone').enabled"
+                               class="float-right" (click)="edit('phone', 'sendPhone')">
                                 <span aria-hidden="true" class="fa fa-pencil"></span>
                             </a>
                         </ng-container>
 
-                        <ng-container
-                            *ngIf="anonymousContactForm.get('phone').enabled">
-                            <input formControlName="phone" class="form-control">
+                        <ng-container *ngIf="anonymousContactForm.get('phone').enabled">
+                            <input formControlName="phone" class="form-control"
+                                   [placeholder]="'global.form.phone.placeholder' | translate">
 
                             <div class="input-group-append"
                                  *ngIf="anonymousContactForm.get('phone').enabled">
                                 <button type="button" class="btn btn-sm"
                                         aria-hidden="true"
-                                        (click)="discardChanges('phone')">
+                                        (click)="discardChanges('phone', 'sendPhone')">
                                     <span class="fa fa-times"></span>
                                 </button>
                                 <button type="button" class="btn btn-sm"
                                         aria-hidden="true"
                                         [disabled]="anonymousContactForm.get('phone').invalid"
-                                        (click)="applyChanges('phone')">
+                                        (click)="applyChanges('phone', 'sendPhone')">
                                     <span class="fa fa-check-square"></span>
                                 </button>
                             </div>
@@ -120,7 +119,8 @@
                             *ngIf="anonymousContactForm.get('email').disabled">
                             <span>{{ anonymousContactForm.get('email').value }}</span>
 
-                            <a class="float-right" (click)="edit('email')">
+                            <a *ngIf="anonymousContactForm.get('sendEmail').enabled"
+                               class="float-right" (click)="edit('email', 'sendEmail')">
                                 <span aria-hidden="true" class="fa fa-pencil"></span>
                             </a>
                         </ng-container>
@@ -132,13 +132,13 @@
                             <div class="input-group-append">
                                 <button type="button" class="btn btn-sm"
                                         aria-hidden="true"
-                                        (click)="discardChanges('email')">
+                                        (click)="discardChanges('email', 'sendEmail')">
                                     <span class="fa fa-times"></span>
                                 </button>
                                 <button type="button" class="btn btn-sm"
                                         aria-hidden="true"
                                         [disabled]="anonymousContactForm.get('email').invalid"
-                                        (click)="applyChanges('email')">
+                                        (click)="applyChanges('email', 'sendEmail')">
                                     <span class="fa fa-check-square"></span>
                                 </button>
                             </div>
@@ -156,7 +156,7 @@
                 <ng-container *ngIf="anonymousContactForm.get('company').disabled">
                     <div>
                         <span>{{ emailContent.company?.name }}</span>
-                        <a class="float-right" (click)="edit('company')">
+                        <a class="float-right" (click)="edit('company', 'sendAddress')">
                             <span aria-hidden="true" class="fa fa-pencil"></span>
                         </a>
                     </div>
@@ -170,15 +170,16 @@
                 <ng-container formGroupName="company"
                               *ngIf="anonymousContactForm.get('company').enabled">
                     <div class="input-group">
-                        <input formControlName="name" class="form-control">
+                        <input formControlName="name" class="form-control"
+                               [placeholder]="'candidate-detail.anonymous-contact.company' | translate">
                         <div class="input-group-append">
                             <button type="button" class="btn btn-sm" aria-hidden="true"
-                                    (click)="discardChanges('company')">
+                                    (click)="discardChanges('company', 'sendAddress')">
                                 <span class="fa fa-times"></span>
                             </button>
                             <button type="button" class="btn btn-sm" aria-hidden="true"
                                     [disabled]="anonymousContactForm.get('company').invalid"
-                                    (click)="applyChanges('company')">
+                                    (click)="applyChanges('company', 'sendAddress')">
                                 <span class="fa fa-check-square"></span>
                             </button>
                         </div>
@@ -186,31 +187,37 @@
 
                     <div class="form-row">
                         <div class="form-group col-11">
-                            <input formControlName="contactPerson" class="form-control">
+                            <input formControlName="contactPerson" class="form-control"
+                                   [placeholder]="'candidate-detail.anonymous-contact.contact-person' | translate">
                         </div>
                     </div>
 
                     <div class="form-row">
                         <div class="form-group col-9">
-                            <input formControlName="street" class="form-control">
+                            <input formControlName="street" class="form-control"
+                                   [placeholder]="'candidate-detail.anonymous-contact.street' | translate">
                         </div>
                         <div class="form-group col-2">
-                            <input formControlName="houseNumber" class="form-control">
+                            <input formControlName="houseNumber" class="form-control"
+                                   [placeholder]="'candidate-detail.anonymous-contact.house' | translate">
                         </div>
                     </div>
 
                     <div class="form-row">
                         <div class="form-group col-3">
-                            <input formControlName="zipCode" class="form-control">
+                            <input formControlName="zipCode" class="form-control"
+                                   [placeholder]="'candidate-detail.anonymous-contact.zip-code' | translate">
                         </div>
                         <div class="form-group col-8">
-                            <input formControlName="city" class="form-control">
+                            <input formControlName="city" class="form-control"
+                                   [placeholder]="'candidate-detail.anonymous-contact.city' | translate">
                         </div>
                     </div>
 
                     <div class="form-row">
                         <div class="form-group col-11">
-                            <input formControlName="country" class="form-control">
+                            <input formControlName="country" class="form-control"
+                                   [placeholder]="'candidate-detail.anonymous-contact.country' | translate">
                         </div>
                     </div>
                 </ng-container>

@@ -29,7 +29,14 @@
             "contact-via.phone": "Phone",
             "dismiss": "Cancel",
             "send-to": "Send your application documents to:",
-            "title": "Contact candidate"
+            "title": "Contact candidate",
+            "company": "Company",
+            "contact-person": "Contact person",
+            "street": "Street",
+            "house": "No.",
+            "zip-code": "Postal code",
+            "city": "City",
+            "country": "Country"
         },
         "back": "Back to search results",
         "candidate-anonymous-contact": "Contact candidate",

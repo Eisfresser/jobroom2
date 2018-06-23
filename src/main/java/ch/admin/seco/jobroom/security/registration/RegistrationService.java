@@ -1,7 +1,26 @@
 package ch.admin.seco.jobroom.security.registration;
 
+import static ch.admin.seco.jobroom.domain.UserInfo_.registrationStatus;
+
+import java.time.LocalDate;
+import java.util.Optional;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
+import org.springframework.util.StringUtils;
+
 import ch.admin.seco.jobroom.config.Constants;
-import ch.admin.seco.jobroom.domain.*;
+import ch.admin.seco.jobroom.domain.Company;
+import ch.admin.seco.jobroom.domain.Organization;
+import ch.admin.seco.jobroom.domain.User;
+import ch.admin.seco.jobroom.domain.UserInfo;
+import ch.admin.seco.jobroom.domain.UserInfoId;
 import ch.admin.seco.jobroom.domain.enumeration.CompanySource;
 import ch.admin.seco.jobroom.domain.enumeration.RegistrationStatus;
 import ch.admin.seco.jobroom.repository.CompanyRepository;
@@ -12,31 +31,18 @@ import ch.admin.seco.jobroom.security.AuthoritiesConstants;
 import ch.admin.seco.jobroom.security.MD5PasswordEncoder;
 import ch.admin.seco.jobroom.security.UserPrincipal;
 import ch.admin.seco.jobroom.security.registration.eiam.exceptions.RoleCouldNotBeAddedException;
-import ch.admin.seco.jobroom.security.registration.stes.StesService;
-import ch.admin.seco.jobroom.security.registration.stes.StesVerificationRequest;
-import ch.admin.seco.jobroom.security.registration.stes.StesVerificationResult;
 import ch.admin.seco.jobroom.security.registration.uid.UidClient;
 import ch.admin.seco.jobroom.security.registration.uid.dto.FirmData;
 import ch.admin.seco.jobroom.security.registration.uid.exceptions.CompanyNotFoundException;
 import ch.admin.seco.jobroom.security.registration.uid.exceptions.UidClientException;
 import ch.admin.seco.jobroom.security.registration.uid.exceptions.UidNotUniqueException;
 import ch.admin.seco.jobroom.security.saml.utils.IamService;
+import ch.admin.seco.jobroom.service.CandidateService;
 import ch.admin.seco.jobroom.service.CurrentUserService;
 import ch.admin.seco.jobroom.service.MailService;
 import ch.admin.seco.jobroom.service.dto.RegistrationResultDTO;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Assert;
-import org.springframework.util.StringUtils;
-
-import java.time.LocalDate;
-import java.util.Optional;
-
-import static ch.admin.seco.jobroom.domain.UserInfo_.registrationStatus;
+import ch.admin.seco.jobroom.service.dto.StesVerificationRequest;
+import ch.admin.seco.jobroom.service.dto.StesVerificationResult;
 
 @Service
 @ConfigurationProperties(prefix = "security")
@@ -58,7 +64,7 @@ public class RegistrationService {
 
     private final IamService iamService;
 
-    private final StesService stesService;
+    private final CandidateService candidateService;
 
     private final CurrentUserService currentUserService;
 
@@ -68,7 +74,7 @@ public class RegistrationService {
     private static final int ACCESS_CODE_LENGTH = 8;
 
     @Autowired
-    public RegistrationService(UserInfoRepository userInfoRepository, CompanyRepository companyRepository, OrganizationRepository organizationRepository, UserRepository userRepository, MailService mailService, UidClient uidClient, IamService iamService, StesService stesService, CurrentUserService currentUserService) {
+    public RegistrationService(UserInfoRepository userInfoRepository, CompanyRepository companyRepository, OrganizationRepository organizationRepository, UserRepository userRepository, MailService mailService, UidClient uidClient, IamService iamService, CandidateService candidateService, CurrentUserService currentUserService) {
         this.userInfoRepository = userInfoRepository;
         this.companyRepository = companyRepository;
         this.organizationRepository = organizationRepository;
@@ -76,7 +82,7 @@ public class RegistrationService {
         this.mailService = mailService;
         this.uidClient = uidClient;
         this.iamService = iamService;
-        this.stesService = stesService;
+        this.candidateService = candidateService;
         this.currentUserService = currentUserService;
     }
 
@@ -182,7 +188,7 @@ public class RegistrationService {
     private boolean validatePersonNumber(LocalDate birthdate, Long personNumber) throws StesServiceException {
         StesVerificationRequest jobseekerRequestData = new StesVerificationRequest(personNumber, birthdate);
         try {
-            StesVerificationResult stesVerificationResult = this.stesService.verifyStesRegistrationData(jobseekerRequestData);
+            StesVerificationResult stesVerificationResult = this.candidateService.verifyStesRegistrationData(jobseekerRequestData);
             return stesVerificationResult.isVerified();
         } catch (Exception e) {
             throw new StesServiceException(e);

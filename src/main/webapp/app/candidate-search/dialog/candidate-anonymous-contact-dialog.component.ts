@@ -1,19 +1,22 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { EMAIL_REGEX, PHONE_NUMBER_REGEX, POSTBOX_NUMBER_REGEX } from '../../shared';
 import { EmailContent, MailService } from '../services/mail.service';
+import { Subject } from 'rxjs/Subject';
 
 @Component({
     templateUrl: './candidate-anonymous-contact-dialog.component.html',
     styleUrls: ['./candidate-anonymous-contact-dialog.component.scss']
 })
-export class CandidateAnonymousContactDialogComponent implements OnInit {
+export class CandidateAnonymousContactDialogComponent implements OnInit, OnDestroy {
     readonly MESSAGE_BODY_MAX_LENGTH = 10000;
 
     @Input() emailContent: EmailContent;
 
     anonymousContactForm: FormGroup;
+
+    private unsubscribe$ = new Subject<void>();
 
     constructor(private formBuilder: FormBuilder,
                 private mailService: MailService,
@@ -41,53 +44,92 @@ export class CandidateAnonymousContactDialogComponent implements OnInit {
                 disabled: true
             }, Validators.pattern(EMAIL_REGEX)],
             sendAddress: true,
-            company: this.formBuilder.group(this.buildCompanyFormGroup())
+            company: this.formBuilder.group({
+                name: this.emailContent.company ? this.emailContent.company.name : '',
+                contactPerson: this.emailContent.company ? this.emailContent.company.contactPerson : '',
+                street: this.emailContent.company ? this.emailContent.company.street : '',
+                houseNumber: this.emailContent.company ? this.emailContent.company.houseNumber : '',
+                zipCode: [this.emailContent.company ? this.emailContent.company.zipCode : null, Validators.pattern(POSTBOX_NUMBER_REGEX)],
+                city: this.emailContent.company ? this.emailContent.company.city : '',
+                country: this.emailContent.company ? this.emailContent.company.country : ''
+            })
         });
         this.anonymousContactForm.get('company').disable();
+
+        this.toggleValue('sendPhone', 'phone');
+        this.toggleValue('sendEmail', 'email');
+        this.toggleValue('sendAddress', 'company');
     }
 
-    private buildCompanyFormGroup() {
-        return {
-            name: this.emailContent.company ? this.emailContent.company.name : '',
-            contactPerson: this.emailContent.company ? this.emailContent.company.contactPerson : '',
-            street: this.emailContent.company ? this.emailContent.company.street : '',
-            houseNumber: this.emailContent.company ? this.emailContent.company.houseNumber : '',
-            zipCode: [this.emailContent.company ? this.emailContent.company.zipCode : '', Validators.pattern(POSTBOX_NUMBER_REGEX)],
-            city: this.emailContent.company ? this.emailContent.company.city : '',
-            country: this.emailContent.company ? this.emailContent.company.country : ''
-        }
+    ngOnDestroy(): void {
+        this.unsubscribe$.next();
+        this.unsubscribe$.complete();
+    }
+
+    private toggleValue(toggleControl: string, source: string) {
+        this.anonymousContactForm.get(toggleControl).valueChanges
+            .takeUntil(this.unsubscribe$)
+            .subscribe((active) => {
+                if (active) {
+                    this.updateEmailContentProperty(source);
+                } else {
+                    this.emailContent[source] = null;
+                }
+            });
     }
 
     sendMessage(): void {
         if (this.anonymousContactForm.valid) {
-            this.mailService.senAnonymousContactMessage(this.emailContent);
-            this.activeModal.close();
+            this.mailService.senAnonymousContactMessage(this.emailContent)
+                .finally(() => this.activeModal.close())
+                .subscribe();
         }
     }
 
-    edit(controlName: string): void {
+    edit(controlName: string, toggleControl?: string): void {
         this.anonymousContactForm.get(controlName).enable();
+        if (toggleControl) {
+            this.anonymousContactForm.get(toggleControl).disable();
+        }
     }
 
-    discardChanges(controlName: string): void {
+    discardChanges(controlName: string, toggleControl?: string): void {
         const control = this.anonymousContactForm.get(controlName);
         switch (controlName) {
             case 'company':
-                control.reset(this.buildCompanyFormGroup());
+                control.reset({
+                    name: this.emailContent.company ? this.emailContent.company.name : '',
+                    contactPerson: this.emailContent.company ? this.emailContent.company.contactPerson : '',
+                    street: this.emailContent.company ? this.emailContent.company.street : '',
+                    houseNumber: this.emailContent.company ? this.emailContent.company.houseNumber : '',
+                    zipCode: this.emailContent.company ? this.emailContent.company.zipCode : '',
+                    city: this.emailContent.company ? this.emailContent.company.city : '',
+                    country: this.emailContent.company ? this.emailContent.company.country : ''
+                });
                 break;
             default:
                 control.setValue(this.emailContent[controlName]);
         }
         control.disable();
+        if (toggleControl) {
+            this.anonymousContactForm.get(toggleControl).enable()
+        }
     }
 
-    applyChanges(controlName: string): void {
+    applyChanges(controlName: string, toggleControl?: string): void {
         const formControl = this.anonymousContactForm.get(controlName);
         if (formControl.invalid) {
             return;
         }
+        this.updateEmailContentProperty(controlName);
+        formControl.disable();
+        if (toggleControl) {
+            this.anonymousContactForm.get(toggleControl).enable()
+        }
+    }
 
-        switch (controlName) {
+    private updateEmailContentProperty(property: string) {
+        switch (property) {
             case 'company':
                 const company = Object.assign({}, {
                     name: this.anonymousContactForm.get('company.name').value,
@@ -101,8 +143,7 @@ export class CandidateAnonymousContactDialogComponent implements OnInit {
                 this.emailContent.company = company;
                 break;
             default:
-                this.emailContent[controlName] = formControl.value;
+                this.emailContent[property] = this.anonymousContactForm.get(property).value;
         }
-        formControl.disable();
     }
 }

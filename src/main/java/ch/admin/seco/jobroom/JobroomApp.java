@@ -17,6 +17,7 @@ import org.springframework.boot.autoconfigure.liquibase.LiquibaseProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.core.env.Environment;
 
 import ch.admin.seco.jobroom.config.ApplicationProperties;
@@ -26,6 +27,7 @@ import ch.admin.seco.jobroom.config.DefaultProfileUtil;
 @EnableConfigurationProperties({LiquibaseProperties.class, ApplicationProperties.class})
 @EnableDiscoveryClient
 @EnableZuulProxy
+@EnableFeignClients
 public class JobroomApp {
 
     private static final Logger log = LoggerFactory.getLogger(JobroomApp.class);

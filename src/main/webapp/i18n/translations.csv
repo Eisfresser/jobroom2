@@ -51,6 +51,15 @@ candidate-detail,candidate-detail.anonymous-contact.contact-via,Bitte kontaktier
 candidate-detail,candidate-detail.anonymous-contact.contact-via.email,E-Mail,email,Courriel,e-mail
 candidate-detail,candidate-detail.anonymous-contact.contact-via.phone,Telefon,Phone,Téléphone,telefono
 candidate-detail,candidate-detail.anonymous-contact.dismiss,Abbrechen,Cancel,Interrompre,Interrompere
+candidate-detail,candidate-detail.anonymous-contact.send-to,Schicken Sie Ihre Bewerbungsunterlagen an:,Schicken Sie Ihre Bewerbungsunterlagen an:,Schicken Sie Ihre Bewerbungsunterlagen an:,Schicken Sie Ihre Bewerbungsunterlagen an:
+candidate-detail,candidate-detail.anonymous-contact.title,Kandidat-/in kontaktieren,Kandidat-/in kontaktieren,Kandidat-/in kontaktieren,Kandidat-/in kontaktieren
+candidate-detail,candidate-detail.anonymous-contact.company,Company,Company,Company,Company
+candidate-detail,candidate-detail.anonymous-contact.contact-person,Contact person,Contact person,Contact person,Contact person
+candidate-detail,candidate-detail.anonymous-contact.street,Street,Street,Street,Street
+candidate-detail,candidate-detail.anonymous-contact.house,No.,No.,No.,No.
+candidate-detail,candidate-detail.anonymous-contact.zip-code,Postal code,Postal code,Postal code,Postal code
+candidate-detail,candidate-detail.anonymous-contact.city,City,City,City,City
+candidate-detail,candidate-detail.anonymous-contact.country,Country,Country,Country,Country
 candidate-detail,candidate-detail.anonymous-contact.send-to,Schicken Sie Ihre Bewerbungsunterlagen an:,Send your application documents to:,Veuillez envoyer votre dossier de candidature à:,Invii il dossier di candidatura a:
 candidate-detail,candidate-detail.anonymous-contact.title,Kandidat-/in kontaktieren,Contact candidate,Prendre contact avec un/e candidat/e,Contattare il candidato
 candidate-detail,candidate-detail.back,Zurück zu den Suchergebnissen,Back to search results,Retour aux résultats,"Torna ai risultati della ricerca "

@@ -23,7 +23,7 @@ import {
     getSelectedCandidateProfile,
     getTotalCandidateCount
 } from '../state-management/state/candidate-search.state';
-import { Contact, Gender, Graduation, Principal } from '../../shared';
+import { Contact, CurrentUser, Gender, Graduation, Principal } from '../../shared';
 import {
     MailToOpenedAction,
     PhoneToOpenedAction,
@@ -34,6 +34,8 @@ import { TOOLTIP_AUTO_HIDE_TIMEOUT } from '../../app.constants';
 import { LanguageSkill } from '../../shared/job-advertisement/job-advertisement.model';
 import { CandidateAnonymousContactDialogService } from '../dialog/candidate-anonymous-contact-dialog.service';
 import { EmailContent } from '../services/mail.service';
+import { CompanyService } from '../../shared/company/company.service';
+import { Company } from '../../shared/company/company.model';
 
 interface EnrichedJobExperience extends JobExperience {
     occupationLabels: {
@@ -74,12 +76,17 @@ export class CandidateDetailComponent implements OnInit {
                 private translateService: TranslateService,
                 private principal: Principal,
                 private store: Store<CandidateSearchState>,
-                private anonymousContactDialogService: CandidateAnonymousContactDialogService) {
+                private anonymousContactDialogService: CandidateAnonymousContactDialogService,
+                private companyService: CompanyService) {
     }
 
     ngOnInit() {
         this.candidateProfile$ = this.store.select(getSelectedCandidateProfile)
-            .filter((candidateProfile) => !!candidateProfile);
+            .filter((candidateProfile) => !!candidateProfile)
+            .map((candidateProfile) => {
+                this.buildEmailContent(candidateProfile);
+                return candidateProfile;
+            });
 
         this.jobCenter$ = this.candidateProfile$
             .map((candidateProfile) => candidateProfile.jobCenterCode)
@@ -88,12 +95,7 @@ export class CandidateDetailComponent implements OnInit {
                 : Observable.empty());
 
         this.candidateProtectedData$ = this.candidateProfile$
-            .flatMap((candidateProfile) => this.candidateService.findCandidate(candidateProfile)
-                .map((candidate) => {
-                    this.buildEmailContent(candidate);
-                    return candidate;
-                })
-            );
+            .flatMap((candidateProfile) => this.candidateService.findCandidate(candidateProfile));
 
         this.candidateProfiles$ = this.store.select(getCandidateProfileList);
         this.candidateProfileListTotalSize$ = this.store.select(getTotalCandidateCount);
@@ -183,7 +185,8 @@ export class CandidateDetailComponent implements OnInit {
         return Observable.of([]);
     }
 
-    private buildEmailContent(candidate: Candidate): void {
+    private buildEmailContent(candidate: CandidateProfile): void {
+        // todo: Clean up this!!!
         this.emailContent$ = this.candidateService.canSendAnonymousContactEmail(candidate)
             .filter((canSendEmail) => canSendEmail)
             .flatMap(() => {
@@ -192,15 +195,28 @@ export class CandidateDetailComponent implements OnInit {
                     'candidate-detail.candidate-anonymous-contact.subject',
                     'candidate-detail.candidate-anonymous-contact.body']);
                 return Observable.combineLatest(identity$, translations$)
-                    .map(([currentUser, translations]) => {
-                        return {
-                            to: candidate.email,
-                            subject: translations['candidate-detail.candidate-anonymous-contact.subject'],
-                            body: translations['candidate-detail.candidate-anonymous-contact.body'],
-                            phone: null,
-                            email: currentUser ? currentUser.email : null,
-                            company: null
-                        };
+                    .flatMap(([currentUser, translations]) => {
+                        currentUser = currentUser ? currentUser : {} as CurrentUser;
+                        return this.companyService.findByExternalId(currentUser.companyId)
+                            .map((company: Company) => {
+                                company = company ? company : {} as Company;
+                                return {
+                                    candidateId: candidate.id,
+                                    subject: translations['candidate-detail.candidate-anonymous-contact.subject'],
+                                    body: translations['candidate-detail.candidate-anonymous-contact.body'],
+                                    phone: null,
+                                    email: currentUser.email,
+                                    company: {
+                                        name: company.name,
+                                        contactPerson: currentUser.firstName + '' + currentUser.lastName,
+                                        street: company.street,
+                                        houseNumber: null,
+                                        zipCode: company.zipCode,
+                                        city: company.city,
+                                        country: null
+                                    }
+                                };
+                            });
                     });
             });
     }

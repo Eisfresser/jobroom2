@@ -16,12 +16,15 @@ import { MockPrincipal } from '../../../helpers/mock-principal.service';
 import { Principal } from '../../../../../../main/webapp/app/shared';
 import { CandidateProfileDetailLoadedAction } from '../../../../../../main/webapp/app/candidate-search/state-management/actions/candidate-search.actions';
 import { CandidateAnonymousContactDialogService } from '../../../../../../main/webapp/app/candidate-search/dialog/candidate-anonymous-contact-dialog.service';
+import { CompanyService } from '../../../../../../main/webapp/app/shared/company/company.service';
+import { CompanySource } from '../../../../../../main/webapp/app/shared/company/company.model';
 
 describe('CandidateDetailComponent', () => {
     let component: CandidateDetailComponent;
     let fixture: ComponentFixture<CandidateDetailComponent>;
 
     const candidateProfile: any = {
+        id: '1111',
         jobExperiences: [
             {
                 occupation: {
@@ -36,9 +39,10 @@ describe('CandidateDetailComponent', () => {
     };
     const mockActivatedRoute: any = { data: Observable.of({ 'candidateProfile': candidateProfile }) };
     const mockReferenceService = jasmine.createSpyObj('mockReferenceService', ['resolveJobCenter']);
-    const mockCandidateService = jasmine.createSpyObj('mockCandidateService', ['findCandidate']);
+    const mockCandidateService = jasmine.createSpyObj('mockCandidateService', ['findCandidate', 'canSendAnonymousContactEmail']);
     const mockOccupationOccupationPresentationService = jasmine.createSpyObj('mockOccupationOccupationPresentationService', ['findOccupationLabelsByAvamCode']);
     const mockCandidateAnonymousContactDialogService = jasmine.createSpyObj('mockCandidateAnonymousContactDialogService', ['open']);
+    const mockCompanyService = jasmine.createSpyObj('mockCompanyService', ['findByExternalId']);
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -48,6 +52,7 @@ describe('CandidateDetailComponent', () => {
                 { provide: ActivatedRoute, useValue: mockActivatedRoute },
                 { provide: ReferenceService, useValue: mockReferenceService },
                 { provide: CandidateService, useValue: mockCandidateService },
+                { provide: CompanyService, useValue: mockCompanyService },
                 { provide: Principal, useClass: MockPrincipal },
                 {
                     provide: OccupationPresentationService,
@@ -89,6 +94,24 @@ describe('CandidateDetailComponent', () => {
             }
         });
         mockOccupationOccupationPresentationService.findOccupationLabelsByAvamCode.and.returnValue(occupation$);
+
+        const emailContent$ = cold('-a', {
+            a: false
+        });
+        mockCandidateService.canSendAnonymousContactEmail.and.returnValue(emailContent$);
+
+        const company$ = cold('-c', {
+            id: 'id',
+            externalId: 'externalId',
+            name: 'name',
+            street: 'street',
+            zipCode: 'zipCode',
+            city: 'city',
+            email: 'email',
+            phone: 'phone',
+            source: CompanySource.AVG
+        });
+        mockCompanyService.findByExternalId.and.returnValue(company$);
 
         // WHEN
         fixture.detectChanges();

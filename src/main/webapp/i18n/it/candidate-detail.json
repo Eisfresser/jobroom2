@@ -29,7 +29,14 @@
             "contact-via.phone": "telefono",
             "dismiss": "Interrompere",
             "send-to": "Invii il dossier di candidatura a:",
-            "title": "Contattare il candidato"
+            "title": "Contattare il candidato",
+            "company": "Company",
+            "contact-person": "Contact person",
+            "street": "Street",
+            "house": "No.",
+            "zip-code": "Postal code",
+            "city": "City",
+            "country": "Country"
         },
         "back": "Torna ai risultati della ricerca ",
         "candidate-anonymous-contact": "Contattare il candidato",

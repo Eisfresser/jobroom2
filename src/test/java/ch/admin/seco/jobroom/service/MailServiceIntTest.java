@@ -5,7 +5,6 @@ import ch.admin.seco.jobroom.config.Constants;
 import ch.admin.seco.jobroom.domain.Company;
 import ch.admin.seco.jobroom.domain.User;
 import ch.admin.seco.jobroom.domain.UserInfo;
-import ch.admin.seco.jobroom.service.mapper.MailSenderDataMapper;
 import ch.admin.seco.jobroom.service.pdf.PdfCreatorService;
 import io.github.jhipster.config.JHipsterProperties;
 import org.junit.Before;
@@ -47,9 +46,6 @@ public class MailServiceIntTest {
 
     @Autowired
     private SpringTemplateEngine templateEngine;
-
-    @Autowired
-    private MailSenderDataMapper mailSenderDataMapper;
 
     @Spy
     private JavaMailSenderImpl javaMailSender;

@@ -2,6 +2,7 @@ package ch.admin.seco.jobroom.service;
 
 import ch.admin.seco.jobroom.domain.User;
 import ch.admin.seco.jobroom.domain.UserInfo;
+import ch.admin.seco.jobroom.service.dto.AnonymousContactMessageDTO;
 import ch.admin.seco.jobroom.service.pdf.PdfCreatorService;
 import io.github.jhipster.config.JHipsterProperties;
 import org.slf4j.Logger;
@@ -147,6 +148,19 @@ public class MailService {
         } catch (IOException e) {
             throw new IllegalStateException("The access code letter for the user " + userInfo.getFirstName() + " " + userInfo.getLastName() + " could not be generated.", e);
         }
+    }
+
+    @Async
+    public void sendAnonymousContactMail(AnonymousContactMessageDTO anonymousContactMessage, String recipient) {
+        log.debug("Sending anonymous contact email to '{}'", recipient);
+        Context context = new Context();
+        context.setVariable("subject", anonymousContactMessage.getSubject());
+        context.setVariable("body", anonymousContactMessage.getBody());
+        context.setVariable("phone", anonymousContactMessage.getPhone());
+        context.setVariable("email", anonymousContactMessage.getEmail());
+        context.setVariable("company", anonymousContactMessage.getCompany());
+        String content = templateEngine.process("mails/anonymousContactEmail", context);
+        sendEmail(recipient, anonymousContactMessage.getSubject(), content, false, true);
     }
 
 }

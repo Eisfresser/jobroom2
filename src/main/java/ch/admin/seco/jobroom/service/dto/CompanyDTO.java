@@ -93,4 +93,5 @@ public class CompanyDTO {
     public void setSource(CompanySource source) {
         this.source = source;
     }
+
 }
