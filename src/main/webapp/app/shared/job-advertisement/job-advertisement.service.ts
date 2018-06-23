@@ -69,7 +69,7 @@ export class JobAdvertisementService {
             params.set('token', jobAdCancelRequest.token);
         }
         return this.http.patch(`${this.resourceUrl}/${jobAdCancelRequest.id}/cancel`,
-            { code }, { params, observe: 'response' })
+            { code }, { params: params, observe: 'response' })
             .map((result) => result.status);
     }
 
