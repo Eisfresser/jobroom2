@@ -1,6 +1,6 @@
 import { CanActivate } from '@angular/router';
 import { Injectable } from '@angular/core';
-import { Principal } from '../../shared/auth/principal.service';
+import { Principal } from '../../shared';
 
 @Injectable()
 export class PeaDashboardGuard implements CanActivate {
@@ -8,12 +8,7 @@ export class PeaDashboardGuard implements CanActivate {
     }
 
     canActivate() {
-        return this.principal.identity()
-            .then((account) =>
-                this.principal.hasAnyAuthority([
-                    'ROLE_PRIVATE_EMPLOYMENT_AGENT',
-                    'ROLE_PUBLIC_EMPLOYMENT_SERVICE',
-                    'ROLE_COMPANY'
-                ]));
+        return this.principal.currentUser()
+            .flatMap(() => this.principal.isCompanyOrAgent())
     }
 }

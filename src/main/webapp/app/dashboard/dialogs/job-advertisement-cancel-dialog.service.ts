@@ -9,12 +9,13 @@ export class JobAdvertisementCancelDialogService {
     constructor(private modalService: NgbModal) {
     }
 
-    open(id: string, onSubmit: (cancellationData: CancellationData) => void) {
+    open(id: string, onSubmit: (cancellationData: CancellationData) => void, token?: string) {
         const modalRef = this.modalService.open(JobPublicationCancelDialogComponent, {
             container: 'nav',
             size: 'lg'
         });
         modalRef.componentInstance.id = id;
+        modalRef.componentInstance.token = token;
 
         const subscription = modalRef.componentInstance.submitCancellation.subscribe(onSubmit);
 

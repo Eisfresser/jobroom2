@@ -1,11 +1,18 @@
 import { Injectable } from '@angular/core';
 import { ResponseWrapper } from '../index';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-import { CreateJobAdvertisement, JobAdvertisement, JobAdvertisementStatus } from './job-advertisement.model';
+import {
+    CreateJobAdvertisement,
+    JobAdvertisement,
+    JobAdvertisementStatus
+} from './job-advertisement.model';
 import { createPageableURLSearchParams } from '../model/request-util';
 import { JobAdvertisementCancelRequest } from './job-advertisement-cancel-request';
-import { JobAdvertisementSearchRequest, JobAdvertisementSearchRequestBody } from './job-advertisement-search-request';
+import {
+    JobAdvertisementSearchRequest,
+    JobAdvertisementSearchRequestBody
+} from './job-advertisement-search-request';
 import { PEAJobAdsSearchRequest } from './pea-job-ads-search-request';
 
 @Injectable()
@@ -47,15 +54,22 @@ export class JobAdvertisementService {
         return this.http.get<JobAdvertisement>(`${this.resourceUrl}/${id}`);
     }
 
-    // TODO: update
+    findByToken(token: string): Observable<JobAdvertisement> {
+        return this.http.get<JobAdvertisement>(`${this.resourceUrl}/token/${token}`);
+    }
+
     findByExternalId(externalId: any): Observable<JobAdvertisement> {
         return this.http.get<JobAdvertisement>(`${this.resourceUrl}/${externalId}`);
     }
 
     cancel(jobAdCancelRequest: JobAdvertisementCancelRequest): Observable<number> {
         const { code } = jobAdCancelRequest;
+        const params = new HttpParams();
+        if (jobAdCancelRequest.token) {
+            params.set('token', jobAdCancelRequest.token);
+        }
         return this.http.patch(`${this.resourceUrl}/${jobAdCancelRequest.id}/cancel`,
-            { code }, { observe: 'response' })
+            { code }, { params, observe: 'response' })
             .map((result) => result.status);
     }
 

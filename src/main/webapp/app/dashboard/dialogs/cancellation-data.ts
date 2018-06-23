@@ -2,5 +2,6 @@ import { CancellationReason } from '../../shared/job-advertisement/job-advertise
 
 export interface CancellationData {
     id: string;
+    token?: string;
     cancellationReason: CancellationReason
 }

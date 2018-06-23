@@ -5,23 +5,33 @@ import { JobAdvertisementService } from '../../../../shared/job-advertisement/jo
 import { JobAdvertisement } from '../../../../shared/job-advertisement/job-advertisement.model';
 import { OccupationPresentationService } from '../../../../shared/reference-service';
 import { TranslateService } from '@ngx-translate/core';
+import { Principal } from '../../../../shared';
 
 @Injectable()
 export class JobAdvertisementResolverService implements Resolve<JobAdvertisement> {
     constructor(private jobAdvertisementService: JobAdvertisementService,
                 private occupationPresentationService: OccupationPresentationService,
-                private translateService: TranslateService) {
+                private translateService: TranslateService,
+                private principal: Principal) {
     }
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<JobAdvertisement> {
         const jobPublicationId = route.paramMap.get('jobPublicationId');
+        const token = route.paramMap.get('token');
+        return this.principal.currentUser()
+            .flatMap(() => this.principal.isCompanyOrAgent())
+            .flatMap((canActivate) => {
+                if (!canActivate && !token) {
+                    return Observable.of(null);
+                } else if (!jobPublicationId) {
+                    return Observable.of(null);
+                }
+                const job$ = token ? this.jobAdvertisementService.findByToken(token)
+                    : this.jobAdvertisementService.findById(jobPublicationId);
 
-        if (jobPublicationId) {
-            return this.jobAdvertisementService.findById(jobPublicationId)
-                .flatMap(this.addOccupationLabel.bind(this));
-        } else {
-            return Observable.of(null);
-        }
+                return job$
+                    .flatMap(this.addOccupationLabel.bind(this));
+            });
     }
 
     private addOccupationLabel(jobAd: JobAdvertisement): Observable<JobAdvertisement> {

@@ -14,7 +14,7 @@ export const JOB_ADVERTISEMENT_LOADED = 'JOB_PUBLICATION_DETAIL:JOB_ADVERTISEMEN
 export class LoadJobAdvertisementAction implements Action {
     readonly type = LOAD_JOB_ADVERTISEMENT;
 
-    constructor(public payload: { id: string }) {
+    constructor(public payload: { id: string, token?: string }) {
     }
 }
 

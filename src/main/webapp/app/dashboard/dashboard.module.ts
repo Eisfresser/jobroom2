@@ -14,6 +14,7 @@ import { jobPublicationDetailReducer } from './state-management/reducers/job-pub
 import { PEADashboardEffects } from './state-management/effects/pea-dashboard.effects';
 import { peaDashboardReducer } from './state-management/reducers/pea-dashboard.reducers';
 import { JobAdvertisementCancelDialogService } from './dialogs/job-advertisement-cancel-dialog.service';
+import { MarkdownModule } from 'angular2-markdown';
 
 @NgModule({
     imports: [
@@ -22,7 +23,8 @@ import { JobAdvertisementCancelDialogService } from './dialogs/job-advertisement
         EffectsModule.forFeature([PEADashboardEffects, JobPublicationDetailEffects]),
         JobroomSharedModule,
         ReactiveFormsModule,
-        DashboardRoutingModule
+        DashboardRoutingModule,
+        MarkdownModule.forRoot(),
     ],
     declarations: [
         DashboardComponent,

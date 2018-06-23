@@ -6,6 +6,7 @@ export function createJobAdvertisementCancellationRequest(cancellationData: Canc
     const { id, cancellationReason } = cancellationData;
     return {
         id,
+        token: cancellationData.token,
         code: CancellationReason[cancellationReason]
     } as JobAdvertisementCancelRequest;
 }

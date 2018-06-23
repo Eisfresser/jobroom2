@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 import {
@@ -17,33 +17,42 @@ import { JobAdvertisementService } from '../../shared/job-advertisement/job-adve
 import { JobAdvertisementUtils } from '../job-advertisement.utils';
 import { JobAdvertisementCancelDialogService } from '../dialogs/job-advertisement-cancel-dialog.service';
 import { CoreState, getLanguage } from '../../shared/state-management/state/core.state';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
     selector: 'jr2-job-publication-detail',
     templateUrl: './job-publication-detail.component.html',
     styleUrls: []
 })
-export class JobPublicationDetailComponent {
+export class JobPublicationDetailComponent implements OnInit {
     jobAdvertisement$: Observable<JobAdvertisement>;
     showCancellationSuccess$: Observable<boolean>;
     showCancellationError$: Observable<boolean>;
     showCancellationLink$: Observable<boolean>;
     jobDescription$: Observable<JobDescription>;
+    token: string;
 
     constructor(private jobAdvertisementService: JobAdvertisementService,
                 private store: Store<JobPublicationDetailState>,
                 private coreStore: Store<CoreState>,
-                private jobAdvertisementCancelDialogService: JobAdvertisementCancelDialogService) {
-        this.showCancellationSuccess$ = store.select(getShowCancellationSuccess);
-        this.showCancellationError$ = store.select(getShowCancellationError);
-        this.jobAdvertisement$ = store.select(getJobAdvertisement)
+                private jobAdvertisementCancelDialogService: JobAdvertisementCancelDialogService,
+                private route: ActivatedRoute,
+                private router: Router) {
+    }
+
+    ngOnInit() {
+        this.route.queryParamMap.subscribe((params) => this.token = params.get('token'));
+
+        this.showCancellationSuccess$ = this.store.select(getShowCancellationSuccess);
+        this.showCancellationError$ = this.store.select(getShowCancellationError);
+        this.jobAdvertisement$ = this.store.select(getJobAdvertisement)
             .map(this.fixApplicationUrl);
-        this.showCancellationLink$ = store.select(getJobAdvertisement)
+        this.showCancellationLink$ = this.store.select(getJobAdvertisement)
             .filter((jobAdvertisement: JobAdvertisement) => !!jobAdvertisement)
             .map((jobAdvertisement: JobAdvertisement) =>
                 this.jobAdvertisementService.isJobAdvertisementCancellable(jobAdvertisement.status));
 
-        this.jobDescription$ = coreStore.select(getLanguage)
+        this.jobDescription$ = this.coreStore.select(getLanguage)
             .combineLatest(this.jobAdvertisement$)
             .map(([lang, jobAdvertisement]: [string, JobAdvertisement]) => JobAdvertisementUtils.getJobDescription(jobAdvertisement, lang));
     }
@@ -58,9 +67,17 @@ export class JobPublicationDetailComponent {
         return jobAdvertisement;
     }
 
-    showCancellationDialog(id: string) {
+    showCancellationDialog(id: string, token: string) {
         const onSubmit = (cancellationData) => this.store.dispatch(new SubmitCancellationAction(cancellationData));
-        this.jobAdvertisementCancelDialogService.open(id, onSubmit);
+        this.jobAdvertisementCancelDialogService.open(id, onSubmit, token);
+    }
+
+    copyJobAdvertisement(id: string, token: string) {
+        const params = { jobPublicationId: id };
+        if (token) {
+            Object.assign(params, { token });
+        }
+        this.router.navigate(['/agents/jobpublication', params]);
     }
 
     closeSuccessMessage() {
