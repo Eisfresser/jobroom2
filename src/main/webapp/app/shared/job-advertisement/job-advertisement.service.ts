@@ -64,9 +64,9 @@ export class JobAdvertisementService {
 
     cancel(jobAdCancelRequest: JobAdvertisementCancelRequest): Observable<number> {
         const { code } = jobAdCancelRequest;
-        const params = new HttpParams();
+        let params = new HttpParams();
         if (jobAdCancelRequest.token) {
-            params.set('token', jobAdCancelRequest.token);
+            params = params.set('token', jobAdCancelRequest.token);
         }
         return this.http.patch(`${this.resourceUrl}/${jobAdCancelRequest.id}/cancel`,
             { code }, { params: params, observe: 'response' })
