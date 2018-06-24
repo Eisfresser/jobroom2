@@ -1,7 +1,22 @@
 package ch.admin.seco.jobroom.web.rest;
 
+import java.time.LocalDate;
+
+import javax.validation.Valid;
+
+import com.codahale.metrics.annotation.Timed;
+
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import ch.admin.seco.jobroom.config.Constants;
-import ch.admin.seco.jobroom.security.registration.*;
+import ch.admin.seco.jobroom.security.registration.InvalidAccessCodeException;
+import ch.admin.seco.jobroom.security.registration.InvalidOldLoginException;
+import ch.admin.seco.jobroom.security.registration.InvalidPersonenNumberException;
+import ch.admin.seco.jobroom.security.registration.RegistrationService;
+import ch.admin.seco.jobroom.security.registration.StesServiceException;
 import ch.admin.seco.jobroom.security.registration.eiam.exceptions.RoleCouldNotBeAddedException;
 import ch.admin.seco.jobroom.security.registration.uid.dto.FirmData;
 import ch.admin.seco.jobroom.security.registration.uid.exceptions.CompanyNotFoundException;
@@ -10,21 +25,12 @@ import ch.admin.seco.jobroom.security.registration.uid.exceptions.UidNotUniqueEx
 import ch.admin.seco.jobroom.service.dto.RegistrationResultDTO;
 import ch.admin.seco.jobroom.web.rest.vm.LoginVM;
 import ch.admin.seco.jobroom.web.rest.vm.RegisterJobseekerVM;
-import com.codahale.metrics.annotation.Timed;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import javax.validation.Valid;
-import java.time.LocalDate;
 
 /**
  * Controller to provide all functionality needed during the user registration in Jobroom.
  */
 @RestController
 @RequestMapping("/api")
-//@Profile("!no-eiam")
 public class RegistrationController {
 
     private RegistrationService registrationService;

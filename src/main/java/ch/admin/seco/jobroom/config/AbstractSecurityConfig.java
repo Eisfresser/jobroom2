@@ -1,17 +1,19 @@
-package ch.admin.seco.jobroom.security.saml;
+package ch.admin.seco.jobroom.config;
 
-import ch.admin.seco.jobroom.security.AuthoritiesConstants;
+import org.zalando.problem.spring.web.advice.security.SecurityProblemSupport;
+
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.zalando.problem.spring.web.advice.security.SecurityProblemSupport;
 
-public class AbstractSecurityConfig extends WebSecurityConfigurerAdapter {
+import ch.admin.seco.jobroom.security.AuthoritiesConstants;
+
+class AbstractSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final SecurityProblemSupport problemSupport;
 
-    public AbstractSecurityConfig(SecurityProblemSupport problemSupport) {
+    AbstractSecurityConfig(SecurityProblemSupport problemSupport) {
         this.problemSupport = problemSupport;
     }
 
@@ -29,18 +31,18 @@ public class AbstractSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable();
-
-        http.exceptionHandling().accessDeniedHandler(this.problemSupport);
+        http.exceptionHandling()
+            .accessDeniedHandler(this.problemSupport);
 
         http.authorizeRequests()
-            .antMatchers("/samllogin").fullyAuthenticated()
             .antMatchers("/api/register").permitAll()
-            .antMatchers("/api/activate").permitAll()
             .antMatchers("/api/authenticate").permitAll()
-            .antMatchers("/api/account/reset-password/init").permitAll()
-            .antMatchers("/api/account/reset-password/finish").permitAll()
+            .antMatchers("/api/active-system-notifications").permitAll()
             .antMatchers("/api/profile-info").permitAll()
+            .antMatchers("/api/messages/send-anonymous-message")
+            /*-*/.hasAnyAuthority(
+            /*----*/AuthoritiesConstants.ROLE_COMPANY,
+            /*----*/AuthoritiesConstants.ROLE_PRIVATE_EMPLOYMENT_AGENT)
             .antMatchers("/api/**").authenticated()
             .antMatchers("/management/health").permitAll()
             .antMatchers("/management/info").permitAll()
@@ -50,4 +52,5 @@ public class AbstractSecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers("/swagger-ui/index.html").hasAuthority(AuthoritiesConstants.ROLE_ADMIN);
 
     }
+
 }

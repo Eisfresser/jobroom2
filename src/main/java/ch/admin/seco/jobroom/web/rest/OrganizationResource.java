@@ -48,7 +48,9 @@ import ch.admin.seco.jobroom.web.rest.util.PaginationUtil;
 public class OrganizationResource {
 
     private static final String ENTITY_NAME = "organization";
+
     private final Logger log = LoggerFactory.getLogger(OrganizationResource.class);
+
     private final OrganizationService organizationService;
 
     public OrganizationResource(OrganizationService organizationService) {
