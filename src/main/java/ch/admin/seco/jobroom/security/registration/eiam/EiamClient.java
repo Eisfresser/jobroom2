@@ -3,10 +3,6 @@ package ch.admin.seco.jobroom.security.registration.eiam;
 
 import ch.adnovum.nevisidm.ws.services.v1.User;
 
-import ch.admin.seco.jobroom.security.registration.eiam.exceptions.ExtIdNotUniqueException;
-import ch.admin.seco.jobroom.security.registration.eiam.exceptions.RoleCouldNotBeAddedException;
-import ch.admin.seco.jobroom.security.registration.eiam.exceptions.UserNotFoundException;
-
 public interface EiamClient {
 
     //TODO: take from config -> rolemapping

@@ -30,13 +30,13 @@ import ch.admin.seco.jobroom.repository.UserRepository;
 import ch.admin.seco.jobroom.security.AuthoritiesConstants;
 import ch.admin.seco.jobroom.security.MD5PasswordEncoder;
 import ch.admin.seco.jobroom.security.UserPrincipal;
-import ch.admin.seco.jobroom.security.registration.eiam.exceptions.RoleCouldNotBeAddedException;
+import ch.admin.seco.jobroom.security.registration.eiam.EiamAdminService;
+import ch.admin.seco.jobroom.security.registration.eiam.RoleCouldNotBeAddedException;
+import ch.admin.seco.jobroom.security.registration.uid.CompanyNotFoundException;
+import ch.admin.seco.jobroom.security.registration.uid.FirmData;
 import ch.admin.seco.jobroom.security.registration.uid.UidClient;
-import ch.admin.seco.jobroom.security.registration.uid.dto.FirmData;
-import ch.admin.seco.jobroom.security.registration.uid.exceptions.CompanyNotFoundException;
-import ch.admin.seco.jobroom.security.registration.uid.exceptions.UidClientException;
-import ch.admin.seco.jobroom.security.registration.uid.exceptions.UidNotUniqueException;
-import ch.admin.seco.jobroom.security.saml.utils.IamService;
+import ch.admin.seco.jobroom.security.registration.uid.UidClientException;
+import ch.admin.seco.jobroom.security.registration.uid.UidNotUniqueException;
 import ch.admin.seco.jobroom.service.CandidateService;
 import ch.admin.seco.jobroom.service.CurrentUserService;
 import ch.admin.seco.jobroom.service.MailService;
@@ -48,7 +48,7 @@ import ch.admin.seco.jobroom.service.dto.StesVerificationResult;
 @ConfigurationProperties(prefix = "security")
 public class RegistrationService {
 
-    private static final Logger log = LoggerFactory.getLogger(RegistrationService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RegistrationService.class);
 
     private final UserInfoRepository userInfoRepository;
 
@@ -62,7 +62,7 @@ public class RegistrationService {
 
     private final UidClient uidClient;
 
-    private final IamService iamService;
+    private final EiamAdminService eiamAdminService;
 
     private final CandidateService candidateService;
 
@@ -74,14 +74,14 @@ public class RegistrationService {
     private static final int ACCESS_CODE_LENGTH = 8;
 
     @Autowired
-    public RegistrationService(UserInfoRepository userInfoRepository, CompanyRepository companyRepository, OrganizationRepository organizationRepository, UserRepository userRepository, MailService mailService, UidClient uidClient, IamService iamService, CandidateService candidateService, CurrentUserService currentUserService) {
+    public RegistrationService(UserInfoRepository userInfoRepository, CompanyRepository companyRepository, OrganizationRepository organizationRepository, UserRepository userRepository, MailService mailService, UidClient uidClient, EiamAdminService eiamAdminService, CandidateService candidateService, CurrentUserService currentUserService) {
         this.userInfoRepository = userInfoRepository;
         this.companyRepository = companyRepository;
         this.organizationRepository = organizationRepository;
         this.userRepository = userRepository;
         this.mailService = mailService;
         this.uidClient = uidClient;
-        this.iamService = iamService;
+        this.eiamAdminService = eiamAdminService;
         this.candidateService = candidateService;
         this.currentUserService = currentUserService;
     }
@@ -96,6 +96,7 @@ public class RegistrationService {
         addJobseekerRoleToEiam(principal);
         addJobseekerRoleToSession();
         userInfo.closeRegistration();
+        LOGGER.info("Registered user with id: {} as job-seeker", userInfo.getUserExternalId());
     }
 
     @Transactional
@@ -134,10 +135,12 @@ public class RegistrationService {
             result.setEmployerType();
             addCompanyRoleToEiam(userPrincipal);
             addCompanyRoleToSession();
+            LOGGER.info("Registered user with id: {} as company user", userInfo.getUserExternalId());
         } else if (RegistrationStatus.VALIDATION_PAV.equals(userInfo.getRegistrationStatus())) {
             result.setAgentType();
             addAgentRoleToEiam(userPrincipal);
             addAgentRoleToSession();
+            LOGGER.info("Registered user with id: {} as pav user", userInfo.getUserExternalId());
         } else {
             throw new RoleCouldNotBeAddedException("User with id=" + userPrincipal.getUserExtId() + " tried to register as employer/agent, but has a wrong registration status: " + registrationStatus);
         }
@@ -232,15 +235,15 @@ public class RegistrationService {
     }
 
     private void addJobseekerRoleToEiam(UserPrincipal userPrincipal) throws RoleCouldNotBeAddedException {
-        this.iamService.addJobSeekerRoleToUser(userPrincipal.getUserExtId(), userPrincipal.getUserDefaultProfileExtId());
+        this.eiamAdminService.addJobSeekerRoleToUser(userPrincipal.getUserExtId(), userPrincipal.getUserDefaultProfileExtId());
     }
 
     private void addCompanyRoleToEiam(UserPrincipal userPrincipal) throws RoleCouldNotBeAddedException {
-        this.iamService.addCompanyRoleToUser(userPrincipal.getUserExtId(), userPrincipal.getUserDefaultProfileExtId());
+        this.eiamAdminService.addCompanyRoleToUser(userPrincipal.getUserExtId(), userPrincipal.getUserDefaultProfileExtId());
     }
 
     private void addAgentRoleToEiam(UserPrincipal userPrincipal) throws RoleCouldNotBeAddedException {
-        this.iamService.addAgentRoleToUser(userPrincipal.getUserExtId(), userPrincipal.getUserDefaultProfileExtId());
+        this.eiamAdminService.addAgentRoleToUser(userPrincipal.getUserExtId(), userPrincipal.getUserDefaultProfileExtId());
     }
 
     private void addJobseekerRoleToSession() {
@@ -275,7 +278,7 @@ public class RegistrationService {
     }
 
     private String getStreetRepresentation(FirmData firmData) {
-        String streetRepresentation =  firmData.getAddress().getStreet();
+        String streetRepresentation = firmData.getAddress().getStreet();
         if (firmData.getAddress().getStreetAddOn() != null) {
             streetRepresentation += " " + firmData.getAddress().getStreetAddOn();
         }

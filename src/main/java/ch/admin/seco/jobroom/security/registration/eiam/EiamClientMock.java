@@ -1,10 +1,8 @@
-package ch.admin.seco.jobroom.security.registration.eiam.mock;
+package ch.admin.seco.jobroom.security.registration.eiam;
 
 import ch.adnovum.nevisidm.ws.services.v1.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import ch.admin.seco.jobroom.security.registration.eiam.EiamClient;
 
 public class EiamClientMock implements EiamClient {
 

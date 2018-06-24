@@ -39,7 +39,7 @@ public class CurrentUserResource {
 
     @GetMapping
     @Timed
-    public ResponseEntity<CurrentUserDTO> getAccount() {
+    public ResponseEntity<CurrentUserDTO> getCurrentUser() {
         UserPrincipal principal = this.currentUserService.getPrincipal();
         CurrentUserDTO currentUserDTO = this.currentUserMapper.toCurrentUserResource(principal);
         String token = this.tokenProvider.createToken(SecurityContextHolder.getContext().getAuthentication(), false);
@@ -69,14 +69,14 @@ public class CurrentUserResource {
         private String companyName;
 
         CurrentUserDTO(String id,
-                       String login,
-                       String firstName,
-                       String lastName,
-                       String email,
-                       String langKey,
-                       Set<String> authorities,
-                       String externalId,
-                       String name) {
+            String login,
+            String firstName,
+            String lastName,
+            String email,
+            String langKey,
+            Set<String> authorities,
+            String externalId,
+            String name) {
             this.id = id;
             this.login = login;
             this.firstName = firstName;

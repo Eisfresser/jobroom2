@@ -1,4 +1,4 @@
-package ch.admin.seco.jobroom.security.saml.utils;
+package ch.admin.seco.jobroom.security.saml.infrastructure.dsl;
 
 import javax.servlet.http.HttpServletRequest;
 

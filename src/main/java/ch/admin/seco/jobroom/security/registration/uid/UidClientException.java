@@ -1,4 +1,4 @@
-package ch.admin.seco.jobroom.security.registration.uid.exceptions;
+package ch.admin.seco.jobroom.security.registration.uid;
 
 public class UidClientException extends Throwable {
     public UidClientException(String message) {

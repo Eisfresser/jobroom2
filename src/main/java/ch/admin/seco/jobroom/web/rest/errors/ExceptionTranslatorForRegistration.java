@@ -12,13 +12,12 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.NativeWebRequest;
 
 import ch.admin.seco.jobroom.security.registration.NoValidPrincipalException;
-import ch.admin.seco.jobroom.security.registration.PersistenceException;
 import ch.admin.seco.jobroom.security.registration.StesServiceException;
 import ch.admin.seco.jobroom.security.registration.UserAlreadyExistsException;
-import ch.admin.seco.jobroom.security.registration.eiam.exceptions.RoleCouldNotBeAddedException;
-import ch.admin.seco.jobroom.security.registration.uid.exceptions.CompanyNotFoundException;
-import ch.admin.seco.jobroom.security.registration.uid.exceptions.UidClientException;
-import ch.admin.seco.jobroom.security.registration.uid.exceptions.UidNotUniqueException;
+import ch.admin.seco.jobroom.security.registration.eiam.RoleCouldNotBeAddedException;
+import ch.admin.seco.jobroom.security.registration.uid.CompanyNotFoundException;
+import ch.admin.seco.jobroom.security.registration.uid.UidClientException;
+import ch.admin.seco.jobroom.security.registration.uid.UidNotUniqueException;
 
 /**
  * Controller advice to translate the server side exceptions thrown during the registration
@@ -155,20 +154,4 @@ public class ExceptionTranslatorForRegistration implements AdviceTrait {
         return create(ex, problem, request);
     }
 
-    /**
-     * In the case of this exception there was a problem while persisting the user/company
-     * in the Jobroom database. The client should ask the user to contact the service desk,
-     * so that the case can be investigated further.
-     * @param ex the exception to be handled by this method
-     * @param request   the current web request
-     * @return client-friendly json error response
-     */
-    @ExceptionHandler(PersistenceException.class)
-    public ResponseEntity<Problem> handleAccessCodeLetterException(PersistenceException ex, NativeWebRequest request) {
-        Problem problem = Problem.builder()
-            .withStatus(Status.INTERNAL_SERVER_ERROR)
-            .with("message", "The information could not be stored in the database.")
-            .build();
-        return create(ex, problem, request);
-    }
 }

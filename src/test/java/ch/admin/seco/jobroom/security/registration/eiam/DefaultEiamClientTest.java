@@ -23,10 +23,6 @@ import org.springframework.ws.client.core.WebServiceTemplate;
 import org.springframework.ws.test.client.MockWebServiceServer;
 import org.springframework.xml.transform.StringSource;
 
-import ch.admin.seco.jobroom.security.registration.eiam.exceptions.ExtIdNotUniqueException;
-import ch.admin.seco.jobroom.security.registration.eiam.exceptions.RoleCouldNotBeAddedException;
-import ch.admin.seco.jobroom.security.registration.eiam.exceptions.UserNotFoundException;
-
 @ContextConfiguration ("DefaultEidWebServiceClientTest-context.xml")
 @RunWith(SpringJUnit4ClassRunner.class)
 public class DefaultEiamClientTest {

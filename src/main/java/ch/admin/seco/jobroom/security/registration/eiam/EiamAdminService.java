@@ -1,11 +1,17 @@
-package ch.admin.seco.jobroom.security.saml.utils;
+package ch.admin.seco.jobroom.security.registration.eiam;
 
-import ch.admin.seco.jobroom.security.registration.eiam.exceptions.RoleCouldNotBeAddedException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-/**
- * IAM Service to access organizational units and user information.
- */
-public interface IamService {
+@Service
+public class EiamAdminService {
+
+    private final EiamClient eiamClient;
+
+    @Autowired
+    public EiamAdminService(EiamClient eiamClient) {
+        this.eiamClient = eiamClient;
+    }
 
     /**
      * Give a user the role JobSeeker in eIAM.
@@ -14,7 +20,9 @@ public interface IamService {
      * @param profileExtId id of the user's default profile in eIAM to which the role should be added
      * @exception RoleCouldNotBeAddedException  thrown if the role was not added successfully (see cause for details)
      */
-    void addJobSeekerRoleToUser(String userExtId, String profileExtId) throws RoleCouldNotBeAddedException;
+    public void addJobSeekerRoleToUser(String userExtId, String profileExtId) throws RoleCouldNotBeAddedException {
+        this.eiamClient.addRoleToUser(userExtId, profileExtId, EiamClient.ROLE_JOBSEEKER, EiamClient.ROLE_PREFIX);
+    }
 
     /**
      * Give a user the role Company in eIAM.
@@ -23,7 +31,9 @@ public interface IamService {
      * @param profileExtId id of the user's default profile in eIAM to which the role should be added
      * @exception RoleCouldNotBeAddedException  thrown if the role was not added successfully (see cause for details)
      */
-    void addCompanyRoleToUser(String extId, String profileExtId) throws RoleCouldNotBeAddedException;
+    public void addCompanyRoleToUser(String extId, String profileExtId) throws RoleCouldNotBeAddedException {
+        this.eiamClient.addRoleToUser(extId, profileExtId, EiamClient.ROLE_COMPANY, EiamClient.ROLE_PREFIX);
+    }
 
     /**
      * Give a user the role PrivateEmploymentAgent in eIAM.
@@ -32,6 +42,7 @@ public interface IamService {
      * @param profileExtId id of the user's default profile in eIAM to which the role should be added
      * @exception RoleCouldNotBeAddedException  thrown if the role was not added successfully (see cause for details)
      */
-    void addAgentRoleToUser(String extId, String profileExtId) throws RoleCouldNotBeAddedException;
-
+    public void addAgentRoleToUser(String extId, String profileExtId) throws RoleCouldNotBeAddedException {
+        this.eiamClient.addRoleToUser(extId, profileExtId, EiamClient.ROLE_PRIVATE_EMPLOYMENT_AGENT, EiamClient.ROLE_PREFIX);
+    }
 }

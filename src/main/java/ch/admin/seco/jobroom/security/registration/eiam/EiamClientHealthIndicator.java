@@ -1,8 +1,7 @@
 package ch.admin.seco.jobroom.security.registration.eiam;
 
-import ch.admin.seco.jobroom.security.registration.eiam.exceptions.ExtIdNotUniqueException;
-import ch.admin.seco.jobroom.security.registration.eiam.exceptions.UserNotFoundException;
 import ch.adnovum.nevisidm.ws.services.v1.User;
+
 import org.springframework.boot.actuate.health.AbstractHealthIndicator;
 import org.springframework.boot.actuate.health.Health;
 

@@ -1,9 +1,5 @@
 package ch.admin.seco.jobroom.security.registration.uid;
 
-import ch.admin.seco.jobroom.security.registration.uid.dto.FirmData;
-import ch.admin.seco.jobroom.security.registration.uid.exceptions.CompanyNotFoundException;
-import ch.admin.seco.jobroom.security.registration.uid.exceptions.UidClientException;
-import ch.admin.seco.jobroom.security.registration.uid.exceptions.UidNotUniqueException;
 import org.springframework.boot.actuate.health.AbstractHealthIndicator;
 import org.springframework.boot.actuate.health.Health;
 

@@ -46,10 +46,10 @@ public class JobroomAuthenticationSuccessHandler extends SavedRequestAwareAuthen
     JobroomAuthenticationSuccessHandler(String targetUrlEiamAccessRequest, UserInfoRepository userInfoRepository) {
         this.targetUrlEiamAccessRequest = targetUrlEiamAccessRequest;
         this.userInfoRepository = userInfoRepository;
+        this.registrationStatusStrategyMap.put(RegistrationStatus.UNREGISTERED, this::redirectToRegistrationPage);
+        this.registrationStatusStrategyMap.put(RegistrationStatus.VALIDATION_EMP, this::redirectToAccessCodePage);
+        this.registrationStatusStrategyMap.put(RegistrationStatus.VALIDATION_PAV, this::redirectToAccessCodePage);
         this.registrationStatusStrategyMap.put(RegistrationStatus.REGISTERED, super::onAuthenticationSuccess);
-        this.registrationStatusStrategyMap.put(RegistrationStatus.UNREGISTERED, (request, response, authentication) -> redirectTo(SAMLConfigurer.TARGET_URL_REGISTRATION_PROCESS, request, response));
-        this.registrationStatusStrategyMap.put(RegistrationStatus.VALIDATION_EMP, (request, response, authentication) -> redirectTo(SAMLConfigurer.TARGET_URL_ENTER_ACCESS_CODE, request, response));
-        this.registrationStatusStrategyMap.put(RegistrationStatus.VALIDATION_PAV, (request, response, authentication) -> redirectTo(SAMLConfigurer.TARGET_URL_ENTER_ACCESS_CODE, request, response));
     }
 
     @Override
@@ -57,7 +57,7 @@ public class JobroomAuthenticationSuccessHandler extends SavedRequestAwareAuthen
         throws ServletException, IOException {
 
         if (LOG.isDebugEnabled()) {
-            LOG.debug("Found roles: " + authentication.getAuthorities().stream().map(Object::toString).collect(Collectors.joining(", ")));
+            LOG.debug("Found roles: " + rolesAsString(authentication));
         }
 
         if (authentication.getPrincipal() instanceof User) {
@@ -82,18 +82,12 @@ public class JobroomAuthenticationSuccessHandler extends SavedRequestAwareAuthen
             return;
         }
 
-        // make sure PAV and company users are authenticated with 2-factor!
-        // this is a functionality which should be provided by a future PeP implementation
-        if ((isAgent(authentication) || isEmployer(authentication)) && userPrincipal.hasOnlyOneFactorAuthentication()) {
-            // send to 2 factor setup in eIAM
-            redirectTo(SAMLConfigurer.TARGET_URL_FORCE_TWO_FACTOR_AUTH, request, response);
-            authentication.setAuthenticated(false);
-            return;
-        }
+        // TODO make sure PAV and company users are authenticated with 2-factor and if
+        // not redirect them with a different "authnContexts" to eiam
 
         RegistrationStatus registrationStatus = userInfo.getRegistrationStatus();
         if (registrationStatus == null) {
-            logger.warn("User's registration status null -> redirect to home");
+            logger.warn("User's registration status is: null -> redirect to home");
             super.onAuthenticationSuccess(request, response, authentication);
             return;
         }
@@ -107,24 +101,30 @@ public class JobroomAuthenticationSuccessHandler extends SavedRequestAwareAuthen
         registrationStatusStrategy.handleRedirect(request, response, authentication);
     }
 
-    private boolean isAgent(Authentication authentication) {
-        return authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals(AuthoritiesConstants.ROLE_PRIVATE_EMPLOYMENT_AGENT));
-    }
-
-    private boolean isEmployer(Authentication authentication) {
-        return authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals(AuthoritiesConstants.ROLE_COMPANY));
-    }
-
     private boolean isAdmin(Authentication authentication) {
         return authentication.getAuthorities().stream()
-            .anyMatch(a -> a.getAuthority().equals(AuthoritiesConstants.ROLE_ADMIN) || a.getAuthority().equals(AuthoritiesConstants.ROLE_SYSADMIN));
+            .anyMatch(a -> a.getAuthority().equals(AuthoritiesConstants.ROLE_ADMIN)
+                || a.getAuthority().equals(AuthoritiesConstants.ROLE_SYSADMIN));
     }
 
+    private String rolesAsString(Authentication authentication) {
+        return authentication.getAuthorities().stream()
+            .map(Object::toString)
+            .collect(Collectors.joining(", "));
+    }
 
     private void redirectTo(String targetUrl, HttpServletRequest request, HttpServletResponse response) throws IOException {
         logger.info("Redirecting to target url: " + targetUrl);
         getRedirectStrategy().sendRedirect(request, response, targetUrl);
         clearAuthenticationAttributes(request);
+    }
+
+    private void redirectToRegistrationPage(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
+        redirectTo(SAMLConfigurer.TARGET_URL_REGISTRATION_PROCESS, request, response);
+    }
+
+    private void redirectToAccessCodePage(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
+        redirectTo(SAMLConfigurer.TARGET_URL_ENTER_ACCESS_CODE, request, response);
     }
 
     interface RegistrationStatusStrategy {

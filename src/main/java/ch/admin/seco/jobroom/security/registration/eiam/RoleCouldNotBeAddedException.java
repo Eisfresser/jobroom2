@@ -1,4 +1,4 @@
-package ch.admin.seco.jobroom.security.registration.eiam.exceptions;
+package ch.admin.seco.jobroom.security.registration.eiam;
 
 public class RoleCouldNotBeAddedException extends Throwable {
     public RoleCouldNotBeAddedException(String message) {

@@ -1,4 +1,4 @@
-package ch.admin.seco.jobroom.security.registration.uid.dto;
+package ch.admin.seco.jobroom.security.registration.uid;
 
 import java.util.Date;
 
@@ -6,17 +6,29 @@ import java.util.Date;
  * Firm DTO.
  */
 public class FirmData implements Comparable<FirmData> {
+
     private String name;
+
     private String additionalName;
+
     private String chId;
+
     private String uidPrefix;
+
     private int uid;
+
     private boolean active;
+
     private Date commercialRegisterEntryDate;
+
     private AddressData address;
+
     private String mwst;
+
     private String vatEntryStatus;
+
     private Date vatLiquidationDate;
+
     private boolean uidPublic;
 
     public FirmData() {
@@ -177,16 +189,16 @@ public class FirmData implements Comparable<FirmData> {
     @Override
     public String toString() {
         return "FirmData{" +
-                "name='" + name + '\'' +
-                ", chId='" + chId + '\'' +
-                ", uid=" + uid +
-                ", active=" + active +
-                ", commercialRegisterEntryDate=" + commercialRegisterEntryDate +
-                ", address=" + address +
-                ", mwst='" + mwst + '\'' +
-                ", vatEntryStatus='" + vatEntryStatus + '\'' +
-                ", vatLiquidationDate=" + vatLiquidationDate +
-                ", uidPublic=" + uidPublic +
-                '}';
+            "name='" + name + '\'' +
+            ", chId='" + chId + '\'' +
+            ", uid=" + uid +
+            ", active=" + active +
+            ", commercialRegisterEntryDate=" + commercialRegisterEntryDate +
+            ", address=" + address +
+            ", mwst='" + mwst + '\'' +
+            ", vatEntryStatus='" + vatEntryStatus + '\'' +
+            ", vatLiquidationDate=" + vatLiquidationDate +
+            ", uidPublic=" + uidPublic +
+            '}';
     }
 }

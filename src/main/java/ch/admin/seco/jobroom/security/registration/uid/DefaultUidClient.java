@@ -25,11 +25,6 @@ import org.springframework.ws.client.core.WebServiceMessageCallback;
 import org.springframework.ws.client.core.WebServiceTemplate;
 import org.springframework.ws.soap.SoapMessage;
 
-import ch.admin.seco.jobroom.security.registration.uid.dto.AddressData;
-import ch.admin.seco.jobroom.security.registration.uid.dto.FirmData;
-import ch.admin.seco.jobroom.security.registration.uid.exceptions.CompanyNotFoundException;
-import ch.admin.seco.jobroom.security.registration.uid.exceptions.UidClientException;
-import ch.admin.seco.jobroom.security.registration.uid.exceptions.UidNotUniqueException;
 import ch.admin.uid.xmlns.uid_wse.GetByUID;
 import ch.admin.uid.xmlns.uid_wse.GetByUIDResponse;
 import ch.admin.uid.xmlns.uid_wse.ObjectFactory;

@@ -1,4 +1,4 @@
-package ch.admin.seco.jobroom.security.registration.uid.mock;
+package ch.admin.seco.jobroom.security.registration.uid;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -6,10 +6,6 @@ import java.util.Date;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import ch.admin.seco.jobroom.security.registration.uid.UidClient;
-import ch.admin.seco.jobroom.security.registration.uid.dto.AddressData;
-import ch.admin.seco.jobroom.security.registration.uid.dto.FirmData;
 
 public class UidClientMock implements UidClient {
 

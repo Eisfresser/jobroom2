@@ -1,16 +1,21 @@
-package ch.admin.seco.jobroom.security.registration.uid.dto;
+package ch.admin.seco.jobroom.security.registration.uid;
 
-/**
- * Address DTO.
- */
 public class AddressData {
+
     private String street;
+
     private String buildingNum;
+
     private String streetAddOn;
+
     private String zip;
+
     private String city;
+
     private String canton;
+
     private String country;
+
     private String communityNumber;
 
     public String getCountry() {
@@ -128,14 +133,14 @@ public class AddressData {
     @Override
     public String toString() {
         return "AddressData{" +
-                "street='" + street + '\'' +
-                ", buildingNum='" + buildingNum + '\'' +
-                ", streetAddOn='" + streetAddOn + '\'' +
-                ", zip='" + zip + '\'' +
-                ", city='" + city + '\'' +
-                ", canton='" + canton + '\'' +
-                ", country='" + country + '\'' +
-                ", communityNumber='" + communityNumber + '\'' +
-                '}';
+            "street='" + street + '\'' +
+            ", buildingNum='" + buildingNum + '\'' +
+            ", streetAddOn='" + streetAddOn + '\'' +
+            ", zip='" + zip + '\'' +
+            ", city='" + city + '\'' +
+            ", canton='" + canton + '\'' +
+            ", country='" + country + '\'' +
+            ", communityNumber='" + communityNumber + '\'' +
+            '}';
     }
 }

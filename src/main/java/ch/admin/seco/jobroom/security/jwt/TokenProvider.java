@@ -1,24 +1,29 @@
 package ch.admin.seco.jobroom.security.jwt;
 
-import ch.admin.seco.jobroom.security.UserPrincipal;
-import io.github.jhipster.config.JHipsterProperties;
-import io.github.jhipster.config.JHipsterProperties.Security.Authentication.Jwt;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.SignatureAlgorithm;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Date;
-
 import static io.jsonwebtoken.Jwts.builder;
 import static java.time.LocalDateTime.now;
 import static java.time.ZoneId.systemDefault;
 import static java.time.temporal.ChronoUnit.MILLIS;
 
+import java.util.Date;
+
+import io.github.jhipster.config.JHipsterProperties;
+import io.github.jhipster.config.JHipsterProperties.Security.Authentication.Jwt;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.SignatureAlgorithm;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
+import org.springframework.stereotype.Component;
+
+import ch.admin.seco.jobroom.security.UserPrincipal;
+
 @Component
 public class TokenProvider {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(TokenProvider.class);
 
     private String secretKey;
 
@@ -38,13 +43,18 @@ public class TokenProvider {
         this.tokenValidityInMillisecondsForRememberMe = 1000 * token.getTokenValidityInSecondsForRememberMe();
     }
 
-    @Transactional
     public String createToken(Authentication authentication, boolean rememberMe) {
         return createToken(
             authentication.getName(),
             calculateExpirationDate(rememberMe),
             prepareClaims(authentication)
         );
+    }
+
+    public DefaultOAuth2AccessToken createAccessToken(Authentication authentication) {
+        String token = createToken(authentication, false);
+        Date expirationDate = calculateExpirationDate(false);
+        return createAccessToken(token, expirationDate);
     }
 
     private Claims prepareClaims(Authentication authentication) {
@@ -55,11 +65,6 @@ public class TokenProvider {
         throw new IllegalArgumentException("The principal in the authentication is of an unknown type " + principal.getClass().getSimpleName());
     }
 
-    public DefaultOAuth2AccessToken createAccessToken(Authentication authentication) {
-        String token = createToken(authentication, false);
-        Date expirationDate = calculateExpirationDate(false);
-        return createAccessToken(token, expirationDate);
-    }
 
     private DefaultOAuth2AccessToken createAccessToken(String token, Date expirationDate) {
         DefaultOAuth2AccessToken oAuth2AccessToken = new DefaultOAuth2AccessToken(token);
@@ -68,6 +73,7 @@ public class TokenProvider {
     }
 
     private String createToken(String subject, Date validity, Claims claims) {
+        LOGGER.info("About to create Token for subject: {}", subject);
         return builder()
             .setClaims(claims)
             .setSubject(subject)

@@ -39,14 +39,14 @@ import ch.admin.seco.jobroom.repository.UserRepository;
 import ch.admin.seco.jobroom.security.AuthoritiesConstants;
 import ch.admin.seco.jobroom.security.MD5PasswordEncoder;
 import ch.admin.seco.jobroom.security.UserPrincipal;
-import ch.admin.seco.jobroom.security.registration.eiam.exceptions.RoleCouldNotBeAddedException;
+import ch.admin.seco.jobroom.security.registration.eiam.EiamAdminService;
+import ch.admin.seco.jobroom.security.registration.eiam.RoleCouldNotBeAddedException;
+import ch.admin.seco.jobroom.security.registration.uid.AddressData;
+import ch.admin.seco.jobroom.security.registration.uid.CompanyNotFoundException;
+import ch.admin.seco.jobroom.security.registration.uid.FirmData;
 import ch.admin.seco.jobroom.security.registration.uid.UidClient;
-import ch.admin.seco.jobroom.security.registration.uid.dto.AddressData;
-import ch.admin.seco.jobroom.security.registration.uid.dto.FirmData;
-import ch.admin.seco.jobroom.security.registration.uid.exceptions.CompanyNotFoundException;
-import ch.admin.seco.jobroom.security.registration.uid.exceptions.UidClientException;
-import ch.admin.seco.jobroom.security.registration.uid.exceptions.UidNotUniqueException;
-import ch.admin.seco.jobroom.security.saml.utils.IamService;
+import ch.admin.seco.jobroom.security.registration.uid.UidClientException;
+import ch.admin.seco.jobroom.security.registration.uid.UidNotUniqueException;
 import ch.admin.seco.jobroom.service.CandidateService;
 import ch.admin.seco.jobroom.service.CurrentUserService;
 import ch.admin.seco.jobroom.service.MailService;
@@ -98,7 +98,7 @@ public class RegistrationServiceTest {
     private UidClient mockUidClient;
 
     @Mock
-    private IamService mockIamService;
+    private EiamAdminService mockEiamAdminService;
 
     @Mock
     private CandidateService mockCandidateService;
@@ -122,7 +122,7 @@ public class RegistrationServiceTest {
 
         this.registrationService.registerAsJobSeeker(LocalDate.of(BIRTHDATE_YEAR, BIRTHDATE_MONTH, BIRTHDATE_DAY), VALID_PERS_NO);
 
-        verify(mockIamService).addJobSeekerRoleToUser(anyString(), anyString());
+        verify(mockEiamAdminService).addJobSeekerRoleToUser(anyString(), anyString());
         verify(currentUserService).addRoleToSession(eq(AuthoritiesConstants.ROLE_JOBSEEKER_CLIENT));
     }
 
@@ -209,7 +209,7 @@ public class RegistrationServiceTest {
 
         RegistrationResultDTO registrationResultDTO = this.registrationService.registerAsEmployerOrAgent(userInfo.getAccessCode());
 
-        verify(mockIamService).addCompanyRoleToUser(anyString(), anyString());
+        verify(mockEiamAdminService).addCompanyRoleToUser(anyString(), anyString());
         assertTrue(registrationResultDTO.isSuccess());
         assertTrue(registrationResultDTO.getType().equals(Constants.TYPE_EMPLOYER));
         verify(currentUserService).addRoleToSession(AuthoritiesConstants.ROLE_COMPANY);
@@ -223,7 +223,7 @@ public class RegistrationServiceTest {
 
         registrationService.registerExistingAgent(VALID_LOGIN, VALID_PASSWORD);
 
-        verify(mockIamService).addAgentRoleToUser(anyString(), anyString());
+        verify(mockEiamAdminService).addAgentRoleToUser(anyString(), anyString());
         verify(currentUserService).addRoleToSession(AuthoritiesConstants.ROLE_PRIVATE_EMPLOYMENT_AGENT);
     }
 

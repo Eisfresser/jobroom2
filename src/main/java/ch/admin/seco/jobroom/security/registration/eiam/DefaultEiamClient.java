@@ -18,10 +18,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;
 import org.springframework.ws.client.core.WebServiceTemplate;
 
-import ch.admin.seco.jobroom.security.registration.eiam.exceptions.ExtIdNotUniqueException;
-import ch.admin.seco.jobroom.security.registration.eiam.exceptions.RoleCouldNotBeAddedException;
-import ch.admin.seco.jobroom.security.registration.eiam.exceptions.UserNotFoundException;
-
 class DefaultEiamClient implements EiamClient {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DefaultEiamClient.class);

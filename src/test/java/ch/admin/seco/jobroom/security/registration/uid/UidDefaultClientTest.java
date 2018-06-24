@@ -21,11 +21,6 @@ import org.springframework.ws.client.core.WebServiceTemplate;
 import org.springframework.ws.test.client.MockWebServiceServer;
 import org.springframework.xml.transform.StringSource;
 
-import ch.admin.seco.jobroom.security.registration.uid.dto.FirmData;
-import ch.admin.seco.jobroom.security.registration.uid.exceptions.CompanyNotFoundException;
-import ch.admin.seco.jobroom.security.registration.uid.exceptions.UidClientException;
-import ch.admin.seco.jobroom.security.registration.uid.exceptions.UidNotUniqueException;
-
 @ContextConfiguration("UidWebServiceClientTest-context.xml")
 @RunWith(SpringJUnit4ClassRunner.class)
 public class UidDefaultClientTest {
