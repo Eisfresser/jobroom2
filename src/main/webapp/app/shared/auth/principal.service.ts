@@ -12,7 +12,7 @@ export class Principal {
 
     private authenticated = false;
 
-    private authenticationState = new Subject<any>();
+    private authenticationState = new Subject<CurrentUser>();
 
     constructor(
         private  authServerProvider: AuthServerProvider,
@@ -98,7 +98,7 @@ export class Principal {
         return this.authenticated;
     }
 
-    getAuthenticationState(): Observable<any> {
+    getAuthenticationState(): Observable<CurrentUser> {
         return this.authenticationState.asObservable();
     }
 

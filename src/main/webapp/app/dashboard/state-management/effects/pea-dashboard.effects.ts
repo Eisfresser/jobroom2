@@ -13,9 +13,10 @@ import {
     SUBMIT_CANCELLATION,
     SubmitCancellationAction
 } from '../actions/pea-dashboard.actions';
-import { ITEMS_PER_PAGE, Principal } from '../../../shared';
+import { CurrentUser, ITEMS_PER_PAGE, Principal } from '../../../shared';
 import {
-    getJobAdvertisementDashboardState, JobAdvertisementFilter,
+    getJobAdvertisementDashboardState,
+    JobAdvertisementFilter,
     PEADashboardState
 } from '../state/pea-dashboard.state';
 import { PEAJobAdsSearchRequest } from '../../../shared/job-advertisement/pea-job-ads-search-request';
@@ -43,9 +44,9 @@ export class PEADashboardEffects {
         .withLatestFrom(
             this.store.select(getJobAdvertisementDashboardState),
             this.principal.getAuthenticationState())
-        .switchMap(([action, state, identity]: [LoadNextJobAdvertisementsDashboardPageAction, PEADashboardState, any]) =>
+        .switchMap(([action, state, currentUser]: [LoadNextJobAdvertisementsDashboardPageAction, PEADashboardState, CurrentUser]) =>
             this.jobAdvertisementService.searchPEAJobAds(
-                this.createSearchRequest(state.jobAdvertisementFilter, action.payload.page, identity))
+                this.createSearchRequest(state.jobAdvertisementFilter, action.payload.page, currentUser))
                 .map((resp) => this.toJobAdvertisementsLoadedActionAction(resp, action.payload.page))
                 .catch(() => Observable.of(new JobAdvertisementsLoadErrorAction()))
         );
@@ -56,9 +57,9 @@ export class PEADashboardEffects {
         .withLatestFrom(
             this.store.select(getJobAdvertisementDashboardState),
             this.principal.getAuthenticationState())
-        .switchMap(([action, state, identity]: [FilterJobAdvertisementsDashboardAction, PEADashboardState, any]) =>
+        .switchMap(([action, state, currentUser]: [FilterJobAdvertisementsDashboardAction, PEADashboardState, CurrentUser]) =>
             this.jobAdvertisementService.searchPEAJobAds(
-                this.createSearchRequest(action.payload, state.page, identity))
+                this.createSearchRequest(action.payload, state.page, currentUser))
                 .map(this.toJobAdvertisementsLoadedActionAction)
                 .catch(() => Observable.of(new JobAdvertisementsLoadErrorAction()))
         );
@@ -69,11 +70,11 @@ export class PEADashboardEffects {
                 private jobAdvertisementService: JobAdvertisementService) {
     }
 
-    private createSearchRequest(filter: JobAdvertisementFilter, page: number, identity): PEAJobAdsSearchRequest {
+    private createSearchRequest(filter: JobAdvertisementFilter, page: number, currentUser: CurrentUser): PEAJobAdsSearchRequest {
         const { jobTitle, onlineSinceDays } = filter;
         return {
             body: {
-                companyName: identity.organizationName,
+                companyName: currentUser.companyName,
                 jobTitle,
                 onlineSinceDays
             },
