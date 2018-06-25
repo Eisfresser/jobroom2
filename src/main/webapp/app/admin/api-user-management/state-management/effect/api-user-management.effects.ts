@@ -11,7 +11,9 @@ import {
     TOGGLE_STATUS,
     ToggleStatusAction,
     UPDATE_API_USER,
-    UpdateApiUserAction
+    UPDATE_PASSWORD,
+    UpdateApiUserAction,
+    UpdatePasswordAction
 } from '../action/api-user-management.actions';
 import { Store } from '@ngrx/store';
 import {
@@ -74,6 +76,14 @@ export class ApiUserManagementEffects {
         .flatMap((action: ToggleStatusAction) => {
             return this.apiUserService.toggleStatus(action.payload)
                 .map(() => new ApiUserUpdatedAction(action.payload))
+                .catch(() => Observable.empty());
+        });
+
+    @Effect({ dispatch: false })
+    updatePassword$ = this.actions$
+        .ofType(UPDATE_PASSWORD)
+        .flatMap((action: UpdatePasswordAction) => {
+            return this.apiUserService.updatePassword(action.payload.id, action.payload.password)
                 .catch(() => Observable.empty());
         });
 

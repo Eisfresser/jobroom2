@@ -76,31 +76,34 @@
                     </small>
                 </div>
             </div>
-            <div class="form-group">
-                <label class="form-control-label">
-                    {{ 'api-user-management.password' | translate }}
-                </label>
-                <div class="input-group">
-                    <input formControlName="password" class="form-control">
-                    <div class="input-group-append">
-                        <button type="button" (click)="generatePassword()" class="btn btn-outline-secondary">
-                            {{ 'api-user-management.password.generate' | translate }}
-                        </button>
+
+            <ng-container *ngIf="!apiUser">
+                <div class="form-group">
+                    <label class="form-control-label">
+                        {{ 'api-user-management.password' | translate }}
+                    </label>
+                    <div class="input-group">
+                        <input formControlName="password" class="form-control">
+                        <div class="input-group-append">
+                            <button type="button" (click)="generatePassword()" class="btn btn-outline-secondary">
+                                {{ 'api-user-management.password.generate' | translate }}
+                            </button>
+                        </div>
+                    </div>
+
+                    <div *ngIf="apiUserForm.get('password').touched && apiUserForm.get('password').hasError('required')">
+                        <small class="form-text text-danger">
+                            {{ 'entity.validation.required' | translate }}
+                        </small>
                     </div>
                 </div>
-
-                <div *ngIf="apiUserForm.get('password').touched && apiUserForm.get('password').hasError('required')">
-                    <small class="form-text text-danger">
-                        {{ 'entity.validation.required' | translate }}
-                    </small>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input formControlName="active" type="checkbox" class="form-check-input"/>
+                        {{ 'api-user-management.active' | translate }}
+                    </label>
                 </div>
-            </div>
-            <div class="form-check">
-                <label class="form-check-label">
-                    <input formControlName="active" type="checkbox" class="form-check-input"/>
-                    {{ 'api-user-management.active' | translate }}
-                </label>
-            </div>
+            </ng-container>
         </form>
     </div>
     <div class="modal-footer">

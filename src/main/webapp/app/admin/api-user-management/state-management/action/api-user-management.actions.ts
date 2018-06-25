@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { ApiUser } from '../../service/api-user.service';
+import { ApiUser, ApiUserUpdatePasswordRequest } from '../../service/api-user.service';
 import { ApiUserManagementFilter } from '../state/api-user-management.state';
 
 export const FILTER_API_USERS = 'API_USERS_MANAGEMENT:FILTER_API_USERS';
@@ -9,6 +9,7 @@ export const UPDATE_API_USER = 'API_USERS_MANAGEMENT:UPDATE_API_USER';
 export const API_USER_UPDATED = 'API_USERS_MANAGEMENT:API_USER_UPDATED';
 export const CREATE_API_USER = 'API_USERS_MANAGEMENT:CREATE_API_USER';
 export const TOGGLE_STATUS = 'API_USERS_MANAGEMENT:TOGGLE_STATUS';
+export const UPDATE_PASSWORD = 'API_USER_MANAGEMENT:UPDATE_PASSWORD';
 
 export class FilterApiUsersAction implements Action {
     readonly type = FILTER_API_USERS;
@@ -56,6 +57,13 @@ export class ToggleStatusAction implements Action {
     readonly type = TOGGLE_STATUS;
 
     constructor(public payload: ApiUser) {
+    }
+}
+
+export class UpdatePasswordAction implements Action {
+    readonly type = UPDATE_PASSWORD;
+
+    constructor(public payload: { id: string, password: ApiUserUpdatePasswordRequest }) {
     }
 }
 

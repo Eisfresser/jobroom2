@@ -1,18 +1,18 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { createPageableURLSearchParams, ResponseWrapper } from '../../../shared';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { SERVER_API_URL } from '../../../app.constants';
 
 export interface ApiUser {
     id?: string;
     username: string;
-    password: string;
+    password?: string;
     companyEmail: string;
     companyName: string;
     technicalContactName: string;
     technicalContactEmail: string;
-    active: boolean;
+    active?: boolean;
     lastAccessDate?: Date;
 }
 
@@ -21,6 +21,10 @@ export interface ApiUserSearchRequest {
     size: number;
     query: string;
     sort: string
+}
+
+export interface ApiUserUpdatePasswordRequest {
+    password: string
 }
 
 @Injectable()
@@ -46,11 +50,21 @@ export class ApiUserService {
     }
 
     update(apiUser: ApiUser): Observable<ApiUser> {
-        return this.http.put<ApiUser>(this.resourceUrl, apiUser);
+        const apiUserId = apiUser.id;
+        apiUser = Object.assign({}, apiUser, { id: undefined });
+        return this.http.put<ApiUser>(`${this.resourceUrl}/${apiUserId}`, apiUser);
     }
 
     toggleStatus(apiUser: ApiUser): Observable<void> {
         const body = { active: apiUser.active };
         return this.http.put<void>(`${this.resourceUrl}/${apiUser.id}/active`, body)
+    }
+
+    updatePassword(id: string, updatePasswordRequest: ApiUserUpdatePasswordRequest): Observable<void> {
+        return this.http.put<void>(`${this.resourceUrl}/${id}/password`, updatePasswordRequest)
+    }
+
+    generatePassword(): string {
+        return Math.random().toString(36).slice(-10);
     }
 }

@@ -13,9 +13,11 @@
         "dialog": {
             "title": "API-User erstellen oder modifizieren"
         },
+        "update-password-dialog": {
+            "title": "Change password"
+        },
         "dismiss": "Abbrechen",
         "email": "E-Mail",
-        "id": "Id",
         "lastAccessDate": "Letzter Zugriff",
         "new": "Neuen API-Benutzer erstellen",
         "password": "Passwort",

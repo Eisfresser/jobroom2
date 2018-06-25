@@ -47,6 +47,7 @@ import { apiUserManagementReducer } from './api-user-management/state-management
 import { ApiUserDialogService } from './api-user-management/service/api-user-dialog.service';
 import { ApiUserManagementDialogComponent } from './api-user-management/dialogs/api-user-management-dialog.component';
 import { ApiUserManagementListComponent } from './api-user-management/api-user-management-list/api-user-management-list.component';
+import { ApiUserManagementPasswordUpdateDialogComponent } from './api-user-management/dialogs/api-user-management-password-update-dialog.component';
 
 /* jhipster-needle-add-admin-module-import - JHipster will add admin modules imports here */
 
@@ -85,7 +86,8 @@ import { ApiUserManagementListComponent } from './api-user-management/api-user-m
         JhiMetricsMonitoringModalComponent,
         ApiUserManagementComponent,
         ApiUserManagementDialogComponent,
-        ApiUserManagementListComponent
+        ApiUserManagementListComponent,
+        ApiUserManagementPasswordUpdateDialogComponent
     ],
     entryComponents: [
         UserMgmtDialogComponent,
@@ -95,7 +97,8 @@ import { ApiUserManagementListComponent } from './api-user-management/api-user-m
         SystemNotificationsManagementModalDetailComponent,
         JhiHealthModalComponent,
         JhiMetricsMonitoringModalComponent,
-        ApiUserManagementDialogComponent
+        ApiUserManagementDialogComponent,
+        ApiUserManagementPasswordUpdateDialogComponent
     ],
     providers: [
         AuditsService,

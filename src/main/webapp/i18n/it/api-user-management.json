@@ -13,9 +13,11 @@
         "dialog": {
             "title": "Crea o modifica utente API"
         },
+        "update-password-dialog": {
+            "title": "Change password"
+        },
         "dismiss": "Interrompere",
         "email": "E-mail",
-        "id": "Id",
         "lastAccessDate": "Ultimo accesso",
         "new": "Crea nuovo utente API",
         "password": "Password",

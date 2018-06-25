@@ -5,11 +5,12 @@ import {
     Input,
     Output
 } from '@angular/core';
-import { ApiUser } from '../service/api-user.service';
+import { ApiUser, ApiUserUpdatePasswordRequest } from '../service/api-user.service';
 import {
     LoadNextApiUsersPageAction,
     ToggleStatusAction,
-    UpdateApiUserAction
+    UpdateApiUserAction,
+    UpdatePasswordAction
 } from '../state-management/action/api-user-management.actions';
 import { Store } from '@ngrx/store';
 import {
@@ -72,5 +73,12 @@ export class ApiUserManagementListComponent {
             this.store.dispatch(new UpdateApiUserAction(updatedApiUser));
         };
         this.apiUserDialogService.open(onSubmit, apiUser);
+    }
+
+    openPasswordUpdateDialog(id: string) {
+        const onSubmit = (password: ApiUserUpdatePasswordRequest) => {
+            this.store.dispatch(new UpdatePasswordAction({ id, password }))
+        };
+        this.apiUserDialogService.openPasswordUpdateDialog(onSubmit);
     }
 }

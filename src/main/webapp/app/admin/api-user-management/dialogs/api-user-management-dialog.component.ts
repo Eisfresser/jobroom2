@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { EMAIL_REGEX } from '../../../shared';
-import { ApiUser } from '../service/api-user.service';
+import { ApiUser, ApiUserService } from '../service/api-user.service';
 
 @Component({
     selector: 'jr2-api-user-management-dialog',
@@ -16,7 +16,8 @@ export class ApiUserManagementDialogComponent implements OnInit {
     apiUserForm: FormGroup;
 
     constructor(private fb: FormBuilder,
-                public activeModal: NgbActiveModal) {
+                public activeModal: NgbActiveModal,
+                private apiUserService: ApiUserService) {
     }
 
     ngOnInit(): void {
@@ -26,14 +27,16 @@ export class ApiUserManagementDialogComponent implements OnInit {
             companyName: [this.apiUser ? this.apiUser.companyName : '', Validators.required],
             technicalContactName: [this.apiUser ? this.apiUser.technicalContactName : '', Validators.required],
             technicalContactEmail: [this.apiUser ? this.apiUser.technicalContactEmail : '', [Validators.required, Validators.pattern(EMAIL_REGEX)]],
-            active: [this.apiUser ? this.apiUser.active : true],
-            password: [this.apiUser ? this.apiUser.password : '', Validators.required]
         });
+        if (!this.apiUser) {
+            this.apiUserForm.addControl('password', this.fb.control('', Validators.required));
+            this.apiUserForm.addControl('active', this.fb.control(true));
+        }
     }
 
     generatePassword(): void {
         this.apiUserForm.get('password')
-            .setValue(Math.random().toString(36).slice(-10));
+            .setValue(this.apiUserService.generatePassword());
     }
 
     submit(formValue: ApiUser): void {
