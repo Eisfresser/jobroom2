@@ -277,8 +277,10 @@ export class JobPublicationMapper {
     }
 
     private static fixUrlScheme(url: string): string {
-        return url && (!url.startsWith('http://') || !url.startsWith('https://'))
-            ? `http://${url}`
-            : url;
+        if (!url) {
+            return url
+        }
+        return url.startsWith('http://') || url.startsWith('https://')
+            ? url : `http://${url}`;
     }
 }
