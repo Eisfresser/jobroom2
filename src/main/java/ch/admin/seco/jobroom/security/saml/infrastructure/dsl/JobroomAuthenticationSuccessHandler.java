@@ -1,6 +1,7 @@
 package ch.admin.seco.jobroom.security.saml.infrastructure.dsl;
 
 import java.io.IOException;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -14,7 +15,8 @@ import org.slf4j.LoggerFactory;
 
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 
 import ch.admin.seco.jobroom.domain.UserInfo;
@@ -60,16 +62,23 @@ public class JobroomAuthenticationSuccessHandler extends SavedRequestAwareAuthen
             LOG.debug("Found roles: " + rolesAsString(authentication));
         }
 
-        if (authentication.getPrincipal() instanceof User) {
+        Object principal = authentication.getPrincipal();
+        if (!UserDetails.class.isAssignableFrom(principal.getClass())) {
+            throw new AuthenticationServiceException("Expected Principal to be of type 'UserDetails' but was " + principal.getClass());
+        }
+
+        UserDetails userDetails = (UserDetails) principal;
+        if (!hasJobRoomAllowRole(userDetails.getAuthorities())) {
+            logger.info("User '" + userDetails.getUsername() + "' doesn't have the ALLOW role -> redirect to eiam");
             redirectTo(this.targetUrlEiamAccessRequest, request, response);
             return;
         }
 
-        if (!(authentication.getPrincipal() instanceof UserPrincipal)) {
-            throw new AuthenticationServiceException("Expected Principal to be of type UserPrincipal but was " + authentication.getPrincipal().getClass());
+        if (!(userDetails instanceof UserPrincipal)) {
+            throw new AuthenticationServiceException("Expected Principal to be of type 'UserPrincipal' but was " + principal.getClass());
         }
-        UserPrincipal principal = (UserPrincipal) authentication.getPrincipal();
-        handleAuthenticatedUser(authentication, principal, request, response);
+        UserPrincipal userPrincipal = (UserPrincipal) principal;
+        handleAuthenticatedUser(authentication, userPrincipal, request, response);
     }
 
     private void handleAuthenticatedUser(Authentication authentication, UserPrincipal userPrincipal, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -125,6 +134,10 @@ public class JobroomAuthenticationSuccessHandler extends SavedRequestAwareAuthen
 
     private void redirectToAccessCodePage(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
         redirectTo(SAMLConfigurer.TARGET_URL_ENTER_ACCESS_CODE, request, response);
+    }
+
+    private boolean hasJobRoomAllowRole(Collection<? extends GrantedAuthority> authorities) {
+        return authorities.stream().anyMatch(a -> a.getAuthority().equals(AuthoritiesConstants.ROLE_ALLOW));
     }
 
     interface RegistrationStatusStrategy {

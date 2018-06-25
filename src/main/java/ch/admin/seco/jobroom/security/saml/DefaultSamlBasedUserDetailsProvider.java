@@ -1,6 +1,5 @@
 package ch.admin.seco.jobroom.security.saml;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Optional;
@@ -8,8 +7,6 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import org.springframework.security.authentication.InsufficientAuthenticationException;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,7 +15,6 @@ import org.springframework.transaction.support.TransactionTemplate;
 
 import ch.admin.seco.jobroom.domain.UserInfo;
 import ch.admin.seco.jobroom.repository.UserInfoRepository;
-import ch.admin.seco.jobroom.security.AuthoritiesConstants;
 import ch.admin.seco.jobroom.security.UserPrincipal;
 import ch.admin.seco.jobroom.security.saml.infrastructure.EiamEnrichedSamlUser;
 import ch.admin.seco.jobroom.security.saml.infrastructure.SamlBasedUserDetailsProvider;
@@ -68,10 +64,6 @@ public class DefaultSamlBasedUserDetailsProvider implements SamlBasedUserDetails
         }
     }
 
-    private boolean hasJobRoomAllowRole(Collection<? extends GrantedAuthority> authorities) {
-        return authorities.stream().anyMatch(a -> a.getAuthority().equals(AuthoritiesConstants.ROLE_ALLOW));
-    }
-
     private UserPrincipal prepareEiamUserPrincipal(EiamEnrichedSamlUser eiamEnrichedSamlUser, UserInfo userInfo) {
         UserPrincipal userPrincipal = new UserPrincipal(
             userInfo.getId(),
@@ -85,9 +77,6 @@ public class DefaultSamlBasedUserDetailsProvider implements SamlBasedUserDetails
         userPrincipal.setAuthenticationMethod(eiamEnrichedSamlUser.getAuthnContext());
         userPrincipal.setUserDefaultProfileExtId(eiamEnrichedSamlUser.getDefaultProfileExtId().get());
 
-        if (!hasJobRoomAllowRole(userPrincipal.getAuthorities())) {
-            throw new InsufficientAuthenticationException("User with ext-id: " + eiamEnrichedSamlUser.getUserExtId() + " doesn't have the ALLOW role");
-        }
         return userPrincipal;
     }
 
