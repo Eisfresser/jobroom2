@@ -81,8 +81,9 @@ export class CandidateAnonymousContactDialogComponent implements OnInit, OnDestr
     sendMessage(): void {
         if (this.anonymousContactForm.valid) {
             this.mailService.senAnonymousContactMessage(this.emailContent)
-                .finally(() => this.activeModal.close())
-                .subscribe();
+                .subscribe((success) => {
+                    this.activeModal.close()
+                });
         }
     }
 
