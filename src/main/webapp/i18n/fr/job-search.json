@@ -24,7 +24,7 @@
                 "label": "En ligne depuis"
             },
             "restricted-jobs": {
-                "label": "Stellen innerhalb Informationsvorsprung"
+                "label": "Postes consultables avec un temps d'avance"
             },
             "sort": {
                 "label": "Tri",

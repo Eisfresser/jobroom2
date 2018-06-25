@@ -16,7 +16,7 @@
                 "label": "Personal number",
                 "placeholder": "12345678"
             },
-            "text": "EN Hilfetext Personennummer",
+            "text": "Please authenticate yourself using your personal ID and date of birth. Your personal ID is indicated in the letter which you received from the RAV upon registration.",
             "title": "Identification",
             "messages": {
                 "validate": {

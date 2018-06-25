@@ -52,7 +52,7 @@ candidate-detail,candidate-detail.anonymous-contact.contact-via.email,E-Mail,ema
 candidate-detail,candidate-detail.anonymous-contact.contact-via.phone,Telefon,Phone,Téléphone,telefono
 candidate-detail,candidate-detail.anonymous-contact.dismiss,Abbrechen,Cancel,Interrompre,Interrompere
 candidate-detail,candidate-detail.anonymous-contact.send-to,Schicken Sie Ihre Bewerbungsunterlagen an:,Schicken Sie Ihre Bewerbungsunterlagen an:,Schicken Sie Ihre Bewerbungsunterlagen an:,Schicken Sie Ihre Bewerbungsunterlagen an:
-candidate-detail,candidate-detail.anonymous-contact.title,Kandidat-/in kontaktieren,Kandidat-/in kontaktieren,Kandidat-/in kontaktieren,Kandidat-/in kontaktieren
+candidate-detail,candidate-detail.anonymous-contact.title,Kandidat-/in kontaktieren,Contact candidate,Prendre contact avec un/e candidat/e,Contattare il candidato
 candidate-detail,candidate-detail.anonymous-contact.company,Company,Company,Company,Company
 candidate-detail,candidate-detail.anonymous-contact.contact-person,Contact person,Contact person,Contact person,Contact person
 candidate-detail,candidate-detail.anonymous-contact.street,Street,Street,Street,Street
@@ -65,7 +65,7 @@ candidate-detail,candidate-detail.anonymous-contact.title,Kandidat-/in kontaktie
 candidate-detail,candidate-detail.back,Zurück zu den Suchergebnissen,Back to search results,Retour aux résultats,"Torna ai risultati della ricerca "
 candidate-detail,candidate-detail.candidate-anonymous-contact,Kandidat/-in kontaktieren,Contact candidate,Prendre contact avec un/e candidat/e,Contattare il candidato
 candidate-detail,candidate-detail.candidate-anonymous-contact.body,"Mit Freude habe ich Ihr aussagekräftige Profil auf job-room.ch entdeckt.\n Ich könnte mir vorstellen, dass Sie sehr gut in unser Team passen und würde mich sehr freuen, wenn Sie sich bei uns melden würden.","I discovered your profile on job-room.ch and believe you would make a valuable addition to our team.\n Please do not hesitate to contact us if you are interested.","J'ai vu votre profil sur Job-Room et il m'intéresse particulièrement. Je pense que vous pourriez être adapté à notre équipe et vous serait très reconnaissant si vous pouviez prendre contact avec moi.","Ho trovato il Suo profilo su job-room.ch e trovo che sia pertinente.\nSecondo me Lei è la persona giusta per il nostro team. La invito a mettersi in contatto con noi."
-candidate-detail,candidate-detail.candidate-anonymous-contact.subject,Sehr geehrte(r) Kandidat(in),Dear candidate,,Cher candidat/Chère candidate,Gentile candidato
+candidate-detail,candidate-detail.candidate-anonymous-contact.subject,Sehr geehrte(r) Kandidat(in),Dear candidate,Cher candidat/Chère candidate,Gentile candidato
 candidate-detail,candidate-detail.candidate-copy-link,Link kopieren,Copy link,Copier le lien,Copia link
 candidate-detail,candidate-detail.candidate-print,Drucken,Print,Imprimer,Stampa
 candidate-detail,candidate-detail.candidate-save,Kandidatenprofil speichern,Save candidate profile,Sauvegarder le profil du candidat,Salva candidato
@@ -73,7 +73,7 @@ candidate-detail,candidate-detail.candidate-send-link,Link versenden,Send link,E
 candidate-detail,candidate-detail.external-id,STES-ID,Candidate-ID,ID-DE,PCI-DE
 candidate-detail,candidate-detail.graduation.ACCEPTED,Schweiz anerkannt,Swiss recognized,Diplôme reconnu en Suisse,Riconosciuto in Svizzera
 candidate-detail,candidate-detail.graduation.CH,Schweizer Abschluss,Swiss degree,Diplôme suisse,Diploma svizzero
-candidate-detail,candidate-detail.graduation.NONE,Kein Abschluss,No degree,Aucun diplôme,Nessun diploma
+candidate-detail,candidate-detail.graduation.NONE,Kein Abschluss,No degree,Aucun  diplôme,Nessun diploma
 candidate-detail,candidate-detail.graduation.NOT_ACCEPTED,In der Schweiz nicht anerkannt,In Switzerland not recognized,Diplôme non reconnu en Suisse,Diploma non riconosciuto in Svizzera
 candidate-detail,candidate-detail.job-center.email.label,E-Mail,Email,Courriel,E-mail
 candidate-detail,candidate-detail.job-center.phone.label,Telefon,Telephone,Téléphone,Telefono
@@ -148,9 +148,9 @@ customer,registration.customer.birthdate.label,Geburtstag,Date of Birth,Annivers
 customer,registration.customer.identificaton.mismatch.error,"Wir konnten keine RAV-Daten anhand Ihrer Angaben finden. Bitte überprüfen Sie, dass Personennummer und Geburtsdatum korrekt eingegeben wurden.","We were not able to find RAV data based on the entered values. Please make sure you entered your personal number and birth date correctly.","FR - Wir konnten keine RAV-Daten anhand Ihrer Angaben finden. Bitte überprüfen Sie, dass Personennummer und Geburtsdatum korrekt eingegeben wurden.","IT - Wir konnten keine RAV-Daten anhand Ihrer Angaben finden. Bitte überprüfen Sie, dass Personennummer und Geburtsdatum korrekt eingegeben wurden."
 customer,registration.customer.pn.label,Personennummer,Personal number,FR - Personennummer,IT - Personennummer
 customer,registration.customer.pn.placeholder,12345678,12345678,12345678,12345678
-customer,registration.customer.text,"Bitte identifizieren Sie sich mit ihrer Personennummer und ihrem Geburtsdatum. Die Personennummer finden sie auf dem Brief, welchen Sie bei der Anmeldung vom RAV erhalten haben.",EN Hilfetext Personennummer,FR Hilfetext Personennummer,IT Hilfetext Personennummer
+customer,registration.customer.text,"Bitte identifizieren Sie sich mit ihrer Personennummer und ihrem Geburtsdatum. Die Personennummer finden sie auf dem Brief, welchen Sie bei der Anmeldung vom RAV erhalten haben.","Please authenticate yourself using your personal ID and date of birth. Your personal ID is indicated in the letter which you received from the RAV upon registration.","Veuillez vous identifier au moyen de votre numéro personnel et de votre date de naissance. Vous trouvez votre numéro personnel sur la lettre que vous avez reçu de l'ORP lors de votre inscription. ","Identificati con la tua data di nascita e il tuo numero personale che hai ricevuto con la lettera quando ti sei iscritto all'URC."
 customer,registration.customer.title,Identifizierung,Identification,Identification,Riconoscimento
-customer,registration.customer.messages.validate.pn,"Bitte eine Zahl mit 8 Stellen eingeben","Please provide a number with 8 digits","FR Bitte eine Zahl mit 8 Stellen eingeben","IT Bitte eine Zahl mit 8 Stellen eingeben"
+customer,registration.customer.messages.validate.pn,"Bitte eine Zahl mit 8 Stellen eingeben","Please provide a number with 8 digits","Veuillez indiquer un nombre à 8 chiffres","Inserisci un numero di 8 cifre."
 customer,registration.customer.login,Login,Login,Login,Login
 customer,registration.customer.cancel,Abbrechen,Cancel,Cancel,Cancel
 dashboard,dashboard.job-publication.action,Aktion,Action,Action,Azione
@@ -209,8 +209,8 @@ dashboard,job-publication-details.title,Stellenpublikation,Job publication,Publi
 elasticsearch-reindex,elasticsearch.reindex.candidateservice.accepted,"Request accepted, performing Candidates Elasticsearch reindexing.","Request accepted, performing Candidates Elasticsearch reindexing.","Request accepted, performing Candidates Elasticsearch reindexing.","Request accepted, performing Candidates Elasticsearch reindexing."
 elasticsearch-reindex,elasticsearch.reindex.dialog.cancel,Cancel,Cancel,Cancel,Cancel
 elasticsearch-reindex,elasticsearch.reindex.dialog.confirm,Reindex,Reindex,Reindex,Reindex
-elasticsearch-reindex,elasticsearch.reindex.dialog.question,Are you sure you want to reindex Elasticsearch? This could take a while!,Are you sure you want to reindex Elasticsearch? This could take a while!,Are you sure you want to reindex Elasticsearch? This could take a while!,Are you sure you want to reindex Elasticsearch? This could take a while!
-elasticsearch-reindex,elasticsearch.reindex.dialog.title,Confirm Elasticsearch Reindex,Confirm Elasticsearch Reindex,Confirm Elasticsearch Reindex,Confirm Elasticsearch Reindex
+elasticsearch-reindex,elasticsearch.reindex.dialog.question,"Sind Sie sicher, dass Sie Elasticsearch neu indizieren wollen? Das kann eine Weile dauern!",Are you sure you want to reindex Elasticsearch? This could take a while!,Êtes-vous sûr de vouloir réindexer Elasticsearch? Cela peut prendre du temps!,Vuoi davvero reindicizzare Elasticsearch? L'operazione può durare a lungo!
+elasticsearch-reindex,elasticsearch.reindex.dialog.title,Neuindizierung Elasticsearch bestätigen,Confirm Elasticsearch Reindex,Confirmer la réindexation Elasticsearch ,Conferma di voler reindicizzare Elasticsearch.
 elasticsearch-reindex,elasticsearch.reindex.document.all,All,All,All,All
 elasticsearch-reindex,elasticsearch.reindex.document.candidates,Candidates,Candidates,Candidates,Candidates
 elasticsearch-reindex,elasticsearch.reindex.document.jobs,Jobs,Jobs,Jobs,Jobs
@@ -227,7 +227,7 @@ error,error.concurrencyFailure,Another user modified this data at the same time 
 error,error.http.400,Bad request.,Bad request.,Mauvaise requête.,Bad request.
 error,error.http.401,Unauthorized.,Unauthorized.,Non autorisé.,Non autorizzato.
 error,error.http.403,Sie haben nicht die nötigen Berechtigungen diese Seite anzuzeigen.,You are not authorised to access this page.,Vous n'avez pas les droits nécessaires pour accéder à cette page.,Non hai i diritti per accedere a questa pagina.
-error,error.http.405,The HTTP verb you used is not supported for this URL.,The HTTP verb you used is not supported for this URL.,Le verbe HTTP que vous avez utilisé n'est pas reconnu par cet URL.,The HTTP verb you used is not supported for this URL.
+error,error.http.405,Das verwendete HTTP-Method wird von diese Webseite nicht unterstützt.,The HTTP verb you used is not supported for this URL.,La méthode HTTP utilisé n'est pas soutenu par ce site.,Il metodo HTTP usato non viene supportato da questo sito.
 error,error.http.500,Internal server error.,Internal server error.,Erreur interne du serveur.,Internal server error.
 error,error.title,Fehlerseite!,Error page!,Page d'erreur !,Pagina di errore!
 error,error.validation,Validation error on the server.,Validation error on the server.,Erreur de validation côté serveur.,Validation error on the server.
@@ -480,7 +480,7 @@ global,global.reference.language.pt,Portugiesisch,Portuguese,Portugais,Portoghes
 global,global.reference.language.rm,Rätoromanisch,Rhaeto-Romanic,Rheto-Romanche,Reto-Romancio
 global,global.reference.language.ro,Rumänisch,Romanian,Roumain,Rumeno
 global,global.reference.language.ru,Russisch,Russian,Russe,Russo
-global,global.reference.language.sk,Slovak,Slowakisch,Slovaque,Slovaco
+global,global.reference.language.sk,Slowakisch,Slovakian,Slovaque,Slovacco
 global,global.reference.language.sl,Slowenisch,Slovenian,Slovène,Sloveno
 global,global.reference.language.spoken,Mündlich,Orally,Orale,Orale
 global,global.reference.language.sq,Albanisch,Albanian,Albanais,Albanese
@@ -724,7 +724,7 @@ home,home.tools.job-publication.job-description,Stellenbeschreibung,Job descript
 home,home.tools.job-publication.job-description-lang.label,Sprache der Stellenbeschreibung,Job description language,Langue du descriptif,Lingua della descrizione
 home,home.tools.job-publication.job-title,Stellenbezeichnung,Job title,Désignation du poste,Denominazione del posto
 home,home.tools.job-publication.language-skills,Sprachkenntnisse,Languages,Connaissances linguistiques,Conoscenze linguistiche
-home,home.tools.job-publication.language-skills.add,Add new language skill,Add new language skill,Add new language skill,Add new language skill
+home,home.tools.job-publication.language-skills.add,Neue Sprachkompetenz hinzufügen,Add new language skill,Ajouter une nouvelle compétence linguistique,Aggiungi nuova conoscenza linguistica
 home,home.tools.job-publication.language-skills.spoken.error,Language skill is required,Language skill is required,Des connaissances linguistiques sont requises,Conoscenze linguistiche obbligatorie
 home,home.tools.job-publication.locality.additional-text,Zusatztext,Additional text,Texte complémentaire,Testo aggiuntivo
 home,home.tools.job-publication.locality.additional-text.placeholder,z. B. Aussendienst in der ganzen Schweiz,e.g. in the field throughout Switzerland,p. ex. service externe dans toute la Suisse,p. es. servizio esterno in tutta la Svizzera
@@ -827,7 +827,7 @@ job-search,job-search.filter.contract-type.option.TEMPORARY,Befristet,Temporary,
 job-search,job-search.filter.online-since.day.many,Tagen,days,jours,giorni
 job-search,job-search.filter.online-since.day.one,Tag,day,jour,giorno
 job-search,job-search.filter.online-since.label,Online seit,Online since,En ligne depuis,Online dal
-job-search,job-search.filter.restricted-jobs.label,Stellen innerhalb Informationsvorsprung,Stellen innerhalb Informationsvorsprung,Stellen innerhalb Informationsvorsprung,Stellen innerhalb Informationsvorsprung
+job-search,job-search.filter.restricted-jobs.label,Stellen innerhalb Informationsvorsprung,Advance-notice job vacancies,Postes consultables avec un temps d'avance,Posti consultabili con anticipo (vantaggio informativo)
 job-search,job-search.filter.sort.label,Sortierung,Sort,Tri,Classificazione
 job-search,job-search.filter.sort.option.DATE_ASC,Sortiere nach Datum aufsteigend,Sort by date ascending,Tri par date - ordre croissant,Ordine crescente per data
 job-search,job-search.filter.sort.option.DATE_DESC,Sortiere nach Datum absteigend,Sort by date descending,Tri par date - ordre décroissant,Ordine decrescente per data

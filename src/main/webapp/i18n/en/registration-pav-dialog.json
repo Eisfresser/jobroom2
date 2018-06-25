@@ -1,15 +1,15 @@
 {
     "registrationPavDialog": {
-        "title": "Please select your organisation from the VZ AVG list",
-        "placeholder": "Please enter your organisation",
+        "title": "Please select your organisation from the VZ AVG list.",
+        "placeholder": "Please enter your organisation.",
         "postal": {
-            "description": "Upon your request"
+            "description": "Once your request is submitted"
         },
         "login": {
-            "description": "You can then log in to your user account via the login using the sent activation code."
+            "description": "You can then log in to your user account using this activation code."
         },
         "requestActivationCode": "Request activation code by post",
-        "activationCodeRequested": "Activation code requested successfully",
+        "activationCodeRequested": "Activation code requested",
         "returnToHomepage": "Return to homepage"
     }
 }

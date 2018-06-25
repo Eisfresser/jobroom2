@@ -108,7 +108,7 @@
                 },
                 "job-title": "Denominazione del posto",
                 "language-skills": "Conoscenze linguistiche",
-                "language-skills.add": "Add new language skill",
+                "language-skills.add": "Aggiungi nuova conoscenza linguistica",
                 "language-skills.spoken.error": "Conoscenze linguistiche obbligatorie",
                 "locality": {
                     "additional-text": "Testo aggiuntivo",

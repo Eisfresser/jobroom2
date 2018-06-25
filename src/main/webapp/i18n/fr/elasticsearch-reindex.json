@@ -7,8 +7,8 @@
             "dialog": {
                 "cancel": "Cancel",
                 "confirm": "Reindex",
-                "question": "Are you sure you want to reindex Elasticsearch? This could take a while!",
-                "title": "Confirm Elasticsearch Reindex"
+                "question": "\u00cates-vous s\u00fbr de vouloir r\u00e9indexer Elasticsearch? Cela peut prendre du temps!",
+                "title": "Confirmer la r\u00e9indexation Elasticsearch "
             },
             "document": {
                 "all": "All",

@@ -5,7 +5,7 @@
             "400": "Bad request.",
             "401": "Non autorizzato.",
             "403": "Non hai i diritti per accedere a questa pagina.",
-            "405": "The HTTP verb you used is not supported for this URL.",
+            "405": "Il metodo HTTP usato non viene supportato da questo sito.",
             "500": "Internal server error."
         },
         "title": "Pagina di errore!",

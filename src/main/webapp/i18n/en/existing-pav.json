@@ -14,7 +14,7 @@
                     "error": "We were not able to find login data based on the entered values. Please make sure you entered your email address and password correctly."
                 }
             },
-            "text": "EN - Bitte geben Sie Ihre Anmeldedaten ein, mit welchen Sie sich bisher in Job-Room anmeldeten.",
+            "text": "Please enter the Job Room login details you regularly use.",
             "login": "Login",
             "cancel": "Cancel"
         }

@@ -108,7 +108,7 @@
                 },
                 "job-title": "Stellenbezeichnung",
                 "language-skills": "Sprachkenntnisse",
-                "language-skills.add": "Add new language skill",
+                "language-skills.add": "Neue Sprachkompetenz hinzuf\u00fcgen",
                 "language-skills.spoken.error": "Language skill is required",
                 "locality": {
                     "additional-text": "Zusatztext",

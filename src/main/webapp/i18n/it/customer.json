@@ -16,11 +16,11 @@
                 "label": "IT - Personennummer",
                 "placeholder": "12345678"
             },
-            "text": "IT Hilfetext Personennummer",
+            "text": "Identificati con la tua data di nascita e il tuo numero personale che hai ricevuto con la lettera quando ti sei iscritto all'URC.",
             "title": "Riconoscimento",
             "messages": {
                 "validate": {
-                    "pn": "IT Bitte eine Zahl mit 8 Stellen eingeben"
+                    "pn": "Inserisci un numero di 8 cifre."
                 }
             },
             "login": "Login",

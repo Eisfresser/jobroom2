@@ -16,11 +16,11 @@
                 "label": "FR - Personennummer",
                 "placeholder": "12345678"
             },
-            "text": "FR Hilfetext Personennummer",
+            "text": "Veuillez vous identifier au moyen de votre num\u00e9ro personnel et de votre date de naissance. Vous trouvez votre num\u00e9ro personnel sur la lettre que vous avez re\u00e7u de l'ORP lors de votre inscription. ",
             "title": "Identification",
             "messages": {
                 "validate": {
-                    "pn": "FR Bitte eine Zahl mit 8 Stellen eingeben"
+                    "pn": "Veuillez indiquer un nombre \u00e0 8 chiffres"
                 }
             },
             "login": "Login",

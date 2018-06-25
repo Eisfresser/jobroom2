@@ -55,7 +55,7 @@
                     "postbox-zip": "Case postale NPA",
                     "postbox-zipcode": "Case postale NPA / lieu",
                     "street": "Rue",
-                    "surrogate": "Cette entreprise est substitut pour un employeur",
+                    "surrogate": "Cette annonce d'emploi est faite sur mandat",
                     "title": "Entreprise",
                     "zipcode": "NPA / lieu"
                 },
@@ -108,7 +108,7 @@
                 },
                 "job-title": "D\u00e9signation du poste",
                 "language-skills": "Connaissances linguistiques",
-                "language-skills.add": "Add new language skill",
+                "language-skills.add": "Ajouter une nouvelle comp\u00e9tence linguistique",
                 "language-skills.spoken.error": "Des connaissances linguistiques sont requises",
                 "locality": {
                     "additional-text": "Texte compl\u00e9mentaire",
