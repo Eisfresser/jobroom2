@@ -6,21 +6,24 @@ import ch.admin.seco.jobroom.service.dto.AnonymousContactMessageDTO;
 import ch.admin.seco.jobroom.service.pdf.PdfCreatorService;
 import io.github.jhipster.config.JHipsterProperties;
 import org.apache.commons.mail.util.IDNEmailAddressConverter;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.thymeleaf.context.Context;
+import org.thymeleaf.spring5.SpringTemplateEngine;
+
 import org.springframework.context.MessageSource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-import org.thymeleaf.context.Context;
-import org.thymeleaf.spring5.SpringTemplateEngine;
 
 import javax.mail.internet.MimeMessage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Locale;
+import java.util.stream.Stream;
 
 /**
  * Service for sending emails.
@@ -157,14 +160,43 @@ public class MailService {
     @Async
     public void sendAnonymousContactMail(AnonymousContactMessageDTO anonymousContactMessage, String recipient) {
         log.debug("Sending anonymous contact email to '{}'", recipient);
+        Context context = createAnonymousContactMailContext(anonymousContactMessage);
+        String content = templateEngine.process("mails/anonymousContactEmail", context);
+        sendEmail(recipient, anonymousContactMessage.getSubject(), content, false, true);
+    }
+
+    private Context createAnonymousContactMailContext(AnonymousContactMessageDTO anonymousContactMessage) {
         Context context = new Context();
         context.setVariable("subject", anonymousContactMessage.getSubject());
         context.setVariable("body", anonymousContactMessage.getBody());
         context.setVariable("phone", anonymousContactMessage.getPhone());
         context.setVariable("email", anonymousContactMessage.getEmail());
-        context.setVariable("company", anonymousContactMessage.getCompany());
-        String content = templateEngine.process("mails/anonymousContactEmail", context);
-        sendEmail(recipient, anonymousContactMessage.getSubject(), content, false, true);
+        setCompanyData(context, anonymousContactMessage.getCompany());
+        return context;
     }
 
+    private void setCompanyData(Context context, AnonymousContactMessageDTO.CompanyDTO company) {
+        if (company == null) {
+            context.setVariable("hasCompany", false);
+            return;
+        }
+        context.setVariable("hasCompany", true);
+        context.setVariable("name", company.getName());
+        context.setVariable("contactPerson", company.getContactPerson());
+        context.setVariable("address", prepareCompanyAddress(company));
+        context.setVariable("city", prepareCompanyCity(company));
+        context.setVariable("country", company.getCountry());
+    }
+
+    private String prepareCompanyAddress(AnonymousContactMessageDTO.CompanyDTO company) {
+        return joinStrings(company.getStreet(), company.getHouseNumber());
+    }
+
+    private String prepareCompanyCity(AnonymousContactMessageDTO.CompanyDTO company) {
+        return joinStrings(company.getZipCode(), company.getCity());
+    }
+
+    private String joinStrings(String... values) {
+        return StringUtils.join(Stream.of(values).filter(StringUtils::isNotEmpty).toArray(), ", ");
+    }
 }

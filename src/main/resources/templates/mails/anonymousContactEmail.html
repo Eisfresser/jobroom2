@@ -11,12 +11,12 @@
 
     <p th:if="${email != null}" th:text="#{email.anonymousContact.email(${email})}"></p>
 
-    <p th:if="${company}">
-        <label th:text="${company.name}"></label><br>
-        <label th:text="${company.contactPerson}"></label><br>
-        <label th:text="#{email.anonymousContact.address(${company.street}, ${company.houseNumber})}"></label><br>
-        <label th:text="#{email.anonymousContact.address(${company.zipCode}, ${company.city})}"></label><br>
-        <label th:text="${company.country}"></label>
+    <p th:if="${hasCompany}">
+        <label th:text="${name}"></label><br>
+        <label th:text="${contactPerson}"></label><br>
+        <label th:text="${address}"></label><br>
+        <label th:text="${city}"></label><br>
+        <label th:text="${country}"></label>
     </p>
 </body>
 </html>

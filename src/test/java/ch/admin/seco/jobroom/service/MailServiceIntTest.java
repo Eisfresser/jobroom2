@@ -5,6 +5,7 @@ import ch.admin.seco.jobroom.config.Constants;
 import ch.admin.seco.jobroom.domain.Company;
 import ch.admin.seco.jobroom.domain.User;
 import ch.admin.seco.jobroom.domain.UserInfo;
+import ch.admin.seco.jobroom.service.dto.AnonymousContactMessageDTO;
 import ch.admin.seco.jobroom.service.pdf.PdfCreatorService;
 import io.github.jhipster.config.JHipsterProperties;
 import org.junit.Before;
@@ -212,6 +213,21 @@ public class MailServiceIntTest {
         assertThat(((MimeMultipart)message.getContent()).getCount()).isEqualTo(2);
         assertThat(message.getDataHandler().getContentType().startsWith("multipart/mixed"));
         assertThat(((MimeMultipart) message.getContent()).getBodyPart(1).getContent() instanceof FileInputStream);
+    }
+
+    @Test
+    public void testSendAnonymousContactMail() throws Exception {
+        AnonymousContactMessageDTO anonymousContactMessage = new AnonymousContactMessageDTO();
+        anonymousContactMessage.setSubject("Title");
+        anonymousContactMessage.setBody("Message body");
+
+        mailService.sendAnonymousContactMail(anonymousContactMessage, "test.user@gmail.com");
+
+        verify(javaMailSender).send((MimeMessage) messageCaptor.capture());
+        MimeMessage message = (MimeMessage) messageCaptor.getValue();
+        assertThat(message.getAllRecipients()[0].toString()).isEqualTo("test.user@gmail.com");
+        assertThat(message.getFrom()[0].toString()).isEqualTo("test@localhost");
+        assertThat(message.getSubject()).isEqualTo("Title");
     }
 
 }
