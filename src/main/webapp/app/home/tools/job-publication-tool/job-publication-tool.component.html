@@ -551,7 +551,9 @@
                 <!-- Application -->
                 <fieldset formGroupName="application" class="job-publication--horizontal">
                     <legend>{{ 'home.tools.job-publication.application.title' | translate }}</legend>
-
+                    <div class="form-text text-muted mb-2"
+                         jhiTranslate="home.tools.job-publication.messages.validate.at-least-one-required">
+                    </div>
                     <div class="form-group">
                         <label for="app-form" class="col-form-label">
                             {{ 'home.tools.job-publication.application.online-form' | translate }}
@@ -618,11 +620,10 @@
                             </small>
                         </div>
                     </div>
-
-                    <small class="form-text text-danger"
+                    <div class="form-text text-danger"
                            *ngIf="(form.submitted || jobPublicationForm.get('application').touched) && jobPublicationForm.get('application').invalid"
-                           jhiTranslate="home.tools.job-publication.messages.validate.at-list-one-required">
-                    </small>
+                           jhiTranslate="home.tools.job-publication.messages.validate.at-least-one-required">
+                    </div>
                 </fieldset>
 
                 <!-- Publication -->

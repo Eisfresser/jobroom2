@@ -128,7 +128,7 @@
                         },
                         "phone-format": "Please enter a valid phone number e.g. 031 999 99 99 or +41 31 999 99 99",
                         "required": "This field is required.",
-                        "at-list-one-required": "Select at least one application channel",
+                        "at-least-one-required": "Select at least one application channel",
                         "zip-format": "Invalid postal code",
                         "zip-or-city-format": "Invalid postal code/city"
                     }
