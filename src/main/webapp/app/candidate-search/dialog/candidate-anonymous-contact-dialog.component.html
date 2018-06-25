@@ -82,9 +82,8 @@
                         </ng-container>
 
                         <ng-container *ngIf="anonymousContactForm.get('phone').enabled">
-                            <input formControlName="phone" class="form-control"
-                                   [placeholder]="'global.form.phone.placeholder' | translate">
-
+                            <jr2-phone-number-input id="phone" formControlName="phone" [placeholder]="'global.form.phone.placeholder' | translate">
+                            </jr2-phone-number-input>
                             <div class="input-group-append"
                                  *ngIf="anonymousContactForm.get('phone').enabled">
                                 <button type="button" class="btn btn-sm"

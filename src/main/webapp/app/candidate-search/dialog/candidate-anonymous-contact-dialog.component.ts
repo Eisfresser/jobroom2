@@ -37,7 +37,7 @@ export class CandidateAnonymousContactDialogComponent implements OnInit, OnDestr
             phone: [{
                 value: this.emailContent.phone,
                 disabled: true
-            }, Validators.pattern(PHONE_NUMBER_REGEX)],
+            }],
             sendEmail: true,
             email: [{
                 value: this.emailContent.email,
