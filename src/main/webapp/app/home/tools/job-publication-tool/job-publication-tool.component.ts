@@ -165,9 +165,12 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
         const publicContact = this.jobPublicationForm.get('publicContact');
 
         const makeRequired = (name: string): void => {
-            const field = publicContact.get(name);
-            field.setValidators([Validators.required, ...publicContactFieldValidators[name]]);
-            field.updateValueAndValidity({ emitEvent: false });
+            // TODO: remove workaround
+            if (name !== 'phoneNumber') {
+                const field = publicContact.get(name);
+                field.setValidators([Validators.required, ...publicContactFieldValidators[name]]);
+                field.updateValueAndValidity({ emitEvent: false });
+            }
         };
 
         const makeFieldsRequired = (): void => {
@@ -177,19 +180,23 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
                     return;
                 }
 
-                makeRequired(name)
+                makeRequired(name);
             });
         };
 
         const resetValidator = (name: string): void => {
-            const field = publicContact.get(name);
-            field.clearValidators();
-            field.setValidators(publicContactFieldValidators[name]);
-            field.updateValueAndValidity({ emitEvent: false });
+            // TODO: remove workaround
+            if (name !== 'phoneNumber') {
+                const field = publicContact.get(name);
+                field.clearValidators();
+                field.setValidators(publicContactFieldValidators[name]);
+                field.updateValueAndValidity({ emitEvent: false });
+            }
         };
 
         const resetValidators = (): void => {
-            publicContactFieldNames.forEach((name) => resetValidator(name));
+            publicContactFieldNames
+                .forEach((name) => resetValidator(name));
         };
 
         const isFilled = (value) => publicContactFieldNames
