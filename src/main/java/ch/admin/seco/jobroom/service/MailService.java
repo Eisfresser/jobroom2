@@ -5,6 +5,7 @@ import ch.admin.seco.jobroom.domain.UserInfo;
 import ch.admin.seco.jobroom.service.dto.AnonymousContactMessageDTO;
 import ch.admin.seco.jobroom.service.pdf.PdfCreatorService;
 import io.github.jhipster.config.JHipsterProperties;
+import org.apache.commons.mail.util.IDNEmailAddressConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.MessageSource;
@@ -44,6 +45,8 @@ public class MailService {
 
     private PdfCreatorService pdfCreatorService;
 
+    private IDNEmailAddressConverter idnEmailAddressConverter;
+
     public MailService(JHipsterProperties jHipsterProperties, JavaMailSender javaMailSender,
                        MessageSource messageSource, SpringTemplateEngine templateEngine,
                        PdfCreatorService pdfCreatorService) {
@@ -53,6 +56,7 @@ public class MailService {
         this.messageSource = messageSource;
         this.templateEngine = templateEngine;
         this.pdfCreatorService = pdfCreatorService;
+        this.idnEmailAddressConverter = new IDNEmailAddressConverter();
     }
 
     @Async
@@ -69,7 +73,7 @@ public class MailService {
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         try {
             MimeMessageHelper message = new MimeMessageHelper(mimeMessage, isMultipart, StandardCharsets.UTF_8.name());
-            message.setTo(to);
+            message.setTo(idnEmailAddressConverter.toASCII(to));
             message.setFrom(jHipsterProperties.getMail().getFrom());
             message.setSubject(subject);
             message.setText(content, isHtml);
