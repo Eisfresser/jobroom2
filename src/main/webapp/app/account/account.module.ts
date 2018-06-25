@@ -25,7 +25,6 @@ import {
     PasswordService,
     PasswordStrengthBarComponent,
     RegistrationCompanyDialogComponent,
-    RegistrationComponent,
     RegistrationPavDialogComponent,
     RegistrationService,
     ReLoginComponent,
@@ -50,7 +49,6 @@ import { RegistrationGuardService } from './registration/registration-guard.serv
     ],
     declarations: [
         ActivateComponent,
-        RegistrationComponent,
         ReLoginComponent,
         PasswordComponent,
         PasswordStrengthBarComponent,

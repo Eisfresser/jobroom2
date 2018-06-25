@@ -4,6 +4,9 @@
             "text": "Contact",
             "url": "https://www.arbeit.swiss/secoalv/en/home/service/kontakt.html"
         },
+        "registration": {
+            "url": "https://www.arbeit.swiss/secoalv/en/home/menue/unternehmen/stellenmeldepflicht/Registrierung.html"
+        },
         "title": "Job-Room",
         "title.portal": "work",
         "title.portal-url": "https://www.arbeit.swiss/secoalv/en/home.html",

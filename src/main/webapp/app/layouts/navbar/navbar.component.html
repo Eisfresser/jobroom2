@@ -457,9 +457,7 @@
                     </a>
                 </li>
                 <li class="nav-item" *ngIf="!isAuthenticated() && !noEiam">
-                    <a class="nav-link nav-link--login"
-                       routerLink="registration"
-                       routerLinkActive="active">
+                    <a class="nav-link nav-link--login" [href]="'home.registration.url' | translate" >
                         <span>{{'global.menu.account.registration' | translate}}</span>
                     </a>
                 </li>

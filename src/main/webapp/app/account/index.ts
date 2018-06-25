@@ -14,8 +14,6 @@ export * from './password-reset/init/password-reset-init.route';
 export * from './registration/jobseeker/jobseeker-dialog.component';
 export * from './registration/jobseeker/jobseeker-dialog.route';
 export * from './registration/registration.service';
-export * from './registration/guide/registration.component';
-export * from './registration/guide/registration.route';
 export * from './registration/relogin/relogin.component';
 export * from './registration/relogin/relogin.route';
 export * from './registration/pav/registration-pav-dialog.component';

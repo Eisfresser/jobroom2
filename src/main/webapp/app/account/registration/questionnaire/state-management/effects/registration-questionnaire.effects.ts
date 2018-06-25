@@ -3,18 +3,18 @@ import { Actions, Effect } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import {
-    SELECT_REGISTRATION_ROLE,
     ACCEPT_TERMS_AND_CONDITIONS,
+    ActivateNextButtonAction,
+    NEXT_REGISTRATION_PAGE,
+    NextRegistrationPageAction,
+    ResetRegistrationQuestionnaireAction,
+    SELECT_REGISTRATION_ROLE,
     SELECT_WHETHER_USER_EXIST_OR_NOT,
     SelectRegistrationRoleAction,
-    ShowTermsAndConditionsSectionAction,
     ShowIfUserExistOrNotSectionAction,
-    ActivateNextButtonAction,
-    ResetRegistrationQuestionnaireAction, NEXT_REGISTRATION_PAGE,
-    NextRegistrationPageAction
+    ShowTermsAndConditionsSectionAction
 } from '../actions/registration-questionnaire.actions';
 import { Router } from '@angular/router';
-import { registrationRoute } from '../../../guide/registration.route';
 import { RegistrationService } from '../../../registration.service';
 import { RegistrationCompanyDialogComponent } from '../../../..';
 import { RegistrationDialogService } from '../../../registration-dialog.service';
@@ -68,7 +68,7 @@ export class RegistrationQuestionnaireEffects {
                     this.registrationDialogService.openRegisterJobSeekerDialog();
                     break;
                 default:
-                    this.router.navigate(['/' + registrationRoute.path]);
+                    this.router.navigate(['/error']);
             }
         });
 
