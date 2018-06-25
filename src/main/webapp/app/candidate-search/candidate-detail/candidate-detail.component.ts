@@ -51,6 +51,10 @@ interface EnrichedJobExperience extends JobExperience {
 })
 export class CandidateDetailComponent implements OnInit {
 
+    private readonly SWISS_CANTONS_NUMBER = 26;
+    private readonly ABROAD_CODE = '99';
+    private readonly SWISS_CODE = 'CH';
+
     candidateProfile$: Observable<CandidateProfile>;
     jobExperiences$: Observable<Array<EnrichedJobExperience>>;
     jobCenter$: Observable<JobCenter>;
@@ -171,8 +175,23 @@ export class CandidateDetailComponent implements OnInit {
             .flatMap((candidateProfile) => this.translateValues(candidateProfile.preferredWorkRegions,
                 'global.reference.region.'));
         this.preferredWorkCantons$ = this.candidateProfile$
-            .flatMap((candidateProfile) => this.translateValues(candidateProfile.preferredWorkCantons,
-                'global.reference.canton.'));
+            .flatMap((candidateProfile) => {
+                if (!(candidateProfile.preferredWorkCantons && candidateProfile.preferredWorkCantons.length)) {
+                    return Observable.of([]);
+                }
+                const swissCantons = candidateProfile.preferredWorkCantons
+                    .filter((canton) => canton !== this.ABROAD_CODE);
+                if (swissCantons.length < this.SWISS_CANTONS_NUMBER) {
+                    return this.translateValues(candidateProfile.preferredWorkCantons, 'global.reference.canton.');
+                }
+
+                const workAbroad = candidateProfile.preferredWorkCantons
+                    .some((canton) => canton === this.ABROAD_CODE);
+                if (workAbroad) {
+                    return this.translateValues([this.SWISS_CODE, this.ABROAD_CODE], 'global.reference.canton.')
+                }
+                return this.translateValues([this.SWISS_CODE], 'global.reference.canton.')
+            });
     }
 
     private translateValues(values: Array<string>, keyPrefix: string): Observable<Array<string>> {
@@ -265,10 +284,6 @@ export class CandidateDetailComponent implements OnInit {
 
     isAuthenticated(): boolean {
         return this.principal.isAuthenticated();
-    }
-
-    containsPreferredWorkCantonAbroad(cantons: Array<string>): boolean {
-        return cantons.some((canton) => cantons.indexOf('99') >= 0);
     }
 
     onCopyLink(event: Event): void {
