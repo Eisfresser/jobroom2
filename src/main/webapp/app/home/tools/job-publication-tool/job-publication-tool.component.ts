@@ -540,11 +540,9 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
     onSubmit(): void {
         this.resetAlerts();
         if (this.jobPublicationForm.valid) {
-            this.jobPublicationForm.get('disclaimer').reset(false);
             const createJobAdvertisement = JobPublicationMapper.mapJobPublicationFormToCreateJobAdvertisement(this.jobPublicationForm.value);
             this.jobAdvertisementService.save(createJobAdvertisement)
                 .subscribe(this.createSaveSubscriber());
-            this.jobPublicationForm.reset(this.createDefaultFormModel());
         }
     }
 
@@ -559,6 +557,11 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
                 const changeStatusCb = resp.status === 200
                     ? (show) => this.showSuccessSaveMessage = show
                     : (show) => this.showErrorSaveMessage = show;
+
+                if (resp.status === 200) {
+                    this.jobPublicationForm.get('disclaimer').reset(false);
+                    this.jobPublicationForm.reset(this.createDefaultFormModel());
+                }
                 this.showAlert(changeStatusCb);
             },
             (_) => this.showAlert((show) => this.showErrorSaveMessage = show)
