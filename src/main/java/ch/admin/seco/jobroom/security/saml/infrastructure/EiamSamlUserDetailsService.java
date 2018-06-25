@@ -1,23 +1,29 @@
 package ch.admin.seco.jobroom.security.saml.infrastructure;
 
-import ch.admin.seco.jobroom.security.saml.infrastructure.dsl.SAMLConfigurer;
-import org.apache.commons.lang.StringUtils;
-import org.opensaml.saml2.core.Assertion;
-import org.opensaml.saml2.core.Attribute;
-import org.opensaml.saml2.core.AuthnStatement;
-import org.opensaml.xml.schema.XSString;
-import org.opensaml.xml.util.AttributeMap;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.security.saml.SAMLCredential;
-import org.springframework.security.saml.userdetails.SAMLUserDetailsService;
-
-import javax.xml.namespace.QName;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+
+import javax.xml.namespace.QName;
+
+import org.apache.commons.lang.StringUtils;
+import org.opensaml.saml2.core.Assertion;
+import org.opensaml.saml2.core.Attribute;
+import org.opensaml.saml2.core.AuthnStatement;
+import org.opensaml.ws.message.encoder.MessageEncodingException;
+import org.opensaml.xml.schema.XSString;
+import org.opensaml.xml.util.AttributeMap;
+import org.opensaml.xml.util.XMLHelper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import org.springframework.security.saml.SAMLCredential;
+import org.springframework.security.saml.userdetails.SAMLUserDetailsService;
+import org.springframework.security.saml.util.SAMLUtil;
+
+import ch.admin.seco.jobroom.security.saml.infrastructure.dsl.SAMLConfigurer;
 
 /**
  * Merges the information from the SAML assertion with the ones found in the UserInfo table
@@ -43,19 +49,15 @@ public class EiamSamlUserDetailsService implements SAMLUserDetailsService {
 
     @Override
     public Object loadUserBySAML(SAMLCredential credential) {
-        String extId = credential.getNameID().getValue();
-        LOGGER.debug("Authenticating user with extId {}", extId);
-        return this.samlBasedUserDetailsProvider.createUserDetailsFromSaml(toSamlUser(credential));
-    }
-
-    private SamlUser toSamlUser(SAMLCredential credential) {
-        SamlUser samlUser = doCreateSamlUser(credential);
-        LOGGER.trace("SamlUser User: {}", samlUser);
-        return samlUser;
+        return this.samlBasedUserDetailsProvider.createUserDetailsFromSaml(doCreateSamlUser(credential));
     }
 
     private SamlUser doCreateSamlUser(SAMLCredential credential) {
         final String nameId = credential.getNameID().getValue();
+        LOGGER.debug("Authenticating user having nameId: {}", nameId);
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Received Saml-Assertion: {}", extractSamlAssertion(credential));
+        }
         final String authnContext = getAuthnContext(credential).orElse(SAMLConfigurer.ONE_FACTOR_AUTHN_CTX);
         Map<String, List<String>> eiamAttributes = extractAttributes(credential.getAttributes(), EIAM_ISSUER_NAME);
         if (eiamAttributes.containsKey(USER_EXT_ID_ATTRIBUTE_NAME)) {
@@ -119,4 +121,14 @@ public class EiamSamlUserDetailsService implements SAMLUserDetailsService {
         AttributeMap unknownAttributes = attribute.getUnknownAttributes();
         return unknownAttributes.get(ORIGINAL_ISSUED_QNAME);
     }
+
+    private String extractSamlAssertion(SAMLCredential credential) {
+        try {
+            return XMLHelper.nodeToString(SAMLUtil.marshallMessage(credential.getAuthenticationAssertion()));
+        } catch (MessageEncodingException e) {
+            LOGGER.error("Could not extract saml-assertion", e);
+            return "";
+        }
+    }
+
 }
