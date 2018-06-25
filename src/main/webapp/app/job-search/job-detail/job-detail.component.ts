@@ -68,11 +68,12 @@ export class JobDetailComponent implements AfterViewInit {
 
     private fixApplicationUrl(jobAdvertisement: JobAdvertisement) {
         const applyChannel = jobAdvertisement.jobContent.applyChannel;
-        if (applyChannel && applyChannel.formUrl
-            && (!applyChannel.formUrl.startsWith('http://') || !applyChannel.formUrl.startsWith('https://'))) {
-            jobAdvertisement.jobContent.applyChannel = Object.assign(applyChannel, {
-                formUrl: `http://${applyChannel.formUrl}`
-            });
+        if (applyChannel && applyChannel.formUrl) {
+            if (!applyChannel.formUrl.startsWith('http://') && !applyChannel.formUrl.startsWith('https://')) {
+                jobAdvertisement.jobContent.applyChannel = Object.assign(applyChannel, {
+                    formUrl: `http://${applyChannel.formUrl}`
+                });
+            }
         }
         return jobAdvertisement;
     }
