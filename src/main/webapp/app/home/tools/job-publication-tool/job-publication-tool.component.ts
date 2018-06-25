@@ -66,41 +66,32 @@ import { Company } from '../../../shared/company/company.model';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JobPublicationToolComponent implements OnInit, OnDestroy {
-    private readonly SWITZ_KEY = 'CH';
     readonly APPLICATION_ADDITIONAL_INFO_MAX_LENGTH = 240;
-
     @Input()
     jobAdvertisement: JobAdvertisement;
     @Input()
     userData: UserData;
-
     @ViewChild('employmentStartDateEl')
     employmentStartDateElementRef: ElementRef;
-
     @ViewChild('employmentEndDateEl')
     employmentEndDateElementRef: ElementRef;
-
     degrees = Degree;
     experiences = WorkExperience;
     salutations = Salutation;
     workForms = WorkForm;
     languageSkills$: Observable<Array<string>>;
     languageOptionTranslations$: Observable<Array<{ key: string, value: string }>>;
-
     jobPublicationForm: FormGroup;
     employmentStartDateByArrangement = true;
     employmentEndDateIsPermanent = true;
     employmentStartDateMin = DateUtils.mapDateToNgbDateStruct();
     employmentEndDateMin = DateUtils.mapDateToNgbDateStruct();
-
     fetchOccupationSuggestions: SuggestionLoaderFn<Array<OccupationOption>>;
     occupationFormatter: FormatterFn<OccupationOption>;
-
     countries$: Observable<{ key: string, value: string }[]>;
-
     showSuccessSaveMessage: boolean;
     showErrorSaveMessage: boolean;
-
+    private readonly SWITZ_KEY = 'CH';
     private unsubscribe$ = new Subject<void>();
 
     constructor(private coreStore: Store<CoreState>,
@@ -111,6 +102,14 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
                 private jobAdvertisementService: JobAdvertisementService,
                 private languageFilterService: LanguageFilterService,
                 private cd: ChangeDetectorRef) {
+    }
+
+    get jobOccupation(): AbstractControl {
+        return this.jobPublicationForm.get('occupation.occupationSuggestion');
+    }
+
+    get employmentWorkForms(): FormArray {
+        return <FormArray>this.jobPublicationForm.get('employment.workForms');
     }
 
     ngOnInit(): void {
@@ -150,6 +149,89 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
             });
         this.updateEmploymentStartDateRelatedField();
         this.configurePublicContactSection();
+    }
+
+    isEmployerEnabled(): boolean {
+        return this.jobPublicationForm.get('company.surrogate').value;
+    }
+
+    copyFromContact() {
+        const contact = this.jobPublicationForm.get('contact').value;
+        this.jobPublicationForm.get('publicContact').patchValue(contact);
+        return false;
+    }
+
+    copyPhoneNumberFromPublicContact() {
+        const publicContactPhoneNumber = this.jobPublicationForm.get('publicContact.phoneNumber').value;
+        this.jobPublicationForm.get('application.phoneNumber').setValue(publicContactPhoneNumber);
+        return false;
+    }
+
+    copyEmailFromPublicContact() {
+        const publicContactEmail = this.jobPublicationForm.get('publicContact.email').value;
+        this.jobPublicationForm.get('application.electronicApplicationEmail').setValue(publicContactEmail);
+        return false;
+    }
+
+    copyAddressFromCompany() {
+        const company: CompanyFormModel = this.jobPublicationForm.get('company').value;
+        const addressParts = [company.name];
+        if (company.postboxNumber) {
+            addressParts.push('PO Box ' + company.postboxNumber);
+            if (company.postboxZipCode) {
+                addressParts.push([company.postboxZipCode.zip, company.postboxZipCode.city].join(' '));
+            }
+        } else {
+            addressParts.push([company.street, company.houseNumber].join(' '));
+            if (company.zipCode) {
+                addressParts.push([company.zipCode.zip, company.zipCode.city].join(' '));
+            }
+        }
+        const address = addressParts
+            .filter((part) => !!part)
+            .map((part) => part.replace(/^\s*$/, ''))
+            .filter((part) => !!part)
+            .join(', ');
+        this.jobPublicationForm.get('application.paperApplicationAddress').setValue(address);
+        return false;
+    }
+
+    ngOnDestroy(): void {
+        this.unsubscribe$.next();
+        this.unsubscribe$.complete();
+    }
+
+    getSwitzSelected(countryControl: AbstractControl): Observable<boolean> {
+        return Observable.merge(
+            Observable.of(countryControl.value),
+            countryControl.valueChanges)
+            .map((selectedCountry) => selectedCountry === this.SWITZ_KEY);
+    }
+
+    max(...values: number[]): number {
+        return Math.max(...values);
+    }
+
+    getPoBoxZipCodeTranslations(): Translations {
+        return {
+            zipCode: 'home.tools.job-publication.company.postbox-zipcode',
+            zip: 'home.tools.job-publication.company.postbox-zip',
+            city: 'home.tools.job-publication.company.postbox-city'
+        };
+    }
+
+    onSubmit(): void {
+        this.resetAlerts();
+        if (this.jobPublicationForm.valid) {
+            const createJobAdvertisement = JobPublicationMapper.mapJobPublicationFormToCreateJobAdvertisement(this.jobPublicationForm.value);
+            this.jobAdvertisementService.save(createJobAdvertisement)
+                .subscribe(this.createSaveSubscriber());
+        }
+    }
+
+    resetForm(): void {
+        this.resetAlerts();
+        this.jobPublicationForm.reset(this.createDefaultFormModel());
     }
 
     private configurePublicContactSection() {
@@ -248,10 +330,6 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
                     this.jobPublicationForm.removeControl('employer');
                 }
             });
-    }
-
-    isEmployerEnabled(): boolean {
-        return this.jobPublicationForm.get('company.surrogate').value;
     }
 
     private createJobPublicationForm(formModel: JobPublicationForm): FormGroup {
@@ -437,59 +515,6 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
         };
     }
 
-    copyFromContact() {
-        const contact = this.jobPublicationForm.get('contact').value;
-        this.jobPublicationForm.get('publicContact').patchValue(contact);
-        return false;
-    }
-
-     copyPhoneNumberFromPublicContact() {
-        const publicContactPhoneNumber = this.jobPublicationForm.get('publicContact.phoneNumber').value;
-        this.jobPublicationForm.get('application.phoneNumber').setValue(publicContactPhoneNumber);
-        return false;
-    }
-
-    copyEmailFromPublicContact() {
-        const publicContactEmail = this.jobPublicationForm.get('publicContact.email').value;
-        this.jobPublicationForm.get('application.electronicApplicationEmail').setValue(publicContactEmail);
-        return false;
-    }
-
-    copyAddressFromCompany() {
-        const company: CompanyFormModel = this.jobPublicationForm.get('company').value;
-        const addressParts = [company.name];
-        if (company.postboxNumber) {
-            addressParts.push('PO Box ' + company.postboxNumber);
-            if (company.postboxZipCode) {
-                addressParts.push([company.postboxZipCode.zip, company.postboxZipCode.city].join(' '));
-            }
-        } else {
-            addressParts.push([company.street, company.houseNumber].join(' '));
-            if (company.zipCode) {
-                addressParts.push([company.zipCode.zip, company.zipCode.city].join(' '));
-            }
-        }
-        const address = addressParts
-            .filter((part) => !!part)
-            .map((part) => part.replace(/^\s*$/, ''))
-            .filter((part) => !!part)
-            .join(', ');
-        this.jobPublicationForm.get('application.paperApplicationAddress').setValue(address);
-        return false;
-    }
-
-    ngOnDestroy(): void {
-        this.unsubscribe$.next();
-        this.unsubscribe$.complete();
-    }
-
-    getSwitzSelected(countryControl: AbstractControl): Observable<boolean> {
-        return Observable.merge(
-            Observable.of(countryControl.value),
-            countryControl.valueChanges)
-            .map((selectedCountry) => selectedCountry === this.SWITZ_KEY);
-    }
-
     private configureDateInput(dateInputPath: string, radioButtonsPath: string, onChange: (disabled: boolean) => void) {
         const date = this.jobPublicationForm.get(dateInputPath);
         const radioButton = this.jobPublicationForm.get(radioButtonsPath);
@@ -525,27 +550,6 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
             });
     }
 
-    max(...values: number[]): number {
-        return Math.max(...values);
-    }
-
-    getPoBoxZipCodeTranslations(): Translations {
-        return {
-            zipCode: 'home.tools.job-publication.company.postbox-zipcode',
-            zip: 'home.tools.job-publication.company.postbox-zip',
-            city: 'home.tools.job-publication.company.postbox-city'
-        };
-    }
-
-    onSubmit(): void {
-        this.resetAlerts();
-        if (this.jobPublicationForm.valid) {
-            const createJobAdvertisement = JobPublicationMapper.mapJobPublicationFormToCreateJobAdvertisement(this.jobPublicationForm.value);
-            this.jobAdvertisementService.save(createJobAdvertisement)
-                .subscribe(this.createSaveSubscriber());
-        }
-    }
-
     private resetAlerts() {
         this.showSuccessSaveMessage = false;
         this.showErrorSaveMessage = false;
@@ -554,15 +558,9 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
     private createSaveSubscriber() {
         return Subscriber.create(
             (resp: ResponseWrapper) => {
-                const changeStatusCb = resp.status === 200
-                    ? (show) => this.showSuccessSaveMessage = show
-                    : (show) => this.showErrorSaveMessage = show;
-
-                if (resp.status === 200) {
-                    this.jobPublicationForm.get('disclaimer').reset(false);
-                    this.jobPublicationForm.reset(this.createDefaultFormModel());
-                }
-                this.showAlert(changeStatusCb);
+                this.jobPublicationForm.get('disclaimer').reset(false);
+                this.jobPublicationForm.reset(this.createDefaultFormModel());
+                this.showAlert((show) => this.showSuccessSaveMessage = show);
             },
             (_) => this.showAlert((show) => this.showErrorSaveMessage = show)
         );
@@ -586,19 +584,6 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
                 return Object.keys(countryNames)
                     .map((key) => ({ key, value: countryNames[key] }));
             });
-    }
-
-    resetForm(): void {
-        this.resetAlerts();
-        this.jobPublicationForm.reset(this.createDefaultFormModel());
-    }
-
-    get jobOccupation(): AbstractControl {
-        return this.jobPublicationForm.get('occupation.occupationSuggestion');
-    }
-
-    get employmentWorkForms(): FormArray {
-        return <FormArray>this.jobPublicationForm.get('employment.workForms');
     }
 
     private updateOccupationOnLanguageChange() {
