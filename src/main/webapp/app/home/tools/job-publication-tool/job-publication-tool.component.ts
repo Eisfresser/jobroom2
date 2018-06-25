@@ -544,6 +544,7 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
             const createJobAdvertisement = JobPublicationMapper.mapJobPublicationFormToCreateJobAdvertisement(this.jobPublicationForm.value);
             this.jobAdvertisementService.save(createJobAdvertisement)
                 .subscribe(this.createSaveSubscriber());
+            this.jobPublicationForm.reset(this.createDefaultFormModel());
         }
     }
 
