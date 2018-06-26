@@ -39,8 +39,8 @@
             "country": "Country"
         },
         "back": "Retour aux r\u00e9sultats",
-        "candidate-anonymous-contact": "Prendre contact avec un/e candidat/e",
-        "candidate-anonymous-contact.body": "J'ai vu votre profil sur Job-Room et il m'int\u00e9resse particuli\u00e8rement. Je pense que vous pourriez \u00eatre adapt\u00e9 \u00e0 notre \u00e9quipe et vous serait tr\u00e8s reconnaissant si vous pouviez prendre contact avec moi.",
+        "candidate-anonymous-contact": "Contacter le/la candidat-e",
+        "candidate-anonymous-contact.body": "Madame, Monsieur, L'employeur ci-apr\u00e8s a consult\u00e9 votre profil dans Job-Room et souhaiterait que vous le recontactiez au moyen des coordonn\u00e9es fournies \u00e0 cet effet. Avec nos meilleures salutations",
         "candidate-anonymous-contact.subject": "Cher candidat/Ch\u00e8re candidate",
         "candidate-copy-link": "Copier le lien",
         "candidate-print": "Imprimer",

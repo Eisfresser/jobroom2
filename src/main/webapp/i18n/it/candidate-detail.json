@@ -39,8 +39,8 @@
             "country": "Country"
         },
         "back": "Torna ai risultati della ricerca ",
-        "candidate-anonymous-contact": "Contattare il candidato",
-        "candidate-anonymous-contact.body": "Ho trovato il Suo profilo su job-room.ch e trovo che sia pertinente.\\nSecondo me Lei \u00e8 la persona giusta per il nostro team. La invito a mettersi in contatto con noi.",
+        "candidate-anonymous-contact": "Contattare candidato/a",
+        "candidate-anonymous-contact.body": "Gentile Signora, Egregio Signore, il seguente datore di lavoro ha notato il Suo profilo nel Job-Room e desidera entrare in contatto con Lei. La invitiamo a contattare l\u2019azienda (v. dati sotto) per discutere le prossime tappe. Grazie e cordiali saluti",
         "candidate-anonymous-contact.subject": "Gentile candidato",
         "candidate-copy-link": "Copia link",
         "candidate-print": "Stampa",
