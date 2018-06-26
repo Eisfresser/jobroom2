@@ -19,7 +19,10 @@ import {
     JobAdvertisementFilter,
     PEADashboardState
 } from '../state/pea-dashboard.state';
-import { PEAJobAdsSearchRequest } from '../../../shared/job-advertisement/pea-job-ads-search-request';
+import {
+    PEA_JOB_AD_DEFAULT_SORT,
+    PEAJobAdsSearchRequest
+} from '../../../shared/job-advertisement/pea-job-ads-search-request';
 import { createJobAdvertisementCancellationRequest } from '../util/cancellation-request.mapper';
 import { JobAdvertisementService } from '../../../shared/job-advertisement/job-advertisement.service';
 import { JobAdvertisement } from '../../../shared/job-advertisement/job-advertisement.model';
@@ -79,7 +82,8 @@ export class PEADashboardEffects {
                 onlineSinceDays
             },
             page,
-            size: ITEMS_PER_PAGE
+            size: ITEMS_PER_PAGE,
+            sort: PEA_JOB_AD_DEFAULT_SORT
         };
     }
 
