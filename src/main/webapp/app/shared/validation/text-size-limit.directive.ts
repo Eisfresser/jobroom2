@@ -26,7 +26,8 @@ export class TextSizeLimitDirective implements OnInit, OnDestroy {
 
     @HostListener('keypress', ['$event'])
     blockExtraCharacters(event) {
-        if (event.target.value.length >= this.jr2TextSizeLimit) {
+        if (event.target.value.length > this.jr2TextSizeLimit) {
+            event.stopPropagation();
             event.preventDefault();
         }
     }
