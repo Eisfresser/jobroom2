@@ -171,7 +171,7 @@
         },
         "menu": {
             "account": {
-                "login": "Accesso",
+                "login": "Login",
                 "logout": "Esci",
                 "main": "Utente",
                 "password": "Password",

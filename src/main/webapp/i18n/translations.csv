@@ -358,7 +358,7 @@ global,global.job-publication.status.PUBLISHED_PUBLIC,Published public,Published
 global,global.job-publication.status.PUBLISHED_RESTRICTED,Published restricted,Published restricted,Published restricted,Published restricted
 global,global.job-publication.status.REFINING,Refining,Refining,Refining,Refining
 global,global.job-publication.status.REJECTED,Rejected,Rejected,Rejected,Rejected
-global,global.menu.account.login,Anmelden,Sign in,Connexion,Accesso
+global,global.menu.account.login,Login,Login,Login,Login
 global,global.menu.account.logout,Abmelden,Sign out,Déconnexion,Esci
 global,global.menu.account.main,Zugang,Account,Compte,Utente
 global,global.menu.account.password,Passwort,Password,Mot de passe,Password

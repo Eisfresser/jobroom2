@@ -171,7 +171,7 @@
         },
         "menu": {
             "account": {
-                "login": "Sign in",
+                "login": "Login",
                 "logout": "Sign out",
                 "main": "Account",
                 "password": "Password",

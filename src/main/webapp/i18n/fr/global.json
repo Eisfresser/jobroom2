@@ -171,7 +171,7 @@
         },
         "menu": {
             "account": {
-                "login": "Connexion",
+                "login": "Login",
                 "logout": "D\u00e9connexion",
                 "main": "Compte",
                 "password": "Mot de passe",
