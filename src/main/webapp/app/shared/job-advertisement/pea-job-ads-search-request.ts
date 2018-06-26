@@ -1,7 +1,7 @@
 export interface PEAJobAdsSearchRequestBody {
     jobTitle: string;
     onlineSinceDays: number;
-    companyName: string;
+    companyId: string;
 }
 
 export interface PEAJobAdsSearchRequest {

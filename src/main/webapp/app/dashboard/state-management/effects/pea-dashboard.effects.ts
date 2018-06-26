@@ -74,7 +74,7 @@ export class PEADashboardEffects {
         const { jobTitle, onlineSinceDays } = filter;
         return {
             body: {
-                companyName: currentUser.companyName,
+                companyId: currentUser.companyId,
                 jobTitle,
                 onlineSinceDays
             },
