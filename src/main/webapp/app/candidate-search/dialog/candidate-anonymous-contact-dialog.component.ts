@@ -31,6 +31,12 @@ export class CandidateAnonymousContactDialogComponent implements OnInit, OnDestr
             return email || phone || address ? null : { requiredOneCheckbox: true };
         };
 
+        const requiredDisabledValidator: ValidatorFn = (fg: FormGroup) => {
+            const email = !fg.get('sendEmail').value || !!fg.get('email').value;
+            const phone = !fg.get('sendPhone').value || !!fg.get('phone').value ;
+            return email && phone ? null : { requiredDisabled: true };
+        };
+
         this.anonymousContactForm = this.formBuilder.group({
             subject: [{
                 value: this.emailContent.subject,
@@ -53,7 +59,7 @@ export class CandidateAnonymousContactDialogComponent implements OnInit, OnDestr
             email: [{
                 value: this.emailContent.email,
                 disabled: true
-            }, Validators.pattern(EMAIL_REGEX)],
+            }, [Validators.pattern(EMAIL_REGEX), Validators.required]],
             sendAddress: true,
             company: this.formBuilder.group({
                 name: [this.emailContent.company ? this.emailContent.company.name : '', Validators.required],
@@ -64,7 +70,7 @@ export class CandidateAnonymousContactDialogComponent implements OnInit, OnDestr
                 city: [this.emailContent.company ? this.emailContent.company.city : '', Validators.required],
                 country: this.emailContent.company ? this.emailContent.company.country : ''
             })
-        }, { validator: requiredOneCheckboxValidator });
+        }, { validator: [requiredOneCheckboxValidator, requiredDisabledValidator] });
         this.anonymousContactForm.get('company').disable();
 
         this.toggleValue('sendPhone', 'phone');
