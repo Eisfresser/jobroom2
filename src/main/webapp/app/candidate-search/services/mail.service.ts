@@ -6,6 +6,7 @@ export interface EmailContent {
     candidateId: string;
     subject: string;
     body: string;
+    companyName: string;
     phone?: string;
     email?: string;
     company?: Company
@@ -27,7 +28,7 @@ export class MailService {
     constructor(private http: HttpClient) {
     }
 
-    senAnonymousContactMessage(emailContent: EmailContent): Observable<void> {
+    sendAnonymousContactMessage(emailContent: EmailContent): Observable<void> {
         return this.http.post<void>('/api/messages/send-anonymous-message', emailContent)
     }
 }

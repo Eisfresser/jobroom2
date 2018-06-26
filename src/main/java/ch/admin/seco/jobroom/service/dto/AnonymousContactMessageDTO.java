@@ -13,6 +13,9 @@ public class AnonymousContactMessageDTO {
     @NotNull
     private String body;
 
+    @NotNull
+    private String companyName;
+
     private String phone;
 
     private String email;
@@ -41,6 +44,14 @@ public class AnonymousContactMessageDTO {
 
     public void setBody(String body) {
         this.body = body;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
     }
 
     public String getPhone() {

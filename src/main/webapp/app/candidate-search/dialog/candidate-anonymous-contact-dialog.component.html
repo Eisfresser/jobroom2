@@ -56,17 +56,44 @@
                     </button>
                 </div>
             </div>
+            <div
+                class="{{anonymousContactForm.get('companyName').disabled ? 'form-group--icon' : 'input-group' }}">
+                <input formControlName="companyName" class="form-control">
 
+                <a *ngIf="anonymousContactForm.get('companyName').disabled"
+                   class="fa-stack form-control--icon" (click)="edit('companyName')">
+                    <span aria-hidden="true" class="fa fa-pencil fa-stack-1x"></span>
+                </a>
+
+                <div class="input-group-append"
+                     *ngIf="anonymousContactForm.get('companyName').enabled">
+                    <button type="button" class="btn btn-sm" aria-hidden="true"
+                            (click)="discardChanges('companyName')">
+                        <span class="fa fa-times"></span>
+                    </button>
+                    <button type="button" class="btn btn-sm" aria-hidden="true"
+                            [disabled]="anonymousContactForm.get('companyName').invalid"
+                            (click)="applyChanges('companyName')">
+                        <span class="fa fa-check-square"></span>
+                    </button>
+                </div>
+            </div>
             <span>
                 {{ 'candidate-detail.anonymous-contact.contact-via' | translate }}
             </span>
+
+            <p class="alert-danger" *ngIf="anonymousContactForm?.errors?.requiredOneCheckbox">
+                {{ 'candidate-detail.anonymous-contact.contact-via.validation' | translate
+                }}
+            </p>
 
             <div class="mt-4">
                 <div class="form-row">
                     <div class="form-check col-2">
                         <input formControlName="sendPhone" type="checkbox">
                         <label class="form-check-label">
-                            {{ 'candidate-detail.anonymous-contact.contact-via.phone' | translate }}
+                            {{ 'candidate-detail.anonymous-contact.contact-via.phone' |
+                            translate }}
                         </label>
                     </div>
                     <div *ngIf="anonymousContactForm.get('sendPhone').value"
@@ -83,7 +110,8 @@
                         </ng-container>
 
                         <ng-container *ngIf="anonymousContactForm.get('phone').enabled">
-                            <jr2-phone-number-input id="phone" formControlName="phone" [placeholder]="'global.form.phone.placeholder' | translate">
+                            <jr2-phone-number-input id="phone" formControlName="phone"
+                                                    [placeholder]="'global.form.phone.placeholder' | translate">
                             </jr2-phone-number-input>
                             <div class="input-group-append"
                                  *ngIf="anonymousContactForm.get('phone').enabled">
@@ -156,7 +184,9 @@
                 <ng-container *ngIf="anonymousContactForm.get('company').disabled">
                     <div>
                         <span>{{ emailContent.company?.name }}</span>
-                        <a class="float-right" (click)="edit('company', 'sendAddress')">
+                        <a class="float-right"
+                           *ngIf="anonymousContactForm.get('sendAddress').value"
+                           (click)="edit('company', 'sendAddress')">
                             <span aria-hidden="true" class="fa fa-pencil"></span>
                         </a>
                     </div>
@@ -226,10 +256,12 @@
     </div>
 
     <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" (click)="activeModal.close()">
+        <button type="button" class="btn btn-secondary" (click)="activeModal.dismiss()">
             {{ 'candidate-detail.anonymous-contact.dismiss' | translate }}
         </button>
-        <button type="submit" class="btn btn-primary" [disabled]="anonymousContactForm.invalid"
+        <button type="submit"
+                class="btn btn-primary"
+                [disabled]="anonymousContactForm.invalid"
                 (click)="sendMessage()">
             {{ 'candidate-detail.anonymous-contact.confirm' | translate }}
         </button>

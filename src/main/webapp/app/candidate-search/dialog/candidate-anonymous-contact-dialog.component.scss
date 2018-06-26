@@ -22,6 +22,11 @@ jr2-phone-number-input {
     padding-left: 0.5rem;
 }
 
+.alert-danger {
+    padding: 1em;
+    margin: 0.5em 0;
+}
+
 /deep/ .input-group #phone .form-control {
     width: 100%;
 }

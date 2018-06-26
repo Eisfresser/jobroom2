@@ -7,6 +7,8 @@
     <p th:text="${subject}"></p>
     <p th:text="${body}"></p>
 
+    <p th:text="#{email.anonymousContact.company(${companyName})}"></p>
+
     <p th:if="${phone != null}" th:text="#{email.anonymousContact.phone(${phone})}"></p>
 
     <p th:if="${email != null}" th:text="#{email.anonymousContact.email(${email})}"></p>

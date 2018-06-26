@@ -25,10 +25,10 @@
         "anonymous-contact": {
             "confirm": "Confirm",
             "contact-via": "Please contact me by:",
-            "contact-via.email": "email",
+            "contact-via.email": "Email",
             "contact-via.phone": "Phone",
+            "contact-via.validation": "At least one of the following options are required",
             "dismiss": "Cancel",
-            "send-to": "Send your application documents to:",
             "title": "Contact candidate",
             "company": "Company",
             "contact-person": "Contact person",
@@ -36,7 +36,8 @@
             "house": "No.",
             "zip-code": "Postal code",
             "city": "City",
-            "country": "Country"
+            "country": "Country",
+            "send-to": "Mail"
         },
         "back": "Back to search results",
         "candidate-anonymous-contact": "Contact candidate",

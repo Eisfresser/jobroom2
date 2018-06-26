@@ -223,6 +223,7 @@ export class CandidateDetailComponent implements OnInit {
                                     candidateId: candidate.id,
                                     subject: translations['candidate-detail.candidate-anonymous-contact.subject'],
                                     body: translations['candidate-detail.candidate-anonymous-contact.body'],
+                                    companyName: company.name,
                                     phone: null,
                                     email: currentUser.email,
                                     company: {
