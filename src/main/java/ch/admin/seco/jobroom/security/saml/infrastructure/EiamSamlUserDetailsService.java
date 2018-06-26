@@ -55,20 +55,20 @@ public class EiamSamlUserDetailsService implements SAMLUserDetailsService {
     private SamlUser doCreateSamlUser(SAMLCredential credential) {
         final String nameId = credential.getNameID().getValue();
         LOGGER.debug("Authenticating user having nameId: {}", nameId);
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Received Saml-Assertion: {}", extractSamlAssertion(credential));
+        if (LOGGER.isTraceEnabled()) {
+            LOGGER.trace("Received Saml-Assertion: {}", extractSamlAssertion(credential));
         }
         final String authnContext = getAuthnContext(credential).orElse(SAMLConfigurer.ONE_FACTOR_AUTHN_CTX);
         Map<String, List<String>> eiamAttributes = extractAttributes(credential.getAttributes(), EIAM_ISSUER_NAME);
         if (eiamAttributes.containsKey(USER_EXT_ID_ATTRIBUTE_NAME)) {
-            LOGGER.info("Credential was enriched by EIAM Issuer FEDS: creating an EiamEnrichedSamlUser");
+            LOGGER.info("Credential for nameId: '{}' was enriched by EIAM Issuer FEDS: creating an EiamEnrichedSamlUser", nameId);
             printOutAttributes(eiamAttributes);
             return new EiamEnrichedSamlUser(nameId, eiamAttributes, authnContext);
         }
 
         eiamAttributes = extractAttributes(credential.getAttributes(), CH_LOGIN_ISSUER_NAME);
         if (eiamAttributes.containsKey(USER_EXT_ID_ATTRIBUTE_NAME)) {
-            LOGGER.info("Credential was enriched by EIAM Issuer: CH_LOGIN: creating an SamlUser");
+            LOGGER.info("Credential for nameId: '{}' was enriched by EIAM Issuer: CH_LOGIN: creating an SamlUser", nameId);
             printOutAttributes(eiamAttributes);
             return new SamlUser(nameId, eiamAttributes, authnContext);
         }
