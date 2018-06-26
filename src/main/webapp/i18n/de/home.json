@@ -39,7 +39,7 @@
                     },
                     "copy-email-from-public-contact": "Wie bei Kontakt f\u00fcr Stellensuchende",
                     "copy-phonenumber-from-public-contact": "Wie bei Kontakt f\u00fcr Stellensuchende",
-                    "copy-from-business": "Wie Unternehmen",
+                    "copy-from-business": "Wie bei Unternehmen",
                     "email": "E-Mail",
                     "online-form": "Online-Formular",
                     "paper-application-url": "Postadresse",
@@ -80,7 +80,7 @@
                 "disclaimer.error": "Bitte best\u00e4tigen Sie, dass der Arbeitgeber die orts- und branchen\u00fcblichen Lohn- und Arbeitsbedingungen einh\u00e4lt.",
                 "driving-licence": "F\u00fchrerausweis",
                 "employer": {
-                    "title": "Employer"
+                    "title": "Arbeitgeber"
                 },
                 "employment": {
                     "title": "Arbeitsstelle"
@@ -131,7 +131,7 @@
                         },
                         "phone-format": "Bitte g\u00fcltige Telefonnummer eingeben z. B. 031 999 99 99 oder +41 31 999 99 99",
                         "required": "Pflichtfeld",
-                        "at-least-one-required": "Bitte w\u00e4hlen Sie mindestens eine Bewerbungsform",
+                        "at-least-one-required": "Bitte mindestens eine Bewerbungsform w\u00e4hlen",
                         "zip-format": "PLZ ung\u00fcltig",
                         "zip-or-city-format": "PLZ/Ort ung\u00fcltig"
                     }
@@ -148,7 +148,7 @@
                     "url": "http://www.muster.ch"
                 },
                 "public-contact": {
-                    "copy": "Wie oben",
+                    "copy": "Wie bei Kontakt",
                     "title": "Kontakt f\u00fcr Stellensuchende"
                 },
                 "publication": {
@@ -172,7 +172,7 @@
                 "shortEmployment": {
                     "label": "Kurzeinsatz (bis zu 14 Kalendertage)"
                 },
-                "submit": "Stelle publizieren",
+                "submit": "Stelle melden",
                 "submit.error": "Die Stellenanzeige konnte nicht gespeichert werden.",
                 "submit.success": "Besten Dank f\u00fcr Ihre Stellenmeldung. Ihr Inserat wird nun von einem Regionalen Arbeitsvermittlungszentrum (RAV) gepr\u00fcft. Sie werden per E-Mail informiert, sobald die Stelle ver\u00f6ffentlicht wurde.",
                 "workload": "Arbeitspensum"

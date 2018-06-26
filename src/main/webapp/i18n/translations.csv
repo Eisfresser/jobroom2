@@ -480,7 +480,7 @@ global,global.reference.language.pt,Portugiesisch,Portuguese,Portugais,Portoghes
 global,global.reference.language.rm,Rätoromanisch,Rhaeto-Romanic,Rheto-Romanche,Reto-Romancio
 global,global.reference.language.ro,Rumänisch,Romanian,Roumain,Rumeno
 global,global.reference.language.ru,Russisch,Russian,Russe,Russo
-global,global.reference.language.sk,Slovakisch,Slovakian,Slovaque,Slovacco
+global,global.reference.language.sk,Slowakisch,Slovakian,Slovaque,Slovacco
 global,global.reference.language.sl,Slowenisch,Slovenian,Slovène,Sloveno
 global,global.reference.language.spoken,Mündlich,Orally,Orale,Orale
 global,global.reference.language.sq,Albanisch,Albanian,Albanais,Albanese
@@ -490,7 +490,7 @@ global,global.reference.language.ta,Tamil,Tamil,Tamoul,Tamil
 global,global.reference.language.th,Thai,Thai,Thaïlandais,Tailandese
 global,global.reference.language.tr,Türkisch,Turkish,Turc,Turco
 global,global.reference.language.vi,Vietnamesisch,Vietnamese,Vietnamien,Vietnamita
-global,global.reference.language.written,Schriftlich,Written,Écrit,Scritto
+global,global.reference.language.written,Schriftlich,Written,Écrite,Scritto
 global,global.reference.language.zh,Chinesisch,Chinese,Chinois,Cinese
 global,global.reference.languages,Sprachkenntnisse,Languages,Connaissances linguistiques,Conoscenze linguistiche
 global,global.reference.region.A,Ausland,Abroad,Étranger,Estero
@@ -670,9 +670,9 @@ home,home.tools.candidateSearchTab,Kandidaten finden,Find candidates,Trouver des
 home,home.tools.job-publication.application.additional-info.characters-counter-text,{{count}} Zeichen verbleibend,{{count}} characters available,{{count}} caractères disponibles,{{count}} caratteri disponibili
 home,home.tools.job-publication.application.additional-info.label,Ergänzende Angaben,Supplementary information,Indications complémentaires,Dati complementari
 home,home.tools.job-publication.application.additional-info.placeholder,max. 240 Zeichen,Max. 240 characters,max. 240 caractères,max. 240 caratteri
-home,home.tools.job-publication.application.copy-email-from-public-contact,Wie bei Kontakt für Stellensuchende,Take from jobseeker contact,Comme le contact pour candidats,Come contatto per candidati
-home,home.tools.job-publication.application.copy-phonenumber-from-public-contact,Wie bei Kontakt für Stellensuchende,Take from jobseeker contact,Comme le contact pour candidats,Come contatto per candidati
-home,home.tools.job-publication.application.copy-from-business,Wie Unternehmen,Take from business,Comme l'entreprise,Come l'impresa
+home,home.tools.job-publication.application.copy-email-from-public-contact,Wie bei Kontakt für Stellensuchende,Same as jobseeker contact,Comme Contact pour candidats,Come Contatto per candidati
+home,home.tools.job-publication.application.copy-phonenumber-from-public-contact,Wie bei Kontakt für Stellensuchende,Same as jobseeker contact,Comme Contact pour candidats,Come Contatto per candidati
+home,home.tools.job-publication.application.copy-from-business,Wie bei Unternehmen,Same as business,Comme l'entreprise,Come l'impresa
 home,home.tools.job-publication.application.email,E-Mail,Email,Courriel,E-mail
 home,home.tools.job-publication.application.online-form,Online-Formular,Online form,Formulaire en ligne,Modulo online
 home,home.tools.job-publication.application.paper-application-url,Postadresse,Postal address,Adresse postale,Indirizzo postale
@@ -705,7 +705,7 @@ home,home.tools.job-publication.description.placeholder,max. 10000 Zeichen,max. 
 home,home.tools.job-publication.disclaimer,"Ich bestätige, dass der Arbeitgeber die orts- und branchenüblichen Lohn- und Arbeitsbedingungen einhält.",I certify that the employer complies with local and industry standards for wage and working conditions.,Je confirme que l'employeur respecte les conditions de travail et de salaire usuelles dans la branche et la localité en question.,Confermo che il datore di lavoro rispetta le condizioni salariali e lavorative usuali nel ramo e nel luogo in questione.
 home,home.tools.job-publication.disclaimer.error,"Bitte bestätigen Sie, dass der Arbeitgeber die orts- und branchenüblichen Lohn- und Arbeitsbedingungen einhält.",Please confirm that the employer complies with local and industry standards for wage and working conditions.,Veuillez confirmer que l'employeur respecte bien les conditions de travail et de salaire en vigueur dans la branche et la localité en question.,Confermare che il datore di lavoro rispetta le condizioni salariali e lavorative del luogo e del ramo in questione.
 home,home.tools.job-publication.driving-licence,Führerausweis,Driving licence,Permis de conduire,Patente
-home,home.tools.job-publication.employer.title,Employer,Employer,Employer,Employer
+home,home.tools.job-publication.employer.title,Arbeitgeber,Employer,Employeur,Datore di lavoro
 home,home.tools.job-publication.employment.title,Arbeitsstelle,Employment,Emploi,Posto di lavoro
 home,home.tools.job-publication.employmentEndDate.label,Anstellungsdauer befristet bis Datum,Temporary employment to date,Engagement limité au [date],a tempo determinato fino al
 home,home.tools.job-publication.employmentEndDate.permanent,unbefristet,permanent,illimité,a tempo indeterminato
@@ -720,7 +720,7 @@ home,home.tools.job-publication.experience.LESS_THAN_1_YEAR,weniger als 1 Jahr,l
 home,home.tools.job-publication.experience.MORE_THAN_1_YEAR,1 - 3 Jahre,1 - 3 years,1 - 3 années,1 - 3 anni
 home,home.tools.job-publication.experience.MORE_THAN_3_YEARS,mehr als 3 Jahre,more than 3 years,plus de 3 années,più di 3 anni
 home,home.tools.job-publication.experience.NO_EXPERIENCE,keine Erfahrung,no experience,sans expérience,senza esperienza
-home,home.tools.job-publication.job-description,Stellenbeschreibung,Job description,Descriptif du poste,Descrizione del posto
+home,home.tools.job-publication.job-description,Stellenbeschreibung,Job description,Description du poste,Descrizione del posto
 home,home.tools.job-publication.job-description-lang.label,Sprache der Stellenbeschreibung,Job description language,Langue du descriptif,Lingua della descrizione
 home,home.tools.job-publication.job-title,Stellenbezeichnung,Job title,Désignation du poste,Denominazione del posto
 home,home.tools.job-publication.language-skills,Sprachkenntnisse,Languages,Connaissances linguistiques,Conoscenze linguistiche
@@ -739,7 +739,7 @@ home,home.tools.job-publication.messages.validate.employment-duration.date-befor
 home,home.tools.job-publication.messages.validate.employment-start.date-before,Datum muss in der Zukunft liegen.,Date must be in the future.,La date doit se situer dans le futur.,La data deve situarsi nel futuro.
 home,home.tools.job-publication.messages.validate.phone-format,Bitte gültige Telefonnummer eingeben z. B. 031 999 99 99 oder +41 31 999 99 99,Please enter a valid phone number e.g. 031 999 99 99 or +41 31 999 99 99,Please enter a valid phone number e.g. 031 999 99 99 or +41 31 999 99 99,Please enter a valid phone number e.g. 031 999 99 99 or +41 31 999 99 99
 home,home.tools.job-publication.messages.validate.required,Pflichtfeld,This field is required.,Ce champ est obligatoire.,Questo campo è obbligatorio.
-home,home.tools.job-publication.messages.validate.at-least-one-required,Bitte wählen Sie mindestens eine Bewerbungsform,Select at least one application channel,Choisi au moins un type de postulation,Scegliere almeno una tipologia di candidatura
+home,home.tools.job-publication.messages.validate.at-least-one-required,Bitte mindestens eine Bewerbungsform wählen,Select at least one application channel,Choisir au moins un type de postulation,Scegliere almeno una tipologia di candidatura
 home,home.tools.job-publication.messages.validate.zip-format,PLZ ungültig,Invalid postal code,NPA n'est pas valide.,NPA non è valido.
 home,home.tools.job-publication.messages.validate.zip-or-city-format,PLZ/Ort ungültig,Invalid postal code/city,NPA/lieu n'est pas valide.,NPA/luogo non è valido.
 home,home.tools.job-publication.no-selection,keine Auswahl,No selection,aucune sélection,nessuna scelta
@@ -749,7 +749,7 @@ home,home.tools.job-publication.optional,Optional,Optional,Optionnel,Opzionale
 home,home.tools.job-publication.placeholders.email,muster@email.ch,example@email.ch,exemple@email.ch,esempio@email.ch
 home,home.tools.job-publication.placeholders.phone,031 999 99 99 oder +41 31 999 99 99,031 999 99 99 or +41 31 999 99 99,031 999 99 99 ou +41 31 999 99 99,031 999 99 99 o +41 31 999 99 99
 home,home.tools.job-publication.placeholders.url,http://www.muster.ch,http://www.example.ch,http://www.exemple.ch,http://www.esempio.ch
-home,home.tools.job-publication.public-contact.copy,Wie oben,As above,Comme ci-haut,Sovraindicato
+home,home.tools.job-publication.public-contact.copy,Wie bei Kontakt,Same as contact,Comme Contact,Come Contatto
 home,home.tools.job-publication.public-contact.title,Kontakt für Stellensuchende,Jobseeker contact,Contact pour candidats,Contatto per candidati
 home,home.tools.job-publication.publication.eures,EURES Portal,EURES Portal,Portal EURES," Portale EURES"
 home,home.tools.job-publication.publication.eures.label,EURES,EURES,EURES,EURES
@@ -764,7 +764,7 @@ home,home.tools.job-publication.publication.restricted.label,Job-Room restricted
 home,home.tools.job-publication.publication.title,Publikationsmedien,Publication media,Moyens de publication,Mezzi di pubblicazione
 home,home.tools.job-publication.reset,Zurücksetzen,Reset,Rétablir,Ripristina
 home,home.tools.job-publication.shortEmployment.label,Kurzeinsatz (bis zu 14 Kalendertage),Short employment (up to 14 calendar days),Emploi de courte durée (jusqu'à 14 jours civils),Durata non supera i 14 giorni civili
-home,home.tools.job-publication.submit,Stelle publizieren,Publish job,Publier un emploi,Pubblica posto
+home,home.tools.job-publication.submit,Stelle melden,Post job ad,Envoyer l'annonce,Inviare l'annuncio
 home,home.tools.job-publication.submit.error,Die Stellenanzeige konnte nicht gespeichert werden.,Job ad could not be saved.,L'annonce n'a pas pu être sauvegardé.,Annuncio non salvata.
 home,home.tools.job-publication.submit.success,"Besten Dank für Ihre Stellenmeldung. Ihr Inserat wird nun von einem Regionalen Arbeitsvermittlungszentrum (RAV) geprüft. Sie werden per E-Mail informiert, sobald die Stelle veröffentlicht wurde.","Thank you for posting this job ad, which will now be checked by a regional employment centre (RAV). You will be informed by email as soon as it is published.",Merci d'avoir annoncé le poste vacant que l'ORP va examiner. Vous recevrez un courriel dès sa publication.,Grazie di aver annunciato il posto vacante que sarà esaminato dall'URC. Riceverà un'e-mail non appena il posto vacante verrà pubblicato.
 home,home.tools.job-publication.workload,Arbeitspensum,Workload,Taux d'occupation,Grado di occupazione
@@ -773,7 +773,7 @@ home,home.tools.job-search.search-badge.none,Diesem Profil entsprechen keine Ste
 home,home.tools.job-search.search-badge.one,"Diesem Profil entspricht <br><span class=""badge badge-radar"">1</span><br>Stelle","This profile matches <br><span class=""badge badge-radar"">1</span><br>job","<br><span class=""badge badge-radar"">1</span><br>emploi correspond à ce profil","A questo profilo corrisponde<br><span class=""badge badge-radar"">1</span><br>posto"
 home,home.tools.job-search.search-badge.show,Jetzt anzeigen,Show search results.,Afficher maintenant,Visualizza ora
 home,home.tools.job-search.search-button.title,Stellen anzeigen,Show job offers,Afficher les offres d'emploi,Visualizza offerte di lavoro
-home,home.tools.jobPublicationTab,Stelle melden,Post job,Publier une place vacante,Pubblica lavoro
+home,home.tools.jobPublicationTab,Stelle melden,Post job,Publier un poste vacant,Pubblica un posto vacante
 home,home.tools.jobSearch.title,Finden Sie passende Stellen,Find suitable positions,Trouvez des offres appropriées,Trovare il posto giusto
 job-detail,job-detail.action.applyNow,Jetzt bewerben,Apply now,Postuler maintenant,Candidarsi ora
 job-detail,job-detail.action.copyLink,Link kopieren,Copy link,Copier le lien,Copia link

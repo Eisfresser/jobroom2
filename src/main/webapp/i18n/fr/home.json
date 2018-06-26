@@ -37,8 +37,8 @@
                         "label": "Indications compl\u00e9mentaires",
                         "placeholder": "max. 240 caract\u00e8res"
                     },
-                    "copy-email-from-public-contact": "Comme le contact pour candidats",
-                    "copy-phonenumber-from-public-contact": "Comme le contact pour candidats",
+                    "copy-email-from-public-contact": "Comme Contact pour candidats",
+                    "copy-phonenumber-from-public-contact": "Comme Contact pour candidats",
                     "copy-from-business": "Comme l'entreprise",
                     "email": "Courriel",
                     "online-form": "Formulaire en ligne",
@@ -80,7 +80,7 @@
                 "disclaimer.error": "Veuillez confirmer que l'employeur respecte bien les conditions de travail et de salaire en vigueur dans la branche et la localit\u00e9 en question.",
                 "driving-licence": "Permis de conduire",
                 "employer": {
-                    "title": "Employer"
+                    "title": "Employeur"
                 },
                 "employment": {
                     "title": "Emploi"
@@ -102,7 +102,7 @@
                 "experience.MORE_THAN_1_YEAR": "1 - 3 ann\u00e9es",
                 "experience.MORE_THAN_3_YEARS": "plus de 3 ann\u00e9es",
                 "experience.NO_EXPERIENCE": "sans exp\u00e9rience",
-                "job-description": "Descriptif du poste",
+                "job-description": "Description du poste",
                 "job-description-lang": {
                     "label": "Langue du descriptif"
                 },
@@ -131,7 +131,7 @@
                         },
                         "phone-format": "Please enter a valid phone number e.g. 031 999 99 99 or +41 31 999 99 99",
                         "required": "Ce champ est obligatoire.",
-                        "at-least-one-required": "Choisi au moins un type de postulation",
+                        "at-least-one-required": "Choisir au moins un type de postulation",
                         "zip-format": "NPA n'est pas valide.",
                         "zip-or-city-format": "NPA/lieu n'est pas valide."
                     }
@@ -148,7 +148,7 @@
                     "url": "http://www.exemple.ch"
                 },
                 "public-contact": {
-                    "copy": "Comme ci-haut",
+                    "copy": "Comme Contact",
                     "title": "Contact pour candidats"
                 },
                 "publication": {
@@ -172,7 +172,7 @@
                 "shortEmployment": {
                     "label": "Emploi de courte dur\u00e9e (jusqu'\u00e0 14 jours civils)"
                 },
-                "submit": "Publier un emploi",
+                "submit": "Envoyer l'annonce",
                 "submit.error": "L'annonce n'a pas pu \u00eatre sauvegard\u00e9.",
                 "submit.success": "Merci d'avoir annonc\u00e9 le poste vacant que l'ORP va examiner. Vous recevrez un courriel d\u00e8s sa publication.",
                 "workload": "Taux d'occupation"
@@ -188,7 +188,7 @@
                     "title": "Afficher les offres d'emploi"
                 }
             },
-            "jobPublicationTab": "Publier une place vacante",
+            "jobPublicationTab": "Publier un poste vacant",
             "jobSearch": {
                 "title": "Trouvez des offres appropri\u00e9es"
             }

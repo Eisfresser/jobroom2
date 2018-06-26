@@ -37,9 +37,9 @@
                         "label": "Supplementary information",
                         "placeholder": "Max. 240 characters"
                     },
-                    "copy-email-from-public-contact": "Take from jobseeker contact",
-                    "copy-phonenumber-from-public-contact": "Take from jobseeker contact",
-                    "copy-from-business": "Take from business",
+                    "copy-email-from-public-contact": "Same as jobseeker contact",
+                    "copy-phonenumber-from-public-contact": "Same as jobseeker contact",
+                    "copy-from-business": "Same as business",
                     "email": "Email",
                     "online-form": "Online form",
                     "paper-application-url": "Postal address",
@@ -148,7 +148,7 @@
                     "url": "http://www.example.ch"
                 },
                 "public-contact": {
-                    "copy": "As above",
+                    "copy": "Same as contact",
                     "title": "Jobseeker contact"
                 },
                 "publication": {
@@ -172,7 +172,7 @@
                 "shortEmployment": {
                     "label": "Short employment (up to 14 calendar days)"
                 },
-                "submit": "Publish job",
+                "submit": "Post job ad",
                 "submit.error": "Job ad could not be saved.",
                 "submit.success": "Thank you for posting this job ad, which will now be checked by a regional employment centre (RAV). You will be informed by email as soon as it is published.",
                 "workload": "Workload"

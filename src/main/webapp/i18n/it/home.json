@@ -37,8 +37,8 @@
                         "label": "Dati complementari",
                         "placeholder": "max. 240 caratteri"
                     },
-                    "copy-email-from-public-contact": "Come contatto per candidati",
-                    "copy-phonenumber-from-public-contact": "Come contatto per candidati",
+                    "copy-email-from-public-contact": "Come Contatto per candidati",
+                    "copy-phonenumber-from-public-contact": "Come Contatto per candidati",
                     "copy-from-business": "Come l'impresa",
                     "email": "E-mail",
                     "online-form": "Modulo online",
@@ -80,7 +80,7 @@
                 "disclaimer.error": "Confermare che il datore di lavoro rispetta le condizioni salariali e lavorative del luogo e del ramo in questione.",
                 "driving-licence": "Patente",
                 "employer": {
-                    "title": "Employer"
+                    "title": "Datore di lavoro"
                 },
                 "employment": {
                     "title": "Posto di lavoro"
@@ -148,7 +148,7 @@
                     "url": "http://www.esempio.ch"
                 },
                 "public-contact": {
-                    "copy": "Sovraindicato",
+                    "copy": "Come Contatto",
                     "title": "Contatto per candidati"
                 },
                 "publication": {
@@ -172,7 +172,7 @@
                 "shortEmployment": {
                     "label": "Durata non supera i 14 giorni civili"
                 },
-                "submit": "Pubblica posto",
+                "submit": "Inviare l'annuncio",
                 "submit.error": "Annuncio non salvata.",
                 "submit.success": "Grazie di aver annunciato il posto vacante que sar\u00e0 esaminato dall'URC. Ricever\u00e0 un'e-mail non appena il posto vacante verr\u00e0 pubblicato.",
                 "workload": "Grado di occupazione"
@@ -188,7 +188,7 @@
                     "title": "Visualizza offerte di lavoro"
                 }
             },
-            "jobPublicationTab": "Pubblica lavoro",
+            "jobPublicationTab": "Pubblica un posto vacante",
             "jobSearch": {
                 "title": "Trovare il posto giusto"
             }
