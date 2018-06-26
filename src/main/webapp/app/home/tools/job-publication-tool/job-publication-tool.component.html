@@ -159,7 +159,7 @@
                     </ng-container>
 
                     <ng-container formGroupName="employmentEndDate">
-                        <div class="form-group">
+                        <div [hidden]="jobPublicationForm.get('employment.shortEmployment').value" class="form-group">
                             <label class="col-form-label">{{ 'home.tools.job-publication.employmentEndDate.title' |
                                 translate }}</label>
                             <div class="form-group__inline">
