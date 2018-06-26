@@ -37,8 +37,8 @@
                         "label": "Dati complementari",
                         "placeholder": "max. 240 caratteri"
                     },
-                    "copy-email-from-public-contact": "Come Contatto per candidati",
-                    "copy-phonenumber-from-public-contact": "Come Contatto per candidati",
+                    "copy-email-from-public-contact": "Come contatto per candidati",
+                    "copy-phonenumber-from-public-contact": "Come contatto per candidati",
                     "copy-from-business": "Come l'impresa",
                     "email": "E-mail",
                     "online-form": "Modulo online",
@@ -131,7 +131,7 @@
                         },
                         "phone-format": "Please enter a valid phone number e.g. 031 999 99 99 or +41 31 999 99 99",
                         "required": "Questo campo \u00e8 obbligatorio.",
-                        "at-least-one-required": "Scegliere almeno una Tipologie di candidatura",
+                        "at-least-one-required": "Scegliere almeno una tipologia di candidatura",
                         "zip-format": "NPA non \u00e8 valido.",
                         "zip-or-city-format": "NPA/luogo non \u00e8 valido."
                     }

@@ -37,9 +37,9 @@
                         "label": "Supplementary information",
                         "placeholder": "Max. 240 characters"
                     },
-                    "copy-email-from-public-contact": "As jobseeker contact",
-                    "copy-phonenumber-from-public-contact": "As jobseeker contact",
-                    "copy-from-business": "Take address from business",
+                    "copy-email-from-public-contact": "Take from jobseeker contact",
+                    "copy-phonenumber-from-public-contact": "Take from jobseeker contact",
+                    "copy-from-business": "Take from business",
                     "email": "Email",
                     "online-form": "Online form",
                     "paper-application-url": "Postal address",
@@ -55,7 +55,7 @@
                     "postbox-zip": "PO box postal code",
                     "postbox-zipcode": "PO box postal code / city",
                     "street": "Street",
-                    "surrogate": "This business is surrogate for a employer",
+                    "surrogate": "This business is surrogate for an employer",
                     "title": "Business",
                     "zipcode": "Postal code / city"
                 },

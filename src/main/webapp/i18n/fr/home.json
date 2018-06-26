@@ -131,7 +131,7 @@
                         },
                         "phone-format": "Please enter a valid phone number e.g. 031 999 99 99 or +41 31 999 99 99",
                         "required": "Ce champ est obligatoire.",
-                        "at-least-one-required": "Choisi au moins une type de postulation",
+                        "at-least-one-required": "Choisi au moins un type de postulation",
                         "zip-format": "NPA n'est pas valide.",
                         "zip-or-city-format": "NPA/lieu n'est pas valide."
                     }
