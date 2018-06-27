@@ -1,12 +1,18 @@
 package ch.admin.seco.jobroom.service;
 
-import ch.admin.seco.jobroom.JobroomApp;
-import ch.admin.seco.jobroom.config.Constants;
-import ch.admin.seco.jobroom.domain.Company;
-import ch.admin.seco.jobroom.domain.User;
-import ch.admin.seco.jobroom.domain.UserInfo;
-import ch.admin.seco.jobroom.service.dto.AnonymousContactMessageDTO;
-import ch.admin.seco.jobroom.service.pdf.PdfCreatorService;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.verify;
+
+import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
+
+import javax.mail.Multipart;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
+
 import io.github.jhipster.config.JHipsterProperties;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,30 +21,28 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
+import org.thymeleaf.spring5.SpringTemplateEngine;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.MessageSource;
-import org.springframework.mail.MailSendException;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.thymeleaf.spring5.SpringTemplateEngine;
 
-import javax.mail.Multipart;
-import javax.mail.internet.MimeBodyPart;
-import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMultipart;
-import java.io.ByteArrayOutputStream;
-import java.io.FileInputStream;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import ch.admin.seco.jobroom.JobroomApp;
+import ch.admin.seco.jobroom.config.Constants;
+import ch.admin.seco.jobroom.domain.Company;
+import ch.admin.seco.jobroom.domain.User;
+import ch.admin.seco.jobroom.domain.UserInfo;
+import ch.admin.seco.jobroom.service.dto.AnonymousContactMessageDTO;
+import ch.admin.seco.jobroom.service.pdf.PdfCreatorService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = JobroomApp.class)
 public class MailServiceIntTest {
 
-    public static final String ACCESS_CODE_MAIL_RECIPIENT = "servicedesk@jobroom.ch";
+    private static final String ACCESS_CODE_MAIL_RECIPIENT = "servicedesk@jobroom.ch";
+
     @Autowired
     private JHipsterProperties jHipsterProperties;
 
@@ -188,19 +192,13 @@ public class MailServiceIntTest {
     }
 
     @Test
-    public void testSendEmailWithException() throws Exception {
-        doThrow(MailSendException.class).when(javaMailSender).send(any(MimeMessage.class));
-        mailService.sendEmail("john.doe@example.com", "testSubject", "testContent", false, false);
-    }
-
-    @Test
     public void testSendAccessCodeLetterMail() throws Exception {
         Company userOrganization = new Company();
         userOrganization.setCity("Dübendorf");
         userOrganization.setStreet("Stadtstrasse 21");
         userOrganization.setZipCode("8600");
         userOrganization.setName("Stellenvermittlung24");
-        UserInfo user = new UserInfo("Hans","Muster","john.doe@example.com","extid",Constants.DEFAULT_LANGUAGE);
+        UserInfo user = new UserInfo("Hans", "Muster", "john.doe@example.com", "extid", Constants.DEFAULT_LANGUAGE);
         user.setAccessCode("CODEXX");
         user.addCompany(userOrganization);
 
@@ -210,7 +208,7 @@ public class MailServiceIntTest {
         MimeMessage message = (MimeMessage) messageCaptor.getValue();
         assertThat(message.getAllRecipients()[0].toString()).isEqualTo(ACCESS_CODE_MAIL_RECIPIENT);
         assertThat(message.getFrom()[0].toString()).isEqualTo("test@localhost");
-        assertThat(((MimeMultipart)message.getContent()).getCount()).isEqualTo(2);
+        assertThat(((MimeMultipart) message.getContent()).getCount()).isEqualTo(2);
         assertThat(message.getDataHandler().getContentType().startsWith("multipart/mixed"));
         assertThat(((MimeMultipart) message.getContent()).getBodyPart(1).getContent() instanceof FileInputStream);
     }

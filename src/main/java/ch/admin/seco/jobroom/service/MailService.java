@@ -1,29 +1,33 @@
 package ch.admin.seco.jobroom.service;
 
-import ch.admin.seco.jobroom.domain.User;
-import ch.admin.seco.jobroom.domain.UserInfo;
-import ch.admin.seco.jobroom.service.dto.AnonymousContactMessageDTO;
-import ch.admin.seco.jobroom.service.pdf.PdfCreatorService;
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.Locale;
+import java.util.stream.Stream;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+
 import io.github.jhipster.config.JHipsterProperties;
-import org.apache.commons.mail.util.IDNEmailAddressConverter;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.mail.util.IDNEmailAddressConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 
 import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.mail.MailSendException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import javax.mail.internet.MimeMessage;
-import java.io.File;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.util.Locale;
-import java.util.stream.Stream;
+import ch.admin.seco.jobroom.domain.User;
+import ch.admin.seco.jobroom.domain.UserInfo;
+import ch.admin.seco.jobroom.service.dto.AnonymousContactMessageDTO;
+import ch.admin.seco.jobroom.service.pdf.PdfCreatorService;
 
 /**
  * Service for sending emails.
@@ -34,6 +38,7 @@ import java.util.stream.Stream;
 public class MailService {
 
     private static final String USER = "user";
+
     private static final String BASE_URL = "baseUrl";
 
     private final Logger log = LoggerFactory.getLogger(MailService.class);
@@ -50,10 +55,11 @@ public class MailService {
 
     private IDNEmailAddressConverter idnEmailAddressConverter;
 
-    public MailService(JHipsterProperties jHipsterProperties, JavaMailSender javaMailSender,
-                       MessageSource messageSource, SpringTemplateEngine templateEngine,
-                       PdfCreatorService pdfCreatorService) {
-
+    public MailService(JHipsterProperties jHipsterProperties,
+        JavaMailSender javaMailSender,
+        MessageSource messageSource,
+        SpringTemplateEngine templateEngine,
+        PdfCreatorService pdfCreatorService) {
         this.jHipsterProperties = jHipsterProperties;
         this.javaMailSender = javaMailSender;
         this.messageSource = messageSource;
@@ -62,13 +68,59 @@ public class MailService {
         this.idnEmailAddressConverter = new IDNEmailAddressConverter();
     }
 
-    @Async
-    public void sendEmail(String to, String subject, String content, boolean isMultipart, boolean isHtml) {
+    @Deprecated
+    public void sendActivationEmail(User user) {
+        log.debug("Sending activation email to '{}'", user.getEmail());
+        sendEmailFromTemplate(user, "mails/activationEmail", "email.activation.title");
+    }
+
+    @Deprecated
+    public void sendCreationEmail(User user) {
+        log.debug("Sending creation email to '{}'", user.getEmail());
+        sendEmailFromTemplate(user, "mails/creationEmail", "email.activation.title");
+    }
+
+    @Deprecated
+    public void sendPasswordResetMail(User user) {
+        log.debug("Sending password reset email to '{}'", user.getEmail());
+        sendEmailFromTemplate(user, "mails/passwordResetEmail", "email.reset.title");
+    }
+
+    public void sendAccessCodeLetterMail(String emailAddress, UserInfo userInfo) {
+        log.debug("Sending access code letter email to the service desk '{}'", emailAddress);
+        String attachmentFilename = "Zugriffscode_Brief.pdf";
+        String pathToPdf = generatePdf(userInfo);
+        Locale locale = Locale.forLanguageTag("de");
+        Context context = new Context(locale);
+        context.setVariable(BASE_URL, jHipsterProperties.getMail().getBaseUrl());
+        String content = templateEngine.process("mails/accessCodeLetterEmail", context);
+        String subject = messageSource.getMessage("email.accessCodeLetter.title", null, locale);
+        sendEmail(emailAddress, subject, content, true, true, attachmentFilename, pathToPdf);
+    }
+
+    public void sendAnonymousContactMail(AnonymousContactMessageDTO anonymousContactMessage, String recipient) {
+        log.debug("Sending anonymous contact email to '{}'", recipient);
+        Context context = createAnonymousContactMailContext(anonymousContactMessage);
+        String content = templateEngine.process("mails/anonymousContactEmail", context);
+        sendEmail(recipient, anonymousContactMessage.getSubject(), content, false, true);
+    }
+
+    @Deprecated
+    void sendEmailFromTemplate(User user, String templateName, String titleKey) {
+        Locale locale = Locale.forLanguageTag(user.getLangKey());
+        Context context = new Context(locale);
+        context.setVariable(USER, user);
+        context.setVariable(BASE_URL, jHipsterProperties.getMail().getBaseUrl());
+        String content = templateEngine.process(templateName, context);
+        String subject = messageSource.getMessage(titleKey, null, locale);
+        sendEmail(user.getEmail(), subject, content, false, true);
+    }
+
+    void sendEmail(String to, String subject, String content, boolean isMultipart, boolean isHtml) {
         sendEmail(to, subject, content, isMultipart, isHtml, null, null);
     }
 
-    @Async
-    public void sendEmail(String to, String subject, String content, boolean isMultipart, boolean isHtml, String attachmentFilename, String attachmentFilePath) {
+    private void sendEmail(String to, String subject, String content, boolean isMultipart, boolean isHtml, String attachmentFilename, String attachmentFilePath) {
         log.debug("Send email[multipart '{}' and html '{}'] to '{}' with subject '{}' and content={}",
             isMultipart, isHtml, to, subject, content);
 
@@ -88,65 +140,9 @@ public class MailService {
             }
             javaMailSender.send(mimeMessage);
             log.debug("Sent email to User '{}'", to);
-        } catch (Exception e) {
-            if (log.isDebugEnabled()) {
-                log.warn("Email could not be sent to user '{}'", to, e);
-            } else {
-                log.warn("Email could not be sent to user '{}': {}", to, e.getMessage());
-            }
+        } catch (MessagingException e) {
+            throw new MailSendException("Could not send email", e);
         }
-    }
-
-    @Async
-    @Deprecated
-    public void sendEmailFromTemplate(User user, String templateName, String titleKey) {
-        Locale locale = Locale.forLanguageTag(user.getLangKey());
-        Context context = new Context(locale);
-        context.setVariable(USER, user);
-        context.setVariable(BASE_URL, jHipsterProperties.getMail().getBaseUrl());
-        String content = templateEngine.process(templateName, context);
-        String subject = messageSource.getMessage(titleKey, null, locale);
-        sendEmail(user.getEmail(), subject, content, false, true);
-
-    }
-
-    @Async
-    public void sendEmailFromTemplate(String emailAddress, String templateName, String titleKey, String languageKey, String attachmentFilename, String attachmentFilePath) {
-        Locale locale = Locale.forLanguageTag(languageKey);
-        Context context = new Context(locale);
-        context.setVariable(BASE_URL, jHipsterProperties.getMail().getBaseUrl());
-        String content = templateEngine.process(templateName, context);
-        String subject = messageSource.getMessage(titleKey, null, locale);
-        sendEmail(emailAddress, subject, content, true, true, attachmentFilename, attachmentFilePath);
-    }
-
-    @Async
-    @Deprecated
-    public void sendActivationEmail(User user) {
-        log.debug("Sending activation email to '{}'", user.getEmail());
-        sendEmailFromTemplate(user, "mails/activationEmail", "email.activation.title");
-    }
-
-    @Async
-    @Deprecated
-    public void sendCreationEmail(User user) {
-        log.debug("Sending creation email to '{}'", user.getEmail());
-        sendEmailFromTemplate(user, "mails/creationEmail", "email.activation.title");
-    }
-
-    @Async
-    @Deprecated
-    public void sendPasswordResetMail(User user) {
-        log.debug("Sending password reset email to '{}'", user.getEmail());
-        sendEmailFromTemplate(user, "mails/passwordResetEmail", "email.reset.title");
-    }
-
-    @Async
-    public void sendAccessCodeLetterMail(String emailAddress, UserInfo userInfo) {
-        log.debug("Sending access code letter email to the service desk '{}'", emailAddress);
-        String attachmentFilename = "Zugriffscode_Brief.pdf";
-        String pathToPdf = generatePdf(userInfo);
-        sendEmailFromTemplate(emailAddress, "mails/accessCodeLetterEmail", "email.accessCodeLetter.title", "de", attachmentFilename, pathToPdf);
     }
 
     private String generatePdf(UserInfo userInfo) {
@@ -157,16 +153,9 @@ public class MailService {
         }
     }
 
-    @Async
-    public void sendAnonymousContactMail(AnonymousContactMessageDTO anonymousContactMessage, String recipient) {
-        log.debug("Sending anonymous contact email to '{}'", recipient);
-        Context context = createAnonymousContactMailContext(anonymousContactMessage);
-        String content = templateEngine.process("mails/anonymousContactEmail", context);
-        sendEmail(recipient, anonymousContactMessage.getSubject(), content, false, true);
-    }
-
     private Context createAnonymousContactMailContext(AnonymousContactMessageDTO anonymousContactMessage) {
-        Context context = new Context();
+        Locale locale = LocaleContextHolder.getLocale();
+        Context context = new Context(locale);
         context.setVariable("subject", anonymousContactMessage.getSubject());
         context.setVariable("body", anonymousContactMessage.getBody());
         context.setVariable("companyName", anonymousContactMessage.getCompanyName());
