@@ -1,12 +1,12 @@
 {
     "relogin": {
         "button": {
-            "text": "FR-Jetzt abmelden"
+            "text": "Se d\u00e9connecter maintenant"
         },
         "click": {
-            "text": " your registration will be complete."
+            "text": "Veuillez vous d\u00e9connecter. L'enregistrement se terminera avec votre prochain acc\u00e8s."
         },
-        "text": "FR-Sie besitzen nun die Zugriffsrechte f\u00fcr arbeit.swiss. Diese stehen Ihnen jedoch erst nach dem n\u00e4chsten Login zur Verf\u00fcgung. Bitte melden Sie sich ab. Danach ist der Registrationsprozess abgeschlossen und Sie k\u00f6nnen arbeit.swiss \u00f6ffnen und sich anmelden.",
-        "title": "FR-Registration abschliessen"
+        "text": "Vous poss\u00e9dez \u00e0 pr\u00e9sent les droits d\u2019acc\u00e8s \u00e0 travail.swiss. Vous ne pourrez en disposer que lors de votre prochaine connexion. Veuillez vous d\u00e9connecter. Cela mettra fin \u00e0 la proc\u00e9dure d\u2019enregistrement. Vous pourrez ensuite ouvrir travail.swiss et vous reconnecter.",
+        "title": "Terminer l'enregistrement"
     }
 }

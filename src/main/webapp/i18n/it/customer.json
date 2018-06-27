@@ -1,6 +1,6 @@
 {
     "customer": {
-        "title": "IT - Registrierung f\u00fcr Kunden"
+        "title": "Registrazione per i clienti"
     },
     "registration": {
         "customer": {
@@ -9,18 +9,19 @@
             },
             "identificaton": {
                 "mismatch": {
-                    "error": "IT - Wir konnten keine RAV-Daten anhand Ihrer Angaben finden. Bitte \u00fcberpr\u00fcfen Sie, dass Personennummer und Geburtsdatum korrekt eingegeben wurden."
+                    "error": "Non abbiamo trovato dati URC in base alle indicazioni fornite. Per favore controllare che il numero personale e la data di nascita siano stati inseriti correttamente."
                 }
             },
             "pn": {
-                "label": "IT - Personennummer",
+                "label": "Numero personale",
                 "placeholder": "12345678"
             },
             "text": "Identificati con la tua data di nascita e il tuo numero personale che hai ricevuto con la lettera quando ti sei iscritto all'URC.",
             "title": "Riconoscimento",
             "messages": {
                 "validate": {
-                    "pn": "Inserisci un numero di 8 cifre."
+                    "pn": "Inserisci un numero di 8 cifre.",
+                    "birthdate": "La data deve essere compresa tra il 01.01.1900 e oggi."
                 }
             },
             "login": "Login",

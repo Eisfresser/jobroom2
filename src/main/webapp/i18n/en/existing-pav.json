@@ -11,7 +11,7 @@
             },
             "identificaton": {
                 "mismatch": {
-                    "error": "We were not able to find login data based on the entered values. Please make sure you entered your email address and password correctly."
+                    "error": "We were unable to find your account based on the information provided. Please verify your email address and password."
                 }
             },
             "text": "Please enter the Job Room login details you regularly use.",

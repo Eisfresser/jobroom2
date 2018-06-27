@@ -4,9 +4,9 @@
             "text": "Logout now"
         },
         "click": {
-            "text": "Press button to logout. With your next login"
+            "text": "Please log out. Your registration will be completed the next time you log in."
         },
-        "text": "You now have the necessary access rights for arbeit.swiss. But the access rights are only available after the next login. Please logout. With that the registration process is complete and you can come back to arbeit.swiss and login as a registered user.",
+        "text": "You have been granted access permissions for work.swiss. However, you must first log out to complete the registration process. Then you will be able to log in to work.swiss.",
         "title": "Complete registration"
     }
 }

@@ -1,6 +1,6 @@
 {
     "customer": {
-        "title": "Registration for Customers"
+        "title": "Customer registration"
     },
     "registration": {
         "customer": {
@@ -9,18 +9,19 @@
             },
             "identificaton": {
                 "mismatch": {
-                    "error": "We were not able to find RAV data based on the entered values. Please make sure you entered your personal number and birth date correctly."
+                    "error": "We were unable to find any RAV data based on the information provided. Please verify your personal ID and date of birth."
                 }
             },
             "pn": {
-                "label": "Personal number",
+                "label": "Personal ID",
                 "placeholder": "12345678"
             },
             "text": "Please authenticate yourself using your personal ID and date of birth. Your personal ID is indicated in the letter which you received from the RAV upon registration.",
             "title": "Identification",
             "messages": {
                 "validate": {
-                    "pn": "Please provide a number with 8 digits"
+                    "pn": "Please provide a number with 8 digits",
+                    "birthdate": "The date must be between 01.01.1900 and today"
                 }
             },
             "login": "Login",

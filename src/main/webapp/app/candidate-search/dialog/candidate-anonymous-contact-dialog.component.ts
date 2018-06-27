@@ -78,7 +78,6 @@ export class CandidateAnonymousContactDialogComponent implements OnInit, OnDestr
         this.toggleValue('sendAddress', 'company');
     }
 
-
     ngOnDestroy(): void {
         this.unsubscribe$.next();
         this.unsubscribe$.complete();

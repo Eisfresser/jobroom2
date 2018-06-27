@@ -16,11 +16,12 @@
                 "label": "Personennummer",
                 "placeholder": "12345678"
             },
-            "text": "Bitte identifizieren Sie sich mit ihrer Personennummer und ihrem Geburtsdatum. Die Personennummer finden sie auf dem Brief, welchen Sie bei der Anmeldung vom RAV erhalten haben.",
+            "text": "Bitte identifizieren Sie sich mit Ihrer Personennummer und Ihrem Geburtsdatum. Die Personennummer finden Sie auf dem Brief, den Sie bei der Anmeldung vom RAV erhalten haben.",
             "title": "Identifizierung",
             "messages": {
                 "validate": {
-                    "pn": "Bitte eine Zahl mit 8 Stellen eingeben"
+                    "pn": "Bitte eine Zahl mit 8 Stellen eingeben",
+                    "birthdate": "Das Datum muss zwischen dem 01.01.1900 und heute liegen."
                 }
             },
             "login": "Login",
