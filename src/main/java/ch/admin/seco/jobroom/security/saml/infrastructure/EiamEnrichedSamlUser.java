@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public class EiamEnrichedSamlUser extends SamlUser {
 
-    private static final String SCHEMAS_EIAM_2013_12_PREFIX = "http://schemas.eiam.admin.ch/ws/2013/12/identity/claims/";
+    static final String SCHEMAS_EIAM_2013_12_PREFIX = "http://schemas.eiam.admin.ch/ws/2013/12/identity/claims/";
 
     EiamEnrichedSamlUser(String nameId, Map<String, List<String>> attributes, String authnContext) {
         super(nameId, attributes, authnContext);

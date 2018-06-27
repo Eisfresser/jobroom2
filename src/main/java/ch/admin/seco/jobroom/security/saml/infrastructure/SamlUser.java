@@ -6,7 +6,7 @@ import java.util.Optional;
 
 public class SamlUser {
 
-    private static final String SCHEMAS_XMLSOAP_2005_05_PREFIX = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/";
+    static final String SCHEMAS_XMLSOAP_2005_05_PREFIX = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/";
 
     private final String nameId;
 
