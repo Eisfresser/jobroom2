@@ -42,7 +42,7 @@
         "job-search-list-item": {
             "badge": {
                 "permanent": "A tempo indeterminato",
-                "restricted": "registration requirement",
+                "restricted": "obligo di annuncio",
                 "temporary": "A tempo determinato"
             }
         },

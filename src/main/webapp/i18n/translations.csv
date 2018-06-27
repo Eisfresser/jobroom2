@@ -64,8 +64,9 @@ candidate-detail,candidate-detail.anonymous-contact.send-to,Post,Mail,Poste,Post
 candidate-detail,candidate-detail.anonymous-contact.title,Kandidat-/in kontaktieren,Contact candidate,Prendre contact avec un/e candidat/e,Contattare il candidato
 candidate-detail,candidate-detail.back,Zurück zu den Suchergebnissen,Back to search results,Retour aux résultats,"Torna ai risultati della ricerca "
 candidate-detail,candidate-detail.candidate-anonymous-contact,Kandidat/in kontaktieren,Contact candidate,Contacter le/la candidat-e,Contattare candidato/a
-candidate-detail,candidate-detail.candidate-anonymous-contact.body,"Sehr geehrte Stellensuchende, sehr geehrter Stellensuchender Der unten angegebene Arbeitgeber ist im Job-Room auf Ihr Profil gestossen und wünscht eine Kontaktaufnahme. Bitte kontaktieren Sie die Firma gemäss unten stehenden Angaben, um das weitere Vorgehen zu besprechen. Besten Dank und freundliche Grüsse","Dear jobseeker, the following employer discovered your profile on Job Room and would like to communicate with you directly. Please contact the company using the details below to discuss further steps.  Thank you.","Madame, Monsieur, L'employeur ci-après a consulté votre profil dans Job-Room et souhaiterait que vous le recontactiez au moyen des coordonnées fournies à cet effet. Avec nos meilleures salutations","Gentile Signora, Egregio Signore, il seguente datore di lavoro ha notato il Suo profilo nel Job-Room e desidera entrare in contatto con Lei. La invitiamo a contattare l’azienda (v. dati sotto) per discutere le prossime tappe. Grazie e cordiali saluti"
-candidate-detail,candidate-detail.candidate-anonymous-contact.subject,Sehr geehrte(r) Kandidat(in),Dear candidate,Cher candidat/Chère candidate,Gentile candidato
+candidate-detail,candidate-detail.candidate-anonymous-contact.greeting,"Liebe RAV-Kundin, lieber RAV-Kunde","Dear Customer","Chère cliente, cher client ORP","Cara cliente, caro cliente dell'URC"
+candidate-detail,candidate-detail.candidate-anonymous-contact.body,"Der unten angegebene Arbeitgeber ist im Job-Room auf Ihr Profil gestossen und wünscht eine Kontaktaufnahme. Bitte kontaktieren Sie die Firma gemäss unten stehenden Angaben, um das weitere Vorgehen zu besprechen.","The following employer discovered your profile on Job Room and would like to communicate with you directly. Please contact the company using the details below to discuss further steps.","L'employeur ci-après a consulté votre profil dans Job-Room et souhaiterait que vous le recontactiez au moyen des coordonnées ci-dessous pour discuter les prochains pas.","Il seguente datore di lavoro ha notato il Suo profilo nel Job-Room e desidera entrare in contatto con Lei. La invitiamo a contattare l’azienda (v. dati sotto) per discutere le prossime tappe."
+candidate-detail,candidate-detail.candidate-anonymous-contact.subject,Kontaktanfrage eines Arbeitgebers aus Job-Room,Contact request by an employer out of Job-Room,Demande de contact d'un employeur à travers Job-Room,Richiesta di contatto di un datore di lavoro a traverso Job-Room
 candidate-detail,candidate-detail.candidate-copy-link,Link kopieren,Copy link,Copier le lien,Copia link
 candidate-detail,candidate-detail.candidate-print,Drucken,Print,Imprimer,Stampa
 candidate-detail,candidate-detail.candidate-save,Kandidatenprofil speichern,Save candidate profile,Sauvegarder le profil du candidat,Salva candidato
@@ -232,8 +233,8 @@ error,error.http.405,Das verwendete HTTP-Method wird von diese Webseite nicht un
 error,error.http.500,Internal server error.,Internal server error.,Erreur interne du serveur.,Internal server error.
 error,error.title,Fehlerseite!,Error page!,Page d'erreur !,Pagina di errore!
 error,error.validation,Validation error on the server.,Validation error on the server.,Erreur de validation côté serveur.,Validation error on the server.
-existing-pav,registration.existing-pav.username.label,E-Mail Adresse,Email Address,Email Address,Email Address
-existing-pav,registration.existing-pav.username.placeholder,E-Mail Adresse,Email Address,Email Address,Email Address
+existing-pav,registration.existing-pav.username.label,Benutzername,Username,Nom d'utilisateur,Nome utente
+existing-pav,registration.existing-pav.username.placeholder,Benutzername,Username,Nom d'utilisateur,Nome utente
 existing-pav,registration.existing-pav.password.label,Passwort,Password,Mot de passe,Password
 existing-pav,registration.existing-pav.password.placeholder,Passwort,Password,Mot de passe,Password
 existing-pav,registration.existing-pav.identificaton.mismatch.error,"Wir konnten keine Login-Daten anhand Ihrer Angaben finden. Bitte überprüfen Sie, dass E-Mail Adresse und Passwort korrekt eingegeben wurden.","We were unable to find your account based on the information provided. Please verify your email address and password.","Nous n'avons trouvé aucune donnée d’accès correspondant à vos indications. Veuillez vérifier que vous avez indiqué correctement le courriel et le mot de passe.","Non abbiamo trovato i dati di login in base ai valori inseriti. Controlli di aver inserito correttamente indirizzo e-mail e password."
@@ -363,7 +364,7 @@ global,global.menu.account.login,Login,Login,Login,Login
 global,global.menu.account.logout,Abmelden,Sign out,Déconnexion,Esci
 global,global.menu.account.main,Zugang,Account,Compte,Utente
 global,global.menu.account.password,Passwort,Password,Mot de passe,Password
-global,global.menu.account.registration,Registrieren,Register,Enregistrement,Crea Account
+global,global.menu.account.registration,Registrierung,Registration,Enregistrement,Registrazione
 global,global.menu.account.sessions,Sitzungen,Sessions,Sessions,Sessioni
 global,global.menu.account.settings,Einstellungen,Settings,Paramètres,Impostazioni
 global,global.menu.admin.api-user-management,API-Schlüssel-Verwaltung,API-Schlüssel-Verwaltung,API-Schlüssel-Verwaltung,API-Schlüssel-Verwaltung
@@ -836,7 +837,7 @@ job-search,job-search.filter.sort.option.RELEVANCE_DESC,Sortiere nach Relevanz,S
 job-search,job-search.filter.title,Suchergebnisse filtern,Filter search result,Filtrer les résultats,Filtra risultati della ricerca
 job-search,job-search.filter.working-time.label,Arbeitspensum,Workload,Taux d'occupation,Grado di occupazione
 job-search,job-search.job-search-list-item.badge.permanent,Unbefristet,Permanent,Indéterminé,A tempo indeterminato
-job-search,job-search.job-search-list-item.badge.restricted,meldepflichtig,obloigation d'annonce,obligo di annuncio,registration requirement
+job-search,job-search.job-search-list-item.badge.restricted,meldepflichtig,registration requirement,obligation d'annonce,obligo di annuncio
 job-search,job-search.job-search-list-item.badge.temporary,Befristet,Temporary,Durée limitée,A tempo determinato
 job-search,job-search.job-search-list.error-message,Suche nach Stellen fehlgeschlagen,Failed to load job result list!,Les résultats de la recherche d'emplois n'ont pas pu être chargés,Impossibile caricare l'ultima lista di posti!
 job-search,job-search.job-search-list.title.many,{{count}} Stellen,{{count}} jobs,{{count}} emplois,{{count}} posti

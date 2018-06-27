@@ -42,7 +42,7 @@
         "job-search-list-item": {
             "badge": {
                 "permanent": "Ind\u00e9termin\u00e9",
-                "restricted": "obligo di annuncio",
+                "restricted": "obligation d'annonce",
                 "temporary": "Dur\u00e9e limit\u00e9e"
             }
         },

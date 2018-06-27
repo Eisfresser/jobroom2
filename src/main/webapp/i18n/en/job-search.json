@@ -42,7 +42,7 @@
         "job-search-list-item": {
             "badge": {
                 "permanent": "Permanent",
-                "restricted": "obloigation d'annonce",
+                "restricted": "registration requirement",
                 "temporary": "Temporary"
             }
         },

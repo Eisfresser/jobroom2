@@ -2,8 +2,8 @@
     "registration": {
         "existing-pav": {
             "username": {
-                "label": "Email Address",
-                "placeholder": "Email Address"
+                "label": "Username",
+                "placeholder": "Username"
             },
             "password": {
                 "label": "Password",
