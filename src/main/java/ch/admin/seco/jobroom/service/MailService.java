@@ -102,7 +102,8 @@ public class MailService {
         log.debug("Sending anonymous contact email to '{}'", recipient);
         Context context = createAnonymousContactMailContext(anonymousContactMessage);
         String content = templateEngine.process("mails/anonymousContactEmail", context);
-        sendEmail(recipient, anonymousContactMessage.getSubject(), content, false, true);
+        String subject = messageSource.getMessage("email.anonymousContact.mail-subject", null, LocaleContextHolder.getLocale());
+        sendEmail(recipient, subject, content, false, true);
     }
 
     @Deprecated
