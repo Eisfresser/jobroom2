@@ -44,7 +44,7 @@ public class CustomAuditEventRepository implements AuditEventRepository {
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void add(AuditEvent event) {
-        if (Constants.ANONYMOUS_USER.equals(event.getPrincipal())) {
+        if (Constants.ANONYMOUS_USER.equalsIgnoreCase(event.getPrincipal())) {
             return;
         }
         PersistentAuditEvent persistentAuditEvent = new PersistentAuditEvent();
