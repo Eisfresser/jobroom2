@@ -46,7 +46,7 @@ public class GatewaySwaggerResourcesProvider implements SwaggerResourcesProvider
         List<SwaggerResource> resources = new ArrayList<>();
 
         //Add the default swagger resource that correspond to the gateway's own swagger doc
-        resources.add(swaggerResource("default", "/v2/api-docs"));
+        resources.add(swaggerResource("gateway-default", "/v2/api-docs"));
 
         //Add the registered microservices swagger docs as additional swagger resources
         List<Route> routes = routeLocator.getRoutes();
@@ -54,17 +54,17 @@ public class GatewaySwaggerResourcesProvider implements SwaggerResourcesProvider
                 final String remoteSwaggerResourcesUrl = "/" + route.getLocation() + "/swagger-resources";
                 RemoteSwaggerResource[] remoteSwaggerResources = resolveRemoteSwaggerResources(remoteSwaggerResourcesUrl);
                 for (RemoteSwaggerResource remoteSwaggerResource : remoteSwaggerResources) {
-                    final String location = "/" + route.getLocation() + remoteSwaggerResource.getLocation();
-                    resources.add(
-                        swaggerResource(
-                            remoteSwaggerResource.getName(),
-                            location
-                        )
-                    );
+                    resources.add(swaggerRemoteResource(route, remoteSwaggerResource));
                 }
             }
         );
         return resources;
+    }
+
+    private SwaggerResource swaggerRemoteResource(Route route, RemoteSwaggerResource remoteSwaggerResource) {
+        final String name = route.getId() + "-" + remoteSwaggerResource.getName();
+        final String location = "/" + route.getLocation() + remoteSwaggerResource.getLocation();
+        return swaggerResource(name, location);
     }
 
     private RemoteSwaggerResource[] resolveRemoteSwaggerResources(String remoteSwaggerResourcesUrl) {
