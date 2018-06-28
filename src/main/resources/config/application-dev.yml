@@ -169,6 +169,11 @@ jhipster:
 
 # application:
 
+management:
+    health:
+        mail:
+          enabled: false
+
 security:
     saml:
         idpConfigPath: classpath:config/security/local-shibboleth-idp-metadata.xml
