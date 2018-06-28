@@ -15,7 +15,6 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 
 /**
@@ -68,10 +67,10 @@ public class GatewaySwaggerResourcesProvider implements SwaggerResourcesProvider
             ResponseEntity<RemoteSwaggerResource[]> entity = ribbonClientRestTemplate
                 .getForEntity("http://" + serviceId + "/swagger-resources", RemoteSwaggerResource[].class);
             return entity.getBody();
-        } catch (HttpStatusCodeException e) {
-            LOGGER.warn("Could not resolve url: {}. Status code was: {}", serviceId, e.getStatusCode());
+        } catch (Exception e) {
+            LOGGER.warn("Could not resolve swagger-resources from service-id: " + serviceId, e);
+            return new RemoteSwaggerResource[0];
         }
-        return new RemoteSwaggerResource[0];
     }
 
     private SwaggerResource swaggerResource(String name, String location) {
