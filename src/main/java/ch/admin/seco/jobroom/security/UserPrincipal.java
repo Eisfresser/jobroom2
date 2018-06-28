@@ -1,16 +1,17 @@
 package ch.admin.seco.jobroom.security;
 
-import ch.admin.seco.jobroom.domain.UserInfoId;
-import ch.admin.seco.jobroom.security.saml.infrastructure.dsl.SAMLConfigurer;
-import com.google.common.base.Preconditions;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import com.google.common.base.Preconditions;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import ch.admin.seco.jobroom.domain.UserInfoId;
 
 public class UserPrincipal implements UserDetails {
 
@@ -27,8 +28,6 @@ public class UserPrincipal implements UserDetails {
     private final String langKey;
 
     private List<GrantedAuthority> authorities = new ArrayList<>();
-
-    private String authenticationMethod;
 
     private String userDefaultProfileExtId;
 
@@ -110,14 +109,6 @@ public class UserPrincipal implements UserDetails {
 
     public void addAuthority(GrantedAuthority authority) {
         this.authorities.add(authority);
-    }
-
-    public void setAuthenticationMethod(String authenticationMethod) {
-        this.authenticationMethod = authenticationMethod;
-    }
-
-    public boolean hasOnlyOneFactorAuthentication() {
-        return SAMLConfigurer.ONE_FACTOR_AUTHN_CTX.equals(authenticationMethod);
     }
 
     public void setUserDefaultProfileExtId(String defaultProfileExtId) {

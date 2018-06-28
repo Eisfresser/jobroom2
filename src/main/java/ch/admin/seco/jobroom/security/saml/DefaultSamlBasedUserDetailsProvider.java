@@ -74,7 +74,7 @@ public class DefaultSamlBasedUserDetailsProvider implements SamlBasedUserDetails
             eiamEnrichedSamlUser.getLanguage().get().toLowerCase()
         );
         userPrincipal.setAuthoritiesFromStringCollection(this.eiamRoleMapper.mapEiamRolesToJobRoomRoles(eiamEnrichedSamlUser.getRoles()));
-        userPrincipal.setAuthenticationMethod(eiamEnrichedSamlUser.getAuthnContext());
+        //userPrincipal.setAuthenticationMethod(eiamEnrichedSamlUser.getAuthnContext());
         userPrincipal.setUserDefaultProfileExtId(eiamEnrichedSamlUser.getDefaultProfileExtId().get());
 
         return userPrincipal;
