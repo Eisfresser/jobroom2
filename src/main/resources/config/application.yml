@@ -130,17 +130,6 @@ jhipster:
         #max-age: 1800
     mail:
         from: jobroom@localhost
-    swagger:
-        default-include-pattern: /api/.*
-        title: jobroom API
-        description: jobroom API documentation
-        version: 0.0.1
-        terms-of-service-url:
-        contact-name:
-        contact-url:
-        contact-email:
-        license:
-        license-url:
     gateway:
         authorized-microservices-endpoints:
             jobservice: /api,/v2/api-docs,/swagger-resources,/management

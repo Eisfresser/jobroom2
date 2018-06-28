@@ -47,6 +47,7 @@ public class GatewaySwaggerResourcesProvider implements SwaggerResourcesProvider
 
         //Add the default swagger resource that correspond to the gateway's own swagger doc
         resources.add(swaggerResource("gateway-default", "/v2/api-docs"));
+        resources.add(swaggerResource("gateway-manage-api", "/v2/api-docs?group=manage-api"));
 
         //Add the registered microservices swagger docs as additional swagger resources
         List<Route> routes = routeLocator.getRoutes();
