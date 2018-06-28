@@ -33,6 +33,8 @@ class AbstractSecurityConfig extends WebSecurityConfigurerAdapter {
         http.exceptionHandling()
             .accessDeniedHandler(this.problemSupport);
 
+        http.headers().frameOptions().sameOrigin();
+
         http.authorizeRequests()
             .antMatchers("/api/register").permitAll()
             .antMatchers("/api/authenticate").permitAll()
