@@ -30,6 +30,8 @@ import org.opensaml.xml.security.x509.PKIXTrustEvaluator;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.Resource;
+import org.springframework.security.authentication.AuthenticationEventPublisher;
+import org.springframework.security.authentication.DefaultAuthenticationEventPublisher;
 import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -306,8 +308,14 @@ public final class SAMLConfigurer extends SecurityConfigurerAdapter<DefaultSecur
         return authenticationFailureHandler;
     }
 
+    private AuthenticationEventPublisher authenticationEventPublisher() {
+        DefaultAuthenticationEventPublisher authenticationEventPublisher = new DefaultAuthenticationEventPublisher();
+        authenticationEventPublisher.setApplicationEventPublisher(this.applicationEventPublisher);
+        return authenticationEventPublisher;
+    }
+
     private JobroomAuthenticationSuccessHandler authenticationSuccessHandler() {
-        JobroomAuthenticationSuccessHandler authenticationSuccessHandler = new JobroomAuthenticationSuccessHandler(this.targetUrlEiamAccessRequest, this.userInfoRepository);
+        JobroomAuthenticationSuccessHandler authenticationSuccessHandler = new JobroomAuthenticationSuccessHandler(this.targetUrlEiamAccessRequest, this.userInfoRepository, authenticationEventPublisher());
         authenticationSuccessHandler.setAlwaysUseDefaultTargetUrl(true);
         authenticationSuccessHandler.setDefaultTargetUrl(TARGET_URL_AFTER_AUTHENTICATION);
         return authenticationSuccessHandler;

@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.springframework.security.authentication.AuthenticationEventPublisher;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -45,9 +46,12 @@ public class JobroomAuthenticationSuccessHandler extends SavedRequestAwareAuthen
 
     private final Map<RegistrationStatus, RegistrationStatusStrategy> registrationStatusStrategyMap = new HashMap<>();
 
-    JobroomAuthenticationSuccessHandler(String targetUrlEiamAccessRequest, UserInfoRepository userInfoRepository) {
+    private final AuthenticationEventPublisher authenticationEventPublisher;
+
+    JobroomAuthenticationSuccessHandler(String targetUrlEiamAccessRequest, UserInfoRepository userInfoRepository, AuthenticationEventPublisher authenticationEventPublisher) {
         this.targetUrlEiamAccessRequest = targetUrlEiamAccessRequest;
         this.userInfoRepository = userInfoRepository;
+        this.authenticationEventPublisher = authenticationEventPublisher;
         this.registrationStatusStrategyMap.put(RegistrationStatus.UNREGISTERED, this::redirectToRegistrationPage);
         this.registrationStatusStrategyMap.put(RegistrationStatus.VALIDATION_EMP, this::redirectToAccessCodePage);
         this.registrationStatusStrategyMap.put(RegistrationStatus.VALIDATION_PAV, this::redirectToAccessCodePage);
@@ -71,6 +75,7 @@ public class JobroomAuthenticationSuccessHandler extends SavedRequestAwareAuthen
         if (!hasJobRoomAllowRole(userDetails.getAuthorities())) {
             logger.info("User '" + userDetails.getUsername() + "' doesn't have the ALLOW role -> redirect to eiam");
             redirectTo(this.targetUrlEiamAccessRequest, request, response);
+            this.authenticationEventPublisher.publishAuthenticationSuccess(authentication);
             return;
         }
 
@@ -79,6 +84,7 @@ public class JobroomAuthenticationSuccessHandler extends SavedRequestAwareAuthen
         }
         UserPrincipal userPrincipal = (UserPrincipal) principal;
         handleAuthenticatedUser(authentication, userPrincipal, request, response);
+        this.authenticationEventPublisher.publishAuthenticationSuccess(authentication);
     }
 
     private void handleAuthenticatedUser(Authentication authentication, UserPrincipal userPrincipal, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
