@@ -162,7 +162,7 @@ public class CustomAuditEventRepositoryIntTest {
         AuditEvent event = new AuditEvent("test-user", "AUTHORIZATION_FAILURE", data);
         customAuditEventRepository.add(event);
         List<PersistentAuditEvent> persistentAuditEvents = persistenceAuditEventRepository.findAll();
-        assertThat(persistentAuditEvents).hasSize(0);
+        assertThat(persistentAuditEvents).hasSize(1);
     }
 
 }

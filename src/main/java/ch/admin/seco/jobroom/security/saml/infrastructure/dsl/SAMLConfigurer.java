@@ -27,6 +27,7 @@ import org.opensaml.xml.parse.XMLParserException;
 import org.opensaml.xml.security.x509.CertPathPKIXTrustEvaluator;
 import org.opensaml.xml.security.x509.PKIXTrustEvaluator;
 
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.Resource;
 import org.springframework.security.config.annotation.ObjectPostProcessor;
@@ -114,6 +115,8 @@ public final class SAMLConfigurer extends SecurityConfigurerAdapter<DefaultSecur
 
     private final AuthenticationEntryPoint fallbackAuthenticationEntryPoint;
 
+    private final ApplicationEventPublisher applicationEventPublisher;
+
     private IdentityProvider identityProvider = new IdentityProvider();
     private ServiceProvider serviceProvider = new ServiceProvider();
 
@@ -136,10 +139,11 @@ public final class SAMLConfigurer extends SecurityConfigurerAdapter<DefaultSecur
     };
 
 
-    private SAMLConfigurer(String accessRequestUrl, UserInfoRepository userInfoRepository, AuthenticationEntryPoint fallbackAuthenticationEntryPoint) {
+    private SAMLConfigurer(String accessRequestUrl, UserInfoRepository userInfoRepository, AuthenticationEntryPoint fallbackAuthenticationEntryPoint, ApplicationEventPublisher applicationEventPublisher) {
         this.targetUrlEiamAccessRequest = accessRequestUrl;
         this.userInfoRepository = userInfoRepository;
         this.fallbackAuthenticationEntryPoint = fallbackAuthenticationEntryPoint;
+        this.applicationEventPublisher = applicationEventPublisher;
     }
 
     @Override
@@ -179,8 +183,11 @@ public final class SAMLConfigurer extends SecurityConfigurerAdapter<DefaultSecur
             .authenticationProvider(samlAuthenticationProvider);
     }
 
-    public static SAMLConfigurer saml(String accessRequestUrl, UserInfoRepository userInfoRepository, AuthenticationEntryPoint fallbackAuthenticationEntryPoint) {
-        return new SAMLConfigurer(accessRequestUrl, userInfoRepository, fallbackAuthenticationEntryPoint);
+    public static SAMLConfigurer saml(String accessRequestUrl,
+        UserInfoRepository userInfoRepository,
+        AuthenticationEntryPoint fallbackAuthenticationEntryPoint,
+        ApplicationEventPublisher applicationEventPublisher) {
+        return new SAMLConfigurer(accessRequestUrl, userInfoRepository, fallbackAuthenticationEntryPoint, applicationEventPublisher);
     }
 
     public SAMLConfigurer userDetailsService(SAMLUserDetailsService samlUserDetailsService) {
@@ -282,14 +289,14 @@ public final class SAMLConfigurer extends SecurityConfigurerAdapter<DefaultSecur
 
     private SAMLProcessingFilter samlWebSSOProcessingFilter(SAMLAuthenticationProvider samlAuthenticationProvider, SAMLContextProvider contextProvider, SAMLProcessor samlProcessor) throws Exception {
         SAMLProcessingFilter samlWebSSOProcessingFilter = new SAMLProcessingFilter();
-
-        AuthenticationManagerBuilder authenticationManagerBuilder = new AuthenticationManagerBuilder(objectPostProcessor);
+        AuthenticationManagerBuilder authenticationManagerBuilder = new AuthenticationManagerBuilder(this.objectPostProcessor);
         authenticationManagerBuilder.authenticationProvider(samlAuthenticationProvider);
         samlWebSSOProcessingFilter.setAuthenticationManager(authenticationManagerBuilder.build());
         samlWebSSOProcessingFilter.setContextProvider(contextProvider);
         samlWebSSOProcessingFilter.setSAMLProcessor(samlProcessor);
         samlWebSSOProcessingFilter.setAuthenticationSuccessHandler(authenticationSuccessHandler());
         samlWebSSOProcessingFilter.setAuthenticationFailureHandler(authenticationFailureHandler());
+        samlWebSSOProcessingFilter.setApplicationEventPublisher(this.applicationEventPublisher);
         return samlWebSSOProcessingFilter;
     }
 
@@ -342,8 +349,8 @@ public final class SAMLConfigurer extends SecurityConfigurerAdapter<DefaultSecur
     private SAMLLogoutFilter samlLogoutFilter(SAMLContextProvider contextProvider, SAMLProcessor samlProcessor) {
         SAMLLogoutFilter samlLogoutFilter = new SAMLLogoutFilter(
             successLogoutHandler(),
-            new LogoutHandler[]{logoutHandler()},
-            new LogoutHandler[]{logoutHandler()}
+            new LogoutHandler[] {logoutHandler()},
+            new LogoutHandler[] {logoutHandler()}
         );
         samlLogoutFilter.setProfile(singleLogoutProfile(samlProcessor));
         samlLogoutFilter.setContextProvider(contextProvider);

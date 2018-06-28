@@ -11,6 +11,7 @@ import org.zalando.problem.spring.web.advice.security.SecurityProblemSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -77,6 +78,7 @@ public class SecurityConfiguration {
 
         @Override
         protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+            super.configure(auth);
             auth.userDetailsService(this.loginFormUserDetailsService)
                 .passwordEncoder(passwordEncoder());
         }
@@ -139,11 +141,13 @@ public class SecurityConfiguration {
 
         private final SecurityProblemSupport problemSupport;
 
+        private final ApplicationEventPublisher applicationEventPublisher;
+
         // this is set via @ConfigurationProperties
         private Map<String, String> rolemapping;
 
         @Autowired
-        SamlSecurityConfig(UserInfoRepository userInfoRepository, SamlProperties samlProperties, TransactionTemplate transactionTemplate, JHipsterProperties jHipsterProperties, LoginFormUserDetailsService loginFormUserDetailsService, SecurityProblemSupport problemSupport) {
+        SamlSecurityConfig(UserInfoRepository userInfoRepository, SamlProperties samlProperties, TransactionTemplate transactionTemplate, JHipsterProperties jHipsterProperties, LoginFormUserDetailsService loginFormUserDetailsService, SecurityProblemSupport problemSupport, ApplicationEventPublisher applicationEventPublisher) {
             super(problemSupport);
             this.userInfoRepository = userInfoRepository;
             this.samlProperties = samlProperties;
@@ -151,6 +155,7 @@ public class SecurityConfiguration {
             this.jHipsterProperties = jHipsterProperties;
             this.loginFormUserDetailsService = loginFormUserDetailsService;
             this.problemSupport = problemSupport;
+            this.applicationEventPublisher = applicationEventPublisher;
         }
 
         @Bean
@@ -165,6 +170,7 @@ public class SecurityConfiguration {
 
         @Override
         protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+            super.configure(auth);
             auth
                 .userDetailsService(this.loginFormUserDetailsService)
                 .passwordEncoder(passwordEncoder());
@@ -181,7 +187,7 @@ public class SecurityConfiguration {
                 .csrf().disable()
                 .apply(jwt())
                 .and()
-                .apply(saml(samlProperties.getAccessRequestUrl(), this.userInfoRepository, this.problemSupport))
+                .apply(saml(samlProperties.getAccessRequestUrl(), this.userInfoRepository, this.problemSupport, this.applicationEventPublisher))
                 .serviceProvider()
                 /*-*/.keyStore()
                 /*----*/.storeFilePath(samlProperties.getKeystorePath())
