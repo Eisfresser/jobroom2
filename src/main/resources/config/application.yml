@@ -141,6 +141,12 @@ jhipster:
         contact-email:
         license:
         license-url:
+    gateway:
+        authorized-microservices-endpoints:
+            jobservice: /api,/v2/api-docs,/swagger-resources,/management
+            referenceservice: /api,/v2/api-docs,/swagger-resources,/management
+            candidateservice: /api,/v2/api-docs,/swagger-resources,/management
+            jobadservice: /api,/v2/api-docs,/swagger-resources,/management
     ribbon:
         display-on-active-profiles:
             - dev
