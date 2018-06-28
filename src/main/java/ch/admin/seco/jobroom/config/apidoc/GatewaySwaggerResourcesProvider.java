@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.github.jhipster.config.JHipsterConstants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import springfox.documentation.swagger.web.SwaggerResource;
 import springfox.documentation.swagger.web.SwaggerResourcesProvider;
 
@@ -15,6 +17,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 
 /**
@@ -24,6 +27,8 @@ import org.springframework.web.client.RestTemplate;
 @Primary
 @Profile(JHipsterConstants.SPRING_PROFILE_SWAGGER)
 public class GatewaySwaggerResourcesProvider implements SwaggerResourcesProvider {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(GatewaySwaggerResourcesProvider.class);
 
     private final RouteLocator routeLocator;
 
@@ -47,8 +52,8 @@ public class GatewaySwaggerResourcesProvider implements SwaggerResourcesProvider
         List<Route> routes = routeLocator.getRoutes();
         routes.forEach(route -> {
                 final String remoteSwaggerResourcesUrl = "/" + route.getLocation() + "/swagger-resources";
-                ResponseEntity<RemoteSwaggerResource[]> forEntity = restTemplate.getForEntity(remoteSwaggerResourcesUrl, RemoteSwaggerResource[].class);
-                for (RemoteSwaggerResource remoteSwaggerResource : forEntity.getBody()) {
+                RemoteSwaggerResource[] remoteSwaggerResources = resolveRemoteSwaggerResources(remoteSwaggerResourcesUrl);
+                for (RemoteSwaggerResource remoteSwaggerResource : remoteSwaggerResources) {
                     final String location = "/" + route.getLocation() + remoteSwaggerResource.getLocation();
                     resources.add(
                         swaggerResource(
@@ -59,8 +64,17 @@ public class GatewaySwaggerResourcesProvider implements SwaggerResourcesProvider
                 }
             }
         );
-
         return resources;
+    }
+
+    private RemoteSwaggerResource[] resolveRemoteSwaggerResources(String remoteSwaggerResourcesUrl) {
+        try {
+            ResponseEntity<RemoteSwaggerResource[]> entity = restTemplate.getForEntity(remoteSwaggerResourcesUrl, RemoteSwaggerResource[].class);
+            return entity.getBody();
+        } catch (HttpStatusCodeException e) {
+            LOGGER.warn("Could not resolve url: {}. Status code was: {}", remoteSwaggerResourcesUrl, e.getStatusCode());
+        }
+        return new RemoteSwaggerResource[0];
     }
 
     private SwaggerResource swaggerResource(String name, String location) {
