@@ -9,8 +9,6 @@ import org.slf4j.LoggerFactory;
 import springfox.documentation.swagger.web.SwaggerResource;
 import springfox.documentation.swagger.web.SwaggerResourcesProvider;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.cloud.netflix.zuul.filters.Route;
 import org.springframework.cloud.netflix.zuul.filters.RouteLocator;
 import org.springframework.context.annotation.Primary;
@@ -32,13 +30,11 @@ public class GatewaySwaggerResourcesProvider implements SwaggerResourcesProvider
 
     private final RouteLocator routeLocator;
 
-    private final RestTemplate restTemplate;
+    private final RestTemplate ribbonClientRestTemplate;
 
-    public GatewaySwaggerResourcesProvider(RouteLocator routeLocator, RestTemplateBuilder restTemplateBuilder, @Value("${server.port}") Integer localServerPort) {
+    public GatewaySwaggerResourcesProvider(RouteLocator routeLocator, RestTemplate ribbonClientRestTemplate) {
         this.routeLocator = routeLocator;
-        this.restTemplate = restTemplateBuilder
-            .rootUri("http://localhost:" + localServerPort)
-            .build();
+        this.ribbonClientRestTemplate = ribbonClientRestTemplate;
     }
 
     @Override
@@ -52,8 +48,7 @@ public class GatewaySwaggerResourcesProvider implements SwaggerResourcesProvider
         //Add the registered microservices swagger docs as additional swagger resources
         List<Route> routes = routeLocator.getRoutes();
         routes.forEach(route -> {
-                final String remoteSwaggerResourcesUrl = "/" + route.getLocation() + "/swagger-resources";
-                RemoteSwaggerResource[] remoteSwaggerResources = resolveRemoteSwaggerResources(remoteSwaggerResourcesUrl);
+                RemoteSwaggerResource[] remoteSwaggerResources = resolveRemoteSwaggerResources(route.getId());
                 for (RemoteSwaggerResource remoteSwaggerResource : remoteSwaggerResources) {
                     resources.add(swaggerRemoteResource(route, remoteSwaggerResource));
                 }
@@ -68,12 +63,13 @@ public class GatewaySwaggerResourcesProvider implements SwaggerResourcesProvider
         return swaggerResource(name, location);
     }
 
-    private RemoteSwaggerResource[] resolveRemoteSwaggerResources(String remoteSwaggerResourcesUrl) {
+    private RemoteSwaggerResource[] resolveRemoteSwaggerResources(String serviceId) {
         try {
-            ResponseEntity<RemoteSwaggerResource[]> entity = restTemplate.getForEntity(remoteSwaggerResourcesUrl, RemoteSwaggerResource[].class);
+            ResponseEntity<RemoteSwaggerResource[]> entity = ribbonClientRestTemplate
+                .getForEntity("http://" + serviceId + "/swagger-resources", RemoteSwaggerResource[].class);
             return entity.getBody();
         } catch (HttpStatusCodeException e) {
-            LOGGER.warn("Could not resolve url: {}. Status code was: {}", remoteSwaggerResourcesUrl, e.getStatusCode());
+            LOGGER.warn("Could not resolve url: {}. Status code was: {}", serviceId, e.getStatusCode());
         }
         return new RemoteSwaggerResource[0];
     }
