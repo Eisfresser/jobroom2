@@ -38,7 +38,8 @@ ribbon:
     eureka:
         enabled: true
     restclient:
-        enabled: true
+        # must be set to false since otherwise the RibbonClientHttpRequestFactory is used which doesn't support 'PATCH'
+        enabled: false
 
 # See http://cloud.spring.io/spring-cloud-netflix/spring-cloud-netflix.html
 zuul: # those values must be configured depending on the application specific needs
