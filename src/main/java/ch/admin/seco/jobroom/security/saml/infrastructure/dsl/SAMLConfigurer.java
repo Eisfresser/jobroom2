@@ -303,7 +303,7 @@ public final class SAMLConfigurer extends SecurityConfigurerAdapter<DefaultSecur
     }
 
     private JobroomAuthenticationFailureHandler authenticationFailureHandler() {
-        JobroomAuthenticationFailureHandler authenticationFailureHandler = new JobroomAuthenticationFailureHandler();
+        JobroomAuthenticationFailureHandler authenticationFailureHandler = new JobroomAuthenticationFailureHandler(this.applicationEventPublisher);
         authenticationFailureHandler.setUseForward(false);
         return authenticationFailureHandler;
     }
