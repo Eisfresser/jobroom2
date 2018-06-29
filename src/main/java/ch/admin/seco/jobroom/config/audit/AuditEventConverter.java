@@ -1,10 +1,10 @@
 package ch.admin.seco.jobroom.config.audit;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.boot.actuate.audit.AuditEvent;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
@@ -21,15 +21,13 @@ public class AuditEventConverter {
      * @param persistentAuditEvents the list to convert
      * @return the converted list.
      */
-    public List<AuditEvent> convertToAuditEvent(Iterable<PersistentAuditEvent> persistentAuditEvents) {
+    public List<AuditEvent> convertToAuditEvent(List<PersistentAuditEvent> persistentAuditEvents) {
         if (persistentAuditEvents == null) {
             return Collections.emptyList();
         }
-        List<AuditEvent> auditEvents = new ArrayList<>();
-        for (PersistentAuditEvent persistentAuditEvent : persistentAuditEvents) {
-            auditEvents.add(convertToAuditEvent(persistentAuditEvent));
-        }
-        return auditEvents;
+        return persistentAuditEvents.stream()
+            .map(this::convertToAuditEvent)
+            .collect(Collectors.toList());
     }
 
     /**
@@ -42,25 +40,12 @@ public class AuditEventConverter {
         if (persistentAuditEvent == null) {
             return null;
         }
-        return new AuditEvent(persistentAuditEvent.getAuditEventDate(), persistentAuditEvent.getPrincipal(),
-            persistentAuditEvent.getAuditEventType(), convertDataToObjects(persistentAuditEvent.getData()));
-    }
-
-    /**
-     * Internal conversion. This is needed to support the current SpringBoot actuator AuditEventRepository interface.
-     *
-     * @param data the data to convert
-     * @return a map of String, Object
-     */
-    public Map<String, Object> convertDataToObjects(Map<String, String> data) {
-        Map<String, Object> results = new HashMap<>();
-
-        if (data != null) {
-            for (Map.Entry<String, String> entry : data.entrySet()) {
-                results.put(entry.getKey(), entry.getValue());
-            }
-        }
-        return results;
+        return new AuditEvent(
+            persistentAuditEvent.getAuditEventDate(),
+            persistentAuditEvent.getPrincipal(),
+            persistentAuditEvent.getAuditEventType(),
+            convertDataToObjects(persistentAuditEvent.getData())
+        );
     }
 
     /**
@@ -92,4 +77,22 @@ public class AuditEventConverter {
 
         return results;
     }
+
+    /**
+     * Internal conversion. This is needed to support the current SpringBoot actuator AuditEventRepository interface.
+     *
+     * @param data the data to convert
+     * @return a map of String, Object
+     */
+    private Map<String, Object> convertDataToObjects(Map<String, String> data) {
+        Map<String, Object> results = new HashMap<>();
+
+        if (data != null) {
+            for (Map.Entry<String, String> entry : data.entrySet()) {
+                results.put(entry.getKey(), entry.getValue());
+            }
+        }
+        return results;
+    }
+
 }

@@ -32,6 +32,8 @@ public class CustomAuditEventRepository implements AuditEventRepository {
 
     static final int EVENT_DATA_COLUMN_MAX_LENGTH = 255;
 
+    private static final PageRequest DEFAULT_PAGE_REQUEST = PageRequest.of(0, 100, Sort.by("auditEventDate").descending());
+
     private final PersistenceAuditEventRepository persistenceAuditEventRepository;
 
     private final AuditEventConverter auditEventConverter;
@@ -59,10 +61,10 @@ public class CustomAuditEventRepository implements AuditEventRepository {
     @Override
     public List<AuditEvent> find(String principal, Instant after, String type) {
         if (principal == null) {
-            Page<PersistentAuditEvent> pageResult = persistenceAuditEventRepository.findAll(PageRequest.of(0, 100, Sort.by("auditEventDate").ascending()));
+            Page<PersistentAuditEvent> pageResult = persistenceAuditEventRepository.findAll(DEFAULT_PAGE_REQUEST);
             return auditEventConverter.convertToAuditEvent(pageResult.getContent());
         }
-        Iterable<PersistentAuditEvent> persistentAuditEvents =
+        List<PersistentAuditEvent> persistentAuditEvents =
             persistenceAuditEventRepository.findByPrincipalAndAuditEventDateAfterAndAuditEventType(principal, after, type);
         return auditEventConverter.convertToAuditEvent(persistentAuditEvents);
     }
