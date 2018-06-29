@@ -38,6 +38,9 @@ Style guide customization
         }
     }
 }
+.navbar-nav .nav-link.nav-link--registration:hover {
+    background-color: #780b05;
+}
 
 .navbar-light .navbar-nav .nav-link:focus {
     color: $main-color-black;
