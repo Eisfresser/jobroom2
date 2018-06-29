@@ -126,4 +126,15 @@ public class UserPrincipal implements UserDetails {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    @Override
+    public String toString() {
+        return "UserPrincipal{" +
+            "id=" + id +
+            ", firstName='" + firstName + '\'' +
+            ", lastName='" + lastName + '\'' +
+            ", email='" + email + '\'' +
+            ", userExtId='" + userExtId + '\'' +
+            '}';
+    }
 }
