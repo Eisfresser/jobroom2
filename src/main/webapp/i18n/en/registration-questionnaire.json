@@ -1,18 +1,18 @@
 {
     "registrationQuestionnaire": {
         "title": "Registration",
-        "header": "Complete registration",
-        "placeholder": "Please answer the following questions so that we can assign you to the appropriate category.",
+        "header": "Type of usage",
+        "placeholder": "Please select one of the following types of usage.",
         "ravCustomer": "I would like to use work.swiss as a <b>RAV customer</b>",
         "employer": "I would like to use work.swiss as an <b>employer</b>",
         "recruitmentAgency": {
             "message": "I would like to use work.swiss as an <b>employment agency</b>",
-            "new": "This is my first time registering for work.swiss or Job Room",
+            "new": "This is my first time registering for work.swiss or Job-Room",
             "existing": "I am an existing Job Room user"
         },
         "termsOfUse": {
             "accept": "I agree to the terms and conditions",
-            "link": "<a href=\"/docs/Job-Room-AGB-20180530_en.pdf\" target=\"_blank\">Show terms and conditions</a>"
+            "link": "<a href=\"https://www.arbeit.swiss/dam/secoalv/en/bilder/unternehmen/Stellenmeldepflicht/Nutzungsbedingungen_Job-Room.pdf.download.pdf/AGB_Job-Room_Juni_2018_en.pdf\" target=\"_blank\">Show terms and conditions</a>"
         },
         "error": {
             "candidate": {

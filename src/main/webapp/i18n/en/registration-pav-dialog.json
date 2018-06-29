@@ -3,7 +3,7 @@
         "title": "Please select your organisation from the VZ AVG list.",
         "placeholder": "Please enter your organisation.",
         "postal": {
-            "description": "Once your request is submitted"
+            "description": "We will send an activation code <b>by post</b> to the address associated with the Register VZ AVG:"
         },
         "login": {
             "description": "You can then log in to your user account using this activation code."

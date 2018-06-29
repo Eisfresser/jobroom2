@@ -3,7 +3,7 @@
         "title": "Veuillez s\u00e9lectionner votre organisation dans le r\u00e9pertoire des AP LSE ",
         "placeholder": "Veuillez indiquer votre organisation",
         "postal": {
-            "description": " we will send an activation code <b>by post</b> to the address associated with your UID:"
+            "description": "Nous enverrons un code d'activation <b>par poste</B \u00e0 l'adresse qui est connect\u00e9e avec l'entreprise que vous avez choisie dans le r\u00e9pertoire des AP LSE:"
         },
         "login": {
             "description": "Vous pourrez ensuite vous connecter \u00e0 votre compte d'utilisateur au moyen du code de d\u00e9verrouillage."

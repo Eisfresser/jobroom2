@@ -1,8 +1,8 @@
 {
     "registrationQuestionnaire": {
         "title": "Enregistrement",
-        "header": "Terminer l'enregistrement",
-        "placeholder": "Veuillez r\u00e9pondre aux questions suivantes pour que nous puissions vous classer correctement.",
+        "header": "Type d'utilisation",
+        "placeholder": "Veuillez s\u00e9lectionner l'un des types d'utilisation suivants.",
         "ravCustomer": "Je souhaite utiliser travail.swiss en tant que <b>client ORP</b> ",
         "employer": "Je souhaite utiliser travail.swiss en tant que <b>employeur</b> ",
         "recruitmentAgency": {
@@ -12,7 +12,7 @@
         },
         "termsOfUse": {
             "accept": "J'accepte les conditions d'utilisation",
-            "link": "<a href=\"/docs/Job-Room-AGB-20180530_fr.pdf\" target=\"_blank\">Afficher les conditions d'utilisation</a>"
+            "link": "<a href=\"https://www.arbeit.swiss/dam/secoalv/fr/bilder/unternehmen/Stellenmeldepflicht/Nutzungsbedingungen_Job-Room.pdf.download.pdf/AGB_Job-Room_Juni_2018_fr.pdf\" target=\"_blank\">Afficher les conditions d'utilisation</a>"
         },
         "error": {
             "candidate": {

@@ -3,7 +3,7 @@
         "title": "Veuillez indiquer votre num\u00e9ro d'identification des entreprises (IDE).",
         "placeholder": "CHE-123.456.789",
         "postal": {
-            "description": " we will send an activation code <b>by post</b> to the address associated with your UID:"
+            "description": "Nous enverrons un code d'activation <b>par poste</b> \u00e0 l'adresse qui est connect\u00e9e avec votre IDE:"
         },
         "login": {
             "description": "Vous pourrez ensuite vous connecter \u00e0 votre compte d'utilisateur au moyen du code de d\u00e9verrouillage."

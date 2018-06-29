@@ -1,8 +1,8 @@
 {
     "registrationQuestionnaire": {
         "title": "Registrazione",
-        "header": "Completa la registrazione",
-        "placeholder": "Si prega di rispondere alle domande per consentire una corretta classificazione.",
+        "header": "Tipo di utilizzo",
+        "placeholder": "Si prega di selezionare uno dei seguenti tipi di utilizzo.",
         "ravCustomer": "Voglio usare lavoro.swiss come <b>cliente URC</b>",
         "employer": "Voglio usare lavoro.swiss come <b>datore di lavoro</b>",
         "recruitmentAgency": {
@@ -12,7 +12,7 @@
         },
         "termsOfUse": {
             "accept": "Accetto le condizoni di utilizzo",
-            "link": "<a href=\"/docs/Job-Room-AGB-20180530_it.pdf\" target=\"_blank\">Mostra le condizioni di utilizzo</a>"
+            "link": "<a href=\"https://www.arbeit.swiss/dam/secoalv/it/bilder/unternehmen/Stellenmeldepflicht/Nutzungsbedingungen_Job-Room.pdf.download.pdf/AGB_Job-Room_Juni_2018_it.pdf\" target=\"_blank\">Mostra le condizioni di utilizzo</a>"
         },
         "error": {
             "candidate": {

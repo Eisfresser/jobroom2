@@ -3,7 +3,7 @@
         "title": "Bitte w\u00e4hlen Sie Ihre Organisation aus der VZ AVG Liste aus",
         "placeholder": "Geben Sie Ihre Organisation ein",
         "postal": {
-            "description": "Nach Ihrer Anforderung werden wir Ihnen <b>per Post</b> einen Freischaltcode an die der UID zugeh\u00f6rigen Postadresse senden:"
+            "description": "Sie erhalten <b>per Post</b> einen Freischaltcode an die aus dem VZ AVG-Register ausgew\u00e4hlte Adresse:"
         },
         "login": {
             "description": "Mit dem zugesendeten Freischaltcode k\u00f6nnen Sie sich anschliessend \u00fcber den Login in Ihr Benutzerkonto einloggen."

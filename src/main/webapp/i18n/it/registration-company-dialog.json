@@ -3,7 +3,7 @@
         "title": "Inserire il numero d'identificazione delle imprese (IDI).",
         "placeholder": "CHE-123.456.789",
         "postal": {
-            "description": "Comme demand\u00e9"
+            "description": "Invieremo un codice di attivazione <b>per posta</b> all'indirizzo iscritto con il vostro IDI:"
         },
         "login": {
             "description": "Con il codice di attivazione inviato potr\u00e0 accedere al suo account utente tramite il login."

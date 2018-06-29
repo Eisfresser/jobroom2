@@ -3,7 +3,7 @@
         "title": "Selezionare la sua organizzazione dall'elenco OE LC",
         "placeholder": "Inserire la sua organizzazione",
         "postal": {
-            "description": "Comme demand\u00e9"
+            "description": "Invieremo un codice di attivazione <b>per posta</b> all'indirizzo della ditta da voi scelta dall'elenco ES ELC:"
         },
         "login": {
             "description": "Con il codice di attivazione inviato potrai accedere al tuo account utente tramite il login."

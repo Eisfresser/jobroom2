@@ -6,7 +6,7 @@
         "click": {
             "text": "Veuillez vous d\u00e9connecter. L'enregistrement se terminera avec votre prochain acc\u00e8s."
         },
-        "text": "Vous poss\u00e9dez \u00e0 pr\u00e9sent les droits d\u2019acc\u00e8s \u00e0 travail.swiss. Vous ne pourrez en disposer que lors de votre prochaine connexion. Veuillez vous d\u00e9connecter. Cela mettra fin \u00e0 la proc\u00e9dure d\u2019enregistrement. Vous pourrez ensuite ouvrir travail.swiss et vous reconnecter.",
-        "title": "Terminer l'enregistrement"
+        "text": "Vous avez maintenant les droits d'acc\u00e8s pour travail.swiss. Cependant, ceux-ci ne sont disponibles qu'apr\u00e8s le prochain login. Veuillez vous d\u00e9connecter. Ensuite, le processus d'enregistrement pour eIAM est termin\u00e9. Vous pouvez d\u00e9sormais vous connecter dans le www.job-room.ch et y compl\u00e9ter l'enregistrement.",
+        "title": "Terminer l'inscription eIAM"
     }
 }
