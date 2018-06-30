@@ -155,13 +155,19 @@ public class RegistrationService {
             throw new InvalidOldLoginException();
         }
         UserPrincipal userPrincipal = this.currentUserService.getPrincipal();
-        addAgentRoleToEiam(userPrincipal);
-        addAgentRoleToSession();
         UserInfo userInfo = getUserInfo(userPrincipal.getId());
         Optional<User> oldUser = this.userRepository.findOneWithAuthoritiesByLogin(username);
+        if (!oldUser.isPresent()) {
+            throw new IllegalStateException("Existing User " + username + " was not found");
+        }
         Organization avgCompany = oldUser.get().getOrganization();
+        if (avgCompany == null) {
+            throw new IllegalStateException("Existing User " + username + " has no organization");
+        }
         Company company = storeCompany(avgCompany);
         userInfo.registerExistingAgent(company);
+        addAgentRoleToEiam(userPrincipal);
+        addAgentRoleToSession();
     }
 
     private boolean validateOldLogin(String username, String password) {
