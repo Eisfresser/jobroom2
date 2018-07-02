@@ -3,7 +3,7 @@
       xsi:schemaLocation="http://www.thymeleaf.org ">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <link rel="shortcut icon"  th:href="@{./swiss.png}"/>
+    <link rel="shortcut icon"  th:href="@{../swiss.png}"/>
     <title>Job-Room</title>
     <style>
         ::-moz-selection {
@@ -71,6 +71,7 @@
             margin: 0 auto;
         }
 
+
         input::-moz-focus-inner {
             padding: 0;
             border: 0;
@@ -79,14 +80,10 @@
 </head>
 <body>
 <div class="container">
-    <h1 th:text="#{error.title}">Your request cannot be processed</h1>
+    <h1 th:text="#{error.saml_login.title}">Title</h1>
 
-    <p th:text="#{error.description}">Sorry, an error has occurred.</p>
+    <p th:text="#{error.saml_login.description}">Description</p>
 
-    <span th:text="#{error.status}">Status:</span>&nbsp;<span th:text="${error}"></span>&nbsp;(<span th:text="${error}"></span>)<br/>
-    <span th:if="${!#strings.isEmpty(message)}">
-        <span th:text="#{error.message}">Message:</span>&nbsp;<span th:text="${message}"></span><br/>
-    </span>
 </div>
 </body>
 </html>

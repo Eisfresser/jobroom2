@@ -302,10 +302,8 @@ public final class SAMLConfigurer extends SecurityConfigurerAdapter<DefaultSecur
         return samlWebSSOProcessingFilter;
     }
 
-    private JobroomAuthenticationFailureHandler authenticationFailureHandler() {
-        JobroomAuthenticationFailureHandler authenticationFailureHandler = new JobroomAuthenticationFailureHandler(this.applicationEventPublisher);
-        authenticationFailureHandler.setUseForward(false);
-        return authenticationFailureHandler;
+    private SamlAuthenticationFailureHandler authenticationFailureHandler() {
+        return new SamlAuthenticationFailureHandler(this.applicationEventPublisher);
     }
 
     private AuthenticationEventPublisher authenticationEventPublisher() {
@@ -314,8 +312,8 @@ public final class SAMLConfigurer extends SecurityConfigurerAdapter<DefaultSecur
         return authenticationEventPublisher;
     }
 
-    private JobroomAuthenticationSuccessHandler authenticationSuccessHandler() {
-        JobroomAuthenticationSuccessHandler authenticationSuccessHandler = new JobroomAuthenticationSuccessHandler(this.targetUrlEiamAccessRequest, this.userInfoRepository, authenticationEventPublisher());
+    private SamlAuthenticationSuccessHandler authenticationSuccessHandler() {
+        SamlAuthenticationSuccessHandler authenticationSuccessHandler = new SamlAuthenticationSuccessHandler(this.targetUrlEiamAccessRequest, this.userInfoRepository, authenticationEventPublisher());
         authenticationSuccessHandler.setAlwaysUseDefaultTargetUrl(true);
         authenticationSuccessHandler.setDefaultTargetUrl(TARGET_URL_AFTER_AUTHENTICATION);
         return authenticationSuccessHandler;

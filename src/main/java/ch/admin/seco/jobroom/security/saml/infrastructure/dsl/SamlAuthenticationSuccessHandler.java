@@ -36,9 +36,9 @@ import ch.admin.seco.jobroom.security.UserPrincipal;
  * 3) principal.userInfo.registrationStatus=VALIDATION_EMP or VALIDATION_PAV -> (the UserInfo in the database contains an accessCode; user is lead to access code page)
  * 4) principal.userInfo.registrationStatus=REGISTERED -> fully registered user -> send to default authentication success handler
  */
-public class JobroomAuthenticationSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
+public class SamlAuthenticationSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
 
-    private final static Logger LOG = LoggerFactory.getLogger(JobroomAuthenticationSuccessHandler.class);
+    private final static Logger LOG = LoggerFactory.getLogger(SamlAuthenticationSuccessHandler.class);
 
     private final String targetUrlEiamAccessRequest;
 
@@ -48,7 +48,7 @@ public class JobroomAuthenticationSuccessHandler extends SavedRequestAwareAuthen
 
     private final AuthenticationEventPublisher authenticationEventPublisher;
 
-    JobroomAuthenticationSuccessHandler(String targetUrlEiamAccessRequest, UserInfoRepository userInfoRepository, AuthenticationEventPublisher authenticationEventPublisher) {
+    SamlAuthenticationSuccessHandler(String targetUrlEiamAccessRequest, UserInfoRepository userInfoRepository, AuthenticationEventPublisher authenticationEventPublisher) {
         this.targetUrlEiamAccessRequest = targetUrlEiamAccessRequest;
         this.userInfoRepository = userInfoRepository;
         this.authenticationEventPublisher = authenticationEventPublisher;

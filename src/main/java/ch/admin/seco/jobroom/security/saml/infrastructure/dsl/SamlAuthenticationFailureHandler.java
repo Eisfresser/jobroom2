@@ -8,25 +8,26 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.event.AbstractAuthenticationFailureEvent;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 
-public class JobroomAuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {
+public class SamlAuthenticationFailureHandler implements AuthenticationFailureHandler {
 
     private final ApplicationEventPublisher applicationEventPublisher;
 
-    JobroomAuthenticationFailureHandler(ApplicationEventPublisher applicationEventPublisher) {
+    SamlAuthenticationFailureHandler(ApplicationEventPublisher applicationEventPublisher) {
         this.applicationEventPublisher = applicationEventPublisher;
     }
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
         this.applicationEventPublisher.publishEvent(new SamlAuthenticationFailureEvent(new SamlFailedAuthentication(request), exception));
-        super.onAuthenticationFailure(request, response, exception);
+        response.sendError(HttpStatus.I_AM_A_TEAPOT.value(), HttpStatus.I_AM_A_TEAPOT.getReasonPhrase());
     }
 
     public static class SamlFailedAuthentication extends AbstractAuthenticationToken {
