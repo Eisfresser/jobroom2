@@ -1,11 +1,37 @@
 package ch.admin.seco.jobroom.security.jwt;
 
-import ch.admin.seco.jobroom.domain.UserInfoId;
-import ch.admin.seco.jobroom.security.UserPrincipal;
+import static ch.admin.seco.jobroom.security.jwt.ClaimMapper.ClaimKey.auth;
+import static ch.admin.seco.jobroom.security.jwt.ClaimMapper.ClaimKey.email;
+import static ch.admin.seco.jobroom.security.jwt.ClaimMapper.ClaimKey.externalId;
+import static ch.admin.seco.jobroom.security.jwt.ClaimMapper.ClaimKey.firstName;
+import static ch.admin.seco.jobroom.security.jwt.ClaimMapper.ClaimKey.langKey;
+import static ch.admin.seco.jobroom.security.jwt.ClaimMapper.ClaimKey.lastName;
+import static ch.admin.seco.jobroom.security.jwt.ClaimMapper.ClaimKey.userId;
+import static ch.admin.seco.jobroom.security.jwt.ClaimMapper.ClaimKey.userProfileExtId;
+import static io.jsonwebtoken.Jwts.parser;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Optional;
+import java.util.function.Consumer;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+
 import io.github.jhipster.config.JHipsterProperties.Security.Authentication.Jwt;
-import io.jsonwebtoken.*;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.SignatureException;
+import io.jsonwebtoken.UnsupportedJwtException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -19,20 +45,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.GenericFilterBean;
 
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
-import java.util.List;
-import java.util.Optional;
-import java.util.function.Consumer;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import static ch.admin.seco.jobroom.security.jwt.ClaimMapper.ClaimKey.*;
-import static io.jsonwebtoken.Jwts.parser;
+import ch.admin.seco.jobroom.domain.UserInfoId;
+import ch.admin.seco.jobroom.security.UserPrincipal;
 
 public class JWTConfigurer extends SecurityConfigurerAdapter<DefaultSecurityFilterChain, HttpSecurity> {
 
@@ -140,6 +154,7 @@ public class JWTConfigurer extends SecurityConfigurerAdapter<DefaultSecurityFilt
                 claims.get(langKey.name(), String.class)
             );
             principal.setAuthorities(authorities);
+            principal.setUserDefaultProfileExtId(claims.get(userProfileExtId.name(), String.class));
             return new UsernamePasswordAuthenticationToken(principal, token, authorities);
         }
 
