@@ -128,7 +128,7 @@ public class DefaultEiamClientTest {
             andRespond(withPayload(result));
 
         // Act
-        this.client.addRoleToUser(VALID_EXT_ID, VALID_PROFILE_EXT_ID, VALID_ROLE, VALID_APPLICATION_NAME);
+        this.client.addRoleToUser(VALID_EXT_ID, VALID_PROFILE_EXT_ID, VALID_ROLE);
 
         // Assert
         this.mockServer.verify();
@@ -148,7 +148,7 @@ public class DefaultEiamClientTest {
             andRespond(withPayload(result));
 
         // Act
-        this.client.addRoleToUser(VALID_EXT_ID, VALID_PROFILE_EXT_ID, INVALID_ROLE, VALID_APPLICATION_NAME);
+        this.client.addRoleToUser(VALID_EXT_ID, VALID_PROFILE_EXT_ID, INVALID_ROLE);
 
         // Assert
         this.mockServer.verify();

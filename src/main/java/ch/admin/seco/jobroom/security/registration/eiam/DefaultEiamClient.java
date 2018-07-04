@@ -9,6 +9,9 @@ import ch.adnovum.nevisidm.ws.services.v1.BusinessException;
 import ch.adnovum.nevisidm.ws.services.v1.GetUsersByExtId;
 import ch.adnovum.nevisidm.ws.services.v1.GetUsersByExtIdResponse;
 import ch.adnovum.nevisidm.ws.services.v1.ObjectFactory;
+import ch.adnovum.nevisidm.ws.services.v1.Profile;
+import ch.adnovum.nevisidm.ws.services.v1.RemoveAuthorizationFromProfile;
+import ch.adnovum.nevisidm.ws.services.v1.RemoveAuthorizationFromProfileRequest;
 import ch.adnovum.nevisidm.ws.services.v1.Role;
 import ch.adnovum.nevisidm.ws.services.v1.User;
 import ch.adnovum.nevisidm.ws.services.v1.UserGetByExtId;
@@ -19,6 +22,8 @@ import org.springframework.util.Assert;
 import org.springframework.ws.client.core.WebServiceTemplate;
 
 class DefaultEiamClient implements EiamClient {
+
+    private static final String APPLICATION_NAME = "ALV-jobroom";
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DefaultEiamClient.class);
 
@@ -61,23 +66,16 @@ class DefaultEiamClient implements EiamClient {
     }
 
     @Override
-    public void addRoleToUser(String userExtId, String profileExtId, String roleName, String applicationName) throws RoleCouldNotBeAddedException {
+    public void addRoleToUser(String userExtId, String profileExtId, String roleName) throws RoleCouldNotBeAddedException {
         ObjectFactory factory = new ObjectFactory();
-        AddAuthorizationToProfile addAuthorizationToProfile = factory.createAddAuthorizationToProfile();
+
         AddAuthorizationToProfileRequest addAuthorizationToProfileRequest = factory.createAddAuthorizationToProfileRequest();
         addAuthorizationToProfileRequest.setClientName(clientName);
         addAuthorizationToProfileRequest.setDetail(DEFAULT_DETAIL_LEVEL);
-        Authorization authorization = factory.createAuthorization();
-        Role roleToBeSet = factory.createRole();
-        roleToBeSet.setName(roleName);
-        roleToBeSet.setApplicationName(applicationName);
-        authorization.setRole(roleToBeSet);
-        addAuthorizationToProfileRequest.setAuthorization(authorization);
-        ch.adnovum.nevisidm.ws.services.v1.Profile profile = factory.createProfile();
-        profile.setDefaultProfile(true);
-        profile.setUserExtId(userExtId);
-        profile.setExtId(profileExtId);
-        addAuthorizationToProfileRequest.setProfile(profile);
+        addAuthorizationToProfileRequest.setAuthorization(prepareAuthorization(roleName, factory));
+        addAuthorizationToProfileRequest.setProfile(prepareProfile(userExtId, profileExtId, factory));
+
+        AddAuthorizationToProfile addAuthorizationToProfile = factory.createAddAuthorizationToProfile();
         addAuthorizationToProfile.setRequest(addAuthorizationToProfileRequest);
         Object result = webServiceTemplate.marshalSendAndReceive(addAuthorizationToProfile);
         if (result instanceof BusinessException) {
@@ -87,17 +85,58 @@ class DefaultEiamClient implements EiamClient {
         }
     }
 
+    @Override
+    public void removeRoleFromUser(String userExtId, String profileExtId, String roleName) throws RoleCouldNotBeRemovedException {
+        ObjectFactory factory = new ObjectFactory();
+
+        RemoveAuthorizationFromProfileRequest removeAuthorizationFromProfileRequest = factory.createRemoveAuthorizationFromProfileRequest();
+        removeAuthorizationFromProfileRequest.setClientName(clientName);
+        removeAuthorizationFromProfileRequest.setDetail(DEFAULT_DETAIL_LEVEL);
+        removeAuthorizationFromProfileRequest.setAuthorization(prepareAuthorization(roleName, factory));
+        removeAuthorizationFromProfileRequest.setProfile(prepareProfile(userExtId, profileExtId, factory));
+
+        RemoveAuthorizationFromProfile removeAuthorizationFromProfile = factory.createRemoveAuthorizationFromProfile();
+        removeAuthorizationFromProfile.setRequest(removeAuthorizationFromProfileRequest);
+        Object result = webServiceTemplate.marshalSendAndReceive(removeAuthorizationFromProfile);
+        if (result instanceof BusinessException) {
+            throw new RoleCouldNotBeRemovedException("The roleName " + roleName + " could not be removed to the user with userExtId " + userExtId
+                + " with the error message: " + ((BusinessException) result).getMessage()
+                + " and the reason: " + ((BusinessException) result).getReason());
+        }
+    }
+
+    private Authorization prepareAuthorization(String role, ObjectFactory factory) {
+        Authorization authorization = factory.createAuthorization();
+        authorization.setRole(prepareRole(role, factory));
+        return authorization;
+    }
+
+    private Role prepareRole(String role, ObjectFactory factory) {
+        Role roleToBeSet = factory.createRole();
+        roleToBeSet.setName(role);
+        roleToBeSet.setApplicationName(APPLICATION_NAME);
+        return roleToBeSet;
+    }
+
+    private Profile prepareProfile(String extId, String profileExtId, ObjectFactory factory) {
+        Profile profile = factory.createProfile();
+        profile.setDefaultProfile(true);
+        profile.setUserExtId(extId);
+        profile.setExtId(profileExtId);
+        return profile;
+    }
+
     private String printUsers(List<User> users) {
         StringBuilder sb = new StringBuilder();
         for (User user : users) {
             sb.append(user.getFirstName())
-                    .append(" ")
-                    .append(user.getName())
-                    .append(" - extId=")
-                    .append(user.getExtId())
-                    .append(" - roles: ")
-                    .append(printAuthorizations(user.getProfiles().get(0).getAuthorizations()))
-                    .append("\n");
+                .append(" ")
+                .append(user.getName())
+                .append(" - extId=")
+                .append(user.getExtId())
+                .append(" - roles: ")
+                .append(printAuthorizations(user.getProfiles().get(0).getAuthorizations()))
+                .append("\n");
         }
         if (sb.length() > 0) {
             return sb.toString().substring(0, sb.length() - 1);
@@ -110,7 +149,7 @@ class DefaultEiamClient implements EiamClient {
         StringBuilder sb = new StringBuilder();
         for (Authorization authorization : authorizations) {
             sb.append(authorization.getRole().getName())
-                    .append(", ");
+                .append(", ");
         }
         return sb.toString().substring(0, sb.length() - 2);
     }

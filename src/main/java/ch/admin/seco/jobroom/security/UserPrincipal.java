@@ -98,9 +98,9 @@ public class UserPrincipal implements UserDetails {
     }
 
     public void setAuthoritiesFromStringCollection(Collection<String> authorities) {
-        this.authorities = authorities.stream()
+        this.setAuthorities(authorities.stream()
             .map(SimpleGrantedAuthority::new)
-            .collect(Collectors.toList());
+            .collect(Collectors.toList()));
     }
 
     public void setAuthorities(List<GrantedAuthority> authorities) {

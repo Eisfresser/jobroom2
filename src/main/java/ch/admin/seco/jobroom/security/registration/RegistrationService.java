@@ -3,13 +3,16 @@ package ch.admin.seco.jobroom.security.registration;
 import static ch.admin.seco.jobroom.domain.UserInfo_.registrationStatus;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -31,7 +34,11 @@ import ch.admin.seco.jobroom.security.AuthoritiesConstants;
 import ch.admin.seco.jobroom.security.MD5PasswordEncoder;
 import ch.admin.seco.jobroom.security.UserPrincipal;
 import ch.admin.seco.jobroom.security.registration.eiam.EiamAdminService;
+import ch.admin.seco.jobroom.security.registration.eiam.EiamClientRole;
+import ch.admin.seco.jobroom.security.registration.eiam.ExtIdNotUniqueException;
 import ch.admin.seco.jobroom.security.registration.eiam.RoleCouldNotBeAddedException;
+import ch.admin.seco.jobroom.security.registration.eiam.RoleCouldNotBeRemovedException;
+import ch.admin.seco.jobroom.security.registration.eiam.UserNotFoundException;
 import ch.admin.seco.jobroom.security.registration.uid.CompanyNotFoundException;
 import ch.admin.seco.jobroom.security.registration.uid.FirmData;
 import ch.admin.seco.jobroom.security.registration.uid.UidClient;
@@ -40,12 +47,16 @@ import ch.admin.seco.jobroom.security.registration.uid.UidNotUniqueException;
 import ch.admin.seco.jobroom.service.CandidateService;
 import ch.admin.seco.jobroom.service.CurrentUserService;
 import ch.admin.seco.jobroom.service.MailService;
+import ch.admin.seco.jobroom.service.UserInfoNotFoundException;
+import ch.admin.seco.jobroom.service.dto.AccountabilityDTO;
 import ch.admin.seco.jobroom.service.dto.RegistrationResultDTO;
 import ch.admin.seco.jobroom.service.dto.StesVerificationRequest;
 import ch.admin.seco.jobroom.service.dto.StesVerificationResult;
+import ch.admin.seco.jobroom.service.dto.UserInfoDTO;
 
 @Service
 @ConfigurationProperties(prefix = "security")
+@Transactional(rollbackFor = Exception.class)
 public class RegistrationService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RegistrationService.class);
@@ -86,7 +97,6 @@ public class RegistrationService {
         this.currentUserService = currentUserService;
     }
 
-    @Transactional
     public void registerAsJobSeeker(LocalDate birthdate, Long personNumber) throws InvalidPersonenNumberException, RoleCouldNotBeAddedException, StesServiceException {
         if (!this.validatePersonNumber(birthdate, personNumber)) {
             throw new InvalidPersonenNumberException(personNumber, birthdate);
@@ -99,7 +109,6 @@ public class RegistrationService {
         LOGGER.info("Registered user with id: {} as job-seeker", userInfo.getUserExternalId());
     }
 
-    @Transactional
     public void requestAccessAsEmployer(Long uid) throws UidClientException, UidNotUniqueException, CompanyNotFoundException {
         UserPrincipal userPrincipal = this.currentUserService.getPrincipal();
         UserInfo userInfo = getUserInfo(userPrincipal.getId());
@@ -109,7 +118,6 @@ public class RegistrationService {
         sendMailForServiceDesk(userInfo);
     }
 
-    @Transactional
     public void requestAccessAsAgent(String avgId) throws CompanyNotFoundException {
         UserPrincipal userPrincipal = this.currentUserService.getPrincipal();
         UserInfo userInfo = getUserInfo(userPrincipal.getId());
@@ -122,7 +130,6 @@ public class RegistrationService {
         sendMailForServiceDesk(userInfo);
     }
 
-    @Transactional
     public RegistrationResultDTO registerAsEmployerOrAgent(String accessCode) throws RoleCouldNotBeAddedException, InvalidAccessCodeException {
         boolean isValid = this.validateAccessCode(accessCode);
         if (!isValid) {
@@ -149,7 +156,6 @@ public class RegistrationService {
         return result;
     }
 
-    @Transactional
     public void registerExistingAgent(String username, String password) throws RoleCouldNotBeAddedException, InvalidOldLoginException {
         if (!validateOldLogin(username, password)) {
             throw new InvalidOldLoginException();
@@ -170,6 +176,59 @@ public class RegistrationService {
         addAgentRoleToSession();
     }
 
+    public FirmData getCompanyByUid(long uid) throws UidClientException, UidNotUniqueException, CompanyNotFoundException {
+        return this.uidClient.getCompanyByUid(uid);
+    }
+
+    public void setAccessCodeMailRecipient(String accessCodeMailRecipient) {
+        this.accessCodeMailRecipient = accessCodeMailRecipient;
+    }
+
+    @PreAuthorize("hasAuthority('ROLE_SYSADMIN')")
+    public void unregisterJobSeeker(String eMail) throws UserNotFoundException, ExtIdNotUniqueException, RoleCouldNotBeRemovedException {
+        doUnregister(eMail, EiamClientRole.ROLE_JOBSEEKER);
+    }
+
+    @PreAuthorize("hasAuthority('ROLE_SYSADMIN')")
+    public void unregisterPrivateAgent(String eMail) throws UserNotFoundException, ExtIdNotUniqueException, RoleCouldNotBeRemovedException {
+        doUnregister(eMail, EiamClientRole.ROLE_PRIVATE_EMPLOYMENT_AGENT);
+    }
+
+    @PreAuthorize("hasAuthority('ROLE_SYSADMIN')")
+    public void unregisterCompany(String eMail) throws UserNotFoundException, ExtIdNotUniqueException, RoleCouldNotBeRemovedException {
+        doUnregister(eMail, EiamClientRole.ROLE_COMPANY);
+    }
+
+    @PreAuthorize("hasAuthority('ROLE_SYSADMIN')")
+    public UserInfoDTO getUserInfo(String eMail) throws UserInfoNotFoundException {
+        Optional<UserInfo> userInfo = this.userInfoRepository.findByEMail(eMail);
+        return userInfo.map(this::toUserInfoDTO)
+            .orElseThrow(() -> new UserInfoNotFoundException(eMail));
+    }
+
+    private UserInfoDTO toUserInfoDTO(UserInfo userInfo) {
+        return new UserInfoDTO(
+            userInfo.getId().getValue(),
+            userInfo.getUserExternalId(),
+            userInfo.getFirstName(),
+            userInfo.getLastName(),
+            userInfo.getEmail(),
+            userInfo.getRegistrationStatus(),
+            toAccountabilityDTOs(userInfo)
+        );
+    }
+
+    private List<AccountabilityDTO> toAccountabilityDTOs(UserInfo userInfo) {
+        return userInfo.getAccountabilities().stream()
+            .map(accountability -> new AccountabilityDTO(
+                accountability.getType(),
+                accountability.getCompany().getName(),
+                accountability.getCompany().getExternalId(),
+                accountability.getCompany().getSource()
+            ))
+            .collect(Collectors.toList());
+    }
+
     private boolean validateOldLogin(String username, String password) {
         Assert.notNull(username, "A username must be provided.");
         Assert.notNull(password, "A password must be provided.");
@@ -179,11 +238,6 @@ public class RegistrationService {
         }
         MD5PasswordEncoder md5PasswordEncoder = new MD5PasswordEncoder();
         return md5PasswordEncoder.matches(password, oldUser.get().getPassword());
-    }
-
-    @Transactional
-    public FirmData getCompanyByUid(long uid) throws UidClientException, UidNotUniqueException, CompanyNotFoundException {
-        return this.uidClient.getCompanyByUid(uid);
     }
 
     private UserInfo getUserInfo(UserInfoId userInfoId) {
@@ -241,15 +295,15 @@ public class RegistrationService {
     }
 
     private void addJobseekerRoleToEiam(UserPrincipal userPrincipal) throws RoleCouldNotBeAddedException {
-        this.eiamAdminService.addJobSeekerRoleToUser(userPrincipal.getUserExtId(), userPrincipal.getUserDefaultProfileExtId());
+        this.eiamAdminService.addRole(userPrincipal.getUserExtId(), userPrincipal.getUserDefaultProfileExtId(), EiamClientRole.ROLE_JOBSEEKER);
     }
 
     private void addCompanyRoleToEiam(UserPrincipal userPrincipal) throws RoleCouldNotBeAddedException {
-        this.eiamAdminService.addCompanyRoleToUser(userPrincipal.getUserExtId(), userPrincipal.getUserDefaultProfileExtId());
+        this.eiamAdminService.addRole(userPrincipal.getUserExtId(), userPrincipal.getUserDefaultProfileExtId(), EiamClientRole.ROLE_COMPANY);
     }
 
     private void addAgentRoleToEiam(UserPrincipal userPrincipal) throws RoleCouldNotBeAddedException {
-        this.eiamAdminService.addAgentRoleToUser(userPrincipal.getUserExtId(), userPrincipal.getUserDefaultProfileExtId());
+        this.eiamAdminService.addRole(userPrincipal.getUserExtId(), userPrincipal.getUserDefaultProfileExtId(), EiamClientRole.ROLE_PRIVATE_EMPLOYMENT_AGENT);
     }
 
     private void addJobseekerRoleToSession() {
@@ -315,8 +369,11 @@ public class RegistrationService {
         return accessCode.equals(storedAccessCode);
     }
 
-    public void setAccessCodeMailRecipient(String accessCodeMailRecipient) {
-        this.accessCodeMailRecipient = accessCodeMailRecipient;
+    private void doUnregister(String eMail, EiamClientRole role) throws UserNotFoundException, ExtIdNotUniqueException, RoleCouldNotBeRemovedException {
+        Optional<UserInfo> userInfoByMail = userInfoRepository.findByEMail(eMail);
+        UserInfo userInfo = userInfoByMail.get();
+        userInfo.unregister();
+        this.eiamAdminService.removeRole(userInfo.getUserExternalId(), role);
     }
 
 }

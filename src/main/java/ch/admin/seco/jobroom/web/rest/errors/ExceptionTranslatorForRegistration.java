@@ -19,6 +19,7 @@ import ch.admin.seco.jobroom.security.registration.uid.CompanyNotFoundException;
 import ch.admin.seco.jobroom.security.registration.uid.UidClientException;
 import ch.admin.seco.jobroom.security.registration.uid.UidNotUniqueException;
 import ch.admin.seco.jobroom.service.CouldNotLoadCurrentUserException;
+import ch.admin.seco.jobroom.service.UserInfoNotFoundException;
 
 /**
  * Controller advice to translate the server side exceptions thrown during the registration
@@ -159,6 +160,15 @@ public class ExceptionTranslatorForRegistration implements AdviceTrait {
     public ResponseEntity<Problem> handleCouldNotLoadCurrentUserException(CouldNotLoadCurrentUserException ex, NativeWebRequest request) {
         Problem problem = Problem.builder()
             .withStatus(Status.PRECONDITION_FAILED)
+            .with("message", ex.getMessage())
+            .build();
+        return create(ex, problem, request);
+    }
+
+    @ExceptionHandler(UserInfoNotFoundException.class)
+    public ResponseEntity<Problem> handleUserInfoNotFoundException(UserInfoNotFoundException ex, NativeWebRequest request) {
+        Problem problem = Problem.builder()
+            .withStatus(Status.NOT_FOUND)
             .with("message", ex.getMessage())
             .build();
         return create(ex, problem, request);

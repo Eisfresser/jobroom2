@@ -1,23 +1,35 @@
 package ch.admin.seco.jobroom.domain;
 
-import ch.admin.seco.jobroom.domain.enumeration.AccountabilityType;
-import ch.admin.seco.jobroom.domain.enumeration.RegistrationStatus;
-import org.apache.commons.codec.binary.Base32;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
+import static ch.admin.seco.jobroom.domain.enumeration.RegistrationStatus.UNREGISTERED;
 
-import javax.persistence.*;
-import javax.validation.Valid;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.security.SecureRandom;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-import static ch.admin.seco.jobroom.domain.enumeration.RegistrationStatus.UNREGISTERED;
+import javax.persistence.AttributeOverride;
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
+import javax.persistence.Table;
+import javax.validation.Valid;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import com.google.common.base.Preconditions;
+import org.apache.commons.codec.binary.Base32;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
+import ch.admin.seco.jobroom.domain.enumeration.AccountabilityType;
+import ch.admin.seco.jobroom.domain.enumeration.RegistrationStatus;
 
 /**
  * Additional information about a user. The eIAM is master, which means users are registered
@@ -83,10 +95,10 @@ public class UserInfo implements Serializable {
 
     public UserInfo(String firstName, String lastName, String email, String userExternalId, String langKey) {
         this.id = new UserInfoId();
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.userExternalId = userExternalId;
+        setFirstName(firstName);
+        setLastName(lastName);
+        setEmail(email);
+        this.userExternalId = Preconditions.checkNotNull(userExternalId);
         this.langKey = langKey;
         this.registrationStatus = UNREGISTERED;
     }
@@ -140,10 +152,22 @@ public class UserInfo implements Serializable {
     }
 
     public void update(String firstName, String lastName, String email, String langKey) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
+        setFirstName(firstName);
+        setLastName(lastName);
+        setEmail(email);
         this.langKey = langKey;
+    }
+
+    private void setFirstName(String firstName) {
+        this.firstName = Preconditions.checkNotNull(firstName);
+    }
+
+    private void setLastName(String lastName) {
+        this.lastName = Preconditions.checkNotNull(lastName);
+    }
+
+    private void setEmail(String email) {
+        this.email = Preconditions.checkNotNull(email).toLowerCase();
     }
 
     /**
@@ -189,6 +213,11 @@ public class UserInfo implements Serializable {
     public void registerExistingAgent(Company company) {
         this.addCompany(company);
         this.changeRegistrationStatus(RegistrationStatus.REGISTERED);
+    }
+
+    public void unregister() {
+        this.registrationStatus = UNREGISTERED;
+        this.accountabilities.clear();
     }
 
     private void changeRegistrationStatus(RegistrationStatus registrationStatus) {

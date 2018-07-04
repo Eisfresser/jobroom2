@@ -40,6 +40,7 @@ import ch.admin.seco.jobroom.security.AuthoritiesConstants;
 import ch.admin.seco.jobroom.security.MD5PasswordEncoder;
 import ch.admin.seco.jobroom.security.UserPrincipal;
 import ch.admin.seco.jobroom.security.registration.eiam.EiamAdminService;
+import ch.admin.seco.jobroom.security.registration.eiam.EiamClientRole;
 import ch.admin.seco.jobroom.security.registration.eiam.RoleCouldNotBeAddedException;
 import ch.admin.seco.jobroom.security.registration.uid.AddressData;
 import ch.admin.seco.jobroom.security.registration.uid.CompanyNotFoundException;
@@ -122,7 +123,7 @@ public class RegistrationServiceTest {
 
         this.registrationService.registerAsJobSeeker(LocalDate.of(BIRTHDATE_YEAR, BIRTHDATE_MONTH, BIRTHDATE_DAY), VALID_PERS_NO);
 
-        verify(mockEiamAdminService).addJobSeekerRoleToUser(anyString(), anyString());
+        verify(mockEiamAdminService).addRole(anyString(), anyString(), eq(EiamClientRole.ROLE_JOBSEEKER));
         verify(currentUserService).addRoleToSession(eq(AuthoritiesConstants.ROLE_JOBSEEKER_CLIENT));
     }
 
@@ -209,7 +210,7 @@ public class RegistrationServiceTest {
 
         RegistrationResultDTO registrationResultDTO = this.registrationService.registerAsEmployerOrAgent(userInfo.getAccessCode());
 
-        verify(mockEiamAdminService).addCompanyRoleToUser(anyString(), anyString());
+        verify(mockEiamAdminService).addRole(anyString(), anyString(), eq(EiamClientRole.ROLE_COMPANY));
         assertTrue(registrationResultDTO.isSuccess());
         assertTrue(registrationResultDTO.getType().equals(Constants.TYPE_EMPLOYER));
         verify(currentUserService).addRoleToSession(AuthoritiesConstants.ROLE_COMPANY);
@@ -223,7 +224,7 @@ public class RegistrationServiceTest {
 
         registrationService.registerExistingAgent(VALID_LOGIN, VALID_PASSWORD);
 
-        verify(mockEiamAdminService).addAgentRoleToUser(anyString(), anyString());
+        verify(mockEiamAdminService).addRole(anyString(), anyString(), eq(EiamClientRole.ROLE_PRIVATE_EMPLOYMENT_AGENT));
         verify(currentUserService).addRoleToSession(AuthoritiesConstants.ROLE_PRIVATE_EMPLOYMENT_AGENT);
     }
 

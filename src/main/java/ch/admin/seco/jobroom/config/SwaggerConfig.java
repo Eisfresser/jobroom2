@@ -38,7 +38,9 @@ class SwaggerConfig {
             .paths(regex("/api/.*"))
             .build()
             .directModelSubstitute(LocalDate.class, java.sql.Date.class)
-            .directModelSubstitute(LocalDateTime.class, java.util.Date.class);
+            .directModelSubstitute(LocalDateTime.class, java.util.Date.class)
+            .securityContexts(Collections.singletonList(securityContext()))
+            .securitySchemes(Collections.singletonList(apiKey()));
     }
 
     @Bean
@@ -54,8 +56,7 @@ class SwaggerConfig {
     }
 
     List<SecurityReference> defaultAuth() {
-        AuthorizationScope authorizationScope
-            = new AuthorizationScope("global", "accessEverything");
+        AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
         AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
         authorizationScopes[0] = authorizationScope;
         return Collections.singletonList(

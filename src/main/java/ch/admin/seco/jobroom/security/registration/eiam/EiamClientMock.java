@@ -1,5 +1,6 @@
 package ch.admin.seco.jobroom.security.registration.eiam;
 
+import ch.adnovum.nevisidm.ws.services.v1.Profile;
 import ch.adnovum.nevisidm.ws.services.v1.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,34 +16,24 @@ public class EiamClientMock implements EiamClient {
         user.setFirstName("Hans");
         user.setName("Muster");
         user.setTelephone("+41 31 1234567");
+        user.getProfiles().add(prepareProfile());
         return user;
     }
 
+    private Profile prepareProfile() {
+        Profile profile = new Profile();
+        profile.setExtId("DUMMY-PROFILE-EXT-ID");
+        return profile;
+    }
+
     @Override
-    public void addRoleToUser(String userExtId, String profileExtId, String role, String applicationName) {
+    public void addRoleToUser(String userExtId, String profileExtId, String role) {
         log.debug("addRoleToUser of eIAM webservice mock was called with userExtId={} and role={}", userExtId, role);
     }
 
-    /*
-
-    private String getLanguage(String username) {
-        return username.substring(username.lastIndexOf("-") + 1);
+    @Override
+    public void removeRoleFromUser(String userExtId, String profileExtId, String role) {
+        log.debug("removeRoleFromUser of eIAM webservice mock was called with userExtId={} and role={}", userExtId, role);
     }
 
-    private String getFirstName(String username) {
-        String lang = getLanguage(username);
-        switch (lang) {
-            case "de":
-                return "Hans";
-            case "fr":
-                return "Jean";
-            case "it":
-                return "Giovani";
-            case "en":
-                return "John";
-            default:
-                return "not-found";
-        }
-    }
-    */
 }
