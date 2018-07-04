@@ -3,7 +3,6 @@ package ch.admin.seco.jobroom.security.saml.infrastructure.dsl;
 import java.io.IOException;
 import java.util.Collections;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -25,7 +24,7 @@ public class SamlAuthenticationFailureHandler implements AuthenticationFailureHa
     }
 
     @Override
-    public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
+    public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException {
         this.applicationEventPublisher.publishEvent(new SamlAuthenticationFailureEvent(new SamlFailedAuthentication(request), exception));
         response.sendError(HttpStatus.I_AM_A_TEAPOT.value(), HttpStatus.I_AM_A_TEAPOT.getReasonPhrase());
     }

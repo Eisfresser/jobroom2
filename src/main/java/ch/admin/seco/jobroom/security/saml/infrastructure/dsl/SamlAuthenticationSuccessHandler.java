@@ -10,9 +10,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import org.springframework.security.authentication.AuthenticationEventPublisher;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.core.Authentication;
@@ -38,8 +35,6 @@ import ch.admin.seco.jobroom.security.UserPrincipal;
  */
 public class SamlAuthenticationSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
 
-    private final static Logger LOG = LoggerFactory.getLogger(SamlAuthenticationSuccessHandler.class);
-
     private final String targetUrlEiamAccessRequest;
 
     private final UserInfoRepository userInfoRepository;
@@ -62,8 +57,8 @@ public class SamlAuthenticationSuccessHandler extends SavedRequestAwareAuthentic
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
         throws ServletException, IOException {
 
-        if (LOG.isDebugEnabled()) {
-            LOG.debug("Found roles: " + rolesAsString(authentication));
+        if (logger.isDebugEnabled()) {
+            logger.debug("Found roles: " + rolesAsString(authentication));
         }
 
         Object principal = authentication.getPrincipal();
