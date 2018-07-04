@@ -47,7 +47,7 @@ import org.springframework.security.saml.context.SAMLContextProvider;
 import org.springframework.security.saml.context.SAMLContextProviderLB;
 import org.springframework.security.saml.key.JKSKeyManager;
 import org.springframework.security.saml.key.KeyManager;
-import org.springframework.security.saml.log.SAMLDefaultLogger;
+import org.springframework.security.saml.log.SAMLLogger;
 import org.springframework.security.saml.metadata.CachingMetadataManager;
 import org.springframework.security.saml.metadata.ExtendedMetadata;
 import org.springframework.security.saml.metadata.ExtendedMetadataDelegate;
@@ -125,7 +125,7 @@ public final class SAMLConfigurer extends SecurityConfigurerAdapter<DefaultSecur
     private WebSSOProfileOptions webSSOProfileOptions = webSSOProfileOptions();
     private StaticBasicParserPool parserPool = staticBasicParserPool();
     private SAMLProcessor samlProcessor = samlProcessor();
-    private SAMLDefaultLogger samlLogger = new SAMLDefaultLogger();
+    private SAMLLogger samlLogger = new ImprovedSAMLLogger();
     private SAMLAuthenticationProvider samlAuthenticationProvider;
     private MetadataProvider metadataProvider;
     private ExtendedMetadataDelegate extendedMetadataDelegate;
