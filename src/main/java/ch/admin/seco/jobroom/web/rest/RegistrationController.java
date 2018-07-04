@@ -6,9 +6,14 @@ import javax.validation.Valid;
 
 import com.codahale.metrics.annotation.Timed;
 
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ch.admin.seco.jobroom.config.Constants;
@@ -17,12 +22,17 @@ import ch.admin.seco.jobroom.security.registration.InvalidOldLoginException;
 import ch.admin.seco.jobroom.security.registration.InvalidPersonenNumberException;
 import ch.admin.seco.jobroom.security.registration.RegistrationService;
 import ch.admin.seco.jobroom.security.registration.StesServiceException;
+import ch.admin.seco.jobroom.security.registration.eiam.ExtIdNotUniqueException;
 import ch.admin.seco.jobroom.security.registration.eiam.RoleCouldNotBeAddedException;
+import ch.admin.seco.jobroom.security.registration.eiam.RoleCouldNotBeRemovedException;
+import ch.admin.seco.jobroom.security.registration.eiam.UserNotFoundException;
 import ch.admin.seco.jobroom.security.registration.uid.CompanyNotFoundException;
 import ch.admin.seco.jobroom.security.registration.uid.FirmData;
 import ch.admin.seco.jobroom.security.registration.uid.UidClientException;
 import ch.admin.seco.jobroom.security.registration.uid.UidNotUniqueException;
+import ch.admin.seco.jobroom.service.UserInfoNotFoundException;
 import ch.admin.seco.jobroom.service.dto.RegistrationResultDTO;
+import ch.admin.seco.jobroom.service.dto.UserInfoDTO;
 import ch.admin.seco.jobroom.web.rest.vm.LoginVM;
 import ch.admin.seco.jobroom.web.rest.vm.RegisterJobseekerVM;
 
@@ -151,6 +161,34 @@ public class RegistrationController {
         } catch (InvalidOldLoginException e) {
             return false;
         }
+    }
+
+    @GetMapping("/user-info/{eMail}")
+    @PreAuthorize("hasAuthority('ROLE_SYSADMIN')")
+    public UserInfoDTO getUserInfo(@PathVariable String eMail) throws UserInfoNotFoundException {
+        return this.registrationService.getUserInfo(eMail);
+    }
+
+    @DeleteMapping("/user-info/{eMail}")
+    @PreAuthorize("hasAuthority('ROLE_SYSADMIN')")
+    public void unregister(@PathVariable String eMail, @RequestParam Role role) throws UserNotFoundException, ExtIdNotUniqueException, RoleCouldNotBeRemovedException {
+        switch (role) {
+            case JOB_SEEKER:
+                this.registrationService.unregisterJobSeeker(eMail);
+                break;
+            case PRIVATE_AGENT:
+                this.registrationService.unregisterPrivateAgent(eMail);
+                break;
+            case COMPANY:
+                this.registrationService.unregisterCompany(eMail);
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown type" + role);
+        }
+    }
+
+    enum Role {
+        JOB_SEEKER, PRIVATE_AGENT, COMPANY
     }
 
 }

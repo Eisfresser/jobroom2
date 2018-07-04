@@ -26,6 +26,11 @@ plugins {
 }
 
 apply plugin: 'java'
+
+compileJava {
+    options.compilerArgs << '-parameters'
+}
+
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 // Until JHipster supports JDK 9

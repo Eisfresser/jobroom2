@@ -97,7 +97,7 @@ public class SamlAuthenticationSuccessHandler extends SavedRequestAwareAuthentic
             return;
         }
 
-        // TODO make sure PAV and company users are authenticated with 2-factor and if
+        // TODO make sure PRIVATE_AGENT and company users are authenticated with 2-factor and if
         // not redirect them with a different "authnContexts" to eiam
 
         RegistrationStatus registrationStatus = userInfo.getRegistrationStatus();
