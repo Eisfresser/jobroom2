@@ -1,8 +1,12 @@
 package ch.admin.seco.jobroom.security.registration.eiam;
 
+import javax.xml.soap.SOAPException;
+import javax.xml.soap.SOAPMessage;
+
 import org.apache.http.client.HttpClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -17,9 +21,6 @@ import org.springframework.ws.soap.client.core.SoapFaultMessageResolver;
 import org.springframework.ws.soap.saaj.SaajSoapMessageFactory;
 import org.springframework.ws.transport.http.HttpComponentsMessageSender;
 
-import javax.xml.soap.SOAPException;
-import javax.xml.soap.SOAPMessage;
-
 @Configuration
 @EnableConfigurationProperties({EiamWsClientProperties.class})
 @Profile("!eiam-mock")
@@ -32,7 +33,6 @@ public class EiamWsClientConfig {
     @Autowired
     public EiamWsClientConfig(EiamWsClientProperties eiamWsClientProperties) {
         this.eiamWsClientProperties = eiamWsClientProperties;
-        LOGGER.info("Received the eiamWsClientProperties: {}", eiamWsClientProperties);
     }
 
     @Bean
