@@ -73,10 +73,9 @@ class ImprovedSamlAuthenticationProvider extends SAMLAuthenticationProvider {
             return Collections.emptyList();
         }
         List<String> result = new ArrayList<>();
-        result.add(statusCode.getValue());
-        while (statusCode.getStatusCode() != null) {
-            statusCode = statusCode.getStatusCode();
+        while (statusCode != null) {
             result.add(statusCode.getValue());
+            statusCode = statusCode.getStatusCode();
         }
         return result;
     }
