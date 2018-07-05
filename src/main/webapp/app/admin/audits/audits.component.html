@@ -27,11 +27,11 @@
                 <td><span>{{audit.timestamp| date:'medium'}}</span></td>
                 <td><small>{{audit.principal}}</small></td>
                 <td>{{audit.type}}</td>
-                <td>
-                    <span *ngIf="audit.data" ng-show="audit.data.type">{{audit.data.type}}</span>
-                    <span *ngIf="audit.data" ng-show="audit.data.message">{{audit.data.message}}</span>
-                    <span *ngIf="audit.data" ng-show="audit.data.remoteAddress"><span jhiTranslate="audits.table.data.remoteAddress">Remote Address</span> {{audit.data.remoteAddress}}</span>
-                    <span *ngIf="audit.data" ng-show="audit.data.details">{{audit.data.details}}</span>
+                <td style="font-size: 12px">
+                    <pre *ngIf="audit.data" ng-show="audit.data.type">{{audit.data.type}}</pre>
+                    <pre *ngIf="audit.data" ng-show="audit.data.message">{{audit.data.message}}</pre>
+                    <pre *ngIf="audit.data" ng-show="audit.data.remoteAddress"><span jhiTranslate="audits.table.data.remoteAddress">Remote Address</span> {{audit.data.remoteAddress}}</pre>
+                    <pre *ngIf="audit.data" ng-show="audit.data.details">{{audit.data.details}}</pre>
                 </td>
             </tr>
         </table>
