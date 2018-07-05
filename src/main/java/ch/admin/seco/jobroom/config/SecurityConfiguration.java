@@ -22,6 +22,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Profile;
+import org.springframework.security.authentication.AuthenticationEventPublisher;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.DefaultAuthenticationEventPublisher;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -240,11 +241,15 @@ public class SecurityConfiguration {
             SamlAuthenticationSuccessHandler authenticationSuccessHandler = new SamlAuthenticationSuccessHandler(
                 samlProperties.getAccessRequestUrl(),
                 this.userInfoRepository,
-                new DefaultAuthenticationEventPublisher()
+                authenticationEventPublisher()
             );
             authenticationSuccessHandler.setAlwaysUseDefaultTargetUrl(true);
             authenticationSuccessHandler.setDefaultTargetUrl("/");
             return authenticationSuccessHandler;
+        }
+
+        private AuthenticationEventPublisher authenticationEventPublisher() {
+            return new DefaultAuthenticationEventPublisher();
         }
 
         private SamlAuthenticationFailureHandler authenticationFailureHandler() {
