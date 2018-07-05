@@ -239,9 +239,9 @@ public class SecurityConfiguration {
 
         private SamlAuthenticationSuccessHandler authenticationSuccessHandler() {
             SamlAuthenticationSuccessHandler authenticationSuccessHandler = new SamlAuthenticationSuccessHandler(
-                samlProperties.getAccessRequestUrl(),
+                this.samlProperties.getAccessRequestUrl(),
                 this.userInfoRepository,
-                authenticationEventPublisher()
+                this.authenticationEventPublisher()
             );
             authenticationSuccessHandler.setAlwaysUseDefaultTargetUrl(true);
             authenticationSuccessHandler.setDefaultTargetUrl("/");

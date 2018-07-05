@@ -39,7 +39,7 @@ public class SamlAuthenticationSuccessHandler extends SavedRequestAwareAuthentic
 
     private static final String TARGET_URL_ENTER_ACCESS_CODE = "/#/accessCode";
 
-    private final String targetUrlEiamAccessRequest;
+    private final String eiamAccessRequestTargetUrl;
 
     private final UserInfoRepository userInfoRepository;
 
@@ -47,8 +47,8 @@ public class SamlAuthenticationSuccessHandler extends SavedRequestAwareAuthentic
 
     private final AuthenticationEventPublisher authenticationEventPublisher;
 
-    public SamlAuthenticationSuccessHandler(String targetUrlEiamAccessRequest, UserInfoRepository userInfoRepository, AuthenticationEventPublisher authenticationEventPublisher) {
-        this.targetUrlEiamAccessRequest = targetUrlEiamAccessRequest;
+    public SamlAuthenticationSuccessHandler(String eiamAccessRequestTargetUrl, UserInfoRepository userInfoRepository, AuthenticationEventPublisher authenticationEventPublisher) {
+        this.eiamAccessRequestTargetUrl = eiamAccessRequestTargetUrl;
         this.userInfoRepository = userInfoRepository;
         this.authenticationEventPublisher = authenticationEventPublisher;
         this.registrationStatusStrategyMap.put(RegistrationStatus.UNREGISTERED, this::redirectToRegistrationPage);
@@ -73,7 +73,7 @@ public class SamlAuthenticationSuccessHandler extends SavedRequestAwareAuthentic
         UserDetails userDetails = (UserDetails) principal;
         if (!hasJobRoomAllowRole(userDetails.getAuthorities())) {
             logger.info("User '" + userDetails.getUsername() + "' doesn't have the ALLOW role -> redirect to eiam");
-            redirectTo(this.targetUrlEiamAccessRequest, request, response);
+            redirectTo(this.eiamAccessRequestTargetUrl, request, response);
             this.authenticationEventPublisher.publishAuthenticationSuccess(authentication);
             return;
         }
