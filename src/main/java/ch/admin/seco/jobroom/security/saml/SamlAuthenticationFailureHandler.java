@@ -72,10 +72,9 @@ public class SamlAuthenticationFailureHandler implements AuthenticationFailureHa
      */
     private boolean isCancelAuthentication(SamlAuthenticationServiceException exception) {
         List<String> statusCodes = exception.getStatusCodes();
-        String statusMessage = exception.getStatusMessage();
         return statusCodes.contains(StatusCode.AUTHN_FAILED_URI)
             && statusCodes.contains(StatusCode.RESPONDER_URI)
-            && StringUtils.isBlank(statusMessage);
+            && StringUtils.isBlank(exception.getStatusMessage());
     }
 
 }

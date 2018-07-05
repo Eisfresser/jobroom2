@@ -1,5 +1,6 @@
 package ch.admin.seco.jobroom.security.saml.infrastructure.dsl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -10,13 +11,15 @@ import org.springframework.security.authentication.AuthenticationServiceExceptio
  */
 public class SamlAuthenticationServiceException extends AuthenticationServiceException {
 
-    private final List<String> statusCodes;
+    private final List<String> statusCodes = new ArrayList<>();
 
     private final String statusMessage;
 
     SamlAuthenticationServiceException(AuthenticationServiceException e, List<String> statusCodes, String statusMessage) {
         super(prepareMessage(e, statusCodes, statusMessage), e.getCause());
-        this.statusCodes = statusCodes;
+        if (statusCodes != null) {
+            this.statusCodes.addAll(statusCodes);
+        }
         this.statusMessage = statusMessage;
     }
 
