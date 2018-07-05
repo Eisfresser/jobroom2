@@ -318,7 +318,7 @@ public final class SAMLConfigurer extends SecurityConfigurerAdapter<DefaultSecur
         DefaultAuthenticationEventPublisher authenticationEventPublisher = new DefaultAuthenticationEventPublisher();
         authenticationEventPublisher.setApplicationEventPublisher(this.applicationEventPublisher);
         Properties exceptionMappings = new Properties();
-        exceptionMappings.put(SamlAuthenticationServiceException.class, AuthenticationFailureServiceExceptionEvent.class);
+        exceptionMappings.put(SamlAuthenticationServiceException.class.getName(), AuthenticationFailureServiceExceptionEvent.class.getName());
         authenticationEventPublisher.setAdditionalExceptionMappings(exceptionMappings);
         return authenticationEventPublisher;
     }
