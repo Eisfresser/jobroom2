@@ -1,5 +1,9 @@
 package ch.admin.seco.jobroom.security.saml.infrastructure.dsl;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import org.opensaml.common.SAMLObject;
 import org.opensaml.saml2.core.Response;
 import org.opensaml.saml2.core.Status;
@@ -40,9 +44,9 @@ class ImprovedSamlAuthenticationProvider extends SAMLAuthenticationProvider {
                 LOGGER.warn("No response is available");
                 throw e;
             }
-            String statusCode = extractStatusCode(response);
+            List<String> statusCodes = extractStatusCodes(response);
             String statusMessage = extractStatusMessage(response);
-            throw new SamlAuthenticationServiceException(e, statusCode, statusMessage);
+            throw new SamlAuthenticationServiceException(e, statusCodes, statusMessage);
         }
     }
 
@@ -58,16 +62,22 @@ class ImprovedSamlAuthenticationProvider extends SAMLAuthenticationProvider {
         return statusMessage.getMessage();
     }
 
-    private String extractStatusCode(Response response) {
+    List<String> extractStatusCodes(Response response) {
         Status responseStatus = response.getStatus();
         if (responseStatus == null) {
-            return null;
+            return Collections.emptyList();
         }
         StatusCode statusCode = responseStatus.getStatusCode();
         if (statusCode == null) {
-            return null;
+            return Collections.emptyList();
         }
-        return statusCode.getValue();
+        List<String> result = new ArrayList<>();
+        result.add(statusCode.getValue());
+        while (statusCode.getStatusCode() != null) {
+            statusCode = statusCode.getStatusCode();
+            result.add(statusCode.getValue());
+        }
+        return result;
     }
 
     private Response extractResponse(SAMLAuthenticationToken samlAuthenticationToken, AuthenticationServiceException e) {

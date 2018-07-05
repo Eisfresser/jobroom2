@@ -1,12 +1,14 @@
 package ch.admin.seco.jobroom.security.saml;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.common.base.Preconditions;
 import org.apache.commons.lang.StringUtils;
+import org.opensaml.saml2.core.StatusCode;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
@@ -17,8 +19,6 @@ import org.springframework.security.web.authentication.AuthenticationFailureHand
 import ch.admin.seco.jobroom.security.saml.infrastructure.dsl.SamlAuthenticationServiceException;
 
 public class SamlAuthenticationFailureHandler implements AuthenticationFailureHandler {
-
-    private static final String AUTHENTICATION_FAILED_STATUS_CODE = "urn:oasis:names:tc:SAML:2.0:status:AuthnFailed";
 
     private final RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
@@ -71,9 +71,11 @@ public class SamlAuthenticationFailureHandler implements AuthenticationFailureHa
      * @return true if the saml-assertion containts a failed-status-code AND the status-message is null
      */
     private boolean isCancelAuthentication(SamlAuthenticationServiceException exception) {
-        String statusCode = exception.getStatusCode();
+        List<String> statusCodes = exception.getStatusCodes();
         String statusMessage = exception.getStatusMessage();
-        return AUTHENTICATION_FAILED_STATUS_CODE.equals(statusCode) && StringUtils.isBlank(statusMessage);
+        return statusCodes.contains(StatusCode.AUTHN_FAILED_URI)
+            && statusCodes.contains(StatusCode.RESPONDER_URI)
+            && StringUtils.isBlank(statusMessage);
     }
 
 }
