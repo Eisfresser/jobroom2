@@ -28,10 +28,10 @@
                 <td><small>{{audit.principal}}</small></td>
                 <td>{{audit.type}}</td>
                 <td style="font-size: 12px">
-                    <pre *ngIf="audit.data" ng-show="audit.data.type">{{audit.data.type}}</pre>
-                    <pre *ngIf="audit.data" ng-show="audit.data.message">{{audit.data.message}}</pre>
-                    <pre *ngIf="audit.data" ng-show="audit.data.remoteAddress"><span jhiTranslate="audits.table.data.remoteAddress">Remote Address</span> {{audit.data.remoteAddress}}</pre>
-                    <pre *ngIf="audit.data" ng-show="audit.data.details">{{audit.data.details}}</pre>
+                    <p *ngIf="audit.data" ng-show="audit.data.type"><code>{{audit.data.type}}</code></p>
+                    <p *ngIf="audit.data" ng-show="audit.data.message"><code>{{audit.data.message}}</code></p>
+                    <p *ngIf="audit.data" ng-show="audit.data.remoteAddress"><span jhiTranslate="audits.table.data.remoteAddress">Remote Address</span> {{audit.data.remoteAddress}}</p>
+                    <p *ngIf="audit.data" ng-show="audit.data.details">{{audit.data.details}}</p>
                 </td>
             </tr>
         </table>
