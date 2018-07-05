@@ -24,6 +24,8 @@ public class SamlAuthenticationFailureHandler implements AuthenticationFailureHa
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SamlAuthenticationFailureHandler.class);
 
+    private static final HttpStatus ERROR_HTTP_STATUS = HttpStatus.I_AM_A_TEAPOT;
+
     private final RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
     private final String homePageUrl;
@@ -40,18 +42,19 @@ public class SamlAuthenticationFailureHandler implements AuthenticationFailureHa
         if (exception instanceof SamlAuthenticationServiceException) {
             SamlAuthenticationServiceException samlAuthenticationServiceException = (SamlAuthenticationServiceException) exception;
             if (isCancelAuthentication(samlAuthenticationServiceException) && this.redirectToHomeOnCancellation) {
-                LOGGER.info("Saml authentication failure looks like cancellation -> redirect to {}", this.homePageUrl);
+                LOGGER.warn("Saml authentication failure looks like cancellation -> redirect to {}", this.homePageUrl);
                 this.redirectStrategy.sendRedirect(request, response, this.homePageUrl);
                 return;
             }
         }
-        response.sendError(HttpStatus.I_AM_A_TEAPOT.value(), HttpStatus.I_AM_A_TEAPOT.getReasonPhrase());
+        LOGGER.warn("Saml authentication failure is unknown ->  send error-status: {}", ERROR_HTTP_STATUS);
+        response.sendError(ERROR_HTTP_STATUS.value(), ERROR_HTTP_STATUS.getReasonPhrase());
     }
 
     /**
      *
      * Decides whether the status-code and status-messages matches the one that is being
-     * send to use from eiam once the user hits their cancel button.
+     * send to use from eiam once the user hits the cancel button.
      * <br/>
      * Eiam sends us the following Assertion once the user hits the cancel button:
      *
@@ -76,7 +79,7 @@ public class SamlAuthenticationFailureHandler implements AuthenticationFailureHa
      * </pre>
      *
      * @param exception the {@link SamlAuthenticationServiceException}
-     * @return true if the saml-assertion containts a failed-status-code AND the status-message is null
+     * @return true if the saml-assertion contains a responder-status-code AND a failed-status-code AND the status-message is null
      */
     private boolean isCancelAuthentication(SamlAuthenticationServiceException exception) {
         List<String> statusCodes = exception.getStatusCodes();
