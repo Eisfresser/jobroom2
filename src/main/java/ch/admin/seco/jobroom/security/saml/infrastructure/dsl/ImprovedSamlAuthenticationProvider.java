@@ -46,6 +46,7 @@ class ImprovedSamlAuthenticationProvider extends SAMLAuthenticationProvider {
             }
             List<String> statusCodes = extractStatusCodes(response);
             String statusMessage = extractStatusMessage(response);
+            LOGGER.debug("Extracted Status-Codes: {} and Status-Message: {}", statusCodes, statusMessage);
             throw new SamlAuthenticationServiceException(e, statusCodes, statusMessage);
         }
     }
