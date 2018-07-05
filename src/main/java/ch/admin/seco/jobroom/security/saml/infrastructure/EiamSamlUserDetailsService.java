@@ -9,16 +9,13 @@ import java.util.stream.Collectors;
 import javax.xml.namespace.QName;
 
 import org.opensaml.saml2.core.Attribute;
-import org.opensaml.ws.message.encoder.MessageEncodingException;
 import org.opensaml.xml.schema.XSString;
 import org.opensaml.xml.util.AttributeMap;
-import org.opensaml.xml.util.XMLHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.springframework.security.saml.SAMLCredential;
 import org.springframework.security.saml.userdetails.SAMLUserDetailsService;
-import org.springframework.security.saml.util.SAMLUtil;
 
 public class EiamSamlUserDetailsService implements SAMLUserDetailsService {
 
@@ -44,9 +41,6 @@ public class EiamSamlUserDetailsService implements SAMLUserDetailsService {
     private SamlUser doCreateSamlUser(SAMLCredential credential) {
         final String nameId = credential.getNameID().getValue();
         LOGGER.debug("Authenticating user having nameId: {}", nameId);
-        if (LOGGER.isTraceEnabled()) {
-            LOGGER.trace("Received Saml-Assertion: {}", extractSamlAssertion(credential));
-        }
 
         final Map<String, List<String>> fedsAttributes = extractAttributesForFedsIssuer(credential.getAttributes());
         if (fedsAttributes.containsKey(USER_EXT_ID_ATTRIBUTE_NAME)) {
@@ -62,8 +56,8 @@ public class EiamSamlUserDetailsService implements SAMLUserDetailsService {
     }
 
     private void printOutAttributes(Map<String, List<String>> attributes) {
-        if (LOGGER.isDebugEnabled()) {
-            attributes.forEach((key, value) -> LOGGER.debug("SAMLCredential attribute Name: {} -> Values: {}", key, value));
+        if (LOGGER.isTraceEnabled()) {
+            attributes.forEach((key, value) -> LOGGER.trace("SAMLCredential attribute Name: {} -> Values: {}", key, value));
         }
     }
 
@@ -98,15 +92,6 @@ public class EiamSamlUserDetailsService implements SAMLUserDetailsService {
     private static String extractOriginalIssuer(Attribute attribute) {
         AttributeMap unknownAttributes = attribute.getUnknownAttributes();
         return unknownAttributes.get(ORIGINAL_ISSUED_QNAME);
-    }
-
-    private String extractSamlAssertion(SAMLCredential credential) {
-        try {
-            return XMLHelper.nodeToString(SAMLUtil.marshallMessage(credential.getAuthenticationAssertion()));
-        } catch (MessageEncodingException e) {
-            LOGGER.error("Could not extract saml-assertion", e);
-            return "";
-        }
     }
 
 }
