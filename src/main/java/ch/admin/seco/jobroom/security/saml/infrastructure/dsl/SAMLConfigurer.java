@@ -98,11 +98,11 @@ public final class SAMLConfigurer extends SecurityConfigurerAdapter<DefaultSecur
 
     private IdentityProvider identityProvider = new IdentityProvider();
     private ServiceProvider serviceProvider = new ServiceProvider();
-    private WebSSOProfileOptions webSSOProfileOptions = webSSOProfileOptions();
     private StaticBasicParserPool parserPool = staticBasicParserPool();
     private SAMLProcessor samlProcessor = samlProcessor();
     private SAMLLogger samlLogger = new ImprovedSAMLLogger();
     private SAMLAuthenticationProvider samlAuthenticationProvider;
+    private WebSSOProfileOptions webSSOProfileOptions;
     private MetadataProvider metadataProvider;
     private ExtendedMetadataDelegate extendedMetadataDelegate;
     private CachingMetadataManager cachingMetadataManager;
@@ -129,7 +129,7 @@ public final class SAMLConfigurer extends SecurityConfigurerAdapter<DefaultSecur
 
     @Override
     public void init(HttpSecurity http) throws Exception {
-
+        webSSOProfileOptions = webSSOProfileOptions();
         metadataProvider = identityProvider.metadataProvider();
         ExtendedMetadata extendedMetadata = extendedMetadata();
         extendedMetadataDelegate = extendedMetadataDelegate(extendedMetadata);
