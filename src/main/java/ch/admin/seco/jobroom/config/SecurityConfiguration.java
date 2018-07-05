@@ -146,10 +146,6 @@ public class SecurityConfiguration {
             KERBEROS_AUTHN_CTX
         );
 
-        private static final String TARGET_URL_AFTER_AUTHENTICATION = "/#/home";
-
-        private static final String TARGET_URL_AFTER_LOGOUT = "/#/home";
-
         private final UserInfoRepository userInfoRepository;
 
         private final SamlProperties samlProperties;
@@ -242,22 +238,22 @@ public class SecurityConfiguration {
 
         private SamlAuthenticationSuccessHandler authenticationSuccessHandler() {
             SamlAuthenticationSuccessHandler authenticationSuccessHandler = new SamlAuthenticationSuccessHandler(
-                TARGET_URL_AFTER_AUTHENTICATION,
+                samlProperties.getAccessRequestUrl(),
                 this.userInfoRepository,
                 new DefaultAuthenticationEventPublisher()
             );
             authenticationSuccessHandler.setAlwaysUseDefaultTargetUrl(true);
-            authenticationSuccessHandler.setDefaultTargetUrl(TARGET_URL_AFTER_AUTHENTICATION);
+            authenticationSuccessHandler.setDefaultTargetUrl("/");
             return authenticationSuccessHandler;
         }
 
         private SamlAuthenticationFailureHandler authenticationFailureHandler() {
-            return new SamlAuthenticationFailureHandler(TARGET_URL_AFTER_AUTHENTICATION);
+            return new SamlAuthenticationFailureHandler("/");
         }
 
         private SimpleUrlLogoutSuccessHandler successLogoutHandler() {
             SimpleUrlLogoutSuccessHandler successLogoutHandler = new SimpleUrlLogoutSuccessHandler();
-            successLogoutHandler.setDefaultTargetUrl(TARGET_URL_AFTER_LOGOUT);
+            successLogoutHandler.setDefaultTargetUrl("/");
             return successLogoutHandler;
         }
 
@@ -280,7 +276,11 @@ public class SecurityConfiguration {
         }
 
         private SamlBasedUserDetailsProvider samlBasedUserDetailsProvider() {
-            return new DefaultSamlBasedUserDetailsProvider(userInfoRepository, rolemapping, this.transactionTemplate);
+            return new DefaultSamlBasedUserDetailsProvider(
+                this.userInfoRepository,
+                this.rolemapping,
+                this.transactionTemplate
+            );
         }
 
         public Map<String, String> getRolemapping() {
