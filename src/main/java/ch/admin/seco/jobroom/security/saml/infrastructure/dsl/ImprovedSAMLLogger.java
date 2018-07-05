@@ -16,9 +16,29 @@ public class ImprovedSAMLLogger extends SAMLDefaultLogger {
 
     @Override
     public void log(String operation, String result, SAMLMessageContext context, Authentication a, Exception e) {
+        prepareLogMessages();
+        prepareLogErrors();
+
         super.log(operation, result, context, a, e);
+
         if (e != null) {
             LOGGER.info("Failing Saml Assertion: {}", extractSamlAssertion(context));
+        }
+    }
+
+    private void prepareLogMessages() {
+        if (LOGGER.isTraceEnabled()) {
+            super.setLogMessages(true);
+        } else {
+            super.setLogMessages(false);
+        }
+    }
+
+    private void prepareLogErrors() {
+        if (LOGGER.isDebugEnabled()) {
+            super.setLogErrors(true);
+        } else {
+            super.setLogErrors(false);
         }
     }
 
