@@ -10,7 +10,7 @@ import org.springframework.security.saml.metadata.MetadataManager;
 import org.springframework.security.saml.websso.WebSSOProfile;
 
 
-public class SAMLDslEntryPoint extends SAMLEntryPoint {
+class SAMLDslEntryPoint extends SAMLEntryPoint {
 
     /**
      * Metadata manager, cannot be null, must be set.

@@ -1,7 +1,13 @@
 package ch.admin.seco.jobroom.config;
 
 import static ch.admin.seco.jobroom.security.saml.infrastructure.dsl.SAMLConfigurer.saml;
+import static org.opensaml.saml2.core.AuthnContext.KERBEROS_AUTHN_CTX;
+import static org.opensaml.saml2.core.AuthnContext.NOMAD_TELEPHONY_AUTHN_CTX;
+import static org.opensaml.saml2.core.AuthnContext.SMARTCARD_PKI_AUTHN_CTX;
+import static org.opensaml.saml2.core.AuthnContext.SOFTWARE_PKI_AUTHN_CTX;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Map;
 
 import io.github.jhipster.config.JHipsterProperties;
@@ -17,12 +23,14 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.DefaultAuthenticationEventPublisher;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler;
 import org.springframework.security.web.header.HeaderWriter;
 import org.springframework.security.web.header.writers.CacheControlHeadersWriter;
 import org.springframework.security.web.header.writers.DelegatingRequestMatcherHeaderWriter;
@@ -37,6 +45,8 @@ import ch.admin.seco.jobroom.security.LoginFormUserDetailsService;
 import ch.admin.seco.jobroom.security.MD5PasswordEncoder;
 import ch.admin.seco.jobroom.security.jwt.JWTConfigurer;
 import ch.admin.seco.jobroom.security.saml.DefaultSamlBasedUserDetailsProvider;
+import ch.admin.seco.jobroom.security.saml.SamlAuthenticationFailureHandler;
+import ch.admin.seco.jobroom.security.saml.SamlAuthenticationSuccessHandler;
 import ch.admin.seco.jobroom.security.saml.SamlProperties;
 import ch.admin.seco.jobroom.security.saml.infrastructure.EiamSamlUserDetailsService;
 import ch.admin.seco.jobroom.security.saml.infrastructure.SamlBasedUserDetailsProvider;
@@ -129,6 +139,17 @@ public class SecurityConfiguration {
     @Profile("!no-eiam")
     static class SamlSecurityConfig extends AbstractSecurityConfig {
 
+        private static final Collection<String> DEFAULT_AUTHN_CTX = Arrays.asList(
+            NOMAD_TELEPHONY_AUTHN_CTX,
+            SMARTCARD_PKI_AUTHN_CTX,
+            SOFTWARE_PKI_AUTHN_CTX,
+            KERBEROS_AUTHN_CTX
+        );
+
+        private static final String TARGET_URL_AFTER_AUTHENTICATION = "/#/home";
+
+        private static final String TARGET_URL_AFTER_LOGOUT = "/#/home";
+
         private final UserInfoRepository userInfoRepository;
 
         private final SamlProperties samlProperties;
@@ -187,7 +208,7 @@ public class SecurityConfiguration {
                 .csrf().disable()
                 .apply(jwt())
                 .and()
-                .apply(saml(samlProperties.getAccessRequestUrl(), this.userInfoRepository, this.problemSupport, this.applicationEventPublisher))
+                .apply(saml())
                 .serviceProvider()
                 /*-*/.keyStore()
                 /*----*/.storeFilePath(samlProperties.getKeystorePath())
@@ -208,9 +229,36 @@ public class SecurityConfiguration {
                 /*-*/.signMetadata(true)
                 /*-*/.metadataFilePath(samlProperties.getIdpConfigPath())
                 .and()
-                .userDetailsService(this.eiamSamlUserDetailsService());
+                .userDetailsService(this.eiamSamlUserDetailsService())
+                .successHandler(this.authenticationSuccessHandler())
+                .failureHandler(this.authenticationFailureHandler())
+                .logoutHandler(this.successLogoutHandler())
+                .xmlHttpRequestedWithEntryPoint(this.problemSupport)
+                .applicationEventPublisher(this.applicationEventPublisher)
+                .defaultAuthnCtx(DEFAULT_AUTHN_CTX);
 
             super.configure(http);
+        }
+
+        private SamlAuthenticationSuccessHandler authenticationSuccessHandler() {
+            SamlAuthenticationSuccessHandler authenticationSuccessHandler = new SamlAuthenticationSuccessHandler(
+                TARGET_URL_AFTER_AUTHENTICATION,
+                this.userInfoRepository,
+                new DefaultAuthenticationEventPublisher()
+            );
+            authenticationSuccessHandler.setAlwaysUseDefaultTargetUrl(true);
+            authenticationSuccessHandler.setDefaultTargetUrl(TARGET_URL_AFTER_AUTHENTICATION);
+            return authenticationSuccessHandler;
+        }
+
+        private SamlAuthenticationFailureHandler authenticationFailureHandler() {
+            return new SamlAuthenticationFailureHandler(TARGET_URL_AFTER_AUTHENTICATION);
+        }
+
+        private SimpleUrlLogoutSuccessHandler successLogoutHandler() {
+            SimpleUrlLogoutSuccessHandler successLogoutHandler = new SimpleUrlLogoutSuccessHandler();
+            successLogoutHandler.setDefaultTargetUrl(TARGET_URL_AFTER_LOGOUT);
+            return successLogoutHandler;
         }
 
         private JWTConfigurer jwt() {

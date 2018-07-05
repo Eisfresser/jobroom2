@@ -4,15 +4,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.xml.namespace.QName;
 
-import org.apache.commons.lang.StringUtils;
-import org.opensaml.saml2.core.Assertion;
 import org.opensaml.saml2.core.Attribute;
-import org.opensaml.saml2.core.AuthnStatement;
 import org.opensaml.ws.message.encoder.MessageEncodingException;
 import org.opensaml.xml.schema.XSString;
 import org.opensaml.xml.util.AttributeMap;
@@ -24,12 +20,6 @@ import org.springframework.security.saml.SAMLCredential;
 import org.springframework.security.saml.userdetails.SAMLUserDetailsService;
 import org.springframework.security.saml.util.SAMLUtil;
 
-import ch.admin.seco.jobroom.security.saml.infrastructure.dsl.SAMLConfigurer;
-
-/**
- * Merges the information from the SAML assertion with the ones found in the UserInfo table
- * of the Jobroom database.
- */
 public class EiamSamlUserDetailsService implements SAMLUserDetailsService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(EiamSamlUserDetailsService.class);
@@ -57,38 +47,18 @@ public class EiamSamlUserDetailsService implements SAMLUserDetailsService {
         if (LOGGER.isTraceEnabled()) {
             LOGGER.trace("Received Saml-Assertion: {}", extractSamlAssertion(credential));
         }
-        final String authnContext = getAuthnContext(credential).orElse(SAMLConfigurer.ONE_FACTOR_AUTHN_CTX);
 
         final Map<String, List<String>> fedsAttributes = extractAttributesForFedsIssuer(credential.getAttributes());
         if (fedsAttributes.containsKey(USER_EXT_ID_ATTRIBUTE_NAME)) {
             LOGGER.info("Credential for nameId: '{}' was enriched by EIAM Issuer FEDS: creating an EiamEnrichedSamlUser", nameId);
             printOutAttributes(fedsAttributes);
-            return new EiamEnrichedSamlUser(nameId, fedsAttributes, authnContext);
+            return new EiamEnrichedSamlUser(nameId, fedsAttributes);
         }
 
         Map<String, List<String>> allAttributes = extractAllAttributes(credential.getAttributes());
         LOGGER.warn("Credential for nameId: '{}' was NOT enriched by EIAM Issuer: FEDS: creating an default SamlUser", nameId);
         printOutAttributes(allAttributes);
-        return new SamlUser(nameId, allAttributes, authnContext);
-    }
-
-    private Optional<String> getAuthnContext(SAMLCredential credential) {
-        Optional<String> authnContext = Optional.empty();
-        Assertion assertion = credential.getAuthenticationAssertion();
-        if (assertion.getAuthnStatements().size() > 0) {
-            for (AuthnStatement statement : assertion.getAuthnStatements()) {
-                if (statement.getAuthnContext() != null
-                    && statement.getAuthnContext().getAuthnContextClassRef() != null
-                    && StringUtils.isNotEmpty(statement.getAuthnContext().getAuthnContextClassRef().getAuthnContextClassRef())) {
-                    if (authnContext.isPresent()) {
-                        LOGGER.warn("More than one authn context found in SAML assertion. The first one found [{}] is used; this one [{}] is ignored.", authnContext, statement.getAuthnContext().getAuthnContextClassRef().getAuthnContextClassRef());
-                    } else {
-                        authnContext = Optional.of(statement.getAuthnContext().getAuthnContextClassRef().getAuthnContextClassRef());
-                    }
-                }
-            }
-        }
-        return authnContext;
+        return new SamlUser(nameId, allAttributes);
     }
 
     private void printOutAttributes(Map<String, List<String>> attributes) {

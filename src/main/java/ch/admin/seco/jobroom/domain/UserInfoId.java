@@ -1,12 +1,13 @@
 package ch.admin.seco.jobroom.domain;
 
-import org.springframework.util.Assert;
+import java.io.Serializable;
+import java.util.Objects;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Embeddable;
-import java.io.Serializable;
-import java.util.Objects;
+
+import org.springframework.util.Assert;
 
 @Embeddable
 @Access(AccessType.FIELD)
@@ -14,7 +15,7 @@ public class UserInfoId implements Serializable {
 
     private final String value;
 
-    public UserInfoId() {
+    UserInfoId() {
         this(IdGenerator.timeBasedUUID().toString());
     }
 
@@ -29,8 +30,12 @@ public class UserInfoId implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         UserInfoId that = (UserInfoId) o;
         return Objects.equals(value, that.value);
     }
@@ -42,8 +47,6 @@ public class UserInfoId implements Serializable {
 
     @Override
     public String toString() {
-        return "UserInfoId{" +
-            "value='" + value + '\'' +
-            '}';
+        return this.value;
     }
 }

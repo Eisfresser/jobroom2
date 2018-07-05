@@ -12,12 +12,9 @@ public class SamlUser {
 
     private final Map<String, List<String>> attributes;
 
-    private final String authnContext;
-
-    SamlUser(String nameId, Map<String, List<String>> attributes, String authnContext) {
+    SamlUser(String nameId, Map<String, List<String>> attributes) {
         this.nameId = nameId;
         this.attributes = attributes;
-        this.authnContext = authnContext;
     }
 
     public Optional<List<String>> getAttribute(String key) {
@@ -41,10 +38,6 @@ public class SamlUser {
 
     public Optional<String> getEmail() {
         return getAttributeSingleValue(SCHEMAS_XMLSOAP_2005_05_PREFIX + "emailaddress");
-    }
-
-    public String getAuthnContext() {
-        return authnContext;
     }
 
     @Override

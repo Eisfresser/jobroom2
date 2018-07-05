@@ -10,7 +10,7 @@ import org.springframework.security.saml.context.SAMLMessageContext;
 import org.springframework.security.saml.log.SAMLDefaultLogger;
 import org.springframework.security.saml.util.SAMLUtil;
 
-public class ImprovedSAMLLogger extends SAMLDefaultLogger {
+class ImprovedSAMLLogger extends SAMLDefaultLogger {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(ImprovedSAMLLogger.class);
 

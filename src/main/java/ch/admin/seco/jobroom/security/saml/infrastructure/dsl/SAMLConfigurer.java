@@ -2,13 +2,13 @@ package ch.admin.seco.jobroom.security.saml.infrastructure.dsl;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Timer;
 import java.util.regex.Pattern;
 
@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
-import org.opensaml.saml2.core.AuthnContext;
 import org.opensaml.saml2.metadata.provider.FilesystemMetadataProvider;
 import org.opensaml.saml2.metadata.provider.HTTPMetadataProvider;
 import org.opensaml.saml2.metadata.provider.MetadataProvider;
@@ -31,7 +30,9 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.Resource;
 import org.springframework.security.authentication.AuthenticationEventPublisher;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.DefaultAuthenticationEventPublisher;
+import org.springframework.security.authentication.event.AuthenticationFailureServiceExceptionEvent;
 import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -79,49 +80,20 @@ import org.springframework.security.web.DefaultSecurityFilterChain;
 import org.springframework.security.web.FilterChainProxy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.channel.ChannelProcessingFilter;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.DelegatingAuthenticationEntryPoint;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
-import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
-import ch.admin.seco.jobroom.repository.UserInfoRepository;
-
 public final class SAMLConfigurer extends SecurityConfigurerAdapter<DefaultSecurityFilterChain, HttpSecurity> {
-
-    private static final String TARGET_URL_AFTER_AUTHENTICATION = "/#/home";
-    private static final String TARGET_URL_AFTER_LOGOUT = "/#/home";
-    public static final String TARGET_URL_REGISTRATION_PROCESS = "/#/registrationQuestionnaire";
-    public static final String TARGET_URL_ENTER_ACCESS_CODE = "/#/accessCode";
-    public static final String TARGET_URL_FORCE_TWO_FACTOR_AUTH = "/samllogin?strong=true";
-
-    /* Authentication methods supported by the eIAM */
-    private static final String NOMAD_TELEPHONY_AUTH_CTX = AuthnContext.NOMAD_TELEPHONY_AUTHN_CTX;
-    private static final String SMARTCARD_PKI_AUTHN_CTX = AuthnContext.SMARTCARD_PKI_AUTHN_CTX;
-    private static final String SOFTWARE_PKI_AUTHN_CTX = AuthnContext.SOFTWARE_PKI_AUTHN_CTX;
-    private static final String KERBEROS_AUTHN_CTX = AuthnContext.KERBEROS_AUTHN_CTX;
-    private static final String PASSWORD_PROTECTED_TRANSPORT_AUTHN_CTX = AuthnContext.PPT_AUTHN_CTX;
-    public static final Collection<String> PASSWORD_ALLOWED_AUTHN_CTX = Arrays.asList(
-        NOMAD_TELEPHONY_AUTH_CTX, SMARTCARD_PKI_AUTHN_CTX, SOFTWARE_PKI_AUTHN_CTX, KERBEROS_AUTHN_CTX, PASSWORD_PROTECTED_TRANSPORT_AUTHN_CTX
-    );
-    public static final Collection<String> DEFAULT_AUTHN_CTX = Arrays.asList(
-        NOMAD_TELEPHONY_AUTH_CTX, SMARTCARD_PKI_AUTHN_CTX, SOFTWARE_PKI_AUTHN_CTX, KERBEROS_AUTHN_CTX
-    );
-    public static final String ONE_FACTOR_AUTHN_CTX = PASSWORD_PROTECTED_TRANSPORT_AUTHN_CTX;
-
-    private final String targetUrlEiamAccessRequest;
-
-    private final UserInfoRepository userInfoRepository;
-
-    private final AuthenticationEntryPoint fallbackAuthenticationEntryPoint;
-
-    private final ApplicationEventPublisher applicationEventPublisher;
 
     private IdentityProvider identityProvider = new IdentityProvider();
     private ServiceProvider serviceProvider = new ServiceProvider();
-
     private WebSSOProfileOptions webSSOProfileOptions = webSSOProfileOptions();
     private StaticBasicParserPool parserPool = staticBasicParserPool();
     private SAMLProcessor samlProcessor = samlProcessor();
@@ -131,21 +103,24 @@ public final class SAMLConfigurer extends SecurityConfigurerAdapter<DefaultSecur
     private ExtendedMetadataDelegate extendedMetadataDelegate;
     private CachingMetadataManager cachingMetadataManager;
     private WebSSOProfile webSSOProfile;
-    private SAMLUserDetailsService samlUserDetailsService;
-
-
     private ObjectPostProcessor<Object> objectPostProcessor = new ObjectPostProcessor<Object>() {
         public <T> T postProcess(T object) {
             return object;
         }
     };
+    private SAMLUserDetailsService samlUserDetailsService;
+    private AuthenticationSuccessHandler successHandler;
+    private AuthenticationFailureHandler failureHandler;
+    private LogoutSuccessHandler logoutSuccessHandler;
+    private AuthenticationEntryPoint xmlHttpRequestedWithEntryPoint;
+    private ApplicationEventPublisher applicationEventPublisher;
+    private Collection<String> defaultAuthnCtx;
 
+    private SAMLConfigurer() {
+    }
 
-    private SAMLConfigurer(String accessRequestUrl, UserInfoRepository userInfoRepository, AuthenticationEntryPoint fallbackAuthenticationEntryPoint, ApplicationEventPublisher applicationEventPublisher) {
-        this.targetUrlEiamAccessRequest = accessRequestUrl;
-        this.userInfoRepository = userInfoRepository;
-        this.fallbackAuthenticationEntryPoint = fallbackAuthenticationEntryPoint;
-        this.applicationEventPublisher = applicationEventPublisher;
+    public static SAMLConfigurer saml() {
+        return new SAMLConfigurer();
     }
 
     @Override
@@ -185,15 +160,28 @@ public final class SAMLConfigurer extends SecurityConfigurerAdapter<DefaultSecur
             .authenticationProvider(samlAuthenticationProvider);
     }
 
-    public static SAMLConfigurer saml(String accessRequestUrl,
-        UserInfoRepository userInfoRepository,
-        AuthenticationEntryPoint fallbackAuthenticationEntryPoint,
-        ApplicationEventPublisher applicationEventPublisher) {
-        return new SAMLConfigurer(accessRequestUrl, userInfoRepository, fallbackAuthenticationEntryPoint, applicationEventPublisher);
-    }
-
     public SAMLConfigurer userDetailsService(SAMLUserDetailsService samlUserDetailsService) {
         this.samlUserDetailsService = samlUserDetailsService;
+        return this;
+    }
+
+    public SAMLConfigurer successHandler(AuthenticationSuccessHandler successHandler) {
+        this.successHandler = successHandler;
+        return this;
+    }
+
+    public SAMLConfigurer failureHandler(AuthenticationFailureHandler failureHandler) {
+        this.failureHandler = failureHandler;
+        return this;
+    }
+
+    public SAMLConfigurer logoutHandler(LogoutSuccessHandler logoutSuccessHandler) {
+        this.logoutSuccessHandler = logoutSuccessHandler;
+        return this;
+    }
+
+    public SAMLConfigurer xmlHttpRequestedWithEntryPoint(AuthenticationEntryPoint xmlHttpRequestedWithEntryPoint) {
+        this.xmlHttpRequestedWithEntryPoint = xmlHttpRequestedWithEntryPoint;
         return this;
     }
 
@@ -203,6 +191,16 @@ public final class SAMLConfigurer extends SecurityConfigurerAdapter<DefaultSecur
 
     public ServiceProvider serviceProvider() {
         return serviceProvider;
+    }
+
+    public SAMLConfigurer applicationEventPublisher(ApplicationEventPublisher applicationEventPublisher) {
+        this.applicationEventPublisher = applicationEventPublisher;
+        return this;
+    }
+
+    public SAMLConfigurer defaultAuthnCtx(Collection<String> defaultAuthnCtx) {
+        this.defaultAuthnCtx = defaultAuthnCtx;
+        return this;
     }
 
     private String entityBaseURL() {
@@ -272,7 +270,9 @@ public final class SAMLConfigurer extends SecurityConfigurerAdapter<DefaultSecur
     private WebSSOProfileOptions webSSOProfileOptions() {
         WebSSOProfileOptions webSSOProfileOptions = new WebSSOProfileOptions();
         webSSOProfileOptions.setIncludeScoping(false);
-        webSSOProfileOptions.setAuthnContexts(DEFAULT_AUTHN_CTX);
+        if (this.defaultAuthnCtx != null) {
+            webSSOProfileOptions.setAuthnContexts(defaultAuthnCtx);
+        }
         return webSSOProfileOptions;
     }
 
@@ -289,35 +289,40 @@ public final class SAMLConfigurer extends SecurityConfigurerAdapter<DefaultSecur
         return new HTTPRedirectDeflateBinding(parserPool);
     }
 
-    private SAMLProcessingFilter samlWebSSOProcessingFilter(SAMLAuthenticationProvider samlAuthenticationProvider, SAMLContextProvider contextProvider, SAMLProcessor samlProcessor) throws Exception {
+    private SAMLProcessingFilter samlWebSSOProcessingFilter(SAMLContextProvider contextProvider, SAMLProcessor samlProcessor) throws Exception {
         SAMLProcessingFilter samlWebSSOProcessingFilter = new SAMLProcessingFilter();
-        AuthenticationManagerBuilder authenticationManagerBuilder = new AuthenticationManagerBuilder(this.objectPostProcessor);
-        authenticationManagerBuilder.authenticationProvider(samlAuthenticationProvider);
-        samlWebSSOProcessingFilter.setAuthenticationManager(authenticationManagerBuilder.build());
+        samlWebSSOProcessingFilter.setAuthenticationManager(authenticationManager());
         samlWebSSOProcessingFilter.setContextProvider(contextProvider);
         samlWebSSOProcessingFilter.setSAMLProcessor(samlProcessor);
-        samlWebSSOProcessingFilter.setAuthenticationSuccessHandler(authenticationSuccessHandler());
-        samlWebSSOProcessingFilter.setAuthenticationFailureHandler(authenticationFailureHandler());
-        samlWebSSOProcessingFilter.setApplicationEventPublisher(this.applicationEventPublisher);
+        if (this.successHandler != null) {
+            samlWebSSOProcessingFilter.setAuthenticationSuccessHandler(this.successHandler);
+        }
+        if (this.failureHandler != null) {
+            samlWebSSOProcessingFilter.setAuthenticationFailureHandler(this.failureHandler);
+        }
+        if (this.applicationEventPublisher != null) {
+            samlWebSSOProcessingFilter.setApplicationEventPublisher(this.applicationEventPublisher);
+        }
+
         return samlWebSSOProcessingFilter;
     }
 
-    private SamlAuthenticationFailureHandler authenticationFailureHandler() {
-        return new SamlAuthenticationFailureHandler(this.applicationEventPublisher);
+    private AuthenticationManager authenticationManager() throws Exception {
+        AuthenticationManagerBuilder authenticationManagerBuilder = new AuthenticationManagerBuilder(this.objectPostProcessor);
+        authenticationManagerBuilder.authenticationProvider(this.samlAuthenticationProvider);
+        authenticationManagerBuilder.authenticationEventPublisher(authenticationEventPublisher());
+        return authenticationManagerBuilder.build();
     }
 
     private AuthenticationEventPublisher authenticationEventPublisher() {
         DefaultAuthenticationEventPublisher authenticationEventPublisher = new DefaultAuthenticationEventPublisher();
         authenticationEventPublisher.setApplicationEventPublisher(this.applicationEventPublisher);
+        Properties exceptionMappings = new Properties();
+        exceptionMappings.put(SamlAuthenticationServiceException.class, AuthenticationFailureServiceExceptionEvent.class);
+        authenticationEventPublisher.setAdditionalExceptionMappings(exceptionMappings);
         return authenticationEventPublisher;
     }
 
-    private SamlAuthenticationSuccessHandler authenticationSuccessHandler() {
-        SamlAuthenticationSuccessHandler authenticationSuccessHandler = new SamlAuthenticationSuccessHandler(this.targetUrlEiamAccessRequest, this.userInfoRepository, authenticationEventPublisher());
-        authenticationSuccessHandler.setAlwaysUseDefaultTargetUrl(true);
-        authenticationSuccessHandler.setDefaultTargetUrl(TARGET_URL_AFTER_AUTHENTICATION);
-        return authenticationSuccessHandler;
-    }
 
     private MetadataGeneratorFilter metadataGeneratorFilter(SAMLEntryPoint samlEntryPoint, ExtendedMetadata extendedMetadata) {
         MetadataGeneratorFilter metadataGeneratorFilter = new MetadataGeneratorFilter(getMetadataGenerator(samlEntryPoint, extendedMetadata));
@@ -329,7 +334,7 @@ public final class SAMLConfigurer extends SecurityConfigurerAdapter<DefaultSecur
         List<SecurityFilterChain> chains = new ArrayList<>();
         chains.add(new DefaultSecurityFilterChain(new AntPathRequestMatcher("/saml/login/**"), samlEntryPoint));
         chains.add(new DefaultSecurityFilterChain(new AntPathRequestMatcher("/saml/metadata/**"), metadataDisplayFilter(contextProvider)));
-        chains.add(new DefaultSecurityFilterChain(new AntPathRequestMatcher("/saml/SSO/**"), samlWebSSOProcessingFilter(samlAuthenticationProvider, contextProvider, samlProcessor)));
+        chains.add(new DefaultSecurityFilterChain(new AntPathRequestMatcher("/saml/SSO/**"), samlWebSSOProcessingFilter(contextProvider, samlProcessor)));
         chains.add(new DefaultSecurityFilterChain(new AntPathRequestMatcher("/saml/logout/**"), samlLogoutFilter(contextProvider, samlProcessor)));
         chains.add(new DefaultSecurityFilterChain(new AntPathRequestMatcher("/saml/SingleLogout/**"), samlLogoutProcessingFilter(contextProvider, samlProcessor)));
         chains.add(new DefaultSecurityFilterChain(new AntPathRequestMatcher("/saml/discovery/**"), samlDiscovery(contextProvider)));
@@ -344,7 +349,7 @@ public final class SAMLConfigurer extends SecurityConfigurerAdapter<DefaultSecur
     }
 
     private SAMLLogoutProcessingFilter samlLogoutProcessingFilter(SAMLContextProvider contextProvider, SAMLProcessor samlProcessor) {
-        SAMLLogoutProcessingFilter samlLogoutProcessingFilter = new SAMLLogoutProcessingFilter(successLogoutHandler(), logoutHandler());
+        SAMLLogoutProcessingFilter samlLogoutProcessingFilter = new SAMLLogoutProcessingFilter(this.logoutSuccessHandler, logoutHandler());
         samlLogoutProcessingFilter.setContextProvider(contextProvider);
         samlLogoutProcessingFilter.setSamlLogger(this.samlLogger);
         samlLogoutProcessingFilter.setLogoutProfile(singleLogoutProfile(samlProcessor));
@@ -354,7 +359,7 @@ public final class SAMLConfigurer extends SecurityConfigurerAdapter<DefaultSecur
 
     private SAMLLogoutFilter samlLogoutFilter(SAMLContextProvider contextProvider, SAMLProcessor samlProcessor) {
         SAMLLogoutFilter samlLogoutFilter = new SAMLLogoutFilter(
-            successLogoutHandler(),
+            this.logoutSuccessHandler,
             new LogoutHandler[] {logoutHandler()},
             new LogoutHandler[] {logoutHandler()}
         );
@@ -374,12 +379,6 @@ public final class SAMLConfigurer extends SecurityConfigurerAdapter<DefaultSecur
         return new SecurityContextLogoutHandler();
     }
 
-    private SimpleUrlLogoutSuccessHandler successLogoutHandler() {
-        final SimpleUrlLogoutSuccessHandler successLogoutHandler = new SimpleUrlLogoutSuccessHandler();
-        successLogoutHandler.setDefaultTargetUrl(TARGET_URL_AFTER_LOGOUT);
-        return successLogoutHandler;
-    }
-
     private MetadataDisplayFilter metadataDisplayFilter(SAMLContextProvider contextProvider) {
         final MetadataDisplayFilter metadataDisplayFilter = new MetadataDisplayFilter();
         metadataDisplayFilter.setContextProvider(contextProvider);
@@ -389,7 +388,7 @@ public final class SAMLConfigurer extends SecurityConfigurerAdapter<DefaultSecur
     }
 
     private SAMLAuthenticationProvider samlAuthenticationProvider() {
-        SAMLAuthenticationProvider samlAuthenticationProvider = new SAMLAuthenticationProvider();
+        SAMLAuthenticationProvider samlAuthenticationProvider = new ImprovedSamlAuthenticationProvider();
         samlAuthenticationProvider.setForcePrincipalAsString(false);
         samlAuthenticationProvider.setExcludeCredential(serviceProvider.excludeCredential);
         samlAuthenticationProvider.setSamlLogger(samlLogger);
@@ -437,7 +436,9 @@ public final class SAMLConfigurer extends SecurityConfigurerAdapter<DefaultSecur
 
     private AuthenticationEntryPoint prepareEntryPoint(SAMLEntryPoint samlEntryPoint) {
         LinkedHashMap<RequestMatcher, AuthenticationEntryPoint> entryPoints = new LinkedHashMap<RequestMatcher, AuthenticationEntryPoint>();
-        entryPoints.put(new XmlHttpRequestedWithMatcher(), this.fallbackAuthenticationEntryPoint);
+        if (this.xmlHttpRequestedWithEntryPoint != null) {
+            entryPoints.put(new XmlHttpRequestedWithMatcher(), this.xmlHttpRequestedWithEntryPoint);
+        }
         DelegatingAuthenticationEntryPoint defaultEntryPoint = new DelegatingAuthenticationEntryPoint(entryPoints);
         defaultEntryPoint.setDefaultEntryPoint(samlEntryPoint);
         return defaultEntryPoint;
@@ -522,6 +523,7 @@ public final class SAMLConfigurer extends SecurityConfigurerAdapter<DefaultSecur
             return SAMLConfigurer.this;
         }
     }
+
 
     public class ServiceProvider {
 

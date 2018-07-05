@@ -1,4 +1,4 @@
-package ch.admin.seco.jobroom.security.saml.infrastructure.dsl;
+package ch.admin.seco.jobroom.security.saml;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -35,6 +35,10 @@ import ch.admin.seco.jobroom.security.UserPrincipal;
  */
 public class SamlAuthenticationSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
 
+    private static final String TARGET_URL_REGISTRATION_PROCESS = "/#/registrationQuestionnaire";
+
+    private static final String TARGET_URL_ENTER_ACCESS_CODE = "/#/accessCode";
+
     private final String targetUrlEiamAccessRequest;
 
     private final UserInfoRepository userInfoRepository;
@@ -43,7 +47,7 @@ public class SamlAuthenticationSuccessHandler extends SavedRequestAwareAuthentic
 
     private final AuthenticationEventPublisher authenticationEventPublisher;
 
-    SamlAuthenticationSuccessHandler(String targetUrlEiamAccessRequest, UserInfoRepository userInfoRepository, AuthenticationEventPublisher authenticationEventPublisher) {
+    public SamlAuthenticationSuccessHandler(String targetUrlEiamAccessRequest, UserInfoRepository userInfoRepository, AuthenticationEventPublisher authenticationEventPublisher) {
         this.targetUrlEiamAccessRequest = targetUrlEiamAccessRequest;
         this.userInfoRepository = userInfoRepository;
         this.authenticationEventPublisher = authenticationEventPublisher;
@@ -130,11 +134,11 @@ public class SamlAuthenticationSuccessHandler extends SavedRequestAwareAuthentic
     }
 
     private void redirectToRegistrationPage(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
-        redirectTo(SAMLConfigurer.TARGET_URL_REGISTRATION_PROCESS, request, response);
+        redirectTo(TARGET_URL_REGISTRATION_PROCESS, request, response);
     }
 
     private void redirectToAccessCodePage(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
-        redirectTo(SAMLConfigurer.TARGET_URL_ENTER_ACCESS_CODE, request, response);
+        redirectTo(TARGET_URL_ENTER_ACCESS_CODE, request, response);
     }
 
     private boolean hasJobRoomAllowRole(Collection<? extends GrantedAuthority> authorities) {
