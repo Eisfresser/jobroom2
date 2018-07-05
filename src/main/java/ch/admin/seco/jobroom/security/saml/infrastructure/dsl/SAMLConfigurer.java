@@ -25,6 +25,8 @@ import org.opensaml.xml.parse.StaticBasicParserPool;
 import org.opensaml.xml.parse.XMLParserException;
 import org.opensaml.xml.security.x509.CertPathPKIXTrustEvaluator;
 import org.opensaml.xml.security.x509.PKIXTrustEvaluator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.core.io.DefaultResourceLoader;
@@ -91,6 +93,8 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
 public final class SAMLConfigurer extends SecurityConfigurerAdapter<DefaultSecurityFilterChain, HttpSecurity> {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(SAMLConfigurer.class);
 
     private IdentityProvider identityProvider = new IdentityProvider();
     private ServiceProvider serviceProvider = new ServiceProvider();
@@ -270,8 +274,11 @@ public final class SAMLConfigurer extends SecurityConfigurerAdapter<DefaultSecur
     private WebSSOProfileOptions webSSOProfileOptions() {
         WebSSOProfileOptions webSSOProfileOptions = new WebSSOProfileOptions();
         webSSOProfileOptions.setIncludeScoping(false);
-        if (this.defaultAuthnCtx != null) {
+        if (this.defaultAuthnCtx != null && !this.defaultAuthnCtx.isEmpty()) {
+            LOGGER.info("Applying AuthnContext: {} ", this.defaultAuthnCtx);
             webSSOProfileOptions.setAuthnContexts(defaultAuthnCtx);
+        } else {
+            LOGGER.warn("No AuthnContext has been specified");
         }
         return webSSOProfileOptions;
     }
