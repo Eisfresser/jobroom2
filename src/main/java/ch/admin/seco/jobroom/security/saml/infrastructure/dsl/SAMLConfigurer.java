@@ -96,11 +96,12 @@ public final class SAMLConfigurer extends SecurityConfigurerAdapter<DefaultSecur
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SAMLConfigurer.class);
 
-    private IdentityProvider identityProvider = new IdentityProvider();
-    private ServiceProvider serviceProvider = new ServiceProvider();
-    private StaticBasicParserPool parserPool = staticBasicParserPool();
-    private SAMLProcessor samlProcessor = samlProcessor();
-    private SAMLLogger samlLogger = new ImprovedSAMLLogger();
+    private final IdentityProvider identityProvider = new IdentityProvider();
+    private final ServiceProvider serviceProvider = new ServiceProvider();
+    private final StaticBasicParserPool parserPool = staticBasicParserPool();
+    private final SAMLProcessor samlProcessor = samlProcessor();
+    private final SAMLLogger samlLogger = new ImprovedSAMLLogger();
+
     private SAMLAuthenticationProvider samlAuthenticationProvider;
     private WebSSOProfileOptions webSSOProfileOptions;
     private MetadataProvider metadataProvider;
@@ -302,12 +303,15 @@ public final class SAMLConfigurer extends SecurityConfigurerAdapter<DefaultSecur
         samlWebSSOProcessingFilter.setContextProvider(contextProvider);
         samlWebSSOProcessingFilter.setSAMLProcessor(samlProcessor);
         if (this.successHandler != null) {
+            LOGGER.info("Applying custom AuthenticationSuccessHandler");
             samlWebSSOProcessingFilter.setAuthenticationSuccessHandler(this.successHandler);
         }
         if (this.failureHandler != null) {
+            LOGGER.info("Applying custom AuthenticationFailureHandler");
             samlWebSSOProcessingFilter.setAuthenticationFailureHandler(this.failureHandler);
         }
         if (this.applicationEventPublisher != null) {
+            LOGGER.info("Applying custom ApplicationEventPublisher");
             samlWebSSOProcessingFilter.setApplicationEventPublisher(this.applicationEventPublisher);
         }
 
@@ -444,6 +448,7 @@ public final class SAMLConfigurer extends SecurityConfigurerAdapter<DefaultSecur
     private AuthenticationEntryPoint prepareEntryPoint(SAMLEntryPoint samlEntryPoint) {
         LinkedHashMap<RequestMatcher, AuthenticationEntryPoint> entryPoints = new LinkedHashMap<RequestMatcher, AuthenticationEntryPoint>();
         if (this.xmlHttpRequestedWithEntryPoint != null) {
+            LOGGER.info("Applying custom XmlHttpRequestedWithEntryPoint");
             entryPoints.put(new XmlHttpRequestedWithMatcher(), this.xmlHttpRequestedWithEntryPoint);
         }
         DelegatingAuthenticationEntryPoint defaultEntryPoint = new DelegatingAuthenticationEntryPoint(entryPoints);
