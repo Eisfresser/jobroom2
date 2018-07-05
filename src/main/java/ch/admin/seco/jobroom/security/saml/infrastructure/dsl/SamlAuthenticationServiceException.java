@@ -26,6 +26,6 @@ public class SamlAuthenticationServiceException extends AuthenticationServiceExc
     }
 
     private static String prepareMessage(AuthenticationServiceException e, String statusCode, String statusMessage) {
-        return e.getMessage() + " - Assertion Status-Code:" + statusCode + ", Status-Message: " + statusMessage;
+        return e.getMessage() + " - Assertion Status-Code: " + statusCode + ", Status-Message: " + statusMessage;
     }
 }
