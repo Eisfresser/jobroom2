@@ -93,6 +93,7 @@ public class MailService {
         Locale locale = Locale.forLanguageTag("de");
         Context context = new Context(locale);
         context.setVariable(BASE_URL, jHipsterProperties.getMail().getBaseUrl());
+        context.setVariable("userEmail", userInfo.getEmail());
         String content = templateEngine.process("mails/accessCodeLetterEmail", context);
         String subject = messageSource.getMessage("email.accessCodeLetter.title", null, locale);
         sendEmail(emailAddress, subject, content, true, true, attachmentFilename, pathToPdf);

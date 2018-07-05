@@ -9,7 +9,7 @@
         <p th:text="#{email.greeting}">
             Hello,
         </p>
-        <p th:text="#{email.accessCodeLetter.text}">
+        <p th:text="#{email.accessCodeLetter.text(${userEmail})}">
             Ein neuer Benutzer hat sich in Job-Room registriert. Bitte drucken Sie das angehängte Dokument aus und senden Sie den Brief per Post an die im Brief aufgeführte Adresse.
         </p>
         <p>
