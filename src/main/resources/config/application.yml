@@ -158,15 +158,17 @@ jhipster:
 # application:
 
 security:
+    eiam:
+        rolemapping:
+            ROLE_ALLOW: ALV-jobroom.ALLOW
+            ROLE_REGISTRATION: ALV-jobroom.ROLE_REGISTRATION
+            ROLE_USER: ALV-jobroom.ROLE_USER
+            ROLE_JOBSEEKER_CLIENT: ALV-jobroom.ROLE_JOBSEEKER
+            ROLE_PRIVATE_EMPLOYMENT_AGENT: ALV-jobroom.ROLE_PRIVATE_EMPLOYMENT_AGENT
+            ROLE_COMPANY: ALV-jobroom.ROLE_COMPANY
+            ROLE_PUBLIC_EMPLOYMENT_SERVICE: ALV-jobroom.ROLE_PUBLIC_EMPLOYMENT_SERVICE
+            ROLE_ADMIN: ALV-jobroom.ROLE_ADMIN
+            ROLE_SYSADMIN: ALV-jobroom.ROLE_ADMIN
+        enable-redirect-on-cancellation: true
     user:
         logout_url: '/saml/logout'
-    rolemapping:
-        ROLE_ALLOW: ALV-jobroom.ALLOW
-        ROLE_REGISTRATION: ALV-jobroom.ROLE_REGISTRATION
-        ROLE_USER: ALV-jobroom.ROLE_USER
-        ROLE_JOBSEEKER_CLIENT: ALV-jobroom.ROLE_JOBSEEKER
-        ROLE_PRIVATE_EMPLOYMENT_AGENT: ALV-jobroom.ROLE_PRIVATE_EMPLOYMENT_AGENT
-        ROLE_COMPANY: ALV-jobroom.ROLE_COMPANY
-        ROLE_PUBLIC_EMPLOYMENT_SERVICE: ALV-jobroom.ROLE_PUBLIC_EMPLOYMENT_SERVICE
-        ROLE_ADMIN: ALV-jobroom.ROLE_ADMIN
-        ROLE_SYSADMIN: ALV-jobroom.ROLE_ADMIN

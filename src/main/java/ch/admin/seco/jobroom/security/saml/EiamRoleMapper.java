@@ -8,12 +8,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.google.common.base.Preconditions;
+
 class EiamRoleMapper {
 
     private final Map<String, String> rolemapping;
 
     EiamRoleMapper(Map<String, String> rolemapping) {
-        this.rolemapping = rolemapping;
+        this.rolemapping = Preconditions.checkNotNull(rolemapping);
+        Preconditions.checkArgument(!rolemapping.isEmpty(), "rolemapping must not be empty");
     }
 
     Set<String> mapEiamRolesToJobRoomRoles(List<String> eiamRoles) {

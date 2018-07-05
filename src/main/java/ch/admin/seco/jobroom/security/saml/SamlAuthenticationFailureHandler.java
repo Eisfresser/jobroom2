@@ -24,15 +24,18 @@ public class SamlAuthenticationFailureHandler implements AuthenticationFailureHa
 
     private final String homePageUrl;
 
-    public SamlAuthenticationFailureHandler(String homePageUrl) {
+    private final boolean redirectToHomeOnCancellation;
+
+    public SamlAuthenticationFailureHandler(String homePageUrl, boolean redirectToHomeOnCancellation) {
         this.homePageUrl = Preconditions.checkNotNull(homePageUrl);
+        this.redirectToHomeOnCancellation = redirectToHomeOnCancellation;
     }
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException {
         if (exception instanceof SamlAuthenticationServiceException) {
             SamlAuthenticationServiceException samlAuthenticationServiceException = (SamlAuthenticationServiceException) exception;
-            if (isCancelAuthentication(samlAuthenticationServiceException)) {
+            if (isCancelAuthentication(samlAuthenticationServiceException) && this.redirectToHomeOnCancellation) {
                 this.redirectStrategy.sendRedirect(request, response, homePageUrl);
                 return;
             }

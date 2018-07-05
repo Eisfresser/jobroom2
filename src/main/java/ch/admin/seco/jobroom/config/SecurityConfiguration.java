@@ -8,7 +8,6 @@ import static org.opensaml.saml2.core.AuthnContext.SOFTWARE_PKI_AUTHN_CTX;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Map;
 
 import io.github.jhipster.config.JHipsterProperties;
 import io.github.jhipster.config.JHipsterProperties.Security.Authentication.Jwt;
@@ -16,7 +15,7 @@ import org.apache.commons.lang.StringUtils;
 import org.zalando.problem.spring.web.advice.security.SecurityProblemSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -136,8 +135,8 @@ public class SecurityConfiguration {
     }
 
     @Configuration
-    @ConfigurationProperties(prefix = "security")
     @Profile("!no-eiam")
+    @EnableConfigurationProperties(EiamSecurityProperties.class)
     static class SamlSecurityConfig extends AbstractSecurityConfig {
 
         private static final Collection<String> DEFAULT_AUTHN_CTX = Arrays.asList(
@@ -161,11 +160,10 @@ public class SecurityConfiguration {
 
         private final ApplicationEventPublisher applicationEventPublisher;
 
-        // this is set via @ConfigurationProperties
-        private Map<String, String> rolemapping;
+        private final EiamSecurityProperties eiamSecurityProperties;
 
         @Autowired
-        SamlSecurityConfig(UserInfoRepository userInfoRepository, SamlProperties samlProperties, TransactionTemplate transactionTemplate, JHipsterProperties jHipsterProperties, LoginFormUserDetailsService loginFormUserDetailsService, SecurityProblemSupport problemSupport, ApplicationEventPublisher applicationEventPublisher) {
+        SamlSecurityConfig(UserInfoRepository userInfoRepository, SamlProperties samlProperties, TransactionTemplate transactionTemplate, JHipsterProperties jHipsterProperties, LoginFormUserDetailsService loginFormUserDetailsService, SecurityProblemSupport problemSupport, ApplicationEventPublisher applicationEventPublisher, EiamSecurityProperties eiamSecurityProperties) {
             super(problemSupport);
             this.userInfoRepository = userInfoRepository;
             this.samlProperties = samlProperties;
@@ -174,6 +172,7 @@ public class SecurityConfiguration {
             this.loginFormUserDetailsService = loginFormUserDetailsService;
             this.problemSupport = problemSupport;
             this.applicationEventPublisher = applicationEventPublisher;
+            this.eiamSecurityProperties = eiamSecurityProperties;
         }
 
         @Bean
@@ -253,7 +252,7 @@ public class SecurityConfiguration {
         }
 
         private SamlAuthenticationFailureHandler authenticationFailureHandler() {
-            return new SamlAuthenticationFailureHandler("/");
+            return new SamlAuthenticationFailureHandler("/", this.eiamSecurityProperties.isEnableRedirectOnCancellation());
         }
 
         private SimpleUrlLogoutSuccessHandler successLogoutHandler() {
@@ -283,18 +282,11 @@ public class SecurityConfiguration {
         private SamlBasedUserDetailsProvider samlBasedUserDetailsProvider() {
             return new DefaultSamlBasedUserDetailsProvider(
                 this.userInfoRepository,
-                this.rolemapping,
+                this.eiamSecurityProperties.getRolemapping(),
                 this.transactionTemplate
             );
         }
 
-        public Map<String, String> getRolemapping() {
-            return rolemapping;
-        }
-
-        public void setRolemapping(Map<String, String> rolemapping) {
-            this.rolemapping = rolemapping;
-        }
     }
 
 }
