@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.common.base.Preconditions;
 import org.apache.commons.lang.StringUtils;
 import org.opensaml.saml2.core.StatusCode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
@@ -19,6 +21,8 @@ import org.springframework.security.web.authentication.AuthenticationFailureHand
 import ch.admin.seco.jobroom.security.saml.infrastructure.dsl.SamlAuthenticationServiceException;
 
 public class SamlAuthenticationFailureHandler implements AuthenticationFailureHandler {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(SamlAuthenticationFailureHandler.class);
 
     private final RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
@@ -36,7 +40,8 @@ public class SamlAuthenticationFailureHandler implements AuthenticationFailureHa
         if (exception instanceof SamlAuthenticationServiceException) {
             SamlAuthenticationServiceException samlAuthenticationServiceException = (SamlAuthenticationServiceException) exception;
             if (isCancelAuthentication(samlAuthenticationServiceException) && this.redirectToHomeOnCancellation) {
-                this.redirectStrategy.sendRedirect(request, response, homePageUrl);
+                LOGGER.info("Saml authentication failure looks like cancellation -> redirect to {}", this.homePageUrl);
+                this.redirectStrategy.sendRedirect(request, response, this.homePageUrl);
                 return;
             }
         }
