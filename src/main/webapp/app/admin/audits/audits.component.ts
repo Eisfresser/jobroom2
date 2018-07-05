@@ -14,7 +14,6 @@ export class AuditsComponent implements OnInit {
     audits: Audit[];
     fromDate: string;
     itemsPerPage: any;
-    links: any;
     page: number;
     orderProp: string;
     reverse: boolean;
@@ -23,8 +22,7 @@ export class AuditsComponent implements OnInit {
     datePipe: DatePipe;
 
     constructor(
-        private auditsService: AuditsService,
-        private parseLinks: JhiParseLinks
+        private auditsService: AuditsService
     ) {
         this.itemsPerPage = ITEMS_PER_PAGE;
         this.page = 1;
@@ -53,7 +51,6 @@ export class AuditsComponent implements OnInit {
             fromDate: this.fromDate, toDate: this.toDate}).subscribe((res) => {
 
             this.audits = res.body;
-            this.links = this.parseLinks.parse(res.headers.get('link'));
             this.totalItems = + res.headers.get('X-Total-Count');
         });
     }
