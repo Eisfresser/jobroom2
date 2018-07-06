@@ -75,7 +75,8 @@ export class JobAdvertisementService {
 
     isJobAdvertisementCancellable(status: string | JobAdvertisementStatus): boolean {
         const statusEnum = typeof status === 'string' ? JobAdvertisementStatus[status] : status;
-        return statusEnum !== JobAdvertisementStatus.REJECTED
+        return statusEnum !== JobAdvertisementStatus.INSPECTING
+            && statusEnum !== JobAdvertisementStatus.REJECTED
             && statusEnum !== JobAdvertisementStatus.CANCELLED
             && statusEnum !== JobAdvertisementStatus.ARCHIVE;
     }
