@@ -1,21 +1,23 @@
 package ch.admin.seco.jobroom.security;
 
-import ch.admin.seco.jobroom.domain.User;
-import ch.admin.seco.jobroom.domain.UserInfo;
-import ch.admin.seco.jobroom.repository.UserInfoRepository;
-import ch.admin.seco.jobroom.repository.UserRepository;
+import java.util.List;
+import java.util.Locale;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Locale;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import ch.admin.seco.jobroom.domain.User;
+import ch.admin.seco.jobroom.domain.UserInfo;
+import ch.admin.seco.jobroom.repository.UserInfoRepository;
+import ch.admin.seco.jobroom.repository.UserRepository;
 
 @Component("userDetailsService")
 public class LoginFormUserDetailsService implements UserDetailsService {
@@ -47,6 +49,7 @@ public class LoginFormUserDetailsService implements UserDetailsService {
         );
         userPrincipal.setPassword(user.getPassword());
         userPrincipal.setAuthorities(toAuthorities(user));
+        userPrincipal.setAccountEnabled(user.getActivated());
         return userPrincipal;
     }
 

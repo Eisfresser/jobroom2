@@ -33,6 +33,8 @@ public class UserPrincipal implements UserDetails {
 
     private String password;
 
+    private boolean accountEnabled = true;
+
     public UserPrincipal(UserInfoId id, String firstName, String lastName, String email, String userExtId, String langKey) {
         this.id = Preconditions.checkNotNull(id);
         this.firstName = Preconditions.checkNotNull(firstName);
@@ -94,7 +96,7 @@ public class UserPrincipal implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return this.accountEnabled;
     }
 
     public void setAuthoritiesFromStringCollection(Collection<String> authorities) {
@@ -113,6 +115,10 @@ public class UserPrincipal implements UserDetails {
 
     public void setUserDefaultProfileExtId(String defaultProfileExtId) {
         this.userDefaultProfileExtId = defaultProfileExtId;
+    }
+
+    void setAccountEnabled(boolean accountEnabled) {
+        this.accountEnabled = accountEnabled;
     }
 
     public String getUserDefaultProfileExtId() {
