@@ -10,7 +10,6 @@ import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
@@ -35,15 +34,10 @@ import ch.admin.seco.jobroom.security.MD5PasswordEncoder;
 import ch.admin.seco.jobroom.security.UserPrincipal;
 import ch.admin.seco.jobroom.security.registration.eiam.EiamAdminService;
 import ch.admin.seco.jobroom.security.registration.eiam.EiamClientRole;
-import ch.admin.seco.jobroom.security.registration.eiam.ExtIdNotUniqueException;
-import ch.admin.seco.jobroom.security.registration.eiam.RoleCouldNotBeAddedException;
-import ch.admin.seco.jobroom.security.registration.eiam.RoleCouldNotBeRemovedException;
 import ch.admin.seco.jobroom.security.registration.eiam.UserNotFoundException;
-import ch.admin.seco.jobroom.security.registration.uid.CompanyNotFoundException;
 import ch.admin.seco.jobroom.security.registration.uid.FirmData;
 import ch.admin.seco.jobroom.security.registration.uid.UidClient;
-import ch.admin.seco.jobroom.security.registration.uid.UidClientException;
-import ch.admin.seco.jobroom.security.registration.uid.UidNotUniqueException;
+import ch.admin.seco.jobroom.security.registration.uid.UidCompanyNotFoundException;
 import ch.admin.seco.jobroom.service.CandidateService;
 import ch.admin.seco.jobroom.service.CurrentUserService;
 import ch.admin.seco.jobroom.service.MailService;
@@ -81,10 +75,6 @@ public class RegistrationService {
 
     private String accessCodeMailRecipient;
 
-    // access code size
-    private static final int ACCESS_CODE_LENGTH = 8;
-
-    @Autowired
     public RegistrationService(UserInfoRepository userInfoRepository, CompanyRepository companyRepository, OrganizationRepository organizationRepository, UserRepository userRepository, MailService mailService, UidClient uidClient, EiamAdminService eiamAdminService, CandidateService candidateService, CurrentUserService currentUserService) {
         this.userInfoRepository = userInfoRepository;
         this.companyRepository = companyRepository;
@@ -97,7 +87,7 @@ public class RegistrationService {
         this.currentUserService = currentUserService;
     }
 
-    public void registerAsJobSeeker(LocalDate birthdate, Long personNumber) throws InvalidPersonenNumberException, RoleCouldNotBeAddedException, StesServiceException {
+    public void registerAsJobSeeker(LocalDate birthdate, Long personNumber) throws InvalidPersonenNumberException {
         if (!this.validatePersonNumber(birthdate, personNumber)) {
             throw new InvalidPersonenNumberException(personNumber, birthdate);
         }
@@ -109,7 +99,7 @@ public class RegistrationService {
         LOGGER.info("Registered user with id: {} as job-seeker", userInfo.getUserExternalId());
     }
 
-    public void requestAccessAsEmployer(Long uid) throws UidClientException, UidNotUniqueException, CompanyNotFoundException {
+    public void requestAccessAsEmployer(Long uid) throws UidCompanyNotFoundException {
         UserPrincipal userPrincipal = this.currentUserService.getPrincipal();
         UserInfo userInfo = getUserInfo(userPrincipal.getId());
         FirmData firmData = this.uidClient.getCompanyByUid(uid);
@@ -118,19 +108,19 @@ public class RegistrationService {
         sendMailForServiceDesk(userInfo);
     }
 
-    public void requestAccessAsAgent(String avgId) throws CompanyNotFoundException {
+    public void requestAccessAsAgent(String avgId) throws AvgNotFoundException {
         UserPrincipal userPrincipal = this.currentUserService.getPrincipal();
         UserInfo userInfo = getUserInfo(userPrincipal.getId());
-        Optional<Organization> avgCompany = this.organizationRepository.findByExternalId(avgId);
-        if (!avgCompany.isPresent()) {
-            throw new CompanyNotFoundException();
+        Optional<Organization> avgOrganization = this.organizationRepository.findByExternalId(avgId);
+        if (!avgOrganization.isPresent()) {
+            throw new AvgNotFoundException(avgId);
         }
-        Company company = storeCompany(avgCompany.get());
+        Company company = storeCompany(avgOrganization.get());
         userInfo.requestAccessAsAgent(company);
         sendMailForServiceDesk(userInfo);
     }
 
-    public RegistrationResultDTO registerAsEmployerOrAgent(String accessCode) throws RoleCouldNotBeAddedException, InvalidAccessCodeException {
+    public RegistrationResultDTO registerAsEmployerOrAgent(String accessCode) throws InvalidAccessCodeException {
         boolean isValid = this.validateAccessCode(accessCode);
         if (!isValid) {
             throw new InvalidAccessCodeException();
@@ -149,14 +139,14 @@ public class RegistrationService {
             addAgentRoleToSession();
             LOGGER.info("Registered user with id: {} as pav user", userInfo.getUserExternalId());
         } else {
-            throw new RoleCouldNotBeAddedException("User with id=" + userPrincipal.getUserExtId() + " tried to register as employer/agent, but has a wrong registration status: " + registrationStatus);
+            throw new IllegalStateException("User with id=" + userPrincipal.getUserExtId() + " tried to register as employer/agent, but has a wrong registration status: " + registrationStatus);
         }
         result.setSuccess(true);
         userInfo.closeRegistration();
         return result;
     }
 
-    public void registerExistingAgent(String username, String password) throws RoleCouldNotBeAddedException, InvalidOldLoginException {
+    public void registerExistingAgent(String username, String password) throws InvalidOldLoginException {
         if (!validateOldLogin(username, password)) {
             throw new InvalidOldLoginException();
         }
@@ -176,7 +166,7 @@ public class RegistrationService {
         addAgentRoleToSession();
     }
 
-    public FirmData getCompanyByUid(long uid) throws UidClientException, UidNotUniqueException, CompanyNotFoundException {
+    public FirmData getCompanyByUid(long uid) throws UidCompanyNotFoundException {
         return this.uidClient.getCompanyByUid(uid);
     }
 
@@ -185,17 +175,17 @@ public class RegistrationService {
     }
 
     @PreAuthorize("hasAuthority('ROLE_SYSADMIN')")
-    public void unregisterJobSeeker(String eMail) throws UserNotFoundException, ExtIdNotUniqueException, RoleCouldNotBeRemovedException {
+    public void unregisterJobSeeker(String eMail) throws UserNotFoundException {
         doUnregister(eMail, EiamClientRole.ROLE_JOBSEEKER);
     }
 
     @PreAuthorize("hasAuthority('ROLE_SYSADMIN')")
-    public void unregisterPrivateAgent(String eMail) throws UserNotFoundException, ExtIdNotUniqueException, RoleCouldNotBeRemovedException {
+    public void unregisterPrivateAgent(String eMail) throws UserNotFoundException {
         doUnregister(eMail, EiamClientRole.ROLE_PRIVATE_EMPLOYMENT_AGENT);
     }
 
     @PreAuthorize("hasAuthority('ROLE_SYSADMIN')")
-    public void unregisterCompany(String eMail) throws UserNotFoundException, ExtIdNotUniqueException, RoleCouldNotBeRemovedException {
+    public void unregisterCompany(String eMail) throws UserNotFoundException {
         doUnregister(eMail, EiamClientRole.ROLE_COMPANY);
     }
 
@@ -214,7 +204,10 @@ public class RegistrationService {
             userInfo.getLastName(),
             userInfo.getEmail(),
             userInfo.getRegistrationStatus(),
-            toAccountabilityDTOs(userInfo)
+            toAccountabilityDTOs(userInfo),
+            userInfo.getCreatedAt(),
+            userInfo.getModifiedAt(),
+            userInfo.getLastLoginAt()
         );
     }
 
@@ -248,14 +241,10 @@ public class RegistrationService {
         return userInfo.get();
     }
 
-    private boolean validatePersonNumber(LocalDate birthdate, Long personNumber) throws StesServiceException {
+    private boolean validatePersonNumber(LocalDate birthdate, Long personNumber) {
         StesVerificationRequest jobseekerRequestData = new StesVerificationRequest(personNumber, birthdate);
-        try {
-            StesVerificationResult stesVerificationResult = this.candidateService.verifyStesRegistrationData(jobseekerRequestData);
-            return stesVerificationResult.isVerified();
-        } catch (Exception e) {
-            throw new StesServiceException(e);
-        }
+        StesVerificationResult stesVerificationResult = this.candidateService.verifyStesRegistrationData(jobseekerRequestData);
+        return stesVerificationResult.isVerified();
     }
 
     /**
@@ -294,15 +283,15 @@ public class RegistrationService {
         }
     }
 
-    private void addJobseekerRoleToEiam(UserPrincipal userPrincipal) throws RoleCouldNotBeAddedException {
+    private void addJobseekerRoleToEiam(UserPrincipal userPrincipal) {
         this.eiamAdminService.addRole(userPrincipal.getUserExtId(), userPrincipal.getUserDefaultProfileExtId(), EiamClientRole.ROLE_JOBSEEKER);
     }
 
-    private void addCompanyRoleToEiam(UserPrincipal userPrincipal) throws RoleCouldNotBeAddedException {
+    private void addCompanyRoleToEiam(UserPrincipal userPrincipal) {
         this.eiamAdminService.addRole(userPrincipal.getUserExtId(), userPrincipal.getUserDefaultProfileExtId(), EiamClientRole.ROLE_COMPANY);
     }
 
-    private void addAgentRoleToEiam(UserPrincipal userPrincipal) throws RoleCouldNotBeAddedException {
+    private void addAgentRoleToEiam(UserPrincipal userPrincipal) {
         this.eiamAdminService.addRole(userPrincipal.getUserExtId(), userPrincipal.getUserDefaultProfileExtId(), EiamClientRole.ROLE_PRIVATE_EMPLOYMENT_AGENT);
     }
 
@@ -359,7 +348,6 @@ public class RegistrationService {
 
     private boolean validateAccessCode(String accessCode) {
         Assert.notNull(accessCode, "An access code must be provided.");
-        Assert.isTrue(accessCode.length() == ACCESS_CODE_LENGTH, "The access code has an invalid length.");
         UserPrincipal userPrincipal = this.currentUserService.getPrincipal();
         UserInfo userInfo = getUserInfo(userPrincipal.getId());
         String storedAccessCode = userInfo.getAccessCode();
@@ -369,7 +357,7 @@ public class RegistrationService {
         return accessCode.equals(storedAccessCode);
     }
 
-    private void doUnregister(String eMail, EiamClientRole role) throws UserNotFoundException, ExtIdNotUniqueException, RoleCouldNotBeRemovedException {
+    private void doUnregister(String eMail, EiamClientRole role) throws UserNotFoundException {
         Optional<UserInfo> userInfoByMail = userInfoRepository.findByEMail(eMail);
         UserInfo userInfo = userInfoByMail.get();
         userInfo.unregister();

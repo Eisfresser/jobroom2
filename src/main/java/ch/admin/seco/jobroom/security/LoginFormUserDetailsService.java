@@ -70,6 +70,12 @@ public class LoginFormUserDetailsService implements UserDetailsService {
             );
             return this.userInfoRepository.saveAndFlush(userInfo1);
         } else {
+            userInfo.get().loginWithUpdate(
+                user.getFirstName(),
+                user.getLastName(),
+                user.getEmail(),
+                user.getLangKey()
+            );
             return userInfo.get();
         }
     }

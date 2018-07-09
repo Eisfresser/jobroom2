@@ -5,7 +5,7 @@ import ch.adnovum.nevisidm.ws.services.v1.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class EiamClientMock implements EiamClient {
+class EiamClientMock implements EiamClient {
 
     private final Logger log = LoggerFactory.getLogger(EiamClientMock.class);
 

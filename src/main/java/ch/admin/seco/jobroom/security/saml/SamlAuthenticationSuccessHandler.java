@@ -43,9 +43,9 @@ public class SamlAuthenticationSuccessHandler extends SavedRequestAwareAuthentic
 
     private final UserInfoRepository userInfoRepository;
 
-    private final Map<RegistrationStatus, RegistrationStatusStrategy> registrationStatusStrategyMap = new HashMap<>();
-
     private final AuthenticationEventPublisher authenticationEventPublisher;
+
+    private final Map<RegistrationStatus, RegistrationStatusStrategy> registrationStatusStrategyMap = new HashMap<>();
 
     public SamlAuthenticationSuccessHandler(String eiamAccessRequestTargetUrl, UserInfoRepository userInfoRepository, AuthenticationEventPublisher authenticationEventPublisher) {
         this.eiamAccessRequestTargetUrl = eiamAccessRequestTargetUrl;

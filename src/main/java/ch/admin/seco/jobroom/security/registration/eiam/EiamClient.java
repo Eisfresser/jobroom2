@@ -5,9 +5,11 @@ import ch.adnovum.nevisidm.ws.services.v1.User;
 
 public interface EiamClient {
 
-    User getUserByExtId(String userExtId) throws UserNotFoundException, ExtIdNotUniqueException;
+    String APPLICATION_NAME = "ALV-jobroom";
 
-    void addRoleToUser(String userExtId, String profileExtId, String roleName) throws RoleCouldNotBeAddedException;
+    User getUserByExtId(String userExtId) throws UserNotFoundException;
 
-    void removeRoleFromUser(String userExtId, String profileExtId, String role) throws RoleCouldNotBeRemovedException;
+    void addRoleToUser(String userExtId, String profileExtId, String roleName);
+
+    void removeRoleFromUser(String userExtId, String profileExtId, String role);
 }

@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionTemplate;
 
@@ -20,7 +19,6 @@ import ch.admin.seco.jobroom.security.saml.infrastructure.EiamEnrichedSamlUser;
 import ch.admin.seco.jobroom.security.saml.infrastructure.SamlBasedUserDetailsProvider;
 import ch.admin.seco.jobroom.security.saml.infrastructure.SamlUser;
 
-@Transactional
 public class DefaultSamlBasedUserDetailsProvider implements SamlBasedUserDetailsProvider {
 
     private final static Logger LOG = LoggerFactory.getLogger(DefaultSamlBasedUserDetailsProvider.class);
@@ -74,14 +72,13 @@ public class DefaultSamlBasedUserDetailsProvider implements SamlBasedUserDetails
             eiamEnrichedSamlUser.getLanguage().get().toLowerCase()
         );
         userPrincipal.setAuthoritiesFromStringCollection(this.eiamRoleMapper.mapEiamRolesToJobRoomRoles(eiamEnrichedSamlUser.getRoles()));
-        //userPrincipal.setAuthenticationMethod(eiamEnrichedSamlUser.getAuthnContext());
         userPrincipal.setUserDefaultProfileExtId(eiamEnrichedSamlUser.getDefaultProfileExtId().get());
 
         return userPrincipal;
     }
 
     private void updateDbUser(EiamEnrichedSamlUser eiamEnrichedSamlUser, UserInfo userInfo) {
-        userInfo.update(
+        userInfo.loginWithUpdate(
             eiamEnrichedSamlUser.getSurname().get(),
             eiamEnrichedSamlUser.getGivenname().get(),
             eiamEnrichedSamlUser.getEmail().get(),

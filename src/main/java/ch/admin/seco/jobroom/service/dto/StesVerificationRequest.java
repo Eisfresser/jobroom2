@@ -2,10 +2,14 @@ package ch.admin.seco.jobroom.service.dto;
 
 import java.time.LocalDate;
 
+import javax.validation.constraints.NotNull;
+
 public class StesVerificationRequest {
 
+    @NotNull
     private Long personNumber;
 
+    @NotNull
     private LocalDate birthdate;
 
     public StesVerificationRequest(Long personNumber, LocalDate birthdate) {

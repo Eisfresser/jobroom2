@@ -193,14 +193,13 @@ public class MailServiceIntTest {
 
     @Test
     public void testSendAccessCodeLetterMail() throws Exception {
-        Company userOrganization = new Company();
-        userOrganization.setCity("Dübendorf");
-        userOrganization.setStreet("Stadtstrasse 21");
-        userOrganization.setZipCode("8600");
-        userOrganization.setName("Stellenvermittlung24");
+        Company company = new Company();
+        company.setCity("Dübendorf");
+        company.setStreet("Stadtstrasse 21");
+        company.setZipCode("8600");
+        company.setName("Stellenvermittlung24");
         UserInfo user = new UserInfo("Hans", "Muster", "john.doe@example.com", "extid", Constants.DEFAULT_LANGUAGE);
-        user.setAccessCode("CODEXX");
-        user.addCompany(userOrganization);
+        user.requestAccessAsEmployer(company);
 
         mailService.sendAccessCodeLetterMail(ACCESS_CODE_MAIL_RECIPIENT, user);
 

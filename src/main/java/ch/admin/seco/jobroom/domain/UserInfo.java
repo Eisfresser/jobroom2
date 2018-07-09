@@ -4,6 +4,8 @@ import static ch.admin.seco.jobroom.domain.enumeration.RegistrationStatus.UNREGI
 
 import java.io.Serializable;
 import java.security.SecureRandom;
+import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -46,8 +48,6 @@ public class UserInfo implements Serializable {
 
     private static final int RANDOM_NUMBER_LENGTH = 5;
 
-    private static final int ACCESS_CODE_LENGTH = 8; // note that this number is related to the RANDOM_NUMBER_LENGTH
-
     private static final long serialVersionUID = 1L;
 
     @EmbeddedId
@@ -83,6 +83,7 @@ public class UserInfo implements Serializable {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "registration_status", length = 15)
+    @NotNull
     private RegistrationStatus registrationStatus;
 
     @Column(name = "access_code", length = 15)
@@ -93,6 +94,15 @@ public class UserInfo implements Serializable {
     @Column(name = "accountability_id")
     private Set<Accountability> accountabilities = new HashSet<>();
 
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+
+    @Column(name = "modified_at")
+    private LocalDateTime modifiedAt;
+
+    @Column(name = "last_login_at")
+    private LocalDateTime lastLoginAt;
+
     public UserInfo(String firstName, String lastName, String email, String userExternalId, String langKey) {
         this.id = new UserInfoId();
         setFirstName(firstName);
@@ -101,10 +111,66 @@ public class UserInfo implements Serializable {
         this.userExternalId = Preconditions.checkNotNull(userExternalId);
         this.langKey = langKey;
         this.registrationStatus = UNREGISTERED;
+        this.createdAt = LocalDateTime.now();
+        this.modifiedAt = LocalDateTime.now();
+        this.lastLoginAt = LocalDateTime.now();
     }
 
     private UserInfo() {
         // FOR JPA
+    }
+
+    public void loginWithUpdate(String firstName, String lastName, String email, String langKey) {
+        setFirstName(firstName);
+        setLastName(lastName);
+        setEmail(email);
+        this.langKey = langKey;
+        this.lastLoginAt = LocalDateTime.now();
+        this.modifiedAt = LocalDateTime.now();
+    }
+
+    public void closeRegistration() {
+        this.changeRegistrationStatus(RegistrationStatus.REGISTERED);
+        this.accessCode = null;
+        this.modifiedAt = LocalDateTime.now();
+    }
+
+    public void requestAccessAsEmployer(Company company) {
+        this.addCompany(company);
+        this.setAccessCode(createAccessCode());
+        this.changeRegistrationStatus(RegistrationStatus.VALIDATION_EMP);
+        this.modifiedAt = LocalDateTime.now();
+    }
+
+    public void requestAccessAsAgent(Company company) {
+        this.addCompany(company);
+        this.setAccessCode(createAccessCode());
+        this.changeRegistrationStatus(RegistrationStatus.VALIDATION_PAV);
+        this.modifiedAt = LocalDateTime.now();
+
+    }
+
+    public void registerExistingAgent(Company company) {
+        this.addCompany(company);
+        this.changeRegistrationStatus(RegistrationStatus.REGISTERED);
+        this.modifiedAt = LocalDateTime.now();
+    }
+
+    public void unregister() {
+        this.changeRegistrationStatus(UNREGISTERED);
+        this.accountabilities.clear();
+        this.modifiedAt = LocalDateTime.now();
+    }
+
+    public Company getCompany() {
+        if (accountabilities.isEmpty()) {
+            return null;
+        }
+        return accountabilities.stream()
+            .filter(accountability -> accountability.getType().equals(AccountabilityType.USER))
+            .findFirst()
+            .map((Accountability::getCompany))
+            .orElseThrow(() -> new IllegalStateException("No accountabilites with a company found for user: " + this.id));
     }
 
     public UserInfoId getId() {
@@ -143,19 +209,48 @@ public class UserInfo implements Serializable {
         return accessCode;
     }
 
-    public void setAccessCode(String accessCode) {
-        this.accessCode = accessCode;
-    }
-
     public Set<Accountability> getAccountabilities() {
-        return accountabilities;
+        return Collections.unmodifiableSet(this.accountabilities);
     }
 
-    public void update(String firstName, String lastName, String email, String langKey) {
-        setFirstName(firstName);
-        setLastName(lastName);
-        setEmail(email);
-        this.langKey = langKey;
+    public RegistrationStatus getRegistrationStatus() {
+        return registrationStatus;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public LocalDateTime getModifiedAt() {
+        return modifiedAt;
+    }
+
+    public LocalDateTime getLastLoginAt() {
+        return lastLoginAt;
+    }
+
+    private void changeRegistrationStatus(RegistrationStatus registrationStatus) {
+        Preconditions.checkArgument(this.registrationStatus.canChangeTo(registrationStatus),
+            "Can not change RegistrationStatus from  " + this.registrationStatus + " to " + registrationStatus);
+        this.registrationStatus = registrationStatus;
+    }
+
+    private void addCompany(Company company) {
+        Accountability accountability = new Accountability(AccountabilityType.USER, company);
+        accountabilities.add(accountability);
+        this.modifiedAt = LocalDateTime.now();
+    }
+
+    private String createAccessCode() {
+        SecureRandom random = new SecureRandom();
+        byte[] bytes = new byte[RANDOM_NUMBER_LENGTH];
+        random.nextBytes(bytes);
+        Base32 base32 = new Base32();
+        return base32.encodeToString(bytes);
+    }
+
+    private void setAccessCode(String accessCode) {
+        this.accessCode = accessCode;
     }
 
     private void setFirstName(String firstName) {
@@ -168,68 +263,6 @@ public class UserInfo implements Serializable {
 
     private void setEmail(String email) {
         this.email = Preconditions.checkNotNull(email).toLowerCase();
-    }
-
-    /**
-     * Get the user's company. Since through the multiple accountability, the user could be
-     * related to multiple companies, this method returns the company referenced by the
-     * first found accountability with type USER.
-     *
-     * @return the user's company (referenced by the first USER accountability); if no company is found the return value is <code>null</code>
-     */
-    public Company getCompany() {
-        if (accountabilities.isEmpty()) {
-            return null;
-        }
-        return accountabilities.stream().filter(accountability -> accountability.getType().equals(AccountabilityType.USER)).findFirst().get().getCompany();
-    }
-
-    public void addCompany(Company company) {
-        Accountability accountability = new Accountability(AccountabilityType.USER, company);
-        accountabilities.add(accountability);
-    }
-
-    public RegistrationStatus getRegistrationStatus() {
-        return registrationStatus;
-    }
-
-    public void closeRegistration() {
-        this.changeRegistrationStatus(RegistrationStatus.REGISTERED);
-        this.accessCode = null;
-    }
-
-    public void requestAccessAsEmployer(Company company) {
-        this.addCompany(company);
-        this.setAccessCode(createAccessCode());
-        this.changeRegistrationStatus(RegistrationStatus.VALIDATION_EMP);
-    }
-
-    public void requestAccessAsAgent(Company company) {
-        this.addCompany(company);
-        this.setAccessCode(createAccessCode());
-        this.changeRegistrationStatus(RegistrationStatus.VALIDATION_PAV);
-    }
-
-    public void registerExistingAgent(Company company) {
-        this.addCompany(company);
-        this.changeRegistrationStatus(RegistrationStatus.REGISTERED);
-    }
-
-    public void unregister() {
-        this.registrationStatus = UNREGISTERED;
-        this.accountabilities.clear();
-    }
-
-    private void changeRegistrationStatus(RegistrationStatus registrationStatus) {
-        this.registrationStatus = registrationStatus;
-    }
-
-    private String createAccessCode() {
-        SecureRandom random = new SecureRandom();
-        byte[] bytes = new byte[RANDOM_NUMBER_LENGTH];
-        random.nextBytes(bytes);
-        Base32 base32 = new Base32();
-        return base32.encodeToString(bytes);
     }
 
     @Override

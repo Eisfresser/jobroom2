@@ -1,4 +1,4 @@
 package ch.admin.seco.jobroom.security.registration;
 
-public class InvalidAccessCodeException extends Throwable {
+public class InvalidAccessCodeException extends RegistrationException {
 }

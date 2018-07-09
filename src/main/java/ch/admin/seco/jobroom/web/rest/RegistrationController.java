@@ -17,19 +17,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ch.admin.seco.jobroom.config.Constants;
+import ch.admin.seco.jobroom.security.registration.AvgNotFoundException;
 import ch.admin.seco.jobroom.security.registration.InvalidAccessCodeException;
 import ch.admin.seco.jobroom.security.registration.InvalidOldLoginException;
 import ch.admin.seco.jobroom.security.registration.InvalidPersonenNumberException;
 import ch.admin.seco.jobroom.security.registration.RegistrationService;
-import ch.admin.seco.jobroom.security.registration.StesServiceException;
-import ch.admin.seco.jobroom.security.registration.eiam.ExtIdNotUniqueException;
-import ch.admin.seco.jobroom.security.registration.eiam.RoleCouldNotBeAddedException;
-import ch.admin.seco.jobroom.security.registration.eiam.RoleCouldNotBeRemovedException;
 import ch.admin.seco.jobroom.security.registration.eiam.UserNotFoundException;
-import ch.admin.seco.jobroom.security.registration.uid.CompanyNotFoundException;
 import ch.admin.seco.jobroom.security.registration.uid.FirmData;
-import ch.admin.seco.jobroom.security.registration.uid.UidClientException;
-import ch.admin.seco.jobroom.security.registration.uid.UidNotUniqueException;
+import ch.admin.seco.jobroom.security.registration.uid.UidCompanyNotFoundException;
 import ch.admin.seco.jobroom.service.UserInfoNotFoundException;
 import ch.admin.seco.jobroom.service.dto.RegistrationResultDTO;
 import ch.admin.seco.jobroom.service.dto.UserInfoDTO;
@@ -57,12 +52,10 @@ public class RegistrationController {
      *
      * @param jobseekerDetails personal number and birthdate entered by the user
      * @return <code>true</code> it the jobseeker was registered successfully, otherwise <code>false</code>
-     * @throws RoleCouldNotBeAddedException adding the role to the eIAM (via eIAM web service call) failed (see error message for details)
-     * @throws StesServiceException         stes services was not available
      */
     @PostMapping("/registerJobseeker")
     @Timed
-    public boolean registerJobseeker(@Valid @RequestBody RegisterJobseekerVM jobseekerDetails) throws RoleCouldNotBeAddedException, StesServiceException {
+    public boolean registerJobseeker(@Valid @RequestBody RegisterJobseekerVM jobseekerDetails) {
         try {
             final LocalDate birthdate = LocalDate.of(jobseekerDetails.getBirthdateYear(), jobseekerDetails.getBirthdateMonth(), jobseekerDetails.getBirthdateDay());
             this.registrationService.registerAsJobSeeker(birthdate, jobseekerDetails.getPersonNumber());
@@ -81,13 +74,11 @@ public class RegistrationController {
      * At the end of this, the user is shown a message, that access code was ordered.
      *
      * @param uid uid register id of the selected company for which the user should be registered
-     * @throws UidClientException       an execption occured during the uid webservice call or the return value is unknown
-     * @throws CompanyNotFoundException the given uid was not found in the uid register
-     * @throws UidNotUniqueException    the uid register webservice returned more than one result for the given uid
+     * @throws UidCompanyNotFoundException the given uid was not found in the uid register
      */
     @PostMapping("/requestEmployerAccessCode")
     @Timed
-    public void requestEmployerAccessCode(@Valid @RequestBody Long uid) throws UidClientException, CompanyNotFoundException, UidNotUniqueException {
+    public void requestEmployerAccessCode(@Valid @RequestBody Long uid) throws UidCompanyNotFoundException {
         this.registrationService.requestAccessAsEmployer(uid);
     }
 
@@ -96,46 +87,23 @@ public class RegistrationController {
      *
      * @param uid uid register id entered in the frontend
      * @return DTO with the firm data of the company found in the UID register
-     * @throws UidClientException       an execption occured during the uid webservice call or the return value is unknown
-     * @throws CompanyNotFoundException the given uid was not found in the uid register
-     * @throws UidNotUniqueException    the uid register webservice returned more than one result for the given uid
+     * @throws UidCompanyNotFoundException the given uid was not found in the uid register
      */
     @PostMapping("/getCompanyByUid")
-    public FirmData getCompanyByUid(@Valid @RequestBody long uid) throws UidClientException, UidNotUniqueException, CompanyNotFoundException {
+    @Timed
+    public FirmData getCompanyByUid(@Valid @RequestBody long uid) throws UidCompanyNotFoundException {
         return this.registrationService.getCompanyByUid(uid);
     }
 
-    /**
-     * Generate a new access code for an agent and store it together with the user in
-     * the Jobroom database. This includes the following logic: Create user, find or
-     * create company and link to user, create access code, set the user's status to
-     * 'waiting for access code' and save user with all this information in the Jobroom
-     * database. After that generate letter & send service desk mail with letter attached.
-     * At the end of this, the user is shown a message, that access code was ordered.
-     *
-     * @param avgId avg id of the company selected by the user
-     * @throws CompanyNotFoundException the given uid was not found in the uid register
-     */
     @PostMapping("/requestAgentAccessCode")
     @Timed
-    public void requestAgentAccessCode(@Valid @RequestBody String avgId) throws CompanyNotFoundException {
+    public void requestAgentAccessCode(@Valid @RequestBody String avgId) throws AvgNotFoundException {
         this.registrationService.requestAccessAsAgent(avgId);
     }
 
-    /**
-     * Validate the entered access code against the one saved in the database. If it
-     * matches, the Employer/Agent role is added to the user (depending on the status of
-     * the user VALIDATION_EMP/VALIDATION_PAV). Finally we enforce 2-factor
-     * authentication for this user because it is mandatory for company users.
-     *
-     * @param accessCode the access code entered by the user
-     * @return the result object contains a success flag which is <code>true</code> if the employer/agent was registered successfully, otherwise <code>false</code>
-     * and it marks the user type as EMPLOYER or AGENT so that the client can lead the user to the apropriate landing page
-     * @throws RoleCouldNotBeAddedException adding the role to the eIAM (via eIAM web service call) failed (see error message for details)
-     */
     @PostMapping("/registerEmployerOrAgent")
     @Timed
-    public RegistrationResultDTO registerEmployerOrAgent(@Valid @RequestBody String accessCode) throws RoleCouldNotBeAddedException {
+    public RegistrationResultDTO registerEmployerOrAgent(@Valid @RequestBody String accessCode) {
         try {
             return this.registrationService.registerAsEmployerOrAgent(accessCode);
         } catch (InvalidAccessCodeException e) {
@@ -143,18 +111,9 @@ public class RegistrationController {
         }
     }
 
-    /**
-     * Validate the entered access code against the one saved in the database. If it
-     * matches, the Employer role is added to the user. Finally we enforce 2-factor
-     * authentication for this user because it is mandatory for company users.
-     *
-     * @param loginData username and password entered by the user
-     * @return <code>true</code> it the agent was registered successfully, otherwise <code>false</code>
-     * @throws RoleCouldNotBeAddedException adding the role to the eIAM (via eIAM web service call) failed (see error message for details)
-     */
     @PostMapping("/registerExistingAgent")
     @Timed
-    public boolean registerExistingAgent(@Valid @RequestBody LoginVM loginData) throws RoleCouldNotBeAddedException {
+    public boolean registerExistingAgent(@Valid @RequestBody LoginVM loginData) {
         try {
             this.registrationService.registerExistingAgent(loginData.getUsername(), loginData.getPassword());
             return true;
@@ -171,7 +130,7 @@ public class RegistrationController {
 
     @DeleteMapping("/user-info/{eMail}")
     @PreAuthorize("hasAuthority('ROLE_SYSADMIN')")
-    public void unregister(@PathVariable String eMail, @RequestParam Role role) throws UserNotFoundException, ExtIdNotUniqueException, RoleCouldNotBeRemovedException {
+    public void unregister(@PathVariable String eMail, @RequestParam Role role) throws UserNotFoundException {
         switch (role) {
             case JOB_SEEKER:
                 this.registrationService.unregisterJobSeeker(eMail);

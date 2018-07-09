@@ -45,7 +45,7 @@ public class UidDefaultClientTest {
     }
 
     @Test
-    public void getCompanyByUid() throws CompanyNotFoundException, UidNotUniqueException, UidClientException {
+    public void getCompanyByUid() throws UidCompanyNotFoundException, UidNotUniqueException, UidClientRuntimeException {
         // Arrange
         StringSource result = new StringSource(UidTestPayloads.GET_BY_UID_VALID_PAYLOAD_RESPONSE);
         this.mockServer.expect(connectionTo("http://my.web.ch/service")).
@@ -69,8 +69,8 @@ public class UidDefaultClientTest {
         this.mockServer.verify();
     }
 
-    @Test (expected = CompanyNotFoundException.class)
-    public void getCompanyByUidNoCompanyFound() throws CompanyNotFoundException, UidNotUniqueException, UidClientException {
+    @Test (expected = UidCompanyNotFoundException.class)
+    public void getCompanyByUidNoCompanyFound() throws UidCompanyNotFoundException, UidNotUniqueException, UidClientRuntimeException {
         // Arrange
         StringSource result = new StringSource(UidTestPayloads.GET_BY_UID_EMPTY_RESPONSE);
         this.mockServer.expect(connectionTo("http://my.web.ch/service")).
@@ -86,7 +86,7 @@ public class UidDefaultClientTest {
     }
 
     @Test (expected = UidNotUniqueException.class)
-    public void getCompanyByUidMultipleCompaniesFound() throws CompanyNotFoundException, UidNotUniqueException, UidClientException {
+    public void getCompanyByUidMultipleCompaniesFound() throws UidCompanyNotFoundException, UidNotUniqueException, UidClientRuntimeException {
         // Arrange
         StringSource result = new StringSource(UidTestPayloads.GET_BY_UID_MULTIPLE_COMPANIES_PAYLOAD_RESPONSE);
         this.mockServer.expect(connectionTo("http://my.web.ch/service")).
@@ -101,8 +101,8 @@ public class UidDefaultClientTest {
         this.mockServer.verify();
     }
 
-    @Test (expected = UidClientException.class)
-    public void getCompanyByUidInvalidResponse() throws CompanyNotFoundException, UidNotUniqueException, UidClientException {
+    @Test (expected = UidClientRuntimeException.class)
+    public void getCompanyByUidInvalidResponse() throws UidCompanyNotFoundException, UidNotUniqueException, UidClientRuntimeException {
         // Arrange
         StringSource result = new StringSource(UidTestPayloads.GET_BY_UID_INVALID_PAYLOAD_RESPONSE);
         this.mockServer.expect(connectionTo("http://my.web.ch/service")).

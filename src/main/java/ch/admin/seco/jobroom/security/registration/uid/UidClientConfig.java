@@ -1,11 +1,13 @@
 package ch.admin.seco.jobroom.security.registration.uid;
 
+import javax.net.ssl.SSLContext;
+
 import org.apache.http.client.HttpClient;
 import org.apache.http.conn.ssl.NoopHostnameVerifier;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.ssl.SSLContextBuilder;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,8 +16,6 @@ import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.ws.client.core.WebServiceTemplate;
 import org.springframework.ws.transport.http.HttpComponentsMessageSender;
 
-import javax.net.ssl.SSLContext;
-
 @Configuration
 @EnableConfigurationProperties({UidClientProperties.class})
 @Profile("!uid-mock")
@@ -23,7 +23,6 @@ public class UidClientConfig {
 
     private final UidClientProperties uidClientProperties;
 
-    @Autowired
     public UidClientConfig(UidClientProperties uidClientProperties) {
         this.uidClientProperties = uidClientProperties;
     }

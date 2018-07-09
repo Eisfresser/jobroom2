@@ -2,7 +2,7 @@ package ch.admin.seco.jobroom.security.registration;
 
 import java.time.LocalDate;
 
-public class InvalidPersonenNumberException extends Throwable {
+public class InvalidPersonenNumberException extends RegistrationException {
 
     private final Long personNumber;
 

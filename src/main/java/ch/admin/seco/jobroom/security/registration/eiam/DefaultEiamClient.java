@@ -23,8 +23,6 @@ import org.springframework.ws.client.core.WebServiceTemplate;
 
 class DefaultEiamClient implements EiamClient {
 
-    private static final String APPLICATION_NAME = "ALV-jobroom";
-
     private static final Logger LOGGER = LoggerFactory.getLogger(DefaultEiamClient.class);
 
     private static final int DEFAULT_DETAIL_LEVEL = 1;
@@ -41,7 +39,7 @@ class DefaultEiamClient implements EiamClient {
     }
 
     @Override
-    public User getUserByExtId(String userExtId) throws UserNotFoundException, ExtIdNotUniqueException {
+    public User getUserByExtId(String userExtId) throws UserNotFoundException {
         ObjectFactory factory = new ObjectFactory();
         GetUsersByExtId getUsersByExtId = factory.createGetUsersByExtId();
         UserGetByExtId usersGetByExtId = factory.createUserGetByExtId();
@@ -58,15 +56,15 @@ class DefaultEiamClient implements EiamClient {
         LOGGER.debug("Eiam client received user = {}", printUsers(users));
 
         if (users.isEmpty()) {
-            throw new UserNotFoundException();
+            throw new UserNotFoundException(userExtId);
         } else if (users.size() > 1) {
-            throw new ExtIdNotUniqueException();
+            throw new ExtIdNotUniqueException(userExtId);
         }
         return users.get(0);
     }
 
     @Override
-    public void addRoleToUser(String userExtId, String profileExtId, String roleName) throws RoleCouldNotBeAddedException {
+    public void addRoleToUser(String userExtId, String profileExtId, String roleName) {
         ObjectFactory factory = new ObjectFactory();
 
         AddAuthorizationToProfileRequest addAuthorizationToProfileRequest = factory.createAddAuthorizationToProfileRequest();
@@ -79,14 +77,12 @@ class DefaultEiamClient implements EiamClient {
         addAuthorizationToProfile.setRequest(addAuthorizationToProfileRequest);
         Object result = webServiceTemplate.marshalSendAndReceive(addAuthorizationToProfile);
         if (result instanceof BusinessException) {
-            throw new RoleCouldNotBeAddedException("The role " + roleName + " could not be added to the user with extId " + userExtId
-                + " with the error message: " + ((BusinessException) result).getMessage()
-                + " and the reason: " + ((BusinessException) result).getReason());
+            throw new RoleCouldNotBeAddedException(userExtId, roleName, (BusinessException) result);
         }
     }
 
     @Override
-    public void removeRoleFromUser(String userExtId, String profileExtId, String roleName) throws RoleCouldNotBeRemovedException {
+    public void removeRoleFromUser(String userExtId, String profileExtId, String roleName) {
         ObjectFactory factory = new ObjectFactory();
 
         RemoveAuthorizationFromProfileRequest removeAuthorizationFromProfileRequest = factory.createRemoveAuthorizationFromProfileRequest();
@@ -99,9 +95,7 @@ class DefaultEiamClient implements EiamClient {
         removeAuthorizationFromProfile.setRequest(removeAuthorizationFromProfileRequest);
         Object result = webServiceTemplate.marshalSendAndReceive(removeAuthorizationFromProfile);
         if (result instanceof BusinessException) {
-            throw new RoleCouldNotBeRemovedException("The roleName " + roleName + " could not be removed to the user with userExtId " + userExtId
-                + " with the error message: " + ((BusinessException) result).getMessage()
-                + " and the reason: " + ((BusinessException) result).getReason());
+            throw new RoleCouldNotBeRemovedException(userExtId, roleName, (BusinessException) result);
         }
     }
 

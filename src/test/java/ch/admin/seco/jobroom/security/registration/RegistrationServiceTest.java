@@ -41,13 +41,10 @@ import ch.admin.seco.jobroom.security.MD5PasswordEncoder;
 import ch.admin.seco.jobroom.security.UserPrincipal;
 import ch.admin.seco.jobroom.security.registration.eiam.EiamAdminService;
 import ch.admin.seco.jobroom.security.registration.eiam.EiamClientRole;
-import ch.admin.seco.jobroom.security.registration.eiam.RoleCouldNotBeAddedException;
 import ch.admin.seco.jobroom.security.registration.uid.AddressData;
-import ch.admin.seco.jobroom.security.registration.uid.CompanyNotFoundException;
 import ch.admin.seco.jobroom.security.registration.uid.FirmData;
 import ch.admin.seco.jobroom.security.registration.uid.UidClient;
-import ch.admin.seco.jobroom.security.registration.uid.UidClientException;
-import ch.admin.seco.jobroom.security.registration.uid.UidNotUniqueException;
+import ch.admin.seco.jobroom.security.registration.uid.UidCompanyNotFoundException;
 import ch.admin.seco.jobroom.service.CandidateService;
 import ch.admin.seco.jobroom.service.CurrentUserService;
 import ch.admin.seco.jobroom.service.MailService;
@@ -58,14 +55,11 @@ import ch.admin.seco.jobroom.web.rest.vm.RegisterJobseekerVM;
 @RunWith(MockitoJUnitRunner.class)
 public class RegistrationServiceTest {
 
-    private static final String VALID_ACCESS_CODE = "4FQ2ABBP";
-    private static final String INVALID_ACCESS_CODE = "ABC";
     private static final String EXT_ID = "CH1234";
     private static final String PROFILE_EXT_ID = "123456";
     private static final String USER_ROLE_USER = "ROLE_USER";
     private static final String USER_ROLE_REGISTERED = "ROLE_REGISTERED";
     private static final long VALID_UID = 1234567;
-    private static final String VALID_UID_PREFIX = "CHE";
     private static final String VALID_AVG_ID = "12345";
     private static final long VALID_PERS_NO = 1234;
     private static final int BIRTHDATE_YEAR = 1999;
@@ -116,7 +110,7 @@ public class RegistrationServiceTest {
     }
 
     @Test
-    public void insertNewJobseeker() throws RoleCouldNotBeAddedException, InvalidPersonenNumberException, StesServiceException {
+    public void insertNewJobseeker() throws InvalidPersonenNumberException {
         StesVerificationResult stesVerificationResult = new StesVerificationResult();
         stesVerificationResult.setVerified(true);
         when(mockCandidateService.verifyStesRegistrationData(any())).thenReturn(stesVerificationResult);
@@ -128,7 +122,7 @@ public class RegistrationServiceTest {
     }
 
     @Test
-    public void insertNewEmployerwithNewCompany() throws UidClientException, CompanyNotFoundException, UidNotUniqueException {
+    public void insertNewEmployerwithNewCompany() throws UidCompanyNotFoundException {
         // userInfoRepository does nothing (no exception means it is ok -> new user)
         when(mockUidClient.getCompanyByUid(anyLong())).thenReturn(getDummyFirm());          // found company in UID register
         when(mockCompanyRepository.findByExternalId(any())).thenReturn(Optional.empty());   // company not found in database -> new company
@@ -144,7 +138,7 @@ public class RegistrationServiceTest {
     }
 
     @Test
-    public void getCompanyByUid() throws UidClientException, CompanyNotFoundException, UidNotUniqueException {
+    public void getCompanyByUid() throws UidCompanyNotFoundException {
         when(mockUidClient.getCompanyByUid(anyLong())).thenReturn(getDummyFirm());
 
         FirmData companyByUid = this.registrationService.getCompanyByUid(VALID_UID);
@@ -154,7 +148,7 @@ public class RegistrationServiceTest {
     }
 
     @Test
-    public void insertNewEmployerwithExistingCompany() throws UidClientException, CompanyNotFoundException, UidNotUniqueException {
+    public void insertNewEmployerwithExistingCompany() throws UidCompanyNotFoundException {
         // userInfoRepository does nothing (no exception means it is ok -> new user)
         when(mockUidClient.getCompanyByUid(anyLong())).thenReturn(getDummyFirm());          // found company in UID register
         when(mockCompanyRepository.findByExternalId(any())).thenReturn(Optional.of(getDummyCompany()));   // company found in database
@@ -169,7 +163,7 @@ public class RegistrationServiceTest {
     }
 
     @Test
-    public void insertNewAgent() throws CompanyNotFoundException {
+    public void insertNewAgent() throws UidCompanyNotFoundException, AvgNotFoundException {
         // userInfoRepository does nothing (no exception means it is ok -> new user)
         when(mockOrganizationRepository.findByExternalId(anyString())).thenReturn(getDummyOrganization());  // found company in AVG list
         when(mockCompanyRepository.findByExternalId(any())).thenReturn(Optional.empty());   // company not found in database -> new company
@@ -185,7 +179,7 @@ public class RegistrationServiceTest {
     }
 
     @Test
-    public void insertNewAgentWithExistingCompany() throws CompanyNotFoundException {
+    public void insertNewAgentWithExistingCompany() throws AvgNotFoundException {
         // userInfoRepository does nothing (no exception means it is ok -> new user)
         when(mockOrganizationRepository.findByExternalId(anyString())).thenReturn(getDummyOrganization());  // found company in AVG list
         when(mockCompanyRepository.findByExternalId(any())).thenReturn(Optional.of(getDummyCompany()));   // company found in database
@@ -200,7 +194,7 @@ public class RegistrationServiceTest {
     }
 
     @Test
-    public void registerEmployer() throws RoleCouldNotBeAddedException, InvalidAccessCodeException {
+    public void registerEmployer() throws InvalidAccessCodeException {
 
         setupSecurityContextMockWithRegistrationStatus();  // overwrite with one that has registration status set
         UserInfo userInfo = this.getDummyUser();
@@ -217,7 +211,7 @@ public class RegistrationServiceTest {
     }
 
     @Test
-    public void registerExistingAgent() throws RoleCouldNotBeAddedException, InvalidOldLoginException {
+    public void registerExistingAgent() throws InvalidOldLoginException {
         when(mockUserRepository.findOneWithAuthoritiesByLogin(anyString())).thenReturn(getOldDummyUser());
 
         when(mockCompanyRepository.save(any())).thenReturn(getDummyCompany());
@@ -230,7 +224,7 @@ public class RegistrationServiceTest {
 
 
     @Test(expected = InvalidOldLoginException.class)
-    public void validateOldLoginWrongPassword() throws RoleCouldNotBeAddedException, InvalidOldLoginException {
+    public void validateOldLoginWrongPassword() throws InvalidOldLoginException {
         when(mockUserRepository.findOneWithAuthoritiesByLogin(anyString())).thenReturn(Optional.empty());
 
         when(mockUserRepository.findOneWithAuthoritiesByLogin(anyString())).thenReturn(getOldDummyUser());
@@ -253,9 +247,7 @@ public class RegistrationServiceTest {
     }
 
     public UserInfo getDummyUser() {
-        UserInfo user = new UserInfo("Hans", "Muster", "hans-muster@example.com", "EXT-ID", "de");
-        user.setAccessCode(VALID_ACCESS_CODE);
-        return user;
+        return new UserInfo("Hans", "Muster", "hans-muster@example.com", "EXT-ID", "de");
     }
 
     private Optional<User> getOldDummyUser() {

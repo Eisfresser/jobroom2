@@ -20,7 +20,6 @@ import org.datacontract.schemas._2004._07.ch_admin_bit_uid.BusinessFault;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.client.core.WebServiceMessageCallback;
 import org.springframework.ws.client.core.WebServiceTemplate;
 import org.springframework.ws.soap.SoapMessage;
@@ -29,7 +28,7 @@ import ch.admin.uid.xmlns.uid_wse.GetByUID;
 import ch.admin.uid.xmlns.uid_wse.GetByUIDResponse;
 import ch.admin.uid.xmlns.uid_wse.ObjectFactory;
 
-public class DefaultUidClient implements UidClient {
+class DefaultUidClient implements UidClient {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DefaultUidClient.class);
 
@@ -57,14 +56,13 @@ public class DefaultUidClient implements UidClient {
         soapMessage.setSoapAction(SEARCH_SOAP_ACTION);
     };
 
-    private WebServiceTemplate webServiceTemplate;
+    private final WebServiceTemplate webServiceTemplate;
 
-    @Autowired
-    public DefaultUidClient(WebServiceTemplate webServiceTemplate) {
+    DefaultUidClient(WebServiceTemplate webServiceTemplate) {
         this.webServiceTemplate = webServiceTemplate;
     }
 
-    public FirmData getCompanyByUid(long uid) throws CompanyNotFoundException, UidNotUniqueException, UidClientException {
+    public FirmData getCompanyByUid(long uid) throws UidCompanyNotFoundException {
         ObjectFactory factory = new ObjectFactory();
         GetByUID getByUID = factory.createGetByUID();
         ch.ech.xmlns.ech_0097_f._2.ObjectFactory factory1 = new ch.ech.xmlns.ech_0097_f._2.ObjectFactory();
@@ -80,10 +78,10 @@ public class DefaultUidClient implements UidClient {
         // workaround for handling exceptions
         if (response instanceof JAXBElement && ((JAXBElement) response).getValue() instanceof BusinessFault) {
             BusinessFault faultDetails = (BusinessFault) ((JAXBElement) response).getValue();
-            throw new UidClientException("A problem occured while retrieving a company from the UID register: "
+            throw new UidClientRuntimeException("A problem occured while retrieving a company from the UID register: "
                 + faultDetails.getErrorDetail());
         } else if (!(response instanceof GetByUIDResponse)) {
-            throw new UidClientException("An unknown response type was returned by the UID client call.");
+            throw new UidClientRuntimeException("An unknown response type was returned by the UID client call.");
         }
 
         GetByUIDResponse result = (GetByUIDResponse) response;
@@ -91,20 +89,19 @@ public class DefaultUidClient implements UidClient {
 
         if (orgs.isEmpty()) {
             LOGGER.debug("Client received no organisation for UID ='{}'", uid);
-            throw new CompanyNotFoundException();
+            throw new UidCompanyNotFoundException();
         }
 
-        boolean includingPrivate = false;
-        List<FirmData> firms = getVisibleFirmDTOs(orgs, includingPrivate);
+        List<FirmData> firms = getVisibleFirmDTOs(orgs, false);
 
         if (firms.isEmpty()) {
             LOGGER.debug("Client received no visible organisation for UID ='{}'", uid);
-            throw new CompanyNotFoundException();
+            throw new UidCompanyNotFoundException();
         }
 
         if (firms.size() > 1) {
             LOGGER.error("Client received more than one organisation for UID = '{}':{}", uid, firmListToString(firms));
-            throw new UidNotUniqueException();
+            throw new UidNotUniqueException(uid);
         }
 
         LOGGER.debug("Client received the following organisation for UID = '{}': {}", uid, firms.get(0).toString());
@@ -123,17 +120,17 @@ public class DefaultUidClient implements UidClient {
 
     private boolean isPublicAndStillActive(ch.ech.xmlns.ech_0108_f._3.OrganisationType organisation) {
         return UID_STATUS_PUBLIC.equals(organisation.getUidregInformation().getUidregPublicStatus()) &&
-                (ENTERPRISE_STATUS_REACTIVATION.equals(organisation.getUidregInformation().getUidregStatusEnterpriseDetail()) ||
-                        ENTERPRISE_STATUS_DEFINITIVE.equals(organisation.getUidregInformation().getUidregStatusEnterpriseDetail()) ||
-                        ENTERPRISE_STATUS_MUTATING.equals(organisation.getUidregInformation().getUidregStatusEnterpriseDetail()) ||
-                        ENTERPRISE_STATUS_DELETED.equals(organisation.getUidregInformation().getUidregStatusEnterpriseDetail()));
+            (ENTERPRISE_STATUS_REACTIVATION.equals(organisation.getUidregInformation().getUidregStatusEnterpriseDetail()) ||
+                ENTERPRISE_STATUS_DEFINITIVE.equals(organisation.getUidregInformation().getUidregStatusEnterpriseDetail()) ||
+                ENTERPRISE_STATUS_MUTATING.equals(organisation.getUidregInformation().getUidregStatusEnterpriseDetail()) ||
+                ENTERPRISE_STATUS_DELETED.equals(organisation.getUidregInformation().getUidregStatusEnterpriseDetail()));
     }
 
     private boolean isPrivateButAvailableForUidSearch(final ch.ech.xmlns.ech_0108_f._3.OrganisationType organisation) {
         return UID_STATUS_PRIVATE.equals(organisation.getUidregInformation().getUidregPublicStatus()) &&
-                (ENTERPRISE_STATUS_DEFINITIVE.equals(organisation.getUidregInformation().getUidregStatusEnterpriseDetail()) ||
-                        ENTERPRISE_STATUS_MUTATING.equals(organisation.getUidregInformation().getUidregStatusEnterpriseDetail()) ||
-                        ENTERPRISE_STATUS_DELETED.equals(organisation.getUidregInformation().getUidregStatusEnterpriseDetail()));
+            (ENTERPRISE_STATUS_DEFINITIVE.equals(organisation.getUidregInformation().getUidregStatusEnterpriseDetail()) ||
+                ENTERPRISE_STATUS_MUTATING.equals(organisation.getUidregInformation().getUidregStatusEnterpriseDetail()) ||
+                ENTERPRISE_STATUS_DELETED.equals(organisation.getUidregInformation().getUidregStatusEnterpriseDetail()));
     }
 
     private FirmData getDto(ch.ech.xmlns.ech_0108_f._3.OrganisationType organisation) {
@@ -199,7 +196,7 @@ public class DefaultUidClient implements UidClient {
             }
             if (isEmpty(address.getCommunityNumber())) {
                 if (organisation.getOrganisationMunicipality() != null
-                        && organisation.getOrganisationMunicipality().getMunicipalityId() != null) {
+                    && organisation.getOrganisationMunicipality().getMunicipalityId() != null) {
                     address.setCommunityNumber(organisation.getOrganisationMunicipality().getMunicipalityId().toString());
                 }
             }

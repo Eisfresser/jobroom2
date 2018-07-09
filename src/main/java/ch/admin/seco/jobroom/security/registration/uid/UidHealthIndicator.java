@@ -3,13 +3,13 @@ package ch.admin.seco.jobroom.security.registration.uid;
 import org.springframework.boot.actuate.health.AbstractHealthIndicator;
 import org.springframework.boot.actuate.health.Health;
 
-public class UidHealthIndicator extends AbstractHealthIndicator {
+class UidHealthIndicator extends AbstractHealthIndicator {
 
     private final UidClient uidClient;
 
     private final Long monitoringUId;
 
-    public UidHealthIndicator(UidClient uidClient, Long monitoringUId) {
+    UidHealthIndicator(UidClient uidClient, Long monitoringUId) {
         this.uidClient = uidClient;
         this.monitoringUId = monitoringUId;
     }
@@ -21,11 +21,9 @@ public class UidHealthIndicator extends AbstractHealthIndicator {
             builder.up()
                 .withDetail("company-name", firmData.getName())
                 .withDetail("company-uid", firmData.getUid());
-        } catch (CompanyNotFoundException e) {
+        } catch (UidCompanyNotFoundException e) {
             builder.up().withDetail("company", "no company found with uid:" + this.monitoringUId);
-        } catch (UidNotUniqueException e) {
-            builder.up().withDetail("company", "more than one company found having uid: " + this.monitoringUId);
-        } catch (UidClientException e) {
+        } catch (UidClientRuntimeException e) {
             builder.down().withException(e);
         }
     }
