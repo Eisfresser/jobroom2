@@ -23,6 +23,7 @@
                                 {{ company.postalCode }} {{ company.city }}
                             </address>
 
+     <!--   JR2-1180
                             <ng-container *ngIf="company.phone">
                                 <a href="tel:{{company.phone}}">{{ company.phone | jr2PhoneNumber }}</a>
                                 <br>
@@ -36,6 +37,7 @@
                             <a href="{{ company.website }}" target="{{ job.id }}">
                                 {{ company.website | truncateCharacters:30 }}
                             </a>
+                            -->
                         </div>
 
                         <div *ngIf="job.jobContent.publicContact as contact">
