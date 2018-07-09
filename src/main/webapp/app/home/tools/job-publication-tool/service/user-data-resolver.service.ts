@@ -20,7 +20,7 @@ export class UserDataResolverService implements Resolve<UserData> {
         return this.principal.currentUser()
             .flatMap((currentUser) => {
                 return this.principal.isCompanyOrAgent()
-                    .flatMap((hasCompany) => hasCompany && currentUser.companyId ? this.companyService.findByExternalId(currentUser.companyId) : Observable.empty())
+                    .flatMap((hasCompany) => hasCompany && currentUser.companyId ? this.companyService.findByExternalId(currentUser.companyId) : Observable.of(null))
                     .map((company) => Object.assign({}, currentUser, { company }));
             });
     }
