@@ -55,9 +55,9 @@ export class ApiUserManagementComponent implements OnInit {
         this.store.dispatch(new FilterApiUsersAction(apiUserFilter))
     }
 
-    filter(apiUserFilter: ApiUserManagementFilter): void {
+    filterApiUsers(apiUserFilter: ApiUserManagementFilter): void {
         this.store.dispatch(new FilterApiUsersAction(Object.assign({}, apiUserFilter, {
-            query: this.apiUsersFilterForm.value
+            query: this.apiUsersFilterForm.get('filter').value
         })));
     }
 

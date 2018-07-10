@@ -37,7 +37,7 @@ export class ApiUserManagementListComponent {
 
     @Output() sortOrderEmitter = new EventEmitter<ApiUserManagementFilter>();
 
-    sortByField = 'username';
+    sortByField = 'id.keyword';
     reverse: false;
 
     constructor(private store: Store<ApiUserManagementState>,
