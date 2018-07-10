@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -90,7 +91,7 @@ public class EiamSamlUserDetailsService implements SAMLUserDetailsService {
     private static boolean isIssuedWithFedsAttributes(List<Attribute> credentialAttributes) {
         return credentialAttributes
             .stream()
-            .filter(attribute -> EiamSamlUserDetailsService.FEDS_ISSUER_NAME.equalsIgnoreCase(extractOriginalIssuer(attribute)))
+            .filter(EiamSamlUserDetailsService::isAttributeIssuedByFeds)
             .collect(Collectors.toMap(Attribute::getName, EiamSamlUserDetailsService::extractValues))
             .containsKey(EiamEnrichedSamlUser.USER_EXTID_KEY);
     }
@@ -98,15 +99,25 @@ public class EiamSamlUserDetailsService implements SAMLUserDetailsService {
     private static Map<String, List<String>> extractAttributesForFedsIssuer(List<Attribute> credentialAttributes) {
         return credentialAttributes
             .stream()
-            .filter(attribute -> EiamSamlUserDetailsService.FEDS_ISSUER_NAME.equalsIgnoreCase(extractOriginalIssuer(attribute)))
+            .filter(EiamSamlUserDetailsService::isAttributeIssuedByFeds)
             .collect(Collectors.toMap(Attribute::getName, EiamSamlUserDetailsService::extractValues));
     }
 
     private static Map<String, List<String>> extractNonFedsAttributes(List<Attribute> credentialAttributes) {
         return credentialAttributes
             .stream()
-            .filter(attribute -> !FEDS_ISSUER_NAME.equalsIgnoreCase(extractOriginalIssuer(attribute)))
+            .filter(EiamSamlUserDetailsService::isAttributeNotIssuedByFeds)
             .collect(Collectors.toMap(Attribute::getName, EiamSamlUserDetailsService::extractValues));
+    }
+
+    private static boolean isAttributeNotIssuedByFeds(Attribute attribute) {
+        return !isAttributeIssuedByFeds(attribute);
+    }
+
+    private static boolean isAttributeIssuedByFeds(Attribute attribute) {
+        return extractOriginalIssuer(attribute)
+            .filter(FEDS_ISSUER_NAME::equalsIgnoreCase)
+            .isPresent();
     }
 
     private static Map<String, List<String>> extractAllAttributes(List<Attribute> credentialAttributes) {
@@ -118,17 +129,17 @@ public class EiamSamlUserDetailsService implements SAMLUserDetailsService {
         return result;
     }
 
-    private static List<String> extractValues(Attribute credentialAttribute) {
-        return credentialAttribute.getAttributeValues().stream()
+    private static List<String> extractValues(Attribute attribute) {
+        return attribute.getAttributeValues().stream()
             .filter(xmlObject -> xmlObject instanceof XSString)
             .map(xmlObject -> (XSString) xmlObject)
             .map(XSString::getValue)
             .collect(Collectors.toList());
     }
 
-    private static String extractOriginalIssuer(Attribute attribute) {
+    private static Optional<String> extractOriginalIssuer(Attribute attribute) {
         AttributeMap unknownAttributes = attribute.getUnknownAttributes();
-        return unknownAttributes.get(ORIGINAL_ISSUED_QNAME);
+        return Optional.ofNullable(unknownAttributes.get(ORIGINAL_ISSUED_QNAME));
     }
 
 }
