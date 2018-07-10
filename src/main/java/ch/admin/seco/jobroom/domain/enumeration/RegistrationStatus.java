@@ -14,7 +14,7 @@ public enum RegistrationStatus {
     private static final Map<RegistrationStatus, Set<RegistrationStatus>> VALID_TRANSITIONS = new HashMap<>();
 
     static {
-        VALID_TRANSITIONS.put(UNREGISTERED, Sets.newHashSet(REGISTERED, VALIDATION_EMP, VALIDATION_PAV));
+        VALID_TRANSITIONS.put(UNREGISTERED, Sets.newHashSet(REGISTERED, VALIDATION_EMP, VALIDATION_PAV, UNREGISTERED));
         VALID_TRANSITIONS.put(VALIDATION_EMP, Sets.newHashSet(REGISTERED, UNREGISTERED));
         VALID_TRANSITIONS.put(VALIDATION_PAV, Sets.newHashSet(REGISTERED, UNREGISTERED));
         VALID_TRANSITIONS.put(REGISTERED, Sets.newHashSet(UNREGISTERED));
