@@ -14,7 +14,7 @@ export class JobFingerprintRedirectResolver implements Resolve<void> {
     }
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): void {
-        this.jobAdvertisementService.findByExternalId(route.queryParams['externalId'])
+        this.jobAdvertisementService.findByFingerprint(route.queryParams['externalId'])
             .subscribe((job) => {
                 if (job !== null) {
                     this.router.navigate(['/job-detail/', job.id]);

@@ -58,8 +58,8 @@ export class JobAdvertisementService {
         return this.http.get<JobAdvertisement>(`${this.resourceUrl}/token/${token}`);
     }
 
-    findByExternalId(externalId: any): Observable<JobAdvertisement> {
-        return this.http.get<JobAdvertisement>(`${this.resourceUrl}/${externalId}`);
+    findByFingerprint(fingerprint: string): Observable<JobAdvertisement> {
+        return this.http.get<JobAdvertisement>(`${this.resourceUrl}/byFingerprint/${fingerprint}`)
     }
 
     cancel(jobAdCancelRequest: JobAdvertisementCancelRequest): Observable<number> {
