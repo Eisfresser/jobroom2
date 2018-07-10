@@ -90,7 +90,7 @@ public class EiamSamlUserDetailsService implements SAMLUserDetailsService {
     private static boolean isIssuedWithFedsAttributes(List<Attribute> credentialAttributes) {
         return credentialAttributes
             .stream()
-            .filter(attribute -> extractOriginalIssuer(attribute).equalsIgnoreCase(EiamSamlUserDetailsService.FEDS_ISSUER_NAME))
+            .filter(attribute -> EiamSamlUserDetailsService.FEDS_ISSUER_NAME.equalsIgnoreCase(extractOriginalIssuer(attribute)))
             .collect(Collectors.toMap(Attribute::getName, EiamSamlUserDetailsService::extractValues))
             .containsKey(EiamEnrichedSamlUser.USER_EXTID_KEY);
     }
@@ -98,14 +98,14 @@ public class EiamSamlUserDetailsService implements SAMLUserDetailsService {
     private static Map<String, List<String>> extractAttributesForFedsIssuer(List<Attribute> credentialAttributes) {
         return credentialAttributes
             .stream()
-            .filter(attribute -> extractOriginalIssuer(attribute).equalsIgnoreCase(EiamSamlUserDetailsService.FEDS_ISSUER_NAME))
+            .filter(attribute -> EiamSamlUserDetailsService.FEDS_ISSUER_NAME.equalsIgnoreCase(extractOriginalIssuer(attribute)))
             .collect(Collectors.toMap(Attribute::getName, EiamSamlUserDetailsService::extractValues));
     }
 
     private static Map<String, List<String>> extractNonFedsAttributes(List<Attribute> credentialAttributes) {
         return credentialAttributes
             .stream()
-            .filter(attribute -> !extractOriginalIssuer(attribute).equalsIgnoreCase(FEDS_ISSUER_NAME))
+            .filter(attribute -> !FEDS_ISSUER_NAME.equalsIgnoreCase(extractOriginalIssuer(attribute)))
             .collect(Collectors.toMap(Attribute::getName, EiamSamlUserDetailsService::extractValues));
     }
 
