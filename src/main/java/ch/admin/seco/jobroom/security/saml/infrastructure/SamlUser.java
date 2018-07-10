@@ -6,7 +6,13 @@ import java.util.Optional;
 
 public class SamlUser {
 
-    static final String SCHEMAS_XMLSOAP_2005_05_PREFIX = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/";
+    private static final String SCHEMAS_XMLSOAP_2005_05_PREFIX = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/";
+
+    static final String EMAIL_KEY = SCHEMAS_XMLSOAP_2005_05_PREFIX + "emailaddress";
+
+    static final String SURNAME_KEY = SCHEMAS_XMLSOAP_2005_05_PREFIX + "surname";
+
+    static final String GIVEN_NAME_KEY = SCHEMAS_XMLSOAP_2005_05_PREFIX + "givenname";
 
     private final String nameId;
 
@@ -17,38 +23,27 @@ public class SamlUser {
         this.attributes = attributes;
     }
 
-    public Optional<List<String>> getAttribute(String key) {
-        if (attributes.containsKey(key)) {
-            return Optional.ofNullable(attributes.get(key));
-        }
-        return Optional.empty();
-    }
-
     public String getNameId() {
         return nameId;
     }
 
     public Optional<String> getGivenname() {
-        return getAttributeSingleValue(SCHEMAS_XMLSOAP_2005_05_PREFIX + "givenname");
+        return getAttributeSingleValue(GIVEN_NAME_KEY);
     }
 
     public Optional<String> getSurname() {
-        return getAttributeSingleValue(SCHEMAS_XMLSOAP_2005_05_PREFIX + "surname");
+        return getAttributeSingleValue(SURNAME_KEY);
     }
 
     public Optional<String> getEmail() {
-        return getAttributeSingleValue(SCHEMAS_XMLSOAP_2005_05_PREFIX + "emailaddress");
+        return getAttributeSingleValue(EMAIL_KEY);
     }
 
-    @Override
-    public String toString() {
-        return "SamlUser{" +
-            "nameId='" + nameId + '\'' +
-            ", givenname='" + toStringhelper(getGivenname()) + '\'' +
-            ", surname='" + toStringhelper(getSurname()) + '\'' +
-            ", email='" + toStringhelper(getEmail()) + '\'' +
-            ", attributes=" + attributes +
-            '}';
+    Optional<List<String>> getAttribute(String key) {
+        if (attributes.containsKey(key)) {
+            return Optional.ofNullable(attributes.get(key));
+        }
+        return Optional.empty();
     }
 
     Optional<String> getAttributeSingleValue(String key) {
@@ -62,4 +57,16 @@ public class SamlUser {
     final Object toStringhelper(Optional<?> optional) {
         return optional.orElse(null);
     }
+
+    @Override
+    public String toString() {
+        return "SamlUser{" +
+            "nameId='" + nameId + '\'' +
+            ", givenname='" + toStringhelper(getGivenname()) + '\'' +
+            ", surname='" + toStringhelper(getSurname()) + '\'' +
+            ", email='" + toStringhelper(getEmail()) + '\'' +
+            ", attributes=" + attributes +
+            '}';
+    }
+
 }

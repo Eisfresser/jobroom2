@@ -1,5 +1,9 @@
 package ch.admin.seco.jobroom.security.saml.infrastructure;
 
+import static ch.admin.seco.jobroom.security.saml.infrastructure.EiamEnrichedSamlUser.ROLES_KEY;
+import static ch.admin.seco.jobroom.security.saml.infrastructure.EiamEnrichedSamlUser.USER_EXTID_KEY;
+import static ch.admin.seco.jobroom.security.saml.infrastructure.SamlUser.EMAIL_KEY;
+import static ch.admin.seco.jobroom.security.saml.infrastructure.SamlUser.GIVEN_NAME_KEY;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -57,10 +61,13 @@ public class EiamSamlUserDetailsServiceTest {
         when(samlCredential.getAuthenticationAssertion()).thenReturn(new AssertionBuilder().buildObject());
 
         List<Attribute> attributes = new ArrayList<>();
-        attributes.add(createEiamFedsAttribute(EiamSamlUserDetailsService.USER_EXT_ID_ATTRIBUTE_NAME, "EXT-ID"));
-        attributes.add(createEiamFedsAttribute(SamlUser.SCHEMAS_XMLSOAP_2005_05_PREFIX + "givenname", "GIVEN-NAME-1"));
-        attributes.add(createEiamFedsAttribute(SamlUser.SCHEMAS_XMLSOAP_2005_05_PREFIX + "emailaddress", "test@example.com"));
-        attributes.add(createEiamFedsAttribute(EiamEnrichedSamlUser.SCHEMAS_EIAM_2013_12_PREFIX + "role", "ROLE-A", "Role-B"));
+        attributes.add(createFedsAttribute(GIVEN_NAME_KEY, "FEDS-GIVEN-NAME-1"));
+        attributes.add(createFedsAttribute(EMAIL_KEY, "feds-test@example.com"));
+        attributes.add(createFedsAttribute(ROLES_KEY, "ROLE-A", "Role-B"));
+        attributes.add(createFedsAttribute(USER_EXTID_KEY, "FEDS-EXT-ID"));
+
+        attributes.add(createCHLoginAttribute(GIVEN_NAME_KEY, "CH-LOGIN-GIVEN-NAME-1"));
+        attributes.add(createCHLoginAttribute(EMAIL_KEY, "chlogin-test@example.com"));
 
         when(samlCredential.getAttributes()).thenReturn(attributes);
 
@@ -70,15 +77,14 @@ public class EiamSamlUserDetailsServiceTest {
         verify(this.samlBasedUserDetailsProvider).createUserDetailsFromSaml(captor.capture());
 
         SamlUser samlUser = captor.getValue();
+        assertThat(samlUser.getNameId()).isEqualTo(TESTING_NAME_ID);
+        assertThat(samlUser.getGivenname()).contains("CH-LOGIN-GIVEN-NAME-1");
+        assertThat(samlUser.getEmail()).contains("chlogin-test@example.com");
 
         assertThat(samlUser).isInstanceOf(EiamEnrichedSamlUser.class);
-
         EiamEnrichedSamlUser eiamEnrichedSamlUser = (EiamEnrichedSamlUser) samlUser;
-        assertThat(samlUser.getNameId()).isEqualTo(TESTING_NAME_ID);
-        assertThat(samlUser.getGivenname()).contains("GIVEN-NAME-1");
-        assertThat(samlUser.getEmail()).contains("test@example.com");
-
         assertThat(eiamEnrichedSamlUser.getRoles()).hasSize(2);
+        assertThat(eiamEnrichedSamlUser.getUserExtId()).contains("FEDS-EXT-ID");
     }
 
     @Test
@@ -88,9 +94,9 @@ public class EiamSamlUserDetailsServiceTest {
         when(samlCredential.getAuthenticationAssertion()).thenReturn(new AssertionBuilder().buildObject());
 
         List<Attribute> attributes = new ArrayList<>();
-        attributes.add(createEiamFedsAttribute(SamlUser.SCHEMAS_XMLSOAP_2005_05_PREFIX + "givenname", "GIVEN-NAME-1"));
-        attributes.add(createEiamChLoginAttribute(SamlUser.SCHEMAS_XMLSOAP_2005_05_PREFIX + "givenname", "GIVEN-NAME-2"));
-        attributes.add(createEiamChLoginAttribute(SamlUser.SCHEMAS_XMLSOAP_2005_05_PREFIX + "emailaddress", "test@example.com"));
+        attributes.add(createCHLoginAttribute(GIVEN_NAME_KEY, "CH-LOGIN-GIVEN-NAME-1"));
+        attributes.add(createCHLoginAttribute(GIVEN_NAME_KEY, "CH-LOGIN-GIVEN-NAME-2"));
+        attributes.add(createCHLoginAttribute(EMAIL_KEY, "ch-login-test@example.com"));
         when(samlCredential.getAttributes()).thenReturn(attributes);
 
         this.eiamSamlUserDetailsService.loadUserBySAML(samlCredential);
@@ -102,15 +108,15 @@ public class EiamSamlUserDetailsServiceTest {
 
         assertThat(samlUser).isNotInstanceOf(EiamEnrichedSamlUser.class);
         assertThat(samlUser.getNameId()).isEqualTo(TESTING_NAME_ID);
-        assertThat(samlUser.getGivenname()).contains("GIVEN-NAME-1");
-        assertThat(samlUser.getEmail()).contains("test@example.com");
+        assertThat(samlUser.getGivenname()).contains("CH-LOGIN-GIVEN-NAME-1");
+        assertThat(samlUser.getEmail()).contains("ch-login-test@example.com");
     }
 
-    private Attribute createEiamFedsAttribute(String name, String... values) throws ConfigurationException {
+    private Attribute createFedsAttribute(String name, String... values) throws ConfigurationException {
         return addValueToAttribute(prepareEiamFedsIssuerAttribute(), name, values);
     }
 
-    private Attribute createEiamChLoginAttribute(String name, String... values) throws ConfigurationException {
+    private Attribute createCHLoginAttribute(String name, String... values) throws ConfigurationException {
         return addValueToAttribute(prepareEiamCHLoginIssuerAttribute(), name, values);
     }
 

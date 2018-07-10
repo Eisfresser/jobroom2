@@ -2,8 +2,10 @@ package ch.admin.seco.jobroom.security.saml.infrastructure;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.xml.namespace.QName;
@@ -23,14 +25,18 @@ public class EiamSamlUserDetailsService implements SAMLUserDetailsService {
 
     private static final QName ORIGINAL_ISSUED_QNAME = new QName("http://schemas.xmlsoap.org/ws/2009/09/identity/claims", "OriginalIssuer");
 
-    static final String USER_EXT_ID_ATTRIBUTE_NAME = EiamEnrichedSamlUser.SCHEMAS_EIAM_2013_12_PREFIX + "e-id/userExtId";
-
     static final String FEDS_ISSUER_NAME = "uri:eiam.admin.ch:feds";
 
     private final SamlBasedUserDetailsProvider samlBasedUserDetailsProvider;
 
+    private final Set<String> attributesToCopyFromNonFeds = new HashSet<>();
+
     public EiamSamlUserDetailsService(SamlBasedUserDetailsProvider samlBasedUserDetailsProvider) {
         this.samlBasedUserDetailsProvider = samlBasedUserDetailsProvider;
+        this.attributesToCopyFromNonFeds.add(SamlUser.EMAIL_KEY);
+        this.attributesToCopyFromNonFeds.add(SamlUser.SURNAME_KEY);
+        this.attributesToCopyFromNonFeds.add(SamlUser.GIVEN_NAME_KEY);
+        this.attributesToCopyFromNonFeds.add(EiamEnrichedSamlUser.LANGUAGE_KEY);
     }
 
     @Override
@@ -42,11 +48,11 @@ public class EiamSamlUserDetailsService implements SAMLUserDetailsService {
         final String nameId = credential.getNameID().getValue();
         LOGGER.debug("Authenticating user having nameId: {}", nameId);
 
-        final Map<String, List<String>> fedsAttributes = extractAttributesForFedsIssuer(credential.getAttributes());
-        if (fedsAttributes.containsKey(USER_EXT_ID_ATTRIBUTE_NAME)) {
+        if (isIssuedWithFedsAttributes(credential.getAttributes())) {
             LOGGER.info("Credential for nameId: '{}' was enriched by EIAM Issuer FEDS: creating an EiamEnrichedSamlUser", nameId);
-            printOutAttributes(fedsAttributes);
-            return new EiamEnrichedSamlUser(nameId, fedsAttributes);
+            final Map<String, List<String>> attributes = extractAttributes(credential);
+            printOutAttributes(attributes);
+            return new EiamEnrichedSamlUser(nameId, attributes);
         }
 
         Map<String, List<String>> allAttributes = extractAllAttributes(credential.getAttributes());
@@ -55,21 +61,52 @@ public class EiamSamlUserDetailsService implements SAMLUserDetailsService {
         return new SamlUser(nameId, allAttributes);
     }
 
+    private Map<String, List<String>> extractAttributes(SAMLCredential credential) {
+        final Map<String, List<String>> resultingAttributes = new HashMap<>(extractAttributesForFedsIssuer(credential.getAttributes()));
+
+        final Map<String, List<String>> nonFedsAttributes = extractNonFedsAttributes(credential.getAttributes());
+        if (!nonFedsAttributes.isEmpty()) {
+            // copy the following values from the non-feds issued attributes since they can change
+            // whereas the once from feds always contain the initial values
+            for (String attributesToCopyFromNonFed : this.attributesToCopyFromNonFeds) {
+                replaceAttribute(attributesToCopyFromNonFed, nonFedsAttributes, resultingAttributes);
+            }
+        }
+        return resultingAttributes;
+    }
+
+    private void replaceAttribute(String attributeKey, Map<String, List<String>> source, Map<String, List<String>> destination) {
+        if (source.containsKey(attributeKey)) {
+            destination.replace(attributeKey, source.get(attributeKey));
+        }
+    }
+
     private void printOutAttributes(Map<String, List<String>> attributes) {
         if (LOGGER.isTraceEnabled()) {
             attributes.forEach((key, value) -> LOGGER.trace("SAMLCredential attribute Name: {} -> Values: {}", key, value));
         }
     }
 
+    private static boolean isIssuedWithFedsAttributes(List<Attribute> credentialAttributes) {
+        return credentialAttributes
+            .stream()
+            .filter(attribute -> extractOriginalIssuer(attribute).equalsIgnoreCase(EiamSamlUserDetailsService.FEDS_ISSUER_NAME))
+            .collect(Collectors.toMap(Attribute::getName, EiamSamlUserDetailsService::extractValues))
+            .containsKey(EiamEnrichedSamlUser.USER_EXTID_KEY);
+    }
+
     private static Map<String, List<String>> extractAttributesForFedsIssuer(List<Attribute> credentialAttributes) {
         return credentialAttributes
             .stream()
-            .filter(EiamSamlUserDetailsService::isIssuedByFeds)
+            .filter(attribute -> extractOriginalIssuer(attribute).equalsIgnoreCase(EiamSamlUserDetailsService.FEDS_ISSUER_NAME))
             .collect(Collectors.toMap(Attribute::getName, EiamSamlUserDetailsService::extractValues));
     }
 
-    private static boolean isIssuedByFeds(Attribute attribute) {
-        return EiamSamlUserDetailsService.FEDS_ISSUER_NAME.equals(extractOriginalIssuer(attribute));
+    private static Map<String, List<String>> extractNonFedsAttributes(List<Attribute> credentialAttributes) {
+        return credentialAttributes
+            .stream()
+            .filter(attribute -> !extractOriginalIssuer(attribute).equalsIgnoreCase(FEDS_ISSUER_NAME))
+            .collect(Collectors.toMap(Attribute::getName, EiamSamlUserDetailsService::extractValues));
     }
 
     private static Map<String, List<String>> extractAllAttributes(List<Attribute> credentialAttributes) {

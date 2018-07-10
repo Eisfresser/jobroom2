@@ -7,7 +7,13 @@ import java.util.Optional;
 
 public class EiamEnrichedSamlUser extends SamlUser {
 
-    static final String SCHEMAS_EIAM_2013_12_PREFIX = "http://schemas.eiam.admin.ch/ws/2013/12/identity/claims/";
+    private static final String SCHEMAS_EIAM_2013_12_PREFIX = "http://schemas.eiam.admin.ch/ws/2013/12/identity/claims/";
+
+    static final String USER_EXTID_KEY = SCHEMAS_EIAM_2013_12_PREFIX + "e-id/userExtId";
+
+    static final String ROLES_KEY = SCHEMAS_EIAM_2013_12_PREFIX + "role";
+
+    static final String LANGUAGE_KEY = SCHEMAS_EIAM_2013_12_PREFIX + "language";
 
     EiamEnrichedSamlUser(String nameId, Map<String, List<String>> attributes) {
         super(nameId, attributes);
@@ -40,11 +46,11 @@ public class EiamEnrichedSamlUser extends SamlUser {
     }
 
     public Optional<String> getLanguage() {
-        return getAttributeSingleValue(SCHEMAS_EIAM_2013_12_PREFIX + "language");
+        return getAttributeSingleValue(LANGUAGE_KEY);
     }
 
     public List<String> getRoles() {
-        return getAttribute(SCHEMAS_EIAM_2013_12_PREFIX + "role").orElse(Collections.emptyList());
+        return getAttribute(ROLES_KEY).orElse(Collections.emptyList());
     }
 
     public Optional<String> getLoginId() {
@@ -56,7 +62,7 @@ public class EiamEnrichedSamlUser extends SamlUser {
     }
 
     public Optional<String> getUserExtId() {
-        return getAttributeSingleValue(SCHEMAS_EIAM_2013_12_PREFIX + "e-id/userExtId");
+        return getAttributeSingleValue(USER_EXTID_KEY);
     }
 
     public Optional<String> getProfileName() {
