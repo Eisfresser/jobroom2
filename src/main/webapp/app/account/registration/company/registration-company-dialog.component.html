@@ -55,7 +55,7 @@
         <button
             *ngIf="!isSubmitted"
             class="btn btn-primary"
-            [disabled]="!company"
+            [disabled]="!company || disableSubmit"
             jhiTranslate="registrationCompanyDialog.requestActivationCode"
             (click)="requestActivationCode()">
         </button>

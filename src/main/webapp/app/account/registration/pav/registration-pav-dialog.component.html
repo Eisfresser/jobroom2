@@ -40,7 +40,7 @@
                 type="submit"
                 *ngIf="!isSubmitted"
                 class="btn btn-primary"
-                [disabled]="!userOrganization?.name"
+                [disabled]="!userOrganization?.name || disableSubmit"
                 jhiTranslate="registrationPavDialog.requestActivationCode"
                 (click)="requestActivationCode()">
             </button>

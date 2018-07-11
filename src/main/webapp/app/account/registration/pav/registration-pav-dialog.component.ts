@@ -19,6 +19,7 @@ export class RegistrationPavDialogComponent implements OnInit {
 
     private static readonly ORGANIZATION_SUGGESTIONS_SIZE = 25;
     isSubmitted: boolean;
+    disableSubmit = false;
 
     userOrganization: OrganizationSuggestion;
     searchOrganizations = (text$: Observable<string>): Observable<Array<OrganizationSuggestion>> =>
@@ -45,10 +46,10 @@ export class RegistrationPavDialogComponent implements OnInit {
     }
 
     requestActivationCode() {
+        this.disableSubmit = true;
         this.registrationService.requestAgentAccessCode(this.userOrganization.externalId)
-            .subscribe((result) => {
-                this.isSubmitted = true;
-            });
+            .finally(() => this.disableSubmit = false)
+            .subscribe(() => this.isSubmitted = true);
     }
 
     close() {

@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Company, initialCompany } from './registration-company-data';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { RegistrationService } from '../registration.service';
-import { ModalUtils } from '../../../shared/utils/modal-utils';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { ModalUtils } from '../../../shared';
 import { Router } from '@angular/router';
 
 @Component({
@@ -16,6 +15,7 @@ export class RegistrationCompanyDialogComponent implements OnInit {
     companyForm: FormGroup;
     isSubmitted = false;
     companyNotFound = false;
+    disableSubmit = false;
 
     constructor(private modalUtils: ModalUtils,
                 private registrationService: RegistrationService,
@@ -33,7 +33,9 @@ export class RegistrationCompanyDialogComponent implements OnInit {
     }
 
     requestActivationCode() {
+        this.disableSubmit = true;
         this.registrationService.requestEmployerAccessCode(this.getCompanyUid())
+            .finally(() => this.disableSubmit = false)
             .subscribe(() => this.isSubmitted = true);
     }
 
@@ -46,7 +48,7 @@ export class RegistrationCompanyDialogComponent implements OnInit {
         this.registrationService.getCompanyByUid(this.getCompanyUid())
             .subscribe(
                 (company) => this.company = company,
-                (error) => {
+                () => {
                     this.companyForm.get('uid').reset(this.companyForm.get('uid').value);
                     this.companyNotFound = true;
                 });
