@@ -55,16 +55,16 @@ describe('Component Tests', () => {
             comp = fixture.componentInstance;
         });
 
-        describe('today function ', () => {
+        describe('initToDate function ', () => {
             it('should set toDate to current date', () => {
-               comp.today();
+               comp.initToDate();
                expect(comp.toDate).toBe(getDate());
             });
         });
 
-        describe('previousMonth function ', () => {
+        describe('initFromDate function ', () => {
             it('should set fromDate to current date', () => {
-               comp.previousMonth();
+               comp.initFromDate();
                expect(comp.fromDate).toBe(getDate(false));
             });
         });
@@ -76,8 +76,6 @@ describe('Component Tests', () => {
                expect(comp.fromDate).toBe(getDate(false));
                expect(comp.itemsPerPage).toBe(ITEMS_PER_PAGE);
                expect(comp.page).toBe(1);
-               expect(comp.reverse).toBeFalsy();
-               expect(comp.orderProp).toBe('timestamp');
             });
         });
     });

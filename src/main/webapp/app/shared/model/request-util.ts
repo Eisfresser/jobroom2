@@ -9,9 +9,13 @@ export const createRequestOption = (req?: any): HttpParams => {
             }
         });
         if (req.sort) {
-            req.sort.forEach((val) => {
-                options = options.append('sort', val);
-            });
+            if (req.sort instanceof Array) {
+                req.sort.forEach((val) => {
+                    options = options.append('sort', val);
+                });
+            } else {
+                options = options.set('sort', req.sort);
+            }
         }
     }
     return options;

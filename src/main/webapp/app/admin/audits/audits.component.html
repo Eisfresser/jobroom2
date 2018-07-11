@@ -6,9 +6,9 @@
             <h4 jhiTranslate="audits.filter.title">Filter by date</h4>
             <p class="d-flex">
                 <span jhiTranslate="audits.filter.from" class="input-group-addon">from</span>
-                <input type="date" class="form-control" name="start" [(ngModel)]="fromDate" (ngModelChange)="onChangeDate($event)" required/>
+                <input type="date" class="form-control" name="start" [(ngModel)]="fromDate" (ngModelChange)="loadAudits($event)" required/>
                 <span jhiTranslate="audits.filter.to" class="input-group-addon">to</span>
-                <input type="date" class="form-control" name="end" [(ngModel)]="toDate" (ngModelChange)="onChangeDate($event)" required/>
+                <input type="date" class="form-control" name="end" [(ngModel)]="toDate" (ngModelChange)="loadAudits($event)" required/>
             </p>
         </div>
     </div>
@@ -16,14 +16,20 @@
     <div class="table-responsive">
         <table class="table table-sm table-striped table-bordered">
             <thead>
-            <tr>
-                <th (click)="orderProp = 'timestamp'; reverse=!reverse"><span jhiTranslate="audits.table.header.date">Date</span></th>
-                <th (click)="orderProp = 'principal'; reverse=!reverse"><span jhiTranslate="audits.table.header.principal">User</span></th>
-                <th (click)="orderProp = 'type'; reverse=!reverse"><span jhiTranslate="audits.table.header.status">State</span></th>
-                <th (click)="orderProp = 'data.message'; reverse=!reverse"><span jhiTranslate="audits.table.header.data">Extra data</span></th>
+            <tr jhiSort [(predicate)]="sortByField" [(ascending)]="ascending" [callback]="loadAudits.bind(this)">
+                <th jhiSortBy="auditEventDate" scope="col">
+                    <span jhiTranslate="audits.table.header.date">Date</span>
+                    <span class="fa fa-sort"></span>
+                </th>
+                <th><span jhiTranslate="audits.table.header.principal">User</span></th>
+                <th jhiSortBy="auditEventType" scope="col">
+                    <span jhiTranslate="audits.table.header.status">State</span>
+                    <span class="fa fa-sort"></span>
+                </th>
+                <th><span jhiTranslate="audits.table.header.data">Extra data</span></th>
             </tr>
             </thead>
-            <tr *ngFor="let audit of getAudits()">
+            <tr *ngFor="let audit of audits">
                 <td><span>{{audit.timestamp| date:'medium'}}</span></td>
                 <td><small>{{audit.principal}}</small></td>
                 <td>{{audit.type}}</td>
