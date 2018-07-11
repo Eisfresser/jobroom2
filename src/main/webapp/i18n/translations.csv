@@ -20,7 +20,7 @@ api-user-management,api-user-management.lastAccessDate,Letzter Zugriff,Last acce
 api-user-management,api-user-management.new,Neuen API-Benutzer erstellen,Create new API user,Créer un nouvel utilisateur API,Crea nuovo utente API
 api-user-management,api-user-management.password,Passwort,Password,Mot de passe,Password
 api-user-management,api-user-management.password.generate,Password generieren,Generate password,Générer un mot de passe,Genera password
-api-user-management,api-user-management.search,API-Benutzer suchen,Search API users,Chercher un utilisateur API,Cerca utente API
+api-user-management,api-user-management.search,"API-Benutzer nach Benutzername, Firma, E-Mail Firma, Technischer Kontakt oder E-Mail Technischer Kontakt suchen","Search API users by Username, Company, Company email, Technical contact or Technical contact email","Chercher un utilisateur API par Nom d'utilisateur, Entreprise, Courriel de l'entreprise, Contact technique ou Courriel contact technique","Cerca utente API per Nome utente, Impresa, E-mail dell'impresa, Contatto tecnico o E-mail contatto tecnico"
 api-user-management,api-user-management.technicalContactEmail,E-Mail Technischer Kontakt,Technical contact email,Courriel contact technique,E-mail contatto tecnico
 api-user-management,api-user-management.technicalContactName,Technischer Kontakt,Technical contact,Contact technique,Contatto tecnico
 api-user-management,api-user-management.title,API-Benutzer verwalten,Manage API users,Gérer les utilisateurs API,Gestisci utente API

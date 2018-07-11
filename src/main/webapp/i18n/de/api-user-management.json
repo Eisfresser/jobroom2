@@ -22,7 +22,7 @@
         "new": "Neuen API-Benutzer erstellen",
         "password": "Passwort",
         "password.generate": "Password generieren",
-        "search": "API-Benutzer suchen",
+        "search": "API-Benutzer nach Benutzername, Firma, E-Mail Firma, Technischer Kontakt oder E-Mail Technischer Kontakt suchen",
         "technicalContactEmail": "E-Mail Technischer Kontakt",
         "technicalContactName": "Technischer Kontakt",
         "title": "API-Benutzer verwalten",

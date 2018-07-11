@@ -22,7 +22,7 @@
         "new": "Cr\u00e9er un nouvel utilisateur API",
         "password": "Mot de passe",
         "password.generate": "G\u00e9n\u00e9rer un mot de passe",
-        "search": "Chercher un utilisateur API",
+        "search": "Chercher un utilisateur API par Nom d'utilisateur, Entreprise, Courriel de l'entreprise, Contact technique ou Courriel contact technique",
         "technicalContactEmail": "Courriel contact technique",
         "technicalContactName": "Contact technique",
         "title": "G\u00e9rer les utilisateurs API",

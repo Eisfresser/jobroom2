@@ -22,7 +22,7 @@
         "new": "Create new API user",
         "password": "Password",
         "password.generate": "Generate password",
-        "search": "Search API users",
+        "search": "Search API users by Username, Company, Company email, Technical contact or Technical contact email",
         "technicalContactEmail": "Technical contact email",
         "technicalContactName": "Technical contact",
         "title": "Manage API users",
