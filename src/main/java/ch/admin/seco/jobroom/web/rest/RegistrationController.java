@@ -22,6 +22,7 @@ import ch.admin.seco.jobroom.security.registration.InvalidAccessCodeException;
 import ch.admin.seco.jobroom.security.registration.InvalidOldLoginException;
 import ch.admin.seco.jobroom.security.registration.InvalidPersonenNumberException;
 import ch.admin.seco.jobroom.security.registration.RegistrationService;
+import ch.admin.seco.jobroom.security.registration.StesPersonNumberAlreadyTaken;
 import ch.admin.seco.jobroom.security.registration.eiam.UserNotFoundException;
 import ch.admin.seco.jobroom.security.registration.uid.FirmData;
 import ch.admin.seco.jobroom.security.registration.uid.UidCompanyNotFoundException;
@@ -55,14 +56,9 @@ public class RegistrationController {
      */
     @PostMapping("/registerJobseeker")
     @Timed
-    public boolean registerJobseeker(@Valid @RequestBody RegisterJobseekerVM jobseekerDetails) {
-        try {
-            final LocalDate birthdate = LocalDate.of(jobseekerDetails.getBirthdateYear(), jobseekerDetails.getBirthdateMonth(), jobseekerDetails.getBirthdateDay());
-            this.registrationService.registerAsJobSeeker(birthdate, jobseekerDetails.getPersonNumber());
-            return true;
-        } catch (InvalidPersonenNumberException e) {
-            return false;
-        }
+    public void registerJobseeker(@Valid @RequestBody RegisterJobseekerVM jobseekerDetails) throws InvalidPersonenNumberException, StesPersonNumberAlreadyTaken {
+        final LocalDate birthdate = LocalDate.of(jobseekerDetails.getBirthdateYear(), jobseekerDetails.getBirthdateMonth(), jobseekerDetails.getBirthdateDay());
+        this.registrationService.registerAsJobSeeker(birthdate, jobseekerDetails.getPersonNumber());
     }
 
     /**

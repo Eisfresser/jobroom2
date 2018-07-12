@@ -10,6 +10,12 @@
             "identificaton": {
                 "mismatch": {
                     "error": "Wir konnten keine RAV-Daten anhand Ihrer Angaben finden. Bitte \u00fcberpr\u00fcfen Sie, dass Personennummer und Geburtsdatum korrekt eingegeben wurden."
+                },
+                "already-taken": {
+                    "error": "Diese Personennummer wurde bereits verwendet"
+                },
+                "technical": {
+                    "error": "Es ist ein technisches Problem aufgetreten. Versuchen Sie es sp\u00e4ter noch einmal ansonsten wenden Sie sich an unseren Support via Kontaktformular"
                 }
             },
             "pn": {

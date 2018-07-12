@@ -9,6 +9,7 @@ public class InvalidPersonenNumberException extends RegistrationException {
     private final LocalDate birthdate;
 
     InvalidPersonenNumberException(Long personNumber, LocalDate birthdate) {
+        super("No matching candidate found for PersonNumber: " + personNumber + " and Birthday: " + birthdate);
         this.personNumber = personNumber;
         this.birthdate = birthdate;
     }

@@ -20,6 +20,7 @@ import org.springframework.util.StringUtils;
 import ch.admin.seco.jobroom.config.Constants;
 import ch.admin.seco.jobroom.domain.Company;
 import ch.admin.seco.jobroom.domain.Organization;
+import ch.admin.seco.jobroom.domain.StesInformation;
 import ch.admin.seco.jobroom.domain.User;
 import ch.admin.seco.jobroom.domain.UserInfo;
 import ch.admin.seco.jobroom.domain.UserInfoId;
@@ -44,6 +45,7 @@ import ch.admin.seco.jobroom.service.MailService;
 import ch.admin.seco.jobroom.service.UserInfoNotFoundException;
 import ch.admin.seco.jobroom.service.dto.AccountabilityDTO;
 import ch.admin.seco.jobroom.service.dto.RegistrationResultDTO;
+import ch.admin.seco.jobroom.service.dto.StesInformationDto;
 import ch.admin.seco.jobroom.service.dto.StesVerificationRequest;
 import ch.admin.seco.jobroom.service.dto.StesVerificationResult;
 import ch.admin.seco.jobroom.service.dto.UserInfoDTO;
@@ -87,17 +89,21 @@ public class RegistrationService {
         this.currentUserService = currentUserService;
     }
 
-    public void registerAsJobSeeker(LocalDate birthdate, Long personNumber) throws InvalidPersonenNumberException {
+    public void registerAsJobSeeker(LocalDate birthdate, Long personNumber) throws InvalidPersonenNumberException, StesPersonNumberAlreadyTaken {
         if (!this.validatePersonNumber(birthdate, personNumber)) {
             throw new InvalidPersonenNumberException(personNumber, birthdate);
+        }
+        if (isPersonNumberAlreadyTaken(personNumber)) {
+            throw new StesPersonNumberAlreadyTaken(personNumber);
         }
         UserPrincipal principal = this.currentUserService.getPrincipal();
         UserInfo userInfo = getUserInfo(principal.getId());
         addJobseekerRoleToEiam(principal);
         addJobseekerRoleToSession();
-        userInfo.closeRegistration();
+        userInfo.registerAsJobSeeker(personNumber);
         LOGGER.info("Registered user with id: {} as job-seeker", userInfo.getUserExternalId());
     }
+
 
     public void requestAccessAsEmployer(Long uid) throws UidCompanyNotFoundException {
         UserPrincipal userPrincipal = this.currentUserService.getPrincipal();
@@ -142,7 +148,7 @@ public class RegistrationService {
             throw new IllegalStateException("User with id=" + userPrincipal.getUserExtId() + " tried to register as employer/agent, but has a wrong registration status: " + registrationStatus);
         }
         result.setSuccess(true);
-        userInfo.closeRegistration();
+        userInfo.finishRegistration();
         return result;
     }
 
@@ -192,26 +198,38 @@ public class RegistrationService {
     @PreAuthorize("hasAuthority('ROLE_SYSADMIN')")
     public UserInfoDTO getUserInfo(String eMail) throws UserInfoNotFoundException {
         Optional<UserInfo> userInfo = this.userInfoRepository.findByEMail(eMail);
-        return userInfo.map(this::toUserInfoDTO)
+        return userInfo.map(RegistrationService::toUserInfoDTO)
             .orElseThrow(() -> new UserInfoNotFoundException(eMail));
     }
 
-    private UserInfoDTO toUserInfoDTO(UserInfo userInfo) {
-        return new UserInfoDTO(
-            userInfo.getId().getValue(),
-            userInfo.getUserExternalId(),
-            userInfo.getFirstName(),
-            userInfo.getLastName(),
-            userInfo.getEmail(),
-            userInfo.getRegistrationStatus(),
-            toAccountabilityDTOs(userInfo),
-            userInfo.getCreatedAt(),
-            userInfo.getModifiedAt(),
-            userInfo.getLastLoginAt()
+    private static UserInfoDTO toUserInfoDTO(UserInfo userInfo) {
+        return new UserInfoDTO.Builder()
+            .setId(userInfo.getId().getValue())
+            .setUserExternalId(userInfo.getUserExternalId())
+            .setFirstName(userInfo.getFirstName())
+            .setLastName(userInfo.getLastName())
+            .setEmail(userInfo.getEmail())
+            .setRegistrationStatus(userInfo.getRegistrationStatus())
+            .setAccountabilities(toAccountabilityDTOs(userInfo))
+            .setStesInformation(userInfo.getStesInformation()
+                .map(RegistrationService::toStesInformationDto)
+                .orElse(null)
+            )
+            .setCreatedAt(userInfo.getCreatedAt())
+            .setModifiedAt(userInfo.getModifiedAt())
+            .setLastLoginAt(userInfo.getLastLoginAt())
+            .build();
+    }
+
+    private static StesInformationDto toStesInformationDto(StesInformation stesInformation) {
+        return new StesInformationDto(
+            stesInformation.getPersonNumber(),
+            stesInformation.getVerificationType(),
+            stesInformation.getVerifiedAt()
         );
     }
 
-    private List<AccountabilityDTO> toAccountabilityDTOs(UserInfo userInfo) {
+    private static List<AccountabilityDTO> toAccountabilityDTOs(UserInfo userInfo) {
         return userInfo.getAccountabilities().stream()
             .map(accountability -> new AccountabilityDTO(
                 accountability.getType(),
@@ -245,6 +263,10 @@ public class RegistrationService {
         StesVerificationRequest jobseekerRequestData = new StesVerificationRequest(personNumber, birthdate);
         StesVerificationResult stesVerificationResult = this.candidateService.verifyStesRegistrationData(jobseekerRequestData);
         return stesVerificationResult.isVerified();
+    }
+
+    private boolean isPersonNumberAlreadyTaken(Long personNumber) {
+        return this.userInfoRepository.findByPersonNumber(personNumber).isPresent();
     }
 
     /**

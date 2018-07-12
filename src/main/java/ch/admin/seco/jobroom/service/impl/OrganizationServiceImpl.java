@@ -32,9 +32,6 @@ import ch.admin.seco.jobroom.service.dto.OrganizationAutocompleteDTO;
 import ch.admin.seco.jobroom.service.dto.OrganizationDTO;
 import ch.admin.seco.jobroom.service.mapper.OrganizationMapper;
 
-/**
- * Service Implementation for managing Organization.
- */
 @Service
 @Transactional
 public class OrganizationServiceImpl implements OrganizationService {

@@ -39,7 +39,7 @@ public class Accountability implements Serializable {
     @JoinColumn(name = "company_id", referencedColumnName = "id")
     private Company company;
 
-    public Accountability(AccountabilityType type, Company company) {
+    Accountability(AccountabilityType type, Company company) {
         Assert.notNull(company, "A company must be set.");
         Assert.notNull(type, "A type must be set.");
         this.type = type;

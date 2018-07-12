@@ -27,17 +27,20 @@ public class UserInfoDTO {
 
     private LocalDateTime lastLoginAt;
 
-    public UserInfoDTO(String id, String userExternalId, String firstName, String lastName, String email, RegistrationStatus registrationStatus, List<AccountabilityDTO> accountabilities, LocalDateTime createdAt, LocalDateTime modifiedAt, LocalDateTime lastLoginAt) {
-        this.id = id;
-        this.userExternalId = userExternalId;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.registrationStatus = registrationStatus;
-        this.accountabilities = accountabilities;
-        this.createdAt = createdAt;
-        this.modifiedAt = modifiedAt;
-        this.lastLoginAt = lastLoginAt;
+    private StesInformationDto stesInformation;
+
+    public UserInfoDTO(Builder builder) {
+        this.id = builder.id;
+        this.userExternalId = builder.userExternalId;
+        this.firstName = builder.firstName;
+        this.lastName = builder.lastName;
+        this.email = builder.email;
+        this.registrationStatus = builder.registrationStatus;
+        this.accountabilities = builder.accountabilities;
+        this.stesInformation = builder.stesInformation;
+        this.createdAt = builder.createdAt;
+        this.modifiedAt = builder.modifiedAt;
+        this.lastLoginAt = builder.lastLoginAt;
     }
 
     public String getId() {
@@ -78,5 +81,82 @@ public class UserInfoDTO {
 
     public LocalDateTime getLastLoginAt() {
         return lastLoginAt;
+    }
+
+    public StesInformationDto getStesInformation() {
+        return stesInformation;
+    }
+
+    public static class Builder {
+        private String id;
+        private String userExternalId;
+        private String firstName;
+        private String lastName;
+        private String email;
+        private RegistrationStatus registrationStatus;
+        private List<AccountabilityDTO> accountabilities;
+        private StesInformationDto stesInformation;
+        private LocalDateTime createdAt;
+        private LocalDateTime modifiedAt;
+        private LocalDateTime lastLoginAt;
+
+        public Builder setId(String id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder setUserExternalId(String userExternalId) {
+            this.userExternalId = userExternalId;
+            return this;
+        }
+
+        public Builder setFirstName(String firstName) {
+            this.firstName = firstName;
+            return this;
+        }
+
+        public Builder setLastName(String lastName) {
+            this.lastName = lastName;
+            return this;
+        }
+
+        public Builder setEmail(String email) {
+            this.email = email;
+            return this;
+        }
+
+        public Builder setRegistrationStatus(RegistrationStatus registrationStatus) {
+            this.registrationStatus = registrationStatus;
+            return this;
+        }
+
+        public Builder setAccountabilities(List<AccountabilityDTO> accountabilities) {
+            this.accountabilities = accountabilities;
+            return this;
+        }
+
+        public Builder setStesInformation(StesInformationDto stesInformation) {
+            this.stesInformation = stesInformation;
+            return this;
+        }
+
+        public Builder setCreatedAt(LocalDateTime createdAt) {
+            this.createdAt = createdAt;
+            return this;
+        }
+
+        public Builder setModifiedAt(LocalDateTime modifiedAt) {
+            this.modifiedAt = modifiedAt;
+            return this;
+        }
+
+        public Builder setLastLoginAt(LocalDateTime lastLoginAt) {
+            this.lastLoginAt = lastLoginAt;
+            return this;
+        }
+
+        public UserInfoDTO build() {
+            return new UserInfoDTO(this);
+        }
     }
 }

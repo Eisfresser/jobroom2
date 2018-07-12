@@ -39,6 +39,10 @@
         file="config/liquibase/changelog/20180706120000_add_user_info_times.xml"
         relativeToChangelogFile="false"/>
 
+    <include
+        file="config/liquibase/changelog/20180711120000_add_user_info_stes_information.xml"
+        relativeToChangelogFile="false"/>
+
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>

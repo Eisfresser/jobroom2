@@ -18,7 +18,7 @@ export const BIRTHDAY_START_DATE = new Date(new Date().getFullYear() - 30, 0);
 export class JobseekerDialogComponent implements OnInit {
 
     registerForm: FormGroup;
-    mismatchInfo = false;
+    errorMessageKey: string = null;
     buttonDisabled = false;
     birthdayDateMin = DateUtils.mapDateToNgbDateStruct(BIRTHDAY_MIN_DATE);
     birthdayDateMax = DateUtils.mapDateToNgbDateStruct(BIRTHDAY_MAX_DATE);
@@ -37,6 +37,7 @@ export class JobseekerDialogComponent implements OnInit {
     onSubmit() {
         // TODO implement spinner
         this.buttonDisabled = true;
+        this.errorMessageKey = null;
         const birthday: NgbDateStruct = this.registerForm.get('customerBirthday').value;
         this.registrationService.registerJobSeeker(
             {
@@ -44,16 +45,26 @@ export class JobseekerDialogComponent implements OnInit {
                 birthdateYear: birthday.year,
                 birthdateMonth: birthday.month,
                 birthdateDay: birthday.day
-            }).subscribe((res: HttpResponse<any>) => {
-            this.mismatchInfo = !res.body;
-            if (this.mismatchInfo) {
+            })
+            .finally(() => {
                 this.buttonDisabled = false;
-            } else {
+            })
+            .subscribe((res: HttpResponse<any>) => {
                 this.activeModal.close(true);
-            }
-        }, (error: HttpErrorResponse) => {
-            this.buttonDisabled = false;
-        });
+            }, (error: HttpErrorResponse) => {
+                if (error.error.reason) {
+                    if (error.error.reason === 'InvalidPersonenNumberException') {
+                        this.errorMessageKey = 'registration.customer.identificaton.mismatch.error';
+                        return;
+                    }
+                    if (error.error.reason === 'StesPersonNumberAlreadyTaken') {
+                        this.errorMessageKey = 'registration.customer.identificaton.already-taken.error';
+                        return;
+                    }
+                }
+                this.errorMessageKey = 'registration.customer.identificaton.technical.error';
+
+            });
     }
 
     checkButtonDisabled(): boolean {

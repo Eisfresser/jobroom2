@@ -7,8 +7,10 @@
     </div>
     <div class="modal-body">
         <p jhiTranslate="registration.customer.text">Please fill in..</p>
-        <div *ngIf="mismatchInfo" class="missmatch-info"
-             jhiTranslate="registration.customer.identificaton.mismatch.error"></div>
+
+        <div class="missmatch-info" *ngIf="errorMessageKey"  [jhiTranslate]="errorMessageKey">
+
+        </div>
 
         <form [formGroup]="registerForm" role="form" novalidate>
 
@@ -59,9 +61,7 @@
                                          [keys]="['home.tools.job-publication.messages.validate.required','registration.customer.messages.validate.birthdate']">
                 </jr2-input-error-message>
             </div>
-
         </form>
-        <jhi-alert-error></jhi-alert-error>
     </div>
     <div class="modal-footer">
         <button (click)="onSubmit()" class="btn btn-primary btn-lg"

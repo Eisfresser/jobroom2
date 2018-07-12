@@ -110,7 +110,7 @@ public class RegistrationServiceTest {
     }
 
     @Test
-    public void insertNewJobseeker() throws InvalidPersonenNumberException {
+    public void insertNewJobseeker() throws InvalidPersonenNumberException, StesPersonNumberAlreadyTaken {
         StesVerificationResult stesVerificationResult = new StesVerificationResult();
         stesVerificationResult.setVerified(true);
         when(mockCandidateService.verifyStesRegistrationData(any())).thenReturn(stesVerificationResult);

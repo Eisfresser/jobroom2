@@ -84,10 +84,12 @@ public class ExceptionTranslatorForRegistration implements AdviceTrait {
         return create(ex, problem, request);
     }
 
+
     @ExceptionHandler(RegistrationException.class)
     public ResponseEntity<Problem> handleRegistrationException(RegistrationException ex, NativeWebRequest request) {
         Problem problem = Problem.builder()
             .withStatus(Status.PRECONDITION_FAILED)
+            .with("reason", ex.getClass().getSimpleName())
             .with("message", ex.getMessage())
             .build();
         return create(ex, problem, request);

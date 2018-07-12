@@ -10,6 +10,12 @@
             "identificaton": {
                 "mismatch": {
                     "error": "Non abbiamo trovato dati URC in base alle indicazioni fornite. Per favore controllare che il numero personale e la data di nascita siano stati inseriti correttamente."
+                },
+                "already-taken": {
+                    "error": "Diese Personennummer wurde bereits verwendet"
+                },
+                "technical": {
+                    "error": "Es ist ein technisches Problem aufgetreten. Versuchen Sie es sp\u00e4ter noch einmal ansonsten wenden Sie sich an unseren Support via Kontaktformular"
                 }
             },
             "pn": {

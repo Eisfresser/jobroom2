@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import javax.validation.Valid;
 
+import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +18,7 @@ import ch.admin.seco.jobroom.service.dto.StesVerificationResult;
 
 @Component
 @Profile("stes-mock")
+@Primary
 public class CandidateServiceMock implements CandidateService {
 
     @PostMapping("/api/candidates/verify")

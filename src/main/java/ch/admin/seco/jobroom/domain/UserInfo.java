@@ -8,12 +8,15 @@ import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
+import javax.persistence.Embedded;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -94,6 +97,15 @@ public class UserInfo implements Serializable {
     @Column(name = "accountability_id")
     private Set<Accountability> accountabilities = new HashSet<>();
 
+    @Embedded
+    @AttributeOverrides({
+        @AttributeOverride(name = "personNumber", column = @Column(name = "stes_person_number")),
+        @AttributeOverride(name = "verificationType", column = @Column(name = "stes_verification_type")),
+        @AttributeOverride(name = "verifiedAt", column = @Column(name = "stes_verified_at"))
+    })
+    @Valid
+    private StesInformation stesInformation;
+
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
@@ -129,7 +141,13 @@ public class UserInfo implements Serializable {
         this.modifiedAt = LocalDateTime.now();
     }
 
-    public void closeRegistration() {
+
+    public void registerAsJobSeeker(Long personNumber) {
+        this.stesInformation = new StesInformation(personNumber, StesVerificationType.SIMPLE);
+        this.finishRegistration();
+    }
+
+    public void finishRegistration() {
         this.changeRegistrationStatus(RegistrationStatus.REGISTERED);
         this.accessCode = null;
         this.modifiedAt = LocalDateTime.now();
@@ -147,7 +165,6 @@ public class UserInfo implements Serializable {
         this.setAccessCode(createAccessCode());
         this.changeRegistrationStatus(RegistrationStatus.VALIDATION_PAV);
         this.modifiedAt = LocalDateTime.now();
-
     }
 
     public void registerExistingAgent(Company company) {
@@ -160,6 +177,7 @@ public class UserInfo implements Serializable {
         this.changeRegistrationStatus(UNREGISTERED);
         this.accountabilities.clear();
         this.modifiedAt = LocalDateTime.now();
+        this.stesInformation = null;
     }
 
     public Company getCompany() {
@@ -171,6 +189,10 @@ public class UserInfo implements Serializable {
             .findFirst()
             .map((Accountability::getCompany))
             .orElseThrow(() -> new IllegalStateException("No accountabilites with a company found for user: " + this.id));
+    }
+
+    public Optional<StesInformation> getStesInformation() {
+        return Optional.ofNullable(this.stesInformation);
     }
 
     public UserInfoId getId() {

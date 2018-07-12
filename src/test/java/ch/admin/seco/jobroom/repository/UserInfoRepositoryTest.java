@@ -1,5 +1,6 @@
 package ch.admin.seco.jobroom.repository;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -75,6 +76,22 @@ public class UserInfoRepositoryTest {
         assertNotNull(foundUser.get().getCompany());
         assertTrue(foundUser.get().getCompany().getName().equals("ACME AG"));
         assertTrue(foundUser.get().getCompany().getExternalId().equals(VALID_EXT_ID));
+    }
+
+    @Test
+    public void findByPersonNumber() {
+        // given
+        UserInfo dummyUser = getDummyUser(VALID_USER_EXT_ID_1);
+        Long personNumber = 1234L;
+        dummyUser.registerAsJobSeeker(personNumber);
+
+        this.userInfoRepository.save(dummyUser);
+
+        // when
+        Optional<UserInfo> byPersonNumber = this.userInfoRepository.findByPersonNumber(personNumber);
+
+        // then
+        assertThat(byPersonNumber).isPresent();
     }
 
     private UserInfo getDummyUser(String extId) {

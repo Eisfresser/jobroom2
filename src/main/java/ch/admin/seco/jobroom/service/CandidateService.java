@@ -17,7 +17,7 @@ import ch.admin.seco.jobroom.service.dto.CandidateProtectedDataDto;
 import ch.admin.seco.jobroom.service.dto.StesVerificationRequest;
 import ch.admin.seco.jobroom.service.dto.StesVerificationResult;
 
-@FeignClient(name = "candidateservice", decode404 = true, configuration = OAuth2InterceptedFeignConfiguration.class)
+@FeignClient(name = "candidateservice", decode404 = true, configuration = OAuth2InterceptedFeignConfiguration.class, primary = false)
 public interface CandidateService {
 
     @PostMapping("/api/candidates/verify")
