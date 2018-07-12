@@ -667,7 +667,8 @@
                 </fieldset>
                 <div class="job-publication--horizontal__actions">
                     <div class="form__actions">
-                        <button type="submit" class="btn btn-primary btn-lg">
+                        <button type="submit" [disabled]="disableSubmit"
+                                class="btn btn-primary btn-lg">
                             {{ 'home.tools.job-publication.submit' | translate }}
                         </button>
                         <button type="button" (click)="form.resetForm(); resetForm()" class="btn btn-secondary btn-lg">

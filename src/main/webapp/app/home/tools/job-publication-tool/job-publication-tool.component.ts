@@ -91,6 +91,7 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
     countries$: Observable<{ key: string, value: string }[]>;
     showSuccessSaveMessage: boolean;
     showErrorSaveMessage: boolean;
+    disableSubmit = false;
     private readonly SWITZ_KEY = 'CH';
     private unsubscribe$ = new Subject<void>();
 
@@ -223,8 +224,10 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
     onSubmit(): void {
         this.resetAlerts();
         if (this.jobPublicationForm.valid) {
+            this.disableSubmit = true;
             const createJobAdvertisement = JobPublicationMapper.mapJobPublicationFormToCreateJobAdvertisement(this.jobPublicationForm.value);
             this.jobAdvertisementService.save(createJobAdvertisement)
+                .finally(() => this.disableSubmit = false)
                 .subscribe(this.createSaveSubscriber());
         }
     }
