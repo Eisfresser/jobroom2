@@ -12,6 +12,7 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDFont;
+import org.apache.pdfbox.pdmodel.font.PDType0Font;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.apache.pdfbox.pdmodel.graphics.image.LosslessFactory;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
@@ -30,8 +31,11 @@ public abstract class PdfDocument<T> {
     protected PdfCoord currentPosition = new PdfCoord(0, 0);
     protected PDPageContentStream contentStream;
 
+
     protected static final PDFont FONT_NORMAL = PDType1Font.HELVETICA;
     protected static final PDFont FONT_BOLD = PDType1Font.HELVETICA_BOLD;
+    protected final PDFont font_monospace = PDType0Font.load(document, PdfDocument.class.getResourceAsStream("/fonts/ShareTechMono-Regular.ttf"));
+
     protected static final PDFont FONT_ITALIC = PDType1Font.HELVETICA_OBLIQUE;
     protected static final PDFont FONT_ITALIC_BOLD = PDType1Font.HELVETICA_BOLD_OBLIQUE;
 
@@ -118,6 +122,11 @@ public abstract class PdfDocument<T> {
 
     PdfDocument setStandardFont() throws IOException {
         this.setFont(FONT_NORMAL, FONT_MEDIUM, COLOR_PRIMARY);
+        return this;
+    }
+
+    PdfDocument setMonospaceFont() throws IOException {
+        this.setFont(font_monospace, FONT_MEDIUM, COLOR_PRIMARY);
         return this;
     }
 

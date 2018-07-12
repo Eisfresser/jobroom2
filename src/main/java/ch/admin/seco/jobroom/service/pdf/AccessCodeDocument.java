@@ -191,7 +191,10 @@ public class AccessCodeDocument extends PdfDocument<UserInfo> {
             .insertTextLine(this.messageSource.getMessage("pdf.accesscode.accesscode", null, this.locale) + ":")
             .setX(LEFT_BORDER + 110)
 
+            .setMonospaceFont()
             .insertTextLine(user.getAccessCode())
+
+            .setStandardFont()
             .setX(LEFT_BORDER)
             .newLine(ACCESS_CODE_BOTTOM_MARGIN);
     }
