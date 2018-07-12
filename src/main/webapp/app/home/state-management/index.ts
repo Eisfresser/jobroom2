@@ -23,6 +23,11 @@ import {
     GetActiveSystemNotificationsSuccessAction,
     HideSystemNotificationAction
 } from './actions/system-notification-actions';
+import {
+    HideStatusNotificationMessageAction,
+    ShowStatusNotificationMessageAction
+} from './actions/status-notification.actions';
+
 export { SystemNotificationState } from './state/system-notification-state';
 
 export * from './actions/job-search-tool.actions';
@@ -55,4 +60,6 @@ export type Actions =
     | GetActiveSystemNotificationsSuccessAction
     | GetActiveSystemNotificationsFailedAction
     | JobSearchUpdateOccupationTranslationAction
-    | HideSystemNotificationAction;
+    | HideSystemNotificationAction
+    | ShowStatusNotificationMessageAction
+    | HideStatusNotificationMessageAction

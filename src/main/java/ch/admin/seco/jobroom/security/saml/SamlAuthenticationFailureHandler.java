@@ -6,7 +6,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.common.base.Preconditions;
 import org.apache.commons.lang.StringUtils;
 import org.opensaml.saml2.core.StatusCode;
 import org.slf4j.Logger;
@@ -28,12 +27,11 @@ public class SamlAuthenticationFailureHandler implements AuthenticationFailureHa
 
     private final RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
-    private final String homePageUrl;
+    private final static String CANCELED_URL = "/#/?show-message=login-cancel";
 
     private final boolean redirectToHomeOnCancellation;
 
-    public SamlAuthenticationFailureHandler(String homePageUrl, boolean redirectToHomeOnCancellation) {
-        this.homePageUrl = Preconditions.checkNotNull(homePageUrl);
+    public SamlAuthenticationFailureHandler(boolean redirectToHomeOnCancellation) {
         this.redirectToHomeOnCancellation = redirectToHomeOnCancellation;
     }
 
@@ -42,8 +40,8 @@ public class SamlAuthenticationFailureHandler implements AuthenticationFailureHa
         if (exception instanceof SamlAuthenticationServiceException) {
             SamlAuthenticationServiceException samlAuthenticationServiceException = (SamlAuthenticationServiceException) exception;
             if (isCancelAuthentication(samlAuthenticationServiceException) && this.redirectToHomeOnCancellation) {
-                LOGGER.warn("Saml authentication failure looks like cancellation -> redirect to {}", this.homePageUrl);
-                this.redirectStrategy.sendRedirect(request, response, this.homePageUrl);
+                LOGGER.warn("Saml authentication failure looks like cancellation -> redirect to {}", CANCELED_URL);
+                this.redirectStrategy.sendRedirect(request, response, CANCELED_URL);
                 return;
             }
         }

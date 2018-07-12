@@ -8,23 +8,27 @@
         </li>
         <jr2-toolbar-item [icon]="'binoculars'" [active]="(activeToolbarItem$ | async) == ToolbarItem.JOB_SEEKERS"
                           routerLink="/jobseekers"
+                          queryParamsHandling="preserve"
                           (click)="collapseSubnavbar()"
                           [ngClass]="{show: !isSubnavCollapsed}">
             {{'home.toolbar.jobSeekers' | translate}}
         </jr2-toolbar-item>
         <jr2-toolbar-item [icon]="'building'" [active]="(activeToolbarItem$ | async) == ToolbarItem.COMPANIES"
                           routerLink="/companies/jobpublication"
+                          queryParamsHandling="preserve"
                           (click)="collapseSubnavbar()"
                           [ngClass]="{show: !isSubnavCollapsed}">
             {{'home.toolbar.companies' | translate}}
         </jr2-toolbar-item>
         <jr2-toolbar-item [icon]="'eye'" [active]="(activeToolbarItem$ | async) == ToolbarItem.RECRUITMENT_AGENCIES"
                           routerLink="/agents/candidates"
+                          queryParamsHandling="preserve"
                           (click)="collapseSubnavbar()"
                           [ngClass]="{show: !isSubnavCollapsed}">
             {{'home.toolbar.recruitmentAgencies' | translate}}
         </jr2-toolbar-item>
     </jr2-toolbar>
+    <jr2-status-notification></jr2-status-notification>
     <jr2-system-notification [activeSystemNotifications] = "activeSystemNotifications$ | async"></jr2-system-notification>
     <div class="container" [ngSwitch]="activeToolbarItem$ | async">
         <div class="row">

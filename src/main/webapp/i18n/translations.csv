@@ -657,6 +657,8 @@ home,home.registration.url,https://www.arbeit.swiss/secoalv/de/home/menue/untern
 home,home.title,Job-Room,Job-Room,Job-Room,Job-Room
 home,home.title.portal,arbeit,work,travail,lavoro
 home,home.title.portal-url,https://www.arbeit.swiss,https://www.arbeit.swiss/secoalv/en/home.html,https://www.arbeit.swiss/secoalv/fr/home.html,https://www.arbeit.swiss/secoalv/it/home.html
+home,home.login-cancel.title,Login fehlgeschlagen,Login failed,Echec du login,Login fallito
+home,home.login-cancel.message,Sie haben den Login Vorgang abgebrochen,You canceled the login process,Vous avez interrompu la procédure de login,Hai interrotto il processo di login
 home,home.toolbar.companies,Arbeitgeber,Employers,Employeurs,Datori di lavoro
 home,home.toolbar.jobSeekers,Stellensuchende,Job seekers,Demandeur d'emploi,Persone in cerca d'impiego
 home,home.toolbar.recruitmentAgencies,Arbeitsvermittler,Recruitment agencies,Agence de placement,Collocatori

@@ -3,12 +3,14 @@ import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { CandidateSearchToolState } from './candidate-search-tool.state';
 import { HomeLayoutState } from './layout.state';
 import { SystemNotificationState } from './system-notification-state';
+import { StatusNotificationState } from './status-notification.state';
 
 export interface HomeState {
     layoutState: HomeLayoutState;
     jobSearchTool: JobSearchToolState;
     candidateSearchTool: CandidateSearchToolState;
-    systemNotification: SystemNotificationState
+    systemNotification: SystemNotificationState;
+    statusNotification: StatusNotificationState;
 }
 
 export const getHomeState = createFeatureSelector<HomeState>('home');
@@ -27,3 +29,5 @@ export const getActiveSystemNotifications = createSelector(
             .map((id) => entities[id]);
     }
 );
+export const getStatusNotificationState = createSelector(getHomeState, (state: HomeState) => state.statusNotification);
+export const getStatusNotificationMessageKey = createSelector(getStatusNotificationState, (state: StatusNotificationState) => state.messageKey);

@@ -10,6 +10,10 @@
         "title": "Job-Room",
         "title.portal": "lavoro",
         "title.portal-url": "https://www.arbeit.swiss/secoalv/it/home.html",
+        "login-cancel": {
+            "title": "Login fallito",
+            "message": "Hai interrotto il processo di login"
+        },
         "toolbar": {
             "companies": "Datori di lavoro",
             "jobSeekers": "Persone in cerca d'impiego",

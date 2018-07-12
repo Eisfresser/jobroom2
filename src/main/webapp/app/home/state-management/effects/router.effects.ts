@@ -3,10 +3,19 @@ import { Actions, Effect } from '@ngrx/effects';
 import { Observable } from 'rxjs/Observable';
 import { Action, Store } from '@ngrx/store';
 import { ROUTER_NAVIGATION, RouterNavigationAction } from '@ngrx/router-store';
-import { SelectAgencyTabAction, SelectCompanyTabAction, SelectToolbarItemAction } from '../actions/layout.actions';
-import { AgenciesTab, CompaniesTab, HomeLayoutState, ToolbarItem } from '../state/layout.state';
-import { HomeState } from '../state/home.state';
-import { getLayoutState } from '..';
+import {
+    getLayoutState,
+    HomeState,
+    SelectAgencyTabAction,
+    SelectCompanyTabAction,
+    SelectToolbarItemAction
+} from '..';
+import {
+    AgenciesTab,
+    CompaniesTab,
+    HomeLayoutState,
+    ToolbarItem
+} from '../state/layout.state';
 import { Router } from '@angular/router';
 
 @Injectable()
@@ -46,30 +55,38 @@ export class HomeRouterEffects {
         .withLatestFrom(this.store.select(getLayoutState))
         .map(([action, state]: [RouterNavigationAction, HomeLayoutState]) => {
             if (!action.payload.event.url.includes('/home')) {
-               return action;
+                return action;
             }
 
-            if (state.activeToolbarItem === ToolbarItem.JOB_SEEKERS) {
-                this.router.navigate([this.JOB_SEEKERS_PATH]);
-            } else if (state.activeToolbarItem === ToolbarItem.COMPANIES) {
-                if (state.activeCompanyTabId === CompaniesTab.JOB_PUBLICATION) {
-                    this.router.navigate([this.COMPANIES_JOB_PUBLICATION_PATH]);
-                } else {
-                    this.router.navigate([this.COMPANIES_CANDIDATES_PATH]);
-                }
-            } else if (state.activeToolbarItem === ToolbarItem.RECRUITMENT_AGENCIES) {
-                if (state.activeAgencyTabId === AgenciesTab.CANDIDATE_SEARCH) {
-                    this.router.navigate([this.AGENTS_CANDIDATES_PATH]);
-                } else {
-                    this.router.navigate([this.AGENTS_JOB_PUBLICATION_PATH]);
-                }
+            const redirectPath = this.resolveRedirectPath(state);
+            if (redirectPath) {
+                const queryParams = action.payload.event.state['queryParams'];
+                this.router.navigate([redirectPath], { queryParams });
             }
-
             return action;
         });
 
     constructor(private actions$: Actions,
                 private router: Router,
                 private store: Store<HomeState>) {
+    }
+
+    private resolveRedirectPath(state: HomeLayoutState): string {
+        if (state.activeToolbarItem === ToolbarItem.JOB_SEEKERS) {
+            return this.JOB_SEEKERS_PATH;
+        } else if (state.activeToolbarItem === ToolbarItem.COMPANIES) {
+            if (state.activeCompanyTabId === CompaniesTab.JOB_PUBLICATION) {
+                return this.COMPANIES_JOB_PUBLICATION_PATH;
+            } else {
+                return this.COMPANIES_CANDIDATES_PATH;
+            }
+        } else if (state.activeToolbarItem === ToolbarItem.RECRUITMENT_AGENCIES) {
+            if (state.activeAgencyTabId === AgenciesTab.CANDIDATE_SEARCH) {
+                return this.AGENTS_CANDIDATES_PATH;
+            } else {
+                return this.AGENTS_JOB_PUBLICATION_PATH;
+            }
+        }
+        return null;
     }
 }

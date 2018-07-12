@@ -1,6 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { JobroomSharedModule, JobSearchSharedModule } from '../shared';
+import { JobroomSharedModule, JobSearchSharedModule, BackgroundUtils } from '../shared';
 import { HomeComponent } from './';
 import { JobSearchToolComponent } from './tools/job-search-tool/job-search-tool.component';
 import { CandidateSearchToolComponent } from './tools/candidate-search-tool/candidate-search-tool.component';
@@ -22,7 +22,7 @@ import { JobDescriptionComponent } from './tools/job-publication-tool/job-descri
 import { JobAdvertisementResolverService } from './tools/job-publication-tool/service/job-advertisement-resolver.service';
 import { SystemNotificationComponent } from './system-notification/system.notification.component';
 import { SystemNotificationService } from './system-notification/system.notification.service';
-import { BackgroundUtils } from '../shared/utils/background-utils';
+import { StatusNotificationComponent } from './status-notification/status-notification.component';
 
 @NgModule({
     imports: [
@@ -46,7 +46,8 @@ import { BackgroundUtils } from '../shared/utils/background-utils';
         LanguageSkillsComponent,
         ZipCodeComponent,
         ScrollToFirstInvalidDirective,
-        JobDescriptionComponent
+        JobDescriptionComponent,
+        StatusNotificationComponent
     ],
     entryComponents: [],
     providers: [

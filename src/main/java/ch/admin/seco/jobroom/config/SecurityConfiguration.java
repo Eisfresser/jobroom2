@@ -252,7 +252,7 @@ public class SecurityConfiguration {
         }
 
         private SamlAuthenticationFailureHandler authenticationFailureHandler() {
-            return new SamlAuthenticationFailureHandler("/", this.eiamSecurityProperties.isEnableRedirectOnCancellation());
+            return new SamlAuthenticationFailureHandler(this.eiamSecurityProperties.isEnableRedirectOnCancellation());
         }
 
         private SimpleUrlLogoutSuccessHandler successLogoutHandler() {
