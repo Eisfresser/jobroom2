@@ -12,10 +12,10 @@
                     "error": "We were unable to find any RAV data based on the information provided. Please verify your personal ID and date of birth."
                 },
                 "already-taken": {
-                    "error": "Diese Personennummer wurde bereits verwendet"
+                    "error": "This personal identification number is already in use"
                 },
                 "technical": {
-                    "error": "Es ist ein technisches Problem aufgetreten. Versuchen Sie es sp\u00e4ter noch einmal ansonsten wenden Sie sich an unseren Support via Kontaktformular"
+                    "error": "There is a technical problem. Please try again later or contact our support team using the contact form."
                 }
             },
             "pn": {

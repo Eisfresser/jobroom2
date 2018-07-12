@@ -12,10 +12,10 @@
                     "error": "Non abbiamo trovato dati URC in base alle indicazioni fornite. Per favore controllare che il numero personale e la data di nascita siano stati inseriti correttamente."
                 },
                 "already-taken": {
-                    "error": "Diese Personennummer wurde bereits verwendet"
+                    "error": "Questo numero personale \u00e8 gi\u00e0 attribuito"
                 },
                 "technical": {
-                    "error": "Es ist ein technisches Problem aufgetreten. Versuchen Sie es sp\u00e4ter noch einmal ansonsten wenden Sie sich an unseren Support via Kontaktformular"
+                    "error": "Si \u00e8 verificato un problema tecnico. Riprovare pi\u00f9 tardi o rivolgersi al Supporto mediante il modulo di contatto"
                 }
             },
             "pn": {

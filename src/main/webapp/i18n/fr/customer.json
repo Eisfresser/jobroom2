@@ -12,10 +12,10 @@
                     "error": "Nous n'avons trouv\u00e9 aucune donn\u00e9e ORP correspondant \u00e0 vos indications. Veuillez v\u00e9rifier que vous avez indiqu\u00e9 correctement le num\u00e9ro personnel et la date de naissance."
                 },
                 "already-taken": {
-                    "error": "Diese Personennummer wurde bereits verwendet"
+                    "error": "Ce num\u00e9ro d\u2019identification personnel est d\u00e9j\u00e0 utilis\u00e9"
                 },
                 "technical": {
-                    "error": "Es ist ein technisches Problem aufgetreten. Versuchen Sie es sp\u00e4ter noch einmal ansonsten wenden Sie sich an unseren Support via Kontaktformular"
+                    "error": "Un probl\u00e8me technique est survenu. Veuillez r\u00e9essayer plus tard ou nous contacter \u00e0 l\u2019aide du formulaire pr\u00e9vu \u00e0 cet effet"
                 }
             },
             "pn": {
