@@ -44,8 +44,17 @@ export class UserInfoComponent {
         if (!confirmed) {
             return;
         }
-        let params = new HttpParams();
-        params = params.set('role', 'NO_ROLE');
+        this.http.delete(UserInfoComponent.BASE_URL + this.email.value, { params: this.prepareDeleteParams() })
+            .subscribe(() => {
+                this.searchByEMail();
+            });
+    }
+
+    private prepareDeleteParams() {
+        let params = new HttpParams().set('role', 'NO_ROLE');
+        if (!!this.userRoles) {
+            return params;
+        }
         if (this.userRoles.includes('ROLE_JOBSEEKER_CLIENT')) {
             params = params.set('role', 'JOB_SEEKER');
         } else if (this.userRoles.includes('ROLE_COMPANY')) {
@@ -53,10 +62,7 @@ export class UserInfoComponent {
         } else if (this.userRoles.includes('ROLE_PRIVATE_EMPLOYMENT_AGENT')) {
             params = params.set('role', 'PRIVATE_AGENT');
         }
-        this.http.delete(UserInfoComponent.BASE_URL + this.email.value, { params })
-            .subscribe(() => {
-                this.searchByEMail();
-            });
+        return params;
     }
 }
 
