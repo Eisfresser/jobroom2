@@ -10,6 +10,7 @@ import {
     metricsRoute,
     systemNotificationsManagementRoute,
     userDialogRoute,
+    userInfoRoute,
     userMgmtRoute
 } from './';
 
@@ -19,6 +20,7 @@ import { apiUserManagementRoutes } from './api-user-management/api-user-manageme
 const ADMIN_ROUTES = [
     auditsRoute,
     configurationRoute,
+    userInfoRoute,
     docsRoute,
     healthRoute,
     logsRoute,

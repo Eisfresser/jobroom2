@@ -1,17 +1,14 @@
-package ch.admin.seco.jobroom.security.registration;
+package ch.admin.seco.jobroom.service;
 
 import static ch.admin.seco.jobroom.domain.UserInfo_.registrationStatus;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -20,7 +17,6 @@ import org.springframework.util.StringUtils;
 import ch.admin.seco.jobroom.config.Constants;
 import ch.admin.seco.jobroom.domain.Company;
 import ch.admin.seco.jobroom.domain.Organization;
-import ch.admin.seco.jobroom.domain.StesInformation;
 import ch.admin.seco.jobroom.domain.User;
 import ch.admin.seco.jobroom.domain.UserInfo;
 import ch.admin.seco.jobroom.domain.UserInfoId;
@@ -31,6 +27,7 @@ import ch.admin.seco.jobroom.repository.OrganizationRepository;
 import ch.admin.seco.jobroom.repository.UserInfoRepository;
 import ch.admin.seco.jobroom.repository.UserRepository;
 import ch.admin.seco.jobroom.security.AuthoritiesConstants;
+import ch.admin.seco.jobroom.security.IsAdmin;
 import ch.admin.seco.jobroom.security.MD5PasswordEncoder;
 import ch.admin.seco.jobroom.security.UserPrincipal;
 import ch.admin.seco.jobroom.security.registration.eiam.EiamAdminService;
@@ -39,16 +36,9 @@ import ch.admin.seco.jobroom.security.registration.eiam.UserNotFoundException;
 import ch.admin.seco.jobroom.security.registration.uid.FirmData;
 import ch.admin.seco.jobroom.security.registration.uid.UidClient;
 import ch.admin.seco.jobroom.security.registration.uid.UidCompanyNotFoundException;
-import ch.admin.seco.jobroom.service.CandidateService;
-import ch.admin.seco.jobroom.service.CurrentUserService;
-import ch.admin.seco.jobroom.service.MailService;
-import ch.admin.seco.jobroom.service.UserInfoNotFoundException;
-import ch.admin.seco.jobroom.service.dto.AccountabilityDTO;
 import ch.admin.seco.jobroom.service.dto.RegistrationResultDTO;
-import ch.admin.seco.jobroom.service.dto.StesInformationDto;
 import ch.admin.seco.jobroom.service.dto.StesVerificationRequest;
 import ch.admin.seco.jobroom.service.dto.StesVerificationResult;
-import ch.admin.seco.jobroom.service.dto.UserInfoDTO;
 
 @Service
 @ConfigurationProperties(prefix = "security")
@@ -180,64 +170,19 @@ public class RegistrationService {
         this.accessCodeMailRecipient = accessCodeMailRecipient;
     }
 
-    @PreAuthorize("hasAuthority('ROLE_SYSADMIN')")
+    @IsAdmin
     public void unregisterJobSeeker(String eMail) throws UserNotFoundException {
         doUnregister(eMail, EiamClientRole.ROLE_JOBSEEKER);
     }
 
-    @PreAuthorize("hasAuthority('ROLE_SYSADMIN')")
+    @IsAdmin
     public void unregisterPrivateAgent(String eMail) throws UserNotFoundException {
         doUnregister(eMail, EiamClientRole.ROLE_PRIVATE_EMPLOYMENT_AGENT);
     }
 
-    @PreAuthorize("hasAuthority('ROLE_SYSADMIN')")
+    @IsAdmin
     public void unregisterCompany(String eMail) throws UserNotFoundException {
         doUnregister(eMail, EiamClientRole.ROLE_COMPANY);
-    }
-
-    @PreAuthorize("hasAuthority('ROLE_SYSADMIN')")
-    public UserInfoDTO getUserInfo(String eMail) throws UserInfoNotFoundException {
-        Optional<UserInfo> userInfo = this.userInfoRepository.findByEMail(eMail);
-        return userInfo.map(RegistrationService::toUserInfoDTO)
-            .orElseThrow(() -> new UserInfoNotFoundException(eMail));
-    }
-
-    private static UserInfoDTO toUserInfoDTO(UserInfo userInfo) {
-        return new UserInfoDTO.Builder()
-            .setId(userInfo.getId().getValue())
-            .setUserExternalId(userInfo.getUserExternalId())
-            .setFirstName(userInfo.getFirstName())
-            .setLastName(userInfo.getLastName())
-            .setEmail(userInfo.getEmail())
-            .setRegistrationStatus(userInfo.getRegistrationStatus())
-            .setAccountabilities(toAccountabilityDTOs(userInfo))
-            .setStesInformation(userInfo.getStesInformation()
-                .map(RegistrationService::toStesInformationDto)
-                .orElse(null)
-            )
-            .setCreatedAt(userInfo.getCreatedAt())
-            .setModifiedAt(userInfo.getModifiedAt())
-            .setLastLoginAt(userInfo.getLastLoginAt())
-            .build();
-    }
-
-    private static StesInformationDto toStesInformationDto(StesInformation stesInformation) {
-        return new StesInformationDto(
-            stesInformation.getPersonNumber(),
-            stesInformation.getVerificationType(),
-            stesInformation.getVerifiedAt()
-        );
-    }
-
-    private static List<AccountabilityDTO> toAccountabilityDTOs(UserInfo userInfo) {
-        return userInfo.getAccountabilities().stream()
-            .map(accountability -> new AccountabilityDTO(
-                accountability.getType(),
-                accountability.getCompany().getName(),
-                accountability.getCompany().getExternalId(),
-                accountability.getCompany().getSource()
-            ))
-            .collect(Collectors.toList());
     }
 
     private boolean validateOldLogin(String username, String password) {

@@ -8,6 +8,8 @@ export * from './configuration/configuration.service';
 export * from './configuration/configuration.route';
 export * from './docs/docs.component';
 export * from './docs/docs.route';
+export * from './user-info/user-info.route';
+export * from './user-info/user-info.component';
 export * from './health/health.component';
 export * from './health/health-modal.component';
 export * from './health/health.service';

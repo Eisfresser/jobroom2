@@ -11,12 +11,13 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.NativeWebRequest;
 
-import ch.admin.seco.jobroom.security.registration.AvgNotFoundException;
-import ch.admin.seco.jobroom.security.registration.RegistrationException;
 import ch.admin.seco.jobroom.security.registration.eiam.EiamClientRuntimeException;
+import ch.admin.seco.jobroom.security.registration.eiam.UserNotFoundException;
 import ch.admin.seco.jobroom.security.registration.uid.UidClientRuntimeException;
 import ch.admin.seco.jobroom.security.registration.uid.UidCompanyNotFoundException;
+import ch.admin.seco.jobroom.service.AvgNotFoundException;
 import ch.admin.seco.jobroom.service.CouldNotLoadCurrentUserException;
+import ch.admin.seco.jobroom.service.RegistrationException;
 import ch.admin.seco.jobroom.service.UserInfoNotFoundException;
 
 /**
@@ -79,11 +80,21 @@ public class ExceptionTranslatorForRegistration implements AdviceTrait {
     public ResponseEntity<Problem> handleUserInfoNotFoundException(UserInfoNotFoundException ex, NativeWebRequest request) {
         Problem problem = Problem.builder()
             .withStatus(Status.NOT_FOUND)
+            .with("reason", ex.getClass().getSimpleName())
             .with("message", ex.getMessage())
             .build();
         return create(ex, problem, request);
     }
 
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<Problem> handleUserNotFoundException(UserNotFoundException ex, NativeWebRequest request) {
+        Problem problem = Problem.builder()
+            .withStatus(Status.NOT_FOUND)
+            .with("reason", ex.getClass().getSimpleName())
+            .with("message", ex.getMessage())
+            .build();
+        return create(ex, problem, request);
+    }
 
     @ExceptionHandler(RegistrationException.class)
     public ResponseEntity<Problem> handleRegistrationException(RegistrationException ex, NativeWebRequest request) {

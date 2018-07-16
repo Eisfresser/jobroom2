@@ -1,4 +1,4 @@
-package ch.admin.seco.jobroom.security.registration;
+package ch.admin.seco.jobroom.service;
 
 public abstract class RegistrationException extends Exception {
 

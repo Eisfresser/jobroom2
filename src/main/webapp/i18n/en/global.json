@@ -182,6 +182,7 @@
             "admin": {
                 "api-user-management": "API-Schl\u00fcssel-Verwaltung",
                 "apidocs": "API",
+                "user-info": "User-Info",
                 "audits": "Audits",
                 "configuration": "Configuration",
                 "database": "Database",

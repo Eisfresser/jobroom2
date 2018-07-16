@@ -370,6 +370,7 @@ global,global.menu.account.sessions,Sitzungen,Sessions,Sessions,Sessioni
 global,global.menu.account.settings,Einstellungen,Settings,Paramètres,Impostazioni
 global,global.menu.admin.api-user-management,API-Schlüssel-Verwaltung,API-Schlüssel-Verwaltung,API-Schlüssel-Verwaltung,API-Schlüssel-Verwaltung
 global,global.menu.admin.apidocs,API,API,API,API
+global,global.menu.admin.user-info,User-Info,User-Info,User-Info,User-Info
 global,global.menu.admin.audits,Audits,Audits,Audits,Cambiamenti
 global,global.menu.admin.configuration,Konfiguration,Configuration,Configuration,Configurazione
 global,global.menu.admin.database,Datenbank,Database,Base de données,Database

@@ -1,5 +1,8 @@
 package ch.admin.seco.jobroom.security.registration.eiam;
 
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import ch.adnovum.nevisidm.ws.services.v1.Profile;
 import ch.adnovum.nevisidm.ws.services.v1.Role;
 import ch.adnovum.nevisidm.ws.services.v1.User;
@@ -30,6 +33,14 @@ public class EiamAdminService {
         } else {
             LOGGER.warn("User with extId: {} doesn't have the requested role: {} to be removed", eiamClientRole);
         }
+    }
+
+    public Set<String> getRoles(String email) throws UserNotFoundException {
+        User user = this.eiamClient.getUserByEmail(email);
+        return user.getProfiles().stream()
+            .flatMap(profile -> profile.getRoles().stream())
+            .map(Role::getName)
+            .collect(Collectors.toSet());
     }
 
     private void removeRoleFromUser(String extId, String role) throws UserNotFoundException {

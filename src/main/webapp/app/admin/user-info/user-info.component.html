@@ -1,0 +1,107 @@
+<div class="container-fluid">
+    <h2>
+        <span>User Info</span>
+    </h2>
+
+    <form class="form-inline" (ngSubmit)="searchByEMail()" novalidate
+          autocomplete="off">
+        <label class="sr-only" for="inpt-user-email">E-Mail</label>
+        <div class="mb-2 mr-sm-2">
+            <input type="text" class="form-control" id="inpt-user-email"
+                   placeholder="muster@example.com"
+                   [formControl]="email">
+        </div>
+        <button type="submit" class="btn btn-primary mb-2">Suchen</button>
+    </form>
+
+    <hr>
+
+    <jhi-alert-error></jhi-alert-error>
+
+    <div class="row">
+        <div class="col-6">
+            <h3>User Info</h3>
+            <div *ngIf="selectedUserInfo;else no_user_info">
+                <dl>
+                    <dt>Ext-Id:</dt>
+                    <dd>{{selectedUserInfo.userExternalId}}</dd>
+
+                    <dt>E-Mail:</dt>
+                    <dd>{{selectedUserInfo.email}}</dd>
+
+                    <dt>First-Name:</dt>
+                    <dd>{{selectedUserInfo.firstName}}</dd>
+
+                    <dt>Last-Name:</dt>
+                    <dd>{{selectedUserInfo.lastName}}</dd>
+
+                    <dt>Registration Status:</dt>
+                    <dd class="badge"
+                        [class.badge-danger]="selectedUserInfo.registrationStatus === 'UNREGISTERED'"
+                        [class.badge-warning]="selectedUserInfo.registrationStatus === 'VALIDATION_PAV' || selectedUserInfo.registrationStatus === 'VALIDATION_EMP'"
+                        [class.badge-success]="selectedUserInfo.registrationStatus === 'REGISTERED'"
+                    >{{selectedUserInfo.registrationStatus}}
+                    </dd>
+
+                    <dt>Created at:</dt>
+                    <dd>{{selectedUserInfo.createdAt | date}}</dd>
+
+                    <dt>Modified at:</dt>
+                    <dd>{{selectedUserInfo.modifiedAt| date}}</dd>
+
+                    <dt>Last login at</dt>
+                    <dd>{{selectedUserInfo.lastLoginAt| date}}</dd>
+                </dl>
+                <h4>Accountabilities Info</h4>
+                <ul *ngIf="selectedUserInfo.stesInformation;else no_accountabilites">
+                    <li *ngFor="let account of selectedUserInfo.accountabilities">
+                        {{account.companyName}},
+                        {{account.companyExternalId}},
+                        {{account.companySource}}
+                    </li>
+                </ul>
+                <ng-template #no_accountabilites>
+                    Keine Firmen Berechtigungen
+                </ng-template>
+                <h4>Stes Info</h4>
+                <ul *ngIf="selectedUserInfo.stesInformation;else no_stes_info">
+                    <dl>
+                        <dt>Person Number</dt>
+                        <dd>{{selectedUserInfo.stesInformation.personNumber}}</dd>
+
+                        <dt>Verified at</dt>
+                        <dd>{{selectedUserInfo.stesInformation.verifiedAt | date}}</dd>
+                    </dl>
+                </ul>
+                <ng-template #no_stes_info>
+                    Keine Stes Informationen
+                </ng-template>
+                <h5>Aktionen</h5>
+                <button type="button" class="btn btn-sm btn-primary" (click)="unregister()">
+                    Zurückstellen
+                </button>
+            </div>
+            <ng-template #no_user_info>
+                <div class="alert alert-light" role="alert">
+                    User nicht gefunden
+                </div>
+            </ng-template>
+        </div>
+
+        <div class="col-6">
+            <h3>Roles:</h3>
+            <div *ngIf="userRoles?.length > 0;else no_roles">">
+                <ul>
+                    <li *ngFor="let role of userRoles">
+                        {{role}}
+                    </li>
+                </ul>
+            </div>
+            <ng-template #no_roles>
+                <div class="alert alert-light" role="alert">
+                    Keine Rolen in EIAM
+                </div>
+            </ng-template>
+        </div>
+    </div>
+</div>

@@ -20,6 +20,11 @@ class EiamClientMock implements EiamClient {
         return user;
     }
 
+    @Override
+    public User getUserByEmail(String email) {
+        return this.getUserByExtId(email);
+    }
+
     private Profile prepareProfile() {
         Profile profile = new Profile();
         profile.setExtId("DUMMY-PROFILE-EXT-ID");

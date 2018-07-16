@@ -1,11 +1,14 @@
 package ch.admin.seco.jobroom.security.registration.eiam;
 
+import static ch.admin.seco.jobroom.security.registration.eiam.UserNotFoundException.Identification;
+
 import java.util.List;
 
 import ch.adnovum.nevisidm.ws.services.v1.AddAuthorizationToProfile;
 import ch.adnovum.nevisidm.ws.services.v1.AddAuthorizationToProfileRequest;
 import ch.adnovum.nevisidm.ws.services.v1.Authorization;
 import ch.adnovum.nevisidm.ws.services.v1.BusinessException;
+import ch.adnovum.nevisidm.ws.services.v1.GetUserByEmailResponse;
 import ch.adnovum.nevisidm.ws.services.v1.GetUsersByExtId;
 import ch.adnovum.nevisidm.ws.services.v1.GetUsersByExtIdResponse;
 import ch.adnovum.nevisidm.ws.services.v1.ObjectFactory;
@@ -14,6 +17,7 @@ import ch.adnovum.nevisidm.ws.services.v1.RemoveAuthorizationFromProfile;
 import ch.adnovum.nevisidm.ws.services.v1.RemoveAuthorizationFromProfileRequest;
 import ch.adnovum.nevisidm.ws.services.v1.Role;
 import ch.adnovum.nevisidm.ws.services.v1.User;
+import ch.adnovum.nevisidm.ws.services.v1.UserGetByEmailForLogin;
 import ch.adnovum.nevisidm.ws.services.v1.UserGetByExtId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,17 +54,33 @@ class DefaultEiamClient implements EiamClient {
 
         LOGGER.debug("Eiam client sending [extId={}]", userExtId);
 
-        GetUsersByExtIdResponse result = (GetUsersByExtIdResponse) webServiceTemplate.marshalSendAndReceive(getUsersByExtId); //, ACTION_ADDING_CALLBACK);
+        GetUsersByExtIdResponse result = (GetUsersByExtIdResponse) webServiceTemplate.marshalSendAndReceive(getUsersByExtId);
         List<User> users = result.getReturns();
 
         LOGGER.debug("Eiam client received user = {}", printUsers(users));
 
         if (users.isEmpty()) {
-            throw new UserNotFoundException(userExtId);
+            throw new UserNotFoundException(Identification.EXT_ID, userExtId);
         } else if (users.size() > 1) {
             throw new ExtIdNotUniqueException(userExtId);
         }
         return users.get(0);
+    }
+
+    @Override
+    public User getUserByEmail(String email) throws UserNotFoundException {
+        ObjectFactory factory = new ObjectFactory();
+        UserGetByEmailForLogin userGetByEmailForLogin = factory.createUserGetByEmailForLogin();
+        userGetByEmailForLogin.setEmail(email);
+        userGetByEmailForLogin.setDetail(DEFAULT_DETAIL_LEVEL);
+        userGetByEmailForLogin.setClientName(clientName);
+        LOGGER.debug("Eiam client sending [email={}]", email);
+        GetUserByEmailResponse result = (GetUserByEmailResponse) webServiceTemplate.marshalSendAndReceive(userGetByEmailForLogin);
+        User user = result.getReturn();
+        if (user == null) {
+            throw new UserNotFoundException(Identification.EMAIL, email);
+        }
+        return user;
     }
 
     @Override

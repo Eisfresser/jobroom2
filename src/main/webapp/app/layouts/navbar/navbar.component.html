@@ -60,8 +60,10 @@
                                 <div class="megamenu-menu">
                                     <div>
                                         <span class="dropdown-title">Admin</span>
+
                                         <a class="dropdown-item" routerLink="gateway"
-                                           routerLinkActive="active">
+                                           routerLinkActive="active"
+                                           *jhiHasAnyAuthority="'ROLE_SYSADMIN'">
                                             <span class="fa fa-fw fa-road"
                                                   aria-hidden="true"></span>
                                             <span jhiTranslate="global.menu.admin.gateway"
@@ -133,6 +135,14 @@
                                                 jhiTranslate="global.menu.admin.apidocs">API</span>
                                         </a>
 
+                                        <a class="dropdown-item" routerLink="user-info"
+                                           *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_SYSADMIN']"
+                                           routerLinkActive="active"
+                                           (click)="collapseNavbar()">
+                                            <span class="fa fa-fw fa-user" aria-hidden="true"></span>
+                                            <span jhiTranslate="global.menu.admin.user-info">User-Info</span>
+                                        </a>
+
                                         <a class="dropdown-item" routerLinkActive="active"
                                            *jhiHasAnyAuthority="'ROLE_SYSADMIN'"
                                            (click)="isReindexMenuCollapsed = !isReindexMenuCollapsed">
@@ -161,7 +171,6 @@
                                                     Data</a>
                                             </div>
                                         </a>
-
 
                                         <!-- jhipster-needle-add-element-to-admin-menu - JHipster will add entities to the admin menu here -->
 
@@ -298,6 +307,7 @@
                                 </a>
 
                                 <span class="dropdown-title">Admin</span>
+
                                 <a class="dropdown-item" routerLink="gateway"
                                    *jhiHasAnyAuthority="'ROLE_SYSADMIN'"
                                    routerLinkActive="active">
@@ -308,7 +318,7 @@
                                 </a>
 
                                 <a class="dropdown-item"
-                                   *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_SYSADMIN']"
+                                   *jhiHasAnyAuthority="'ROLE_SYSADMIN'"
                                    routerLink="user-management"
                                    routerLinkActive="active"
                                    (click)="collapseNavbar()">
@@ -386,6 +396,16 @@
                                         jhiTranslate="global.menu.admin.apidocs">API</span>
                                 </a>
 
+                                <a class="dropdown-item" routerLink="user-info"
+                                   *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_SYSADMIN']"
+                                   routerLinkActive="active"
+                                   (click)="collapseNavbar()">
+                                    <span class="fa fa-fw fa-user"
+                                          aria-hidden="true"></span>
+                                    <span
+                                        jhiTranslate="global.menu.admin.user-info">User-Info</span>
+                                </a>
+
                                 <a class="dropdown-item" routerLinkActive="active"
                                    *jhiHasAnyAuthority="'ROLE_SYSADMIN'"
                                    (click)="isReindexMenuCollapsed = !isReindexMenuCollapsed">
@@ -457,7 +477,8 @@
                     </a>
                 </li>
                 <li class="nav-item" *ngIf="!isAuthenticated() && !noEiam">
-                    <a class="nav-link nav-link--login nav-link--registration" [href]="'home.registration.url' | translate" >
+                    <a class="nav-link nav-link--login nav-link--registration"
+                       [href]="'home.registration.url' | translate">
                         <span>{{'global.menu.account.registration' | translate}}</span>
                     </a>
                 </li>

@@ -168,7 +168,7 @@ security:
             ROLE_COMPANY: ALV-jobroom.ROLE_COMPANY
             ROLE_PUBLIC_EMPLOYMENT_SERVICE: ALV-jobroom.ROLE_PUBLIC_EMPLOYMENT_SERVICE
             ROLE_ADMIN: ALV-jobroom.ROLE_ADMIN
-            ROLE_SYSADMIN: ALV-jobroom.ROLE_ADMIN
+            ROLE_SYSADMIN: ALV-jobroom.ROLE_SYSADMIN
         enable-redirect-on-cancellation: true
     user:
         logout_url: '/saml/logout'

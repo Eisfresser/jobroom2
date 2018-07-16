@@ -18,7 +18,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,7 +31,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ch.admin.seco.jobroom.config.Constants;
 import ch.admin.seco.jobroom.domain.User;
 import ch.admin.seco.jobroom.repository.UserRepository;
-import ch.admin.seco.jobroom.security.AuthoritiesConstants;
+import ch.admin.seco.jobroom.security.IsSystemAdmin;
 import ch.admin.seco.jobroom.service.MailService;
 import ch.admin.seco.jobroom.service.UserService;
 import ch.admin.seco.jobroom.service.dto.UserDTO;
@@ -98,7 +97,7 @@ public class UserResource {
      */
     @PostMapping("/users")
     @Timed
-    @Secured({AuthoritiesConstants.ROLE_ADMIN, AuthoritiesConstants.ROLE_SYSADMIN})
+    @IsSystemAdmin
     public ResponseEntity<User> createUser(@Valid @RequestBody UserDTO userDTO) throws URISyntaxException {
         log.debug("REST request to save User : {}", userDTO);
 
@@ -125,7 +124,7 @@ public class UserResource {
      */
     @PutMapping("/users")
     @Timed
-    @Secured({AuthoritiesConstants.ROLE_ADMIN, AuthoritiesConstants.ROLE_SYSADMIN})
+    @IsSystemAdmin
     public ResponseEntity<UserDTO> updateUser(@Valid @RequestBody UserDTO userDTO) {
         log.debug("REST request to update User : {}", userDTO);
         Optional<User> existingUser = userRepository.findOneByLogin(userDTO.getLogin().toLowerCase());
@@ -159,7 +158,7 @@ public class UserResource {
      */
     @GetMapping("/users/authorities")
     @Timed
-    @Secured({AuthoritiesConstants.ROLE_ADMIN, AuthoritiesConstants.ROLE_SYSADMIN})
+    @IsSystemAdmin
     public List<String> getAuthorities() {
         return userService.getAuthorities();
     }
@@ -187,7 +186,7 @@ public class UserResource {
      */
     @DeleteMapping("/users/{login:" + Constants.LOGIN_REGEX + "}")
     @Timed
-    @Secured({AuthoritiesConstants.ROLE_ADMIN, AuthoritiesConstants.ROLE_SYSADMIN})
+    @IsSystemAdmin
     public ResponseEntity<Void> deleteUser(@PathVariable String login) {
         log.debug("REST request to delete User: {}", login);
         userService.deleteUser(login);

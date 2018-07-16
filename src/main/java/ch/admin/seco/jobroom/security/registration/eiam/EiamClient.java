@@ -9,6 +9,8 @@ public interface EiamClient {
 
     User getUserByExtId(String userExtId) throws UserNotFoundException;
 
+    User getUserByEmail(String email) throws UserNotFoundException;
+
     void addRoleToUser(String userExtId, String profileExtId, String roleName);
 
     void removeRoleFromUser(String userExtId, String profileExtId, String role);
