@@ -75,6 +75,7 @@ class DefaultEiamClient implements EiamClient {
         User user = factory.createUser();
         user.setEmail(email);
         userQuery.setUser(user);
+        userQuery.setDetail(DEFAULT_DETAIL_LEVEL);
         QueryUsers queryUsers = factory.createQueryUsers();
         QueryUsersResponse result = (QueryUsersResponse) webServiceTemplate.marshalSendAndReceive(queryUsers);
         List<User> users = result.getReturns();
