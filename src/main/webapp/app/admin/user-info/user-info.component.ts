@@ -15,7 +15,7 @@ export class UserInfoComponent {
 
     public selectedUserInfo: UserInfoDto;
 
-    public userRoles: Array<String>;
+    public userRoles: Array<String> = [];
 
     constructor(private http: HttpClient) {
         this.email = new FormControl();
@@ -35,7 +35,7 @@ export class UserInfoComponent {
             .subscribe((roles) => {
                 this.userRoles = roles;
             }, () => {
-                this.userRoles = null;
+                this.userRoles = [];
             });
     }
 
@@ -52,7 +52,7 @@ export class UserInfoComponent {
 
     private prepareDeleteParams() {
         let params = new HttpParams().set('role', 'NO_ROLE');
-        if (!!this.userRoles) {
+        if (this.userRoles == null) {
             return params;
         }
         if (this.userRoles.includes('ROLE_JOBSEEKER_CLIENT')) {
