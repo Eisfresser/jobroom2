@@ -8,6 +8,7 @@ import ch.adnovum.nevisidm.ws.services.v1.AddAuthorizationToProfile;
 import ch.adnovum.nevisidm.ws.services.v1.AddAuthorizationToProfileRequest;
 import ch.adnovum.nevisidm.ws.services.v1.Authorization;
 import ch.adnovum.nevisidm.ws.services.v1.BusinessException;
+import ch.adnovum.nevisidm.ws.services.v1.GetUserByEmail;
 import ch.adnovum.nevisidm.ws.services.v1.GetUserByEmailResponse;
 import ch.adnovum.nevisidm.ws.services.v1.GetUsersByExtId;
 import ch.adnovum.nevisidm.ws.services.v1.GetUsersByExtIdResponse;
@@ -75,7 +76,9 @@ class DefaultEiamClient implements EiamClient {
         userGetByEmailForLogin.setDetail(DEFAULT_DETAIL_LEVEL);
         userGetByEmailForLogin.setClientName(clientName);
         LOGGER.debug("Eiam client sending [email={}]", email);
-        GetUserByEmailResponse result = (GetUserByEmailResponse) webServiceTemplate.marshalSendAndReceive(userGetByEmailForLogin);
+        GetUserByEmail getUserByEmail = factory.createGetUserByEmail();
+        getUserByEmail.setRequest(userGetByEmailForLogin);
+        GetUserByEmailResponse result = (GetUserByEmailResponse) webServiceTemplate.marshalSendAndReceive(getUserByEmail);
         User user = result.getReturn();
         if (user == null) {
             throw new UserNotFoundException(Identification.EMAIL, email);
