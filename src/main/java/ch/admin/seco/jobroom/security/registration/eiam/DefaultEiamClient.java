@@ -77,6 +77,7 @@ class DefaultEiamClient implements EiamClient {
         userQuery.setUser(user);
         userQuery.setDetail(DEFAULT_DETAIL_LEVEL);
         QueryUsers queryUsers = factory.createQueryUsers();
+        queryUsers.setQuery(userQuery);
         QueryUsersResponse result = (QueryUsersResponse) webServiceTemplate.marshalSendAndReceive(queryUsers);
         List<User> users = result.getReturns();
         LOGGER.debug("Eiam client received user = {}", printUsers(users));
