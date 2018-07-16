@@ -52,7 +52,7 @@ public class DefaultEiamClientTest {
     }
 
     @Test
-    public void getUserByExtId() throws UserNotFoundException, ExtIdNotUniqueException {
+    public void getUserByExtId() throws UserNotFoundException, MultipleEiamUsersFound {
         // Arrange
         StringSource result = new StringSource(EiamTestPayloads.GET_USER_BY_EXT_ID_VALID_PAYLOAD_RESPONSE);
         this.mockServer.expect(connectionTo("http://my.web.ch/service")).
@@ -81,7 +81,7 @@ public class DefaultEiamClientTest {
     }
 
     @Test (expected = UserNotFoundException.class)
-    public void getUserByExtIdNoUserFound() throws UserNotFoundException, ExtIdNotUniqueException {
+    public void getUserByExtIdNoUserFound() throws UserNotFoundException, MultipleEiamUsersFound {
         // Arrange
         StringSource result = new StringSource(EiamTestPayloads.GET_USER_BY_EXT_ID_EMPTY_RESPONSE);
         this.mockServer.expect(connectionTo("http://my.web.ch/service")).
@@ -97,8 +97,8 @@ public class DefaultEiamClientTest {
         this.mockServer.verify();
     }
 
-    @Test (expected = ExtIdNotUniqueException.class)
-    public void getUserByExtIdMultipleUsersFound() throws UserNotFoundException, ExtIdNotUniqueException {
+    @Test (expected = MultipleEiamUsersFound.class)
+    public void getUserByExtIdMultipleUsersFound() throws UserNotFoundException, MultipleEiamUsersFound {
         // Arrange
         StringSource result = new StringSource(EiamTestPayloads.GET_USER_BY_EXT_ID_MULTIPLE_USERS_PAYLOAD_RESPONSE);
         this.mockServer.expect(connectionTo("http://my.web.ch/service")).
