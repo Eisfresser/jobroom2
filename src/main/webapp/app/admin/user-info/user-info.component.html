@@ -53,7 +53,7 @@
                     <dd>{{selectedUserInfo.lastLoginAt| date}}</dd>
                 </dl>
                 <h4>Accountabilities Info</h4>
-                <ul *ngIf="selectedUserInfo.stesInformation;else no_accountabilites">
+                <ul *ngIf="selectedUserInfo.accountabilities;else no_accountabilites">
                     <li *ngFor="let account of selectedUserInfo.accountabilities">
                         {{account.companyName}},
                         {{account.companyExternalId}},
