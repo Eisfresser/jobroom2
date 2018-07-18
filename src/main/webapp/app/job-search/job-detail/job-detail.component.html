@@ -140,6 +140,11 @@
                     <strong>{{ 'job-detail.application.mail' | translate}}</strong>
                     <span>{{ job.jobContent.applyChannel.mailAddress }}</span>
                 </div>
+                <div *ngIf="job.jobContent.applyChannel.formUrl" class="content__item">
+                    <span>
+                        <a href="{{ job.jobContent.applyChannel.formUrl }}">{{ 'job-publication-details.application.online-form' | translate}}</a>
+                    </span>
+                </div>
                 <div *ngIf="job.jobContent.applyChannel.emailAddress" class="content__item">
                     <strong>{{ 'job-detail.application.email' | translate}}</strong>
                     <span>
