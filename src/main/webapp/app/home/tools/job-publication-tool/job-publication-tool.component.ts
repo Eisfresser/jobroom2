@@ -28,10 +28,7 @@ import {
     URL_REGEX,
     WorkForm
 } from '../../../shared';
-import {
-    languages,
-    LanguageSkillService
-} from '../../../candidate-search/services/language-skill.service';
+import { LanguageSkillService } from '../../../candidate-search/services/language-skill.service';
 import {
     FormatterFn,
     OccupationOption,
@@ -67,6 +64,8 @@ import { Company } from '../../../shared/company/company.model';
 })
 export class JobPublicationToolComponent implements OnInit, OnDestroy {
     readonly APPLICATION_ADDITIONAL_INFO_MAX_LENGTH = 240;
+    readonly CONTACT_LANGUAGES = ['de', 'fr', 'it', 'en'];
+
     @Input()
     jobAdvertisement: JobAdvertisement;
     @Input()
@@ -117,7 +116,7 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
         this.fetchOccupationSuggestions = this.occupationPresentationService.fetchJobPublicationOccupationSuggestions;
         this.occupationFormatter = this.occupationPresentationService.occupationFormatter;
         this.updateOccupationOnLanguageChange();
-        this.languageOptionTranslations$ = this.languageFilterService.getSorterLanguageTranslations(languages);
+        this.languageOptionTranslations$ = this.languageFilterService.getSorterLanguageTranslations(this.CONTACT_LANGUAGES);
 
         this.languageSkills$ = this.languageSkillService.getLanguages();
         this.setupCountries();
@@ -490,7 +489,7 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
                 countryCode: this.SWITZ_KEY
             },
             contact: {
-                language: this.translateService.currentLang,
+                language: userData && userData.langKey ? userData.langKey : this.translateService.currentLang,
                 salutation: null,
                 firstName: userData ? userData.firstName : '',
                 lastName: userData ? userData.lastName : '',
