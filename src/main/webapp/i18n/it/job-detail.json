@@ -11,9 +11,10 @@
         },
         "application": {
             "additionalInfo": "Dati complementari",
-            "email": "Elettronica",
+            "email": "Per e-mail",
             "mail": "Per posta",
             "phone": "Telefonicamente",
+            "online": "Elettronica",
             "title": "Tipologie di candidatura"
         },
         "back": "Torna ai risultati della ricerca",

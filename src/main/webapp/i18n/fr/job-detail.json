@@ -11,9 +11,10 @@
         },
         "application": {
             "additionalInfo": "Indications compl\u00e9mentaires",
-            "email": "En ligne",
+            "email": "Par courriel",
             "mail": "Par la poste",
             "phone": "Par t\u00e9l\u00e9phone",
+            "online": "En ligne",
             "title": "Types de postulation"
         },
         "back": "Retour \u00e0 la liste des r\u00e9sultats",

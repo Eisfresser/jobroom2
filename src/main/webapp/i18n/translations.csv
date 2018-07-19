@@ -789,9 +789,10 @@ job-detail,job-detail.action.savePdf,Als PDF speichern,Save as PDF,Sauvegarder e
 job-detail,job-detail.action.sendEmail,Per E-Mail versenden,Send by email,Envoyer par courriel,Invia per e-mail
 job-detail,job-detail.action.showExternalPage,Zum externen Stelleninserat,Link to external job posting,Vers l'offre d'emploi externe,vai all'annuncio esterno
 job-detail,job-detail.application.additionalInfo,Ergänzende Angaben,Additional information,Indications complémentaires,Dati complementari
-job-detail,job-detail.application.email,Elektronisch,Electronic,En ligne,Elettronica
+job-detail,job-detail.application.email,Per E-Mail,By email,Par courriel,Per e-mail
 job-detail,job-detail.application.mail,Per Post,By post,Par la poste,Per posta
 job-detail,job-detail.application.phone,Telefonisch,By phone,Par téléphone,Telefonicamente
+job-detail,job-detail.application.online,Elektronisch,Electronic,En ligne,Elettronica
 job-detail,job-detail.application.title,Bewerbungsformen,Application forms,Types de postulation,Tipologie di candidatura
 job-detail,job-detail.back,Zurück zu den Suchergebnissen,Back to search results,Retour à la liste des résultats,Torna ai risultati della ricerca
 job-detail,job-detail.contactPerson,Ihre Kontaktperson,Your contact person,Votre personne de contact,La tua persona di contatto

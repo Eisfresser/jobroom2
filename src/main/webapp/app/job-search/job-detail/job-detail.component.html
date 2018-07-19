@@ -136,26 +136,27 @@
             <div *ngIf="job.jobContent.applyChannel" class="detail__content">
                 <h4 class="detail__content__title">{{ 'job-detail.application.title' | translate }}</h4>
 
-                <div *ngIf="job.jobContent.applyChannel.mailAddress" class="content__item">
-                    <strong>{{ 'job-detail.application.mail' | translate}}</strong>
-                    <span>{{ job.jobContent.applyChannel.mailAddress }}</span>
-                </div>
                 <div *ngIf="job.jobContent.applyChannel.formUrl" class="content__item">
+                    <strong>{{ 'job-detail.application.online' | translate }}</strong>
                     <span>
                         <a href="{{ job.jobContent.applyChannel.formUrl }}">{{ 'job-publication-details.application.online-form' | translate}}</a>
                     </span>
                 </div>
                 <div *ngIf="job.jobContent.applyChannel.emailAddress" class="content__item">
-                    <strong>{{ 'job-detail.application.email' | translate}}</strong>
+                    <strong>{{ 'job-detail.application.email' | translate }}</strong>
                     <span>
                         <a href="mailto:{{job.jobContent.applyChannel.emailAddress}}">{{job.jobContent.applyChannel.emailAddress}}</a>
                     </span>
                 </div>
                 <div *ngIf="job.jobContent.applyChannel.phoneNumber" class="content__item">
-                    <strong>{{ 'job-detail.application.phone' | translate}}</strong>
+                    <strong>{{ 'job-detail.application.phone' | translate }}</strong>
                     <span><a href="tel:{{job.jobContent.applyChannel.phoneNumber}}">
                         {{(job.jobContent.applyChannel.phoneNumber) | jr2PhoneNumber}}
                     </a></span>
+                </div>
+                <div *ngIf="job.jobContent.applyChannel.mailAddress" class="content__item">
+                    <strong>{{ 'job-detail.application.mail' | translate }}</strong>
+                    <span>{{ job.jobContent.applyChannel.mailAddress }}</span>
                 </div>
             </div>
 

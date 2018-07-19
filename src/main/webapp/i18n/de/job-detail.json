@@ -11,9 +11,10 @@
         },
         "application": {
             "additionalInfo": "Erg\u00e4nzende Angaben",
-            "email": "Elektronisch",
+            "email": "Per E-Mail",
             "mail": "Per Post",
             "phone": "Telefonisch",
+            "online": "Elektronisch",
             "title": "Bewerbungsformen"
         },
         "back": "Zur\u00fcck zu den Suchergebnissen",

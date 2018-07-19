@@ -11,9 +11,10 @@
         },
         "application": {
             "additionalInfo": "Additional information",
-            "email": "Electronic",
+            "email": "By email",
             "mail": "By post",
             "phone": "By phone",
+            "online": "Electronic",
             "title": "Application forms"
         },
         "back": "Back to search results",
