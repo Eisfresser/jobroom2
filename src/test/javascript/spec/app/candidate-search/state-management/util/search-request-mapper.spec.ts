@@ -276,7 +276,7 @@ describe('createCandidateSearchRequestFromToolState', () => {
 
         // THEN
         expect(candidateSearchRequest.cantonCode).toEqual('99');
-        expect(candidateSearchRequest.regionCode).toEqual('AU');
+        expect(candidateSearchRequest.regionCode).toEqual('A');
     });
 
     it('should map CandidateSearchFilter with skills', () => {
