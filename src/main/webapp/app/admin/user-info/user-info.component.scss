@@ -1,0 +1,18 @@
+@import '../../../content/scss/jbr2_variables';
+
+/* ==========================================================================
+start Password strength bar style
+========================================================================== */
+div.section {
+    background:$main-color-gray-lighter;
+    margin-top:$margin-y-general;
+    margin-bottom:$margin-y-general;
+    padding:$margin-x-narrow;
+}
+
+div.missmatch-info{
+    background-color: #EBCFCD;
+    margin-top:$margin-y-general;
+    margin-bottom:$margin-y-general;
+    padding:$margin-x-narrow;
+}
