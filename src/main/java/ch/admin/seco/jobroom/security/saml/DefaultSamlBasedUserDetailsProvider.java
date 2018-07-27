@@ -79,8 +79,8 @@ public class DefaultSamlBasedUserDetailsProvider implements SamlBasedUserDetails
 
     private void updateDbUser(EiamEnrichedSamlUser eiamEnrichedSamlUser, UserInfo userInfo) {
         userInfo.loginWithUpdate(
-            eiamEnrichedSamlUser.getSurname().get(),
             eiamEnrichedSamlUser.getGivenname().get(),
+            eiamEnrichedSamlUser.getSurname().get(),
             eiamEnrichedSamlUser.getEmail().get(),
             eiamEnrichedSamlUser.getLanguage().get().toLowerCase()
         );
@@ -88,8 +88,8 @@ public class DefaultSamlBasedUserDetailsProvider implements SamlBasedUserDetails
 
     private UserInfo toUserInfo(EiamEnrichedSamlUser eiamEnrichedSamlUser) {
         return new UserInfo(
-            eiamEnrichedSamlUser.getSurname().get(),
             eiamEnrichedSamlUser.getGivenname().get(),
+            eiamEnrichedSamlUser.getSurname().get(),
             eiamEnrichedSamlUser.getEmail().get(),
             eiamEnrichedSamlUser.getUserExtId().get(),
             eiamEnrichedSamlUser.getLanguage().get().toLowerCase()
