@@ -104,6 +104,6 @@ export class SystemNotificationsManagementModalCreateComponent implements OnInit
     private convertDate(form: FormGroup, date: string, time: string) {
         const startDate: NgbDateStruct = form.get(date).value;
         const startDateTime: NgbTimeStruct = form.get(time).value;
-        return new Date(Date.UTC(startDate.year, startDate.month - 1, startDate.day, startDateTime.hour, startDateTime.minute)).toISOString();
+        return DateUtils.convertNgbDateTimeToISOWithoutZone(startDate, startDateTime);
     }
 }

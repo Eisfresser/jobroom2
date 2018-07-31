@@ -1,13 +1,23 @@
 package ch.admin.seco.jobroom.web.rest;
 
-import ch.admin.seco.jobroom.domain.SystemNotification;
-import ch.admin.seco.jobroom.repository.SystemNotificationRepository;
-import ch.admin.seco.jobroom.service.SystemNotificationService;
-import ch.admin.seco.jobroom.service.dto.SystemNotificationDTO;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.MockitoAnnotations;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -16,13 +26,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.hasItem;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import ch.admin.seco.jobroom.domain.SystemNotification;
+import ch.admin.seco.jobroom.repository.SystemNotificationRepository;
+import ch.admin.seco.jobroom.service.SystemNotificationService;
+import ch.admin.seco.jobroom.service.dto.SystemNotificationDTO;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -69,7 +76,7 @@ public class SystemNotificationIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        SystemNotificationResource systemNotificationResource = new SystemNotificationResource(systemNotificationService, systemNotificationRepository);
+        SystemNotificationResource systemNotificationResource = new SystemNotificationResource(systemNotificationService);
         this.restSystemNotificationMockMvc = MockMvcBuilders.standaloneSetup(systemNotificationResource).build();
         systemNotificationRepository.deleteAll();
         systemNotification = createEntity();

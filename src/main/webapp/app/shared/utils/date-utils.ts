@@ -49,4 +49,10 @@ export class DateUtils {
     static convertNgbDateStructToString(date: NgbDateStruct): string {
         return date ? moment(DateUtils.mapNgbDateStructToDate(date)).format('YYYY-MM-DD') : null;
     }
+
+    static convertNgbDateTimeToISOWithoutZone(date: NgbDateStruct, time: NgbTimeStruct): string {
+        return moment().date(date.day).month(date.month - 1).year(date.year)
+            .hour(time.hour).minute(time.minute).second(0).millisecond(0)
+            .format('YYYY-MM-DDTHH:mm:ss.sss');
+    }
 }

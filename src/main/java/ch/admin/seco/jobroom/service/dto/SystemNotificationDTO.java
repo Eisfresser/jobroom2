@@ -8,7 +8,6 @@ import javax.validation.constraints.Size;
 
 import ch.admin.seco.jobroom.domain.SystemNotification;
 
-
 public class SystemNotificationDTO {
 
     private UUID id;

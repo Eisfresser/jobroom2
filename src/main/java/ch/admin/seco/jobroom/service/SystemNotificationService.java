@@ -21,8 +21,9 @@ import ch.admin.seco.jobroom.service.dto.SystemNotificationDTO;
 @Transactional
 public class SystemNotificationService {
 
-    private SystemNotificationRepository systemNotificationRepository;
     private final Logger log = LoggerFactory.getLogger(SystemNotificationService.class);
+
+    private SystemNotificationRepository systemNotificationRepository;
 
     public SystemNotificationService(SystemNotificationRepository systemNotificationRepository) {
         this.systemNotificationRepository = systemNotificationRepository;
@@ -45,7 +46,6 @@ public class SystemNotificationService {
         return systemNotificationRepository.getSystemNotificationById(id).map(SystemNotificationDTO::toDto);
     }
 
-    @Transactional
     public SystemNotificationDTO createSystemNotification(SystemNotificationDTO systemNotificationDTO) {
         SystemNotification systemNotification = new SystemNotification();
         systemNotification.setTitle(systemNotificationDTO.getTitle());
@@ -57,12 +57,12 @@ public class SystemNotificationService {
         systemNotification.setActive(systemNotificationDTO.isActive());
         systemNotification.setStartDate(systemNotificationDTO.getStartDate());
         systemNotification.setEndDate(systemNotificationDTO.getEndDate());
-        systemNotificationRepository.save(systemNotification);
+        final UUID id = systemNotificationRepository.save(systemNotification).getId();
         log.debug("Created Information for systemNotification: {}", systemNotification);
+        systemNotificationDTO.setId(id);
         return systemNotificationDTO;
     }
 
-    @Transactional
     public void updateSystemNotification(SystemNotificationDTO systemNotificationDTO) {
         systemNotificationRepository.getSystemNotificationById(systemNotificationDTO.getId()).ifPresent(systemNotification -> {
             systemNotification.setTitle(systemNotificationDTO.getTitle());
@@ -79,7 +79,6 @@ public class SystemNotificationService {
         });
     }
 
-    @Transactional
     public void deleteSystemNotification(UUID id) {
         systemNotificationRepository.getSystemNotificationById(id).ifPresent(systemNotification -> {
             systemNotificationRepository.delete(systemNotification);

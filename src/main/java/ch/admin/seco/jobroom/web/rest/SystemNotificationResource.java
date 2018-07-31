@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import ch.admin.seco.jobroom.repository.SystemNotificationRepository;
 import ch.admin.seco.jobroom.service.SystemNotificationService;
 import ch.admin.seco.jobroom.service.dto.SystemNotificationDTO;
 
@@ -34,11 +33,9 @@ public class SystemNotificationResource {
     private final Logger log = LoggerFactory.getLogger(SystemNotificationResource.class);
 
     private final SystemNotificationService systemNotificationService;
-    private final SystemNotificationRepository systemNotificationRepository;
 
-    public SystemNotificationResource(SystemNotificationService systemNotificationService, SystemNotificationRepository systemNotificationRepository) {
+    public SystemNotificationResource(SystemNotificationService systemNotificationService) {
         this.systemNotificationService = systemNotificationService;
-        this.systemNotificationRepository = systemNotificationRepository;
     }
 
     @GetMapping("/system-notifications")
