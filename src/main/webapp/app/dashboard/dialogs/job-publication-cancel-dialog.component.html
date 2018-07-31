@@ -12,42 +12,40 @@
             </div>
 
             <div class="form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" type="radio" formControlName="positionOccupied"  name="positionOccupied" value="occupied">
+                <label>
                     {{ 'job-publication-cancel.job.occupied' | translate }}
                 </label>
             </div>
-            <div formGroupName="occupiedWith" class="ml-3">
+            <div class="ml-3">
                 <div class="form-check">
                     <label class="form-check-label">
-                        <input class="form-check-input" formControlName="jobCenter" type="checkbox">
+                        <input class="form-check-input" formControlName="positionOccupied" value="jobCenter" type="radio">
                         {{ 'job-publication-cancel.job.occupied.jobCenter' | translate }}
                     </label>
                 </div>
                 <div class="form-check">
                     <label class="form-check-label">
-                        <input class="form-check-input" formControlName="privateAgency" type="checkbox">
+                        <input class="form-check-input" formControlName="positionOccupied" value="privateAgency" type="radio">
                         {{ 'job-publication-cancel.job.occupied.privateAgency' | translate }}
                     </label>
                 </div>
             </div>
 
             <div class="form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" type="radio" formControlName="positionOccupied"  name="positionOccupied" value="self">
+                <label>
                     {{ 'job-publication-cancel.job.occupied.self' | translate }}
                 </label>
             </div>
-            <div formGroupName="selfOccupiedWith" class="ml-3">
+            <div class="ml-3">
                 <div class="form-check">
                     <label class="form-check-label">
-                        <input class="form-check-input" formControlName="jobRoom" type="checkbox">
+                        <input class="form-check-input" formControlName="positionOccupied" value="jobRoom" type="radio">
                         {{ 'job-publication-cancel.job.occupied.jobroom' | translate }}
                     </label>
                 </div>
                 <div class="form-check">
                     <label class="form-check-label">
-                        <input class="form-check-input" formControlName="notJobRoom" type="checkbox">
+                        <input class="form-check-input" formControlName="positionOccupied" value="notJobRoom" type="radio">
                         {{ 'job-publication-cancel.job.occupied.not-jobroom' | translate }}
                     </label>
                 </div>
