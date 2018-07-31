@@ -17,7 +17,8 @@ public class AccessCodeDocument extends PdfDocument<UserInfo> {
 
     private final Logger log = LoggerFactory.getLogger(AccessCodeDocument.class);
 
-    private static final int LEFT_BORDER = 90;
+    private static final int ADDRESS_LEFT_BORDER = 60;
+    private static final int CONTENT_LEFT_BORDER = 90;
     private static final int TOP_BORDER = 685;
 
     private static final int ADDRESS_BOTTOM_MARGIN = 100;
@@ -46,7 +47,7 @@ public class AccessCodeDocument extends PdfDocument<UserInfo> {
 
         this.addDefaultHeader()
             .addDefaultFooter()
-            .setPosition(LEFT_BORDER, TOP_BORDER);
+            .setPosition(ADDRESS_LEFT_BORDER, TOP_BORDER);
 
         this.addressHead()
             .address(user)
@@ -106,10 +107,10 @@ public class AccessCodeDocument extends PdfDocument<UserInfo> {
             .setFont(FONT_BOLD, FONT_SMALL, COLOR_PRIMARY)
             .insertTextLine(this.messageSource.getMessage("pdf.accesscode.originator.place", null, this.locale))
             .setFont(FONT_NORMAL, FONT_SMALL, COLOR_PRIMARY)
-            .setX(LEFT_BORDER + ((this.locale.toLanguageTag().equals("fr") || this.locale.toLanguageTag().equals("it")) ? 57 : 52))
+            .setX(ADDRESS_LEFT_BORDER + ((this.locale.toLanguageTag().equals("fr") || this.locale.toLanguageTag().equals("it")) ? 57 : 52))
             .insertTextLine(this.messageSource.getMessage("pdf.accesscode.originator.seco", null, this.locale))
-            .drawLine(LEFT_BORDER, 683, LEFT_BORDER + ((this.locale.toLanguageTag().equals("fr") || this.locale.toLanguageTag().equals("it")) ? 108 : 104), 683)
-            .setX(LEFT_BORDER)
+            .drawLine(ADDRESS_LEFT_BORDER, 683, ADDRESS_LEFT_BORDER + ((this.locale.toLanguageTag().equals("fr") || this.locale.toLanguageTag().equals("it")) ? 108 : 104), 683)
+            .setX(ADDRESS_LEFT_BORDER)
             .newLine(20)
 
             .setFont(FONT_BOLD, FONT_MEDIUM, COLOR_PRIMARY)
@@ -127,7 +128,8 @@ public class AccessCodeDocument extends PdfDocument<UserInfo> {
             .insertTextLine(user.getCompany().getStreet())
             .newLine(14)
             .insertTextLine(format("%s %s", user.getCompany().getZipCode(), user.getCompany().getCity()))
-            .newLine(ADDRESS_BOTTOM_MARGIN);
+            .newLine(ADDRESS_BOTTOM_MARGIN)
+            .setX(CONTENT_LEFT_BORDER);
     }
 
     private AccessCodeDocument title() throws IOException {
@@ -170,32 +172,32 @@ public class AccessCodeDocument extends PdfDocument<UserInfo> {
 
     private AccessCodeDocument applicant(UserInfo user) throws IOException {
         return (AccessCodeDocument) this
-            .setX(LEFT_BORDER)
+            .setX(CONTENT_LEFT_BORDER)
             .setStandardFont()
             .insertTextLine(this.messageSource.getMessage("pdf.accesscode.applicant", null, this.locale) + ":")
-            .setX(LEFT_BORDER + 110)
+            .setX(CONTENT_LEFT_BORDER + 110)
             .insertTextLine(format("%s %s", user.getFirstName(), user.getLastName()))
             .newLine()
 
-            .setX(LEFT_BORDER)
+            .setX(CONTENT_LEFT_BORDER)
             .insertTextLine(this.messageSource.getMessage("pdf.accesscode.email", null, this.locale) + ":")
-            .setX(LEFT_BORDER + 110)
+            .setX(CONTENT_LEFT_BORDER + 110)
             .insertTextLine(user.getEmail())
             .newLine();
     }
 
     private AccessCodeDocument accessCode(UserInfo user) throws IOException {
         return (AccessCodeDocument) this
-            .setX(LEFT_BORDER)
+            .setX(CONTENT_LEFT_BORDER)
             .setStandardFont()
             .insertTextLine(this.messageSource.getMessage("pdf.accesscode.accesscode", null, this.locale) + ":")
-            .setX(LEFT_BORDER + 110)
+            .setX(CONTENT_LEFT_BORDER + 110)
 
             .setMonospaceFont()
             .insertTextLine(user.getAccessCode())
 
             .setStandardFont()
-            .setX(LEFT_BORDER)
+            .setX(CONTENT_LEFT_BORDER)
             .newLine(ACCESS_CODE_BOTTOM_MARGIN);
     }
 
