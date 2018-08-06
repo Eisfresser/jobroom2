@@ -95,7 +95,7 @@
                 <span *ngIf="!jobContent.employment.immediately" class="badge badge-yellow">{{ 'job-publication-details.byArrangement' | translate }}</span>
             </div>
 
-            <div class="job-detail__content">
+            <div *ngIf="jobDescription.description" class="job-detail__content">
                 <markdown [data]="jobDescription.description"></markdown>
             </div>
 

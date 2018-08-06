@@ -124,7 +124,7 @@
             </div>
 
             <!-- job description -->
-            <div class="detail__content">
+            <div *ngIf="jobDescription.description" class="detail__content">
                 <markdown [data]="jobDescription.description"></markdown>
             </div>
 
