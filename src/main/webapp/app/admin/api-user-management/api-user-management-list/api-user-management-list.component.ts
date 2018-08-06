@@ -28,7 +28,7 @@ import { ApiUserDialogService } from '../service/api-user-dialog.service';
 export class ApiUserManagementListComponent {
 
     readonly PAGE_SIZE = ITEMS_PER_PAGE;
-    readonly KEYWORD_FIELDS = ['username', 'createDate', 'lastAccessDate', 'active'];
+    readonly KEYWORD_FIELDS = ['createDate', 'lastAccessDate', 'active'];
 
     @Input() apiUsers: ApiUser[];
     @Input() totalCount: number;

@@ -17,7 +17,7 @@ export interface ApiUserManagementState {
 export const initialState: ApiUserManagementState = {
     filter: {
         query: null,
-        sort: 'apiUser.username,asc'
+        sort: 'apiUser.username.keyword,asc'
     },
     apiUsers: [],
     totalCount: 0,
