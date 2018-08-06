@@ -70,7 +70,7 @@
 
             <!-- Job details -->
             <div class="job-detail__title">
-                <h2 class="text--light">{{ jobDescription.title }}</h2>
+                <h2 class="text--light" [innerHTML]="jobDescription.title | safeHtml"></h2>
                 <h4 class="text--light" *ngIf="jobAdvertisement.status">
                     {{ 'job-publication-details.status' | translate }}: {{'global.job-publication.status.' + jobAdvertisement.status | translate }}
                 </h4>
