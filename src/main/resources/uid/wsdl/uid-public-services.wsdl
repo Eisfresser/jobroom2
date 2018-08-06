@@ -6,7 +6,7 @@
                   xmlns:i0="http://www.uid.admin.ch/xmlns/uid-wse"
 >
     <wsdl:import namespace="http://www.uid.admin.ch/xmlns/uid-wse"
-                 location="https://www.uid-wse-a.admin.ch/V3.0/PublicServices.svc?wsdl=wsdl0"/>
+                 location="https://www.uid-wse.admin.ch/V3.0/PublicServices.svc?wsdl=wsdl0"/>
     <wsdl:types/>
     <wsdl:binding name="BasicHttpBinding_IPublicServices" type="i0:IPublicServices">
         <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
@@ -135,7 +135,7 @@
         <wsdl:port name="BasicHttpBinding_IPublicServices"
                    binding="tns:BasicHttpBinding_IPublicServices">
             <soap:address
-                location="https://www.uid-wse-a.admin.ch/V3.0/PublicServices.svc"/>
+                location="https://www.uid-wse.admin.ch/V3.0/PublicServices.svc"/>
         </wsdl:port>
     </wsdl:service>
 </wsdl:definitions>
