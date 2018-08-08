@@ -10,21 +10,22 @@
             <fieldset>
                 <div class="radio col-form-label">
                     <input
-                        class="form-check-input"
+                        id="jobseeker"
+                        name="selectedRole"
                         type="radio"
-                        formControlName="role"
-                        id="ravCustomer"
-                        value="rav">
+                        formControlName="selectedRole"
+                        value="jobseeker">
                     <label
-                        for="ravCustomer"
+                        for="jobseeker"
                         jhiTranslate="registrationQuestionnaire.ravCustomer">
                     </label>
                 </div>
                 <div class="radio col-form-label">
                     <input
-                        type="radio"
-                        formControlName="role"
                         id="employer"
+                        name="selectedRole"
+                        formControlName="selectedRole"
+                        type="radio"
                         value="employer">
                     <label
                         for="employer"
@@ -32,54 +33,26 @@
                 </div>
                 <div class="radio col-form-label">
                     <input
-                        id="recruitmentAgency"
+                        id="agency"
+                        name="selectedRole"
+                        formControlName="selectedRole"
                         type="radio"
-                        formControlName="role"
                         value="agency">
                     <label
-                        for="recruitmentAgency"
+                        for="agency"
                         jhiTranslate="registrationQuestionnaire.recruitmentAgency.message">
                     </label>
                 </div>
             </fieldset>
         </div>
 
-        <div *ngIf="userExistSectionVisible$ | async"
-             class="registration-questionnaire__paragraph">
-            <fieldset>
-
-                <div class="radio col-form-label">
-                    <input
-                        type="radio"
-                        formControlName="user"
-                        id="newAgency"
-                        value="false">
-                    <label
-                        for="newAgency"
-                        jhiTranslate="registrationQuestionnaire.recruitmentAgency.new"></label>
-                </div>
-                <div class="radio col-form-label">
-                    <input
-                        type="radio"
-                        formControlName="user"
-                        id="existingAgency"
-                        value="true">
-                    <label
-                        for="existingAgency"
-                        jhiTranslate="registrationQuestionnaire.recruitmentAgency.existing">
-                    </label>
-                </div>
-            </fieldset>
-        </div>
-
-        <div *ngIf="termsAndConditionsSectionVisible$ | async">
+        <div *ngIf="hasRoleSelected()">
             <fieldset class="registration-questionnaire__paragraph">
                 <div class="checkbox">
                     <input
                         type="checkbox"
-                        formControlName="termsAndConditions"
-                        id="termsAndConditions"
-                        [checked]="termsAndConditionsChecked$ | async">
+                        formControlName="termsAccepted"
+                        id="termsAndConditions">
                     <label
                         for="termsAndConditions"
                         jhiTranslate="registrationQuestionnaire.termsOfUse.accept">
@@ -100,13 +73,12 @@
                         <button type="submit"
                                 class="btn btn-primary btn-lg"
                                 jhiTranslate="navigation.next"
-                                [disabled]="nextButtonActive$ | async">
+                                [disabled]="!isTermsAndConditionsAccepted()">
                         </button>
                     </div>
                 </div>
             </fieldset>
         </div>
-
     </form>
 </div>
 

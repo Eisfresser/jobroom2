@@ -9,9 +9,7 @@ import { BackgroundUtils } from '../shared/utils/background-utils';
 import { RegistrationQuestionnaireComponent } from './registration/questionnaire/registration-questionnaire.component';
 import { JobroomSharedCommonModule } from '../shared/shared-common.module';
 import { StoreModule } from '@ngrx/store';
-import { RegistrationQuestionnaireEffects } from './registration/questionnaire/state-management/effects/registration-questionnaire.effects';
 import { EffectsModule } from '@ngrx/effects';
-import { registrationQuestionnaireReducer } from './registration/questionnaire/state-management/reducers/registration-questionnaire.reducers';
 import {
     accountState,
     ActivateComponent,
@@ -32,7 +30,6 @@ import {
 } from './';
 import { RegistrationDialogService } from './registration/registration-dialog.service';
 import { RegistrationAccessCodeComponent } from './registration/access-code/registration-access-code.component';
-import { ExistingPavDialogComponent } from './registration/existing-pav/existing-pav-dialog.component';
 import { RegistrationGuardService } from './registration/registration-guard.service';
 
 @NgModule({
@@ -43,8 +40,6 @@ import { RegistrationGuardService } from './registration/registration-guard.serv
         RouterModule.forRoot(accountState, { useHash: true }),
         BrowserModule,
         HttpClientModule,
-        StoreModule.forFeature('registrationQuestionnaire', registrationQuestionnaireReducer),
-        EffectsModule.forFeature([RegistrationQuestionnaireEffects]),
         JobroomSharedCommonModule
     ],
     declarations: [
@@ -56,7 +51,6 @@ import { RegistrationGuardService } from './registration/registration-guard.serv
         PasswordResetFinishComponent,
         SettingsComponent,
         JobseekerDialogComponent,
-        ExistingPavDialogComponent,
         RegistrationCompanyDialogComponent,
         RegistrationQuestionnaireComponent,
         RegistrationCompanyDialogComponent,
@@ -77,8 +71,7 @@ import { RegistrationGuardService } from './registration/registration-guard.serv
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     entryComponents: [
         JobseekerDialogComponent,
-        RegistrationPavDialogComponent,
-        ExistingPavDialogComponent
+        RegistrationPavDialogComponent
     ]
 })
 export class JobroomAccountModule {

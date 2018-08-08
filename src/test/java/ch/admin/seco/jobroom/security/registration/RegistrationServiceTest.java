@@ -216,29 +216,6 @@ public class RegistrationServiceTest {
         verify(currentUserService).addRoleToSession(AuthoritiesConstants.ROLE_COMPANY);
     }
 
-    @Test
-    public void registerExistingAgent() throws InvalidOldLoginException {
-        when(mockUserRepository.findOneWithAuthoritiesByLogin(anyString())).thenReturn(getOldDummyUser());
-
-        when(mockCompanyRepository.save(any())).thenReturn(getDummyCompany());
-
-        registrationService.registerExistingAgent(VALID_LOGIN, VALID_PASSWORD);
-
-        verify(mockEiamAdminService).addRole(anyString(), anyString(), eq(EiamClientRole.ROLE_PRIVATE_EMPLOYMENT_AGENT));
-        verify(currentUserService).addRoleToSession(AuthoritiesConstants.ROLE_PRIVATE_EMPLOYMENT_AGENT);
-    }
-
-
-    @Test(expected = InvalidOldLoginException.class)
-    public void validateOldLoginWrongPassword() throws InvalidOldLoginException {
-        when(mockUserRepository.findOneWithAuthoritiesByLogin(anyString())).thenReturn(Optional.empty());
-
-        when(mockUserRepository.findOneWithAuthoritiesByLogin(anyString())).thenReturn(getOldDummyUser());
-
-        this.registrationService.registerExistingAgent(VALID_LOGIN, INVALID_PASSWORD);
-
-    }
-
     private void setupSecurityContextMockWithRegistrationStatus() {
         Collection<GrantedAuthority> authorities = new HashSet<>(2);
         SimpleGrantedAuthority userAuthority = new SimpleGrantedAuthority(USER_ROLE_USER);

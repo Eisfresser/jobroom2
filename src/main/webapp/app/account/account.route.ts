@@ -2,13 +2,10 @@ import { Routes } from '@angular/router';
 
 import {
     activateRoute,
-    jobseekerDialogRoute,
     passwordResetFinishRoute,
     passwordResetInitRoute,
     passwordRoute,
     registrationAccessCodeRoute,
-    registrationCompanyDialogRoute,
-    registrationPavDialogRoute,
     registrationQuestionnaireRoute,
     reloginRoute,
     settingsRoute
@@ -22,9 +19,6 @@ const ACCOUNT_ROUTES = [
     reloginRoute,
     settingsRoute,
     registrationQuestionnaireRoute,
-    jobseekerDialogRoute,
-    registrationCompanyDialogRoute,
-    registrationPavDialogRoute,
     registrationAccessCodeRoute
 ];
 

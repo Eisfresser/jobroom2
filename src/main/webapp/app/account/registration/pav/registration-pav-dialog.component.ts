@@ -42,7 +42,8 @@ export class RegistrationPavDialogComponent implements OnInit {
     }
 
     goToHomePage() {
-        this.activeModal.dismiss();
+        this.activeModal.dismiss('cancel');
+        this.router.navigate(['/home']);
     }
 
     requestActivationCode() {

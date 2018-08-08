@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { RegistrationService } from '../registration.service';
 import { ModalUtils } from '../../../shared';
 import { Router } from '@angular/router';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'jr2-registration-company-dialog',
@@ -17,9 +18,9 @@ export class RegistrationCompanyDialogComponent implements OnInit {
     companyNotFound = false;
     disableSubmit = false;
 
-    constructor(private modalUtils: ModalUtils,
-                private registrationService: RegistrationService,
+    constructor(private registrationService: RegistrationService,
                 private router: Router,
+                private activeModal: NgbActiveModal,
                 private fb: FormBuilder) {
     }
 
@@ -28,7 +29,7 @@ export class RegistrationCompanyDialogComponent implements OnInit {
     }
 
     goToHomePage() {
-        this.modalUtils.closeActiveModal(true);
+        this.activeModal.close();
         this.router.navigate(['/home']);
     }
 
@@ -40,7 +41,7 @@ export class RegistrationCompanyDialogComponent implements OnInit {
     }
 
     close() {
-        this.modalUtils.dismissActiveModal('cancel');
+        this.activeModal.dismiss('cancel');
     }
 
     findCompanyByUid() {

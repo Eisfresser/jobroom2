@@ -17,7 +17,6 @@ import org.springframework.util.StringUtils;
 import ch.admin.seco.jobroom.config.Constants;
 import ch.admin.seco.jobroom.domain.Company;
 import ch.admin.seco.jobroom.domain.Organization;
-import ch.admin.seco.jobroom.domain.User;
 import ch.admin.seco.jobroom.domain.UserInfo;
 import ch.admin.seco.jobroom.domain.UserInfoId;
 import ch.admin.seco.jobroom.domain.enumeration.CompanySource;
@@ -28,7 +27,6 @@ import ch.admin.seco.jobroom.repository.UserInfoRepository;
 import ch.admin.seco.jobroom.repository.UserRepository;
 import ch.admin.seco.jobroom.security.AuthoritiesConstants;
 import ch.admin.seco.jobroom.security.IsAdmin;
-import ch.admin.seco.jobroom.security.MD5PasswordEncoder;
 import ch.admin.seco.jobroom.security.UserPrincipal;
 import ch.admin.seco.jobroom.security.registration.eiam.EiamAdminService;
 import ch.admin.seco.jobroom.security.registration.eiam.EiamClientRole;
@@ -142,26 +140,6 @@ public class RegistrationService {
         return result;
     }
 
-    public void registerExistingAgent(String username, String password) throws InvalidOldLoginException {
-        if (!validateOldLogin(username, password)) {
-            throw new InvalidOldLoginException();
-        }
-        UserPrincipal userPrincipal = this.currentUserService.getPrincipal();
-        UserInfo userInfo = getUserInfo(userPrincipal.getId());
-        Optional<User> oldUser = this.userRepository.findOneWithAuthoritiesByLogin(username);
-        if (!oldUser.isPresent()) {
-            throw new IllegalStateException("Existing User " + username + " was not found");
-        }
-        Organization avgCompany = oldUser.get().getOrganization();
-        if (avgCompany == null) {
-            throw new IllegalStateException("Existing User " + username + " has no organization");
-        }
-        Company company = storeCompany(avgCompany);
-        userInfo.registerExistingAgent(company);
-        addAgentRoleToEiam(userPrincipal);
-        addAgentRoleToSession();
-    }
-
     public FirmData getCompanyByUid(long uid) throws UidCompanyNotFoundException {
         return this.uidClient.getCompanyByUid(uid);
     }
@@ -183,17 +161,6 @@ public class RegistrationService {
     @IsAdmin
     public void unregisterCompany(String eMail) throws UserNotFoundException {
         doUnregister(eMail, EiamClientRole.ROLE_COMPANY);
-    }
-
-    private boolean validateOldLogin(String username, String password) {
-        Assert.notNull(username, "A username must be provided.");
-        Assert.notNull(password, "A password must be provided.");
-        Optional<User> oldUser = this.userRepository.findOneWithAuthoritiesByLogin(username);
-        if (!oldUser.isPresent()) {
-            return false;
-        }
-        MD5PasswordEncoder md5PasswordEncoder = new MD5PasswordEncoder();
-        return md5PasswordEncoder.matches(password, oldUser.get().getPassword());
     }
 
     private UserInfo getUserInfo(UserInfoId userInfoId) {

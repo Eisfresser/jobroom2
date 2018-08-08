@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { JobseekerDialogComponent } from './jobseeker/jobseeker-dialog.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { RegistrationPavDialogComponent } from './pav/registration-pav-dialog.component';
-import { ExistingPavDialogComponent } from './existing-pav/existing-pav-dialog.component';
+import { RegistrationCompanyDialogComponent } from './company/registration-company-dialog.component';
 import { Router } from '@angular/router';
 import { Principal } from '../../shared';
 
@@ -20,12 +20,11 @@ export class RegistrationDialogService {
             backdrop: 'static'
         });
 
-        modalRef.result.then(() => {
-            this.principal.identity(true).then((result) => {
-                this.router.navigate(['/jobseekers']);
-            });
-        }, (error) => {
-            // cancel dialog
+        return modalRef.result.then(() => {
+            this.principal.identity(true)
+                .then((result) => {
+                    this.router.navigate(['/jobseekers']);
+                });
         });
     }
 
@@ -34,26 +33,18 @@ export class RegistrationDialogService {
             size: 'lg',
             backdrop: 'static'
         });
-
-        modalRef.result.then(() => {
+        return modalRef.result.then(() => {
             this.router.navigate(['/home']);
-        }, (error) => {
-            // cancel dialog
         });
     }
 
-    openExistingPavDialog() {
-        const modalRef = this.modalService.open(ExistingPavDialogComponent, {
+    openRegisterCompanyDialog() {
+        const modalRef = this.modalService.open(RegistrationCompanyDialogComponent, {
             size: 'lg',
             backdrop: 'static'
         });
-
-        modalRef.result.then(() => {
-            this.principal.identity(true).then((result) => {
-                this.router.navigate(['/agents', 'candidates'])
-            });
-        }, (error) => {
-            // cancel dialog
+        return modalRef.result.then(() => {
+            this.router.navigate(['/home']);
         });
     }
 

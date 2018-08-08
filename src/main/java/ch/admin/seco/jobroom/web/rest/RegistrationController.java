@@ -16,12 +16,10 @@ import ch.admin.seco.jobroom.security.registration.uid.FirmData;
 import ch.admin.seco.jobroom.security.registration.uid.UidCompanyNotFoundException;
 import ch.admin.seco.jobroom.service.AvgNotFoundException;
 import ch.admin.seco.jobroom.service.InvalidAccessCodeException;
-import ch.admin.seco.jobroom.service.InvalidOldLoginException;
 import ch.admin.seco.jobroom.service.InvalidPersonenNumberException;
 import ch.admin.seco.jobroom.service.RegistrationService;
 import ch.admin.seco.jobroom.service.StesPersonNumberAlreadyTaken;
 import ch.admin.seco.jobroom.service.dto.RegistrationResultDTO;
-import ch.admin.seco.jobroom.web.rest.vm.LoginVM;
 import ch.admin.seco.jobroom.web.rest.vm.RegisterJobseekerVM;
 
 /**
@@ -69,17 +67,6 @@ public class RegistrationController {
             return this.registrationService.registerAsEmployerOrAgent(accessCode);
         } catch (InvalidAccessCodeException e) {
             return new RegistrationResultDTO(false, Constants.TYPE_UNKOWN);
-        }
-    }
-
-    @PostMapping("/registerExistingAgent")
-    @Timed
-    public boolean registerExistingAgent(@Valid @RequestBody LoginVM loginData) {
-        try {
-            this.registrationService.registerExistingAgent(loginData.getUsername(), loginData.getPassword());
-            return true;
-        } catch (InvalidOldLoginException e) {
-            return false;
         }
     }
 }

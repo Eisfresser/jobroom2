@@ -1,23 +1,7 @@
 import { BackgroundUtils } from '../../../shared';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import {
-    getNextButtonActive,
-    getShowIfUserExistOrNotSection,
-    getShowTermsAndConditions,
-    getTermsAndConditionsChecked,
-    initialState,
-    RegistrationQuestionnaireState
-} from './state-management/state/registration-questionnaire.state';
-import { Store } from '@ngrx/store';
-import {
-    AcceptTermsAndConditionsAction,
-    NextRegistrationPageAction,
-    ResetRegistrationQuestionnaireAction,
-    SelectRegistrationRoleAction,
-    SelectWhetherUserExistOrNotAction
-} from './state-management/actions/registration-questionnaire.actions';
-import { Observable } from 'rxjs/Observable';
+import { RegistrationDialogService } from '../registration-dialog.service';
 
 @Component({
     selector: 'jr2-registration-questionnaire',
@@ -25,53 +9,61 @@ import { Observable } from 'rxjs/Observable';
     styleUrls: ['./registration-questionnaire.component.scss']
 })
 export class RegistrationQuestionnaireComponent implements OnInit, OnDestroy {
-    roleForm: FormGroup;
+    public roleForm: FormGroup;
 
-    termsAndConditionsSectionVisible$: Observable<boolean>;
-    userExistSectionVisible$: Observable<boolean>;
-    nextButtonActive$: Observable<boolean>;
-    termsAndConditionsChecked$: Observable<boolean>;
-
-    constructor(private store: Store<RegistrationQuestionnaireState>,
-                private fb: FormBuilder,
-                private backgroundUtils: BackgroundUtils) {
-        this.termsAndConditionsSectionVisible$ = this.store.select(getShowTermsAndConditions);
-        this.userExistSectionVisible$ = this.store.select(getShowIfUserExistOrNotSection);
-        this.nextButtonActive$ = this.store.select(getNextButtonActive);
-        this.termsAndConditionsChecked$ = this.store.select(getTermsAndConditionsChecked);
+    constructor(private fb: FormBuilder,
+                private backgroundUtils: BackgroundUtils,
+                private registrationDialogService: RegistrationDialogService) {
     }
 
     ngOnInit() {
         this.backgroundUtils.addBackgroundForJobseekers();
-        this.roleForm = this.fb.group(initialState);
-        this.roleForm.get('role')
-            .valueChanges
-            .subscribe((value) => {
-                this.roleForm.get('user')
-                    .reset(false);
-                return this.store.dispatch(new SelectRegistrationRoleAction(value));
-            });
-
-        this.roleForm.get('termsAndConditions')
-            .valueChanges
-            .subscribe((value) => this.store.dispatch(new AcceptTermsAndConditionsAction(value)));
-
-        this.roleForm.get('user')
-            .valueChanges
-            .subscribe((value) => this.store.dispatch(new SelectWhetherUserExistOrNotAction(value)));
+        this.roleForm = this.fb.group({
+            selectedRole: [null],
+            termsAccepted: [false]
+        });
+        this.roleForm.get('selectedRole').valueChanges
+            .subscribe(() => {
+                this.onSelectedRoleChanged();
+            })
     }
 
     ngOnDestroy(): void {
         this.backgroundUtils.removeAllBackgroundClasses();
-        this.store.complete();
+    }
+
+    hasRoleSelected(): boolean {
+        return this.roleForm.get('selectedRole').value;
+    }
+
+    isTermsAndConditionsAccepted(): boolean {
+        return this.roleForm.get('termsAccepted').value === true;
     }
 
     cancel() {
-        this.roleForm.reset(initialState);
-        this.store.dispatch(new ResetRegistrationQuestionnaireAction());
+        this.roleForm.reset();
     }
 
     next() {
-        this.store.dispatch(new NextRegistrationPageAction(this.roleForm.value));
+        if (!this.roleForm.valid) {
+            return;
+        }
+        switch (this.roleForm.get('selectedRole').value) {
+            case 'employer':
+                this.registrationDialogService.openRegisterCompanyDialog();
+                break;
+            case 'agency':
+                this.registrationDialogService.openRegisterPavDialog();
+                break;
+            case 'jobseeker':
+                this.registrationDialogService.openRegisterJobSeekerDialog();
+                break;
+            default:
+                return null;
+        }
+    }
+
+    private onSelectedRoleChanged(): void {
+        this.roleForm.patchValue({ termsAccepted: false });
     }
 }
