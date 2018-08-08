@@ -1,4 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+    Component,
+    ElementRef,
+    EventEmitter,
+    HostListener,
+    Input,
+    OnInit,
+    Output
+} from '@angular/core';
 
 @Component({
     selector: 'jr2-toolbar-item',
@@ -10,7 +18,9 @@ export class ToolbarItemComponent implements OnInit {
     @Input() active: boolean;
     @Output() select = new EventEmitter();
 
-    constructor() {
+    private readonly ENTER_KEY_CODE = 13;
+
+    constructor(private elRef: ElementRef) {
     }
 
     ngOnInit() {
@@ -22,5 +32,19 @@ export class ToolbarItemComponent implements OnInit {
 
     isNavLink() {
         return !!this.icon;
+    }
+
+    @HostListener('document:keypress', ['$event.target', '$event'])
+    handleKeyboardEvent(targetElement: HTMLElement, event: KeyboardEvent) {
+        if (!targetElement) {
+            return;
+        }
+
+        if (event.keyCode === this.ENTER_KEY_CODE
+            && this.elRef.nativeElement.contains(targetElement)) {
+            event.preventDefault();
+            event.stopPropagation();
+            this.elRef.nativeElement.querySelector('a.nav-link').click();
+        }
     }
 }
