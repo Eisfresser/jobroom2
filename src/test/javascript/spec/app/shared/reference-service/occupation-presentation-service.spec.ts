@@ -274,6 +274,35 @@ describe('OccupationPresentationService', () => {
                 { key: 'avam:10', label: 'Informatiker' }
             ]);
         });
+
+        it('should skip "keine Angabe" option', () => {
+            // given
+            const suggestResponse: OccupationLabelAutocomplete = {
+                occupations: [
+                    {
+                        id: '10',
+                        code: 99999,
+                        label: 'keine Angabe',
+                        type: 'avam',
+                        mappings: {
+                            x28: 1,
+                            bfs: 12
+                        },
+                        classifier: '',
+                        language: 'de'
+                    } as OccupationLabelSuggestion,
+                ],
+                classifications: []
+            };
+            mockOccupationLabelService.suggestOccupation.and.returnValue(Observable.of(suggestResponse));
+
+            // when
+            let suggestion;
+            sut.fetchJobPublicationOccupationSuggestions(Observable.of('keine')).subscribe((s) => suggestion = s);
+
+            // then
+            expect(suggestion).toEqual([]);
+        })
     });
 
 });

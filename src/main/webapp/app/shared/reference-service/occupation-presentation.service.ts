@@ -41,6 +41,8 @@ interface OccupationLabelDataCache {
     [key: string]: OccupationLabelData;
 }
 
+const NO_INFORMATION_CODE = 99999;
+
 @Injectable()
 export class OccupationPresentationService {
     private occupationLabelDataCache: OccupationLabelDataCache = {};
@@ -141,11 +143,19 @@ export class OccupationPresentationService {
                 ? Observable.of([])
                 : this.occupationLabelService.suggestOccupation(prefix, ['avam'])
                     .map((autoComplete: OccupationLabelAutocomplete) => autoComplete.occupations)
-                    .map((occupations: OccupationLabelSuggestion[]) =>
-                        occupations.map((o: OccupationLabelSuggestion) => Object.assign({}, {
-                            key: new OccupationCode(o.code, 'avam').toString(),
-                            label: o.label
-                        })))
+                    .map((occupations: OccupationLabelSuggestion[]) => {
+                        const convertToNumber = (code: string | number) => {
+                            if (typeof code === 'string') {
+                                return +code
+                            }
+                            return code;
+                        };
+                       return  occupations.filter((o: OccupationLabelSuggestion) => convertToNumber(o.code) !== NO_INFORMATION_CODE)
+                            .map((o: OccupationLabelSuggestion) => Object.assign({}, {
+                                key: new OccupationCode(o.code, 'avam').toString(),
+                                label: o.label
+                            }))
+                    })
             );
 
     occupationFormatter = (occupationOption: OccupationOption) => occupationOption.label ? occupationOption.label : '';
