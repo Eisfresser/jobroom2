@@ -8,8 +8,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BackgroundUtils } from '../shared/utils/background-utils';
 import { RegistrationQuestionnaireComponent } from './registration/questionnaire/registration-questionnaire.component';
 import { JobroomSharedCommonModule } from '../shared/shared-common.module';
-import { StoreModule } from '@ngrx/store';
-import { EffectsModule } from '@ngrx/effects';
 import {
     accountState,
     ActivateComponent,
@@ -53,7 +51,6 @@ import { RegistrationGuardService } from './registration/registration-guard.serv
         JobseekerDialogComponent,
         RegistrationCompanyDialogComponent,
         RegistrationQuestionnaireComponent,
-        RegistrationCompanyDialogComponent,
         RegistrationPavDialogComponent,
         RegistrationAccessCodeComponent
     ],
@@ -71,7 +68,8 @@ import { RegistrationGuardService } from './registration/registration-guard.serv
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     entryComponents: [
         JobseekerDialogComponent,
-        RegistrationPavDialogComponent
+        RegistrationPavDialogComponent,
+        RegistrationCompanyDialogComponent
     ]
 })
 export class JobroomAccountModule {

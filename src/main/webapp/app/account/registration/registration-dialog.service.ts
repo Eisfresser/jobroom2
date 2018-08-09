@@ -25,7 +25,7 @@ export class RegistrationDialogService {
                 .then((result) => {
                     this.router.navigate(['/jobseekers']);
                 });
-        });
+        }, () => {});
     }
 
     openRegisterPavDialog() {
@@ -35,7 +35,7 @@ export class RegistrationDialogService {
         });
         return modalRef.result.then(() => {
             this.router.navigate(['/home']);
-        });
+        }, () => {});
     }
 
     openRegisterCompanyDialog() {
@@ -45,7 +45,7 @@ export class RegistrationDialogService {
         });
         return modalRef.result.then(() => {
             this.router.navigate(['/home']);
-        });
+        }, () => {});
     }
 
 }
