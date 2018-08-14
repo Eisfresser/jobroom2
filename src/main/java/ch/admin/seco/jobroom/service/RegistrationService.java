@@ -1,6 +1,5 @@
 package ch.admin.seco.jobroom.service;
 
-import static ch.admin.seco.jobroom.domain.UserInfo_.registrationStatus;
 
 import java.time.LocalDate;
 import java.util.Optional;
@@ -133,7 +132,7 @@ public class RegistrationService {
             addAgentRoleToSession();
             LOGGER.info("Registered user with id: {} as pav user", userInfo.getUserExternalId());
         } else {
-            throw new IllegalStateException("User with id=" + userPrincipal.getUserExtId() + " tried to register as employer/agent, but has a wrong registration status: " + registrationStatus);
+            throw new IllegalStateException("User with id=" + userPrincipal.getUserExtId() + " tried to register as employer/agent, but has a wrong registration status: " + userInfo.getRegistrationStatus());
         }
         result.setSuccess(true);
         userInfo.finishRegistration();
