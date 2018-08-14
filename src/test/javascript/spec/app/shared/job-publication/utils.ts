@@ -13,6 +13,7 @@ export function createJobAdvertisement(id = 'id', stellennummerAvam = 'avam'): J
         reportToAvam: true,
         jobCenterCode: 'jobcenter',
         jobContent: {
+            numberOfJobs: '1',
             jobDescriptions: [
                 {
                     languageIsoCode: 'de',

@@ -50,6 +50,7 @@ export interface JobContent {
     languageSkills: LanguageSkill[];
     applyChannel: ApplyChannel;
     publicContact?: PublicContact;
+    numberOfJobs: string;
 }
 
 export interface JobAdvertisement {
@@ -187,6 +188,7 @@ export interface CreateJobAdvertisement {
     externalUrl?: string;
     contact: Contact;
     publication: Publication;
+    numberOfJobs: string;
     jobDescriptions: JobDescription[];
     company: Company;
     employer: Employer;

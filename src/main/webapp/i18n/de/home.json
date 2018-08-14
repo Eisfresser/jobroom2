@@ -111,6 +111,7 @@
                     "label": "Sprache der Stellenbeschreibung"
                 },
                 "job-title": "Stellenbezeichnung",
+                "number-of-jobs": "Anzahl identischer Stellen",
                 "language-skills": "Sprachkenntnisse",
                 "language-skills.add": "Neue Sprachkompetenz hinzuf\u00fcgen",
                 "language-skills.spoken.error": "Language skill is required",
@@ -137,7 +138,8 @@
                         "required": "Pflichtfeld",
                         "at-least-one-required": "Bitte mindestens eine Bewerbungsform w\u00e4hlen",
                         "zip-format": "PLZ ung\u00fcltig",
-                        "zip-or-city-format": "PLZ/Ort ung\u00fcltig"
+                        "zip-or-city-format": "PLZ/Ort ung\u00fcltig",
+                        "number-of-jobs": "Die Anzahl der Stellen muss zwischen 1 und 100 liegen"
                     }
                 },
                 "no-selection": "keine Auswahl",

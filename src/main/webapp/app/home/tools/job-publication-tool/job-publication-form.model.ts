@@ -87,6 +87,7 @@ export interface EmployerFormModel {
 }
 
 export interface JobPublicationForm {
+    numberOfJobs: string;
     jobDescriptions: JobDescription[];
     occupation: OccupationFormModel;
     languageSkills: LanguageSkill[];

@@ -349,6 +349,7 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
         };
 
         return this.fb.group({
+            numberOfJobs: [formModel.numberOfJobs, [Validators.required, Validators.min(1), Validators.max(100)]],
             jobDescriptions: [formModel.jobDescriptions],
             occupation: this.fb.group({
                 occupationSuggestion: [formModel.occupation.occupationSuggestion, Validators.required],
@@ -432,6 +433,7 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
         const company = userData.company ? userData.company : {} as Company;
         return {
             jobDescriptions: [],
+            numberOfJobs: '1',
             occupation: {
                 occupationSuggestion: null,
                 degree: null,

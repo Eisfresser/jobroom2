@@ -149,6 +149,8 @@ export class JobPublicationMapper {
             reportToAvam: true
         } as CreateJobAdvertisement;
 
+        jobAd.numberOfJobs = jobPublicationForm.numberOfJobs;
+
         jobAd.jobDescriptions = jobPublicationForm.jobDescriptions;
 
         jobAd.occupation = {

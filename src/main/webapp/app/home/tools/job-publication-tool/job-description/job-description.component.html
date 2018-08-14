@@ -1,12 +1,15 @@
-<div [formGroup]="group" *ngIf="languageOptionTranslations$ | async as languageOptionTranslations">
-    <ng-container [formArrayName]="controlName" *ngFor="let jobDescription of jobDescriptions.controls; let i = index">
-        <div [formGroupName]="i" class="job-description__item">
-            <div class="form-group">
+<div [formGroup]="group"
+     *ngIf="languageOptionTranslations$ | async as languageOptionTranslations">
+    <ng-container [formArrayName]="controlName"
+                  *ngFor="let jobDescription of jobDescriptions.controls; let i = index">
+        <div class="job-description__item">
+            <div [formGroup]="jobDescription" class="form-group">
                 <label [for]="'job-title-' + i" class="col-form-label">
                     {{ 'home.tools.job-publication.job-title' | translate }}
                 </label>
                 <div>
-                    <input type="text" [jr2TextSizeLimit]="255" class="form-control" [id]="'job-title-' + i" formControlName="title"/>
+                    <input type="text" [jr2TextSizeLimit]="255" class="form-control"
+                           [id]="'job-title-' + i" formControlName="title"/>
                     <jr2-input-error-message [formGroup]="jobDescription" path="title"
                                              [errorCodes]="['required']"
                                              [keys]="['home.tools.job-publication.messages.validate.required']">
@@ -14,12 +17,31 @@
                 </div>
             </div>
 
-            <div class="form-group">
+            <div [formGroup]="group" class="form-group right-input-group">
+                <label [for]="'number-of-jobs-' + i" class="col-form-label right-input-label">
+                    {{ 'home.tools.job-publication.number-of-jobs' | translate }}
+                </label>
+                <div>
+                    <input type="number" [min]="1" [max]="100" [maxlength]="3" class="form-control right-input"
+                           [id]="'number-of-jobs-' + i" formControlName="numberOfJobs"/>
+                    <jr2-input-error-message [formGroup]="group"
+                                             class="right-input-error-label"
+                                             path="numberOfJobs"
+                                             [errorCodes]="['required','min','max']"
+                                             [keys]="['home.tools.job-publication.messages.validate.required',
+                                             'home.tools.job-publication.messages.validate.number-of-jobs',
+                                             'home.tools.job-publication.messages.validate.number-of-jobs']">
+                    </jr2-input-error-message>
+                </div>
+            </div>
+
+            <div [formGroup]="jobDescription" class="form-group">
                 <label [for]="'description-' + i">
                     {{ 'home.tools.job-publication.description.label' | translate }}
                 </label>
                 <div>
-                    <textarea #jobDescriptionInput class="form-control" [id]="'description-' + i" rows="15"
+                    <textarea #jobDescriptionInput class="form-control"
+                              [id]="'description-' + i" rows="15"
                               [placeholder]="'home.tools.job-publication.description.placeholder' | translate"
                               aria-describedby="maxChar" formControlName="description"
                               [jr2TextSizeLimit]="JOB_DESCRIPTION_MAX_LENGTH"></textarea>
@@ -27,7 +49,8 @@
                            jhiTranslate="home.tools.job-publication.description.characters-counter-text"
                            translateValues="{count: {{ max(JOB_DESCRIPTION_MAX_LENGTH - jobDescriptionInput.value.length, 0) }}}">
                     </small>
-                    <jr2-input-error-message [formGroup]="jobDescription" path="description"
+                    <jr2-input-error-message [formGroup]="jobDescription"
+                                             path="description"
                                              [errorCodes]="['required']"
                                              [keys]="['home.tools.job-publication.messages.validate.required']">
                     </jr2-input-error-message>

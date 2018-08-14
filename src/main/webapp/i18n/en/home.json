@@ -111,6 +111,7 @@
                     "label": "Job description language"
                 },
                 "job-title": "Job title",
+                "number-of-jobs": "Number of identical jobs",
                 "language-skills": "Languages",
                 "language-skills.add": "Add new language skill",
                 "language-skills.spoken.error": "Language skill is required",
@@ -137,7 +138,8 @@
                         "required": "This field is required.",
                         "at-least-one-required": "Select at least one application channel",
                         "zip-format": "Invalid postal code",
-                        "zip-or-city-format": "Invalid postal code/city"
+                        "zip-or-city-format": "Invalid postal code/city",
+                        "number-of-jobs": " The amount of jobs must be within 1 and 100"
                     }
                 },
                 "no-selection": "No selection",

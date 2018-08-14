@@ -111,6 +111,7 @@
                     "label": "Lingua della descrizione"
                 },
                 "job-title": "Denominazione del posto",
+                "number-of-jobs": "IT Number of identical jobs",
                 "language-skills": "Conoscenze linguistiche",
                 "language-skills.add": "Aggiungi nuova conoscenza linguistica",
                 "language-skills.spoken.error": "Conoscenze linguistiche obbligatorie",
@@ -137,7 +138,8 @@
                         "required": "Questo campo \u00e8 obbligatorio.",
                         "at-least-one-required": "Scegliere almeno una tipologia di candidatura",
                         "zip-format": "NPA non \u00e8 valido.",
-                        "zip-or-city-format": "NPA/luogo non \u00e8 valido."
+                        "zip-or-city-format": "NPA/luogo non \u00e8 valido.",
+                        "number-of-jobs": " IT  The amount of jobs must be within 1 and 100"
                     }
                 },
                 "no-selection": "nessuna scelta",

@@ -102,7 +102,10 @@
                 <h2 class="text--light" [innerHTML]="jobDescription.title | safeHtml"></h2>
                 <span class="text--primary-color">{{ job.jobContent.company.name }}</span>
                 <small class="detail__date" *ngIf="job.publication.startDate">
-                    {{'job-detail.onlineSince' | translate}} {{ job.publication.startDate | jr2Date }}
+                    {{'job-detail.onlineSince' | translate}}: {{ job.publication.startDate | jr2Date }}
+                </small>
+                <small class="detail__date" *ngIf="job.jobContent.numberOfJobs">
+                    {{'jobroomApp.job.numberOfJobs' | translate}}: {{ job.jobContent.numberOfJobs }}
                 </small>
             </div>
 

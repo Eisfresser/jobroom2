@@ -111,6 +111,7 @@
                     "label": "Langue du descriptif"
                 },
                 "job-title": "D\u00e9signation du poste",
+                "number-of-jobs": "FR Number of identical jobs",
                 "language-skills": "Connaissances linguistiques",
                 "language-skills.add": "Ajouter une nouvelle comp\u00e9tence linguistique",
                 "language-skills.spoken.error": "Des connaissances linguistiques sont requises",
@@ -137,7 +138,8 @@
                         "required": "Ce champ est obligatoire.",
                         "at-least-one-required": "Choisir au moins un type de postulation",
                         "zip-format": "NPA n'est pas valide.",
-                        "zip-or-city-format": "NPA/lieu n'est pas valide."
+                        "zip-or-city-format": "NPA/lieu n'est pas valide.",
+                        "number-of-jobs": " FR  The amount of jobs must be within 1 and 100"
                     }
                 },
                 "no-selection": "aucune s\u00e9lection",
