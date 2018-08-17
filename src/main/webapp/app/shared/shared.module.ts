@@ -32,6 +32,7 @@ import { JobAdvertisementService } from './job-advertisement/job-advertisement.s
 import { Jobroom2LanguageService } from './language/jobroom2-language.service';
 import { ShortenPipe } from './pipes/shorten.pipe';
 import { CompanyService } from './company/company.service';
+import { MarkdownEscapePipe } from './pipes/markdown-escape.pipe';
 
 @NgModule({
     imports: [
@@ -45,6 +46,7 @@ import { CompanyService } from './company/company.service';
         LocaleAwareDecimalPipe,
         PhoneNumberPipe,
         SafeHtmlPipe,
+        MarkdownEscapePipe,
         LanguageComponent,
         DetailsPagePaginationControlsComponent,
         DetailsPagePaginationComponent,
@@ -66,6 +68,7 @@ import { CompanyService } from './company/company.service';
         LocaleAwareDecimalPipe,
         PhoneNumberPipe,
         SafeHtmlPipe,
+        MarkdownEscapePipe,
         Jobroom2LanguageService,
         dateParserFormatterProvider(),
         datepickerI18nService(),
@@ -84,6 +87,7 @@ import { CompanyService } from './company/company.service';
         LocaleAwareDecimalPipe,
         PhoneNumberPipe,
         SafeHtmlPipe,
+        MarkdownEscapePipe,
         LanguageComponent,
         DetailsPagePaginationControlsComponent,
         DetailsPagePaginationComponent,
