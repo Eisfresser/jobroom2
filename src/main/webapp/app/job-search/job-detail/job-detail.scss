@@ -30,7 +30,7 @@ td:first-of-type {
     border-bottom: solid $main-color-gray-light;
     border-width: thin;
     margin-bottom: .5em;
-    font-weight: normal;
+    padding-bottom: .25em;
 }
 
 :host ::ng-deep .content__item--bullet {
