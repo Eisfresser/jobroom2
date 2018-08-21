@@ -1,8 +1,7 @@
 import { Action } from '@ngrx/store';
 import { CandidateSearchFilter } from '../state/candidate-search.state';
 import { CandidateProfile } from '../../services/candidate';
-import { OccupationOption } from '../../../shared/reference-service';
-import { TypeaheadMultiselectModel } from '../../../shared/input-components/typeahead/typeahead-multiselect-model';
+import { TypeaheadMultiselectModel } from '../../../shared/input-components';
 
 export const INIT_CANDIDATE_SEARCH = 'CANDIDATES:INIT_CANDIDATE_SEARCH';
 export const CANDIDATE_PROFILE_DETAIL_LOADED = 'CANDIDATES:CANDIDATE_PROFILE_DETAIL_LOADED';

@@ -46,6 +46,9 @@
         </div>
 
         <div *ngIf="candidateProfile$ | async as candidateProfile" class="col-12 col-md-8 order-3 base__content">
+            <ngb-alert *ngIf="anonymousContactSuccess" type="success" (close)="hideAnonymousContactSuccess()">
+                {{ 'candidate-detail.candidate-anonymous-contact.success' | translate }}
+            </ngb-alert>
             <div *ngIf="relevantJobExperience$ | async as relevantJobExperience" class="detail__title">
                 <h2 class="text--light">{{ relevantJobExperience.occupationLabel }}</h2>
             </div>

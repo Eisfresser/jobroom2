@@ -24,7 +24,7 @@ export function candidateSearchReducer(state = initialState, action: Actions): C
                 page,
                 loading: false,
                 searchError: false,
-                candidateListScrollY: 0
+                candidateListScrollY: 0,
             });
             break;
 

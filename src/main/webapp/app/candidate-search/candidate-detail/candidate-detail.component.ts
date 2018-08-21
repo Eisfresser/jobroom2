@@ -67,6 +67,7 @@ export class CandidateDetailComponent implements OnInit {
     contact$: Observable<Contact>;
     languageSkills$: Observable<LanguageSkill[]>;
     emailContent$: Observable<EmailContent>;
+    anonymousContactSuccess = false;
 
     @ViewChild(NgbTooltip)
     clipboardTooltip: NgbTooltip;
@@ -306,6 +307,11 @@ export class CandidateDetailComponent implements OnInit {
     }
 
     openAnonymousContactDialog(emailContent: EmailContent): void {
-        this.anonymousContactDialogService.open(emailContent);
+        this.anonymousContactDialogService.open(emailContent)
+            .then(() => this.anonymousContactSuccess = true, () => {});
+    }
+
+    hideAnonymousContactSuccess(): void {
+        this.anonymousContactSuccess = false;
     }
 }

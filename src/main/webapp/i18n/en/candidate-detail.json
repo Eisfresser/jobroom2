@@ -43,6 +43,7 @@
         "candidate-anonymous-contact": "Contact candidate",
         "candidate-anonymous-contact.subject": "Dear Customer",
         "candidate-anonymous-contact.body": "The following employer discovered your profile on Job Room and would like to communicate with you directly. Please contact the company using the details below to discuss further steps.",
+        "candidate-anonymous-contact.success": "Your e-mail was succesfully sent. Thank you for using Job-Room.",
         "candidate-copy-link": "Copy link",
         "candidate-print": "Print",
         "candidate-save": "Save candidate profile",

@@ -13,5 +13,6 @@ export class CandidateAnonymousContactDialogService {
         const modalRef = this.modalService
             .open(CandidateAnonymousContactDialogComponent, { size: 'lg' });
         modalRef.componentInstance.emailContent = Object.assign({}, emailContent);
+        return modalRef.result
     }
 }

@@ -215,7 +215,7 @@ describe('candidateSearchReducer', () => {
 
     it('should update JobSearchState for CANDIDATE_PROFILE_DETAIL_LOADED action', () => {
         // GIVEN
-        const state = initialState;
+        const state = Object.assign({}, initialState);
         const candidate0 = {
             id: '0',
             externalId: 'extId0'
