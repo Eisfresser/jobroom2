@@ -1,23 +1,15 @@
 import { Routes } from '@angular/router';
 
 import {
-    activateRoute,
-    passwordResetFinishRoute,
-    passwordResetInitRoute,
-    passwordRoute,
+    contactTemplateManagementRoute,
     registrationAccessCodeRoute,
     registrationQuestionnaireRoute,
     reloginRoute,
-    settingsRoute
 } from './';
 
 const ACCOUNT_ROUTES = [
-    activateRoute,
-    passwordRoute,
-    passwordResetFinishRoute,
-    passwordResetInitRoute,
     reloginRoute,
-    settingsRoute,
+    contactTemplateManagementRoute,
     registrationQuestionnaireRoute,
     registrationAccessCodeRoute
 ];

@@ -5,11 +5,12 @@ import {
     CandidateSearchToolState,
     getActiveAgencyTabId,
     getActiveCompanyTabId,
+    getActiveSystemNotifications,
     getActiveToolbarItem,
     getCandidateSearchToolState,
     getJobSearchToolState,
     HomeState,
-    JobSearchToolState, getActiveSystemNotifications,
+    JobSearchToolState,
 } from './state-management';
 import { NgbTabChangeEvent } from '@ng-bootstrap/ng-bootstrap';
 import {
@@ -18,7 +19,6 @@ import {
     ToolbarItem
 } from './state-management/state/layout.state';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UserData } from './tools/job-publication-tool/service/user-data-resolver.service';
 import { Subscription } from 'rxjs/Subscription';
 import { JobAdvertisement } from '../shared/job-advertisement/job-advertisement.model';
 import { SystemNotification } from './system-notification/system.notification.model';
@@ -43,7 +43,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     activeCompanyTabId$: Observable<string>;
     activeAgencyTabId$: Observable<string>;
     jobAdvertisement$: Observable<JobAdvertisement>;
-    userData$: Observable<UserData>;
+
     isSubnavCollapsed: boolean;
 
     private subscription: Subscription;
@@ -63,9 +63,6 @@ export class HomeComponent implements OnInit, OnDestroy {
 
         this.jobAdvertisement$ = this.route.data
             .map((data) => data['jobAdvertisement']);
-
-        this.userData$ = this.route.data
-            .map((data) => data['userData']);
     }
 
     ngOnInit(): void {

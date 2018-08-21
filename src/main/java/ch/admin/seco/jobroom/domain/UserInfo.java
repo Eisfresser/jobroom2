@@ -35,6 +35,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import ch.admin.seco.jobroom.domain.enumeration.AccountabilityType;
 import ch.admin.seco.jobroom.domain.enumeration.RegistrationStatus;
+import ch.admin.seco.jobroom.service.CompanyContactTemplateNotFoundException;
 
 /**
  * Additional information about a user. The eIAM is master, which means users are registered
@@ -115,6 +116,11 @@ public class UserInfo implements Serializable {
     @Column(name = "last_login_at")
     private LocalDateTime lastLoginAt;
 
+    @Valid
+    @ElementCollection
+    @CollectionTable(name = "company_contact_templates", joinColumns = @JoinColumn(name = "user_id"))
+    private Set<CompanyContactTemplate> companyContactTemplates = new HashSet<>();
+
     public UserInfo(String firstName, String lastName, String email, String userExternalId, String langKey) {
         this.id = new UserInfoId();
         setFirstName(firstName);
@@ -124,8 +130,8 @@ public class UserInfo implements Serializable {
         this.langKey = langKey;
         this.registrationStatus = UNREGISTERED;
         this.createdAt = LocalDateTime.now();
-        this.modifiedAt = LocalDateTime.now();
         this.lastLoginAt = LocalDateTime.now();
+        this.touch();
     }
 
     private UserInfo() {
@@ -138,7 +144,7 @@ public class UserInfo implements Serializable {
         setEmail(email);
         this.langKey = langKey;
         this.lastLoginAt = LocalDateTime.now();
-        this.modifiedAt = LocalDateTime.now();
+        this.touch();
     }
 
 
@@ -150,36 +156,38 @@ public class UserInfo implements Serializable {
     public void finishRegistration() {
         this.changeRegistrationStatus(RegistrationStatus.REGISTERED);
         this.accessCode = null;
-        this.modifiedAt = LocalDateTime.now();
+        this.touch();
     }
+
 
     public void requestAccessAsEmployer(Company company) {
         this.addCompany(company);
         this.setAccessCode(createAccessCode());
         this.changeRegistrationStatus(RegistrationStatus.VALIDATION_EMP);
-        this.modifiedAt = LocalDateTime.now();
+        this.touch();
     }
 
     public void requestAccessAsAgent(Company company) {
         this.addCompany(company);
         this.setAccessCode(createAccessCode());
         this.changeRegistrationStatus(RegistrationStatus.VALIDATION_PAV);
-        this.modifiedAt = LocalDateTime.now();
-    }
-
-    public void registerExistingAgent(Company company) {
-        this.addCompany(company);
-        this.changeRegistrationStatus(RegistrationStatus.REGISTERED);
-        this.modifiedAt = LocalDateTime.now();
+        this.touch();
     }
 
     public void unregister() {
         this.changeRegistrationStatus(UNREGISTERED);
         this.accountabilities.clear();
-        this.modifiedAt = LocalDateTime.now();
+        this.companyContactTemplates.clear();
         this.stesInformation = null;
+        this.touch();
     }
 
+    /**
+     * Method will be deprecated by feature JR2-1216.
+     * @deprecated will be deprecated since it will be possible to get multipleCompanies
+     * @return A Company Object
+     */
+    @Deprecated
     public Company getCompany() {
         if (accountabilities.isEmpty()) {
             return null;
@@ -189,6 +197,41 @@ public class UserInfo implements Serializable {
             .findFirst()
             .map((Accountability::getCompany))
             .orElseThrow(() -> new IllegalStateException("No accountabilites with a company found for user: " + this.id));
+    }
+
+    public void addCompanyContactTemplate(CompanyContactTemplate companyContactTemplate) {
+        if (!this.hasAccountability(companyContactTemplate.getCompanyId())) {
+            throw new IllegalStateException("No Accountability for company with id: " + companyContactTemplate.getCompanyId());
+        }
+        this.companyContactTemplates.remove(companyContactTemplate);
+        this.companyContactTemplates.add(companyContactTemplate);
+        this.touch();
+    }
+
+    public void removeContactTemplate(CompanyId companyId) {
+        if (!this.hasAccountability(companyId)) {
+            throw new IllegalStateException("No Accountability for company with id: " + companyId);
+        }
+        this.companyContactTemplates.removeIf(contactTemplate -> contactTemplate.getCompanyId().equals(companyId));
+    }
+
+    public boolean hasAccountability(CompanyId companyId) {
+        return this.accountabilities.stream()
+            .anyMatch(accountability -> accountability.getCompany().getId().equals(companyId));
+    }
+
+    public CompanyContactTemplate getCompanyContactTemplate(CompanyId companyId) throws CompanyContactTemplateNotFoundException {
+        if (!this.hasAccountability(companyId)) {
+            throw new IllegalStateException("No Accountability for company with id: " + companyId);
+        }
+        return this.companyContactTemplates.stream().
+            filter(contactTemplate -> contactTemplate.getCompanyId().equals(companyId))
+            .findAny()
+            .orElseThrow(() -> new CompanyContactTemplateNotFoundException(companyId));
+    }
+
+    public Set<CompanyContactTemplate> getCompanyContactTemplates() {
+        return Collections.unmodifiableSet(this.companyContactTemplates);
     }
 
     public Optional<StesInformation> getStesInformation() {
@@ -251,16 +294,10 @@ public class UserInfo implements Serializable {
         return lastLoginAt;
     }
 
-    private void changeRegistrationStatus(RegistrationStatus registrationStatus) {
-        Preconditions.checkArgument(this.registrationStatus.canChangeTo(registrationStatus),
-            "Can not change RegistrationStatus from  " + this.registrationStatus + " to " + registrationStatus);
-        this.registrationStatus = registrationStatus;
-    }
-
-    private void addCompany(Company company) {
+    void addCompany(Company company) {
         Accountability accountability = new Accountability(AccountabilityType.USER, company);
         accountabilities.add(accountability);
-        this.modifiedAt = LocalDateTime.now();
+        this.touch();
     }
 
     private String createAccessCode() {
@@ -285,6 +322,16 @@ public class UserInfo implements Serializable {
 
     private void setEmail(String email) {
         this.email = Preconditions.checkNotNull(email).toLowerCase();
+    }
+
+    private void changeRegistrationStatus(RegistrationStatus registrationStatus) {
+        Preconditions.checkArgument(this.registrationStatus.canChangeTo(registrationStatus),
+            "Can not change RegistrationStatus from  " + this.registrationStatus + " to " + registrationStatus);
+        this.registrationStatus = registrationStatus;
+    }
+
+    private void touch() {
+        this.modifiedAt = LocalDateTime.now();
     }
 
     @Override

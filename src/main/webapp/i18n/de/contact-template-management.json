@@ -1,0 +1,22 @@
+{
+    "contact-template-management": {
+        "title": "Pers\u00f6nliche Kontaktangaben f\u00fcr ",
+        "companyName": "Unternehmen",
+        "companyStreet": "Strasse",
+        "companyHouseNr": "Nr.",
+        "companyZipCode": "PLZ",
+        "companyCity": "Ort",
+        "phone": "Telefon",
+        "email": "E-Mail",
+        "firstName": "Vorname",
+        "lastName": "Nachname",
+        "salutation": "Anrede",
+        "userInformation": "Benutzerinformationen",
+        "companyInformation": "Unternehmensinformationen",
+        "successSaveMessage": "Ihre pers\u00f6nlichen Kontaktangaben wurden erfolgreich gespeichert!",
+        "failureSaveMessage": "Ihre pers\u00f6nlichen Kontaktangaben konnten nicht gespeichert werden",
+        "companyhousenr": {
+            "message": "Bitte \u00fcberpr\u00fcfen Sie die korrekte Eingabe der Hausnummer"
+        }
+    }
+}

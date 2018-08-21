@@ -1,15 +1,15 @@
 package ch.admin.seco.jobroom.web.rest;
 
-import ch.admin.seco.jobroom.domain.Company;
-import ch.admin.seco.jobroom.domain.UserInfo;
-import ch.admin.seco.jobroom.repository.UserInfoRepository;
-import ch.admin.seco.jobroom.security.UserPrincipal;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-import java.util.stream.Collectors;
+import ch.admin.seco.jobroom.domain.UserInfo;
+import ch.admin.seco.jobroom.repository.UserInfoRepository;
+import ch.admin.seco.jobroom.security.UserPrincipal;
 
 @Component
 @Transactional
@@ -28,7 +28,6 @@ public class UserInfoBasedCurrentUserMapper implements CurrentUserMapper {
             throw new IllegalStateException("No User found");
         }
         UserInfo userInfo1 = optionalUserInfo.get();
-        Company company = userInfo1.getCompany();
         return new CurrentUserResource.CurrentUserDTO(
             userInfo1.getId().getValue(),
             principal.getEmail(),
@@ -36,9 +35,7 @@ public class UserInfoBasedCurrentUserMapper implements CurrentUserMapper {
             principal.getLastName(),
             principal.getEmail(),
             principal.getLangKey(),
-            principal.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toSet()),
-            company == null ? null : company.getExternalId(),
-            company == null ? null : company.getName()
+            principal.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toSet())
         );
     }
 }

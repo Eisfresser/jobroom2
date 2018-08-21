@@ -16,6 +16,7 @@ import { createJobAdvertisement } from '../../../shared/job-publication/utils';
 import { dashboardReducer } from '../../../../../../../main/webapp/app/dashboard/state-management/reducers/dahboard.reducers';
 import { HttpHeaders } from '@angular/common/http';
 import { JobAdvertisementService } from '../../../../../../../main/webapp/app/shared/job-advertisement/job-advertisement.service';
+import { CurrentSelectedCompanyService } from '../../../../../../../main/webapp/app/shared/company/current-selected-company.service';
 
 describe('PEADashboardEffects', () => {
     let effects: PEADashboardEffects;
@@ -24,8 +25,10 @@ describe('PEADashboardEffects', () => {
 
     const mockJobAdvertisementService = jasmine.createSpyObj('mockJobAdvertisementService', ['searchPEAJobAds']);
     const mockPrincipal = jasmine.createSpyObj('mockPrincipal', ['getAuthenticationState']);
+    const mockCurrentSelectedCompanyService = jasmine.createSpyObj('mockCurrentSelectedCompanyService', ['getSelectedAccountability']);
 
     mockPrincipal.getAuthenticationState.and.returnValue(Observable.of({ organizationId: '111' }));
+    mockCurrentSelectedCompanyService.getSelectedAccountability.and.returnValue(Observable.of({}));
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -42,6 +45,10 @@ describe('PEADashboardEffects', () => {
                 {
                     provide: Principal,
                     useValue: mockPrincipal
+                },
+                {
+                    provide: CurrentSelectedCompanyService,
+                    useValue: mockCurrentSelectedCompanyService
                 }
             ],
         })

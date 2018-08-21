@@ -9,4 +9,6 @@ export const PHONE_NUMBER_REGEX = /^[+]\d+$/;
 
 export const POSTBOX_NUMBER_REGEX = /^\d{0,6}$/;
 
+export const HOUSE_NUMBER_REGEX = /^\d+[a-zA-Z]*$/;
+
 export const PERSON_NUMBER_REGEX = /^\d{8}$/;

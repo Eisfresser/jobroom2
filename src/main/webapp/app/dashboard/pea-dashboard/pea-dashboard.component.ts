@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { ITEMS_PER_PAGE, Principal } from '../../shared';
+import { CurrentUser, ITEMS_PER_PAGE, Principal } from '../../shared';
 import {
     JobAdvertisementFilter,
     PEADashboardState
@@ -30,6 +30,8 @@ import { JobAdvertisementUtils } from '../job-advertisement.utils';
 import { JobAdvertisementCancelDialogService } from '../dialogs/job-advertisement-cancel-dialog.service';
 import { CompanyService } from '../../shared/company/company.service';
 import { Company } from '../../shared/company/company.model';
+import { CurrentSelectedCompanyService } from '../../shared/company/current-selected-company.service';
+import { Accountability } from '../../shared/user-info/user-info.model';
 
 interface JobAdvertisementView {
     id: string;
@@ -52,25 +54,33 @@ export class PeaDashboardComponent implements OnInit, OnChanges {
 
     @Input()
     jobAdvertisementFilter: JobAdvertisementFilter;
+
     @Input()
     jobAdvertisementList: JobAdvertisement[];
+
     @Input()
     totalCount: number;
+
     @Input()
     page: number;
 
     @Output()
     filterJobAdvertisements = new EventEmitter<JobAdvertisementFilter>();
+
     @Output()
     pageChange = new EventEmitter<number>();
 
-    identity$: Observable<any>;
-    organization$: Observable<Company>;
+    currentUser$: Observable<CurrentUser>;
+
+    company$: Observable<Company>;
+
     jobFilterForm: FormGroup;
+
     jobAdvertisementList$: Observable<JobAdvertisementView[]>;
 
     constructor(private fb: FormBuilder,
                 private principal: Principal,
+                private currentSelectedCompanyService: CurrentSelectedCompanyService,
                 private companyService: CompanyService,
                 private store: Store<PEADashboardState>,
                 private jobAdvertisementService: JobAdvertisementService,
@@ -86,9 +96,15 @@ export class PeaDashboardComponent implements OnInit, OnChanges {
             onlineSinceDays: [this.jobAdvertisementFilter.onlineSinceDays]
         });
 
-        this.identity$ = this.principal.currentUser();
-        this.organization$ = this.identity$
-            .flatMap((currentUser) => this.companyService.findByExternalId(currentUser.companyId));
+        this.currentUser$ = this.principal.getAuthenticationState();
+
+        this.company$ = this.currentSelectedCompanyService.getSelectedAccountability()
+            .flatMap((selectedAccountability: Accountability) => {
+                if (selectedAccountability) {
+                    return this.companyService.findByExternalId(selectedAccountability.companyExternalId);
+                }
+                return Observable.empty();
+            });
     }
 
     ngOnChanges(changes: SimpleChanges): void {

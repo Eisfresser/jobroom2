@@ -10,25 +10,16 @@ import { RegistrationQuestionnaireComponent } from './registration/questionnaire
 import { JobroomSharedCommonModule } from '../shared/shared-common.module';
 import {
     accountState,
-    ActivateComponent,
-    ActivateService,
     JobseekerDialogComponent,
-    PasswordComponent,
-    PasswordResetFinishComponent,
-    PasswordResetFinishService,
-    PasswordResetInitComponent,
-    PasswordResetInitService,
-    PasswordService,
-    PasswordStrengthBarComponent,
     RegistrationCompanyDialogComponent,
     RegistrationPavDialogComponent,
     RegistrationService,
     ReLoginComponent,
-    SettingsComponent
 } from './';
 import { RegistrationDialogService } from './registration/registration-dialog.service';
 import { RegistrationAccessCodeComponent } from './registration/access-code/registration-access-code.component';
 import { RegistrationGuardService } from './registration/registration-guard.service';
+import { ContactTemplateManagementComponent } from '../account/contact-template-management/contact-template-management.component';
 
 @NgModule({
     imports: [
@@ -41,24 +32,15 @@ import { RegistrationGuardService } from './registration/registration-guard.serv
         JobroomSharedCommonModule
     ],
     declarations: [
-        ActivateComponent,
         ReLoginComponent,
-        PasswordComponent,
-        PasswordStrengthBarComponent,
-        PasswordResetInitComponent,
-        PasswordResetFinishComponent,
-        SettingsComponent,
         JobseekerDialogComponent,
+        ContactTemplateManagementComponent,
         RegistrationCompanyDialogComponent,
         RegistrationQuestionnaireComponent,
         RegistrationPavDialogComponent,
         RegistrationAccessCodeComponent
     ],
     providers: [
-        ActivateService,
-        PasswordService,
-        PasswordResetInitService,
-        PasswordResetFinishService,
         RegistrationService,
         BackgroundUtils,
         ModalUtils,

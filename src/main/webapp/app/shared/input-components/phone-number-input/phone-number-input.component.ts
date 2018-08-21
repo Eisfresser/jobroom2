@@ -40,8 +40,7 @@ export class PhoneNumberInputComponent implements OnInit, ControlValueAccessor, 
     @Input() defaultCountry: CountryCode = 'CH';
     @Input() id: string;
     @Input() placeholder = '';
-
-    disabled: boolean;
+    @Input() disabled: boolean;
     country: CountryCode;
 
     ngOnInit() {

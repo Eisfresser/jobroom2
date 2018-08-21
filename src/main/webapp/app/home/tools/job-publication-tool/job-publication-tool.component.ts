@@ -40,7 +40,6 @@ import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import * as countries from 'i18n-iso-countries';
 import { Subscriber } from 'rxjs/Subscriber';
 import { JobPublicationMapper } from './job-publication-mapper';
-import { UserData } from './service/user-data-resolver.service';
 import { JobAdvertisementService } from '../../../shared/job-advertisement/job-advertisement.service';
 import {
     JobAdvertisement,
@@ -54,7 +53,7 @@ import {
     CoreState,
     getLanguage
 } from '../../../shared/state-management/state/core.state';
-import { Company } from '../../../shared/company/company.model';
+import { CurrentSelectedCompanyService } from '../../../shared/company/current-selected-company.service';
 
 @Component({
     selector: 'jr2-job-publication-tool',
@@ -68,12 +67,13 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
 
     @Input()
     jobAdvertisement: JobAdvertisement;
-    @Input()
-    userData: UserData;
+
     @ViewChild('employmentStartDateEl')
     employmentStartDateElementRef: ElementRef;
+
     @ViewChild('employmentEndDateEl')
     employmentEndDateElementRef: ElementRef;
+
     degrees = Degree;
     experiences = WorkExperience;
     salutations = Salutation;
@@ -101,6 +101,7 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
                 private translateService: TranslateService,
                 private jobAdvertisementService: JobAdvertisementService,
                 private languageFilterService: LanguageFilterService,
+                private currentSelectedCompanyService: CurrentSelectedCompanyService,
                 private cd: ChangeDetectorRef) {
     }
 
@@ -121,13 +122,13 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
         this.languageSkills$ = this.languageSkillService.getLanguages();
         this.setupCountries();
 
-        let formModel: JobPublicationForm = this.createDefaultFormModel();
+        let defaultFormValues: JobPublicationForm = this.createDefaultFormModel();
         if (this.jobAdvertisement) {
-            formModel = JobPublicationMapper.mapJobPublicationToFormModel(formModel, this.jobAdvertisement);
+            defaultFormValues = JobPublicationMapper.mapJobPublicationToFormModel(defaultFormValues, this.jobAdvertisement);
         }
 
-        this.jobPublicationForm = this.createJobPublicationForm(formModel);
-        this.configureEmployerSection(formModel);
+        this.jobPublicationForm = this.createJobPublicationForm(defaultFormValues);
+        this.configureEmployerSection(defaultFormValues);
 
         this.configureDateInput('employment.employmentStartDate.date', 'employment.employmentStartDate.immediate',
             (disabled) => {
@@ -149,6 +150,31 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
             });
         this.updateEmploymentStartDateRelatedField();
         this.configurePublicContactSection();
+
+        this.currentSelectedCompanyService.getSelectedCompanyContactTemplate()
+            .subscribe((companyContactTemplateModel) => {
+                if (companyContactTemplateModel == null) {
+                    return;
+                }
+                this.jobPublicationForm.patchValue({
+                    company: {
+                        name: companyContactTemplateModel.companyName,
+                        street: companyContactTemplateModel.companyStreet,
+                        zipCode: {
+                            zip: companyContactTemplateModel.companyZipCode,
+                            city: companyContactTemplateModel.companyCity
+                        },
+                        houseNumber: companyContactTemplateModel.companyHouseNr
+                    },
+                    contact: {
+                        salutation: companyContactTemplateModel.salutation,
+                        email: companyContactTemplateModel.email,
+                        phoneNumber: companyContactTemplateModel.phone,
+                        firstName: companyContactTemplateModel.firstName,
+                        lastName: companyContactTemplateModel.lastName
+                    }
+                })
+            });
     }
 
     isEmployerEnabled(): boolean {
@@ -429,8 +455,6 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
     }
 
     private createDefaultFormModel(): JobPublicationForm {
-        const userData = this.userData ? this.userData : {} as UserData;
-        const company = userData.company ? userData.company : {} as Company;
         return {
             jobDescriptions: [],
             numberOfJobs: '1',
@@ -467,11 +491,11 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
                 }
             },
             company: {
-                name: company ? company.name : null,
-                street: company ? company.street : null,
+                name: null,
+                street: null,
                 zipCode: {
-                    zip: company ? company.zipCode : null,
-                    city: company ? company.city : null,
+                    zip: null,
+                    city: null,
                 },
                 houseNumber: '',
                 postboxNumber: '',
@@ -491,12 +515,12 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
                 countryCode: this.SWITZ_KEY
             },
             contact: {
-                language: userData && userData.langKey ? userData.langKey : this.translateService.currentLang,
+                language: this.translateService.currentLang,
                 salutation: null,
-                firstName: userData ? userData.firstName : '',
-                lastName: userData ? userData.lastName : '',
+                firstName: '',
+                lastName: '',
                 phoneNumber: '',
-                email: userData ? userData.email : ''
+                email: ''
             },
             publicContact: {
                 salutation: null,

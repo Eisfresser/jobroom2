@@ -17,6 +17,8 @@ import org.springframework.transaction.annotation.Transactional;
 import ch.admin.seco.jobroom.JobroomApp;
 import ch.admin.seco.jobroom.config.Constants;
 import ch.admin.seco.jobroom.domain.Company;
+import ch.admin.seco.jobroom.domain.CompanyContactTemplate;
+import ch.admin.seco.jobroom.domain.Salutation;
 import ch.admin.seco.jobroom.domain.UserInfo;
 
 @Transactional
@@ -92,6 +94,33 @@ public class UserInfoRepositoryTest {
 
         // then
         assertThat(byPersonNumber).isPresent();
+    }
+
+    @Test
+    public void testCompanyContactTemplate() {
+        // given
+        UserInfo dummyUser = getDummyUser(VALID_USER_EXT_ID_1);
+        Company company = companyRepository.save(getDummyCompany());
+        dummyUser.requestAccessAsEmployer(company);
+
+        CompanyContactTemplate contactTemplate = CompanyContactTemplate.builder()
+            .from(company)
+            .setEmail("test@example.com")
+            .setPhone("12345678901")
+            .setSalutation(Salutation.MR)
+            .build();
+
+        dummyUser.addCompanyContactTemplate(contactTemplate);
+
+        userInfoRepository.save(dummyUser);
+
+        // when
+        Optional<UserInfo> loadedUserInfo = userInfoRepository.findById(dummyUser.getId());
+
+        // then
+        assertThat(loadedUserInfo).isPresent();
+
+        assertThat(loadedUserInfo.get().getCompanyContactTemplates()).hasSize(1);
     }
 
     private UserInfo getDummyUser(String extId) {

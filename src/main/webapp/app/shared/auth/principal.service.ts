@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
 import { AuthServerProvider } from './auth-jwt.service';
 import { SERVER_API_URL } from '../../app.constants';
 import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable()
 export class Principal {
@@ -12,7 +12,7 @@ export class Principal {
 
     private authenticated = false;
 
-    private authenticationState = new Subject<CurrentUser>();
+    private authenticationState = new BehaviorSubject<CurrentUser>(null);
 
     constructor(
         private  authServerProvider: AuthServerProvider,
@@ -126,9 +126,5 @@ export interface CurrentUser {
     langKey: string
 
     authorities: Array<string>
-
-    companyId: string
-
-    companyName: string
 
 }

@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.NativeWebRequest;
 
+import ch.admin.seco.jobroom.service.CompanyContactTemplateNotFoundException;
 import ch.admin.seco.jobroom.web.rest.util.HeaderUtil;
 
 /**
@@ -104,6 +105,15 @@ public class ExceptionTranslator implements ProblemHandling {
         Problem problem = Problem.builder()
             .withStatus(Status.CONFLICT)
             .with("message", ErrorConstants.ERR_CONCURRENCY_FAILURE)
+            .build();
+        return create(ex, problem, request);
+    }
+
+    @ExceptionHandler(CompanyContactTemplateNotFoundException.class)
+    public ResponseEntity<Problem> handleCompanyContactTemplateNotFoundException(CompanyContactTemplateNotFoundException ex, NativeWebRequest request) {
+        Problem problem = Problem.builder()
+            .withStatus(Status.NOT_FOUND)
+            .with("message", ex.getMessage())
             .build();
         return create(ex, problem, request);
     }

@@ -33,6 +33,10 @@ import { Jobroom2LanguageService } from './language/jobroom2-language.service';
 import { ShortenPipe } from './pipes/shorten.pipe';
 import { CompanyService } from './company/company.service';
 import { MarkdownEscapePipe } from './pipes/markdown-escape.pipe';
+import { CompanySelectionComponent } from './components/company-selection/company-selection.component';
+import { CurrentSelectedCompanyService } from './company/current-selected-company.service';
+import { UserInfoService } from './user-info/user-info.service';
+import { FormValidationDirective } from './validation/form-validation.directive';
 
 @NgModule({
     imports: [
@@ -51,8 +55,10 @@ import { MarkdownEscapePipe } from './pipes/markdown-escape.pipe';
         DetailsPagePaginationControlsComponent,
         DetailsPagePaginationComponent,
         TextSizeLimitDirective,
+        FormValidationDirective,
         ScrollToTopComponent,
-        ShortenPipe
+        ShortenPipe,
+        CompanySelectionComponent
     ],
     providers: [
         LoginService,
@@ -75,7 +81,9 @@ import { MarkdownEscapePipe } from './pipes/markdown-escape.pipe';
         OrganizationService,
         CompanyService,
         JobAdvertisementService,
-        LanguageFilterService
+        LanguageFilterService,
+        CurrentSelectedCompanyService,
+        UserInfoService
     ],
     entryComponents: [JhiLoginModalComponent],
     exports: [
@@ -92,8 +100,10 @@ import { MarkdownEscapePipe } from './pipes/markdown-escape.pipe';
         DetailsPagePaginationControlsComponent,
         DetailsPagePaginationComponent,
         TextSizeLimitDirective,
+        FormValidationDirective,
         ScrollToTopComponent,
-        ShortenPipe
+        ShortenPipe,
+        CompanySelectionComponent
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 

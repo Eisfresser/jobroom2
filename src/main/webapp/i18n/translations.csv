@@ -140,6 +140,22 @@ candidate-search,candidate-search.workplace.placeholder,Arbeitsort,Work location
 companyType,jobroomApp.CompanyType.AVG,AVG,AVG,AVG,AVG
 companyType,jobroomApp.CompanyType.RAV,RAV,RAV,RAV,RAV
 companyType,jobroomApp.CompanyType.null,,,,
+contact-template-management,contact-template-management.title,Persönliche Kontaktangaben für ,Personal Contact Information for,Personal Contact Information for,Personal Contact Information for
+contact-template-management,contact-template-management.companyName,Unternehmen,Company,Entreprise,Impresa
+contact-template-management,contact-template-management.companyStreet,Strasse,Street,Rue,Via
+contact-template-management,contact-template-management.companyHouseNr,Nr.,No.,N°,N.
+contact-template-management,contact-template-management.companyZipCode,PLZ,Postal code,NPA,NPA
+contact-template-management,contact-template-management.companyCity,Ort,city,lieu,luogo
+contact-template-management,contact-template-management.phone,Telefon,Telephone number,Téléphone,Telefono
+contact-template-management,contact-template-management.email,E-Mail,E-Mail,Courriel,E-Mail
+contact-template-management,contact-template-management.firstName,Vorname,First name,Prénom,Nome
+contact-template-management,contact-template-management.lastName,Nachname,Last name,Nom,Cognome
+contact-template-management,contact-template-management.salutation,Anrede,Salutation,Courriel,Forma di cortesia
+contact-template-management,contact-template-management.userInformation,Benutzerinformationen,User information,User information,User information
+contact-template-management,contact-template-management.companyInformation,Unternehmensinformationen,Company information,Company information,Company information
+contact-template-management,contact-template-management.successSaveMessage,Ihre persönlichen Kontaktangaben wurden erfolgreich gespeichert!,Your personal contact information was successfully saved!,Your personal contact information was successfully saved!,Your personal contact information was successfully saved!
+contact-template-management,contact-template-management.failureSaveMessage,Ihre persönlichen Kontaktangaben konnten nicht gespeichert werden,There was an error saving your personal contact information,There was an error saving your personal contact information,There was an error saving your personal contact information
+contact-template-management,contact-template-management.companyhousenr.message,Bitte überprüfen Sie die korrekte Eingabe der Hausnummer,please check that your house number is valid,please check that your house number is valid,please check that your house number is valid
 configuration,configuration.filter,Filter (nach Präfix),Filter (by prefix),Filtrer (par préfixe),Filtro (per prefisso)
 configuration,configuration.table.prefix,Präfix,Prefix,Préfixe,Prefisso
 configuration,configuration.table.properties,Eigenschaften,Properties,Propriétés,Proprietà
@@ -374,6 +390,7 @@ global,global.menu.admin.apidocs,API,API,API,API
 global,global.menu.admin.user-info,User-Info,User-Info,User-Info,User-Info
 global,global.menu.admin.audits,Audits,Audits,Audits,Cambiamenti
 global,global.menu.admin.configuration,Konfiguration,Configuration,Configuration,Configurazione
+global,global.menu.admin.contact-template-management,Kontaktangaben,Contact information,Contact information,Contact information
 global,global.menu.admin.database,Datenbank,Database,Base de données,Database
 global,global.menu.admin.elasticsearch-reindex,Reindex Elasticsearch,Reindex Elasticsearch,Reindex Elasticsearch,Reindex Elasticsearch
 global,global.menu.admin.elasticsearch-reindex.all,All,All,All,All

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { HttpErrorResponse, HttpParams, HttpResponse } from '@angular/common/http';
 import { UserInfoDto } from './user-info.model';
-import { UserInfoService } from './user-info.service';
+import { UserInfoService } from '../../shared/user-info/user-info.service';
 
 @Component({
     selector: 'jr2-user-info',

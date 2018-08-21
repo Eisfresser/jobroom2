@@ -1,0 +1,22 @@
+{
+    "contact-template-management": {
+        "title": "Personal Contact Information for",
+        "companyName": "Entreprise",
+        "companyStreet": "Rue",
+        "companyHouseNr": "N\u00b0",
+        "companyZipCode": "NPA",
+        "companyCity": "lieu",
+        "phone": "T\u00e9l\u00e9phone",
+        "email": "Courriel",
+        "firstName": "Pr\u00e9nom",
+        "lastName": "Nom",
+        "salutation": "Courriel",
+        "userInformation": "User information",
+        "companyInformation": "Company information",
+        "successSaveMessage": "Your personal contact information was successfully saved!",
+        "failureSaveMessage": "There was an error saving your personal contact information",
+        "companyhousenr": {
+            "message": "please check that your house number is valid"
+        }
+    }
+}

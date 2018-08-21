@@ -139,8 +139,10 @@
                                            *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_SYSADMIN']"
                                            routerLinkActive="active"
                                            (click)="collapseNavbar()">
-                                            <span class="fa fa-fw fa-user" aria-hidden="true"></span>
-                                            <span jhiTranslate="global.menu.admin.user-info">User-Info</span>
+                                            <span class="fa fa-fw fa-user"
+                                                  aria-hidden="true"></span>
+                                            <span
+                                                jhiTranslate="global.menu.admin.user-info">User-Info</span>
                                         </a>
 
                                         <a class="dropdown-item" routerLinkActive="active"
@@ -266,7 +268,20 @@
                                         <span jhiTranslate="global.menu.dashboard">Dashboard</span>
                                     </a>
                                 </li>
+                                <li>
+                                    <a class="nav-item"
+                                       *jhiHasAnyAuthority="['ROLE_PRIVATE_EMPLOYMENT_AGENT', 'ROLE_COMPANY']"
+                                       routerLink="contact-template-management"
+                                       routerLinkActive="active"
+                                       (click)="collapseNavbar()">
+                                        <span>Kontaktangaben</span>
+                                    </a>
+                                </li>
                             </ul>
+                        </li>
+                        <li class="nav-item"
+                            *jhiHasAnyAuthority="['ROLE_PRIVATE_EMPLOYMENT_AGENT', 'ROLE_COMPANY']">
+                            <jr2-company-selection></jr2-company-selection>
                         </li>
                     </ul>
                 </div>
@@ -316,6 +331,7 @@
                                     <span jhiTranslate="global.menu.admin.gateway"
                                           (click)="collapseNavbar()">Gateway</span>
                                 </a>
+
 
                                 <a class="dropdown-item"
                                    *jhiHasAnyAuthority="'ROLE_SYSADMIN'"
@@ -532,6 +548,24 @@
                         </li>
                         <li>
                             <a class="dropdown-item dropdown-item--account"
+                               *jhiHasAnyAuthority="['ROLE_PRIVATE_EMPLOYMENT_AGENT', 'ROLE_COMPANY']"
+                               routerLink="dashboard" id="dashboard-desktop"
+                               (click)="collapseNavbar()">
+                                <span
+                                    jhiTranslate="global.menu.dashboard">Dashboard</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item dropdown-item--account"
+                               *jhiHasAnyAuthority="['ROLE_PRIVATE_EMPLOYMENT_AGENT', 'ROLE_COMPANY']"
+                               routerLink="contact-template-management"
+                               routerLinkActive="active"
+                               (click)="collapseNavbar()">
+                                <span>Kontaktangaben</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item dropdown-item--account"
                                id="logout-no-eiam-desktop"
                                routerLinkActive="active"
                                (click)="logoutLocal()"
@@ -540,16 +574,11 @@
                                     jhiTranslate="global.menu.account.logout">Sign out</span>
                             </a>
                         </li>
-                        <li>
-                            <a class="dropdown-item dropdown-item--account"
-                               *jhiHasAnyAuthority="['ROLE_PRIVATE_EMPLOYMENT_AGENT', 'ROLE_COMPANY']"
-                               routerLink="dashboard" id="dashboard-desktop"
-                               (click)="collapseNavbar()">
-                                <span
-                                    jhiTranslate="global.menu.dashboard">Dashboard</span>
-                            </a>
-                        </li>
                     </ul>
+                </li>
+                <li class="nav-item d-none d-sm-block"
+                    *jhiHasAnyAuthority="['ROLE_PRIVATE_EMPLOYMENT_AGENT', 'ROLE_COMPANY']">
+                    <jr2-company-selection></jr2-company-selection>
                 </li>
                 <li class="nav-item">
                     <ul class="navbar-nav navbar--language-switcher">

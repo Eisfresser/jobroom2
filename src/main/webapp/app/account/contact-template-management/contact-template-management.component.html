@@ -1,0 +1,164 @@
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h2>{{ 'contact-template-management.title' | translate }} <strong>{{(selectedCompany$
+                | async)?.companyName}}</strong></h2>
+
+            <ngb-alert *ngIf="showSuccessSaveMessage" type="success" (close)="showSuccessSaveMessage = false">
+                {{ 'contact-template-management.successSaveMessage' | translate }}
+            </ngb-alert>
+
+            <ngb-alert *ngIf="showFailureSaveMessage" type="danger" (close)="showFailureSaveMessage = false">
+                {{ 'contact-template-management.failureSaveMessage' | translate }}
+            </ngb-alert>
+
+            <h3 class="mt-4 mb-3">{{ 'contact-template-management.userInformation' |
+                translate }}</h3>
+            <form jr2FormValidator [formGroup]="contactTemplateForm" novalidate
+                  autocomplete="off" (validSubmit)="onSubmit()">
+                <div class="form-group">
+                    <label class="form-control-label" for="salutation">
+                        {{ 'contact-template-management.salutation' | translate }}
+                    </label>
+                    <select formControlName="salutation"
+                            class="form-control custom-select" id="salutation">
+                        <option [ngValue]="null">
+                            {{ 'home.tools.job-publication.no-selection' | translate }}
+                        </option>
+                        <option *ngFor="let salutation of salutations | keys"
+                                [ngValue]="salutation.value">
+                            {{'global.contactPerson.salutation.' + salutation.value |
+                            translate}}
+                        </option>
+                    </select>
+                    <jr2-input-error-message [formGroup]="contactTemplateForm"
+                                             path="salutation"
+                                             [errorCodes]="['required']"
+                                             [keys]="['home.tools.job-publication.messages.validate.required']">
+                    </jr2-input-error-message>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="firstName">
+                        {{ 'contact-template-management.firstName' | translate }}
+                    </label>
+                    <input type="text" id="firstName" class="form-control"
+                           formControlName="firstName" name="email">
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="lastName">
+                        {{ 'contact-template-management.lastName' | translate }}
+                    </label>
+                    <input type="text" id="lastName" class="form-control"
+                           formControlName="lastName" name="email">
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label">
+                        {{ 'contact-template-management.phone' | translate }}
+                    </label>
+                    <jr2-phone-number-input id="phone"
+                                            formControlName="phone"
+                                            [jr2TextSizeLimit]="50"
+                                            [placeholder]="'global.form.phone.placeholder' | translate"></jr2-phone-number-input>
+                    <jr2-input-error-message [formGroup]="contactTemplateForm"
+                                             path="phone"
+                                             [errorCodes]="['required', 'phoneValidator']"
+                                             [keys]="['home.tools.job-publication.messages.validate.required', 'home.tools.job-publication.messages.validate.phone-format']">
+                    </jr2-input-error-message>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="email">
+                        {{ 'contact-template-management.email' | translate }}
+                    </label>
+                    <input type="text" id="email" class="form-control"
+                           formControlName="email" name="email">
+                    <jr2-input-error-message [formGroup]="contactTemplateForm"
+                                             path="email"
+                                             [errorCodes]="['required', 'pattern']"
+                                             [keys]="['home.tools.job-publication.messages.validate.required', 'home.tools.job-publication.messages.validate.email-format']">
+                    </jr2-input-error-message>
+                </div>
+                <h3 class="mt-4 mb-3">{{ 'contact-template-management.companyInformation'
+                    | translate }}</h3>
+                <div class="form-group">
+                    <label class="form-control-label" for="companyName">
+                        {{ 'contact-template-management.companyName' | translate }}
+                    </label>
+                    <input type="text" id="companyName" class="form-control"
+                           formControlName="companyName" name="companyName">
+                    <jr2-input-error-message [formGroup]="contactTemplateForm"
+                                             path="companyName"
+                                             [errorCodes]="['required']"
+                                             [keys]="['home.tools.job-publication.messages.validate.required']">
+                    </jr2-input-error-message>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-9">
+                        <label class="form-control-label" for="companyStreet">
+                            {{ 'contact-template-management.companyStreet' | translate }}
+                        </label>
+                        <input type="text" id="companyStreet" class="form-control"
+                               formControlName="companyStreet" name="companyStreet">
+                        <jr2-input-error-message [formGroup]="contactTemplateForm"
+                                                 path="companyStreet"
+                                                 [errorCodes]="['required']"
+                                                 [keys]="['home.tools.job-publication.messages.validate.required']">
+                        </jr2-input-error-message>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label class="form-control-label" for="companyHouseNr">
+                            {{ 'contact-template-management.companyHouseNr' | translate
+                            }}
+                        </label>
+                        <input type="text" id="companyHouseNr" class="form-control"
+                               formControlName="companyHouseNr" name="companyHouseNr">
+                        <jr2-input-error-message [formGroup]="contactTemplateForm"
+                                                 path="companyHouseNr"
+                                                 [errorCodes]="['pattern']"
+                                                 [keys]="['contact-template-management.companyhousenr.message']">
+                        </jr2-input-error-message>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-3">
+                        <label class="form-control-label" for="companyZipCode">
+                            {{ 'contact-template-management.companyZipCode' | translate }}
+                        </label>
+                        <input type="text" id="companyZipCode" class="form-control"
+                               formControlName="companyZipCode" name="companyZipCode">
+                        <jr2-input-error-message [formGroup]="contactTemplateForm"
+                                                 path="companyZipCode"
+                                                 [errorCodes]="['required']"
+                                                 [keys]="['home.tools.job-publication.messages.validate.required']">
+                        </jr2-input-error-message>
+                    </div>
+                    <div class="form-group col-md-9">
+                        <label class="form-control-label" for="companyCity">
+                            {{ 'contact-template-management.companyCity' | translate }}
+                        </label>
+                        <input type="text" id="companyCity" class="form-control"
+                               formControlName="companyCity" name="companyCity">
+                        <jr2-input-error-message [formGroup]="contactTemplateForm"
+                                                 path="companyCity"
+                                                 [errorCodes]="['required']"
+                                                 [keys]="['home.tools.job-publication.messages.validate.required']">
+                        </jr2-input-error-message>
+                    </div>
+                </div>
+                <button type="button"
+                        [hidden]="!editing"
+                        (click)="toggleEdit()"
+                        class="btn btn-primary">{{'entity.action.cancel' | translate }}
+                </button>
+                <button type="submit"
+                        [hidden]="!editing"
+                        class="btn btn-primary">{{'entity.action.save' | translate }}
+                </button>
+                <button type="button"
+                        [hidden]="editing"
+                        (click)="toggleEdit()"
+                        class="btn btn-primary">{{'entity.action.edit' | translate }}
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

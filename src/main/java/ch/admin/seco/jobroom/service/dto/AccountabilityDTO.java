@@ -7,17 +7,24 @@ public class AccountabilityDTO {
 
     private AccountabilityType type;
 
+    private String companyId;
+
     private String companyName;
 
     private String companyExternalId;
 
     private CompanySource companySource;
 
-    public AccountabilityDTO(AccountabilityType type, String companyName, String companyExternalId, CompanySource companySource) {
+    public AccountabilityDTO(AccountabilityType type, String companyId, String companyName, String companyExternalId, CompanySource companySource) {
         this.type = type;
+        this.companyId = companyId;
         this.companyName = companyName;
         this.companyExternalId = companyExternalId;
         this.companySource = companySource;
+    }
+
+    public String getCompanyId() {
+        return companyId;
     }
 
     public AccountabilityType getType() {

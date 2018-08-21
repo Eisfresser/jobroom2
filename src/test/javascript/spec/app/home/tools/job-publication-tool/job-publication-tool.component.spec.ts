@@ -8,7 +8,7 @@ import { Observable } from 'rxjs/Observable';
 import { JobAdvertisementService } from '../../../../../../../main/webapp/app/shared/job-advertisement/job-advertisement.service';
 import { LanguageFilterService } from '../../../../../../../main/webapp/app/shared/input-components/language-filter/language-filter.service';
 import { Store } from '@ngrx/store';
-import { CurrentUser } from '../../../../../../../main/webapp/app/shared';
+import { CurrentSelectedCompanyService } from '../../../../../../../main/webapp/app/shared/company/current-selected-company.service';
 
 describe('JobPublicationToolComponent', () => {
     let component: JobPublicationToolComponent;
@@ -19,7 +19,10 @@ describe('JobPublicationToolComponent', () => {
     const mockJobAdvertisementService = jasmine.createSpyObj('mockJobAdvertisementService', ['findById', 'save']);
     const mockLanguageFilterService = jasmine.createSpyObj('LanguageFilterService', ['getSorterLanguageTranslations']);
     const mockStore = jasmine.createSpyObj('mockStore', ['select']);
+    const mockCurrentSelectedCompanyService = jasmine.createSpyObj('mockCurrentSelectedCompanyService', ['getSelectedCompanyContactTemplate']);
+
     mockStore.select.and.returnValue(Observable.of([]));
+    mockCurrentSelectedCompanyService.getSelectedCompanyContactTemplate.and.returnValue(Observable.of({}));
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -40,7 +43,8 @@ describe('JobPublicationToolComponent', () => {
                 },
                 { provide: LanguageSkillService, useValue: mockLanguageSkillService },
                 { provide: TranslateService, useValue: { currentLang: 'de', onLangChange: Observable.never() } },
-                { provide: Store, useValue: mockStore }
+                { provide: Store, useValue: mockStore },
+                { provide: CurrentSelectedCompanyService, useValue: mockCurrentSelectedCompanyService }
             ]
         })
             .overrideTemplate(JobPublicationToolComponent, '')
@@ -50,7 +54,7 @@ describe('JobPublicationToolComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(JobPublicationToolComponent);
         component = fixture.componentInstance;
-        component.userData = {} as CurrentUser;
+        // component.userData = {} as CurrentUser;
         fixture.detectChanges();
     });
 

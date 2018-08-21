@@ -185,6 +185,7 @@
                 "user-info": "User-Info",
                 "audits": "Audits",
                 "configuration": "Konfiguration",
+                "contact-template-management": "Kontaktangaben",
                 "database": "Datenbank",
                 "elasticsearch-reindex": "Reindex Elasticsearch",
                 "elasticsearch-reindex.all": "All",

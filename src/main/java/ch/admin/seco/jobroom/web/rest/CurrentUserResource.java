@@ -64,19 +64,13 @@ public class CurrentUserResource {
 
         private Set<String> authorities = new HashSet<>();
 
-        private String companyId;
-
-        private String companyName;
-
         CurrentUserDTO(String id,
             String login,
             String firstName,
             String lastName,
             String email,
             String langKey,
-            Set<String> authorities,
-            String externalId,
-            String name) {
+            Set<String> authorities) {
             this.id = id;
             this.login = login;
             this.firstName = firstName;
@@ -84,8 +78,6 @@ public class CurrentUserResource {
             this.email = email;
             this.langKey = langKey;
             this.authorities.addAll(authorities);
-            this.companyId = externalId;
-            this.companyName = name;
         }
 
         public String getId() {
@@ -114,14 +106,6 @@ public class CurrentUserResource {
 
         public Set<String> getAuthorities() {
             return authorities;
-        }
-
-        public String getCompanyId() {
-            return companyId;
-        }
-
-        public String getCompanyName() {
-            return companyName;
         }
     }
 }

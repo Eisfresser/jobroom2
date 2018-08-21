@@ -13,7 +13,7 @@ import {
     SUBMIT_CANCELLATION,
     SubmitCancellationAction
 } from '../actions/pea-dashboard.actions';
-import { CurrentUser, ITEMS_PER_PAGE, Principal } from '../../../shared';
+import { ITEMS_PER_PAGE } from '../../../shared';
 import {
     getJobAdvertisementDashboardState,
     JobAdvertisementFilter,
@@ -27,9 +27,12 @@ import { createJobAdvertisementCancellationRequest } from '../util/cancellation-
 import { JobAdvertisementService } from '../../../shared/job-advertisement/job-advertisement.service';
 import { JobAdvertisement } from '../../../shared/job-advertisement/job-advertisement.model';
 import { JobAdvertisementCancelRequest } from '../../../shared/job-advertisement/job-advertisement-cancel-request';
+import { CurrentSelectedCompanyService } from '../../../shared/company/current-selected-company.service';
+import { Accountability } from '../../../shared/user-info/user-info.model';
 
 @Injectable()
 export class PEADashboardEffects {
+
     @Effect()
     cancelJobAdvertisement$: Observable<Action> = this.actions$
         .ofType(SUBMIT_CANCELLATION)
@@ -46,10 +49,11 @@ export class PEADashboardEffects {
         .ofType(LOAD_NEXT_JOB_ADVERTISEMENTS_DASHBOARD_PAGE)
         .withLatestFrom(
             this.store.select(getJobAdvertisementDashboardState),
-            this.principal.getAuthenticationState())
-        .switchMap(([action, state, currentUser]: [LoadNextJobAdvertisementsDashboardPageAction, PEADashboardState, CurrentUser]) =>
+            this.currentSelectedCompanyService.getSelectedAccountability(),
+        )
+        .switchMap(([action, state, accountability]: [LoadNextJobAdvertisementsDashboardPageAction, PEADashboardState, Accountability]) =>
             this.jobAdvertisementService.searchPEAJobAds(
-                this.createSearchRequest(state.jobAdvertisementFilter, action.payload.page, currentUser))
+                this.createSearchRequest(state.jobAdvertisementFilter, action.payload.page, accountability))
                 .map((resp) => this.toJobAdvertisementsLoadedActionAction(resp, action.payload.page))
                 .catch(() => Observable.of(new JobAdvertisementsLoadErrorAction()))
         );
@@ -59,25 +63,25 @@ export class PEADashboardEffects {
         .ofType(FILTER_JOB_ADVERTISEMENTS_DASHBOARD)
         .withLatestFrom(
             this.store.select(getJobAdvertisementDashboardState),
-            this.principal.getAuthenticationState())
-        .switchMap(([action, state, currentUser]: [FilterJobAdvertisementsDashboardAction, PEADashboardState, CurrentUser]) =>
+            this.currentSelectedCompanyService.getSelectedAccountability())
+        .switchMap(([action, state, accountability]: [FilterJobAdvertisementsDashboardAction, PEADashboardState, Accountability]) =>
             this.jobAdvertisementService.searchPEAJobAds(
-                this.createSearchRequest(action.payload, state.page, currentUser))
+                this.createSearchRequest(action.payload, state.page, accountability))
                 .map(this.toJobAdvertisementsLoadedActionAction)
                 .catch(() => Observable.of(new JobAdvertisementsLoadErrorAction()))
         );
 
     constructor(private actions$: Actions,
                 private store: Store<PEADashboardState>,
-                private principal: Principal,
+                private currentSelectedCompanyService: CurrentSelectedCompanyService,
                 private jobAdvertisementService: JobAdvertisementService) {
     }
 
-    private createSearchRequest(filter: JobAdvertisementFilter, page: number, currentUser: CurrentUser): PEAJobAdsSearchRequest {
+    private createSearchRequest(filter: JobAdvertisementFilter, page: number, accountability: Accountability): PEAJobAdsSearchRequest {
         const { jobTitle, onlineSinceDays } = filter;
         return {
             body: {
-                companyId: currentUser.companyId,
+                companyId: accountability.companyExternalId,
                 jobTitle,
                 onlineSinceDays
             },

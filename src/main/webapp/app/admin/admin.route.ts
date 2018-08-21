@@ -11,7 +11,7 @@ import {
     systemNotificationsManagementRoute,
     userDialogRoute,
     userInfoRoute,
-    userMgmtRoute
+    userMgmtRoute,
 } from './';
 
 import { UserRouteAccessService } from '../shared';

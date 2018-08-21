@@ -18,7 +18,10 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.core.Ordered;
 import org.springframework.core.env.Environment;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import ch.admin.seco.jobroom.config.ApplicationProperties;
 import ch.admin.seco.jobroom.config.DefaultProfileUtil;
@@ -28,6 +31,8 @@ import ch.admin.seco.jobroom.config.DefaultProfileUtil;
 @EnableDiscoveryClient
 @EnableZuulProxy
 @EnableFeignClients
+@EnableTransactionManagement(order = Ordered.HIGHEST_PRECEDENCE)
+@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
 public class JobroomApp {
 
     private static final Logger log = LoggerFactory.getLogger(JobroomApp.class);

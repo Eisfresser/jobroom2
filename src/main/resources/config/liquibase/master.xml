@@ -42,6 +42,9 @@
     <include
         file="config/liquibase/changelog/20180711120000_add_user_info_stes_information.xml"
         relativeToChangelogFile="false"/>
+    <include
+        file="config/liquibase/changelog/20180813120000_add_company_contact_templates.xml"
+        relativeToChangelogFile="false"/>
 
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->

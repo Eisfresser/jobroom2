@@ -10,6 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { JobAdvertisementService } from '../../../../../../main/webapp/app/shared/job-advertisement/job-advertisement.service';
 import { JobAdvertisementCancelDialogService } from '../../../../../../main/webapp/app/dashboard/dialogs/job-advertisement-cancel-dialog.service';
 import { CompanyService } from '../../../../../../main/webapp/app/shared/company/company.service';
+import { CurrentSelectedCompanyService } from '../../../../../../main/webapp/app/shared/company/current-selected-company.service';
 
 describe('PEA-DashboardComponent', () => {
     let component: PeaDashboardComponent;
@@ -19,6 +20,9 @@ describe('PEA-DashboardComponent', () => {
     const mockCompanyService = jasmine.createSpyObj('mockCompanyService', ['findByExternalId']);
     const mockJobPublicationCancelDialogService = jasmine.createSpyObj('mockJobPublicationCancelDialogService', ['open']);
     const mockTranslateService = jasmine.createSpyObj('mockTranslateService', ['v']);
+    const mockCurrentSelectedCompanyService = jasmine.createSpyObj('mockCurrentSelectedCompanyService', ['getSelectedAccountability']);
+
+    mockCurrentSelectedCompanyService.getSelectedAccountability.and.returnValue(Observable.of({}));
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -44,7 +48,14 @@ describe('PEA-DashboardComponent', () => {
                     provide: TranslateService,
                     useValue: mockTranslateService
                 },
-                { provide: Store, useValue: mockStore },
+                {
+                    provide: Store,
+                    useValue: mockStore
+                },
+                {
+                    provide: CurrentSelectedCompanyService,
+                    useValue: mockCurrentSelectedCompanyService
+                },
                 JobAdvertisementService
             ]
         })
