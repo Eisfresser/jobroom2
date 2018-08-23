@@ -50,11 +50,11 @@ export class PhoneNumberInputComponent implements OnInit, ControlValueAccessor, 
     writeValue(obj: any): void {
         if (obj) {
             const formatter = new AsYouType(this.defaultCountry);
-
             const value = formatter.input(obj);
             this.country = formatter.country;
-
             this.inputViewChild.nativeElement.value = value;
+        } else {
+            this.inputViewChild.nativeElement.value = '';
         }
     }
 

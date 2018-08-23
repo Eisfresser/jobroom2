@@ -1,16 +1,23 @@
 <div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <h2>{{ 'contact-template-management.title' | translate }} <strong>{{(selectedCompany$
+            <h2 class="mb-3">{{ 'contact-template-management.title' | translate }} <strong>{{(selectedCompany$
                 | async)?.companyName}}</strong></h2>
 
-            <ngb-alert *ngIf="showSuccessSaveMessage" type="success" (close)="showSuccessSaveMessage = false">
-                {{ 'contact-template-management.successSaveMessage' | translate }}
-            </ngb-alert>
+            <p><small>{{ 'contact-template-management.helptext' | translate }}</small></p>
 
-            <ngb-alert *ngIf="showFailureSaveMessage" type="danger" (close)="showFailureSaveMessage = false">
-                {{ 'contact-template-management.failureSaveMessage' | translate }}
-            </ngb-alert>
+            <div class="mt-3">
+                <a href="api/redirect/profile" >{{'contact-template-management.link' | translate}}</a>
+            </div>
+
+            <div class="mt-3">
+                <ngb-alert *ngIf="showSuccessSaveMessage" type="success" (close)="showSuccessSaveMessage = false">
+                    {{ 'contact-template-management.successSaveMessage' | translate }}
+                </ngb-alert>
+                <ngb-alert *ngIf="showFailureSaveMessage" type="danger" (close)="showFailureSaveMessage = false">
+                    {{ 'contact-template-management.failureSaveMessage' | translate }}
+                </ngb-alert>
+            </div>
 
             <h3 class="mt-4 mb-3">{{ 'contact-template-management.userInformation' |
                 translate }}</h3>
@@ -22,9 +29,6 @@
                     </label>
                     <select formControlName="salutation"
                             class="form-control custom-select" id="salutation">
-                        <option [ngValue]="null">
-                            {{ 'home.tools.job-publication.no-selection' | translate }}
-                        </option>
                         <option *ngFor="let salutation of salutations | keys"
                                 [ngValue]="salutation.value">
                             {{'global.contactPerson.salutation.' + salutation.value |
@@ -147,16 +151,16 @@
                 <button type="button"
                         [hidden]="!editing"
                         (click)="toggleEdit()"
-                        class="btn btn-primary">{{'entity.action.cancel' | translate }}
+                        class="btn btn-primary mb-3">{{'entity.action.cancel' | translate }}
                 </button>
                 <button type="submit"
                         [hidden]="!editing"
-                        class="btn btn-primary">{{'entity.action.save' | translate }}
+                        class="btn btn-primary mb-3">{{'entity.action.save' | translate }}
                 </button>
                 <button type="button"
                         [hidden]="editing"
                         (click)="toggleEdit()"
-                        class="btn btn-primary">{{'entity.action.edit' | translate }}
+                        class="btn btn-primary mb-3">{{'entity.action.edit' | translate }}
                 </button>
             </form>
         </div>

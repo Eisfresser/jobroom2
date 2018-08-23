@@ -131,6 +131,7 @@ export class ContactTemplateManagementComponent implements OnInit {
             this.contactTemplateForm.enable();
         } else {
             this.contactTemplateForm.disable();
+            this.contactTemplateForm.reset();
             this.patchFormWithSelectedTemplateValues(this.selectedTemplate);
         }
         this.contactTemplateForm.get('firstName').disable();

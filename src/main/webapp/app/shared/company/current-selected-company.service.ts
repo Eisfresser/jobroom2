@@ -96,7 +96,7 @@ export class CurrentSelectedCompanyService {
                     companyId: company.id,
                     companyName: company.name,
                     companyStreet: company.street,
-                    companyHouseNr: '',
+                    companyZipCode: company.zipCode,
                     companyCity: company.city,
                     email: currentUser.email
                 };

@@ -218,7 +218,7 @@ export class CandidateDetailComponent implements OnInit {
                             subject: translations['candidate-detail.candidate-anonymous-contact.subject'],
                             body: translations['candidate-detail.candidate-anonymous-contact.body'],
                             companyName: companyContactTemplateModel.companyName,
-                            phone: null,
+                            phone: companyContactTemplateModel.phone,
                             email: companyContactTemplateModel.email,
                             company: {
                                 name: companyContactTemplateModel.companyName,
