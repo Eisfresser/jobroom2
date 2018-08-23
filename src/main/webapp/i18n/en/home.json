@@ -139,7 +139,7 @@
                         "at-least-one-required": "Select at least one application channel",
                         "zip-format": "Invalid postal code",
                         "zip-or-city-format": "Invalid postal code/city",
-                        "number-of-jobs": " The amount of jobs must be within 1 and 100"
+                        "number-of-jobs": "EN The amount of jobs must be within 1 and 99"
                     }
                 },
                 "no-selection": "No selection",

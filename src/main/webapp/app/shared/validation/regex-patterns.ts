@@ -12,3 +12,5 @@ export const POSTBOX_NUMBER_REGEX = /^\d{0,6}$/;
 export const HOUSE_NUMBER_REGEX = /^\d+[a-zA-Z]*$/;
 
 export const PERSON_NUMBER_REGEX = /^\d{8}$/;
+
+export const ONE_TWO_DIGIT_INTEGER_REGEX = /^[1-9][0-9]?$/;

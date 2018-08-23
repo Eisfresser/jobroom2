@@ -22,14 +22,13 @@
                     {{ 'home.tools.job-publication.number-of-jobs' | translate }}
                 </label>
                 <div>
-                    <input type="number" [min]="1" [max]="100" [maxlength]="3" class="form-control right-input"
+                    <input type="number" [min]="1" [max]="99" class="form-control right-input"
                            [id]="'number-of-jobs-' + i" formControlName="numberOfJobs"/>
                     <jr2-input-error-message [formGroup]="group"
                                              class="right-input-error-label"
                                              path="numberOfJobs"
-                                             [errorCodes]="['required','min','max']"
-                                             [keys]="['home.tools.job-publication.messages.validate.required',
-                                             'home.tools.job-publication.messages.validate.number-of-jobs',
+                                             [errorCodes]="['required', 'pattern']"
+                                             [keys]="['home.tools.job-publication.messages.validate.number-of-jobs',
                                              'home.tools.job-publication.messages.validate.number-of-jobs']">
                     </jr2-input-error-message>
                 </div>

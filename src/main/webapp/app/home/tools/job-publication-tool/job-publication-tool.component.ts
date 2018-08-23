@@ -23,6 +23,7 @@ import {
     DateUtils,
     Degree,
     EMAIL_REGEX,
+    ONE_TWO_DIGIT_INTEGER_REGEX,
     POSTBOX_NUMBER_REGEX,
     ResponseWrapper,
     URL_REGEX,
@@ -392,7 +393,7 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
         };
 
         return this.fb.group({
-            numberOfJobs: [formModel.numberOfJobs, [Validators.required, Validators.min(1), Validators.max(100)]],
+            numberOfJobs: [formModel.numberOfJobs, [Validators.required, Validators.min(1), Validators.max(99), Validators.pattern(ONE_TWO_DIGIT_INTEGER_REGEX)]],
             jobDescriptions: [formModel.jobDescriptions],
             occupation: this.fb.group({
                 occupationSuggestion: [formModel.occupation.occupationSuggestion, Validators.required],

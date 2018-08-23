@@ -769,7 +769,7 @@ home,home.tools.job-publication.messages.validate.required,Pflichtfeld,This fiel
 home,home.tools.job-publication.messages.validate.at-least-one-required,Bitte mindestens eine Bewerbungsform wählen,Select at least one application channel,Choisir au moins un type de postulation,Scegliere almeno una tipologia di candidatura
 home,home.tools.job-publication.messages.validate.zip-format,PLZ ungültig,Invalid postal code,NPA n'est pas valide.,NPA non è valido.
 home,home.tools.job-publication.messages.validate.zip-or-city-format,PLZ/Ort ungültig,Invalid postal code/city,NPA/lieu n'est pas valide.,NPA/luogo non è valido.
-home,home.tools.job-publication.messages.validate.number-of-jobs,Die Anzahl der Stellen muss zwischen 1 und 100 liegen, The amount of jobs must be within 1 and 100, FR  The amount of jobs must be within 1 and 100, IT  The amount of jobs must be within 1 and 100
+home,home.tools.job-publication.messages.validate.number-of-jobs,Dieses Pflichtfeld muss eine ganze Zahl zwischen 1 und 99 sein.,EN The amount of jobs must be within 1 and 99, FR  The amount of jobs must be within 1 and 100, IT  The amount of jobs must be within 1 and 100
 home,home.tools.job-publication.no-selection,keine Auswahl,No selection,aucune sélection,nessuna scelta
 home,home.tools.job-publication.occupation.label,Beruf,Occupation,Profession,Professione
 home,home.tools.job-publication.occupation.placeholder,,,,
