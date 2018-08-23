@@ -129,26 +129,7 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
 
         this.jobPublicationForm = this.createJobPublicationForm(defaultFormValues);
         this.configureEmployerSection(defaultFormValues);
-
-        this.configureDateInput('employment.employmentStartDate.date', 'employment.employmentStartDate.immediate',
-            (disabled) => {
-                this.employmentStartDateByArrangement = disabled;
-                if (!disabled) {
-                    setTimeout(() => {
-                        this.employmentStartDateElementRef.nativeElement.focus();
-                    }, 0);
-                }
-            });
-        this.configureDateInput('employment.employmentEndDate.date', 'employment.employmentEndDate.permanent',
-            (disabled) => {
-                this.employmentEndDateIsPermanent = disabled;
-                if (!disabled) {
-                    setTimeout(() => {
-                        this.employmentEndDateElementRef.nativeElement.focus();
-                    }, 0);
-                }
-            });
-        this.updateEmploymentStartDateRelatedField();
+        this.configureEmploymentSection();
         this.configurePublicContactSection();
 
         this.currentSelectedCompanyService.getSelectedCompanyContactTemplate()
@@ -357,6 +338,42 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
                 } else {
                     this.jobPublicationForm.removeControl('employer');
                 }
+            });
+    }
+
+    private configureEmploymentSection() {
+        this.configureDateInput('employment.employmentStartDate.date', 'employment.employmentStartDate.immediate',
+            (disabled) => {
+                this.employmentStartDateByArrangement = disabled;
+                if (!disabled) {
+                    setTimeout(() => {
+                        this.employmentStartDateElementRef.nativeElement.focus();
+                    }, 0);
+                }
+            });
+        this.configureDateInput('employment.employmentEndDate.date', 'employment.employmentEndDate.permanent',
+            (disabled) => {
+                this.employmentEndDateIsPermanent = disabled;
+                if (!disabled) {
+                    setTimeout(() => {
+                        this.employmentEndDateElementRef.nativeElement.focus();
+                    }, 0);
+                }
+            });
+        this.updateEmploymentStartDateRelatedField();
+        this.jobPublicationForm.get('employment.shortEmployment').valueChanges
+            .takeUntil(this.unsubscribe$)
+            .subscribe((isShortEmployment: boolean) => {
+                this.jobPublicationForm.get('employment.employmentEndDate.permanent').setValue(!isShortEmployment);
+
+                const employmentEndDate = this.jobPublicationForm.get('employment.employmentEndDate.date');
+                if (isShortEmployment) {
+                    employmentEndDate.clearValidators();
+                } else {
+                    employmentEndDate.setValidators([Validators.required])
+                }
+                employmentEndDate.setValue(null, { emitEvent: false });
+                employmentEndDate.updateValueAndValidity({ emitEvent: false });
             });
     }
 
