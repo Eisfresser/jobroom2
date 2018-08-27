@@ -64,7 +64,8 @@
             "startsImmediately": "Available immediately",
             "title": "Job title",
             "workingTimePercentageMax": "Maximum working time percentage",
-            "workingTimePercentageMin": "Minimum working time percentage"
+            "workingTimePercentageMin": "Minimum working time percentage",
+            "rav": "RAV"
         }
     },
     "jobserviceApp": {

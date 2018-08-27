@@ -6,10 +6,7 @@ import {
     ViewChild
 } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import {
-    JobCenter,
-    ReferenceService
-} from '../../shared/reference-service';
+import { JobCenter, ReferenceService } from '../../shared/reference-service';
 import {
     getJobList,
     getSelectedJob,
@@ -40,6 +37,7 @@ export class JobDetailComponent implements AfterViewInit {
     jobList$: Observable<JobAdvertisement[]>;
     jobCenter$: Observable<JobCenter>;
     jobListTotalSize$: Observable<number>;
+    companyAnonymous$: Observable<boolean>;
     externalJobDisclaimerClosed = false;
 
     @ViewChild('copyToClipboard')
@@ -64,6 +62,9 @@ export class JobDetailComponent implements AfterViewInit {
         this.jobDescription$ = coreStore.select(getLanguage)
             .combineLatest(this.job$)
             .map(([lang, job]: [string, JobAdvertisement]) => JobAdvertisementUtils.getJobDescription(job, lang));
+        this.companyAnonymous$ = this.job$
+            .filter((job) => !!job)
+            .map((job) => job.publication.publicAnonymous || job.publication.restrictedAnonymous);
     }
 
     private fixApplicationUrl(jobAdvertisement: JobAdvertisement) {

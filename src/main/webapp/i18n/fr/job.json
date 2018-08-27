@@ -64,7 +64,8 @@
             "startsImmediately": "Disponible tout de suite",
             "title": "Titre du poste",
             "workingTimePercentageMax": "Taux d'occupation maximal",
-            "workingTimePercentageMin": "Taux d'occupation minimal"
+            "workingTimePercentageMin": "Taux d'occupation minimal",
+            "rav": "ORP"
         }
     },
     "jobserviceApp": {

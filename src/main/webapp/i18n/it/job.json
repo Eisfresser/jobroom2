@@ -64,7 +64,8 @@
             "startsImmediately": "Inizio immediato",
             "title": "Titolo del posto",
             "workingTimePercentageMax": "Grado di occupazione max",
-            "workingTimePercentageMin": "Grado di occupazione min"
+            "workingTimePercentageMin": "Grado di occupazione min",
+            "rav": "URC"
         }
     },
     "jobserviceApp": {

@@ -1238,3 +1238,4 @@ registration-access-code,registrationAccessCode.accessCode,Freischaltcode,Activa
 registration-access-code,registrationAccessCode.accessCode.error.required,Freischaltcode wird benötigt,Activation code is required,Un code de déverrouillage est nécessaire ,È necessario il codice di attivazione
 registration-access-code,registrationAccessCode.accessCode.error.minlength,Freischaltcode muss aus 8 Stellen bestehen,Activation code must contain 8 characters,Le code de déverrouillage doit se composer de 8 caractères,Il codice di attivazione deve avere 8 caratteri
 registration-access-code,registrationAccessCode.accessCode.error.invalid,Freischaltcode ungültig,Activation code is invalid,Code de déverrouillage non valable,Codice di attivazione non valido
+job,jobroomApp.job.rav, RAV,RAV,ORP,URC
