@@ -1,14 +1,15 @@
 version: '3.3'
 services:
     jhipster-registry:
-        image: jhipster/jhipster-registry:develop
+        image: jhipster/jhipster-registry:v4.0.1
         env_file: env.properties
         environment:
-            - SPRING_PROFILES_ACTIVE=development,prod,swagger
-            - GIT_URI=https://github.com/alv-ch/central-config.git
-            - SPRING_CLOUD_CONFIG_PROFILE=development
+            - SPRING_PROFILES_ACTIVE=prod,swagger
             - SPRING_SECURITY_USER_PASSWORD=$${jhipster.registry.password}
             - SPRING_CONFIG_ADDITIONALLOCATION=file:/run/secrets/
+            - SPRING_CLOUD_CONFIG_PROFILE=development
+            - SPRING_CLOUD_CONFIG_SERVER_COMPOSITE_0_TYPE=git
+            - SPRING_CLOUD_CONFIG_SERVER_COMPOSITE_0_URI=https://github.com/alv-ch/central-config
         ports:
             - 8761:8761
         networks:
