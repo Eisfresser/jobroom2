@@ -111,7 +111,7 @@
                     "label": "Sprache der Stellenbeschreibung"
                 },
                 "job-title": "Stellenbezeichnung",
-                "number-of-jobs": "Anzahl identischer Stellen",
+                "number-of-jobs": "Anzahl gleiche Stellen",
                 "language-skills": "Sprachkenntnisse",
                 "language-skills.add": "Neue Sprachkompetenz hinzuf\u00fcgen",
                 "language-skills.spoken.error": "Language skill is required",
