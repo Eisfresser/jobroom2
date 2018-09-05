@@ -7,8 +7,8 @@
     </div>
 
     <div>
-        <span class="text--primary-color" *ngIf="!companyAnonymous$">{{job.jobContent.company.name}}</span>
-        <span class="text--primary-color" *ngIf="companyAnonymous$ ">{{'jobroomApp.job.rav' | translate}}</span>
+        <span class="text--primary-color" *ngIf="!companyAnonymous">{{job.jobContent.company.name}}</span>
+        <span class="text--primary-color" *ngIf="companyAnonymous">{{'jobroomApp.job.rav' | translate}}</span>
         <jr2-job-locality [location]="job.jobContent.location"></jr2-job-locality>
         <span class="badge badge-gray">{{[job.jobContent.employment.workloadPercentageMin, job.jobContent.employment.workloadPercentageMax] | workingTimeRange}}</span>
         <span class="badge badge-green" *ngIf="job.jobContent.employment.permanent">{{'job-search.job-search-list-item.badge.permanent' | translate}}</span>
