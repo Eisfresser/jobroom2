@@ -21,22 +21,6 @@
 
                                 {{ company.postalCode }} {{ company.city }}
                             </address>
-
-     <!--   JR2-1180
-                            <ng-container *ngIf="company.phone">
-                                <a href="tel:{{company.phone}}">{{ company.phone | jr2PhoneNumber }}</a>
-                                <br>
-                            </ng-container>
-
-                            <ng-container *ngIf="company.email">
-                                <a href="mailto:{{ company.email }}">{{ company.email }}</a>
-                                <br>
-                            </ng-container>
-
-                            <a href="{{ company.website }}" target="{{ job.id }}">
-                                {{ company.website | truncateCharacters:30 }}
-                            </a>
-                            -->
                         </div>
 
                         <div *ngIf="job.jobContent.publicContact as contact">
@@ -67,13 +51,10 @@
                             <address *ngIf="jobCenter.address">
                                 <strong>{{ 'job-detail.reference.responsible-job-center' | translate }}</strong>
                                 <br>
-
                                 {{jobCenter.address.name}}<ng-container *ngIf="jobCenter.address.street || jobCenter.address.houseNumber">, {{jobCenter.address.street}} {{jobCenter.address.houseNumber}}</ng-container>
                                 <br>
-
                                 {{jobCenter.address.zipCode}} {{jobCenter.address.city}}
                                 <br>
-
                                 {{'job-detail.reference.phone' | translate}} <a href="tel:{{jobCenter.phone}}">{{jobCenter.phone | jr2PhoneNumber}}</a>
                             </address>
 
@@ -96,7 +77,6 @@
                        class="d-print-none">
                 {{'job-detail.external-job-disclaimer' | translate}}
             </ngb-alert>
-
             <div class="detail__title">
                 <h2 class="text--light" [innerHTML]="jobDescription.title | safeHtml"></h2>
                 <span class="text--primary-color" *ngIf="!(companyAnonymous$ | async)">{{ job.jobContent.company.name }}</span>
@@ -108,7 +88,6 @@
                     {{'jobroomApp.job.numberOfJobs' | translate}}: {{ job.jobContent.numberOfJobs }}
                 </small>
             </div>
-
             <div class="detail__content">
                 <jr2-job-locality [location]="job.jobContent.location"></jr2-job-locality>
                 <span class="badge badge-gray">{{[job.jobContent.employment.workloadPercentageMin, job.jobContent.employment.workloadPercentageMax] | workingTimeRange}}</span>
@@ -118,26 +97,22 @@
                 <span *ngIf="!job.jobContent.employment.startDate && job.jobContent.employment.immediately != null" class="badge badge-yellow">
                     {{'job-detail.startsImmediately.' +  job.jobContent.employment.immediately | translate}}
                 </span>
-
                 <span *ngIf="job.jobContent.employment.permanent" class="badge badge-green">{{'job-search.job-search-list-item.badge.permanent' | translate}}</span>
-                <span *ngIf="!job.jobContent.employment.permanent && !!job.jobContent.employment.endDate" class="badge badge-yellow" translate="job-detail.endDate"
+                <span *ngIf="!job.jobContent.employment.permanent && !!job.jobContent.employment.endDate && !job.jobContent.employment.shortEmployment" class="badge badge-yellow" translate="job-detail.endDate"
                       [translateParams]="{date: job.jobContent.employment.endDate | jr2Date}"></span>
+                <span *ngIf="!job.jobContent.employment.permanent && !!job.jobContent.employment.shortEmployment" class="badge badge-yellow">{{'job-search.job-search-list-item.badge.shortEmployment' | translate}}
+                </span>
                 <span *ngIf="!job.jobContent.employment.permanent && !job.jobContent.employment.endDate" class="badge badge-yellow">{{'job-search.job-search-list-item.badge.temporary' | translate}}</span>
                 <span *ngIf="job.reportingObligation" class="badge badge-danger">{{'job-search.job-search-list-item.badge.restricted' | translate}}</span>
             </div>
-
-            <!-- job description -->
             <div *ngIf="jobDescription.description" class="detail__content">
                 <markdown [data]="jobDescription.description"></markdown>
             </div>
-
-            <!-- Languages -->
             <jr2-languages [languages]="job.jobContent.languageSkills"
                            [itemClass]="'content__item content__item--bullet'"
                            [titleClass]="'detail__content__title detail__content__title--light'"></jr2-languages>
 
             <br/>
-            <!-- Application -->
             <div *ngIf="job.jobContent.applyChannel" class="detail__content">
                 <h4 class="detail__content__title detail__content__title--light">{{ 'job-detail.application.title' | translate }}</h4>
 
@@ -164,9 +139,6 @@
                     <span>{{ job.jobContent.applyChannel.mailAddress }}</span>
                 </div>
             </div>
-
-            <!-- /job description -->
-
         </div>
 
         <div class="col-12 col-md order-12 base__related">
@@ -191,32 +163,17 @@
                 </p>
 
                 <ul class="nav filter-nav flex-column">
-                    <!--<li class="nav-item">-->
-                    <!--<a class="nav-link" href="#"><i class="fa fa-star-o"-->
-                    <!--aria-hidden="true"></i>-->
-                    <!--{{'job-detail.action.saveJob' | translate}}</a>-->
-                    <!--</li>-->
                     <li class="nav-item">
                         <a class="nav-link" #copyToClipboard ngxClipboard [cbContent]="getJobUrl()" (cbOnSuccess)="onCopyLink()"
                            [ngbTooltip]="'global.messages.tooltip.link-copy.success' | translate" triggers="manual">
                             <span class="fa fa-share" aria-hidden="true"></span>
                             {{'job-detail.action.copyLink' | translate}}</a>
                     </li>
-                    <!--<li class="nav-item">-->
-                    <!--<a class="nav-link" href="#"><i class="fa fa-envelope"-->
-                    <!--aria-hidden="true"></i>-->
-                    <!--{{'job-detail.action.sendEmail' | translate}}</a>-->
-                    <!--</li>-->
                     <li class="nav-item d-none d-md-block">
                         <a class="nav-link" (click)="printJob()">
                             <span class="fa fa-print" aria-hidden="true"></span>
                             {{'job-detail.action.print' | translate}}</a>
                     </li>
-                    <!--<li class="nav-item">-->
-                    <!--<a class="nav-link" href="#"><i class="fa fa-file-pdf-o"-->
-                    <!--aria-hidden="true"></i>-->
-                    <!--{{'job-detail.action.savePdf' | translate}}</a>-->
-                    <!--</li>-->
                 </ul>
             </div>
         </div>

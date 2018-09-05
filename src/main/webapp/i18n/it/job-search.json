@@ -43,7 +43,8 @@
             "badge": {
                 "permanent": "A tempo indeterminato",
                 "restricted": "obbligo di annuncio",
-                "temporary": "A tempo determinato"
+                "temporary": "A tempo determinato",
+                "shortEmployment": "Durata non supera i 14 giorni civili"
             }
         },
         "job-search-list": {

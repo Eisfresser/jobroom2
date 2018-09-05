@@ -866,6 +866,7 @@ job-search,job-search.filter.working-time.label,Arbeitspensum,Workload,Taux d'oc
 job-search,job-search.job-search-list-item.badge.permanent,Unbefristet,Permanent,Indéterminé,A tempo indeterminato
 job-search,job-search.job-search-list-item.badge.restricted,meldepflichtig,registration requirement,obligation d'annonce,obbligo di annuncio
 job-search,job-search.job-search-list-item.badge.temporary,Befristet,Temporary,Durée limitée,A tempo determinato
+job-search,job-search.job-search-list-item.badge.shortEmployment,Kurzeinsatz, Short employment,Emploi de courte,Durata non supera i 14 giorni civili
 job-search,job-search.job-search-list.error-message,Suche nach Stellen fehlgeschlagen,Failed to load job result list!,Les résultats de la recherche d'emplois n'ont pas pu être chargés,Impossibile caricare l'ultima lista di posti!
 job-search,job-search.job-search-list.title.many,{{count}} Stellen,{{count}} jobs,{{count}} emplois,{{count}} posti
 job-search,job-search.job-search-list.title.many.with-locality,{{count}} Stellen in {{locality}},{{count}} jobs in {{locality}},{{count}} emplois à {{locality}},{{count}} posti in {{locality}}

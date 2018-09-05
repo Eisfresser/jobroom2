@@ -43,7 +43,8 @@
             "badge": {
                 "permanent": "Permanent",
                 "restricted": "registration requirement",
-                "temporary": "Temporary"
+                "temporary": "Temporary",
+                "shortEmployment": " Short employment"
             }
         },
         "job-search-list": {
