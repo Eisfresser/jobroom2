@@ -495,6 +495,7 @@
     },
     "navigation": {
         "next": "Weiter",
-        "previous": "Zur\u00fcck"
+        "previous": "Zur\u00fcck",
+        "scroll-to-top": "Nach oben scrollen"
     }
 }

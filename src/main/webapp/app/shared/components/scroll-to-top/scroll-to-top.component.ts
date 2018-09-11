@@ -4,11 +4,12 @@ import { WINDOW } from '../../shared-libs.module';
 @Component({
     selector: 'jr2-scroll-to-top',
     template: `
-        <div class="scroll-top {{isHidden ? 'd-none' : ''}}"
-             (click)="scrollToTop()">
+        <div class="scroll-top {{isHidden ? 'd-none' : ''}}" [attr.title]="'navigation.scroll-to-top' | translate"
+             (click)="scrollToTop()" [attr.aria-label]="'navigation.scroll-to-top' | translate">
             <i class="fa fa-chevron-up" aria-hidden="true"></i>
         </div>
-    `
+    `,
+    styleUrls: ['./scroll-to-top.component.scss']
 })
 export class ScrollToTopComponent {
     isHidden = true;

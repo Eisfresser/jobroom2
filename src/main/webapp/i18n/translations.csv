@@ -655,6 +655,7 @@ global,global.workForm.selected,Arbeitsformen,Work forms,Formulaires de travail,
 global,header.title,Arbeitslosenversicherung ALV,Unemployment insurance,Assurance-chômage AC,Assicurazione contro la disoccupazione AD
 global,navigation.next,Weiter,Next,Suivant,Seguente
 global,navigation.previous,Zurück,Previous,Précédent,Precedente
+global,navigation.scroll-to-top,Nach oben scrollen,Scroll to top,Défiler vers le haut,Scorrere in cima
 health,health.details.details,Details,Details,Détails,Dettagli
 health,health.details.error,Fehler,Error,Erreur,Errore
 health,health.details.name,Name,Name,Nom,Cognome
