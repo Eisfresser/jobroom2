@@ -26,6 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ch.admin.seco.jobroom.domain.Organization;
 import ch.admin.seco.jobroom.repository.OrganizationRepository;
 import ch.admin.seco.jobroom.repository.search.OrganizationSearchRepository;
+import ch.admin.seco.jobroom.security.IsAdmin;
 import ch.admin.seco.jobroom.service.OrganizationService;
 import ch.admin.seco.jobroom.service.OrganizationSuggestionService;
 import ch.admin.seco.jobroom.service.dto.OrganizationAutocompleteDTO;
@@ -67,6 +68,7 @@ public class OrganizationServiceImpl implements OrganizationService {
      * @return the persisted entity
      */
     @Override
+    @IsAdmin
     public OrganizationDTO save(OrganizationDTO organizationDTO) {
         log.debug("Request to save Organization : {}", organizationDTO);
 
@@ -126,6 +128,7 @@ public class OrganizationServiceImpl implements OrganizationService {
      *  @param id the id of the entity
      */
     @Override
+    @IsAdmin
     public void delete(UUID id) {
         log.debug("Request to delete Organization : {}", id);
         organizationRepository.deleteById(id);
@@ -155,6 +158,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 
     @Async
     @Transactional
+    @IsAdmin
     public void housekeeping(LocalDateTime beforeDateTime) {
         log.info("Start housekeeping");
 

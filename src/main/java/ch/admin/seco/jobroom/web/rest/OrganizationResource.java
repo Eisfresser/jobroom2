@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import ch.admin.seco.jobroom.security.IsSystemAdmin;
+import ch.admin.seco.jobroom.security.IsAdmin;
 import ch.admin.seco.jobroom.security.SecurityUtils;
 import ch.admin.seco.jobroom.service.OrganizationService;
 import ch.admin.seco.jobroom.service.dto.OrganizationAutocompleteDTO;
@@ -173,7 +173,7 @@ public class OrganizationResource {
 
     @PostMapping("/organizations/housekeeping")
     @Timed
-    @IsSystemAdmin
+    @IsAdmin
     public ResponseEntity<Void> housekeeping(@RequestParam LocalDateTime beforeDateTime) {
         log.info("REST request to start housekeeping for Organizations by user : {}", SecurityUtils.getCurrentUserLogin());
         organizationService.housekeeping(beforeDateTime);
