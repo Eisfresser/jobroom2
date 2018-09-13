@@ -46,7 +46,7 @@
                         </div>
                     </div>
 
-                    <div *ngIf="jobCenter$ | async as jobCenter" class="order-sm-2 alv-logo-box logo-box logo-box__company flex-height md-whiteframe-1dp">
+                    <div *ngIf="job.stellennummerAvam && jobCenter$ | async as jobCenter" class="order-sm-2 alv-logo-box logo-box logo-box__company flex-height md-whiteframe-1dp">
                         <div class="detail__content">
                             <address *ngIf="jobCenter.address">
                                 <strong>{{ 'job-detail.reference.responsible-job-center' | translate }}</strong>
