@@ -59,7 +59,7 @@
                     "postbox-zip": "Case postale NPA",
                     "postbox-zipcode": "Case postale NPA / lieu",
                     "street": "Rue",
-                    "surrogate": "Cette annonce d'emploi est faite sur mandat",
+                    "surrogate": "L'annonce du poste s'effectue par un placeur priv\u00e9.",
                     "title": "Entreprise",
                     "zipcode": "NPA / lieu"
                 },
@@ -84,7 +84,7 @@
                 "disclaimer.error": "Veuillez confirmer que l'employeur respecte bien les conditions de travail et de salaire en vigueur dans la branche et la localit\u00e9 en question.",
                 "driving-licence": "Permis de conduire",
                 "employer": {
-                    "title": "Employeur"
+                    "title": "Mandant/Entreprise o\u00f9 a lieu la mission"
                 },
                 "employment": {
                     "title": "Emploi"
@@ -176,7 +176,7 @@
                 },
                 "reset": "R\u00e9tablir",
                 "shortEmployment": {
-                    "label": "Emploi de courte dur\u00e9e (jusqu'\u00e0 14 jours civils)"
+                    "label": "Engagement de courte dur\u00e9e (jusqu\u2019\u00e0 14 jours civils)"
                 },
                 "submit": "Envoyer l'annonce",
                 "submit.error": "L'annonce n'a pas pu \u00eatre sauvegard\u00e9.",

@@ -59,7 +59,7 @@
                     "postbox-zip": "Casella postale NPA",
                     "postbox-zipcode": "Casella postale NPA / luogo",
                     "street": "Via",
-                    "surrogate": "Questo annuncio di lavoro \u00e8 fatto per mandato",
+                    "surrogate": "Annuncio del posto via collocatore privato",
                     "title": "Impresa",
                     "zipcode": "NPA / luogo"
                 },
@@ -84,7 +84,7 @@
                 "disclaimer.error": "Confermare che il datore di lavoro rispetta le condizioni salariali e lavorative del luogo e del ramo in questione.",
                 "driving-licence": "Patente",
                 "employer": {
-                    "title": "Datore di lavoro"
+                    "title": "Committente/impresa acquisitrice"
                 },
                 "employment": {
                     "title": "Posto di lavoro"
@@ -176,7 +176,7 @@
                 },
                 "reset": "Ripristina",
                 "shortEmployment": {
-                    "label": "Durata non supera i 14 giorni civili"
+                    "label": "Assunzione di corta durata (fino a 14 giorni civili)"
                 },
                 "submit": "Inviare l'annuncio",
                 "submit.error": "Annuncio non salvata.",

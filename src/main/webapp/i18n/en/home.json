@@ -59,7 +59,7 @@
                     "postbox-zip": "PO box postal code",
                     "postbox-zipcode": "PO box postal code / city",
                     "street": "Street",
-                    "surrogate": "This business is surrogate for an employer",
+                    "surrogate": "Job registered through a private employment agency",
                     "title": "Business",
                     "zipcode": "Postal code / city"
                 },
@@ -84,7 +84,7 @@
                 "disclaimer.error": "Please confirm that the employer complies with local and industry standards for wage and working conditions.",
                 "driving-licence": "Driving licence",
                 "employer": {
-                    "title": "Employer"
+                    "title": "Principal/Employing company"
                 },
                 "employment": {
                     "title": "Employment"

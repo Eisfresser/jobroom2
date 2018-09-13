@@ -59,7 +59,7 @@
                     "postbox-zip": "Postfach PLZ",
                     "postbox-zipcode": "Postfach PLZ / Ort",
                     "street": "Strasse",
-                    "surrogate": "Diese Stellenmeldung erfolgt im Mandat",
+                    "surrogate": "Stellenmeldung erfolgt \u00fcber private Arbeitsvermittlung.",
                     "title": "Unternehmen",
                     "zipcode": "PLZ / Ort"
                 },
@@ -84,7 +84,7 @@
                 "disclaimer.error": "Bitte best\u00e4tigen Sie, dass der Arbeitgeber die orts- und branchen\u00fcblichen Lohn- und Arbeitsbedingungen einh\u00e4lt.",
                 "driving-licence": "F\u00fchrerausweis",
                 "employer": {
-                    "title": "Arbeitgeber"
+                    "title": "Auftraggeber/Einsatzbetrieb"
                 },
                 "employment": {
                     "title": "Arbeitsstelle"

@@ -713,7 +713,7 @@ home,home.tools.job-publication.company.postbox-number,Postfach-Nr.,PO box no.,N
 home,home.tools.job-publication.company.postbox-zip,Postfach PLZ,PO box postal code,Case postale NPA,Casella postale NPA
 home,home.tools.job-publication.company.postbox-zipcode,Postfach PLZ / Ort,PO box postal code / city,Case postale NPA / lieu,Casella postale NPA / luogo
 home,home.tools.job-publication.company.street,Strasse,Street,Rue,Via
-home,home.tools.job-publication.company.surrogate,Diese Stellenmeldung erfolgt im Mandat,This business is surrogate for an employer,Cette annonce d'emploi est faite sur mandat,Questo annuncio di lavoro è fatto per mandato
+home,home.tools.job-publication.company.surrogate,Stellenmeldung erfolgt über private Arbeitsvermittlung.,Job registered through a private employment agency,L'annonce du poste s'effectue par un placeur privé.,Annuncio del posto via collocatore privato
 home,home.tools.job-publication.company.title,Unternehmen,Business,Entreprise,Impresa
 home,home.tools.job-publication.company.zipcode,PLZ / Ort,Postal code / city,NPA / lieu,NPA / luogo
 home,home.tools.job-publication.contact.email,E-Mail,Email,Courriel,E-mail
@@ -732,7 +732,7 @@ home,home.tools.job-publication.description.placeholder,max. 10000 Zeichen,max. 
 home,home.tools.job-publication.disclaimer,"Ich bestätige, dass der Arbeitgeber die orts- und branchenüblichen Lohn- und Arbeitsbedingungen einhält.",I certify that the employer complies with local and industry standards for wage and working conditions.,Je confirme que l'employeur respecte les conditions de travail et de salaire usuelles dans la branche et la localité en question.,Confermo che il datore di lavoro rispetta le condizioni salariali e lavorative usuali nel ramo e nel luogo in questione.
 home,home.tools.job-publication.disclaimer.error,"Bitte bestätigen Sie, dass der Arbeitgeber die orts- und branchenüblichen Lohn- und Arbeitsbedingungen einhält.",Please confirm that the employer complies with local and industry standards for wage and working conditions.,Veuillez confirmer que l'employeur respecte bien les conditions de travail et de salaire en vigueur dans la branche et la localité en question.,Confermare che il datore di lavoro rispetta le condizioni salariali e lavorative del luogo e del ramo in questione.
 home,home.tools.job-publication.driving-licence,Führerausweis,Driving licence,Permis de conduire,Patente
-home,home.tools.job-publication.employer.title,Arbeitgeber,Employer,Employeur,Datore di lavoro
+home,home.tools.job-publication.employer.title,Auftraggeber/Einsatzbetrieb,Principal/Employing company,Mandant/Entreprise où a lieu la mission,Committente/impresa acquisitrice
 home,home.tools.job-publication.employment.title,Arbeitsstelle,Employment,Emploi,Posto di lavoro
 home,home.tools.job-publication.employmentEndDate.label,Anstellungsdauer befristet bis Datum,Temporary employment to date,Engagement limité au [date],a tempo determinato fino al
 home,home.tools.job-publication.employmentEndDate.permanent,unbefristet,permanent,illimité,a tempo indeterminato
@@ -792,7 +792,7 @@ home,home.tools.job-publication.publication.public.label,Job-Room public website
 home,home.tools.job-publication.publication.restricted.label,Job-Room restricted area,Job-Room restricted area,Job-Room restricted area,Job-Room restricted area
 home,home.tools.job-publication.publication.title,Publikationsmedien,Publication media,Moyens de publication,Mezzi di pubblicazione
 home,home.tools.job-publication.reset,Zurücksetzen,Reset,Rétablir,Ripristina
-home,home.tools.job-publication.shortEmployment.label,Kurzeinsatz (bis zu 14 Kalendertage),Short employment (up to 14 calendar days),Emploi de courte durée (jusqu'à 14 jours civils),Durata non supera i 14 giorni civili
+home,home.tools.job-publication.shortEmployment.label,Kurzeinsatz (bis zu 14 Kalendertage),Short employment (up to 14 calendar days),Engagement de courte durée (jusqu’à 14 jours civils),Assunzione di corta durata (fino a 14 giorni civili)
 home,home.tools.job-publication.submit,Stelle melden,Post job ad,Envoyer l'annonce,Inviare l'annuncio
 home,home.tools.job-publication.submit.error,Die Stellenanzeige konnte nicht gespeichert werden.,Job ad could not be saved.,L'annonce n'a pas pu être sauvegardé.,Annuncio non salvata.
 home,home.tools.job-publication.submit.success,"Besten Dank für Ihre Stellenmeldung. Ihr Inserat wird nun von einem Regionalen Arbeitsvermittlungszentrum (RAV) geprüft. Sie werden per E-Mail informiert, sobald die Stelle veröffentlicht wurde.","Thank you for posting this job ad, which will now be checked by a regional employment centre (RAV). You will be informed by email as soon as it is published.",Merci d'avoir annoncé le poste vacant que l'ORP va examiner. Vous recevrez un courriel dès sa publication.,Grazie di aver annunciato il posto vacante que sarà esaminato dall'URC. Riceverà un'e-mail non appena il posto vacante verrà pubblicato.
@@ -867,7 +867,7 @@ job-search,job-search.filter.working-time.label,Arbeitspensum,Workload,Taux d'oc
 job-search,job-search.job-search-list-item.badge.permanent,Unbefristet,Permanent,Indéterminé,A tempo indeterminato
 job-search,job-search.job-search-list-item.badge.restricted,meldepflichtig,registration requirement,obligation d'annonce,obbligo di annuncio
 job-search,job-search.job-search-list-item.badge.temporary,Befristet,Temporary,Durée limitée,A tempo determinato
-job-search,job-search.job-search-list-item.badge.shortEmployment,Kurzeinsatz, Short employment,Emploi de courte,Durata non supera i 14 giorni civili
+job-search,job-search.job-search-list-item.badge.shortEmployment,Kurzeinsatz,Short employment,Engagement de courte durée,Assunzione di corta durata
 job-search,job-search.job-search-list.error-message,Suche nach Stellen fehlgeschlagen,Failed to load job result list!,Les résultats de la recherche d'emplois n'ont pas pu être chargés,Impossibile caricare l'ultima lista di posti!
 job-search,job-search.job-search-list.title.many,{{count}} Stellen,{{count}} jobs,{{count}} emplois,{{count}} posti
 job-search,job-search.job-search-list.title.many.with-locality,{{count}} Stellen in {{locality}},{{count}} jobs in {{locality}},{{count}} emplois à {{locality}},{{count}} posti in {{locality}}
