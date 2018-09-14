@@ -61,9 +61,8 @@ export function createJobAdvertisement(id = 'id', stellennummerAvam = 'avam'): J
             euresDisplay: true,
             euresAnonymous: true,
             publicDisplay: true,
-            publicAnonymous: true,
             restrictedDisplay: true,
-            restrictedAnonymous: true
+            companyAnonymous: true
         }
     }
 }

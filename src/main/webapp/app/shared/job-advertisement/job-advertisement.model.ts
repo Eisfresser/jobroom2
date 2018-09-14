@@ -82,9 +82,8 @@ export interface Publication {
     euresDisplay: boolean;
     euresAnonymous?: boolean;
     publicDisplay: boolean;
-    publicAnonymous?: boolean;
     restrictedDisplay?: boolean;
-    restrictedAnonymous?: boolean;
+    companyAnonymous?: boolean;
 }
 
 export interface JobDescription {

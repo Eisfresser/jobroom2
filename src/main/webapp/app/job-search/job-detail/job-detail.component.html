@@ -10,7 +10,8 @@
                     </ul>
 
                     <hr class="visible-print-block d-none"/>
-                    <div class="alv-logo-box logo-box logo-box__company flex-height md-whiteframe-1dp" *ngIf="!(companyAnonymous$ | async)">
+
+                    <div class="alv-logo-box logo-box logo-box__company flex-height md-whiteframe-1dp" >
                         <div class="detail__content" *ngIf="job.jobContent.company as company">
                             <address>
                                 <strong>{{ company.name }}</strong>
@@ -79,8 +80,10 @@
             </ngb-alert>
             <div class="detail__title">
                 <h2 class="text--light" [innerHTML]="jobDescription.title | safeHtml"></h2>
-                <span class="text--primary-color" *ngIf="!(companyAnonymous$ | async)">{{ job.jobContent.company.name }}</span>
-                <span class="text--primary-color" *ngIf="companyAnonymous$ | async">{{ 'jobroomApp.job.rav' | translate }}</span>
+                <span class="text--primary-color" *ngIf="job.jobContent.company; else ravLabel">{{job.jobContent.company.name}}</span>
+                <ng-template #ravLabel>
+                    <span class="text--primary-color" >{{ 'jobroomApp.job.rav' | translate }}</span>
+                </ng-template>
                 <small class="detail__date" *ngIf="job.publication.startDate">
                     {{'job-detail.onlineSince' | translate}}: {{ job.publication.startDate | jr2Date }}
                 </small>
