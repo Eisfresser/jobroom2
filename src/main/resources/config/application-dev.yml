@@ -30,7 +30,7 @@ eureka:
 spring:
     profiles:
         active: dev
-        include: swagger
+        include: swagger, messagebroker-mock
     devtools:
         restart:
             enabled: true

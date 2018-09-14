@@ -107,6 +107,16 @@ public class MailService {
         sendEmail(recipient, subject, content, false, true);
     }
 
+    public void sendStesUnregisteringMail(String stesEmail, String recipient) {
+        log.debug("Send an email for unregister a candidate with email {} to {} ", stesEmail, recipient);
+        Locale locale = LocaleContextHolder.getLocale();
+        Context context = new Context(locale);
+        context.setVariable("candidateEmail", stesEmail);
+        String content = templateEngine.process("mails/unregisterCandidateEmail", context);
+        String subject = messageSource.getMessage("email.unregisterCandidateEmail.mail-subject", null, locale);
+        sendEmail(recipient, subject, content, false, true);
+    }
+
     @Deprecated
     void sendEmailFromTemplate(User user, String templateName, String titleKey) {
         Locale locale = Locale.forLanguageTag(user.getLangKey());

@@ -100,6 +100,21 @@ spring:
             enabled: false
     thymeleaf:
         mode: HTML
+    cloud:
+        stream:
+            bindings:
+                input:
+                    group: jobroom
+                    destination: candidate.event
+            kafka:
+                binder:
+                    auto-add-partitions: true
+                    auto-create-topics: true
+                bindings:
+                    input:
+                        consumer:
+                            enableDlq: true
+                            dlq-name: candidate.event.dlq
 
 server:
     servlet:

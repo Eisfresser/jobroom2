@@ -250,6 +250,7 @@ dependencies {
     compile "org.postgresql:postgresql"
     compile "org.mapstruct:mapstruct-jdk8:${mapstruct_version}"
     compile group: 'org.apache.pdfbox', name: 'pdfbox', version: '2.0.11'
+    compile "org.springframework.cloud:spring-cloud-starter-stream-kafka"
     testCompile "com.jayway.jsonpath:json-path"
     testCompile("org.springframework.boot:spring-boot-starter-test") {
         exclude group: 'com.vaadin.external.google', module: 'android-json'
@@ -262,6 +263,7 @@ dependencies {
     testCompile "org.mockito:mockito-core"
     testCompile "com.mattbertolini:liquibase-slf4j"
     testCompile "org.hamcrest:hamcrest-library"
+    testCompile "org.springframework.cloud:spring-cloud-stream-test-support"
     optional("org.springframework.boot:spring-boot-configuration-processor") {
         exclude group: 'com.vaadin.external.google', module: 'android-json'
     }

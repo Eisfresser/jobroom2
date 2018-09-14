@@ -295,6 +295,7 @@ public class RegistrationService {
         UserInfo userInfo = userInfoByMail.get();
         userInfo.unregister();
         this.eiamAdminService.removeRole(userInfo.getUserExternalId(), role);
+        LOGGER.info("JobSeeker with email {} has been unregistered", eMail);
     }
 
 }
