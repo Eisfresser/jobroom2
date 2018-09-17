@@ -1,10 +1,11 @@
 package ch.admin.seco.jobroom.service.impl.messaging;
 
-import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.only;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import java.util.Optional;
@@ -30,8 +31,9 @@ import ch.admin.seco.jobroom.service.RegistrationService;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class CandidateDeleteEventConsumerTest {
+
     @Autowired
-    private Sink channel;
+    private Sink sink;
 
     @MockBean
     private UserInfoRepository userInfoRepository;
@@ -46,7 +48,7 @@ public class CandidateDeleteEventConsumerTest {
     private RegistrationService registrationService;
 
     @Autowired
-    private StesUnregistrationProperties stesUnregistrationProperties;
+    private StesUnregisteringProperties stesUnregisteringProperties;
 
     @Before
     public void setUp() {
@@ -54,16 +56,16 @@ public class CandidateDeleteEventConsumerTest {
     }
 
     @Test
-    public void shouldOnCandidateDeleteEventSendEmailForUnregisterCandidate() {
+    public void shouldOnCandidateDeleteEventSendEmailForUnregisterCandidate() throws UserNotFoundException {
         //given
         given(userInfoRepository.findByPersonNumber(Long.MAX_VALUE)).willReturn(Optional.of(userInfo));
 
         //when
-        this.channel.input().send(MessageBuilder.withPayload(CandidateDeletedEvent.from(UUID.randomUUID(), Long.MAX_VALUE)).build());
+        this.sink.input().send(MessageBuilder.withPayload(CandidateDeletedEvent.from(UUID.randomUUID(), Long.MAX_VALUE)).build());
 
         //then
-        verify(this.userInfoRepository, only()).findByPersonNumber(Long.MAX_VALUE);
-        verify(this.mailService, only()).sendStesUnregisteringMail(anyString(), anyString());
+        verify(this.mailService, times(1)).sendStesUnregisteringMail(any(), any());
+        verify(this.registrationService, never()).unregisterJobSeeker(anyString());
     }
 
     @Test
@@ -72,25 +74,24 @@ public class CandidateDeleteEventConsumerTest {
         given(userInfoRepository.findByPersonNumber(Long.MAX_VALUE)).willReturn(Optional.empty());
 
         //when
-        this.channel.input().send(MessageBuilder.withPayload(CandidateDeletedEvent.from(UUID.randomUUID(), Long.MAX_VALUE)).build());
+        this.sink.input().send(MessageBuilder.withPayload(CandidateDeletedEvent.from(UUID.randomUUID(), Long.MAX_VALUE)).build());
 
         //then
-        verify(this.userInfoRepository, only()).findByPersonNumber(anyLong());
-        verify(this.mailService, never()).sendStesUnregisteringMail(anyString(), anyString());
-        verify(this.registrationService, never()).unregisterJobSeeker(anyString());
+        verify(this.mailService, never()).sendStesUnregisteringMail(any(), any());
+        verify(this.registrationService, never()).unregisterJobSeeker(any());
     }
 
     @Test
     public void shouldOnCandidateDeleteEventUnregisterCandidate() throws UserNotFoundException {
         //given
-        stesUnregistrationProperties.setAutoUnregisteringEnabled(true);
+        this.stesUnregisteringProperties.setAutoUnregisteringEnabled(true);
         given(userInfoRepository.findByPersonNumber(Long.MAX_VALUE)).willReturn(Optional.of(userInfo));
 
         //when
-        this.channel.input().send(MessageBuilder.withPayload(CandidateDeletedEvent.from(UUID.randomUUID(), Long.MAX_VALUE)).build());
+        this.sink.input().send(MessageBuilder.withPayload(CandidateDeletedEvent.from(UUID.randomUUID(), Long.MAX_VALUE)).build());
 
         //then
-        verify(this.userInfoRepository, only()).findByPersonNumber(Long.MAX_VALUE);
-        verify(this.registrationService, only()).unregisterJobSeeker(anyString());
+        verify(this.mailService, never()).sendStesUnregisteringMail(any(), any());
+        verify(this.registrationService, only()).unregisterJobSeeker(any());
     }
 }

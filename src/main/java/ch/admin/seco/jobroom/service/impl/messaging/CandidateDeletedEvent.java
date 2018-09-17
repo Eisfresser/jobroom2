@@ -1,9 +1,8 @@
 package ch.admin.seco.jobroom.service.impl.messaging;
 
-import java.io.Serializable;
 import java.util.UUID;
 
-class CandidateDeletedEvent implements Serializable {
+class CandidateDeletedEvent {
 
     static CandidateDeletedEvent from(UUID candidateId, Long personNumber) {
         CandidateDeletedEvent event = new CandidateDeletedEvent();
