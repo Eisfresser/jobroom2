@@ -324,20 +324,22 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
     }
 
     private configureEmployerSection(formModel: JobPublicationForm) {
+        this.jobPublicationForm.addControl('employer',
+            this.fb.group({
+                name: [formModel.employer.name, Validators.required],
+                zipCode: [formModel.employer.zipCode],
+                countryCode: [formModel.employer.countryCode, Validators.required],
+            }));
+
         const companySurrogate = this.jobPublicationForm.get('company.surrogate');
         companySurrogate.valueChanges
             .takeUntil(this.unsubscribe$)
             .startWith(companySurrogate.value)
             .subscribe((value) => {
                 if (value) {
-                    this.jobPublicationForm.addControl('employer',
-                        this.fb.group({
-                            name: [formModel.employer.name, Validators.required],
-                            zipCode: [formModel.employer.zipCode],
-                            countryCode: [formModel.employer.countryCode, Validators.required],
-                        }));
+                    this.jobPublicationForm.get('employer').enable();
                 } else {
-                    this.jobPublicationForm.removeControl('employer');
+                    this.jobPublicationForm.get('employer').disable();
                 }
             });
     }
