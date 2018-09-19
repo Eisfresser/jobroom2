@@ -203,6 +203,7 @@
                 "tracker": "Activit\u00e9 des utilisateurs",
                 "userManagement": "Gestion des utilisateurs"
             },
+            "company-contact-template": "Informations de contact",
             "dashboard": "Dashboard",
             "entities": {
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)",

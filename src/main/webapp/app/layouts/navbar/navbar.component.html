@@ -246,6 +246,22 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
+                                    <a *jhiHasAnyAuthority="['ROLE_PRIVATE_EMPLOYMENT_AGENT', 'ROLE_COMPANY']"
+                                       routerLink="dashboard" id="dashboard"
+                                       (click)="collapseNavbar()">
+                                        <span jhiTranslate="global.menu.dashboard">Dashboard</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="nav-item"
+                                       *jhiHasAnyAuthority="['ROLE_PRIVATE_EMPLOYMENT_AGENT', 'ROLE_COMPANY']"
+                                       routerLink="contact-template-management"
+                                       routerLinkActive="active"
+                                       (click)="collapseNavbar()">
+                                        <span jhiTranslate="global.menu.company-contact-template">Kontaktangaben</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
                                     <a id="logout"
                                        routerLinkActive="active"
                                        (click)="logout()"
@@ -259,22 +275,6 @@
                                        (click)="logoutNoEiam()"
                                        *ngIf="noEiam">
                                         <span jhiTranslate="global.menu.account.logout">Sign out</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a *jhiHasAnyAuthority="['ROLE_PRIVATE_EMPLOYMENT_AGENT', 'ROLE_COMPANY']"
-                                       routerLink="dashboard" id="dashboard"
-                                       (click)="collapseNavbar()">
-                                        <span jhiTranslate="global.menu.dashboard">Dashboard</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="nav-item"
-                                       *jhiHasAnyAuthority="['ROLE_PRIVATE_EMPLOYMENT_AGENT', 'ROLE_COMPANY']"
-                                       routerLink="contact-template-management"
-                                       routerLinkActive="active"
-                                       (click)="collapseNavbar()">
-                                        <span>Kontaktangaben</span>
                                     </a>
                                 </li>
                             </ul>
@@ -538,16 +538,6 @@
                         </li>
                         <li>
                             <a class="dropdown-item dropdown-item--account"
-                               id="logout-desktop"
-                               routerLinkActive="active"
-                               (click)="logoutEiam()"
-                               *ngIf="!noEiam">
-                                <span
-                                    jhiTranslate="global.menu.account.logout">Sign out</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item dropdown-item--account"
                                *jhiHasAnyAuthority="['ROLE_PRIVATE_EMPLOYMENT_AGENT', 'ROLE_COMPANY']"
                                routerLink="dashboard" id="dashboard-desktop"
                                (click)="collapseNavbar()">
@@ -561,7 +551,17 @@
                                routerLink="contact-template-management"
                                routerLinkActive="active"
                                (click)="collapseNavbar()">
-                                <span>Kontaktangaben</span>
+                                <span jhiTranslate="global.menu.company-contact-template">Kontaktangaben</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item dropdown-item--account"
+                               id="logout-desktop"
+                               routerLinkActive="active"
+                               (click)="logoutEiam()"
+                               *ngIf="!noEiam">
+                                <span
+                                    jhiTranslate="global.menu.account.logout">Sign out</span>
                             </a>
                         </li>
                         <li>
