@@ -24,7 +24,7 @@ final class TechnicalUserContextUtil {
 
     private static final String TECH_USER_LANG_KEY = "de";
 
-    private static final String TECH_USER_EXT_ID = "dummy-ext-id";
+    private static final String TECH_USER_EXT_ID = "tech-user-ext-id";
 
     private TechnicalUserContextUtil() {
     }
