@@ -14,6 +14,7 @@ import ch.admin.seco.jobroom.repository.UserInfoRepository;
 import ch.admin.seco.jobroom.security.registration.eiam.UserNotFoundException;
 import ch.admin.seco.jobroom.service.MailService;
 import ch.admin.seco.jobroom.service.RegistrationService;
+import ch.admin.seco.jobroom.service.impl.security.LoginAsTechnicalUser;
 
 class CandidateDeleteEventConsumer {
 
@@ -35,6 +36,7 @@ class CandidateDeleteEventConsumer {
     }
 
     @StreamListener(Sink.INPUT)
+    @LoginAsTechnicalUser
     void onCandidateDeleteEvent(CandidateDeletedEvent event) throws UserNotFoundException {
         LOGGER.debug("Received CandidateDeletedEvent for Candidate-Id: {}", event.getCandidateId());
         Optional<UserInfo> stesHavingPersonNumber = this.userInfoRepository.findByPersonNumber(event.getPersonNumber());
