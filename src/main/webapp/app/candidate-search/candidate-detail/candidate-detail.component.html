@@ -54,7 +54,7 @@
             </div>
 
             <div class="detail__content">
-                <span class="badge badge-blue">
+                <span class="badge badge-blue" *ngIf="candidateProfile.residenceCantonCode">
                     {{ 'global.reference.canton.' + candidateProfile.residenceCantonCode | translate}}
                 </span>
                 <span class="badge badge-gray">{{ candidateProfile.workLoad }}%</span>
