@@ -199,11 +199,11 @@ To stop it and remove the container, run:
 You can also fully dockerize your application and all the services that it depends on.
 To achieve this, first build a docker image of your app by running:
 
-    ./gradlew bootWar -Pprod buildDocker
+    ./gradlew bootWar buildDocker
 
 Then run:
 
-    docker-compose -f src/main/docker/app.yml up -d
+    docker-compose -f src/main/docker/app-dev.yml up -d
 
 For more information refer to [Using Docker and Docker-Compose][], this page also contains information on the docker-compose sub-generator (`jhipster docker-compose`), which is able to generate docker configurations for one or several JHipster applications.
 
