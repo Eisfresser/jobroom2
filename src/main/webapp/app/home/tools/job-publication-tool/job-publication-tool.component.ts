@@ -92,7 +92,7 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
     showSuccessSaveMessage: boolean;
     showErrorSaveMessage: boolean;
     disableSubmit = false;
-    private readonly SWITZ_KEY = 'CH';
+    private readonly COUNTRY_ISO_CODE_SWITZERLAND = 'CH';
     private unsubscribe$ = new Subject<void>();
 
     constructor(private coreStore: Store<CoreState>,
@@ -131,7 +131,6 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
         this.jobPublicationForm = this.createJobPublicationForm(defaultFormValues);
         this.configureEmployerSection(defaultFormValues);
         this.configureEmploymentSection();
-        this.configurePublicContactSection();
 
         this.currentSelectedCompanyService.getSelectedCompanyContactTemplate()
             .subscribe((companyContactTemplateModel) => {
@@ -209,11 +208,11 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
         this.unsubscribe$.complete();
     }
 
-    getSwitzSelected(countryControl: AbstractControl): Observable<boolean> {
+    isSwitzerlandSelected(countryControl: AbstractControl): Observable<boolean> {
         return Observable.merge(
             Observable.of(countryControl.value),
             countryControl.valueChanges)
-            .map((selectedCountry) => selectedCountry === this.SWITZ_KEY);
+            .map((selectedCountry) => selectedCountry === this.COUNTRY_ISO_CODE_SWITZERLAND);
     }
 
     max(...values: number[]): number {
@@ -242,85 +241,6 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
     resetForm(): void {
         this.resetAlerts();
         this.jobPublicationForm.reset(this.createDefaultFormModel());
-    }
-
-    private configurePublicContactSection() {
-        const publicContactFieldValidators = {
-            salutation: [],
-            firstName: [],
-            lastName: [],
-            phoneNumber: [],
-            email: [Validators.pattern(EMAIL_REGEX)]
-        };
-        const publicContactFieldNames = Object.keys(publicContactFieldValidators);
-
-        const publicContact = this.jobPublicationForm.get('publicContact');
-
-        const makeRequired = (name: string): void => {
-            // TODO: remove workaround
-            if (name !== 'phoneNumber') {
-                const field = publicContact.get(name);
-                field.setValidators([Validators.required, ...publicContactFieldValidators[name]]);
-                field.updateValueAndValidity({ emitEvent: false });
-            }
-        };
-
-        const makeFieldsRequired = (): void => {
-            publicContactFieldNames.forEach((name) => {
-                if (publicContact.get('phoneNumber').value && name === 'email'
-                    || publicContact.get('email').value && name === 'phoneNumber') {
-                    return;
-                }
-
-                makeRequired(name);
-            });
-        };
-
-        const resetValidator = (name: string): void => {
-            // TODO: remove workaround
-            if (name !== 'phoneNumber') {
-                const field = publicContact.get(name);
-                field.clearValidators();
-                field.setValidators(publicContactFieldValidators[name]);
-                field.updateValueAndValidity({ emitEvent: false });
-            }
-        };
-
-        const resetValidators = (): void => {
-            publicContactFieldNames
-                .forEach((name) => resetValidator(name));
-        };
-
-        const isFilled = (value) => publicContactFieldNames
-            .map((name) => value[name])
-            .some((fieldValue) => !!fieldValue);
-
-        publicContact.valueChanges
-            .takeUntil(this.unsubscribe$)
-            .startWith(publicContact.value)
-            .distinctUntilChanged()
-            .subscribe((value) => {
-                if (isFilled(value)) {
-                    makeFieldsRequired();
-                } else {
-                    resetValidators();
-                }
-            });
-
-        const resetRelatedFieldValidator = (fieldName: string, relatedFieldName: string): void => {
-            publicContact.get(fieldName).valueChanges
-                .takeUntil(this.unsubscribe$)
-                .startWith(publicContact.get(fieldName).value)
-                .distinctUntilChanged()
-                .subscribe((value) => {
-                    if (value) {
-                        resetValidator(relatedFieldName);
-                    }
-                });
-        };
-
-        resetRelatedFieldValidator('phoneNumber', 'email');
-        resetRelatedFieldValidator('email', 'phoneNumber');
     }
 
     private configureEmployerSection(formModel: JobPublicationForm) {
@@ -381,9 +301,9 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
     }
 
     private createJobPublicationForm(formModel: JobPublicationForm): FormGroup {
-        const atLeastOneRequired = (validator: ValidatorFn, excludeControl: string) => (group: FormGroup): ValidationErrors | null => {
+        const atLeastOneRequired = (validator: ValidatorFn, includedControls: string[]) => (group: FormGroup): ValidationErrors | null => {
             const hasAtLeastOne = group && group.controls && Object.keys(group.controls)
-                .filter((controlName) => controlName !== excludeControl)
+                .filter((controlName) =>  includedControls.includes(controlName))
                 .some((controlName) => {
                     const control = group.controls[controlName];
                     return control.valid && !validator(control)
@@ -452,12 +372,12 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
                 email: [formModel.contact.email, [Validators.required, Validators.pattern(EMAIL_REGEX)]],
             }),
             publicContact: this.fb.group({
-                salutation: [formModel.publicContact.salutation],
-                firstName: [formModel.publicContact.firstName],
-                lastName: [formModel.publicContact.lastName],
+                salutation: [formModel.publicContact.salutation, Validators.required],
+                firstName: [formModel.publicContact.firstName, Validators.required],
+                lastName: [formModel.publicContact.lastName, Validators.required],
                 phoneNumber: [formModel.publicContact.phoneNumber],
-                email: [formModel.publicContact.email],
-            }),
+                email: [formModel.publicContact.email, Validators.pattern(EMAIL_REGEX)],
+            }, { validator: atLeastOneRequired(Validators.required, ['phoneNumber', 'email']) }),
             application: this.fb.group({
                 paperApplicationAddress: [formModel.application.paperApplicationAddress],
                 electronicApplicationEmail: [formModel.application.electronicApplicationEmail, Validators.pattern(EMAIL_REGEX)],
@@ -465,7 +385,7 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
                 phoneNumber: [formModel.application.phoneNumber],
                 additionalInfo: [formModel.application.additionalInfo,
                     [Validators.maxLength(this.APPLICATION_ADDITIONAL_INFO_MAX_LENGTH)]],
-            }, { validator: atLeastOneRequired(Validators.required, 'additionalInfo') }),
+            }, { validator: atLeastOneRequired(Validators.required, ['paperApplicationAddress', 'electronicApplicationEmail', 'electronicApplicationUrl', 'phoneNumber' ]) }),
             publication: this.fb.group({
                 publicDisplay: [formModel.publication.publicDisplay],
                 eures: [formModel.publication.eures],
@@ -503,7 +423,7 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
                 ]
             },
             location: {
-                countryCode: this.SWITZ_KEY,
+                countryCode: this.COUNTRY_ISO_CODE_SWITZERLAND,
                 additionalDetails: '',
                 zipCode: {
                     zip: '',
@@ -523,7 +443,7 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
                     zip: '',
                     city: ''
                 },
-                countryCode: this.SWITZ_KEY,
+                countryCode: this.COUNTRY_ISO_CODE_SWITZERLAND,
                 surrogate: false
             },
             employer: {
@@ -532,7 +452,7 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
                     zip: '',
                     city: ''
                 },
-                countryCode: this.SWITZ_KEY
+                countryCode: this.COUNTRY_ISO_CODE_SWITZERLAND
             },
             contact: {
                 language: this.translateService.currentLang,

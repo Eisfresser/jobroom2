@@ -136,6 +136,7 @@
                         },
                         "phone-format": "Bitte g\u00fcltige Telefonnummer eingeben z. B. 031 999 99 99 oder +41 31 999 99 99",
                         "required": "Pflichtfeld",
+                        "at-least-one-required-email-or-phone": "Bitte Telefon oder E-Mail angeben",
                         "at-least-one-required": "Bitte mindestens eine Bewerbungsform w\u00e4hlen",
                         "zip-format": "PLZ ung\u00fcltig",
                         "zip-or-city-format": "PLZ/Ort ung\u00fcltig",
