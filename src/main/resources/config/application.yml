@@ -161,6 +161,26 @@ jhipster:
             - staging
             - training
 
+
+gateway:
+    rate-limiting:
+        enabled: true
+        rate-filter-options:
+            # Avoid fetching mass-fetching of sensitive candidate information
+            -
+                bucket-prefix: 'candidate-details'
+                method: 'GET'
+                url: '/candidateservice/api/candidates/*'
+                limit: 5
+                duration: 10s
+
+            # apply rate-limiting filter to any request
+            -
+                bucket-prefix: 'all'
+                url: '/**'
+                limit: 100
+                duration: 10s
+
 # ===================================================================
 # Application specific properties
 # Add your own application properties here, see the ApplicationProperties class

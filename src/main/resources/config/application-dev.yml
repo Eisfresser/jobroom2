@@ -108,11 +108,6 @@ server:
 # ===================================================================
 
 jhipster:
-    gateway:
-        rate-limiting:
-            enabled: false
-            limit: 100000
-            duration-in-seconds: 3600
     http:
         version: V_1_1 # To use HTTP/2 you will need SSL support (see above the "server.ssl" configuration)
     cache: # Cache configuration
@@ -157,17 +152,6 @@ jhipster:
             host: localhost
             port: 5000
             queue-size: 512
-
-# ===================================================================
-# Application specific properties
-# Add your own application properties here, see the ApplicationProperties class
-# to have type-safe configuration, like in the JHipsterProperties above
-#
-# More documentation is available at:
-# http://www.jhipster.tech/common-application-properties/
-# ===================================================================
-
-# application:
 
 management:
     health:

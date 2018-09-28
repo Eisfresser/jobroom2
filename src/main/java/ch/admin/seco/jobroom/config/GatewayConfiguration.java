@@ -3,12 +3,14 @@ package ch.admin.seco.jobroom.config;
 import io.github.jhipster.config.JHipsterProperties;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.netflix.zuul.filters.RouteLocator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import ch.admin.seco.jobroom.gateway.accesscontrol.AccessControlFilter;
 import ch.admin.seco.jobroom.gateway.ratelimiting.RateLimitingFilter;
+import ch.admin.seco.jobroom.gateway.ratelimiting.RateLimitingFilterProperties;
 import ch.admin.seco.jobroom.gateway.responserewriting.SwaggerBasePathRewritingFilter;
 
 @Configuration
@@ -38,18 +40,19 @@ public class GatewayConfiguration {
      * This uses Bucket4J to limit the API calls, see {@link ch.admin.seco.jobroom.gateway.ratelimiting.RateLimitingFilter}.
      */
     @Configuration
-    @ConditionalOnProperty("jhipster.gateway.rate-limiting.enabled")
+    @ConditionalOnProperty(value = "gateway.rate-limiting.enabled", matchIfMissing = true)
+    @EnableConfigurationProperties(RateLimitingFilterProperties.class)
     public static class RateLimitingConfiguration {
 
-        private final JHipsterProperties jHipsterProperties;
+        private final RateLimitingFilterProperties rateLimitingFilterProperties;
 
-        public RateLimitingConfiguration(JHipsterProperties jHipsterProperties) {
-            this.jHipsterProperties = jHipsterProperties;
+        public RateLimitingConfiguration(RateLimitingFilterProperties rateLimitingFilterProperties) {
+            this.rateLimitingFilterProperties = rateLimitingFilterProperties;
         }
 
         @Bean
         public RateLimitingFilter rateLimitingFilter() {
-            return new RateLimitingFilter(jHipsterProperties);
+            return new RateLimitingFilter(rateLimitingFilterProperties);
         }
     }
 }
