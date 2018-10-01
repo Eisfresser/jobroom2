@@ -39,7 +39,12 @@ export const languages = [
     'fi',
     'km',
     'vi',
-    'ro'
+    'ro',
+    'nld',
+    'sr-hr',
+    'fa',
+    'prs',
+    'ti'
 ];
 
 @Injectable()

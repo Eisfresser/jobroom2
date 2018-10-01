@@ -483,6 +483,11 @@ global,global.reference.language.en,Englisch,English,Anglais,Inglese
 global,global.reference.language.es,Spanisch,Spanish,Espagnol,Spagnolo
 global,global.reference.language.fi,Finnisch,Finnish,Finlandais,Finlandese
 global,global.reference.language.fr,Französisch,French,Français,Francese
+global,global.reference.language.nld,Flämisch,Flemish,Flamand,Fiammingo
+global,global.reference.language.sr-hr,Serbokroatisch,Serbo-Croatian,Serbo-croate,Serbo croato
+global,global.reference.language.fa,Farsi,Farsi,Farsi,Farsi
+global,global.reference.language.prs,Dari,Dari,Dari,Dari
+global,global.reference.language.ti,Tigrinya,Tigrinya,Tigrigna,Tigrino
 global,global.reference.language.he,Hebräisch,Hebrew,Hébraïque,Ebreo
 global,global.reference.language.hr,Kroatisch,Croatian,Croate,Croato
 global,global.reference.language.hu,Ungarisch,Hungarian,Hongrois,Ungherese
