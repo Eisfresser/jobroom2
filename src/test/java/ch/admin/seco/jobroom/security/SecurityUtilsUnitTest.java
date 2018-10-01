@@ -1,16 +1,17 @@
 package ch.admin.seco.jobroom.security;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContext;
-
-import java.util.Optional;
-
 import static ch.admin.seco.jobroom.security.SecurityUtils.getCurrentUserLogin;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.security.core.context.SecurityContextHolder.createEmptyContext;
 import static org.springframework.security.core.context.SecurityContextHolder.setContext;
+
+import java.util.Optional;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContext;
 
 /**
  * Test class for the SecurityUtils utility class.
@@ -28,7 +29,7 @@ public class SecurityUtilsUnitTest {
     }
 
     @Test
-    public void testgetCurrentUserLogin() {
+    public void testGetCurrentUserLogin() {
         securityContext.setAuthentication(new UsernamePasswordAuthenticationToken("admin", "admin"));
 
         Optional<String> login = getCurrentUserLogin();

@@ -35,7 +35,9 @@ class AbstractSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.headers().frameOptions().sameOrigin();
 
-        http.anonymous().disable();
+        http.anonymous()
+            .principal("anonymousUser")
+            .authorities(AuthoritiesConstants.ANONYMOUS);
 
         http.authorizeRequests()
             .antMatchers("/api/register").permitAll()

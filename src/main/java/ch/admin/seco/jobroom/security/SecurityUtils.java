@@ -17,7 +17,7 @@ public final class SecurityUtils {
     /**
      * Get the login of the current user.
      *
-     * @return the login of the current user
+     * @return the login of the current user or empty if not logged in (such in the case of an anonymousUser)
      */
     public static Optional<String> getCurrentUserLogin() {
         SecurityContext securityContext = SecurityContextHolder.getContext();
@@ -26,8 +26,6 @@ public final class SecurityUtils {
                 if (authentication.getPrincipal() instanceof UserDetails) {
                     UserDetails userDetails = (UserDetails) authentication.getPrincipal();
                     return userDetails.getUsername();
-                } else if (authentication.getPrincipal() instanceof String) {
-                    return (String) authentication.getPrincipal();
                 }
                 return null;
             });
