@@ -10,8 +10,23 @@ Style guide customization
             color: $main-accent-color !important;
         }
     }
+    .nav-link--account-warning {
+        background-color: $other-colors-red;
+        color: $main-color-white !important;
+        &:hover {
+            background-color: #780b05 !important;
+            color: $main-color-white !important;
+        }
+    }
     .dropdown-item--account {
         color: $main-color-black;
+        &:hover {
+            color: $main-accent-color;
+        }
+    }
+
+    .dropdown-item--account-warning {
+        color: $main-accent-color;
         &:hover {
             color: $main-accent-color;
         }
@@ -30,6 +45,7 @@ Style guide customization
         .portal-logo__image span {
             display: none;
         }
+
     }
 
     @media screen and (max-width: 767px){
@@ -49,5 +65,12 @@ Style guide customization
 @media screen and (max-width: 767px){
     .navbar-nav .dropdown-menu.show {
         position: absolute;
+    }
+}
+
+@media screen and (min-width: 767px){
+    .navbar-nav .dropdown-menu--account.show {
+        position: absolute;
+        width: fit-content;
     }
 }

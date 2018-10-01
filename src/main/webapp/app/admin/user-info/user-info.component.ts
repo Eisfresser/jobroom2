@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { HttpErrorResponse, HttpParams, HttpResponse } from '@angular/common/http';
-import { UserInfoDto } from './user-info.model';
 import { UserInfoService } from '../../shared/user-info/user-info.service';
+import { RegistrationStatus, UserInfoDto } from '../../shared/user-info/user-info.model';
 
 @Component({
     selector: 'jr2-user-info',
@@ -12,6 +12,7 @@ import { UserInfoService } from '../../shared/user-info/user-info.service';
     ]
 })
 export class UserInfoComponent {
+
     public email: FormControl;
 
     public selectedUserInfo: UserInfoDto;
@@ -19,7 +20,9 @@ export class UserInfoComponent {
     public userRoles: Array<String> = [];
 
     public errorMessageKey: string = null;
+
     private tmpErrorMsg: string = null;
+
     private techErrorMsg: string = null;
 
     constructor(private userInfoService: UserInfoService) {
@@ -32,6 +35,28 @@ export class UserInfoComponent {
 
     public actionsAvailable(): boolean {
         return !(this.selectedUserInfo == null) && !(this.userRoles == null) && this.userRoles.length > 0
+    }
+
+    public isRegistrationStatusUnregistered() {
+        if (this.selectedUserInfo != null) {
+            return this.selectedUserInfo.registrationStatus === RegistrationStatus.UNREGISTERED;
+        }
+        return false;
+    }
+
+    public isRegistrationStatusValidationPAVorEMP() {
+        if (this.selectedUserInfo != null) {
+            return this.selectedUserInfo.registrationStatus === RegistrationStatus.VALIDATION_PAV ||
+                this.selectedUserInfo.registrationStatus === RegistrationStatus.VALIDATION_EMP;
+        }
+        return false;
+    }
+
+    public isRegistrationStatusRegistered() {
+        if (this.selectedUserInfo != null) {
+            return this.selectedUserInfo.registrationStatus === RegistrationStatus.REGISTERED;
+        }
+        return false;
     }
 
     public searchByEMail() {

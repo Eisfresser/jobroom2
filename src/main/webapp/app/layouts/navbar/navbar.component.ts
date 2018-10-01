@@ -13,6 +13,7 @@ import {
 } from '../../shared';
 
 import { VERSION } from '../../app.constants';
+import { RegistrationStatus } from '../../shared/user-info/user-info.model';
 
 @Component({
     selector: 'jhi-navbar',
@@ -31,6 +32,7 @@ export class NavbarComponent implements OnInit {
     modalRef: NgbModalRef;
     version: string;
     isReindexMenuCollapsed: boolean;
+    hasCompletedRegistration = true;
 
     constructor(private loginService: LoginService,
                 private eventManager: JhiEventManager,
@@ -47,20 +49,24 @@ export class NavbarComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.principal.identity().then((currentUser) => {
-            this.currentUser = currentUser;
-        });
-        this.registerAuthenticationSuccess();
+        this.principal.getAuthenticationState()
+            .subscribe((currentUser) => {
+                this.currentUser = currentUser;
+                if (currentUser) {
+                    this.hasCompletedRegistration = currentUser.registrationStatus === RegistrationStatus.REGISTERED;
+                }
+            });
 
         this.languageHelper.getAll().then((languages) => {
             this.languages = languages;
         });
 
-        this.profileService.getProfileInfo().subscribe((profileInfo) => {
-            this.inProduction = profileInfo.inProduction;
-            this.swaggerEnabled = profileInfo.swaggerEnabled;
-            this.noEiam = profileInfo.noEiam;
-        });
+        this.profileService.getProfileInfo()
+            .subscribe((profileInfo) => {
+                this.inProduction = profileInfo.inProduction;
+                this.swaggerEnabled = profileInfo.swaggerEnabled;
+                this.noEiam = profileInfo.noEiam;
+            });
     }
 
     @HostListener('document:click', ['$event.target'])
@@ -111,16 +117,23 @@ export class NavbarComponent implements OnInit {
         document.location.href = 'api/redirect/profile';
     }
 
-    toggleNavbar() {
-        this.isNavbarCollapsed = !this.isNavbarCollapsed;
+    hasNotCompletedRegistration() {
+        return !this.hasCompletedRegistration;
     }
 
-    registerAuthenticationSuccess() {
-        this.eventManager.subscribe('authenticationSuccess', (message) => {
-            this.principal.identity().then((currentUser) => {
-                this.currentUser = currentUser;
-            });
-        });
+    goToFinishRegistration() {
+        this.collapseNavbar();
+        const currentRegistrationStatus = this.currentUser.registrationStatus;
+        if (currentRegistrationStatus === RegistrationStatus.UNREGISTERED) {
+            this.router.navigate(['/registrationQuestionnaire']);
+        } else if (currentRegistrationStatus === RegistrationStatus.VALIDATION_PAV
+            || currentRegistrationStatus === RegistrationStatus.VALIDATION_EMP) {
+            this.router.navigate(['/accessCode']);
+        }
+    }
+
+    toggleNavbar() {
+        this.isNavbarCollapsed = !this.isNavbarCollapsed;
     }
 
     isAdmin(): boolean {

@@ -4,6 +4,7 @@ import { AuthServerProvider } from './auth-jwt.service';
 import { SERVER_API_URL } from '../../app.constants';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
+import { RegistrationStatus } from '../user-info/user-info.model';
 
 @Injectable()
 export class Principal {
@@ -127,4 +128,5 @@ export interface CurrentUser {
 
     authorities: Array<string>
 
+    registrationStatus: RegistrationStatus
 }

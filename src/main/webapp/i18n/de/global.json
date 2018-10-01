@@ -176,6 +176,7 @@
                 "main": "Zugang",
                 "password": "Passwort",
                 "registration": "Registrierung",
+                "registration.incomplete": "Registrierung abschliessen",
                 "sessions": "Sitzungen",
                 "settings": "Einstellungen"
             },

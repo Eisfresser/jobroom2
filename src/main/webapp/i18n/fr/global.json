@@ -176,6 +176,7 @@
                 "main": "Compte",
                 "password": "Mot de passe",
                 "registration": "Enregistrement",
+                "registration.incomplete": "Terminer l'enregistrement",
                 "sessions": "Sessions",
                 "settings": "Param\u00e8tres"
             },

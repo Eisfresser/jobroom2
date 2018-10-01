@@ -6,6 +6,7 @@ import { CompanyService } from '../../../../../../main/webapp/app/shared/company
 import { UserInfoService } from '../../../../../../main/webapp/app/shared/user-info/user-info.service';
 import { defer } from 'rxjs/observable/defer';
 import { CompanyContactTemplateModel } from '../../../../../../main/webapp/app/shared/company/company-contact-template.model';
+import { RegistrationStatus } from '../../../../../../main/webapp/app/shared/user-info/user-info.model';
 
 describe('CurrentSelectedCompanyService', () => {
 
@@ -16,7 +17,8 @@ describe('CurrentSelectedCompanyService', () => {
         lastName: 'last name',
         email: 'email',
         langKey: 'lang',
-        authorities: []
+        authorities: [],
+        registrationStatus: RegistrationStatus.UNREGISTERED
     };
 
     const company = {

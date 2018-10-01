@@ -231,6 +231,14 @@
                                 {{currentUser?.firstName}} {{currentUser?.lastName}}
                             </strong>
                             <ul>
+                                <li class="nav-item" *ngIf="hasNotCompletedRegistration()">
+                                    <a routerLinkActive="active"
+                                       (click)="goToFinishRegistration();">
+                                        <span class="fa fa-exclamation-triangle"
+                                              aria-hidden="true"></span>
+                                        <span jhiTranslate="global.menu.account.registration.incomplete">REGISTRATION NOT COMPLETE</span>
+                                    </a>
+                                </li>
                                 <li class="nav-item">
                                     <a routerLink="settings"
                                        routerLinkActive="active"
@@ -252,13 +260,13 @@
                                         <span jhiTranslate="global.menu.dashboard">Dashboard</span>
                                     </a>
                                 </li>
-                                <li>
-                                    <a class="nav-item"
-                                       *jhiHasAnyAuthority="['ROLE_PRIVATE_EMPLOYMENT_AGENT', 'ROLE_COMPANY']"
+                                <li class="nav-item">
+                                    <a *jhiHasAnyAuthority="['ROLE_PRIVATE_EMPLOYMENT_AGENT', 'ROLE_COMPANY']"
                                        routerLink="contact-template-management"
                                        routerLinkActive="active"
                                        (click)="collapseNavbar()">
-                                        <span jhiTranslate="global.menu.company-contact-template">Kontaktangaben</span>
+                                        <span
+                                            jhiTranslate="global.menu.company-contact-template">Kontaktangaben</span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
@@ -500,13 +508,25 @@
                 </li>
                 <li ngbDropdown class="nav-item d-none d-sm-block dropdown"
                     *ngIf="isAuthenticated()">
+
                     <a ngbDropdownToggle
-                       class="nav-link nav-link--account dropdown-toggle"
+                       class="nav-link dropdown-toggle"
+                       [class.nav-link--account-warning]="hasNotCompletedRegistration()"
+                       [class.nav-link--account]="!hasNotCompletedRegistration()"
                        href="javascript:void(0);">
-                        {{currentUser?.firstName}} {{currentUser?.lastName}}
+                        <span *ngIf="hasNotCompletedRegistration()" class="fa fa-exclamation-triangle"
+                              aria-hidden="true"></span>
+                        <span>{{currentUser?.firstName}} {{currentUser?.lastName}}</span>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-right dropdown-menu--account"
                         ngbDropdownMenu>
+                        <li *ngIf="hasNotCompletedRegistration()">
+                            <a class="dropdown-item dropdown-item--account-warning"
+                               routerLinkActive="active"
+                               (click)="goToFinishRegistration();">
+                                <strong jhiTranslate="global.menu.account.registration.incomplete">REGISTRATION NOT COMPLETE</strong>
+                            </a>
+                        </li>
                         <li>
                             <a class="dropdown-item dropdown-item--account"
                                routerLinkActive="active"

@@ -3,9 +3,6 @@ package ch.admin.seco.jobroom.web.rest;
 import static ch.admin.seco.jobroom.security.jwt.JWTConfigurer.TokenResolver.AUTHORIZATION_HEADER;
 import static ch.admin.seco.jobroom.security.jwt.JWTConfigurer.TokenResolver.TOKEN_PREFIX;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import com.codahale.metrics.annotation.Timed;
 
 import org.springframework.http.ResponseEntity;
@@ -17,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ch.admin.seco.jobroom.security.UserPrincipal;
 import ch.admin.seco.jobroom.security.jwt.TokenProvider;
 import ch.admin.seco.jobroom.service.CurrentUserService;
+import ch.admin.seco.jobroom.service.dto.CurrentUserDTO;
 
 /**
  * REST controller for managing the current user's account.
@@ -48,64 +46,4 @@ public class CurrentUserResource {
             .body(currentUserDTO);
     }
 
-    public static class CurrentUserDTO {
-
-        private String id;
-
-        private String login;
-
-        private String firstName;
-
-        private String lastName;
-
-        private String email;
-
-        private String langKey;
-
-        private Set<String> authorities = new HashSet<>();
-
-        CurrentUserDTO(String id,
-            String login,
-            String firstName,
-            String lastName,
-            String email,
-            String langKey,
-            Set<String> authorities) {
-            this.id = id;
-            this.login = login;
-            this.firstName = firstName;
-            this.lastName = lastName;
-            this.email = email;
-            this.langKey = langKey;
-            this.authorities.addAll(authorities);
-        }
-
-        public String getId() {
-            return id;
-        }
-
-        public String getLogin() {
-            return login;
-        }
-
-        public String getFirstName() {
-            return firstName;
-        }
-
-        public String getLastName() {
-            return lastName;
-        }
-
-        public String getEmail() {
-            return email;
-        }
-
-        public String getLangKey() {
-            return langKey;
-        }
-
-        public Set<String> getAuthorities() {
-            return authorities;
-        }
-    }
 }

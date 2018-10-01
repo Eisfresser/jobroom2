@@ -51,9 +51,9 @@
                     <dl>
                         <dt>{{ 'user-info.label.registration-status' | translate }}</dt>
                         <dd class="badge"
-                            [class.badge-danger]="selectedUserInfo.registrationStatus === 'UNREGISTERED'"
-                            [class.badge-warning]="selectedUserInfo.registrationStatus === 'VALIDATION_PAV' || selectedUserInfo.registrationStatus === 'VALIDATION_EMP'"
-                            [class.badge-success]="selectedUserInfo.registrationStatus === 'REGISTERED'"
+                            [class.badge-danger]="isRegistrationStatusUnregistered()"
+                            [class.badge-warning]="isRegistrationStatusValidationPAVorEMP()"
+                            [class.badge-success]="isRegistrationStatusRegistered()"
                         >{{selectedUserInfo.registrationStatus}}
                         </dd>
 

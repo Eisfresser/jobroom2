@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRouteSnapshot, NavigationEnd } from '@angular/router';
+import { ActivatedRouteSnapshot, NavigationEnd, Router } from '@angular/router';
 
-import { JhiLanguageHelper } from '../../shared';
-import { GetActiveSystemNotificationsAction, HomeState } from '../../home/state-management';
+import { JhiLanguageHelper, Principal } from '../../shared';
+import {
+    GetActiveSystemNotificationsAction,
+    HomeState
+} from '../../home/state-management';
 import { Store } from '@ngrx/store';
 
 @Component({
@@ -13,9 +16,11 @@ export class JhiMainComponent implements OnInit {
 
     constructor(
         private jhiLanguageHelper: JhiLanguageHelper,
+        private principal: Principal,
         private router: Router,
         private store: Store<HomeState>,
-    ) {}
+    ) {
+    }
 
     private getPageTitle(routeSnapshot: ActivatedRouteSnapshot) {
         let title: string = (routeSnapshot.data && routeSnapshot.data['pageTitle']) ? routeSnapshot.data['pageTitle'] : 'jobroomApp';
@@ -27,6 +32,8 @@ export class JhiMainComponent implements OnInit {
 
     ngOnInit() {
         this.store.dispatch(new GetActiveSystemNotificationsAction());
+
+        this.principal.identity();
 
         this.router.events.subscribe((event) => {
             if (event instanceof NavigationEnd) {
