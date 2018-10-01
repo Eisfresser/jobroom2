@@ -69,7 +69,7 @@
             </ngb-alert>
 
             <!-- Job details -->
-            <div class="job-detail__title">
+            <div class="detail__title">
                 <h2 class="text--light" [innerHTML]="jobDescription.title | safeHtml"></h2>
                 <h4 class="text--light" *ngIf="jobAdvertisement.status">
                     {{ 'job-publication-details.status' | translate }}: {{'global.job-publication.status.' + jobAdvertisement.status | translate }}
@@ -77,6 +77,9 @@
                 <strong>{{ jobAdvertisement.jobContent.company.name }}</strong>
                 <small *ngIf="jobAdvertisement.publication.startDate" class="job-detail__date">
                     {{ 'job-publication-details.startDate' | translate }} {{ jobAdvertisement.publication.startDate | jr2Date }}
+                </small>
+                <small class="detail__date" *ngIf="jobAdvertisement.jobContent.numberOfJobs">
+                    {{'jobroomApp.job.numberOfJobs' | translate}}: {{ jobAdvertisement.jobContent.numberOfJobs }}
                 </small>
             </div>
             <p></p>
