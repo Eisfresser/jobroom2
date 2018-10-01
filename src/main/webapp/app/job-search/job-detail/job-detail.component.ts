@@ -2,7 +2,7 @@ import {
     AfterViewInit,
     Component,
     ElementRef,
-    HostListener,
+    HostListener, OnInit,
     ViewChild
 } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
@@ -17,7 +17,7 @@ import { Store } from '@ngrx/store';
 import { TOOLTIP_AUTO_HIDE_TIMEOUT } from '../../app.constants';
 import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import {
-    JobAdvertisement,
+    JobAdvertisement, JobAdvertisementStatus,
     JobDescription,
     SourceSystem
 } from '../../shared/job-advertisement/job-advertisement.model';
@@ -31,13 +31,14 @@ import { CoreState, getLanguage } from '../../shared/state-management/state/core
         './job-detail.scss'
     ]
 })
-export class JobDetailComponent implements AfterViewInit {
+export class JobDetailComponent implements AfterViewInit, OnInit {
     job$: Observable<JobAdvertisement>;
     jobDescription$: Observable<JobDescription>;
     jobList$: Observable<JobAdvertisement[]>;
     jobCenter$: Observable<JobCenter>;
     jobListTotalSize$: Observable<number>;
     externalJobDisclaimerClosed = false;
+    jobAdDeactivated = false;
 
     @ViewChild('copyToClipboard')
     copyToClipboardElementRef: ElementRef;
@@ -48,19 +49,32 @@ export class JobDetailComponent implements AfterViewInit {
     constructor(private referenceService: ReferenceService,
                 private store: Store<JobSearchState>,
                 private coreStore: Store<CoreState>) {
+    }
+
+    ngOnInit(): void {
         this.job$ = this.store.select(getSelectedJob)
-            .map(this.fixApplicationUrl);
+            .map(this.fixApplicationUrl)
+            .do((job: JobAdvertisement) => {
+                this.jobAdDeactivated = this.isDeactivated(job.status);
+            });
         this.jobList$ = this.store.select(getJobList);
+
         this.jobListTotalSize$ = this.store.select(getTotalJobCount);
+
         this.jobCenter$ = this.job$
             .filter((job) => !!job)
             .map((job) => job.jobCenterCode)
             .filter((jobCenterCode) => !!jobCenterCode)
             .switchMap((jobCenterCode) => this.referenceService.resolveJobCenter(jobCenterCode));
 
-        this.jobDescription$ = coreStore.select(getLanguage)
+        this.jobDescription$ = this.coreStore.select(getLanguage)
             .combineLatest(this.job$)
             .map(([lang, job]: [string, JobAdvertisement]) => JobAdvertisementUtils.getJobDescription(job, lang));
+
+    }
+
+    private isDeactivated(jobAdvertisementStatus: JobAdvertisementStatus): boolean {
+        return jobAdvertisementStatus.toString() === 'CANCELLED' || jobAdvertisementStatus.toString() === 'ARCHIVED';
     }
 
     private fixApplicationUrl(jobAdvertisement: JobAdvertisement) {
@@ -106,4 +120,5 @@ export class JobDetailComponent implements AfterViewInit {
             this.clipboardTooltip.close();
         }
     }
+
 }

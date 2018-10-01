@@ -31,7 +31,8 @@
         "startsImmediately": "Stellenantritt",
         "startsImmediately.false": "Nach Vereinbarung",
         "startsImmediately.true": "Ab Sofort",
-        "title": "Stellenbeschreibung"
+        "title": "Stellenbeschreibung",
+        "deactivated": "Der Link zum Stelleninserat ist mittlerweile nicht mehr aktiv."
     },
     "job-fingerprint-redirect": {
         "not-found": "Job not found"

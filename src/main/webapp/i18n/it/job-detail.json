@@ -31,7 +31,8 @@
         "startsImmediately": "Entrata in funzione",
         "startsImmediately.false": "Previo accordo",
         "startsImmediately.true": "Da subito",
-        "title": "Dettagli sul posto"
+        "title": "Dettagli sul posto",
+        "deactivated": "Il collegamento all'annuncio di lavoro non \u00e8 pi\u00f9 attivo."
     },
     "job-fingerprint-redirect": {
         "not-found": "Job not found"
