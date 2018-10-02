@@ -34,6 +34,7 @@ export enum Salutation {
 }
 
 export enum WorkExperience {
+    NO_EXPERIENCE,
     LESS_THAN_1_YEAR,
     MORE_THAN_1_YEAR,
     MORE_THAN_3_YEARS
