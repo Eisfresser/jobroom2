@@ -39,6 +39,15 @@ Add the `help` flag on any command to see how you can use it. For example, `yarn
 
 The `yarn run` command will list all of the scripts available to run for this project.
 
+### Populating the database with users
+The file `src/sql-create-users/jobroom_public_all-tables_insert.sql` has the SQL INSERT scripts that populate the dababase with user with different roles. 
+* pav for the confirmed PAV
+* stes for the confirmed job seeker
+* company for the confirmed company
+
+Password for all users: admin
+
+
 ### Service workers
 
 Service workers are commented by default, to enable them please uncomment the following code.
