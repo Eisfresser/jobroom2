@@ -4,9 +4,9 @@ import { Injector, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { EffectsModule } from '@ngrx/effects';
 import { RouterStateSerializer, StoreRouterConnectingModule } from '@ngrx/router-store';
-import { StoreModule } from '@ngrx/store';
+import { Store, StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { TranslateLoader } from '@ngx-translate/core';
+import { TranslateLoader, TranslateService } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { JhiEventManager } from 'ng-jhipster';
 import { JhiBase64Service } from 'ng-jhipster/src/service/base64.service';
@@ -47,11 +47,12 @@ import {
     VersionService
 } from './layouts';
 
-import { JobroomSharedModule, UserRouteAccessService } from './shared';
+import { JobroomSharedModule, Principal, UserRouteAccessService } from './shared';
 import { CustomRouterStateSerializer, } from './shared/custom-router-state-serializer/custom-router-state-serializer';
 import { reducers } from './shared/state-management/reducers/core.reducers';
 import './vendor.ts';
 import { XmlhttprequestInterceptor } from './blocks/interceptor/xmlhttprequest.interceptor';
+import { TooManyRequestsInterceptor } from './blocks/interceptor/too-many-requests.interceptor';
 
 // jhipster-needle-angular-add-module-import JHipster will add new module here
 
@@ -153,6 +154,16 @@ if (DEBUG_INFO_ENABLED) {
             deps: [
                 CookieService,
                 JhiBase64Service
+            ]
+        },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: TooManyRequestsInterceptor,
+            multi: true,
+            deps: [
+                Store,
+                Principal,
+                TranslateService
             ]
         }
     ],

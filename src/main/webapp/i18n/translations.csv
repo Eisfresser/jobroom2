@@ -663,6 +663,8 @@ global,header.title,Arbeitslosenversicherung ALV,Unemployment insurance,Assuranc
 global,navigation.next,Weiter,Next,Suivant,Seguente
 global,navigation.previous,Zurück,Previous,Précédent,Precedente
 global,navigation.scroll-to-top,Nach oben scrollen,Scroll to top,Défiler vers le haut,Scorrere in cima
+global,alert.error.tooManyRequests.authenticated,"There were to many requests from your account. Please wait 1 minute","There were to many requests from your account. Please wait 1 minute","There were to many requests from your account. Please wait 1 minute","There were to many requests from your account. Please wait 1 minute"
+global,alert.error.tooManyRequests.anonymous,"There were to many requests from your ip. Please wait 1 minute","There were to many requests from your ip. Please wait 1 minute","There were to many requests from your ip. Please wait 1 minute","There were to many requests from your ip. Please wait 1 minute"
 health,health.details.details,Details,Details,Détails,Dettagli
 health,health.details.error,Fehler,Error,Erreur,Errore
 health,health.details.name,Name,Name,Nom,Cognome

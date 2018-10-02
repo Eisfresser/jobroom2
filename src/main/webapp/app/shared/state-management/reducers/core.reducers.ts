@@ -1,5 +1,12 @@
 import { initialState } from '../state/core.state';
-import { Actions, INIT_LANGUAGE, LANGUAGE_CHANGED, USER_LOGIN } from '../actions/core.actions';
+import {
+    Actions,
+    HIDE_ALERT,
+    INIT_LANGUAGE,
+    LANGUAGE_CHANGED,
+    SHOW_ALERT,
+    USER_LOGIN
+} from '../actions/core.actions';
 import { ActionReducerMap } from '@ngrx/store';
 import { routerReducer, RouterReducerState } from '@ngrx/router-store';
 import { RouterStateUrl } from '../../custom-router-state-serializer/custom-router-state-serializer';
@@ -16,6 +23,15 @@ export function coreReducer(state = initialState, action: Actions) {
             break;
         case USER_LOGIN:
             newState = Object.assign({}, state, { currentUser: action.payload });
+            break;
+        case SHOW_ALERT:
+            newState = state.alerts.findIndex((alert) => alert.equals(action.payload)) < 0
+                ? Object.assign({}, state, { alerts: [...state.alerts, action.payload] })
+                : state;
+            break;
+        case HIDE_ALERT:
+            const alerts = state.alerts.filter((alert) => !alert.equals(action.payload));
+            newState = Object.assign({}, state, { alerts });
             break;
 
         default:

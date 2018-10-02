@@ -504,5 +504,13 @@
         "next": "Suivant",
         "previous": "Pr\u00e9c\u00e9dent",
         "scroll-to-top": "D\u00e9filer vers le haut"
+    },
+    "alert": {
+        "error": {
+            "tooManyRequests": {
+                "authenticated": "There were to many requests from your account. Please wait 1 minute",
+                "anonymous": "There were to many requests from your ip. Please wait 1 minute"
+            }
+        }
     }
 }

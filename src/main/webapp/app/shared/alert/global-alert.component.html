@@ -1,0 +1,7 @@
+<div *ngIf='(alerts$ | async) as alerts' class="global-alert">
+    <div *ngFor='let alert of alerts'>
+        <ngb-alert [type]='alert.type' (close)='dismissAlert(alert)'>
+            <pre [innerHTML]='alert.message'></pre>
+        </ngb-alert>
+    </div>
+</div>

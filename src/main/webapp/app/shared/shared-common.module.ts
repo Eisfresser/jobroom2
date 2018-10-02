@@ -24,6 +24,7 @@ import {
 import { WorkingTimeRangePipe } from './pipes/working-time-range.pipe';
 import { KeysPipe } from './pipes/enum-keys.pipe';
 import { InputErrorMessageComponent } from './input-components/input-error-message/input-error-message.component';
+import { GlobalAlertComponent } from './alert/global-alert.component';
 
 @NgModule({
     imports: [
@@ -41,7 +42,8 @@ import { InputErrorMessageComponent } from './input-components/input-error-messa
         LanguageFilterComponent,
         SearchButtonComponent,
         WorkingTimeRangePipe,
-        InputErrorMessageComponent
+        InputErrorMessageComponent,
+        GlobalAlertComponent
     ],
     providers: [
         JhiLanguageHelper,
@@ -66,7 +68,8 @@ import { InputErrorMessageComponent } from './input-components/input-error-messa
         SearchButtonComponent,
         KeysPipe,
         WorkingTimeRangePipe,
-        InputErrorMessageComponent
+        InputErrorMessageComponent,
+        GlobalAlertComponent
     ]
 })
 export class JobroomSharedCommonModule {
