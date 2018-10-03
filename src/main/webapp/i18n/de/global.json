@@ -508,8 +508,8 @@
     "alert": {
         "error": {
             "tooManyRequests": {
-                "authenticated": "There were to many requests from your account. Please wait 1 minute",
-                "anonymous": "There were to many requests from your ip. Please wait 1 minute"
+                "authenticated": "Von Ihrem Account aus wurden zu viele Anfragen gesendet. Bitte warten Sie eine Minute.",
+                "anonymous": "Von Ihrer IP-Adresse wurden zu viele Anfragen gesendet. Bitte warten Sie eine Minute."
             }
         }
     }
