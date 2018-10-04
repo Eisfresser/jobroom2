@@ -24,7 +24,7 @@ task copyArtifacts {
             commandLine 'mvn', '-q', 'dependency:get', '-DrepoUrl=https://alvch.jfrog.io/alvch/libs-snapshots-local/', '-Dartifact=ch.admin.seco.service.reference:referenceservice:LATEST:jar', '-Dtransitive=false', "-Ddest=${buildDir}/docker/dockerfiles/referenceservice/referenceservice.jar"
         }
         exec {
-            commandLine 'mvn', '-q', 'dependency:get', '-DrepoUrl=https://alvch.jfrog.io/alvch/libs-snapshots-local/', '-Dartifact=ch.admin.seco.service.candidate:candidateservice:LATEST:jar', '-Dtransitive=false', "-Ddest=${buildDir}/docker/dockerfiles/candidateservice/candidateservice.jar"
+            commandLine 'mvn', '-q', 'dependency:get', '-DrepoUrl=https://alvch.jfrog.io/alvch/libs-snapshots-local/', '-Dartifact=ch.admin.seco.service.candidate:candidate-app:LATEST:jar', '-Dtransitive=false', "-Ddest=${buildDir}/docker/dockerfiles/candidateservice/candidateservice.jar"
         }
         exec {
             commandLine 'mvn', '-q', 'dependency:get', '-DrepoUrl=https://alvch.jfrog.io/alvch/libs-snapshots-local/', '-Dartifact=ch.admin.seco.jobroom.integration:jobroom_batch:LATEST:jar', '-Dtransitive=false', "-Ddest=${buildDir}/docker/dockerfiles/jobroom_batch/jobroom_batch.jar"
