@@ -34,7 +34,10 @@ export class RegistrationDialogService {
             backdrop: 'static'
         });
         return modalRef.result.then(() => {
-            this.router.navigate(['/home']);
+            this.principal.identity(true)
+                .then((result) => {
+                    this.router.navigate(['/home']);
+                });
         }, () => {});
     }
 
@@ -44,7 +47,10 @@ export class RegistrationDialogService {
             backdrop: 'static'
         });
         return modalRef.result.then(() => {
-            this.router.navigate(['/home']);
+            this.principal.identity(true)
+                .then((result) => {
+                    this.router.navigate(['/home']);
+                });
         }, () => {});
     }
 
