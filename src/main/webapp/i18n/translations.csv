@@ -371,15 +371,15 @@ global,global.form.username.placeholder,Ihr Benutzername,Your username,Votre nom
 global,global.gender.FEMALE,weiblich,Female,féminin,femmina
 global,global.gender.MALE,männlich,Male,masculin,maschio
 global,global.item-count,Ergebnis {{first}} - {{second}} von {{total}} Elemente.,Showing {{first}} - {{second}} of {{total}} items.,Affichage {{first}} - {{second}} de {{total}} éléments.,Mostra {{first}} - {{second}} di {{total}} articoli.
-global,global.job-publication.status.APPROVED,Approved,Approved,Approved,Approved
-global,global.job-publication.status.ARCHIVE,Archive,Archive,Archive,Archive
-global,global.job-publication.status.CANCELLED,Canceled,Canceled,Canceled,Canceled
-global,global.job-publication.status.CREATED,Created,Created,Created,Created
-global,global.job-publication.status.INSPECTING,Inspecting,Inspecting,Inspecting,Inspecting
-global,global.job-publication.status.PUBLISHED_PUBLIC,Published public,Published public,Published public,Published public
-global,global.job-publication.status.PUBLISHED_RESTRICTED,Published restricted,Published restricted,Published restricted,Published restricted
-global,global.job-publication.status.REFINING,Refining,Refining,Refining,Refining
-global,global.job-publication.status.REJECTED,Rejected,Rejected,Rejected,Rejected
+global,global.job-publication.status.APPROVED,Genehmigt,Approved,Approuvé,Approvato
+global,global.job-publication.status.ARCHIVED,Archiviert,Archived,Archivé,Archiviato
+global,global.job-publication.status.CANCELLED,Abgemeldet,Canceled,Retiré,Cancellato
+global,global.job-publication.status.CREATED,Erstellt,Created,Créé,Creato
+global,global.job-publication.status.INSPECTING,In Prüfung,Pending verification,En examen,Controllo in corso
+global,global.job-publication.status.PUBLISHED_PUBLIC,Öffentlich publiziert,Public posting,Publié pour le public,Pubblicazione aperta
+global,global.job-publication.status.PUBLISHED_RESTRICTED,Eingeschränkt publiziert,Restricted posting,Publié dans l'espace réservé,Pubblicazione ristretta
+global,global.job-publication.status.REFINING,Wird überarbeitet,In revision,En révision,Revisione in corso
+global,global.job-publication.status.REJECTED,Zurückgewiesen,Rejected,Rejeté,Respinto
 global,global.menu.account.login,Login,Login,Login,Login
 global,global.menu.account.logout,Abmelden,Sign out,Déconnexion,Esci
 global,global.menu.account.main,Zugang,Account,Compte,Utente

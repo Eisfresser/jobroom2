@@ -159,13 +159,13 @@
         "job-publication": {
             "status": {
                 "APPROVED": "Approved",
-                "ARCHIVE": "Archive",
+                "ARCHIVED": "Archived",
                 "CANCELLED": "Canceled",
                 "CREATED": "Created",
-                "INSPECTING": "Inspecting",
-                "PUBLISHED_PUBLIC": "Published public",
-                "PUBLISHED_RESTRICTED": "Published restricted",
-                "REFINING": "Refining",
+                "INSPECTING": "Pending verification",
+                "PUBLISHED_PUBLIC": "Public posting",
+                "PUBLISHED_RESTRICTED": "Restricted posting",
+                "REFINING": "In revision",
                 "REJECTED": "Rejected"
             }
         },

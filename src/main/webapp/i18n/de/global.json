@@ -158,15 +158,15 @@
         "item-count": "Ergebnis {{first}} - {{second}} von {{total}} Elemente.",
         "job-publication": {
             "status": {
-                "APPROVED": "Approved",
-                "ARCHIVE": "Archive",
-                "CANCELLED": "Canceled",
-                "CREATED": "Created",
-                "INSPECTING": "Inspecting",
-                "PUBLISHED_PUBLIC": "Published public",
-                "PUBLISHED_RESTRICTED": "Published restricted",
-                "REFINING": "Refining",
-                "REJECTED": "Rejected"
+                "APPROVED": "Genehmigt",
+                "ARCHIVED": "Archiviert",
+                "CANCELLED": "Abgemeldet",
+                "CREATED": "Erstellt",
+                "INSPECTING": "In Pr\u00fcfung",
+                "PUBLISHED_PUBLIC": "\u00d6ffentlich publiziert",
+                "PUBLISHED_RESTRICTED": "Eingeschr\u00e4nkt publiziert",
+                "REFINING": "Wird \u00fcberarbeitet",
+                "REJECTED": "Zur\u00fcckgewiesen"
             }
         },
         "menu": {
