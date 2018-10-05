@@ -96,10 +96,12 @@ export class CandidateDetailComponent implements OnInit {
             .map((candidateProfile) => candidateProfile.jobCenterCode)
             .flatMap((jobCenterCode) => jobCenterCode
                 ? this.referenceService.resolveJobCenter(jobCenterCode)
-                : Observable.empty());
+                    .catch(() => Observable.of(null as JobCenter))
+                : Observable.of(null as JobCenter));
 
         this.candidateProtectedData$ = this.candidateProfile$
-            .flatMap((candidateProfile) => this.candidateService.findCandidate(candidateProfile));
+            .flatMap((candidateProfile) => this.candidateService.findCandidate(candidateProfile)
+                .catch(() => Observable.of(null as Candidate)));
 
         this.candidateProfiles$ = this.store.select(getCandidateProfileList);
         this.candidateProfileListTotalSize$ = this.store.select(getTotalCandidateCount);
