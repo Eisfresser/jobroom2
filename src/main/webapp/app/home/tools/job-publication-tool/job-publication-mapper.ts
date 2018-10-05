@@ -221,15 +221,13 @@ export class JobPublicationMapper {
             languageIsoCode: jobPublicationForm.contact.language
         };
 
-        if (!JobPublicationMapper.allFieldsSet(jobPublicationForm.publicContact)) {
-            jobAd.publicContact = {
-                salutation: <Salutation>Salutation[jobPublicationForm.publicContact.salutation],
-                firstName: jobPublicationForm.publicContact.firstName,
-                lastName: jobPublicationForm.publicContact.lastName,
-                phone: jobPublicationForm.publicContact.phoneNumber,
-                email: jobPublicationForm.publicContact.email
-            };
-        }
+        jobAd.publicContact = {
+            salutation: <Salutation>Salutation[jobPublicationForm.publicContact.salutation],
+            firstName: jobPublicationForm.publicContact.firstName,
+            lastName: jobPublicationForm.publicContact.lastName,
+            phone: jobPublicationForm.publicContact.phoneNumber,
+            email: jobPublicationForm.publicContact.email
+        };
 
         if (JobPublicationMapper.anyFieldSet(jobPublicationForm.application)) {
             jobAd.applyChannel = {
@@ -249,11 +247,6 @@ export class JobPublicationMapper {
         };
 
         return jobAd;
-    }
-
-    private static allFieldsSet(obj: any): boolean {
-        return Object.keys(obj)
-            .some((key) => !obj[key]);
     }
 
     private static anyFieldSet(obj: any): boolean {

@@ -37,8 +37,8 @@ export class JobDetailComponent implements AfterViewInit, OnInit {
     jobList$: Observable<JobAdvertisement[]>;
     jobCenter$: Observable<JobCenter>;
     jobListTotalSize$: Observable<number>;
-    externalJobDisclaimerClosed = false;
-    jobAdDeactivated = false;
+    showJobAdExternalMessage = false;
+    showJobAdDeactivatedMessage = false;
 
     @ViewChild('copyToClipboard')
     copyToClipboardElementRef: ElementRef;
@@ -55,7 +55,8 @@ export class JobDetailComponent implements AfterViewInit, OnInit {
         this.job$ = this.store.select(getSelectedJob)
             .map(this.fixApplicationUrl)
             .do((job: JobAdvertisement) => {
-                this.jobAdDeactivated = this.isDeactivated(job.status);
+                this.showJobAdDeactivatedMessage = this.isDeactivated(job.status);
+                this.showJobAdExternalMessage = this.isExternal(job.sourceSystem);
             });
         this.jobList$ = this.store.select(getJobList);
 
@@ -77,6 +78,10 @@ export class JobDetailComponent implements AfterViewInit, OnInit {
         return jobAdvertisementStatus.toString() === 'CANCELLED' || jobAdvertisementStatus.toString() === 'ARCHIVED';
     }
 
+    private isExternal(sourceSystem: SourceSystem) {
+        return sourceSystem.toString() === 'EXTERN';
+    }
+
     private fixApplicationUrl(jobAdvertisement: JobAdvertisement) {
         const applyChannel = jobAdvertisement.jobContent.applyChannel;
         if (applyChannel && applyChannel.formUrl) {
@@ -87,10 +92,6 @@ export class JobDetailComponent implements AfterViewInit, OnInit {
             }
         }
         return jobAdvertisement;
-    }
-
-    isExternalJobDisclaimerShown(job: JobAdvertisement) {
-        return job.sourceSystem.toString() === SourceSystem[SourceSystem.EXTERN] && !this.externalJobDisclaimerClosed;
     }
 
     ngAfterViewInit(): void {
@@ -120,5 +121,4 @@ export class JobDetailComponent implements AfterViewInit, OnInit {
             this.clipboardTooltip.close();
         }
     }
-
 }

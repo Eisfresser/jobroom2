@@ -74,15 +74,15 @@
         </div>
 
         <div *ngIf="jobDescription$ | async as jobDescription" class="col-12 col-md-8 order-3 base__content">
-            <ngb-alert *ngIf="isExternalJobDisclaimerShown(job)" [type]="'info'" (close)="externalJobDisclaimerClosed = true"
+            <ngb-alert *ngIf="showJobAdExternalMessage" type="info" (close)="showJobAdExternalMessage = false"
                        class="d-print-none">
                 {{'job-detail.external-job-disclaimer' | translate}}
             </ngb-alert>
+            <ngb-alert  type="warning" *ngIf="showJobAdDeactivatedMessage" (close)="showJobAdDeactivatedMessage = false">
+                {{'job-detail.deactivated' | translate}}
+            </ngb-alert>
             <div class="detail__title">
                 <h2 class="text--light" [innerHTML]="jobDescription.title | safeHtml"></h2>
-                <ngb-alert  type="warning" *ngIf="jobAdDeactivated">
-                    {{'job-detail.deactivated' | translate}}
-                </ngb-alert>
                 <span class="text--primary-color" *ngIf="job.jobContent.company; else ravLabel">{{job.jobContent.company.name}}</span>
                 <ng-template #ravLabel>
                     <span class="text--primary-color" >{{ 'jobroomApp.job.rav' | translate }}</span>
