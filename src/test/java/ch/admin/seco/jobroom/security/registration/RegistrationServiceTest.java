@@ -169,7 +169,7 @@ public class RegistrationServiceTest {
     }
 
     @Test
-    public void insertNewAgent() throws UidCompanyNotFoundException, AvgNotFoundException {
+    public void insertNewAgent() throws AvgNotFoundException {
         // userInfoRepository does nothing (no exception means it is ok -> new user)
         when(mockOrganizationRepository.findByExternalId(anyString())).thenReturn(getDummyOrganization());  // found company in AVG list
         when(mockCompanyRepository.findByExternalId(any())).thenReturn(Optional.empty());   // company not found in database -> new company

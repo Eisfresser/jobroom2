@@ -24,6 +24,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
+import ch.admin.seco.jobroom.domain.BlacklistedAgent;
 import ch.admin.seco.jobroom.domain.User;
 import ch.admin.seco.jobroom.domain.UserInfo;
 import ch.admin.seco.jobroom.service.dto.AnonymousContactMessageDTO;
@@ -109,11 +110,24 @@ public class MailService {
 
     public void sendStesUnregisteringMail(String stesEmail, String recipient) {
         log.debug("Send an email for unregister a candidate with email {} to {} ", stesEmail, recipient);
-        Locale locale = LocaleContextHolder.getLocale();
+        Locale locale = Locale.forLanguageTag("de");
         Context context = new Context(locale);
         context.setVariable("candidateEmail", stesEmail);
         String content = templateEngine.process("mails/unregisterCandidateEmail", context);
         String subject = messageSource.getMessage("email.unregisterCandidateEmail.mail-subject", null, locale);
+        sendEmail(recipient, subject, content, false, true);
+    }
+
+    void sendBlacklistedAgentRequestedAccessCodeMail(String recipient, UserInfo userInfo, BlacklistedAgent agent) {
+        log.debug("Send an email to the servicedesk {} about blacklisted agent requested access code", recipient);
+        Locale locale = LocaleContextHolder.getLocale();
+        Context context = new Context(locale);
+        context.setVariable("userFirstName", userInfo.getFirstName());
+        context.setVariable("userLastName", userInfo.getLastName());
+        context.setVariable("userEmail", userInfo.getEmail());
+        context.setVariable("agentName", agent);
+        String content = templateEngine.process("mails/blacklistedAgentEmail", context);
+        String subject = messageSource.getMessage("email.blacklistedAgent.access-code.mail-subject", null, locale);
         sendEmail(recipient, subject, content, false, true);
     }
 

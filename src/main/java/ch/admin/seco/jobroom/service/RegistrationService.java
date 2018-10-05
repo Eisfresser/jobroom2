@@ -14,12 +14,14 @@ import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
 import ch.admin.seco.jobroom.config.Constants;
+import ch.admin.seco.jobroom.domain.BlacklistedAgent;
 import ch.admin.seco.jobroom.domain.Company;
 import ch.admin.seco.jobroom.domain.Organization;
 import ch.admin.seco.jobroom.domain.UserInfo;
 import ch.admin.seco.jobroom.domain.UserInfoId;
 import ch.admin.seco.jobroom.domain.enumeration.CompanySource;
 import ch.admin.seco.jobroom.domain.enumeration.RegistrationStatus;
+import ch.admin.seco.jobroom.repository.BlacklistedAgentRepository;
 import ch.admin.seco.jobroom.repository.CompanyRepository;
 import ch.admin.seco.jobroom.repository.OrganizationRepository;
 import ch.admin.seco.jobroom.repository.UserInfoRepository;
@@ -64,7 +66,9 @@ public class RegistrationService {
 
     private String accessCodeMailRecipient;
 
-    public RegistrationService(UserInfoRepository userInfoRepository, CompanyRepository companyRepository, OrganizationRepository organizationRepository, UserRepository userRepository, MailService mailService, UidClient uidClient, EiamAdminService eiamAdminService, CandidateService candidateService, CurrentUserService currentUserService) {
+    private final BlacklistedAgentRepository blacklistedAgentRepository;
+
+    public RegistrationService(UserInfoRepository userInfoRepository, CompanyRepository companyRepository, OrganizationRepository organizationRepository, UserRepository userRepository, MailService mailService, UidClient uidClient, EiamAdminService eiamAdminService, CandidateService candidateService, CurrentUserService currentUserService, BlacklistedAgentRepository blacklistedAgentRepository) {
         this.userInfoRepository = userInfoRepository;
         this.companyRepository = companyRepository;
         this.organizationRepository = organizationRepository;
@@ -74,6 +78,7 @@ public class RegistrationService {
         this.eiamAdminService = eiamAdminService;
         this.candidateService = candidateService;
         this.currentUserService = currentUserService;
+        this.blacklistedAgentRepository = blacklistedAgentRepository;
     }
 
     public void registerAsJobSeeker(LocalDate birthdate, Long personNumber) throws InvalidPersonenNumberException, StesPersonNumberAlreadyTaken {
@@ -93,8 +98,7 @@ public class RegistrationService {
 
 
     public void requestAccessAsEmployer(Long uid) throws UidCompanyNotFoundException {
-        UserPrincipal userPrincipal = this.currentUserService.getPrincipal();
-        UserInfo userInfo = getUserInfo(userPrincipal.getId());
+        UserInfo userInfo = getCurrentUserInfo();
         FirmData firmData = this.uidClient.getCompanyByUid(uid);
         Company company = storeCompany(firmData);
         userInfo.requestAccessAsEmployer(company);
@@ -102,15 +106,24 @@ public class RegistrationService {
     }
 
     public void requestAccessAsAgent(String avgId) throws AvgNotFoundException {
-        UserPrincipal userPrincipal = this.currentUserService.getPrincipal();
-        UserInfo userInfo = getUserInfo(userPrincipal.getId());
         Optional<Organization> avgOrganization = this.organizationRepository.findByExternalId(avgId);
         if (!avgOrganization.isPresent()) {
             throw new AvgNotFoundException(avgId);
         }
         Company company = storeCompany(avgOrganization.get());
+        UserInfo userInfo = getCurrentUserInfo();
         userInfo.requestAccessAsAgent(company);
-        sendMailForServiceDesk(userInfo);
+        Optional<BlacklistedAgent> blacklistedAgent = blacklistedAgentRepository.findByExternalId(avgId);
+        if (blacklistedAgent.isPresent()) {
+            mailService.sendBlacklistedAgentRequestedAccessCodeMail(accessCodeMailRecipient, userInfo, blacklistedAgent.get());
+        } else {
+            sendMailForServiceDesk(userInfo);
+        }
+    }
+
+    private UserInfo getCurrentUserInfo() {
+        UserPrincipal userPrincipal = this.currentUserService.getPrincipal();
+        return getUserInfo(userPrincipal.getId());
     }
 
     public RegistrationResultDTO registerAsEmployerOrAgent(String accessCode) throws InvalidAccessCodeException {
@@ -281,8 +294,7 @@ public class RegistrationService {
 
     private boolean validateAccessCode(String accessCode) {
         Assert.notNull(accessCode, "An access code must be provided.");
-        UserPrincipal userPrincipal = this.currentUserService.getPrincipal();
-        UserInfo userInfo = getUserInfo(userPrincipal.getId());
+        UserInfo userInfo = getCurrentUserInfo();
         String storedAccessCode = userInfo.getAccessCode();
         if (StringUtils.isEmpty(storedAccessCode)) {
             throw new IllegalArgumentException("User with extId=" + userInfo.getUserExternalId() + " has no access code stored in the database");

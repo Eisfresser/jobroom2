@@ -23,7 +23,9 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.NativeWebRequest;
 
+import ch.admin.seco.jobroom.service.BlacklistedAgentAlreadyExistsException;
 import ch.admin.seco.jobroom.service.CompanyContactTemplateNotFoundException;
+import ch.admin.seco.jobroom.service.OrganizationNotFoundException;
 import ch.admin.seco.jobroom.web.rest.util.HeaderUtil;
 
 /**
@@ -113,6 +115,24 @@ public class ExceptionTranslator implements ProblemHandling {
     public ResponseEntity<Problem> handleCompanyContactTemplateNotFoundException(CompanyContactTemplateNotFoundException ex, NativeWebRequest request) {
         Problem problem = Problem.builder()
             .withStatus(Status.NOT_FOUND)
+            .with("message", ex.getMessage())
+            .build();
+        return create(ex, problem, request);
+    }
+
+    @ExceptionHandler(OrganizationNotFoundException.class)
+    public ResponseEntity<Problem> handleOrganizationNotFoundException(OrganizationNotFoundException ex, NativeWebRequest request) {
+        Problem problem = Problem.builder()
+            .withStatus(Status.NOT_FOUND)
+            .with("message", ex.getMessage())
+            .build();
+        return create(ex, problem, request);
+    }
+
+    @ExceptionHandler(BlacklistedAgentAlreadyExistsException.class)
+    public ResponseEntity<Problem> handleBlacklistedAgentAlreadyExistsException(BlacklistedAgentAlreadyExistsException ex, NativeWebRequest request) {
+        Problem problem = Problem.builder()
+            .withStatus(Status.BAD_REQUEST)
             .with("message", ex.getMessage())
             .build();
         return create(ex, problem, request);
