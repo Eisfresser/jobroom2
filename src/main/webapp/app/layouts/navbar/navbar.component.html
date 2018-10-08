@@ -208,7 +208,7 @@
                             </a>
                         </li>
                         <li class="nav-item" *ngIf="!isAuthenticated() && !noEiam">
-                            <a class="nav-link nav-link--login" [href]="'/samllogin'">
+                            <a class="nav-link nav-link--login" [href]="'/login'">
                                 <span>{{'global.menu.account.login' | translate}}</span>
                             </a>
                         </li>
@@ -490,7 +490,7 @@
                     </a>
                 </li>
                 <li class="nav-item" *ngIf="!isAuthenticated() && !noEiam">
-                    <a class="nav-link" [href]="'/samllogin'">
+                    <a class="nav-link" [href]="'/login'">
                         <span>{{'global.menu.account.login' | translate}}</span>
                     </a>
                 </li>

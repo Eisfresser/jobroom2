@@ -17,6 +17,9 @@ public class RedirectResource {
     @Value("${security.user.profile_url}")
     private String profileURL;
 
+    @Value("${security.user.login_url}")
+    private String loginUrl;
+
     public RedirectResource() {
     }
 
@@ -28,6 +31,16 @@ public class RedirectResource {
     @GetMapping("/profile")
     public String getUserProfileUrl() {
         return REDIRECT_PREFIX + profileURL;
+    }
+
+    @GetMapping("/login")
+    public String getLoginUrl() {
+        return REDIRECT_PREFIX + loginUrl;
+    }
+
+    @GetMapping("/samllogin")
+    public String samlLogin() {
+        return REDIRECT_PREFIX + "/";
     }
 
 }
