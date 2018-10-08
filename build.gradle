@@ -140,7 +140,7 @@ task generateEiamWsClient(type: Exec) {
 apply from: 'gradle/checkstyle.gradle'
 apply from: 'gradle/docker.gradle'
 apply from: 'gradle/docker-compose.gradle'
-apply from: 'gradle/sonar.gradle'
+/*apply from: 'gradle/sonar.gradle'*/
 apply from: 'gradle/liquibase.gradle'
 apply from: 'gradle/mapstruct.gradle'
 apply from: 'gradle/maven-publish.gradle'
