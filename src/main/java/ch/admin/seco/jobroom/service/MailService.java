@@ -125,7 +125,7 @@ public class MailService {
         context.setVariable("userFirstName", userInfo.getFirstName());
         context.setVariable("userLastName", userInfo.getLastName());
         context.setVariable("userEmail", userInfo.getEmail());
-        context.setVariable("agentName", agent);
+        context.setVariable("agentName", agent.getName());
         String content = templateEngine.process("mails/blacklistedAgentEmail", context);
         String subject = messageSource.getMessage("email.blacklistedAgent.access-code.mail-subject", null, locale);
         sendEmail(recipient, subject, content, false, true);
