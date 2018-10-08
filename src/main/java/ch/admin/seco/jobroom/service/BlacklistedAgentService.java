@@ -76,7 +76,8 @@ public class BlacklistedAgentService {
             .setCity(blacklistedAgent.getCity())
             .setCreatedBy(blacklistedAgent.getCreatedBy())
             .setBlacklistingCounter(blacklistedAgent.getBlacklistingCounter())
-            .setStatus(blacklistedAgent.getStatus());
+            .setStatus(blacklistedAgent.getStatus())
+            .setBlacklistedAt(blacklistedAgent.getBlacklistedAt());
     }
 
     private BlacklistedAgent createBlacklistedAgent(OrganizationDTO organizationDTO) {
