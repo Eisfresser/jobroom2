@@ -35,7 +35,7 @@ install:
 - yarn install
 script:
 - yarn test
-- ./gradlew check -x test jacocoTestReport -Pprod
+- ./gradlew check -x test -Pprod
 after_success:
 - bash <(curl -s https://codecov.io/bash)
 before_deploy:
