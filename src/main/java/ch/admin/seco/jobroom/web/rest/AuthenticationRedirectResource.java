@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/api/redirect")
-public class RedirectResource {
+@RequestMapping
+public class AuthenticationRedirectResource {
 
     private static final String REDIRECT_PREFIX = "redirect:";
 
@@ -20,15 +20,15 @@ public class RedirectResource {
     @Value("${security.user.login_url}")
     private String loginUrl;
 
-    public RedirectResource() {
+    public AuthenticationRedirectResource() {
     }
 
-    @GetMapping("/logout")
+    @GetMapping("/authentication/logout")
     public String getUserLogoutUrl() {
         return REDIRECT_PREFIX + logoutURL;
     }
 
-    @GetMapping("/profile")
+    @GetMapping("/authentication/profile")
     public String getUserProfileUrl() {
         return REDIRECT_PREFIX + profileURL;
     }

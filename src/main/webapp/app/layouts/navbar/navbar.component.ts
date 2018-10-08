@@ -103,7 +103,7 @@ export class NavbarComponent implements OnInit {
     logoutEiam() {
         this.collapseNavbar();
         this.loginService.logout();
-        document.location.href = 'api/redirect/logout';
+        document.location.href = 'authentication/logout';
     }
 
     logoutLocal() {
@@ -114,7 +114,7 @@ export class NavbarComponent implements OnInit {
 
     goToEiamProfile() {
         this.collapseNavbar();
-        document.location.href = 'api/redirect/profile';
+        document.location.href = 'authentication/profile';
     }
 
     hasNotCompletedRegistration() {
