@@ -32,7 +32,7 @@
         "startsImmediately.false": "\u00c0 convenir",
         "startsImmediately.true": "Tout de suite",
         "title": "D\u00e9tail de l'emploi",
-        "deactivated": "Le lien vers l'offre d'emploi n'est plus actif."
+        "deactivated": "Cette offre d'emploi n'est plus active."
     },
     "job-fingerprint-redirect": {
         "not-found": "Job not found"
