@@ -53,6 +53,8 @@ export class CandidateDetailComponent implements OnInit {
     private readonly SWISS_CANTONS_NUMBER = 26;
     private readonly ABROAD_CODE = '99';
     private readonly SWISS_CODE = 'CH';
+    private readonly CONTACT_MESSAGE_SUBJECT = 'candidate-detail.candidate-anonymous-contact.subject';
+    private readonly CONTACT_MESSAGE_BODY = 'candidate-detail.candidate-anonymous-contact.body';
 
     candidateProfile$: Observable<CandidateProfile>;
     jobExperiences$: Observable<Array<EnrichedJobExperience>>;
@@ -86,11 +88,7 @@ export class CandidateDetailComponent implements OnInit {
 
     ngOnInit() {
         this.candidateProfile$ = this.store.select(getSelectedCandidateProfile)
-            .filter((candidateProfile) => !!candidateProfile)
-            .map((candidateProfile) => {
-                this.buildEmailContent(candidateProfile);
-                return candidateProfile;
-            });
+            .filter((candidateProfile) => !!candidateProfile);
 
         this.jobCenter$ = this.candidateProfile$
             .map((candidateProfile) => candidateProfile.jobCenterCode)
@@ -140,6 +138,8 @@ export class CandidateDetailComponent implements OnInit {
 
         this.languageSkills$ = this.candidateProfile$
             .map(this.mapLanguages);
+        this.emailContent$ = this.candidateProfile$
+            .flatMap((candidateProfile) => this.buildEmailContent(candidateProfile));
     }
 
     private mapLanguages(candidateProfile: CandidateProfile): LanguageSkill[] {
@@ -206,34 +206,19 @@ export class CandidateDetailComponent implements OnInit {
         return Observable.of([]);
     }
 
-    private buildEmailContent(candidate: CandidateProfile): void {
-        // todo: Clean up this!!!
-        this.emailContent$ = this.candidateService.canSendAnonymousContactEmail(candidate)
-            .filter((canSendEmail) => canSendEmail)
-            .flatMap(() => {
-                const selectedCompanyContactTemplate$ = this.currentSelectedCompanyService.getSelectedCompanyContactTemplate();
-                const translations$ = this.translateService.stream(['candidate-detail.candidate-anonymous-contact.subject', 'candidate-detail.candidate-anonymous-contact.body']);
-                return Observable.combineLatest(selectedCompanyContactTemplate$, translations$)
-                    .map(([companyContactTemplateModel, translations]) => {
-                        return {
-                            candidateId: candidate.id,
-                            subject: translations['candidate-detail.candidate-anonymous-contact.subject'],
-                            body: translations['candidate-detail.candidate-anonymous-contact.body'],
-                            companyName: companyContactTemplateModel.companyName,
-                            phone: companyContactTemplateModel.phone,
-                            email: companyContactTemplateModel.email,
-                            company: {
-                                name: companyContactTemplateModel.companyName,
-                                contactPerson: companyContactTemplateModel.firstName + ' ' + companyContactTemplateModel.lastName,
-                                street: companyContactTemplateModel.companyStreet,
-                                houseNumber: companyContactTemplateModel.companyHouseNr,
-                                zipCode: companyContactTemplateModel.companyZipCode,
-                                city: companyContactTemplateModel.companyCity,
-                                country: null
-                            }
-                        };
-                    });
-            });
+    private buildEmailContent(candidate: CandidateProfile): Observable<EmailContent> {
+        return this.candidateService.canSendAnonymousContactEmail(candidate).flatMap((canContactCandidate) => {
+            if (canContactCandidate) {
+                const selectedCompanyContactTemplate$ = this.currentSelectedCompanyService.getSelectedCompanyContactTemplate()
+                    .filter((contactTemplate) => !!contactTemplate);
+                const translations$ = this.translateService.stream([this.CONTACT_MESSAGE_SUBJECT, this.CONTACT_MESSAGE_BODY]);
+                return Observable.combineLatest(selectedCompanyContactTemplate$, translations$).map(([companyContactTemplateModel, translations]) => {
+                    return new EmailContent(candidate.id, translations[this.CONTACT_MESSAGE_SUBJECT],
+                        translations[this.CONTACT_MESSAGE_BODY], companyContactTemplateModel);
+                });
+            }
+            return Observable.of(null);
+        });
     }
 
     printCandidateDetails(): void {

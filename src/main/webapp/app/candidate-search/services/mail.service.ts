@@ -1,15 +1,34 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
+import { CompanyContactTemplateModel } from '../../shared/company/company-contact-template.model';
 
-export interface EmailContent {
+export class EmailContent {
     candidateId: string;
     subject: string;
     body: string;
     companyName: string;
     phone?: string;
     email?: string;
-    company?: Company
+    company?: Company;
+
+    constructor(candidateId: string, subject: string, body: string, companyContactTemplateModel: CompanyContactTemplateModel) {
+        this.candidateId = candidateId;
+        this.subject = subject;
+        this.body = body;
+        this.companyName = companyContactTemplateModel.companyName;
+        this.phone = companyContactTemplateModel.phone;
+        this.email = companyContactTemplateModel.email;
+        this.company = {
+            name: companyContactTemplateModel.companyName,
+            contactPerson: companyContactTemplateModel.firstName + ' ' + companyContactTemplateModel.lastName,
+            street: companyContactTemplateModel.companyStreet,
+            houseNumber: companyContactTemplateModel.companyHouseNr,
+            zipCode: companyContactTemplateModel.companyZipCode,
+            city: companyContactTemplateModel.companyCity,
+            country: null
+        }
+    }
 }
 
 export interface Company {
