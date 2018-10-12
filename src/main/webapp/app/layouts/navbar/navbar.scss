@@ -71,6 +71,7 @@ Style guide customization
 @media screen and (min-width: 767px){
     .navbar-nav .dropdown-menu--account.show {
         position: absolute;
-        width: fit-content;
+        display: inline-block;
+        right: auto;
     }
 }
