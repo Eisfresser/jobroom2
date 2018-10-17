@@ -1,0 +1,30 @@
+{
+    "blacklisted-agent": {
+        "title": "Blacklisted Agent",
+        "filter": {
+            "placeholder": "Filter by Id, External Id, Status, Name, Street or Zip Code"
+        },
+        "header": {
+            "id": "Id",
+            "externalId": "External Id",
+            "status": "Status",
+            "name": "Name",
+            "street": "Street",
+            "zipCode": "Zip Code",
+            "city": "City",
+            "createdBy": "Created By",
+            "blacklistedAt": "Blacklisted At",
+            "counter": "Counter"
+        },
+        "status": {
+            "active": "Active",
+            "inactive": "Inactive"
+        },
+        "change-status-dialog": {
+            "title": "Change Status of Blacklisted Agent",
+            "message": "Do you really want to change status of the blacklisted agent?",
+            "change-status": "Change Status",
+            "cancel": "Cancel"
+        }
+    }
+}

@@ -196,6 +196,17 @@
                                             <span
                                                 jhiTranslate="global.menu.admin.api-user-management">Api user management</span>
                                         </a>
+
+                                        <a class="dropdown-item"
+                                           routerLink="blacklisted-agent"
+                                           *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_SYSADMIN']"
+                                           routerLinkActive="active"
+                                           (click)="collapseNavbar()">
+                                            <span class="fa fa-fw fa-user"
+                                                  aria-hidden="true"></span>
+                                            <span
+                                                jhiTranslate="global.menu.blacklisted-agent">Blacklist</span>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -260,6 +271,7 @@
                                         <span jhiTranslate="global.menu.dashboard">Dashboard</span>
                                     </a>
                                 </li>
+
                                 <li class="nav-item">
                                     <a *jhiHasAnyAuthority="['ROLE_PRIVATE_EMPLOYMENT_AGENT', 'ROLE_COMPANY']"
                                        routerLink="contact-template-management"
@@ -478,6 +490,15 @@
                                     <span class="fa fa-key" aria-hidden="true"></span>
                                     <span
                                         jhiTranslate="global.menu.admin.api-user-management">Api user management</span>
+                                </a>
+
+                                <a class="dropdown-item" routerLink="blacklisted-agent"
+                                   *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_SYSADMIN']"
+                                   routerLinkActive="active"
+                                   (click)="collapseNavbar()">
+                                    <span class="fa fa-fw fa-user"
+                                            aria-hidden="true"></span>
+                                    <span jhiTranslate="global.menu.blacklisted-agent">Blacklist</span>
                                 </a>
                             </div>
                         </div>

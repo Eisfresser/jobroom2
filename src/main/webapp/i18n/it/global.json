@@ -206,6 +206,7 @@
             },
             "company-contact-template": "Informazioni sui contatti",
             "dashboard": "Dashboard",
+            "blacklisted-agent": "Lista nera",
             "entities": {
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)",
                 "job": "Posto",

@@ -1,7 +1,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
-import { JobroomSharedModule } from '../shared';
+import { JobroomSharedModule, ModalUtils } from '../shared';
 import { JobroomElasticsearchReindexModule } from './elasticsearch-reindex/elasticsearch-reindex.module';
 import {
     adminState,
@@ -49,6 +49,10 @@ import { ApiUserDialogService } from './api-user-management/service/api-user-dia
 import { ApiUserManagementDialogComponent } from './api-user-management/dialogs/api-user-management-dialog.component';
 import { ApiUserManagementListComponent } from './api-user-management/api-user-management-list/api-user-management-list.component';
 import { ApiUserManagementPasswordUpdateDialogComponent } from './api-user-management/dialogs/api-user-management-password-update-dialog.component';
+import { BlacklistedAgentManagementComponent } from './blacklist-agent/blacklisted-agent-management.component';
+import { BlacklistedAgentChangeStatusDialogComponent } from './blacklist-agent/blacklisted-agent-change-status-dialog/blacklisted-agent-change-status-dialog.component';
+import { BlacklistedAgentPropertyFilterPipe } from './blacklist-agent/blacklisted-agent-property-filter.pipe';
+import { BlacklistedAgentService } from './blacklist-agent/blacklisted-agent.service';
 
 /* jhipster-needle-add-admin-module-import - JHipster will add admin modules imports here */
 
@@ -61,7 +65,7 @@ import { ApiUserManagementPasswordUpdateDialogComponent } from './api-user-manag
         ReactiveFormsModule,
         JobroomElasticsearchReindexModule,
         StoreModule.forFeature('apiUserManagement', apiUserManagementReducer),
-        EffectsModule.forFeature([ApiUserManagementEffects])
+        EffectsModule.forFeature([ApiUserManagementEffects]),
         /* jhipster-needle-add-admin-module - JHipster will add admin modules here */
     ],
     declarations: [
@@ -89,7 +93,10 @@ import { ApiUserManagementPasswordUpdateDialogComponent } from './api-user-manag
         ApiUserManagementComponent,
         ApiUserManagementDialogComponent,
         ApiUserManagementListComponent,
-        ApiUserManagementPasswordUpdateDialogComponent
+        ApiUserManagementPasswordUpdateDialogComponent,
+        BlacklistedAgentManagementComponent,
+        BlacklistedAgentChangeStatusDialogComponent,
+        BlacklistedAgentPropertyFilterPipe
     ],
     entryComponents: [
         UserMgmtDialogComponent,
@@ -100,7 +107,8 @@ import { ApiUserManagementPasswordUpdateDialogComponent } from './api-user-manag
         JhiHealthModalComponent,
         JhiMetricsMonitoringModalComponent,
         ApiUserManagementDialogComponent,
-        ApiUserManagementPasswordUpdateDialogComponent
+        ApiUserManagementPasswordUpdateDialogComponent,
+        BlacklistedAgentChangeStatusDialogComponent
     ],
     providers: [
         AuditsService,
@@ -114,7 +122,9 @@ import { ApiUserManagementPasswordUpdateDialogComponent } from './api-user-manag
         UserResolve,
         UserModalService,
         ApiUserService,
-        ApiUserDialogService
+        ApiUserDialogService,
+        BlacklistedAgentService,
+        ModalUtils
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

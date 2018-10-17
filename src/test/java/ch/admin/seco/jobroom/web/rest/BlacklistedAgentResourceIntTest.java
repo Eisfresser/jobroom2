@@ -69,7 +69,7 @@ public class BlacklistedAgentResourceIntTest {
     public void shouldAddOrganizationToBlacklist() throws Exception {
         UUID id = this.organizationService.save(organizationMapper.toDto(testOrganization())).getId();
         restMock.perform(
-            post("/api/blacklisted-agent")
+            post("/api/blacklisted-agent/")
                 .contentType(APPLICATION_JSON_UTF8)
                 .content(convertObjectToJsonBytes(new CreateNewBlacklistedAgentResource() {{
                     this.organizationId = id.toString();

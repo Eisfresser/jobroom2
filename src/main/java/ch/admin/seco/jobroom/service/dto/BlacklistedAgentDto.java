@@ -10,8 +10,6 @@ public class BlacklistedAgentDto {
 
     private String externalId;
 
-    private String createdBy;
-
     private BlacklistedAgentStatus status;
 
     private String name;
@@ -21,6 +19,8 @@ public class BlacklistedAgentDto {
     private String zipCode;
 
     private String city;
+
+    private String createdBy;
 
     private LocalDateTime blacklistedAt;
 

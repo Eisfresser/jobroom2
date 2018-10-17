@@ -1,9 +1,4 @@
-import {
-    NgbActiveModal,
-    NgbModal,
-    NgbModalOptions,
-    NgbModalRef
-} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalOptions, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Injectable } from '@angular/core';
 
 const SMALL_MODAL: NgbModalOptions = { size: 'sm', backdrop: 'static' },

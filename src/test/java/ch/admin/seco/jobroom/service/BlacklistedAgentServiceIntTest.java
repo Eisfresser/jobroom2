@@ -8,6 +8,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.junit.Before;
@@ -23,6 +24,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import ch.admin.seco.jobroom.repository.BlacklistedAgentRepository;
 import ch.admin.seco.jobroom.security.UserPrincipal;
+import ch.admin.seco.jobroom.service.dto.BlacklistedAgentDto;
 import ch.admin.seco.jobroom.service.mapper.OrganizationMapper;
 
 @RunWith(SpringRunner.class)
@@ -57,11 +59,12 @@ public class BlacklistedAgentServiceIntTest {
     @Test
     @WithMockUser(authorities = {ROLE_ADMIN})
     public void shouldCreate() throws OrganizationNotFoundException, BlacklistedAgentAlreadyExistsException {
+        int initialAmountOfBlacklistedAgents = service.findAll().size();
         UUID organizationId = organizationService.save(mapper.toDto(testOrganization())).getId();
 
         service.create(organizationId);
 
-        assertThat(service.findAll()).size().isEqualTo(1);
+        assertThat(service.findAll()).size().isEqualTo(initialAmountOfBlacklistedAgents + 1);
     }
 
     @Test

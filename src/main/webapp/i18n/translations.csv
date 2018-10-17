@@ -412,6 +412,7 @@ global,global.menu.admin.tracker,Benutzer Aktivitäten,User tracker,Activité de
 global,global.menu.admin.userManagement,Benutzerverwaltung,User management,Gestion des utilisateurs,Gestione utenti
 global,global.menu.company-contact-template,Kontaktangaben,Contact Information,Informations de contact,Informazioni sui contatti
 global,global.menu.dashboard,Dashboard,Dashboard,Dashboard,Dashboard
+global,global.menu.blacklisted-agent,Blacklist,Blacklist,Liste noire,Lista nera
 global,global.menu.entities.jhipster-needle-menu-add-entry,JHipster will add additional entities here (do not translate!),JHipster will add additional entities here (do not translate!),JHipster will add additional entities here (do not translate!),JHipster will add additional entities here (do not translate!)
 global,global.menu.entities.job,Stelle,Job,Emploi,Posto
 global,global.menu.entities.main,Entitäten,Entities,Entités,Entità
@@ -1252,3 +1253,22 @@ registration-access-code,registrationAccessCode.accessCode.error.required,Freisc
 registration-access-code,registrationAccessCode.accessCode.error.minlength,Freischaltcode muss aus 8 Stellen bestehen,Activation code must contain 8 characters,Le code de déverrouillage doit se composer de 8 caractères,Il codice di attivazione deve avere 8 caratteri
 registration-access-code,registrationAccessCode.accessCode.error.invalid,Freischaltcode ungültig,Activation code is invalid,Code de déverrouillage non valable,Codice di attivazione non valido
 job,jobroomApp.job.rav, RAV,RAV,ORP,URC
+blacklisted-agent,blacklisted-agent.title,Blacklisted Agent,Blacklisted Agent,Blacklisted Agent,Blacklisted Agent
+blacklisted-agent,blacklisted-agent.filter.placeholder,"Filter by Id, External Id, Status, Name, Street or Zip Code","Filter by Id, External Id, Status, Name, Street or Zip Code","Filter by Id, External Id, Status, Name, Street or Zip Code","Filter by Id, External Id, Status, Name, Street or Zip Code"
+blacklisted-agent,blacklisted-agent.header.id,Id,Id,Id,Id
+blacklisted-agent,blacklisted-agent.header.externalId,External Id,External Id,External Id,External Id
+blacklisted-agent,blacklisted-agent.header.status,Status,Status,Status,Status
+blacklisted-agent,blacklisted-agent.header.name,Name,Name,Name,Name
+blacklisted-agent,blacklisted-agent.header.street,Street,Street,Street,Street
+blacklisted-agent,blacklisted-agent.header.zipCode,Zip Code,Zip Code,Zip Code,Zip Code
+blacklisted-agent,blacklisted-agent.header.city,City,City,City,City
+blacklisted-agent,blacklisted-agent.header.createdBy,Created By,Created By,Created By,Created By
+blacklisted-agent,blacklisted-agent.header.blacklistedAt,Blacklisted At,Blacklisted At,Blacklisted At,Blacklisted At
+blacklisted-agent,blacklisted-agent.header.counter,Counter,Counter,Counter,Counter
+blacklisted-agent,blacklisted-agent.status.active,Active,Active,Active,Active
+blacklisted-agent,blacklisted-agent.status.inactive,Inactive,Inactive,Inactive,Inactive
+
+blacklisted-agent,blacklisted-agent.change-status-dialog.title,Change Status of Blacklisted Agent,Change Status of Blacklisted Agent,Change Status of Blacklisted Agent,Change Status of Blacklisted Agent,
+blacklisted-agent,blacklisted-agent.change-status-dialog.message,Do you really want to change status of the blacklisted agent?,Do you really want to change status of the blacklisted agent?,Do you really want to change status of the blacklisted agent?,Do you really want to change status of the blacklisted agent?
+blacklisted-agent,blacklisted-agent.change-status-dialog.change-status,Change Status,Change Status,Change Status,Change Status
+blacklisted-agent,blacklisted-agent.change-status-dialog.cancel,Cancel,Cancel,Cancel,Cancel
