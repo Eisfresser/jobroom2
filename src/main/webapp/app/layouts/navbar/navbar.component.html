@@ -9,7 +9,7 @@
 
         <div class="navbar-brand portal-logo">
             <div class="portal-logo__image" [ngSwitch]="getCurrentLanguage()">
-                <a routerLink="home"><span>Job-Room</span></a>
+                <a routerLink="jobseekers"><span>Job-Room</span></a>
                 <a routerLink="jobseekers">
                     <img *ngSwitchCase="'de'"
                          src="~@alv-ch/alv-styleguide/src/assets/styleguide/images/arbeit.swiss_de.svg"/>
@@ -490,6 +490,13 @@
                         </div>
                     </div>
                 </li>
+
+                <li class="nav-item">
+                    <a class="nav-link active" routerLink="jobseekers">
+                        <span>Job-Room</span>
+                    </a>
+                </li>
+
                 <li class="nav-item">
                     <a class="nav-link" [href]="'home.contactform.url' | translate">
                         <span>{{'home.contactform.text' | translate}}</span>
