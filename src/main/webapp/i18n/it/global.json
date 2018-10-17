@@ -171,11 +171,11 @@
         },
         "menu": {
             "account": {
-                "login": "Login",
+                "login": "Login|Registrazione",
                 "logout": "Esci",
                 "main": "Utente",
                 "password": "Password",
-                "registration": "Registrazione",
+                "registration": "Registrazione XXX",
                 "registration.incomplete": "Completa la registrazione",
                 "sessions": "Sessioni",
                 "settings": "Impostazioni"

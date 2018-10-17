@@ -10,7 +10,7 @@
         <div class="navbar-brand portal-logo">
             <div class="portal-logo__image" [ngSwitch]="getCurrentLanguage()">
                 <a routerLink="home"><span>Job-Room</span></a>
-                <a [href]="'home.title.portal-url' | translate" target="work.swiss">
+                <a routerLink="jobseekers">
                     <img *ngSwitchCase="'de'"
                          src="~@alv-ch/alv-styleguide/src/assets/styleguide/images/arbeit.swiss_de.svg"/>
                     <img *ngSwitchCase="'fr'"
@@ -44,7 +44,7 @@
 
                     <ul class="navbar-nav">
                         <li class="nav-item megamenu dropdown">
-                            <ng-container *ngIf="isAdmin(); else nonAdminMenuButton">
+                            <ng-container *ngIf="isAdmin()">
                                 <a class="nav-link dropdown-toggle active"
                                    href="javascript:void(0);"
                                    role="button" (click)="toggleNavbar()"
@@ -53,7 +53,6 @@
                                     Job-Room
                                 </a>
                             </ng-container>
-
                             <div *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_SYSADMIN']"
                                  class="dropdown-menu"
                                  aria-labelledby="navbarDropdownMenuLink">
@@ -211,32 +210,24 @@
                                 </div>
                             </div>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link"
-                               [href]="'home.title.portal-url' | translate"
-                               target="work.swiss">
-                                {{ 'home.title.portal' | translate }}.swiss
-                            </a>
-                        </li>
+
                         <li class="nav-item" *ngIf="!isAuthenticated() && !noEiam">
                             <a class="nav-link nav-link--login" [href]="'/login'">
                                 <span>{{'global.menu.account.login' | translate}}</span>
                             </a>
                         </li>
                         <li class="nav-item" *ngIf="!isAuthenticated() && noEiam">
-                            <a class="nav-link nav-link--login" (click)="login(true)"
-                               jhiTranslate="global.menu.account.login">
-                                Login
+                            <a class="nav-link nav-link--login" (click)="login(true)">
+                                <span>{{'global.menu.account.login' | translate}}</span>
                             </a>
+                        </li>
 
-                        </li>
-                        <li class="nav-item" *ngIf="!isAuthenticated() && !noEiam">
-                            <a class="nav-link nav-link--login"
-                               routerLink="registration"
-                               routerLinkActive="active">
-                                <span>{{'global.menu.account.registration' | translate}}</span>
+                        <li class="nav-item" *ngIf="!isAuthenticated()">
+                            <a class="nav-link" [href]="'home.registration.url' | translate">
+                                {{ 'global.menu.account.registration' | translate }}
                             </a>
                         </li>
+
                         <li ngbDropdown class="nav-item" *ngIf="isAuthenticated()">
                             <strong class="nav-link">
                                 {{currentUser?.firstName}} {{currentUser?.lastName}}
@@ -303,6 +294,7 @@
                             *jhiHasAnyAuthority="['ROLE_PRIVATE_EMPLOYMENT_AGENT', 'ROLE_COMPANY']">
                             <jr2-company-selection></jr2-company-selection>
                         </li>
+
                     </ul>
                 </div>
             </div>
@@ -313,21 +305,15 @@
             <ul class="navbar-nav">
                 <li class="nav-item megamenu dropdown"
                     [ngClass]="{show: !isNavbarCollapsed}">
-                    <ng-container *ngIf="isAdmin(); else nonAdminMenuButton">
+                    <ng-container *ngIf="isAdmin()">
                         <a class="nav-link dropdown-toggle active"
                            href="javascript:void(0);"
                            role="button" (click)="toggleNavbar()"
                            aria-haspopup="true" aria-expanded="false">
                             <span class="fa fa-bars" aria-hidden="true"></span>
-                            Job-Room
+                            Admin
                         </a>
                     </ng-container>
-                    <ng-template #nonAdminMenuButton>
-                        <a class="nav-link active" routerLink="home" role="button">
-                            Job-Room
-                        </a>
-                    </ng-template>
-
                     <div *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_SYSADMIN']"
                          class="dropdown-menu" [ngClass]="{show: !isNavbarCollapsed}"
                          aria-labelledby="navbarDropdownMenuLink">
@@ -505,28 +491,28 @@
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" [href]="'home.contactform.url' | translate"
-                       target="_blank">
+                    <a class="nav-link" [href]="'home.contactform.url' | translate">
                         <span>{{'home.contactform.text' | translate}}</span>
                     </a>
                 </li>
+
+                <li class="nav-item" *ngIf="!isAuthenticated()">
+                    <a class="nav-link" [href]="'home.registration.url' | translate">
+                        {{ 'global.menu.account.registration' | translate }}
+                    </a>
+                </li>
+
                 <li class="nav-item" *ngIf="!isAuthenticated() && !noEiam">
-                    <a class="nav-link" [href]="'/login'">
+                    <a class="nav-link nav-link--login nav-link--registration" [href]="'/login'">
                         <span>{{'global.menu.account.login' | translate}}</span>
                     </a>
                 </li>
                 <li class="nav-item" *ngIf="!isAuthenticated() && noEiam">
-                    <a class="nav-link" (click)="login(false)"
-                       jhiTranslate="global.menu.account.login">
-                        Login
+                    <a class="nav-link nav-link--login nav-link--registration" (click)="login(false)">
+                        <span>{{'global.menu.account.login' | translate}}</span>
                     </a>
                 </li>
-                <li class="nav-item" *ngIf="!isAuthenticated() && !noEiam">
-                    <a class="nav-link nav-link--login nav-link--registration"
-                       [href]="'home.registration.url' | translate">
-                        <span>{{'global.menu.account.registration' | translate}}</span>
-                    </a>
-                </li>
+
                 <li ngbDropdown class="nav-item d-none d-sm-block dropdown"
                     *ngIf="isAuthenticated()">
 
@@ -617,10 +603,18 @@
                         </li>
                     </ul>
                 </li>
+
                 <li class="nav-item d-none d-sm-block"
                     *jhiHasAnyAuthority="['ROLE_PRIVATE_EMPLOYMENT_AGENT', 'ROLE_COMPANY']">
                     <jr2-company-selection></jr2-company-selection>
                 </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" [href]="'home.title.portal-url' | translate">
+                        <span>{{'home.title.cms' | translate}}</span>
+                    </a>
+                </li>
+
                 <li class="nav-item">
                     <ul class="navbar-nav navbar--language-switcher">
                         <li class="nav-item" *ngFor="let language of languages"

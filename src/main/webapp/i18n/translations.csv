@@ -380,11 +380,11 @@ global,global.job-publication.status.PUBLISHED_PUBLIC,Öffentlich publiziert,Pub
 global,global.job-publication.status.PUBLISHED_RESTRICTED,Eingeschränkt publiziert,Restricted posting,Publié dans l'espace réservé,Pubblicazione ristretta
 global,global.job-publication.status.REFINING,Wird überarbeitet,In revision,En révision,Revisione in corso
 global,global.job-publication.status.REJECTED,Zurückgewiesen,Rejected,Rejeté,Respinto
-global,global.menu.account.login,Login,Login,Login,Login
+global,global.menu.account.login,Login|Registrierung,Login|Registration,Login|Enregistrement,Login|Registrazione
 global,global.menu.account.logout,Abmelden,Sign out,Déconnexion,Esci
 global,global.menu.account.main,Zugang,Account,Compte,Utente
 global,global.menu.account.password,Passwort,Password,Mot de passe,Password
-global,global.menu.account.registration,Registrierung,Registration,Enregistrement,Registrazione
+global,global.menu.account.registration,Registrierung Hilfe,Registration Help,Enregistrement XXX,Registrazione XXX
 global,global.menu.account.registration.incomplete,Registrierung abschliessen,Complete registration,Terminer l'enregistrement,Completa la registrazione
 global,global.menu.account.sessions,Sitzungen,Sessions,Sessions,Sessioni
 global,global.menu.account.settings,Einstellungen,Settings,Paramètres,Impostazioni
@@ -691,6 +691,7 @@ home,home.registration.url,https://www.arbeit.swiss/secoalv/de/home/menue/untern
 home,home.title,Job-Room,Job-Room,Job-Room,Job-Room
 home,home.title.portal,arbeit,work,travail,lavoro
 home,home.title.portal-url,https://www.arbeit.swiss,https://www.arbeit.swiss/secoalv/en/home.html,https://www.arbeit.swiss/secoalv/fr/home.html,https://www.arbeit.swiss/secoalv/it/home.html
+home,home.title.cms,arbeit.swiss,work.swiss,travail.swiss,lavoro.swiss
 home,home.login-cancel.title,Login fehlgeschlagen,Login failed,Echec du login,Login fallito
 home,home.login-cancel.message,Sie haben den Login Vorgang abgebrochen,You canceled the login process,Vous avez interrompu la procédure de login,Hai interrotto il processo di login
 home,home.toolbar.companies,Arbeitgeber,Employers,Employeurs,Datori di lavoro
