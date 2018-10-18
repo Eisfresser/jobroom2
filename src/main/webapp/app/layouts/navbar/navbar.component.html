@@ -10,7 +10,7 @@
         <div class="navbar-brand portal-logo">
             <div class="portal-logo__image" [ngSwitch]="getCurrentLanguage()">
                 <a routerLink="jobseekers"><span>Job-Room</span></a>
-                <a routerLink="jobseekers">
+                <a [href]="'home.title.portal-url' | translate">
                     <img *ngSwitchCase="'de'"
                          src="~@alv-ch/alv-styleguide/src/assets/styleguide/images/arbeit.swiss_de.svg"/>
                     <img *ngSwitchCase="'fr'"
