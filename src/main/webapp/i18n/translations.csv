@@ -384,7 +384,7 @@ global,global.menu.account.login,Login|Registrierung,Login|Registration,Login|En
 global,global.menu.account.logout,Abmelden,Sign out,Déconnexion,Esci
 global,global.menu.account.main,Zugang,Account,Compte,Utente
 global,global.menu.account.password,Passwort,Password,Mot de passe,Password
-global,global.menu.account.registration,Informationen Registrierung,Information Registration,Inforamtions Enregistrement,Informazione Registrazione
+global,global.menu.account.registration,Info Registrierung,Registration info,Info enregistrement,Info registrazione
 global,global.menu.account.registration.incomplete,Registrierung abschliessen,Complete registration,Terminer l'enregistrement,Completa la registrazione
 global,global.menu.account.sessions,Sitzungen,Sessions,Sessions,Sessioni
 global,global.menu.account.settings,Einstellungen,Settings,Paramètres,Impostazioni
