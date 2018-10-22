@@ -10,6 +10,7 @@
         "title": "Job-Room",
         "title.portal": "arbeit",
         "title.portal-url": "https://www.arbeit.swiss",
+        "title.cms": "arbeit.swiss",
         "login-cancel": {
             "title": "Login fehlgeschlagen",
             "message": "Sie haben den Login Vorgang abgebrochen"

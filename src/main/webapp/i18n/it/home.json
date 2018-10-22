@@ -10,6 +10,7 @@
         "title": "Job-Room",
         "title.portal": "lavoro",
         "title.portal-url": "https://www.arbeit.swiss/secoalv/it/home.html",
+        "title.cms": "lavoro.swiss",
         "login-cancel": {
             "title": "Login fallito",
             "message": "Hai interrotto il processo di login"
