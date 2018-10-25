@@ -1254,22 +1254,26 @@ registration-access-code,registrationAccessCode.accessCode.error.required,Freisc
 registration-access-code,registrationAccessCode.accessCode.error.minlength,Freischaltcode muss aus 8 Stellen bestehen,Activation code must contain 8 characters,Le code de déverrouillage doit se composer de 8 caractères,Il codice di attivazione deve avere 8 caratteri
 registration-access-code,registrationAccessCode.accessCode.error.invalid,Freischaltcode ungültig,Activation code is invalid,Code de déverrouillage non valable,Codice di attivazione non valido
 job,jobroomApp.job.rav, RAV,RAV,ORP,URC
-blacklisted-agent,blacklisted-agent.title,Blacklisted Agent,Blacklisted Agent,Blacklisted Agent,Blacklisted Agent
-blacklisted-agent,blacklisted-agent.filter.placeholder,"Filter by Id, External Id, Status, Name, Street or Zip Code","Filter by Id, External Id, Status, Name, Street or Zip Code","Filter by Id, External Id, Status, Name, Street or Zip Code","Filter by Id, External Id, Status, Name, Street or Zip Code"
+blacklisted-agent,blacklisted-agent.title,Blacklist für PAV,Blacklisted Agent,Blacklisted Agent,Blacklisted Agent
+blacklisted-agent,blacklisted-agent.filter.placeholder,"Filtern nach Id, External Id, Status, Name, Strasse or PLZ","Filter by Id, External Id, Status, Name, Street or Zip Code","Filter by Id, External Id, Status, Name, Street or Zip Code","Filter by Id, External Id, Status, Name, Street or Zip Code"
 blacklisted-agent,blacklisted-agent.header.id,Id,Id,Id,Id
 blacklisted-agent,blacklisted-agent.header.externalId,External Id,External Id,External Id,External Id
 blacklisted-agent,blacklisted-agent.header.status,Status,Status,Status,Status
 blacklisted-agent,blacklisted-agent.header.name,Name,Name,Name,Name
-blacklisted-agent,blacklisted-agent.header.street,Street,Street,Street,Street
-blacklisted-agent,blacklisted-agent.header.zipCode,Zip Code,Zip Code,Zip Code,Zip Code
-blacklisted-agent,blacklisted-agent.header.city,City,City,City,City
-blacklisted-agent,blacklisted-agent.header.createdBy,Created By,Created By,Created By,Created By
-blacklisted-agent,blacklisted-agent.header.blacklistedAt,Blacklisted At,Blacklisted At,Blacklisted At,Blacklisted At
-blacklisted-agent,blacklisted-agent.header.counter,Counter,Counter,Counter,Counter
-blacklisted-agent,blacklisted-agent.status.active,Active,Active,Active,Active
-blacklisted-agent,blacklisted-agent.status.inactive,Inactive,Inactive,Inactive,Inactive
+blacklisted-agent,blacklisted-agent.header.street,Strasse,Street,Street,Street
+blacklisted-agent,blacklisted-agent.header.zipCode,PLZ,Zip Code,Zip Code,Zip Code
+blacklisted-agent,blacklisted-agent.header.city,Ort,City,City,City
+blacklisted-agent,blacklisted-agent.header.createdBy,Erstellt von,Created By,Created By,Created By
+blacklisted-agent,blacklisted-agent.header.blacklistedAt,Aktualisiert am,Blacklisted At,Blacklisted At,Blacklisted At
+blacklisted-agent,blacklisted-agent.header.counter,Anzahl Sperrungen,Counter,Counter,Counter
+blacklisted-agent,blacklisted-agent.status.active,Aktiv,Active,Active,Active
+blacklisted-agent,blacklisted-agent.status.inactive,Inaktiv,Inactive,Inactive,Inactive
+blacklisted-agent,blacklisted-agent.create-blacklist-entry,PAV auf Blacklist setzen,Add PAV to Blacklist ,Add PAV to Blacklist ,Add PAV to Blacklist
+blacklisted-agent,blacklisted-agent.choose-organisation-desc,"Bitte wählen Sie eine Organisation aus, die sie auf die Blacklist setzen möchten." ,"Please choose an organisation that you want to add to the blacklist." ,"Please choose an organisation that you want to add to the blacklist." ,"Please choose an organisation that you want to add to the blacklist."
+blacklisted-agent,blacklisted-agent.selected-organisation-desc,"Möchten Sie folgende Organisation auf die Blacklist setzen?" ,"Do you want to add the following organisation to the blacklist?" ,"Do you want to add the following organisation to the blacklist?" ,"Do you want to add the following organisation to the blacklist?"
+blacklisted-agent,blacklisted-agent.confirm-alert,"Diese Aktion wird sofort ausgeführt und kann nicht rückgängig gemacht werden!" ,"This action will be effectuated immediately and can not be undone!" ,"This action will be effectuated immediately and can not be undone!" ,"This action will be effectuated immediately and can not be undone!"
 
-blacklisted-agent,blacklisted-agent.change-status-dialog.title,Change Status of Blacklisted Agent,Change Status of Blacklisted Agent,Change Status of Blacklisted Agent,Change Status of Blacklisted Agent,
-blacklisted-agent,blacklisted-agent.change-status-dialog.message,Do you really want to change status of the blacklisted agent?,Do you really want to change status of the blacklisted agent?,Do you really want to change status of the blacklisted agent?,Do you really want to change status of the blacklisted agent?
-blacklisted-agent,blacklisted-agent.change-status-dialog.change-status,Change Status,Change Status,Change Status,Change Status
-blacklisted-agent,blacklisted-agent.change-status-dialog.cancel,Cancel,Cancel,Cancel,Cancel
+blacklisted-agent,blacklisted-agent.change-status-dialog.title,Status des Blacklist-Eintrags ändern,Change Status of Blacklisted Agent,Change Status of Blacklisted Agent,Change Status of Blacklisted Agent,
+blacklisted-agent,blacklisted-agent.change-status-dialog.message,Möchten Sie wirklich den Blacklist-Eintrag für den PAV ändern?,Do you really want to change status of the blacklisted agent?,Do you really want to change status of the blacklisted agent?,Do you really want to change status of the blacklisted agent?
+blacklisted-agent,blacklisted-agent.change-status-dialog.change-status,Status ändern,Change Status,Change Status,Change Status
+blacklisted-agent,blacklisted-agent.change-status-dialog.cancel,Abbrechen,Cancel,Cancel,Cancel

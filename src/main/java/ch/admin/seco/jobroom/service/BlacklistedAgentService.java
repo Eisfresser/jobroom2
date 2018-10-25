@@ -1,19 +1,5 @@
 package ch.admin.seco.jobroom.service;
 
-import static ch.admin.seco.jobroom.domain.BlacklistedAgent.builder;
-import static org.springframework.data.domain.Sort.Direction.DESC;
-
-import java.util.List;
-import java.util.UUID;
-import java.util.stream.Collectors;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.springframework.data.domain.Sort;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import ch.admin.seco.jobroom.domain.BlacklistedAgent;
 import ch.admin.seco.jobroom.domain.BlacklistedAgentId;
 import ch.admin.seco.jobroom.domain.BlacklistedAgentStatus;
@@ -21,6 +7,17 @@ import ch.admin.seco.jobroom.repository.BlacklistedAgentRepository;
 import ch.admin.seco.jobroom.security.IsAdmin;
 import ch.admin.seco.jobroom.service.dto.BlacklistedAgentDto;
 import ch.admin.seco.jobroom.service.dto.OrganizationDTO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static ch.admin.seco.jobroom.domain.BlacklistedAgent.builder;
+import static org.springframework.data.domain.Sort.Direction.DESC;
 
 @Service
 @Transactional
@@ -35,21 +32,21 @@ public class BlacklistedAgentService {
     private final OrganizationService organizationService;
 
     public BlacklistedAgentService(BlacklistedAgentRepository blacklistedAgentRepository,
-        CurrentUserService currentUserService,
-        OrganizationService organizationService) {
+                                   CurrentUserService currentUserService,
+                                   OrganizationService organizationService) {
         this.blacklistedAgentRepository = blacklistedAgentRepository;
         this.currentUserService = currentUserService;
         this.organizationService = organizationService;
     }
 
     @IsAdmin
-    public BlacklistedAgentId create(UUID organizationId) throws OrganizationNotFoundException, BlacklistedAgentAlreadyExistsException {
-        LOG.debug("Request to create a blacklisted agent for an organization id {}", organizationId);
-        OrganizationDTO organizationDTO = organizationService.findOne(organizationId)
-            .orElseThrow(() -> new OrganizationNotFoundException(organizationId));
+    public BlacklistedAgentId create(String externalId) throws OrganizationNotFoundException, BlacklistedAgentAlreadyExistsException {
+        LOG.debug("Request to create a blacklisted agent for an organization id {}", externalId);
+        OrganizationDTO organizationDTO = organizationService.findOneByExternalId(externalId)
+            .orElseThrow(() -> new OrganizationNotFoundException(externalId));
 
         if (this.blacklistedAgentRepository.findByExternalId(organizationDTO.getExternalId()).isPresent()) {
-            throw new BlacklistedAgentAlreadyExistsException(organizationId);
+            throw new BlacklistedAgentAlreadyExistsException(externalId);
         }
         BlacklistedAgent blacklistedAgent = this.blacklistedAgentRepository.save(createBlacklistedAgent(organizationDTO));
         return blacklistedAgent.getId();

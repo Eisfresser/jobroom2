@@ -1,17 +1,15 @@
 package ch.admin.seco.jobroom.service;
 
-import java.util.UUID;
-
 public class OrganizationNotFoundException extends Exception {
 
-    private final UUID organizationId;
+    private final String organizationId;
 
-    OrganizationNotFoundException(UUID organizationId) {
+    OrganizationNotFoundException(String organizationId) {
         super("No Organization found having Id:" + organizationId);
         this.organizationId = organizationId;
     }
 
-    public UUID getOrganizationId() {
+    public String getOrganizationId() {
         return organizationId;
     }
 }

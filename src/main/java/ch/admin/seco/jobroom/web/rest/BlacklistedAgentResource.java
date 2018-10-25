@@ -1,25 +1,16 @@
 package ch.admin.seco.jobroom.web.rest;
 
-import java.util.List;
-import java.util.UUID;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import ch.admin.seco.jobroom.domain.BlacklistedAgentId;
 import ch.admin.seco.jobroom.domain.BlacklistedAgentStatus;
 import ch.admin.seco.jobroom.service.BlacklistedAgentAlreadyExistsException;
 import ch.admin.seco.jobroom.service.BlacklistedAgentService;
 import ch.admin.seco.jobroom.service.OrganizationNotFoundException;
 import ch.admin.seco.jobroom.service.dto.BlacklistedAgentDto;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * REST controller for managing blacklisted agents.
@@ -46,7 +37,7 @@ public class BlacklistedAgentResource {
     public void create(@RequestBody CreateNewBlacklistedAgentResource createNewBlacklistedAgentResource)
         throws OrganizationNotFoundException, BlacklistedAgentAlreadyExistsException {
         LOG.debug("REST request to create a new blacklisted agent with organization id: {}", createNewBlacklistedAgentResource.organizationId);
-        this.blacklistedAgentService.create(UUID.fromString(createNewBlacklistedAgentResource.organizationId));
+        this.blacklistedAgentService.create(createNewBlacklistedAgentResource.organizationId);
     }
 
     @PutMapping("/{id}/status")

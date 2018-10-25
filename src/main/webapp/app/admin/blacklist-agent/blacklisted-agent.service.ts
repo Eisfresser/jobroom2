@@ -25,4 +25,14 @@ export class BlacklistedAgentService {
                 'Content-Type': 'application/json'
             })});
     }
+
+    createBlacklistEntryForPav(organisationId: string) {
+        const requestBody = {
+            organizationId: organisationId
+        }
+        return this.http.post<void>(this.resourceUrl, requestBody, {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json'
+            })});
+    }
 }

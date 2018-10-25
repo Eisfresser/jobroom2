@@ -20,6 +20,10 @@
             "active": "Active",
             "inactive": "Inactive"
         },
+        "create-blacklist-entry": "Add PAV to Blacklist ",
+        "choose-organisation-desc": "Please choose an organisation that you want to add to the blacklist.",
+        "selected-organisation-desc": "Do you want to add the following organisation to the blacklist?",
+        "confirm-alert": "This action will be effectuated immediately and can not be undone!",
         "change-status-dialog": {
             "title": "Change Status of Blacklisted Agent",
             "message": "Do you really want to change status of the blacklisted agent?",

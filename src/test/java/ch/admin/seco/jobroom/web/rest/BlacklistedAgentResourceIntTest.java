@@ -81,7 +81,7 @@ public class BlacklistedAgentResourceIntTest {
     @Transactional
     @WithMockUser(authorities = {ROLE_ADMIN})
     public void shouldChangeStatus() throws Exception {
-        UUID id = this.organizationService.save(organizationMapper.toDto(testOrganization())).getId();
+        String id = this.organizationService.save(organizationMapper.toDto(testOrganization())).getExternalId();
         String blacklistedAgentId = blacklistedAgentService.create(id).getValue();
 
         restMock.perform(

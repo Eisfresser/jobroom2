@@ -60,7 +60,7 @@ public class BlacklistedAgentServiceIntTest {
     @WithMockUser(authorities = {ROLE_ADMIN})
     public void shouldCreate() throws OrganizationNotFoundException, BlacklistedAgentAlreadyExistsException {
         int initialAmountOfBlacklistedAgents = service.findAll().size();
-        UUID organizationId = organizationService.save(mapper.toDto(testOrganization())).getId();
+        String organizationId = organizationService.save(mapper.toDto(testOrganization())).getExternalId();
 
         service.create(organizationId);
 
@@ -70,7 +70,7 @@ public class BlacklistedAgentServiceIntTest {
     @Test
     @WithMockUser(authorities = {ROLE_ADMIN})
     public void shouldNotCreateIfBlacklistedAgentAlreadyExists() {
-        UUID organizationId = organizationService.save(mapper.toDto(testOrganization())).getId();
+        String organizationId = organizationService.save(mapper.toDto(testOrganization())).getExternalId();
 
         assertThatThrownBy(() -> {
             service.create(organizationId);
@@ -84,7 +84,7 @@ public class BlacklistedAgentServiceIntTest {
     public void shouldNotCreateIfOrganizationNotFound() {
         given(currentUserService.getPrincipal()).willReturn(userPrincipal);
 
-        assertThatThrownBy(() -> service.create(randomUUID()))
+        assertThatThrownBy(() -> service.create(randomUUID().toString()))
             .isInstanceOf(OrganizationNotFoundException.class)
             .hasMessageContaining("No Organization found having Id:");
     }
@@ -92,6 +92,6 @@ public class BlacklistedAgentServiceIntTest {
     @Test
     @WithMockUser
     public void shouldNotCreateIfNoAdminRole()  {
-        assertThatThrownBy(() -> service.create(randomUUID())).isInstanceOf(AccessDeniedException.class);
+        assertThatThrownBy(() -> service.create(randomUUID().toString())).isInstanceOf(AccessDeniedException.class);
     }
 }

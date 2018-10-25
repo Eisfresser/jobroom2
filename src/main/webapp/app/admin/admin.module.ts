@@ -53,6 +53,7 @@ import { BlacklistedAgentManagementComponent } from './blacklist-agent/blacklist
 import { BlacklistedAgentChangeStatusDialogComponent } from './blacklist-agent/blacklisted-agent-change-status-dialog/blacklisted-agent-change-status-dialog.component';
 import { BlacklistedAgentPropertyFilterPipe } from './blacklist-agent/blacklisted-agent-property-filter.pipe';
 import { BlacklistedAgentService } from './blacklist-agent/blacklisted-agent.service';
+import { AddBlacklistedAgentDialogComponent } from './blacklist-agent/add-blacklisted-agent-dialog/add-blacklisted-agent-dialog.component';
 
 /* jhipster-needle-add-admin-module-import - JHipster will add admin modules imports here */
 
@@ -96,7 +97,8 @@ import { BlacklistedAgentService } from './blacklist-agent/blacklisted-agent.ser
         ApiUserManagementPasswordUpdateDialogComponent,
         BlacklistedAgentManagementComponent,
         BlacklistedAgentChangeStatusDialogComponent,
-        BlacklistedAgentPropertyFilterPipe
+        BlacklistedAgentPropertyFilterPipe,
+        AddBlacklistedAgentDialogComponent
     ],
     entryComponents: [
         UserMgmtDialogComponent,
@@ -108,7 +110,8 @@ import { BlacklistedAgentService } from './blacklist-agent/blacklisted-agent.ser
         JhiMetricsMonitoringModalComponent,
         ApiUserManagementDialogComponent,
         ApiUserManagementPasswordUpdateDialogComponent,
-        BlacklistedAgentChangeStatusDialogComponent
+        BlacklistedAgentChangeStatusDialogComponent,
+        AddBlacklistedAgentDialogComponent
     ],
     providers: [
         AuditsService,

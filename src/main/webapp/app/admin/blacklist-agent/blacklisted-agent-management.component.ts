@@ -5,6 +5,7 @@ import { BlacklistedAgentService } from './blacklisted-agent.service';
 import { ModalUtils } from '../../shared/index';
 import { BlacklistedAgentChangeStatusDialogComponent } from './blacklisted-agent-change-status-dialog/blacklisted-agent-change-status-dialog.component';
 import { BlacklistedAgent, BlacklistedAgentStatus } from './blacklisted.agent.model';
+import { AddBlacklistedAgentDialogComponent } from './add-blacklisted-agent-dialog/add-blacklisted-agent-dialog.component';
 
 @Component({
     selector: 'jr2-blacklisted-agent-management',
@@ -30,6 +31,22 @@ export class BlacklistedAgentManagementComponent implements OnInit {
 
     activate(agent: BlacklistedAgent) {
         this.changeStatus(agent, BlacklistedAgentStatus.ACTIVE);
+    }
+
+    openCreateDialog() {
+        this.modalUtils.openLargeModal(AddBlacklistedAgentDialogComponent).result
+            .then((organisationId) => this.create(organisationId))
+    }
+
+    create(organisationId: string) {
+        this.blacklistedAgentService.createBlacklistEntryForPav(organisationId).subscribe(
+            () => {
+                console.log('create blacklist entry for organisation: ' + organisationId);
+                this.getAllBlacklistedAgents();
+            }, (error) => {
+                console.log('could not create blacklist entry for organisation: %s reason: %o', organisationId, error);
+            }
+        )
     }
 
     deactivate(agent: BlacklistedAgent) {
