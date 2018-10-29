@@ -1,3 +1,5 @@
+apply plugin: com.bmuschko.gradle.docker.DockerRemoteApiPlugin
+
 buildscript {
     repositories {
         jcenter()
@@ -8,23 +10,38 @@ buildscript {
     }
 }
 
-apply plugin: com.bmuschko.gradle.docker.DockerRemoteApiPlugin
+docker {
+    registryCredentials {
+        url = 'alvch-dockerv2-local.jfrog.io'
+        username = System.env.ARTIFACTORY_USERNAME
+        password = System.env.ARTIFACTORY_PASSWORD
+    }
+}
 
 import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
+import com.bmuschko.gradle.docker.tasks.image.DockerPushImage
 
 task copyDockerFiles(type: Copy) {
-    description = "Copy Dockerfile and required data to build directory"
-    from 'src/main/docker'
-    from "${project.buildDir}/libs"
-    into { "${project.buildDir}/docker" }
-    include "*"
-    exclude "**/*.yml"
+    from project.file("Dockerfile")
+    from("${project.buildDir}/libs") {
+        rename { fileName ->
+            fileName.replace("-${project.version}", "")
+        }
+    }
+    into "${project.buildDir}/docker"
 }
 
-task buildDocker(type: DockerBuildImage, dependsOn: 'copyDockerFiles') {
-    description = "Package application as Docker image"
-    group = "Docker"
+task buildDockerImage(type: DockerBuildImage) {
+    dependsOn copyDockerFiles
     inputDir = project.file("${project.buildDir}/docker")
-    tags = ["jobroom:latest".toString(), "jobroom:${project.version}".toString()]
+    tags = [
+        "alvch-dockerv2-local.jfrog.io/${project.name}:latest".toString(),
+        "alvch-dockerv2-local.jfrog.io/${project.name}:${project.version}".toString()
+    ]
 }
 
+task pushDockerImage(type: DockerPushImage) {
+    dependsOn buildDockerImage
+    imageName = "alvch-dockerv2-local.jfrog.io/${project.name}"
+    tag = "${project.version}"
+}
