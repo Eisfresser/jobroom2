@@ -43,5 +43,4 @@ task buildDockerImage(type: DockerBuildImage) {
 task pushDockerImage(type: DockerPushImage) {
     dependsOn buildDockerImage
     imageName = "alvch-dockerv2-local.jfrog.io/${project.name}"
-    tag = "${project.version}"
 }
