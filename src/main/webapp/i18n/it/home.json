@@ -70,7 +70,7 @@
                     "language": "Lingua",
                     "last-name": "Cognome",
                     "phone": "Telefono",
-                    "salutation": "Forma di cortesia",
+                    "salutation": "Appellativo",
                     "title": "Contatto"
                 },
                 "date-placeholder": "GG.MM.AAAA",

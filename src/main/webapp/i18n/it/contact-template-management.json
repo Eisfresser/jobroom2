@@ -1,6 +1,6 @@
 {
     "contact-template-management": {
-        "title": "Personal Contact Information for",
+        "title": "Dati di contatto personali per",
         "helptext": "\u00c8 impossibile modificare nome e cognome in questa maschera. Modifica questi dati direttamente nel tuo conto EIAM. Compilazione automatica dei dati di contatto in JobRoom, negli appositi campi del modulo per l'annuncio dei posti. Queste informazioni non modificano il login del tuo conto EIAM.",
         "link": "Link al conto EIAM",
         "companyName": "Impresa",
@@ -12,9 +12,9 @@
         "email": "E-Mail",
         "firstName": "Nome",
         "lastName": "Cognome",
-        "salutation": "Forma di cortesia",
-        "userInformation": "User information",
-        "companyInformation": "Company information",
+        "salutation": "Appellativo",
+        "userInformation": "Informazioni utente",
+        "companyInformation": "Informazioni Impresa",
         "successSaveMessage": "Your personal contact information was successfully saved!",
         "failureSaveMessage": "There was an error saving your personal contact information",
         "companyhousenr": {

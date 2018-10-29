@@ -70,7 +70,7 @@
                     "language": "Language",
                     "last-name": "Last name",
                     "phone": "Telephone number",
-                    "salutation": "Salutation",
+                    "salutation": "Title",
                     "title": "Contact"
                 },
                 "date-placeholder": "DD.MM.YYYY",

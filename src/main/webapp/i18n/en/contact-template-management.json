@@ -12,9 +12,9 @@
         "email": "E-Mail",
         "firstName": "First name",
         "lastName": "Last name",
-        "salutation": "Salutation",
+        "salutation": "Title",
         "userInformation": "User information",
-        "companyInformation": "Company information",
+        "companyInformation": "Company Information",
         "successSaveMessage": "Your personal contact information was successfully saved!",
         "failureSaveMessage": "There was an error saving your personal contact information",
         "companyhousenr": {
