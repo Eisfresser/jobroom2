@@ -74,7 +74,7 @@
                             {{ (jobExperience.lastJob ? 'candidate-detail.job-experience.last-job.label' :
                             'candidate-detail.job-experience.job.label') | translate}}
                         </strong>
-                        <span class="text--bold">{{ jobExperience.occupationLabel }}</span>
+                        <span class="text--bold">{{ jobExperience.occupationLabel | jr2Capitalize }}</span>
                     </div>
                     <div *ngIf="isDisplayGraduation(jobExperience.graduation)" class="content__item">
                         <strong>{{ 'candidate-detail.job-experience.graduation.label' | translate }}</strong>

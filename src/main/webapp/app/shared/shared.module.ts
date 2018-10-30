@@ -37,6 +37,7 @@ import { CompanySelectionComponent } from './components/company-selection/compan
 import { CurrentSelectedCompanyService } from './company/current-selected-company.service';
 import { UserInfoService } from './user-info/user-info.service';
 import { FormValidationDirective } from './validation/form-validation.directive';
+import { CapitalizePipe } from './pipes/capitalize.pipe';
 
 @NgModule({
     imports: [
@@ -58,7 +59,8 @@ import { FormValidationDirective } from './validation/form-validation.directive'
         FormValidationDirective,
         ScrollToTopComponent,
         ShortenPipe,
-        CompanySelectionComponent
+        CompanySelectionComponent,
+        CapitalizePipe
     ],
     providers: [
         LoginService,
@@ -103,7 +105,8 @@ import { FormValidationDirective } from './validation/form-validation.directive'
         FormValidationDirective,
         ScrollToTopComponent,
         ShortenPipe,
-        CompanySelectionComponent
+        CompanySelectionComponent,
+        CapitalizePipe
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 
