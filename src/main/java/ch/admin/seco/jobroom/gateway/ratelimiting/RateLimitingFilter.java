@@ -24,6 +24,7 @@ import org.slf4j.LoggerFactory;
 
 import org.springframework.http.HttpStatus;
 
+import ch.admin.seco.jobroom.security.AuthoritiesConstants;
 import ch.admin.seco.jobroom.security.SecurityUtils;
 
 /**
@@ -76,6 +77,12 @@ public class RateLimitingFilter extends ZuulFilter {
         if (request == null) {
             return false;
         }
+
+        if (SecurityUtils.hasAnyRole(AuthoritiesConstants.ROLE_ADMIN, AuthoritiesConstants.ROLE_SYSADMIN)) {
+            log.trace("API rate limit filter is disabled for ADMIN and SYSADMIN");
+            return false;
+        }
+
         return this.rateLimitingFilterProperties.getRateFilterOptions()
             .stream()
             .anyMatch(rateFilterOption -> rateFilterOption.matches(request));
