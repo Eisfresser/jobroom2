@@ -1,8 +1,8 @@
 {
     "contact-template-management": {
         "title": "Dati di contatto personali per",
-        "helptext": "\u00c8 impossibile modificare nome e cognome in questa maschera. Modifica questi dati direttamente nel tuo conto EIAM. Compilazione automatica dei dati di contatto in JobRoom, negli appositi campi del modulo per l'annuncio dei posti. Queste informazioni non modificano il login del tuo conto EIAM.",
-        "link": "Link al conto EIAM",
+        "helptext": "\u00c8 impossibile modificare nome e cognome in questa maschera. Modifica questi dati direttamente nel tuo conto eIAM. Compilazione automatica dei dati di contatto in JobRoom, negli appositi campi del modulo per l'annuncio dei posti. Queste informazioni non modificano il login del tuo conto eIAM.",
+        "link": "Link al conto eIAM",
         "companyName": "Impresa",
         "companyStreet": "Via",
         "companyHouseNr": "N.",

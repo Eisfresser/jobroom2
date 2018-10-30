@@ -5,7 +5,7 @@
         "search": "Search",
         "account-info": "Account Info",
         "stes-info": "STES Info",
-        "roles": "EIAM Roles",
+        "roles": "eIAM Roles",
         "accountabilities": "Accountabilities",
         "info-actions": "Additional Info and Actions",
         "label": {
@@ -22,7 +22,7 @@
         },
         "unregistered-user": {
             "title": "Unregistered User",
-            "desc": "The found user seems to have created an EIAM account but not yet registered for job-room. Thus no action is available for this user. If the user wants to use this account for job-room he simply has to login with his EIAM account and finish the registration process in job-room."
+            "desc": "The found user seems to have created an eIAM account but not yet registered for job-room. Thus no action is available for this user. If the user wants to use this account for job-room he simply has to login with his eIAM account and finish the registration process in job-room."
         },
         "unregister": {
             "title": "Reset Registration",
@@ -31,12 +31,12 @@
         "no-user-info": "No user information found",
         "no-account-info": "No account info found",
         "no-stes-info": "No STES Information found",
-        "no-roles": "No Roles in EIAM found",
+        "no-roles": "No Roles in eIAM found",
         "no-accountabilities": "No company accountabilities found",
         "no-actions": "No actions or additional information available",
         "error": {
             "user-not-found": "No user found with this email address.",
-            "eiam-roles-not-found": "No roles for this user found in EIAM.",
+            "eiam-roles-not-found": "No roles for this user found in eIAM.",
             "technical": "A technical error occurred",
             "delete": {
                 "technical": "A technical error occurred during unregistering the user. Please try it again later."

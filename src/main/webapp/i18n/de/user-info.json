@@ -5,7 +5,7 @@
         "search": "Suchen",
         "account-info": "Account Informationen",
         "stes-info": "STES Informationen",
-        "roles": "EIAM Rollen",
+        "roles": "eIAM Rollen",
         "accountabilities": "Verantwortlichkeiten",
         "info-actions": "Zus\u00e4tzliche Informationen und Aktionen",
         "label": {
@@ -22,7 +22,7 @@
         },
         "unregistered-user": {
             "title": "Unregistrierter Benutzer",
-            "desc": "Dieser Benutzer schein bereits einen Account in EIAM erstellt zu haben, jedoch hat er sich bisher nicht in Job-Room registriert. Aus diesem Grund ist keine Aktion f\u00fcr den Benutzer verf\u00fcgbar. Falls der Benutzer Job-Room mit diesem Account nutzen m\u00f6chte, muss er den regul\u00e4ren Registrationsprozess durchf\u00fchren."
+            "desc": "Dieser Benutzer schein bereits einen Account in eIAM erstellt zu haben, jedoch hat er sich bisher nicht in Job-Room registriert. Aus diesem Grund ist keine Aktion f\u00fcr den Benutzer verf\u00fcgbar. Falls der Benutzer Job-Room mit diesem Account nutzen m\u00f6chte, muss er den regul\u00e4ren Registrationsprozess durchf\u00fchren."
         },
         "unregister": {
             "title": "Registrierung zur\u00fcckstellen",
@@ -31,12 +31,12 @@
         "no-user-info": "Keine Benutzer-Informationen gefunden",
         "no-account-info": "Keine Account-Informationen gefunden",
         "no-stes-info": "Keine STES-Informationen gefunden",
-        "no-roles": "Keine Rollen in EIAM gefunden",
+        "no-roles": "Keine Rollen in eIAM gefunden",
         "no-accountabilities": "Keine Verantwortlichkeiten gefunden",
         "no-actions": "Keine Aktionen oder zus\u00e4tzlichen Informationen verf\u00fcgbar",
         "error": {
             "user-not-found": "Es konnte kein Benutzer mit dieser E-Mail-Adresse gefunden werden.",
-            "eiam-roles-not-found": "Es konnte keine Rollen in EIAM f\u00fcr diesen Benutzer gefunden werden.",
+            "eiam-roles-not-found": "Es konnte keine Rollen in eIAM f\u00fcr diesen Benutzer gefunden werden.",
             "technical": "Es ist ein technischer Fehler aufgetreten",
             "delete": {
                 "technical": "Es ist ein technischer Fehler beim Zur\u00fccksetzen der Registrierung aufgetreten. Versuchen Sie es sp\u00e4ter noch mal."

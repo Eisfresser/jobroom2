@@ -1,8 +1,8 @@
 {
     "contact-template-management": {
         "title": "Personal Contact Information for",
-        "helptext": "Names cannot be altered in this field. Please make any changes through your EIAM account using the following link. Contact details are taken automatically from the relevant job registration form fields in JobRoom. These details have no influence on your EIAM account login data.",
-        "link": "Link to EIAM account",
+        "helptext": "Names cannot be altered in this field. Please make any changes through your eIAM account using the following link. Contact details are taken automatically from the relevant job registration form fields in JobRoom. These details have no influence on your eIAM account login data.",
+        "link": "Link to eIAM account",
         "companyName": "Company",
         "companyStreet": "Street",
         "companyHouseNr": "No.",
