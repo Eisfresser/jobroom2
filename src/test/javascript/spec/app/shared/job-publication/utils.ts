@@ -1,10 +1,5 @@
 import { CEFR_Level } from '../../../../../../main/webapp/app/shared';
-import {
-    Address,
-    JobAdvertisement,
-    JobAdvertisementStatus,
-    SourceSystem
-} from '../../../../../../main/webapp/app/shared/job-advertisement/job-advertisement.model';
+import { JobAdvertisement, JobAdvertisementStatus, SourceSystem } from '../../../../../../main/webapp/app/shared/job-advertisement/job-advertisement.model';
 
 export function createJobAdvertisement(id = 'id', stellennummerAvam = 'avam'): JobAdvertisement {
     return {
@@ -54,8 +49,7 @@ export function createJobAdvertisement(id = 'id', stellennummerAvam = 'avam'): J
                 writtenLevel: CEFR_Level.BASIC
             }],
             applyChannel: {
-                rawPostAddress: '',
-                postAddress: null,
+                mailAddress: '',
                 emailAddress: '',
                 phoneNumber: '',
                 formUrl: '',

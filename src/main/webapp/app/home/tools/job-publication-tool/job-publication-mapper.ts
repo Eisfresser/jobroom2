@@ -1,6 +1,5 @@
 import { DateUtils, Degree, WorkForm } from '../../../shared';
 import {
-    ApplyChannel,
     CreateJobAdvertisement,
     JobAdvertisement,
     LanguageSkill,
@@ -9,7 +8,6 @@ import {
 } from '../../../shared/job-advertisement/job-advertisement.model';
 import { JobPublicationForm } from './job-publication-form.model';
 import * as moment from 'moment';
-import {AddressMapper} from "../../../shared/model/address-mapper";
 
 export class JobPublicationMapper {
 
@@ -130,7 +128,7 @@ export class JobPublicationMapper {
 
         if (jobAdvertisement.jobContent.applyChannel) {
             jobPublicationForm.application = {
-                paperApplicationAddress: this.getPaperApplicationAddress(jobAdvertisement.jobContent.applyChannel),
+                paperApplicationAddress: jobAdvertisement.jobContent.applyChannel.mailAddress,
                 electronicApplicationEmail: jobAdvertisement.jobContent.applyChannel.emailAddress,
                 electronicApplicationUrl: jobAdvertisement.jobContent.applyChannel.formUrl,
                 phoneNumber: jobAdvertisement.jobContent.applyChannel.phoneNumber,
@@ -144,12 +142,6 @@ export class JobPublicationMapper {
         };
 
         return jobPublicationForm;
-    }
-
-    private static getPaperApplicationAddress(applyChannel: ApplyChannel): string | null{
-        return applyChannel.postAddress
-            ? AddressMapper.mapAddressToString(applyChannel.postAddress)
-            : applyChannel.rawPostAddress;
     }
 
     static mapJobPublicationFormToCreateJobAdvertisement(jobPublicationForm: JobPublicationForm): CreateJobAdvertisement {
@@ -239,8 +231,7 @@ export class JobPublicationMapper {
 
         if (JobPublicationMapper.anyFieldSet(jobPublicationForm.application)) {
             jobAd.applyChannel = {
-                rawPostAddress: jobPublicationForm.application.paperApplicationAddress,
-                postAddress: null,
+                mailAddress: jobPublicationForm.application.paperApplicationAddress,
                 emailAddress: jobPublicationForm.application.electronicApplicationEmail,
                 phoneNumber: jobPublicationForm.application.phoneNumber,
                 formUrl: JobPublicationMapper.fixUrlScheme(jobPublicationForm.application.electronicApplicationUrl),
