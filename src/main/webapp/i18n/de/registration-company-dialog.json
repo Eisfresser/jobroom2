@@ -11,7 +11,7 @@
         "requestActivationCode": "Freischaltcode per Post anfordern",
         "activationCodeRequested": "Freischaltcode erfolgreich beantragt",
         "returnToHomepage": "Zur\u00fcck zur Startseite",
-        "findButton": "Suchen",
+        "confirmButton": "Best\u00e4tigen",
         "validation": {
             "error": {
                 "uid": "Ung\u00fcltiges UID-Format, g\u00fcltiges Format: CHE-123.456.789",

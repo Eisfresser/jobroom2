@@ -11,7 +11,7 @@
         "requestActivationCode": "Richiedere il codice di attivazione per posta",
         "activationCodeRequested": "Richiesta inoltrata",
         "returnToHomepage": "Tornare alla pagina iniziale",
-        "findButton": "Cercare",
+        "confirmButton": "Confermare",
         "validation": {
             "error": {
                 "uid": "Formato IDI non valido, formato valido: CHE-123.456.789",

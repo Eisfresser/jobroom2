@@ -1,22 +1,25 @@
-import { Component, OnInit } from '@angular/core';
-import { Company, initialCompany } from './registration-company-data';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Company } from './registration-company-data';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RegistrationService } from '../registration.service';
-import { ModalUtils } from '../../../shared';
 import { Router } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { Subject } from 'rxjs';
 
 @Component({
     selector: 'jr2-registration-company-dialog',
     templateUrl: './registration-company-dialog.component.html',
     styleUrls: ['./registration-company-dialog.component.scss']
 })
-export class RegistrationCompanyDialogComponent implements OnInit {
+export class RegistrationCompanyDialogComponent implements OnInit, OnDestroy {
     company: Company;
     companyForm: FormGroup;
     isSubmitted = false;
     companyNotFound = false;
     disableSubmit = false;
+    displayValidationError = false;
+
+    private unsubscribe$ = new Subject<void>();
 
     constructor(private registrationService: RegistrationService,
                 private router: Router,
@@ -25,7 +28,20 @@ export class RegistrationCompanyDialogComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.companyForm = this.fb.group(initialCompany);
+        this.companyForm = this.fb.group({
+            uid: ['', Validators.pattern('^CHE\\-[0-9]{3}\\.[0-9]{3}\\.[0-9]{3}$')]
+        });
+
+        this.companyForm.get('uid').valueChanges
+            .takeUntil(this.unsubscribe$)
+            .subscribe(() => {
+                this.displayValidationError = false;
+            });
+    }
+
+    ngOnDestroy(): void {
+        this.unsubscribe$.next();
+        this.unsubscribe$.complete();
     }
 
     goToHomePage() {
@@ -45,6 +61,11 @@ export class RegistrationCompanyDialogComponent implements OnInit {
     }
 
     findCompanyByUid() {
+        if (this.companyForm.invalid) {
+            this.displayValidationError = true;
+            return;
+        }
+
         this.companyNotFound = false;
         this.registrationService.getCompanyByUid(this.getCompanyUid())
             .subscribe(

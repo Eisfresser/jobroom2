@@ -11,7 +11,7 @@
         "requestActivationCode": "Demander le code de d\u00e9verrouillage par voie postale",
         "activationCodeRequested": "Le code de d\u00e9verrouillage a bien \u00e9t\u00e9 demand\u00e9.",
         "returnToHomepage": "Retour \u00e0 la page d'accueil",
-        "findButton": "Chercher",
+        "confirmButton": "Confirmer",
         "validation": {
             "error": {
                 "uid": "Format de l'IDE non valable, format valable: CHE-123.456.789",

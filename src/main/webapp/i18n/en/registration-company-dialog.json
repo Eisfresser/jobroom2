@@ -11,7 +11,7 @@
         "requestActivationCode": "Request activation code by post",
         "activationCodeRequested": "Activation code requested",
         "returnToHomepage": "Return to homepage",
-        "findButton": "Search",
+        "confirmButton": "Confirm",
         "validation": {
             "error": {
                 "uid": "Invalid UID format. Please use the format CHE-123.456.789",

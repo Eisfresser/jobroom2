@@ -23,27 +23,3 @@ export interface CompanyAddress {
     country: string;
     communityNumber: string;
 }
-
-export const initialCompany: Company = {
-    name: '',
-    additionalName: '',
-    chId: '',
-    uidPrefix: '',
-    uid: '',
-    active: '',
-    commercialRegisterEntryDate: '',
-    address: {
-        street: '',
-        buildingNum: '',
-        streetAddOn: '',
-        zip: '',
-        city: '',
-        canton: '',
-        country: '',
-        communityNumber: '',
-    },
-    mwst: '',
-    vatEntryStatus: '',
-    vatLiquidationDate: '',
-    uidPublic: ''
-};

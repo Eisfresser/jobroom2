@@ -14,13 +14,13 @@
             <div class="form-group">
                 <input type="text"
                        placeholder="{{'registrationCompanyDialog.placeholder' | translate}}"
-                       pattern="^CHE\-[0-9]{3}\.[0-9]{3}\.[0-9]{3}$"
                        formControlName="uid">
                 <button type="submit" class="btn btn-secondary"
-                        jhiTranslate="registrationCompanyDialog.findButton"
-                        [disabled]="!companyForm.get('uid').value || companyForm.get('uid').invalid">
+                        jhiTranslate="registrationCompanyDialog.confirmButton"
+                        [disabled]="!companyForm.get('uid').value">
                 </button>
-                <jr2-input-error-message [formGroup]="companyForm"
+                <jr2-input-error-message *ngIf="displayValidationError"
+                                         [formGroup]="companyForm"
                                          path="uid"
                                          [errorCodes]="['pattern']"
                                          [keys]="['registrationCompanyDialog.validation.error.uid']">
