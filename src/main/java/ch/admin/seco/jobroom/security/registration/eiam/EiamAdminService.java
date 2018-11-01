@@ -35,8 +35,8 @@ public class EiamAdminService {
         }
     }
 
-    public Set<String> getRoles(String email) throws UserNotFoundException {
-        User user = this.eiamClient.getUserByEmail(email);
+    public Set<String> getRoles(String userExternalId) throws UserNotFoundException {
+        User user = this.eiamClient.getUserByExtId(userExternalId);
         return user.getProfiles().stream()
             .flatMap(profile -> profile.getRoles().stream())
             .map(Role::getName)

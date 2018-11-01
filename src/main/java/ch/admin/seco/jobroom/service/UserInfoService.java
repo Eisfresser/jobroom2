@@ -44,8 +44,9 @@ public class UserInfoService {
     }
 
     @IsAdmin
-    public Set<String> getRoles(String eMail) throws UserNotFoundException {
-        return eiamAdminService.getRoles(eMail);
+    public Set<String> getRoles(UserInfoId userInfoId) throws UserNotFoundException, UserInfoNotFoundException {
+        UserInfo userInfo = getUserInfo(userInfoId);
+        return eiamAdminService.getRoles(userInfo.getUserExternalId());
     }
 
     @PreAuthorize("@userInfoAuthorizationService.isCurrentUser(#userInfoId) or hasAuthority('ROLE_ADMIN')")

@@ -19,8 +19,8 @@ export class UserInfoService {
         return this.http.get(UserInfoService.USER_INFO_URL + email, { observe: 'response' });
     }
 
-    public loadUserRolesByMail(email): Observable<any> {
-        return this.http.get(UserInfoService.USER_INFO_URL + email + UserInfoService.USER_INFO_ROLE_POSTFIX, { observe: 'response' });
+    public loadUserRoles(userInfoId: string): Observable<any> {
+        return this.http.get(UserInfoService.USER_INFO_URL + userInfoId + UserInfoService.USER_INFO_ROLE_POSTFIX, { observe: 'response' });
     }
 
     public unregisterUser(email, deleteParams): Observable<any> {

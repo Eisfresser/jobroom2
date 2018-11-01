@@ -63,7 +63,7 @@ export class UserInfoComponent {
         this.unsetErrorMessages()
         this.userInfoService.loadUserInfoByMail(this.email.value)
             .finally(() => {
-                this.searchRolesByEMail();
+                this.searchRolesByUserInfoId(this.selectedUserInfo.id);
             })
             .subscribe((res: HttpResponse<any>) => {
                 this.selectedUserInfo = res.body
@@ -78,13 +78,13 @@ export class UserInfoComponent {
 
     }
 
-    private searchRolesByEMail() {
-        this.userInfoService.loadUserRolesByMail(this.email.value)
+    private searchRolesByUserInfoId(userInfoId: string) {
+        this.userInfoService.loadUserRoles(userInfoId)
             .finally(() => {
                 this.setErrorMessages();
             })
             .subscribe((res: HttpResponse<any>) => {
-                this.userRoles = res.body
+                this.userRoles = res.body;
                 this.tmpErrorMsg = null;
             }, (error: HttpErrorResponse) => {
                 this.userRoles = [];

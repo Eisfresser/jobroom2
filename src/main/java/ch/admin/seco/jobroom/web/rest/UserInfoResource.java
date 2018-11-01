@@ -45,10 +45,10 @@ public class UserInfoResource {
         return this.userInfoService.getUserInfo(eMail);
     }
 
-    @GetMapping("/{eMail}/roles")
+    @GetMapping("/{userInfoId}/roles")
     @Timed
-    public Set<String> getRoles(@PathVariable String eMail) throws UserNotFoundException {
-        return this.userInfoService.getRoles(eMail);
+    public Set<String> getRoles(@PathVariable UserInfoId userInfoId) throws UserNotFoundException, UserInfoNotFoundException {
+        return this.userInfoService.getRoles(userInfoId);
     }
 
     @GetMapping("/{userInfoId}/accountabilities")
