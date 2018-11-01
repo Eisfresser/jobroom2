@@ -34,10 +34,10 @@ task copyDockerFiles(type: Copy) {
 task buildDockerImage(type: DockerBuildImage) {
     dependsOn copyDockerFiles
     inputDir = project.file("${project.buildDir}/docker")
-    tags = [
-        "alvch-dockerv2-local.jfrog.io/${project.name}:latest".toString(),
-        "alvch-dockerv2-local.jfrog.io/${project.name}:${project.version}".toString()
-    ]
+    tags = ["alvch-dockerv2-local.jfrog.io/${project.name}:${project.version}".toString()]
+    if (project.hasProperty('addLatestTagToDockerImage') && addLatestTagToDockerImage) {
+        tags << "alvch-dockerv2-local.jfrog.io/${project.name}:latest".toString()
+    }
 }
 
 task pushDockerImage(type: DockerPushImage) {
