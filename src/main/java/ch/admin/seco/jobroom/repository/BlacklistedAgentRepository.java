@@ -16,4 +16,6 @@ public interface BlacklistedAgentRepository extends JpaRepository<BlacklistedAge
     @Query("select ba from BlacklistedAgent ba where ba.externalId = :externalId")
     Optional<BlacklistedAgent> findByExternalId(@Param("externalId") String externalId);
 
+    @Query("select ba from BlacklistedAgent ba where ba.externalId = :externalId and ba.status = 'ACTIVE'")
+    Optional<BlacklistedAgent> findActiveByExternalId(@Param("externalId") String externalId);
 }

@@ -113,7 +113,7 @@ public class RegistrationService {
         Company company = storeCompany(avgOrganization.get());
         UserInfo userInfo = getCurrentUserInfo();
         userInfo.requestAccessAsAgent(company);
-        Optional<BlacklistedAgent> blacklistedAgent = blacklistedAgentRepository.findByExternalId(avgId);
+        Optional<BlacklistedAgent> blacklistedAgent = blacklistedAgentRepository.findActiveByExternalId(avgId);
         if (blacklistedAgent.isPresent()) {
             mailService.sendBlacklistedAgentRequestedAccessCodeMail(accessCodeMailRecipient, userInfo, blacklistedAgent.get());
         } else {
