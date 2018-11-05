@@ -50,7 +50,7 @@
                 {{ 'candidate-detail.candidate-anonymous-contact.success' | translate }}
             </ngb-alert>
             <div *ngIf="relevantJobExperience$ | async as relevantJobExperience" class="detail__title">
-                <h2 class="text--light">{{ relevantJobExperience.occupationLabel }}</h2>
+                <h2 class="text--light">{{ relevantJobExperience.occupationLabel | jr2Capitalize }}</h2>
             </div>
 
             <div class="detail__content">
