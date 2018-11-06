@@ -24,7 +24,7 @@
                             </address>
                         </div>
 
-                        <div *ngIf="job.jobContent.publicContact as contact">
+                        <div *ngIf="!job.publication.companyAnonymous && job.jobContent.publicContact as contact" >
                             <div class="detail__content">
                                 <strong>{{'job-detail.contactPerson' | translate}}</strong>
                                 <br>
