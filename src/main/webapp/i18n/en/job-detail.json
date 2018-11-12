@@ -32,7 +32,8 @@
         "startsImmediately.false": "By agreement",
         "startsImmediately.true": "Immediately",
         "title": "Job detail",
-        "deactivated": "This job posting is no longer active."
+        "deactivated": "This job posting is no longer active.",
+        "unvalidated": "This job posting is unvalidated."
     },
     "job-fingerprint-redirect": {
         "not-found": "Job not found"

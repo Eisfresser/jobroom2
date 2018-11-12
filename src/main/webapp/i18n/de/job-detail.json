@@ -32,7 +32,8 @@
         "startsImmediately.false": "Nach Vereinbarung",
         "startsImmediately.true": "Ab Sofort",
         "title": "Stellenbeschreibung",
-        "deactivated": "Dieses Stelleninserat ist mittlerweile nicht mehr aktiv."
+        "deactivated": "Dieses Stelleninserat ist mittlerweile nicht mehr aktiv.",
+        "unvalidated": "This job posting is unvalidated."
     },
     "job-fingerprint-redirect": {
         "not-found": "Job not found"

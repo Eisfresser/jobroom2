@@ -81,6 +81,10 @@
             <ngb-alert  type="warning" *ngIf="showJobAdDeactivatedMessage" (close)="showJobAdDeactivatedMessage = false">
                 {{'job-detail.deactivated' | translate}}
             </ngb-alert>
+            <ngb-alert type="info" *ngIf="showJobAdUnvalidatedMessage" (close)="showJobAdUnvalidatedMessage = false"
+                       class="d-print-none">
+                {{'job-detail.unvalidated' | translate}}
+            </ngb-alert>
             <div class="detail__title">
                 <h2 class="text--light" [innerHTML]="jobDescription.title | safeHtml"></h2>
                 <span class="text--primary-color" *ngIf="job.jobContent.company; else ravLabel">{{job.jobContent.company.name}}</span>

@@ -2,7 +2,8 @@ import {
     AfterViewInit,
     Component,
     ElementRef,
-    HostListener, OnInit,
+    HostListener,
+    OnInit,
     ViewChild
 } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
@@ -17,7 +18,8 @@ import { Store } from '@ngrx/store';
 import { TOOLTIP_AUTO_HIDE_TIMEOUT } from '../../app.constants';
 import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import {
-    JobAdvertisement, JobAdvertisementStatus,
+    JobAdvertisement,
+    JobAdvertisementStatus,
     JobDescription,
     SourceSystem
 } from '../../shared/job-advertisement/job-advertisement.model';
@@ -39,6 +41,7 @@ export class JobDetailComponent implements AfterViewInit, OnInit {
     jobListTotalSize$: Observable<number>;
     showJobAdExternalMessage = false;
     showJobAdDeactivatedMessage = false;
+    showJobAdUnvalidatedMessage = false;
 
     @ViewChild('copyToClipboard')
     copyToClipboardElementRef: ElementRef;
@@ -57,6 +60,7 @@ export class JobDetailComponent implements AfterViewInit, OnInit {
             .do((job: JobAdvertisement) => {
                 this.showJobAdDeactivatedMessage = this.isDeactivated(job.status);
                 this.showJobAdExternalMessage = this.isExternal(job.sourceSystem);
+                this.showJobAdUnvalidatedMessage = this.isUnvalidated(job);
             });
         this.jobList$ = this.store.select(getJobList);
 
@@ -80,6 +84,11 @@ export class JobDetailComponent implements AfterViewInit, OnInit {
 
     private isExternal(sourceSystem: SourceSystem) {
         return sourceSystem.toString() === 'EXTERN';
+    }
+
+    private isUnvalidated(jobAdvertisement: JobAdvertisement): boolean {
+        return jobAdvertisement.sourceSystem.toString() === 'API'
+            && !jobAdvertisement.stellennummerAvam
     }
 
     private fixApplicationUrl(jobAdvertisement: JobAdvertisement) {
