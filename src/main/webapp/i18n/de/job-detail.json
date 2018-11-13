@@ -33,7 +33,7 @@
         "startsImmediately.true": "Ab Sofort",
         "title": "Stellenbeschreibung",
         "deactivated": "Dieses Stelleninserat ist mittlerweile nicht mehr aktiv.",
-        "unvalidated": "This job posting is unvalidated."
+        "unvalidated": "Dieses Inserat wurde direkt von einem unserer Nutzer elektronisch auf die Internetplattform der \u00f6ffentlichen Arbeitsvermittlung publiziert. Die Arbeitslosenversicherung und \u00f6ffentliche Arbeitsvermittlung hat keinen Einfluss auf dessen Inhalt und Qualit\u00e4t."
     },
     "job-fingerprint-redirect": {
         "not-found": "Job not found"

@@ -33,7 +33,7 @@
         "startsImmediately.true": "Immediately",
         "title": "Job detail",
         "deactivated": "This job posting is no longer active.",
-        "unvalidated": "This job posting is unvalidated."
+        "unvalidated": "This advert was published electronically by one of our users on the internet platform of the public employment service. Neither the unemployment insurance office nor the public employment service have any influence over its content or quality."
     },
     "job-fingerprint-redirect": {
         "not-found": "Job not found"

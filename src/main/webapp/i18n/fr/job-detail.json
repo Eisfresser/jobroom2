@@ -33,7 +33,7 @@
         "startsImmediately.true": "Tout de suite",
         "title": "D\u00e9tail de l'emploi",
         "deactivated": "Cette offre d'emploi n'est plus active.",
-        "unvalidated": "This job posting is unvalidated."
+        "unvalidated": "Cette offre d\u2019emploi a \u00e9t\u00e9 publi\u00e9e en ligne sur la plateforme Internet du service public de l\u2019emploi directement par l\u2019un de nos utilisateurs. L\u2019assurance-ch\u00f4mage et le service public de l\u2019emploi ne sont pas responsables de son contenu et de sa qualit\u00e9."
     },
     "job-fingerprint-redirect": {
         "not-found": "Job not found"
