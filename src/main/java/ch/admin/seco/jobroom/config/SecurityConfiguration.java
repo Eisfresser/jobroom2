@@ -9,6 +9,7 @@ import static org.opensaml.saml2.core.AuthnContext.SOFTWARE_PKI_AUTHN_CTX;
 import java.util.Arrays;
 import java.util.Collection;
 
+import ch.admin.seco.jobroom.service.logging.BusinessLogger;
 import io.github.jhipster.config.JHipsterProperties;
 import io.github.jhipster.config.JHipsterProperties.Security.Authentication.Jwt;
 import org.apache.commons.lang.StringUtils;
@@ -162,8 +163,10 @@ public class SecurityConfiguration {
 
         private final EiamSecurityProperties eiamSecurityProperties;
 
+        private final BusinessLogger businessLogger;
+
         @Autowired
-        SamlSecurityConfig(UserInfoRepository userInfoRepository, SamlProperties samlProperties, TransactionTemplate transactionTemplate, JHipsterProperties jHipsterProperties, LoginFormUserDetailsService loginFormUserDetailsService, SecurityProblemSupport problemSupport, ApplicationEventPublisher applicationEventPublisher, EiamSecurityProperties eiamSecurityProperties) {
+        SamlSecurityConfig(UserInfoRepository userInfoRepository, SamlProperties samlProperties, TransactionTemplate transactionTemplate, JHipsterProperties jHipsterProperties, LoginFormUserDetailsService loginFormUserDetailsService, SecurityProblemSupport problemSupport, ApplicationEventPublisher applicationEventPublisher, EiamSecurityProperties eiamSecurityProperties, BusinessLogger businessLogger) {
             super(problemSupport);
             this.userInfoRepository = userInfoRepository;
             this.samlProperties = samlProperties;
@@ -173,6 +176,7 @@ public class SecurityConfiguration {
             this.problemSupport = problemSupport;
             this.applicationEventPublisher = applicationEventPublisher;
             this.eiamSecurityProperties = eiamSecurityProperties;
+            this.businessLogger = businessLogger;
         }
 
         @Bean
@@ -241,7 +245,8 @@ public class SecurityConfiguration {
             SamlAuthenticationSuccessHandler authenticationSuccessHandler = new SamlAuthenticationSuccessHandler(
                 this.samlProperties.getAccessRequestUrl(),
                 this.userInfoRepository,
-                this.authenticationEventPublisher()
+                this.authenticationEventPublisher(),
+                this.businessLogger
             );
             authenticationSuccessHandler.setAlwaysUseDefaultTargetUrl(true);
             authenticationSuccessHandler.setDefaultTargetUrl("/");

@@ -1,15 +1,12 @@
 package ch.admin.seco.jobroom.security.saml;
 
-import java.io.IOException;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.stream.Collectors;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import ch.admin.seco.jobroom.domain.UserInfo;
+import ch.admin.seco.jobroom.domain.enumeration.RegistrationStatus;
+import ch.admin.seco.jobroom.repository.UserInfoRepository;
+import ch.admin.seco.jobroom.security.AuthoritiesConstants;
+import ch.admin.seco.jobroom.security.UserPrincipal;
+import ch.admin.seco.jobroom.service.logging.BusinessLogData;
+import ch.admin.seco.jobroom.service.logging.BusinessLogger;
 import org.springframework.security.authentication.AuthenticationEventPublisher;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.core.Authentication;
@@ -17,11 +14,19 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 
-import ch.admin.seco.jobroom.domain.UserInfo;
-import ch.admin.seco.jobroom.domain.enumeration.RegistrationStatus;
-import ch.admin.seco.jobroom.repository.UserInfoRepository;
-import ch.admin.seco.jobroom.security.AuthoritiesConstants;
-import ch.admin.seco.jobroom.security.UserPrincipal;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import static ch.admin.seco.jobroom.service.logging.BusinessLogAdditionalKey.OBJECT_TYPE_STATUS;
+import static ch.admin.seco.jobroom.service.logging.BusinessLogEventType.USER_LOGGED_IN_EVENT;
+import static ch.admin.seco.jobroom.service.logging.BusinessLogObjectType.USER;
+import static org.apache.commons.lang.WordUtils.capitalize;
 
 /**
  * The success handler is called after the user has been authenticated successfully. It is
@@ -45,12 +50,15 @@ public class SamlAuthenticationSuccessHandler extends SavedRequestAwareAuthentic
 
     private final AuthenticationEventPublisher authenticationEventPublisher;
 
+    private final BusinessLogger businessLogger;
+
     private final Map<RegistrationStatus, RegistrationStatusStrategy> registrationStatusStrategyMap = new HashMap<>();
 
-    public SamlAuthenticationSuccessHandler(String eiamAccessRequestTargetUrl, UserInfoRepository userInfoRepository, AuthenticationEventPublisher authenticationEventPublisher) {
+    public SamlAuthenticationSuccessHandler(String eiamAccessRequestTargetUrl, UserInfoRepository userInfoRepository, AuthenticationEventPublisher authenticationEventPublisher, BusinessLogger businessLogger) {
         this.eiamAccessRequestTargetUrl = eiamAccessRequestTargetUrl;
         this.userInfoRepository = userInfoRepository;
         this.authenticationEventPublisher = authenticationEventPublisher;
+        this.businessLogger = businessLogger;
         this.registrationStatusStrategyMap.put(RegistrationStatus.UNREGISTERED, this::redirectToRegistrationPage);
         this.registrationStatusStrategyMap.put(RegistrationStatus.VALIDATION_EMP, this::redirectToAccessCodePage);
         this.registrationStatusStrategyMap.put(RegistrationStatus.VALIDATION_PAV, this::redirectToAccessCodePage);
@@ -89,6 +97,11 @@ public class SamlAuthenticationSuccessHandler extends SavedRequestAwareAuthentic
     private void handleAuthenticatedUser(Authentication authentication, UserPrincipal userPrincipal, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         UserInfo userInfo = userInfoRepository.findById(userPrincipal.getId())
             .orElseThrow(() -> new IllegalStateException("No user found with Id: " + userPrincipal.getId().getValue()));
+
+        businessLogger.log(BusinessLogData.of(USER_LOGGED_IN_EVENT)
+            .withObjectType(capitalize(USER.name()))
+            .withAdditionalData(OBJECT_TYPE_STATUS.name(), userInfo.getRegistrationStatus())
+            .withObjectId(userInfo.getId().getValue()));
 
         if (this.isAdmin(authentication)) {
             logger.debug("User is Admin -> redirect to home");

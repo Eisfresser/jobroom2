@@ -133,6 +133,12 @@ public class UserPrincipal implements UserDetails {
         this.password = password;
     }
 
+    public String getAuthoritiesAsString() {
+        return authorities.stream()
+            .map(Object::toString)
+            .collect(Collectors.joining(", "));
+    }
+
     @Override
     public String toString() {
         return "UserPrincipal{" +

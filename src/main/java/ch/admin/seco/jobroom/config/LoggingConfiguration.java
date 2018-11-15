@@ -15,6 +15,7 @@ import ch.qos.logback.core.spi.ContextAwareBase;
 import ch.qos.logback.core.spi.FilterReply;
 import io.github.jhipster.config.JHipsterProperties;
 import net.logstash.logback.appender.LogstashTcpSocketAppender;
+import net.logstash.logback.composite.loggingevent.ArgumentsJsonProvider;
 import net.logstash.logback.encoder.LogstashEncoder;
 import net.logstash.logback.stacktrace.ShortenedThrowableConverter;
 import org.slf4j.Logger;
@@ -74,6 +75,7 @@ public class LoggingConfiguration {
         LogstashEncoder logstashEncoder = new LogstashEncoder();
         // Set the Logstash appender config from JHipster properties
         logstashEncoder.setCustomFields(customFields);
+        logstashEncoder.addProvider(new ArgumentsJsonProvider());
         // Set the Logstash appender config from JHipster properties
         logstashAppender.addDestinations(new InetSocketAddress(jHipsterProperties.getLogging().getLogstash().getHost(), jHipsterProperties.getLogging().getLogstash().getPort()));
 

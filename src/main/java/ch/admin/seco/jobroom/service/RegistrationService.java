@@ -1,31 +1,11 @@
 package ch.admin.seco.jobroom.service;
 
 
-import java.time.LocalDate;
-import java.util.Optional;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Assert;
-import org.springframework.util.StringUtils;
-
 import ch.admin.seco.jobroom.config.Constants;
-import ch.admin.seco.jobroom.domain.BlacklistedAgent;
-import ch.admin.seco.jobroom.domain.Company;
-import ch.admin.seco.jobroom.domain.Organization;
-import ch.admin.seco.jobroom.domain.UserInfo;
-import ch.admin.seco.jobroom.domain.UserInfoId;
+import ch.admin.seco.jobroom.domain.*;
 import ch.admin.seco.jobroom.domain.enumeration.CompanySource;
 import ch.admin.seco.jobroom.domain.enumeration.RegistrationStatus;
-import ch.admin.seco.jobroom.repository.BlacklistedAgentRepository;
-import ch.admin.seco.jobroom.repository.CompanyRepository;
-import ch.admin.seco.jobroom.repository.OrganizationRepository;
-import ch.admin.seco.jobroom.repository.UserInfoRepository;
-import ch.admin.seco.jobroom.repository.UserRepository;
+import ch.admin.seco.jobroom.repository.*;
 import ch.admin.seco.jobroom.security.AuthoritiesConstants;
 import ch.admin.seco.jobroom.security.IsAdmin;
 import ch.admin.seco.jobroom.security.UserPrincipal;
@@ -38,6 +18,23 @@ import ch.admin.seco.jobroom.security.registration.uid.UidCompanyNotFoundExcepti
 import ch.admin.seco.jobroom.service.dto.RegistrationResultDTO;
 import ch.admin.seco.jobroom.service.dto.StesVerificationRequest;
 import ch.admin.seco.jobroom.service.dto.StesVerificationResult;
+import ch.admin.seco.jobroom.service.logging.BusinessLogData;
+import ch.admin.seco.jobroom.service.logging.BusinessLogger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
+import org.springframework.util.StringUtils;
+
+import java.time.LocalDate;
+import java.util.Optional;
+
+import static ch.admin.seco.jobroom.service.logging.BusinessLogAdditionalKey.OBJECT_TYPE_STATUS;
+import static ch.admin.seco.jobroom.service.logging.BusinessLogEventType.USER_UNREGISTERED_EVENT;
+import static ch.admin.seco.jobroom.service.logging.BusinessLogObjectType.USER;
+import static org.apache.commons.lang.WordUtils.capitalize;
 
 @Service
 @ConfigurationProperties(prefix = "security")
@@ -68,7 +65,9 @@ public class RegistrationService {
 
     private final BlacklistedAgentRepository blacklistedAgentRepository;
 
-    public RegistrationService(UserInfoRepository userInfoRepository, CompanyRepository companyRepository, OrganizationRepository organizationRepository, UserRepository userRepository, MailService mailService, UidClient uidClient, EiamAdminService eiamAdminService, CandidateService candidateService, CurrentUserService currentUserService, BlacklistedAgentRepository blacklistedAgentRepository) {
+    private final BusinessLogger businessLogger;
+
+    public RegistrationService(UserInfoRepository userInfoRepository, CompanyRepository companyRepository, OrganizationRepository organizationRepository, UserRepository userRepository, MailService mailService, UidClient uidClient, EiamAdminService eiamAdminService, CandidateService candidateService, CurrentUserService currentUserService, BlacklistedAgentRepository blacklistedAgentRepository, BusinessLogger businessLogger) {
         this.userInfoRepository = userInfoRepository;
         this.companyRepository = companyRepository;
         this.organizationRepository = organizationRepository;
@@ -79,6 +78,7 @@ public class RegistrationService {
         this.candidateService = candidateService;
         this.currentUserService = currentUserService;
         this.blacklistedAgentRepository = blacklistedAgentRepository;
+        this.businessLogger = businessLogger;
     }
 
     public void registerAsJobSeeker(LocalDate birthdate, Long personNumber) throws InvalidPersonenNumberException, StesPersonNumberAlreadyTaken {
@@ -94,6 +94,7 @@ public class RegistrationService {
         addJobseekerRoleToSession();
         userInfo.registerAsJobSeeker(personNumber);
         LOGGER.info("Registered user with id: {} as job-seeker", userInfo.getUserExternalId());
+        businessLogger.log(prepareBusinessLogDataForRegistrationStatusAndCandidateEmail(userInfo.getRegistrationStatus(), userInfo.getEmail()));
     }
 
 
@@ -147,6 +148,7 @@ public class RegistrationService {
         } else {
             throw new IllegalStateException("User with id=" + userPrincipal.getUserExtId() + " tried to register as employer/agent, but has a wrong registration status: " + userInfo.getRegistrationStatus());
         }
+        businessLogger.log(prepareBusinessLogDataForRegistrationStatusAndCandidateEmail(userInfo.getRegistrationStatus(), userInfo.getEmail()));
         result.setSuccess(true);
         userInfo.finishRegistration();
         return result;
@@ -308,6 +310,22 @@ public class RegistrationService {
         userInfo.unregister();
         this.eiamAdminService.removeRole(userInfo.getUserExternalId(), role);
         LOGGER.info("JobSeeker with email {} has been unregistered", eMail);
+        businessLogger.log(prepareBusinessLogDataForRegistrationStatusAndCandidateEmail(userInfo.getRegistrationStatus(), eMail));
     }
 
+    private BusinessLogData prepareBusinessLogDataForRegistrationStatusAndCandidateEmail(RegistrationStatus status, String email) {
+        BusinessLogData logData = BusinessLogData.of(USER_UNREGISTERED_EVENT)
+            .withObjectType(capitalize(USER.name()))
+            .withAdditionalData(OBJECT_TYPE_STATUS.name(), status);
+        getCandidatePersonNumber(email).ifPresent(logData::withObjectId);
+        return logData;
+    }
+
+    private Optional<String> getCandidatePersonNumber(String candidateEmail) {
+        return userInfoRepository.findByEMail(candidateEmail)
+            .map(userInfo -> userInfo.getStesInformation()
+                .map(StesInformation::getPersonNumber)
+                .map(Object::toString))
+            .orElse(Optional.empty());
+    }
 }
