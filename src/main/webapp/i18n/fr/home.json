@@ -47,7 +47,7 @@
                     "copy-from-business": "Comme l'entreprise",
                     "email": "Courriel",
                     "online-form": "Formulaire en ligne",
-                    "paper-application-url": "Adresse postale",
+                    "paper-application-post-address": "Adresse postale",
                     "phone": "T\u00e9l\u00e9phone",
                     "title": "Types de postulation"
                 },
@@ -55,6 +55,7 @@
                     "country": "Pays",
                     "house-number": "N\u00b0",
                     "name": "Entreprise",
+                    "postbox": "Case postale",
                     "postbox-city": "Lieu",
                     "postbox-number": "Num\u00e9ro de case postale",
                     "postbox-zip": "Case postale NPA",
@@ -129,16 +130,19 @@
                     "validate": {
                         "date-format": "Le format de la date n\u2019est pas conforme. Format correct: JJ.MM.AAAA",
                         "email-format": "Cette adresse courriel n'est pas valide.",
+                        "url-format": "Ce lien URL n'est pas valable.",
                         "employment-duration": {
                             "date-before": "La date doit se situer apr\u00e8s l'entr\u00e9e en fonction."
                         },
                         "employment-start": {
                             "date-before": "La date doit se situer dans le futur."
                         },
-                        "phone-format": "Please enter a valid phone number e.g. 031 999 99 99 or +41 31 999 99 99",
+                        "phone-format": "Veuillez indiquer un num\u00e9ro de t\u00e9l\u00e9phone valide, par exemple 031 999 99 99 ou +41 31 999 99 99",
                         "required": "Ce champ est obligatoire.",
-                        "at-least-one-required-email-or-phone": "Please specify telephone number or Email",
-                        "at-least-one-required": "Choisir au moins un type de postulation",
+                        "at-least-one-required-email-or-phone": "Veuillez indiquer le num\u00e9ro de t\u00e9l\u00e9phone ou l'adresse courriel.",
+                        "at-least-one-required": "Choisir au moins un type de postulation et remplir correctement les champs respectifs.",
+                        "at-least-one-required-street-or-pobox": "Veuillez indiquer la rue ou le num\u00e9ro de la bo\u00eete postale.",
+                        "pobox-format": "Ce num\u00e9ro de bo\u00eete postale n'est pas valide.",
                         "zip-format": "NPA n'est pas valide.",
                         "zip-or-city-format": "NPA/lieu n'est pas valide.",
                         "number-of-jobs": "Ce champ doit comporter un nombre entier entre 1 et 99."

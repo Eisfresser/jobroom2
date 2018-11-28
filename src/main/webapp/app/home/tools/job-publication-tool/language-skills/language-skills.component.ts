@@ -2,7 +2,7 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import {
     FormArray,
     FormBuilder,
-    FormGroup
+    FormGroup, Validators
 } from '@angular/forms';
 import { CEFR_Level, LanguageSkill } from '../../../../shared';
 import { Subscription } from 'rxjs/Subscription';
@@ -17,6 +17,10 @@ const MAX_LANGUAGE_OPTIONS_NUM = 5;
     styleUrls: ['./language-skills.component.scss']
 })
 export class LanguageSkillsComponent implements OnInit, OnDestroy {
+    readonly CODE_MAX_LENGTH = 5;
+    readonly SPOKEN_MAX_LENGTH = 64;
+    readonly WRITTEN_MAX_LENGTH = 64;
+
     @Input() group: FormGroup;
     @Input() controlName: string;
     @Input() languageOptions: Array<string>;
@@ -122,9 +126,9 @@ export class LanguageSkillsComponent implements OnInit, OnDestroy {
 
     private createGroup(value): FormGroup {
         return this.fb.group({
-            code: [value.code],
-            spoken: [value.spoken],
-            written: [value.written]
+            code: [value.code, [Validators.maxLength(this.CODE_MAX_LENGTH)]],
+            spoken: [value.spoken, [Validators.maxLength(this.SPOKEN_MAX_LENGTH)]],
+            written: [value.written, [Validators.maxLength(this.WRITTEN_MAX_LENGTH)]],
         });
     }
 }

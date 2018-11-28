@@ -18,5 +18,78 @@
         "permanent": "Unbefristet",
         "print": "Drucken",
         "temporary": "Befristet"
+    },
+    "job-publication": {
+        "validation": {
+            "title": {
+                "maxlength": "Dieses Feld darf max. 255 Zeichen lang sein."
+            },
+            "language": {
+                "maxlength": "Dieses Feld darf max. 5 Zeichen lang sein."
+            },
+            "description": {
+                "maxlength": "Dieses Feld darf max. 1000 Zeichen lang sein."
+            }
+        },
+        "application": {
+            "electronicApplication": {
+                "mail": {
+                    "maxlength": "Dieses Feld darf max. 50 Zeichen lang sein."
+                }
+            },
+            "postAddress": {
+                "paperApp": {
+                    "companyName": {
+                        "maxlength": "Dieses Feld darf max. 255 Zeichen lang sein."
+                    },
+                    "street": {
+                        "maxlength": "Dieses Feld darf max. 60 Zeichen lang sein."
+                    },
+                    "houseNr": {
+                        "maxlength": "Dieses Feld darf max. 10 Zeichen lang sein."
+                    },
+                    "postboxNr": {
+                        "maxlength": "Dieses Feld darf max. 20 Zeichen lang sein."
+                    },
+                    "zipCode": {
+                        "maxlength": "Dieses Feld darf max. 10 Zeichen lang sein."
+                    },
+                    "city": {
+                        "maxlength": "Dieses Feld darf max. 10 Zeichen lang sein.",
+                        "empty": "Dieses Feld darf nicht leer sein!"
+                    }
+                }
+            }
+        },
+        "contact": {
+            "firstName": {
+                "maxlength": "Dieses Feld darf max. 50 Zeichen lang sein."
+            },
+            "lastName": {
+                "maxlength": "Dieses Feld darf max. 50 Zeichen lang sein."
+            },
+            "email": {
+                "maxlength": "Dieses Feld darf max. 50 Zeichen lang sein."
+            }
+        },
+        "publicContact": {
+            "firstName": {
+                "maxlength": "Dieses Feld darf max. 50 Zeichen lang sein."
+            },
+            "lastName": {
+                "maxlength": "Dieses Feld darf max. 50 Zeichen lang sein."
+            },
+            "email": {
+                "maxlength": "Dieses Feld darf max. 50 Zeichen lang sein."
+            }
+        },
+        "company": {
+            "name": {
+                "maxlength": "Dieses Feld darf max. 255 Zeichen lang sein."
+            },
+            "street": {
+                "maxlength": "Dieses Feld darf max. 60 Zeichen lang sein."
+            }
+        }
     }
 }

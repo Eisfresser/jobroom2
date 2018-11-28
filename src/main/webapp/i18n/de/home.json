@@ -47,7 +47,7 @@
                     "copy-from-business": "Wie bei Unternehmen",
                     "email": "E-Mail",
                     "online-form": "Online-Formular",
-                    "paper-application-url": "Postadresse",
+                    "paper-application-post-address": "Postadresse",
                     "phone": "Telefon",
                     "title": "Bewerbungsformen"
                 },
@@ -55,6 +55,7 @@
                     "country": "Land",
                     "house-number": "Nr.",
                     "name": "Unternehmen",
+                    "postbox": "Postfach",
                     "postbox-city": "Ort",
                     "postbox-number": "Postfach-Nr.",
                     "postbox-zip": "Postfach PLZ",
@@ -129,16 +130,19 @@
                     "validate": {
                         "date-format": "Datumsformat ung\u00fcltig, richtiges Format: TT.MM.JJJJ",
                         "email-format": "Diese E-Mail-Adresse ist ung\u00fcltig.",
+                        "url-format": "Diese URL ist ung\u00fcltig.",
                         "employment-duration": {
                             "date-before": "Datum muss nach dem Stellenantritt liegen."
                         },
                         "employment-start": {
                             "date-before": "Datum muss in der Zukunft liegen."
                         },
-                        "phone-format": "Bitte g\u00fcltige Telefonnummer eingeben z. B. 031 999 99 99 oder +41 31 999 99 99",
+                        "phone-format": "Bitte g\u00fcltige Telefonnummer eingeben z.B. 031 999 99 99 oder +41 31 999 99 99",
                         "required": "Pflichtfeld",
-                        "at-least-one-required-email-or-phone": "Bitte Telefon oder E-Mail angeben",
-                        "at-least-one-required": "Bitte mindestens eine Bewerbungsform w\u00e4hlen",
+                        "at-least-one-required-email-or-phone": "Bitte Telefon oder E-Mail angeben.",
+                        "at-least-one-required": "Bitte mindestens eine Bewerbungsform w\u00e4hlen und die ausgew\u00e4hlten Bewerbungsformen korrekt ausf\u00fcllen.",
+                        "at-least-one-required-street-or-pobox": "Bitte Strasse oder Postfach-Nr. angeben.",
+                        "pobox-format": "Diese Postfach-Nr. ist ung\u00fcltig.",
                         "zip-format": "PLZ ung\u00fcltig",
                         "zip-or-city-format": "PLZ/Ort ung\u00fcltig",
                         "number-of-jobs": "Dieses Pflichtfeld muss eine ganze Zahl zwischen 1 und 99 sein."

@@ -12,12 +12,18 @@ import {
     HideSuccessMessageAction,
     SubmitCancellationAction
 } from '../state-management/actions/job-publication-detail.actions';
-import { JobAdvertisement, JobDescription } from '../../shared/job-advertisement/job-advertisement.model';
+import {
+    ApplyChannel,
+    JobAdvertisement,
+    JobDescription
+} from '../../shared/job-advertisement/job-advertisement.model';
 import { JobAdvertisementService } from '../../shared/job-advertisement/job-advertisement.service';
 import { JobAdvertisementUtils } from '../job-advertisement.utils';
 import { JobAdvertisementCancelDialogService } from '../dialogs/job-advertisement-cancel-dialog.service';
 import { CoreState, getLanguage } from '../../shared/state-management/state/core.state';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AddressMapper } from '../../shared/model/address-mapper';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'jr2-job-publication-detail',
@@ -37,7 +43,8 @@ export class JobPublicationDetailComponent implements OnInit {
                 private coreStore: Store<CoreState>,
                 private jobAdvertisementCancelDialogService: JobAdvertisementCancelDialogService,
                 private route: ActivatedRoute,
-                private router: Router) {
+                private router: Router,
+                private translate: TranslateService) {
     }
 
     ngOnInit() {
@@ -90,5 +97,11 @@ export class JobPublicationDetailComponent implements OnInit {
 
     printJobAdvertisement() {
         window.print();
+    }
+
+    getPostAddress(applyChannel: ApplyChannel): string {
+        return applyChannel.postAddress
+            ? AddressMapper.mapAddressToString(applyChannel.postAddress, this.translate)
+            : applyChannel.rawPostAddress;
     }
 }

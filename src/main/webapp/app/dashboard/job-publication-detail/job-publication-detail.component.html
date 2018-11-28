@@ -112,9 +112,9 @@
 
                 <div class="alv-logo-box flex-height flex-column md-whiteframe-1dp filter-nav">
                     <p><strong>{{ 'job-publication-details.application.title' | translate }}</strong></p>
-                    <p *ngIf="applyChannel.mailAddress" class="nav-item">
+                    <p *ngIf="getPostAddress(job.jobContent.applyChannel) as postAddress" class="nav-item">
                         <span>{{ 'job-publication-details.application.post' | translate }}</span>
-                        <span>{{ applyChannel.mailAddress }}</span>
+                        <span>{{ postAddress }}</span>
                     </p>
                     <p *ngIf="applyChannel.emailAddress" class="nav-item">
                         <span>{{ 'job-publication-details.application.email' | translate }}:</span><br/>

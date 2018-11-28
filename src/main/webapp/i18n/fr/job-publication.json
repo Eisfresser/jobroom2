@@ -18,5 +18,78 @@
         "permanent": "Ind\u00e9termin\u00e9",
         "print": "Imprimer",
         "temporary": "Dur\u00e9e limit\u00e9e"
+    },
+    "job-publication": {
+        "validation": {
+            "title": {
+                "maxlength": "Ce champ doit comporter au maximum 255 caract\u00e8res."
+            },
+            "language": {
+                "maxlength": "Ce champ doit comporter au maximum 5 caract\u00e8res."
+            },
+            "description": {
+                "maxlength": "Ce champ doit comporter au maximum 1000 caract\u00e8res."
+            }
+        },
+        "application": {
+            "electronicApplication": {
+                "mail": {
+                    "maxlength": "Ce champ doit comporter au maximum 50 caract\u00e8res."
+                }
+            },
+            "postAddress": {
+                "paperApp": {
+                    "companyName": {
+                        "maxlength": "Ce champ doit comporter au maximum 255 caract\u00e8res."
+                    },
+                    "street": {
+                        "maxlength": "Ce champ doit comporter au maximum 60 caract\u00e8res."
+                    },
+                    "houseNr": {
+                        "maxlength": "Ce champ doit comporter au maximum 10 caract\u00e8res."
+                    },
+                    "postboxNr": {
+                        "maxlength": "Ce champ doit comporter au maximum 20 caract\u00e8res."
+                    },
+                    "zipCode": {
+                        "maxlength": "Ce champ doit comporter au maximum 10 caract\u00e8res."
+                    },
+                    "city": {
+                        "maxlength": "Ce champ doit comporter au maximum 10 caract\u00e8res.",
+                        "empty": "Ce champ ne peut pas \u00eatre vide !"
+                    }
+                }
+            }
+        },
+        "contact": {
+            "firstName": {
+                "maxlength": "Ce champ doit comporter au maximum 50 caract\u00e8res."
+            },
+            "lastName": {
+                "maxlength": "Ce champ doit comporter au maximum 50 caract\u00e8res."
+            },
+            "email": {
+                "maxlength": "Ce champ doit comporter au maximum 50 caract\u00e8res."
+            }
+        },
+        "publicContact": {
+            "firstName": {
+                "maxlength": "Ce champ doit comporter au maximum 50 caract\u00e8res."
+            },
+            "lastName": {
+                "maxlength": "Ce champ doit comporter au maximum 50 caract\u00e8res."
+            },
+            "email": {
+                "maxlength": "Ce champ doit comporter au maximum 50 caract\u00e8res."
+            }
+        },
+        "company": {
+            "name": {
+                "maxlength": "Ce champ doit comporter au maximum 255 caract\u00e8res."
+            },
+            "street": {
+                "maxlength": "Ce champ doit comporter au maximum 60 caract\u00e8res."
+            }
+        }
     }
 }

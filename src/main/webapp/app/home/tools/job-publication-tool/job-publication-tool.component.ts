@@ -36,7 +36,7 @@ import {
     OccupationPresentationService,
     SuggestionLoaderFn
 } from '../../../shared/reference-service';
-import { Translations } from './zip-code/zip-code.component';
+import { Translations, ZipCodeComponent } from './zip-code/zip-code.component';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import * as countries from 'i18n-iso-countries';
 import { Subscriber } from 'rxjs/Subscriber';
@@ -63,7 +63,35 @@ import { CurrentSelectedCompanyService } from '../../../shared/company/current-s
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JobPublicationToolComponent implements OnInit, OnDestroy {
-    readonly APPLICATION_ADDITIONAL_INFO_MAX_LENGTH = 240;
+    readonly APPLICATION_ELECTRONIC_MAIL_MAX_LENGTH = 50;
+    readonly APPLICATION_PAPER_COUNTRY_ISO_CODE_MAX_LENGTH = 2;
+
+    readonly APPLICATION_PAPER_APPLICATION_CITY_MAX_LENGTH = 100;
+    readonly APPLICATION_PAPER_APPLICATION_ZIP_MAX_LENGTH = 10;
+    readonly APPLICATION_PAPER_APPLICATION_PO_NO_MAX_LENGTH = 20;
+    readonly APPLICATION_PAPER_APPLICATION_HOUSE_NO_MAX_LENGTH = 10;
+    readonly APPLICATION_PAPER_APPLICATION_STREET_MAX_LENGTH = 60;
+    readonly APPLICATION_PAPER_APPLICATION_COMPANY_NAME_MAX_LENGTH = 255;
+
+    readonly PUBLIC_CONTACT_MAIL_MAX_LENGTH = 50;
+    readonly PUBLIC_CONTACT_LAST_NAME_MAX_LENGTH = 50;
+    readonly PUBLIC_CONTACT_FIRST_NAME_MAX_LENGTH = 50;
+    readonly PUBLIC_CONTACT_SALUTATION_MAX_LENGTH = 3;
+
+    readonly CONTACT_EMAIL_MAX_LENGTH = 50;
+    readonly CONTACT_LAST_NAME_MAX_LENGTH = 50;
+    readonly CONTACT_FIRST_NAME_MAX_LENGTH = 50;
+    readonly CONTACT_SALUTATION_MAX_LENGTH = 3;
+
+    readonly COMPANY_STREET_MAX_LENGTH = 60;
+    readonly COMPANY_COUNTRY_CODE_MAX_LENGTH = 2;
+    readonly COMPANY_POSTBOX_ZIP_CODE_MAX_LENGTH = 10;
+    readonly COMPANY_ZIP_CODE_MAX_LENGTH = 10;
+    readonly COMPANY_HOUSE_NO_MAX_LENGTH = 10;
+    readonly COMPANY_NAME_MAX_LENGTH = 255;
+    readonly EXPERIENCE_MAX_LENGTH = 64;
+
+    readonly APPLICATION_ADDITIONAL_INFO_MAX_LENGTH = 255;
     readonly CONTACT_LANGUAGES = ['de', 'fr', 'it', 'en'];
 
     @Input()
@@ -74,6 +102,9 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
 
     @ViewChild('employmentEndDateEl')
     employmentEndDateElementRef: ElementRef;
+
+    @ViewChild('applicationPostAddressZip')
+    applicationPostAddressZipElementRef: ZipCodeComponent;
 
     degrees = Degree;
     experiences = WorkExperience;
@@ -130,6 +161,7 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
 
         this.jobPublicationForm = this.createJobPublicationForm(defaultFormValues);
         this.configureEmployerSection(defaultFormValues);
+        this.configureApplicationSection(defaultFormValues);
         this.configureEmploymentSection();
 
         this.currentSelectedCompanyService.getSelectedCompanyContactTemplate()
@@ -182,25 +214,54 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
 
     copyAddressFromCompany() {
         const company: CompanyFormModel = this.jobPublicationForm.get('company').value;
-        const addressParts = [company.name];
-        if (company.postboxNumber) {
-            addressParts.push('PO Box ' + company.postboxNumber);
-            if (company.postboxZipCode) {
-                addressParts.push([company.postboxZipCode.zip, company.postboxZipCode.city].join(' '));
+        const oldCountryCode = this.jobPublicationForm.get('application.postAddress.paperAppCountryCode').value;
+        const newCountryCode = company.countryCode;
+        const isSwitzerlandSelected = (newCountryCode === this.COUNTRY_ISO_CODE_SWITZERLAND);
+
+        this.jobPublicationForm.get('application').patchValue({
+            postAddress: {
+                paperAppCompanyName: company.name,
+                paperAppStreet: company.street,
+                paperAppHouseNr: company.houseNumber,
+                paperAppZip: this.copyAddressFromCompanyGetZip(),
+                paperAppPostboxNr: company.postboxNumber,
+                paperAppCountryCode: newCountryCode,
+            }
+        });
+
+        if (oldCountryCode === newCountryCode) {
+            if (isSwitzerlandSelected) {
+                this.applicationPostAddressZipElementRef.zipAutocompleter.setValue(this.copyAddressFromCompanyGetZip());
+            } else {
+                this.applicationPostAddressZipElementRef.zipGroup.setValue(this.copyAddressFromCompanyGetZip());
             }
         } else {
-            addressParts.push([company.street, company.houseNumber].join(' '));
-            if (company.zipCode) {
-                addressParts.push([company.zipCode.zip, company.zipCode.city].join(' '));
+            if (isSwitzerlandSelected) {
+                this.applicationPostAddressZipElementRef.zipAutocompleter.valueChanges.take(1).subscribe(() => {
+                    this.applicationPostAddressZipElementRef.zipAutocompleter.setValue(this.copyAddressFromCompanyGetZip());
+                });
+            } else {
+                this.applicationPostAddressZipElementRef.zipGroup.valueChanges.take(1).subscribe(() => {
+                    this.applicationPostAddressZipElementRef.zipGroup.setValue(this.copyAddressFromCompanyGetZip());
+                });
             }
         }
-        const address = addressParts
-            .filter((part) => !!part)
-            .map((part) => part.replace(/^\s*$/, ''))
-            .filter((part) => !!part)
-            .join(', ');
-        this.jobPublicationForm.get('application.paperApplicationAddress').setValue(address);
         return false;
+    }
+
+    copyAddressFromCompanyGetZip() {
+        const company: CompanyFormModel = this.jobPublicationForm.get('company').value;
+        if (company.postboxNumber && company.postboxZipCode) {
+            return {
+                zip: company.postboxZipCode.zip,
+                city: company.postboxZipCode.city,
+            }
+        } else {
+            return {
+                zip: company.zipCode.zip,
+                city: company.zipCode.city,
+            }
+        }
     }
 
     ngOnDestroy(): void {
@@ -252,14 +313,71 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
             }));
 
         const companySurrogate = this.jobPublicationForm.get('company.surrogate');
-        companySurrogate.valueChanges
+        this.addSectionEnableListener(companySurrogate, 'employer');
+    }
+
+    private configureApplicationSection(formModel: JobPublicationForm) {
+        this.jobPublicationForm.addControl('application',
+            this.fb.group({
+                // paperApplicationAddress: [formModel.application.paperApplicationAddress],
+                selectElectronicApplicationUrl: formModel.application.selectElectronicApplicationUrl,
+                selectElectronicApplicationEmail: formModel.application.selectElectronicApplicationEmail,
+                selectPhoneNumber: formModel.application.selectPhoneNumber,
+                selectPaperApp: formModel.application.selectPaperApp,
+                postAddress: this.fb.group({
+                    paperAppCompanyName: [formModel.application.postAddress.paperAppCompanyName, [
+                        Validators.required,
+                        Validators.maxLength(this.APPLICATION_PAPER_APPLICATION_COMPANY_NAME_MAX_LENGTH)]],
+                    paperAppStreet: [formModel.application.postAddress.paperAppStreet, [
+                        Validators.maxLength(this.APPLICATION_PAPER_APPLICATION_STREET_MAX_LENGTH)]],
+                    paperAppHouseNr: [formModel.application.postAddress.paperAppHouseNr, [
+                        Validators.maxLength(this.APPLICATION_PAPER_APPLICATION_HOUSE_NO_MAX_LENGTH)]],
+                    paperAppPostboxNr: [formModel.application.postAddress.paperAppPostboxNr, [
+                        Validators.pattern(POSTBOX_NUMBER_REGEX),
+                        Validators.maxLength(this.APPLICATION_PAPER_APPLICATION_PO_NO_MAX_LENGTH)]],
+                    paperAppZip: this.fb.group({
+                        zip: [formModel.application.postAddress.paperAppZip.zip, [
+                            Validators.maxLength(this.APPLICATION_PAPER_APPLICATION_ZIP_MAX_LENGTH)]],
+                        city: [formModel.application.postAddress.paperAppZip.city, [
+                            Validators.maxLength(this.APPLICATION_PAPER_APPLICATION_CITY_MAX_LENGTH)]],
+                    }),
+                    paperAppCountryCode: [formModel.application.postAddress.paperAppCountryCode, [
+                        Validators.maxLength(this.APPLICATION_PAPER_COUNTRY_ISO_CODE_MAX_LENGTH)]],
+                }, {
+                    validator: this.atLeastOneRequiredValidator(Validators.required,
+                        ['paperAppStreet', 'paperAppPostboxNr'])
+                }),
+                electronicApplicationEmail: [formModel.application.electronicApplicationEmail, [
+                    Validators.required,
+                    Validators.pattern(EMAIL_REGEX),
+                    Validators.maxLength(this.APPLICATION_ELECTRONIC_MAIL_MAX_LENGTH)
+                ]],
+                electronicApplicationUrl: [formModel.application.electronicApplicationUrl, [
+                    Validators.required,
+                    Validators.pattern(URL_REGEX)]],
+                phoneNumber: [formModel.application.phoneNumber, [Validators.required]],
+                additionalInfo: [formModel.application.additionalInfo,
+                    [Validators.maxLength(this.APPLICATION_ADDITIONAL_INFO_MAX_LENGTH)]],
+            }, {
+                validator: this.atLeastOneRequiredValidator(this.checkBoxSelectedValidator(),
+                    ['selectElectronicApplicationUrl', 'selectElectronicApplicationEmail', 'selectPhoneNumber', 'selectPaperApp'])
+            }));
+
+        this.addSectionEnableListener(this.jobPublicationForm.get('application.selectElectronicApplicationUrl'), 'application.electronicApplicationUrl');
+        this.addSectionEnableListener(this.jobPublicationForm.get('application.selectElectronicApplicationEmail'), 'application.electronicApplicationEmail');
+        this.addSectionEnableListener(this.jobPublicationForm.get('application.selectPhoneNumber'), 'application.phoneNumber');
+        this.addSectionEnableListener(this.jobPublicationForm.get('application.selectPaperApp'), 'application.postAddress');
+    }
+
+    private addSectionEnableListener(controlToObserve, sectionToApply) {
+        controlToObserve.valueChanges
             .takeUntil(this.unsubscribe$)
-            .startWith(companySurrogate.value)
+            .startWith(controlToObserve.value)
             .subscribe((value) => {
                 if (value) {
-                    this.jobPublicationForm.get('employer').enable();
+                    this.jobPublicationForm.get(sectionToApply).enable();
                 } else {
-                    this.jobPublicationForm.get('employer').disable();
+                    this.jobPublicationForm.get(sectionToApply).disable();
                 }
             });
     }
@@ -300,10 +418,10 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
             });
     }
 
-    private createJobPublicationForm(formModel: JobPublicationForm): FormGroup {
-        const atLeastOneRequired = (validator: ValidatorFn, includedControls: string[]) => (group: FormGroup): ValidationErrors | null => {
+    private atLeastOneRequiredValidator(validator: ValidatorFn, includedControls: string[]): ValidatorFn {
+        return (group: FormGroup): ValidationErrors | null => {
             const hasAtLeastOne = group && group.controls && Object.keys(group.controls)
-                .filter((controlName) =>  includedControls.includes(controlName))
+                .filter((controlName) => includedControls.includes(controlName))
                 .some((controlName) => {
                     const control = group.controls[controlName];
                     return control.valid && !validator(control)
@@ -313,6 +431,19 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
                 atLeastOneRequired: true,
             };
         };
+    }
+
+    private checkBoxSelectedValidator(): ValidatorFn {
+        return (control: AbstractControl): ValidationErrors | null => {
+            const isControlValid = control.value;
+
+            return isControlValid ? null : {
+                checkBoxNotSelected: true,
+            };
+        };
+    }
+
+    private createJobPublicationForm(formModel: JobPublicationForm): FormGroup {
 
         return this.fb.group({
             numberOfJobs: [formModel.numberOfJobs, [Validators.required, Validators.min(1), Validators.max(99), Validators.pattern(ONE_TWO_DIGIT_INTEGER_REGEX)]],
@@ -320,7 +451,7 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
             occupation: this.fb.group({
                 occupationSuggestion: [formModel.occupation.occupationSuggestion, Validators.required],
                 degree: [formModel.occupation.degree],
-                experience: [formModel.occupation.experience]
+                experience: [formModel.occupation.experience, [Validators.maxLength(this.EXPERIENCE_MAX_LENGTH)]]
             }),
             languageSkills: [formModel.languageSkills],
             employment: this.fb.group({
@@ -349,48 +480,45 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
             }),
             location: this.fb.group({
                 countryCode: [formModel.location.countryCode, Validators.required],
-                zipCode: [formModel.location.zipCode],
+                zipCode:  this.fb.group({
+                    zip: [formModel.location.zipCode.zip],
+                    city: [formModel.location.zipCode.city, [Validators.maxLength(this.COMPANY_NAME_MAX_LENGTH)]]
+                }),
                 additionalDetails: [formModel.location.additionalDetails]
             }),
             company: this.fb.group({
-                name: [formModel.company.name, Validators.required],
-                street: [formModel.company.street, Validators.required],
-                houseNumber: [formModel.company.houseNumber],
-                zipCode: [formModel.company.zipCode],
-                postboxNumber: [formModel.company.postboxNumber, Validators.pattern(POSTBOX_NUMBER_REGEX)],
-                postboxZipCode: [formModel.company.postboxZipCode],
-                countryCode: [formModel.company.countryCode, Validators.required],
+                name: [formModel.company.name, [Validators.required, Validators.maxLength(this.COMPANY_NAME_MAX_LENGTH)]],
+                street: [formModel.company.street, [Validators.required, Validators.maxLength(this.COMPANY_STREET_MAX_LENGTH)]],
+                houseNumber: [formModel.company.houseNumber, [Validators.maxLength(this.COMPANY_HOUSE_NO_MAX_LENGTH)]],
+                zipCode: [formModel.company.zipCode, [Validators.maxLength(this.COMPANY_ZIP_CODE_MAX_LENGTH)]],
+                postboxNumber: [formModel.company.postboxNumber, [Validators.pattern(POSTBOX_NUMBER_REGEX)]],
+                postboxZipCode: [formModel.company.postboxZipCode, [Validators.maxLength(this.COMPANY_POSTBOX_ZIP_CODE_MAX_LENGTH)]],
+                countryCode: [formModel.company.countryCode, [Validators.required, Validators.maxLength(this.COMPANY_COUNTRY_CODE_MAX_LENGTH)]],
                 surrogate: [formModel.company.surrogate]
             }),
             contact: this.fb.group({
-                language: [formModel.contact.language, Validators.required],
-                salutation: [formModel.contact.salutation, Validators.required],
-                firstName: [formModel.contact.firstName, Validators.required],
-                lastName: [formModel.contact.lastName, Validators.required],
-                phoneNumber: [formModel.contact.phoneNumber,
-                    [Validators.required]],
-                email: [formModel.contact.email, [Validators.required, Validators.pattern(EMAIL_REGEX)]],
+                language: [formModel.contact.language, [Validators.required]],
+                salutation: [formModel.contact.salutation, [Validators.required, Validators.maxLength(this.CONTACT_SALUTATION_MAX_LENGTH)]],
+                firstName: [formModel.contact.firstName, [Validators.required, Validators.maxLength(this.CONTACT_FIRST_NAME_MAX_LENGTH)]],
+                lastName: [formModel.contact.lastName, [Validators.required, Validators.maxLength(this.CONTACT_LAST_NAME_MAX_LENGTH)]],
+                phoneNumber: [formModel.contact.phoneNumber, [Validators.required]],
+                email: [formModel.contact.email, [Validators.required, Validators.pattern(EMAIL_REGEX), Validators.maxLength(this.CONTACT_EMAIL_MAX_LENGTH)]],
             }),
             publicContact: this.fb.group({
-                salutation: [formModel.publicContact.salutation, Validators.required],
-                firstName: [formModel.publicContact.firstName, Validators.required],
-                lastName: [formModel.publicContact.lastName, Validators.required],
+                salutation: [formModel.publicContact.salutation, [Validators.required, Validators.maxLength(this.PUBLIC_CONTACT_SALUTATION_MAX_LENGTH)]],
+                firstName: [formModel.publicContact.firstName, [Validators.required, Validators.maxLength(this.PUBLIC_CONTACT_FIRST_NAME_MAX_LENGTH)]],
+                lastName: [formModel.publicContact.lastName, [Validators.required, Validators.maxLength(this.PUBLIC_CONTACT_LAST_NAME_MAX_LENGTH)]],
+
                 phoneNumber: [formModel.publicContact.phoneNumber],
-                email: [formModel.publicContact.email, Validators.pattern(EMAIL_REGEX)],
-            }, { validator: atLeastOneRequired(Validators.required, ['phoneNumber', 'email']) }),
-            application: this.fb.group({
-                paperApplicationAddress: [formModel.application.paperApplicationAddress],
-                electronicApplicationEmail: [formModel.application.electronicApplicationEmail, Validators.pattern(EMAIL_REGEX)],
-                electronicApplicationUrl: [formModel.application.electronicApplicationUrl, Validators.pattern(URL_REGEX)],
-                phoneNumber: [formModel.application.phoneNumber],
-                additionalInfo: [formModel.application.additionalInfo,
-                    [Validators.maxLength(this.APPLICATION_ADDITIONAL_INFO_MAX_LENGTH)]],
-            }, { validator: atLeastOneRequired(Validators.required, ['paperApplicationAddress', 'electronicApplicationEmail', 'electronicApplicationUrl', 'phoneNumber' ]) }),
+                email: [formModel.publicContact.email, [
+                    Validators.pattern(EMAIL_REGEX),
+                    Validators.maxLength(this.PUBLIC_CONTACT_MAIL_MAX_LENGTH)]],
+            }, { validator: this.atLeastOneRequiredValidator(Validators.required, ['phoneNumber', 'email']) } ),
             publication: this.fb.group({
                 publicDisplay: [formModel.publication.publicDisplay],
                 eures: [formModel.publication.eures],
             }),
-            disclaimer: this.fb.control(false, Validators.requiredTrue)
+            disclaimer: this.fb.control(false, [Validators.requiredTrue])
         });
     }
 
@@ -470,7 +598,21 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
                 email: ''
             },
             application: {
-                paperApplicationAddress: '',
+                selectElectronicApplicationUrl: false,
+                selectElectronicApplicationEmail: false,
+                selectPhoneNumber: false,
+                selectPaperApp: false,
+                postAddress: {
+                    paperAppCompanyName: '',
+                    paperAppStreet: '',
+                    paperAppHouseNr: '',
+                    paperAppPostboxNr: '',
+                    paperAppZip: {
+                        zip: '',
+                        city: '',
+                    },
+                    paperAppCountryCode: this.COUNTRY_ISO_CODE_SWITZERLAND
+                },
                 electronicApplicationEmail: '',
                 electronicApplicationUrl: '',
                 phoneNumber: '',
@@ -550,7 +692,7 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
             .map((lang: string) => {
                 const countryNames = countries.getNames(lang);
                 return Object.keys(countryNames)
-                    .map((key) => ({ key, value: countryNames[key] }));
+                    .map((key) => ({ key, value: countryNames[key] } ));
             });
     }
 

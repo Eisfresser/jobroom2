@@ -68,7 +68,20 @@ export interface PublicContactFormModel {
 }
 
 export interface ApplicationFormModel {
-    paperApplicationAddress: string;
+    selectElectronicApplicationUrl: boolean;
+    selectElectronicApplicationEmail: boolean;
+    selectPhoneNumber: boolean;
+    selectPaperApp: boolean;
+
+    postAddress: {
+        paperAppCompanyName: string;
+        paperAppStreet: string;
+        paperAppHouseNr: string;
+        paperAppPostboxNr: string;
+        paperAppZip: ZipCode;
+        paperAppCountryCode: string;
+    };
+
     electronicApplicationEmail: string;
     electronicApplicationUrl: string;
     phoneNumber: string;

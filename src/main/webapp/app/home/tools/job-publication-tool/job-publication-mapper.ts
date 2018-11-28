@@ -1,13 +1,15 @@
 import { DateUtils, Degree, WorkForm } from '../../../shared';
 import {
+    ApplyChannel, ApplyChannelPostAddress,
     CreateJobAdvertisement,
     JobAdvertisement,
     LanguageSkill,
     Salutation,
     WorkExperience
 } from '../../../shared/job-advertisement/job-advertisement.model';
-import { JobPublicationForm } from './job-publication-form.model';
+import { ApplicationFormModel, JobPublicationForm } from './job-publication-form.model';
 import * as moment from 'moment';
+import { AddressMapper } from '../../../shared/model/address-mapper';
 
 export class JobPublicationMapper {
 
@@ -126,15 +128,7 @@ export class JobPublicationMapper {
             };
         }
 
-        if (jobAdvertisement.jobContent.applyChannel) {
-            jobPublicationForm.application = {
-                paperApplicationAddress: jobAdvertisement.jobContent.applyChannel.mailAddress,
-                electronicApplicationEmail: jobAdvertisement.jobContent.applyChannel.emailAddress,
-                electronicApplicationUrl: jobAdvertisement.jobContent.applyChannel.formUrl,
-                phoneNumber: jobAdvertisement.jobContent.applyChannel.phoneNumber,
-                additionalInfo: jobAdvertisement.jobContent.applyChannel.additionalInfo
-            };
-        }
+        this.mapApplyChannelToFormModel(jobAdvertisement.jobContent.applyChannel, jobPublicationForm)
 
         jobPublicationForm.publication = {
             publicDisplay: jobAdvertisement.publication.publicDisplay,
@@ -142,6 +136,41 @@ export class JobPublicationMapper {
         };
 
         return jobPublicationForm;
+    }
+
+    static mapApplyChannelToFormModel(applyChannel: ApplyChannel, jobPublicationForm: JobPublicationForm) {
+        if (applyChannel) {
+            let addressPostalCode;
+            let addressCity;
+            if (applyChannel.postAddress.postOfficeBoxNumber && applyChannel.postAddress.postOfficeBoxPostalCode && applyChannel.postAddress.postOfficeBoxCity) {
+                    addressPostalCode = applyChannel.postAddress.postOfficeBoxPostalCode;
+                    addressCity = applyChannel.postAddress.postOfficeBoxCity;
+            } else {
+                    addressPostalCode = applyChannel.postAddress.postalCode;
+                    addressCity =  applyChannel.postAddress.city;
+            }
+            jobPublicationForm.application = {
+                selectElectronicApplicationUrl: (!!applyChannel.formUrl),
+                selectElectronicApplicationEmail: (!!applyChannel.emailAddress),
+                selectPhoneNumber: (!!applyChannel.phoneNumber),
+                selectPaperApp: (!!applyChannel.postAddress.name),
+                postAddress: {
+                    paperAppCompanyName: applyChannel.postAddress.name,
+                    paperAppStreet: applyChannel.postAddress.street,
+                    paperAppHouseNr: applyChannel.postAddress.houseNumber,
+                    paperAppZip: {
+                        zip: addressPostalCode,
+                        city: addressCity
+                    },
+                    paperAppPostboxNr: applyChannel.postAddress.postOfficeBoxNumber,
+                    paperAppCountryCode: applyChannel.postAddress.countryIsoCode
+                },
+                electronicApplicationEmail: applyChannel.emailAddress,
+                electronicApplicationUrl: applyChannel.formUrl,
+                phoneNumber: applyChannel.phoneNumber,
+                additionalInfo: applyChannel.additionalInfo
+            };
+        }
     }
 
     static mapJobPublicationFormToCreateJobAdvertisement(jobPublicationForm: JobPublicationForm): CreateJobAdvertisement {
@@ -228,15 +257,8 @@ export class JobPublicationMapper {
             phone: jobPublicationForm.publicContact.phoneNumber,
             email: jobPublicationForm.publicContact.email
         };
-
         if (JobPublicationMapper.anyFieldSet(jobPublicationForm.application)) {
-            jobAd.applyChannel = {
-                mailAddress: jobPublicationForm.application.paperApplicationAddress,
-                emailAddress: jobPublicationForm.application.electronicApplicationEmail,
-                phoneNumber: jobPublicationForm.application.phoneNumber,
-                formUrl: JobPublicationMapper.fixUrlScheme(jobPublicationForm.application.electronicApplicationUrl),
-                additionalInfo: jobPublicationForm.application.additionalInfo
-            };
+            this.mapApplyChannelToCreateJobAdvertisement(jobPublicationForm.application, jobAd);
         }
 
         jobAd.publication = {
@@ -247,6 +269,66 @@ export class JobPublicationMapper {
         };
 
         return jobAd;
+    }
+
+    static mapApplyChannelToCreateJobAdvertisement(applyChannel: ApplicationFormModel, jobAd: CreateJobAdvertisement) {
+        jobAd.applyChannel = {
+            rawPostAddress: null,
+            postAddress: {
+                name: '',
+                street: '',
+                houseNumber: '',
+                postalCode: '',
+                city: '',
+                postOfficeBoxNumber: '',
+                postOfficeBoxPostalCode: '',
+                postOfficeBoxCity: '',
+                countryIsoCode: ''
+            },
+            emailAddress: '',
+            phoneNumber: '',
+            formUrl: '',
+            additionalInfo: ''
+        }
+        if (applyChannel.selectPhoneNumber) {
+            jobAd.applyChannel.phoneNumber = applyChannel.phoneNumber;
+        }
+
+        if (applyChannel.selectElectronicApplicationEmail) {
+            jobAd.applyChannel.emailAddress = applyChannel.electronicApplicationEmail;
+        }
+
+        if (applyChannel.selectElectronicApplicationUrl) {
+            jobAd.applyChannel.formUrl = JobPublicationMapper.fixUrlScheme(applyChannel.electronicApplicationUrl);
+        }
+
+        if (applyChannel.selectPaperApp) {
+            this.mapPostAddressToCreateJobAdvertisement(applyChannel.postAddress, jobAd);
+        }
+
+        if (applyChannel.additionalInfo) {
+            jobAd.applyChannel.additionalInfo = applyChannel.additionalInfo;
+        }
+    }
+
+    static mapPostAddressToCreateJobAdvertisement(postAddress, jobAd: CreateJobAdvertisement):  void {
+
+        jobAd.applyChannel.postAddress.name = postAddress.paperAppCompanyName;
+        jobAd.applyChannel.postAddress.countryIsoCode = postAddress.paperAppCountryCode;
+
+        const postalCode = postAddress.paperAppZip.zip;
+        const city = postAddress.paperAppZip.city;
+
+        if (postAddress.paperAppPostboxNr) {
+            jobAd.applyChannel.postAddress.postOfficeBoxNumber = postAddress.paperAppPostboxNr;
+            jobAd.applyChannel.postAddress.postOfficeBoxPostalCode = postalCode;
+            jobAd.applyChannel.postAddress.postOfficeBoxCity = city;
+        } else {
+            jobAd.applyChannel.postAddress.street = postAddress.paperAppStreet;
+            jobAd.applyChannel.postAddress.houseNumber = postAddress.paperAppHouseNr;
+            jobAd.applyChannel.postAddress.postalCode = postalCode;
+            jobAd.applyChannel.postAddress.city = city;
+        }
     }
 
     private static anyFieldSet(obj: any): boolean {

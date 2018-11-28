@@ -31,8 +31,10 @@ export interface Translations {
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ZipCodeComponent implements OnInit, OnChanges {
+    private static readonly CITY_MAX_LENGTH = 100;
     private static readonly ZIP_CODE_REGEX = /^[a-z0-9][a-z0-9\- ]{0,10}[a-z0-9]$/i;
     private static readonly ABROAD_LOCALITY_POSTAL_CODE = '----';
+    readonly CITY_MAX_LENGTH = 100;
 
     @Input()
     group: FormGroup;
@@ -132,7 +134,7 @@ export class ZipCodeComponent implements OnInit, OnChanges {
 
                 this.zipGroup = this.fb.group({
                     zip: ['', [...zipGroupInputValidators, Validators.pattern(ZipCodeComponent.ZIP_CODE_REGEX)]],
-                    city: ['', zipGroupInputValidators]
+                    city: ['', [...zipGroupInputValidators, Validators.maxLength(ZipCodeComponent.CITY_MAX_LENGTH)]]
                 }, {
                     validator: zipGroupValidator
                 });

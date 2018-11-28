@@ -18,6 +18,7 @@ import { Store } from '@ngrx/store';
 import { TOOLTIP_AUTO_HIDE_TIMEOUT } from '../../app.constants';
 import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import {
+    ApplyChannel,
     JobAdvertisement,
     JobAdvertisementStatus,
     JobDescription,
@@ -25,6 +26,8 @@ import {
 } from '../../shared/job-advertisement/job-advertisement.model';
 import { JobAdvertisementUtils } from '../../dashboard/job-advertisement.utils';
 import { CoreState, getLanguage } from '../../shared/state-management/state/core.state';
+import { AddressMapper } from '../../shared/model/address-mapper';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'jr2-job-detail',
@@ -51,7 +54,8 @@ export class JobDetailComponent implements AfterViewInit, OnInit {
 
     constructor(private referenceService: ReferenceService,
                 private store: Store<JobSearchState>,
-                private coreStore: Store<CoreState>) {
+                private coreStore: Store<CoreState>,
+                private translate: TranslateService) {
     }
 
     ngOnInit(): void {
@@ -76,6 +80,12 @@ export class JobDetailComponent implements AfterViewInit, OnInit {
             .combineLatest(this.job$)
             .map(([lang, job]: [string, JobAdvertisement]) => JobAdvertisementUtils.getJobDescription(job, lang));
 
+    }
+
+    getPostAddress(applyChannel: ApplyChannel): string {
+        return applyChannel.postAddress
+            ? AddressMapper.mapAddressToString(applyChannel.postAddress, this.translate)
+            : applyChannel.rawPostAddress;
     }
 
     private isDeactivated(jobAdvertisementStatus: JobAdvertisementStatus): boolean {

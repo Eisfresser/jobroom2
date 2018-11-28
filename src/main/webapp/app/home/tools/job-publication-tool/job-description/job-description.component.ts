@@ -13,6 +13,8 @@ import { Subscription } from 'rxjs/Subscription';
 })
 export class JobDescriptionComponent implements OnInit, OnDestroy {
     readonly JOB_DESCRIPTION_MAX_LENGTH = 10000;
+    readonly TITLE_MAX_LENGTH = 255;
+    readonly LANGUAGE_MAX_LENGTH = 5;
     private readonly LANGUAGES = [
         'de',
         'fr',
@@ -113,8 +115,8 @@ export class JobDescriptionComponent implements OnInit, OnDestroy {
 
     private createGroup(value): FormGroup {
         return this.fb.group({
-            languageIsoCode: [value.languageIsoCode],
-            title: [value.title, Validators.required],
+            languageIsoCode: [value.languageIsoCode, [Validators.maxLength(this.LANGUAGE_MAX_LENGTH)]],
+            title: [value.title, [ Validators.required, Validators.maxLength(this.TITLE_MAX_LENGTH)]],
             description: [value.description, [Validators.required, Validators.maxLength(this.JOB_DESCRIPTION_MAX_LENGTH)]]
         });
     }

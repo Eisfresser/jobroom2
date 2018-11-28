@@ -36,3 +36,8 @@ legend .optional {
     vertical-align: middle;
     color: #808080;
 }
+
+.marker-line-left {
+    padding-left: 5px;
+    border-left: 5px solid $main-color-gray;
+}

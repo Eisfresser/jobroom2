@@ -144,9 +144,10 @@
                         {{(job.jobContent.applyChannel.phoneNumber) | jr2PhoneNumber}}
                     </a></span>
                 </div>
-                <div *ngIf="job.jobContent.applyChannel.mailAddress" class="content__item content__item--bullet">
-                    <strong>{{ 'job-detail.application.mail' | translate }}</strong>
-                    <span>{{ job.jobContent.applyChannel.mailAddress }}</span>
+                <div *ngIf="getPostAddress(job.jobContent.applyChannel) as postAddress"
+                     class="content__item content__item--bullet">
+                    <strong>{{ 'job-detail.application.mail' | translate}}</strong>
+                    <span>{{ postAddress }}</span>
                 </div>
             </div>
         </div>

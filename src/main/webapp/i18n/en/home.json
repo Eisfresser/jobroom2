@@ -47,7 +47,7 @@
                     "copy-from-business": "Same as business",
                     "email": "Email",
                     "online-form": "Online form",
-                    "paper-application-url": "Postal address",
+                    "paper-application-post-address": "Postal address",
                     "phone": "Telephone number",
                     "title": "Application channels"
                 },
@@ -55,6 +55,7 @@
                     "country": "Country",
                     "house-number": "No.",
                     "name": "Business",
+                    "postbox": "P.O. Box",
                     "postbox-city": "City",
                     "postbox-number": "PO box no.",
                     "postbox-zip": "PO box postal code",
@@ -129,16 +130,19 @@
                     "validate": {
                         "date-format": "Invalid date format, correct format: DD.MM.YYYY",
                         "email-format": "This email address is invalid.",
+                        "url-format": "This URL is not valid",
                         "employment-duration": {
                             "date-before": "Date must be after the employment start."
                         },
                         "employment-start": {
                             "date-before": "Date must be in the future."
                         },
-                        "phone-format": "Please enter a valid phone number e.g. 031 999 99 99 or +41 31 999 99 99",
+                        "phone-format": "Please indicate a valid telephone number e.g. 031 999 99 99 or +41 31 999 99 99",
                         "required": "This field is required.",
-                        "at-least-one-required-email-or-phone": "Please specify telephone number or Email ",
-                        "at-least-one-required": "Select at least one application channel",
+                        "at-least-one-required-email-or-phone": "Please indicate telephone number or email",
+                        "at-least-one-required": "Select at least one application channel and provide all required information",
+                        "at-least-one-required-street-or-pobox": "Please enter a street name or a post office box",
+                        "pobox-format": "Invalid post office box",
                         "zip-format": "Invalid postal code",
                         "zip-or-city-format": "Invalid postal code/city",
                         "number-of-jobs": "This field must contain a number between 1 and 99."

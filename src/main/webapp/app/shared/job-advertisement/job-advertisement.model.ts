@@ -159,7 +159,8 @@ export interface LanguageSkill {
 }
 
 export interface ApplyChannel {
-    mailAddress: string;
+    postAddress: ApplyChannelPostAddress;
+    rawPostAddress: string;
     emailAddress: string;
     phoneNumber: string;
     formUrl: string;
@@ -198,4 +199,16 @@ export interface CreateJobAdvertisement {
     languageSkills: LanguageSkill[];
     applyChannel: ApplyChannel;
     publicContact: PublicContact;
+}
+
+export interface ApplyChannelPostAddress {
+    name: string;
+    street: string;
+    houseNumber: string;
+    postalCode: string;
+    city: string;
+    postOfficeBoxNumber: string;
+    postOfficeBoxPostalCode: string;
+    postOfficeBoxCity: string;
+    countryIsoCode: string;
 }

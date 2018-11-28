@@ -1,7 +1,7 @@
 {
     "contact-template-management": {
         "title": "Pers\u00f6nliche Kontaktangaben f\u00fcr",
-        "helptext": "Vorname und Nachname können nicht auf dieser Maske angepasst werden. Bitte \u00e4ndern Sie diese Daten unter folgendem Link direkt auf ihrem eIAM Konto. Automatisches abf\u00fcllen von Kontaktangaben auf den daf\u00fcr vorgesehenen Formularfeldern f\u00fcr die Stellenmeldung im JobRoom. Diese Angaben haben keinen Einfluss auf die Login-Daten ihres eIAM Kontos.",
+        "helptext": "Vorname und Nachname k\u00f6nnen nicht auf dieser Maske angepasst werden. Bitte \u00e4ndern Sie diese Daten unter folgendem Link direkt auf ihrem eIAM Konto. Automatisches abf\u00fcllen von Kontaktangaben auf den daf\u00fcr vorgesehenen Formularfeldern f\u00fcr die Stellenmeldung im JobRoom. Diese Angaben haben keinen Einfluss auf die Login-Daten ihres eIAM Kontos.",
         "link": "Link zum eIAM Konto",
         "companyName": "Unternehmen",
         "companyStreet": "Strasse",
