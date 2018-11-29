@@ -71,24 +71,24 @@ public class MailService {
 
     @Deprecated
     public void sendActivationEmail(User user) {
-        log.debug("Sending activation email to '{}'", user.getEmail());
+        log.info("Sending activation email to '{}'", user.getEmail());
         sendEmailFromTemplate(user, "mails/activationEmail", "email.activation.title");
     }
 
     @Deprecated
     public void sendCreationEmail(User user) {
-        log.debug("Sending creation email to '{}'", user.getEmail());
+        log.info("Sending creation email to '{}'", user.getEmail());
         sendEmailFromTemplate(user, "mails/creationEmail", "email.activation.title");
     }
 
     @Deprecated
     public void sendPasswordResetMail(User user) {
-        log.debug("Sending password reset email to '{}'", user.getEmail());
+        log.info("Sending password reset email to '{}'", user.getEmail());
         sendEmailFromTemplate(user, "mails/passwordResetEmail", "email.reset.title");
     }
 
     public void sendAccessCodeLetterMail(String emailAddress, UserInfo userInfo) {
-        log.debug("Sending access code letter email to the service desk '{}'", emailAddress);
+        log.info("Sending access code letter email to the service desk '{}' concerning user '{}'", emailAddress, userInfo.getId());
         String attachmentFilename = "Zugriffscode_Brief.pdf";
         String pathToPdf = generatePdf(userInfo);
         Locale locale = Locale.forLanguageTag("de");
@@ -101,7 +101,7 @@ public class MailService {
     }
 
     public void sendAnonymousContactMail(AnonymousContactMessageDTO anonymousContactMessage, String recipient) {
-        log.debug("Sending anonymous contact email to '{}'", recipient);
+        log.info("Sending anonymous contact email to '{}'", recipient);
         Context context = createAnonymousContactMailContext(anonymousContactMessage);
         String content = templateEngine.process("mails/anonymousContactEmail", context);
         String subject = messageSource.getMessage("email.anonymousContact.mail-subject", null, LocaleContextHolder.getLocale());
@@ -109,7 +109,7 @@ public class MailService {
     }
 
     public void sendStesUnregisteringMail(String stesEmail, String recipient) {
-        log.debug("Send an email for unregister a candidate with email {} to {} ", stesEmail, recipient);
+        log.info("Send an email for unregister a candidate with email {} to {} ", stesEmail, recipient);
         Locale locale = Locale.forLanguageTag("de");
         Context context = new Context(locale);
         context.setVariable("candidateEmail", stesEmail);
@@ -119,7 +119,7 @@ public class MailService {
     }
 
     void sendBlacklistedAgentRequestedAccessCodeMail(String recipient, UserInfo userInfo, BlacklistedAgent agent) {
-        log.debug("Send an email to the servicedesk {} about blacklisted agent requested access code", recipient);
+        log.info("Send an email to the servicedesk {} about blacklisted agent requested access code", recipient);
         Locale locale = LocaleContextHolder.getLocale();
         Context context = new Context(locale);
         context.setVariable("userFirstName", userInfo.getFirstName());
@@ -165,7 +165,7 @@ public class MailService {
                 }
             }
             javaMailSender.send(mimeMessage);
-            log.debug("Sent email to User '{}'", to);
+            log.info("Successfully sent email to '{}' with subject '{}'", to, subject);
         } catch (MessagingException e) {
             throw new MailSendException("Could not send email", e);
         }
@@ -175,7 +175,7 @@ public class MailService {
         try {
             return pdfCreatorService.createAccessCodePdf(userInfo);
         } catch (IOException e) {
-            throw new IllegalStateException("The access code letter for the user " + userInfo.getFirstName() + " " + userInfo.getLastName() + " could not be generated.", e);
+            throw new IllegalStateException("The access code letter for the user '" + userInfo.getId() + "' could not be generated.", e);
         }
     }
 
