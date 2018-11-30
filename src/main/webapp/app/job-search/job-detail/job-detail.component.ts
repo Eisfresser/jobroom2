@@ -74,7 +74,10 @@ export class JobDetailComponent implements AfterViewInit, OnInit {
             .filter((job) => !!job)
             .map((job) => job.jobCenterCode)
             .filter((jobCenterCode) => !!jobCenterCode)
-            .switchMap((jobCenterCode) => this.referenceService.resolveJobCenter(jobCenterCode));
+            .combineLatest(this.coreStore.select(getLanguage))
+            .switchMap(([jobCenterCode, lang]) => {
+                return this.referenceService.resolveJobCenter(jobCenterCode, lang)
+            });
 
         this.jobDescription$ = this.coreStore.select(getLanguage)
             .combineLatest(this.job$)

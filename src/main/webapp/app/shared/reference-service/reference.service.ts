@@ -28,13 +28,13 @@ export class JobCenter {
 @Injectable()
 export class ReferenceService {
 
-    constructor(private http: HttpClient, private translateService: TranslateService) {
+    constructor(private http: HttpClient) {
     }
 
-    resolveJobCenter(code: string): Observable<JobCenter> {
+    resolveJobCenter(code: string, lang: string): Observable<JobCenter> {
         const params = new HttpParams()
             .set('code', code)
-            .set('language', this.translateService.currentLang);
+            .set('language', lang);
 
         return this.http.get<JobCenter>(JOB_CENTER_URL, { params });
     }

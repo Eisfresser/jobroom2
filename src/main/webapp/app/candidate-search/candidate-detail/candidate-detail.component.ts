@@ -35,6 +35,7 @@ import { LanguageSkill } from '../../shared/job-advertisement/job-advertisement.
 import { CandidateAnonymousContactDialogService } from '../dialog/candidate-anonymous-contact-dialog.service';
 import { EmailContent } from '../services/mail.service';
 import { CurrentSelectedCompanyService } from '../../shared/company/current-selected-company.service';
+import { getLanguage } from '../../shared/state-management/state/core.state';
 
 interface EnrichedJobExperience extends JobExperience {
     occupationLabels: {
@@ -92,10 +93,14 @@ export class CandidateDetailComponent implements OnInit {
 
         this.jobCenter$ = this.candidateProfile$
             .map((candidateProfile) => candidateProfile.jobCenterCode)
-            .flatMap((jobCenterCode) => jobCenterCode
-                ? this.referenceService.resolveJobCenter(jobCenterCode)
+            .combineLatest(this.store.select(getLanguage))
+            .switchMap(([jobCenterCode, lang]) => {
+                if (!jobCenterCode) {
+                    return Observable.of(null as JobCenter)
+                }
+                return this.referenceService.resolveJobCenter(jobCenterCode, lang)
                     .catch(() => Observable.of(null as JobCenter))
-                : Observable.of(null as JobCenter));
+            });
 
         this.candidateProtectedData$ = this.candidateProfile$
             .flatMap((candidateProfile) => this.candidateService.findCandidate(candidateProfile)
