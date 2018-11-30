@@ -55,7 +55,6 @@ export class CandidateDetailComponent implements OnInit {
     private readonly ABROAD_CODE = '99';
     private readonly SWISS_CODE = 'CH';
     private readonly CONTACT_MESSAGE_SUBJECT = 'candidate-detail.candidate-anonymous-contact.subject';
-    private readonly CONTACT_MESSAGE_BODY = 'candidate-detail.candidate-anonymous-contact.body';
 
     candidateProfile$: Observable<CandidateProfile>;
     jobExperiences$: Observable<Array<EnrichedJobExperience>>;
@@ -216,11 +215,10 @@ export class CandidateDetailComponent implements OnInit {
             if (canContactCandidate) {
                 const selectedCompanyContactTemplate$ = this.currentSelectedCompanyService.getSelectedCompanyContactTemplate()
                     .filter((contactTemplate) => !!contactTemplate);
-                const translations$ = this.translateService.stream([this.CONTACT_MESSAGE_SUBJECT, this.CONTACT_MESSAGE_BODY]);
-                return Observable.combineLatest(selectedCompanyContactTemplate$, translations$).map(([companyContactTemplateModel, translations]) => {
-                    return new EmailContent(candidate.id, translations[this.CONTACT_MESSAGE_SUBJECT],
-                        translations[this.CONTACT_MESSAGE_BODY], companyContactTemplateModel);
-                });
+                const translations$ = this.translateService.stream(this.CONTACT_MESSAGE_SUBJECT);
+                return Observable.combineLatest(selectedCompanyContactTemplate$, translations$)
+                    .map(([companyContactTemplateModel, subject]) =>
+                        new EmailContent(candidate.id, subject, '', companyContactTemplateModel));
             }
             return Observable.of(null);
         });

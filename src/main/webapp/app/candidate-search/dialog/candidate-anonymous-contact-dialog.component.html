@@ -1,15 +1,15 @@
 <div class="modal-content">
-    <div class="modal-header">
-        <h2>{{ 'candidate-detail.anonymous-contact.title' | translate }}</h2>
-        <button type="button" class="close" aria-label="Close"
-                (click)="activeModal.dismiss()">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-    <div class="modal-body">
-        <jhi-alert-error></jhi-alert-error>
-        <form [formGroup]="anonymousContactForm" class="form-horizontal"
-              (submit)="sendMessage()">
+    <form [formGroup]="anonymousContactForm" class="form-horizontal"
+          (submit)="sendEmail()">
+        <div class="modal-header">
+            <h2>{{ 'candidate-detail.anonymous-contact.title' | translate }}</h2>
+            <button type="button" class="close" aria-label="Close"
+                    (click)="activeModal.dismiss()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <jhi-alert-error></jhi-alert-error>
             <div
                 class="{{anonymousContactForm.get('subject').disabled ? 'form-group--icon' : 'input-group' }}">
                 <input formControlName="subject" class="form-control">
@@ -32,10 +32,13 @@
                     </button>
                 </div>
             </div>
-            <div
-                class="{{anonymousContactForm.get('body').disabled ? 'form-group--icon' : 'input-group' }}">
+
+            <p>{{ mailBodyPreamble }}</p>
+
+            <div class="{{anonymousContactForm.get('body').disabled ? 'form-group--icon' : 'input-group' }}">
                 <textarea formControlName="body" class="form-control" rows="8"
                           aria-describedby="maxChar"
+                          [placeholder]="'candidate-detail.anonymous-contact.personal-message' | translate"
                           [jr2TextSizeLimit]="MESSAGE_BODY_MAX_LENGTH"></textarea>
 
                 <a *ngIf="anonymousContactForm.get('body').disabled"
@@ -252,18 +255,17 @@
                     </div>
                 </ng-container>
             </div>
-        </form>
-    </div>
+        </div>
 
-    <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" (click)="activeModal.dismiss()">
-            {{ 'candidate-detail.anonymous-contact.dismiss' | translate }}
-        </button>
-        <button type="submit"
-                class="btn btn-primary"
-                [disabled]="anonymousContactForm.invalid"
-                (click)="sendMessage()">
-            {{ 'candidate-detail.anonymous-contact.confirm' | translate }}
-        </button>
-    </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="activeModal.dismiss()">
+                {{ 'candidate-detail.anonymous-contact.dismiss' | translate }}
+            </button>
+            <button type="submit"
+                    class="btn btn-primary"
+                    [disabled]="anonymousContactForm.invalid">
+                {{ 'candidate-detail.anonymous-contact.confirm' | translate }}
+            </button>
+        </div>
+    </form>
 </div>

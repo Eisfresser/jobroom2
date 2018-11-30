@@ -4,6 +4,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { EMAIL_REGEX, POSTBOX_NUMBER_REGEX } from '../../shared';
 import { EmailContent, MailService } from '../services/mail.service';
 import { Subject } from 'rxjs/Subject';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     templateUrl: './candidate-anonymous-contact-dialog.component.html',
@@ -15,11 +16,13 @@ export class CandidateAnonymousContactDialogComponent implements OnInit, OnDestr
     @Input() emailContent: EmailContent;
 
     anonymousContactForm: FormGroup;
+    mailBodyPreamble: string;
 
     private unsubscribe$ = new Subject<void>();
 
     constructor(private formBuilder: FormBuilder,
                 private mailService: MailService,
+                private translateService: TranslateService,
                 public activeModal: NgbActiveModal) {
     }
 
@@ -33,7 +36,7 @@ export class CandidateAnonymousContactDialogComponent implements OnInit, OnDestr
 
         const requiredDisabledValidator: ValidatorFn = (fg: FormGroup) => {
             const email = !fg.get('sendEmail').value || !!fg.get('email').value;
-            const phone = !fg.get('sendPhone').value || !!fg.get('phone').value ;
+            const phone = !fg.get('sendPhone').value || !!fg.get('phone').value;
             return email && phone ? null : { requiredDisabled: true };
         };
 
@@ -45,7 +48,7 @@ export class CandidateAnonymousContactDialogComponent implements OnInit, OnDestr
             body: [{
                 value: this.emailContent.body,
                 disabled: true
-            }, Validators.required],
+            }],
             companyName: [{
                 value: this.emailContent.companyName,
                 disabled: true
@@ -76,6 +79,10 @@ export class CandidateAnonymousContactDialogComponent implements OnInit, OnDestr
         this.toggleValue('sendPhone', 'phone');
         this.toggleValue('sendEmail', 'email');
         this.toggleValue('sendAddress', 'company');
+
+        this.translateService.get('candidate-detail.anonymous-contact.mail-body-preamble')
+            .takeUntil(this.unsubscribe$)
+            .subscribe((mailBodyPreamble) => this.mailBodyPreamble = mailBodyPreamble);
     }
 
     ngOnDestroy(): void {
@@ -83,11 +90,24 @@ export class CandidateAnonymousContactDialogComponent implements OnInit, OnDestr
         this.unsubscribe$.complete();
     }
 
-    sendMessage(): void {
+    sendEmail(): void {
         if (this.anonymousContactForm.valid) {
-            this.mailService.sendAnonymousContactMessage(this.emailContent)
+            this.applyFormChanges();
+            const mail = Object.assign({}, this.emailContent, { body: this.mailBodyPreamble + '\n' + this.emailContent.body });
+            this.mailService.sendAnonymousContactMessage(mail)
                 .subscribe(() => this.activeModal.close());
         }
+    }
+
+    private applyFormChanges(): void {
+        Object.keys(this.anonymousContactForm.controls)
+            .map((controlName) => {
+                if (['sendPhone', 'sendEmail', 'sendAddress'].includes(controlName)) {
+                    this.anonymousContactForm.get(controlName).enable()
+                } else {
+                    this.applyChanges(controlName)
+                }
+            });
     }
 
     edit(controlName: string, toggleControl?: string): void {
@@ -122,7 +142,7 @@ export class CandidateAnonymousContactDialogComponent implements OnInit, OnDestr
 
     applyChanges(controlName: string, toggleControl?: string): void {
         const formControl = this.anonymousContactForm.get(controlName);
-        if (formControl.invalid) {
+        if (formControl.invalid || formControl.disabled) {
             return;
         }
         this.updateEmailContentProperty(controlName);
