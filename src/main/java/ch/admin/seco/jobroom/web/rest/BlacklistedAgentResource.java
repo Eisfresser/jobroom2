@@ -19,7 +19,7 @@ import java.util.List;
 @RequestMapping("/api/blacklisted-agent")
 public class BlacklistedAgentResource {
 
-    private final Logger LOG = LoggerFactory.getLogger(OrganizationResource.class);
+    private final Logger LOG = LoggerFactory.getLogger(BlacklistedAgentResource.class);
 
     private final BlacklistedAgentService blacklistedAgentService;
 

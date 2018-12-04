@@ -36,6 +36,7 @@
         "Size": "Il campo {{ fieldName }} non \u00e8 conforme ai requisiti di lunghezza min/max!",
         "emailexists": "L'indirizzo e-mail \u00e8 gi\u00e0 in uso!",
         "idexists": "Un(a) nuovo/a {{entityName}} non pu\u00f2 gi\u00e0 avere un ID",
+        "idmismatch": "Un parametro ID non corrisponde all'ID del DTO.",
         "internalServerError": "Errore interno server",
         "server": {
             "not": {

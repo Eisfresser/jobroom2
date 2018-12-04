@@ -36,6 +36,7 @@
         "Size": "Feld {{fieldName}} erf\u00fcllt nicht die minimalen/maximalen Voraussetzungen!",
         "emailexists": "E-Mail-Adresse wird bereits verwendet!",
         "idexists": "Ein neuer {{entityName}} kann noch keine ID haben",
+        "idmismatch": "Ein ID-Parameter stimmt nicht mit der ID von DTO \u00fcberein.",
         "internalServerError": "Interner Serverfehler",
         "server": {
             "not": {

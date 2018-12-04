@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <changeSet id="20181001120000" author="wole">
+
+        <createTable tableName="legal_terms">
+            <column name="id" type="varchar(255)">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="effective_at" type="date">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="link_de" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="link_en" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="link_fr" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="link_it" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+
+        </createTable>
+
+    </changeSet>
+
+</databaseChangeLog>

@@ -36,6 +36,7 @@
         "Size": "Field {{ fieldName }} does not meet min/max size requirements!",
         "emailexists": "Email address is already in use!",
         "idexists": "A new {{ entityName }} cannot have an ID yet.",
+        "idmismatch": "An id parameter does not match the ID of DTO..",
         "internalServerError": "Internal server error",
         "server": {
             "not": {

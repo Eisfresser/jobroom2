@@ -297,6 +297,7 @@ global,error.NotNull,Feld {{fieldName}} darf nicht leer sein!,Field {{ fieldName
 global,error.Size,Feld {{fieldName}} erfüllt nicht die minimalen/maximalen Voraussetzungen!,Field {{ fieldName }} does not meet min/max size requirements!,Le champ {{fieldName}} ne respecte pas les critères minimums et maximums !,Il campo {{ fieldName }} non è conforme ai requisiti di lunghezza min/max!
 global,error.emailexists,E-Mail-Adresse wird bereits verwendet!,Email address is already in use!,Adresse courriel déjà utilisé !,L'indirizzo e-mail è già in uso!
 global,error.idexists,Ein neuer {{entityName}} kann noch keine ID haben,A new {{ entityName }} cannot have an ID yet.,La nouvelle entité {{entityName}} ne peut pas encore avoir d'ID !,Un(a) nuovo/a {{entityName}} non può già avere un ID
+global,error.idmismatch,Ein ID-Parameter stimmt nicht mit der ID von DTO überein.,An id parameter does not match the ID of DTO..,Un paramètre ID ne correspond pas à l'ID de DTO.,Un parametro ID non corrisponde all'ID del DTO.
 global,error.internalServerError,Interner Serverfehler,Internal server error,Erreur interne du serveur,Errore interno server
 global,error.server.not.reachable,Server ist nicht erreichbar,Server not reachable,Serveur inaccessible,Server non raggiungibile
 global,error.url.not.found,Nicht gefunden,Not found,Non trouvé,Non trovato
