@@ -4,7 +4,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
 
-    <changeSet id="20181001120000" author="wole">
+    <changeSet id="20181122120000" author="wole">
 
         <createTable tableName="legal_terms">
             <column name="id" type="varchar(255)">
@@ -32,6 +32,12 @@
             </column>
 
         </createTable>
+
+        <loadData
+            file="config/liquibase/legal_terms.csv"
+            separator=";"
+            tableName="legal_terms">
+        </loadData>
 
     </changeSet>
 
