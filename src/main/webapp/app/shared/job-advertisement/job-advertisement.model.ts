@@ -159,7 +159,7 @@ export interface LanguageSkill {
 }
 
 export interface ApplyChannel {
-    postAddress: ApplyChannelPostAddress;
+    postAddress?: ApplyChannelPostAddress;
     rawPostAddress: string;
     emailAddress: string;
     phoneNumber: string;

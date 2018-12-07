@@ -1,6 +1,6 @@
 import { DateUtils, Degree, WorkForm } from '../../../shared';
 import {
-    ApplyChannel, ApplyChannelPostAddress,
+    ApplyChannel,
     CreateJobAdvertisement,
     JobAdvertisement,
     LanguageSkill,
@@ -9,9 +9,20 @@ import {
 } from '../../../shared/job-advertisement/job-advertisement.model';
 import { ApplicationFormModel, JobPublicationForm } from './job-publication-form.model';
 import * as moment from 'moment';
-import { AddressMapper } from '../../../shared/model/address-mapper';
 
 export class JobPublicationMapper {
+
+    private static readonly EMPTY_POST_ADDRESS = {
+        name: '',
+        street: '',
+        houseNumber: '',
+        postalCode: '',
+        city: '',
+        postOfficeBoxNumber: '',
+        postOfficeBoxPostalCode: '',
+        postOfficeBoxCity: '',
+        countryIsoCode: ''
+    };
 
     private static readonly DEGREE = {
         [Degree[Degree.SEK_II_WEITERFUEHRENDE_SCHULE]]: '130',
@@ -140,30 +151,32 @@ export class JobPublicationMapper {
 
     static mapApplyChannelToFormModel(applyChannel: ApplyChannel, jobPublicationForm: JobPublicationForm) {
         if (applyChannel) {
+            const postAddress = applyChannel.postAddress || JobPublicationMapper.EMPTY_POST_ADDRESS;
+
             let addressPostalCode;
             let addressCity;
-            if (applyChannel.postAddress.postOfficeBoxNumber && applyChannel.postAddress.postOfficeBoxPostalCode && applyChannel.postAddress.postOfficeBoxCity) {
-                    addressPostalCode = applyChannel.postAddress.postOfficeBoxPostalCode;
-                    addressCity = applyChannel.postAddress.postOfficeBoxCity;
+            if (postAddress.postOfficeBoxNumber && postAddress.postOfficeBoxPostalCode && postAddress.postOfficeBoxCity) {
+                addressPostalCode = postAddress.postOfficeBoxPostalCode;
+                addressCity = postAddress.postOfficeBoxCity;
             } else {
-                    addressPostalCode = applyChannel.postAddress.postalCode;
-                    addressCity =  applyChannel.postAddress.city;
+                addressPostalCode = postAddress.postalCode;
+                addressCity = postAddress.city;
             }
             jobPublicationForm.application = {
                 selectElectronicApplicationUrl: (!!applyChannel.formUrl),
                 selectElectronicApplicationEmail: (!!applyChannel.emailAddress),
                 selectPhoneNumber: (!!applyChannel.phoneNumber),
-                selectPaperApp: (!!applyChannel.postAddress.name),
+                selectPaperApp: (!!postAddress.name),
                 postAddress: {
-                    paperAppCompanyName: applyChannel.postAddress.name,
-                    paperAppStreet: applyChannel.postAddress.street,
-                    paperAppHouseNr: applyChannel.postAddress.houseNumber,
+                    paperAppCompanyName: postAddress.name,
+                    paperAppStreet: postAddress.street,
+                    paperAppHouseNr: postAddress.houseNumber,
                     paperAppZip: {
                         zip: addressPostalCode,
                         city: addressCity
                     },
-                    paperAppPostboxNr: applyChannel.postAddress.postOfficeBoxNumber,
-                    paperAppCountryCode: applyChannel.postAddress.countryIsoCode
+                    paperAppPostboxNr: postAddress.postOfficeBoxNumber,
+                    paperAppCountryCode: postAddress.countryIsoCode
                 },
                 electronicApplicationEmail: applyChannel.emailAddress,
                 electronicApplicationUrl: applyChannel.formUrl,
@@ -274,17 +287,7 @@ export class JobPublicationMapper {
     static mapApplyChannelToCreateJobAdvertisement(applyChannel: ApplicationFormModel, jobAd: CreateJobAdvertisement) {
         jobAd.applyChannel = {
             rawPostAddress: null,
-            postAddress: {
-                name: '',
-                street: '',
-                houseNumber: '',
-                postalCode: '',
-                city: '',
-                postOfficeBoxNumber: '',
-                postOfficeBoxPostalCode: '',
-                postOfficeBoxCity: '',
-                countryIsoCode: ''
-            },
+            postAddress: JobPublicationMapper.EMPTY_POST_ADDRESS,
             emailAddress: '',
             phoneNumber: '',
             formUrl: '',
