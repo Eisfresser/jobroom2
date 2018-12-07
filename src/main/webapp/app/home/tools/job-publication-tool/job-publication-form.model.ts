@@ -45,7 +45,6 @@ export interface CompanyFormModel {
     houseNumber: string;
     zipCode: ZipCode;
     postboxNumber: string;
-    postboxZipCode: ZipCode;
     countryCode: string;
     surrogate: boolean;
 }

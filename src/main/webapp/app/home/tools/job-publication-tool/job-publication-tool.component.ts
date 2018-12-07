@@ -85,7 +85,6 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
 
     readonly COMPANY_STREET_MAX_LENGTH = 60;
     readonly COMPANY_COUNTRY_CODE_MAX_LENGTH = 2;
-    readonly COMPANY_POSTBOX_ZIP_CODE_MAX_LENGTH = 10;
     readonly COMPANY_ZIP_CODE_MAX_LENGTH = 10;
     readonly COMPANY_HOUSE_NO_MAX_LENGTH = 10;
     readonly COMPANY_NAME_MAX_LENGTH = 255;
@@ -251,16 +250,9 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
 
     copyAddressFromCompanyGetZip() {
         const company: CompanyFormModel = this.jobPublicationForm.get('company').value;
-        if (company.postboxNumber && company.postboxZipCode) {
-            return {
-                zip: company.postboxZipCode.zip,
-                city: company.postboxZipCode.city,
-            }
-        } else {
-            return {
-                zip: company.zipCode.zip,
-                city: company.zipCode.city,
-            }
+        return {
+            zip: company.zipCode.zip,
+            city: company.zipCode.city,
         }
     }
 
@@ -278,14 +270,6 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
 
     max(...values: number[]): number {
         return Math.max(...values);
-    }
-
-    getPoBoxZipCodeTranslations(): Translations {
-        return {
-            zipCode: 'home.tools.job-publication.company.postbox-zipcode',
-            zip: 'home.tools.job-publication.company.postbox-zip',
-            city: 'home.tools.job-publication.company.postbox-city'
-        };
     }
 
     onSubmit(): void {
@@ -488,14 +472,13 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
             }),
             company: this.fb.group({
                 name: [formModel.company.name, [Validators.required, Validators.maxLength(this.COMPANY_NAME_MAX_LENGTH)]],
-                street: [formModel.company.street, [Validators.required, Validators.maxLength(this.COMPANY_STREET_MAX_LENGTH)]],
+                street: [formModel.company.street, [Validators.maxLength(this.COMPANY_STREET_MAX_LENGTH)]],
                 houseNumber: [formModel.company.houseNumber, [Validators.maxLength(this.COMPANY_HOUSE_NO_MAX_LENGTH)]],
                 zipCode: [formModel.company.zipCode, [Validators.maxLength(this.COMPANY_ZIP_CODE_MAX_LENGTH)]],
                 postboxNumber: [formModel.company.postboxNumber, [Validators.pattern(POSTBOX_NUMBER_REGEX)]],
-                postboxZipCode: [formModel.company.postboxZipCode, [Validators.maxLength(this.COMPANY_POSTBOX_ZIP_CODE_MAX_LENGTH)]],
                 countryCode: [formModel.company.countryCode, [Validators.required, Validators.maxLength(this.COMPANY_COUNTRY_CODE_MAX_LENGTH)]],
                 surrogate: [formModel.company.surrogate]
-            }),
+            }, { validator: this.atLeastOneRequiredValidator(Validators.required, ['street', 'postboxNumber']) }),
             contact: this.fb.group({
                 language: [formModel.contact.language, [Validators.required]],
                 salutation: [formModel.contact.salutation, [Validators.required, Validators.maxLength(this.CONTACT_SALUTATION_MAX_LENGTH)]],
@@ -567,10 +550,6 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
                 },
                 houseNumber: '',
                 postboxNumber: '',
-                postboxZipCode: {
-                    zip: '',
-                    city: ''
-                },
                 countryCode: this.COUNTRY_ISO_CODE_SWITZERLAND,
                 surrogate: false
             },

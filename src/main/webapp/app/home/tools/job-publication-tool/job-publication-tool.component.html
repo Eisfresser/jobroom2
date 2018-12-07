@@ -344,6 +344,10 @@
                         </div>
                     </div>
 
+                    <div class="form-text md-2 text-muted"
+                         jhiTranslate="home.tools.job-publication.messages.validate.at-least-one-required-street-or-pobox">
+                    </div>
+
                     <div class="form-row">
                         <div class="form-group col-md-9">
                             <label for="unt-street" class="col-form-label">{{
@@ -364,22 +368,19 @@
                         </div>
                         <jr2-input-error-message [formGroup]="jobPublicationForm"
                                                  path="company.street"
-                                                 [errorCodes]="['required','maxlength']"
-                                                 [keys]="['home.tools.job-publication.messages.validate.required',
-                                                 'job-publication.company.street.maxlength']">
+                                                 [errorCodes]="['maxlength']"
+                                                 [keys]="['job-publication.company.street.maxlength']">
+                        </jr2-input-error-message>
+                        <jr2-input-error-message [formGroup]="jobPublicationForm"
+                                                 path="company"
+                                                 [errorCodes]="['atLeastOneRequired']"
+                                                 [keys]="['home.tools.job-publication.messages.validate.at-least-one-required-street-or-pobox']">
                         </jr2-input-error-message>
                     </div>
 
-                    <jr2-zip-code [group]="jobPublicationForm.get('company')"
-                                  controlName="zipCode"
-                                  [switzSelected]="isSwitzerlandSelected(jobPublicationForm.get('company.countryCode')) | async">
-                    </jr2-zip-code>
-
                     <div class="form-group">
                         <label for="unt-pobox" class="col-form-label">
-                            {{ 'home.tools.job-publication.company.postbox-number' |
-                            translate }}
-                            <span class="optional">{{ 'home.tools.job-publication.optional' | translate }}</span>
+                            {{ 'home.tools.job-publication.company.postbox-number' | translate }}
                         </label>
                         <div>
                             <input formControlName="postboxNumber" [jr2TextSizeLimit]="6"
@@ -388,16 +389,14 @@
                     </div>
 
                     <jr2-zip-code [group]="jobPublicationForm.get('company')"
-                                  controlName="postboxZipCode"
-                                  [switzSelected]="isSwitzerlandSelected(jobPublicationForm.get('company.countryCode')) | async"
-                                  [translations]="getPoBoxZipCodeTranslations()"
-                                  [optional]="true">
+                                  controlName="zipCode"
+                                  [switzSelected]="isSwitzerlandSelected(jobPublicationForm.get('company.countryCode')) | async">
                     </jr2-zip-code>
 
                     <div class="form-group">
-                        <label for="unt-country" class="col-form-label">{{
-                            'home.tools.job-publication.company.country'
-                            | translate }}</label>
+                        <label for="unt-country" class="col-form-label">
+                            {{'home.tools.job-publication.company.country'| translate }}
+                        </label>
                         <div>
                             <select formControlName="countryCode"
                                     class="form-control custom-select" id="unt-country">

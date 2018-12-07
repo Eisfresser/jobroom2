@@ -110,10 +110,6 @@ export class JobPublicationMapper {
                 city: jobAdvertisement.jobContent.company.city
             },
             postboxNumber: jobAdvertisement.jobContent.company.postOfficeBoxNumber,
-            postboxZipCode: {
-                zip: jobAdvertisement.jobContent.company.postOfficeBoxPostalCode,
-                city: jobAdvertisement.jobContent.company.postOfficeBoxCity
-            },
             countryCode: jobAdvertisement.jobContent.company.countryIsoCode,
             surrogate: jobAdvertisement.jobContent.company.surrogate,
         };
@@ -237,13 +233,6 @@ export class JobPublicationMapper {
             postOfficeBoxNumber: jobPublicationForm.company.postboxNumber,
             surrogate: jobPublicationForm.company.surrogate
         };
-
-        if (jobPublicationForm.company.postboxZipCode) {
-            Object.assign(jobAd.company, {
-                postOfficeBoxPostalCode: jobPublicationForm.company.postboxZipCode.zip,
-                postOfficeBoxCity: jobPublicationForm.company.postboxZipCode.city
-            });
-        }
 
         if (jobPublicationForm.employer) {
             jobAd.employer = {
