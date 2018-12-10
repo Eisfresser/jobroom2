@@ -1,0 +1,63 @@
+<div class="container-fluid">
+    <h2>
+        <span jhiTranslate="legal-terms-management.title">Terms and Conditions Management</span>
+    </h2>
+    <jhi-alert-error></jhi-alert-error>
+    <div class="row">
+        <div class="col-sm-12">
+            <button
+                class="btn btn-danger btn-sm"
+                (click)="addNewLegalTerms()"
+                jhiTranslate="legal-terms-management.add-legal-terms">
+            </button>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th jhiTranslate="legal-terms-management.header.effectiveAt"></th>
+                <th jhiTranslate="legal-terms-management.header.linkDe"></th>
+                <th jhiTranslate="legal-terms-management.header.linkEn"></th>
+                <th jhiTranslate="legal-terms-management.header.linkFr"></th>
+                <th jhiTranslate="legal-terms-management.header.linkIt"></th>
+                <th jhiTranslate="legal-terms-management.header.actions"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let legalTerms of legalTermsEntries$ | async ">
+                <td>{{ legalTerms.effectiveAt | date:'dd/MM/yy' }}</td>
+                <td class="reverse-ellipsis"><a href="{{ legalTerms.linkDe }}" target="_blank"><span>{{legalTerms.linkDe}}</span></a></td>
+                <td class="reverse-ellipsis"><a href="{{ legalTerms.linkEn }}" target="_blank"><span>{{legalTerms.linkEn}}</span></a></td>
+                <td class="reverse-ellipsis"><a href="{{ legalTerms.linkFr }}" target="_blank"><span>{{legalTerms.linkFr}}</span></a></td>
+                <td class="reverse-ellipsis"><a href="{{ legalTerms.linkIt }}" target="_blank"><span>{{legalTerms.linkIt}}</span></a></td>
+                <td>
+                    <button
+                        class="btn btn-info btn-sm"
+                        (click)="openViewDialog(legalTerms)">
+                        <span class="fa fa-eye"></span>
+                        <span class="d-none d-md-inline"
+                              jhiTranslate="entity.action.view">View</span>
+                    </button>
+                    <button
+                        *ngIf="isFutureEffective(legalTerms.effectiveAt)"
+                        class="btn btn-primary btn-sm"
+                        (click)="updateLegalTerms(legalTerms)">
+                        <span class="fa fa-pencil"></span>
+                        <span class="d-none d-md-inline"
+                              jhiTranslate="entity.action.edit">Edit</span>
+                    </button>
+                    <button
+                        *ngIf="isFutureEffective(legalTerms.effectiveAt)"
+                        class="btn btn-danger btn-sm"
+                        (click)="deleteLegalTerms(legalTerms)">
+                        <span class="fa fa-remove"></span>
+                        <span class="d-none d-md-inline"
+                              jhiTranslate="entity.action.delete">Delete</span>
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -17,6 +17,7 @@ import {
 import { UserRouteAccessService } from '../shared';
 import { apiUserManagementRoutes } from './api-user-management/api-user-management.route';
 import { blacklistedAgentRoute } from './blacklist-agent/blacklisted-agent.route';
+import { legalTermsManagementRoute } from './legal-terms-management/legal-terms-management.route';
 
 const ADMIN_ROUTES = [
     auditsRoute,
@@ -30,7 +31,8 @@ const ADMIN_ROUTES = [
     metricsRoute,
     systemNotificationsManagementRoute,
     ...apiUserManagementRoutes,
-    blacklistedAgentRoute
+    blacklistedAgentRoute,
+    legalTermsManagementRoute
 ];
 
 export const adminState: Routes = [

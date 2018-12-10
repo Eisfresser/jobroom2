@@ -1,0 +1,24 @@
+{
+    "legal-terms-management": {
+        "title": "AGB verwalten",
+        "filter": {
+            "placeholder": "Filtern nach Effektiv Bei, Link DE, Link EN, Link FR oder Link IT"
+        },
+        "add-legal-terms": "AGB Hinzuf\u00fcgen",
+        "header": {
+            "effectiveAt": "Effektiv Bei",
+            "linkDe": "DE Link",
+            "linkEn": "EN Link",
+            "linkFr": "FR Link",
+            "linkIt": "IT Link",
+            "actions": "Aktionen"
+        },
+        "legal-terms-details-dialog": "AGB Details",
+        "legal-terms-details-dialog.add": "Hinzuf\u00fcgen",
+        "legal-terms-delete-dialog": {
+            "question": "Sind Sie sicher, dass Sie AGB l\u00f6schen m\u00f6chten?"
+        },
+        "legal-terms-details-dialog.validate.pastEffectiveAt": "Effektiv-Bei-Datum  muss in der Zukunft liegen.",
+        "legal-terms-details-dialog.validate.url.pattern": "Diese URL ist ung\u00fcltig."
+    }
+}

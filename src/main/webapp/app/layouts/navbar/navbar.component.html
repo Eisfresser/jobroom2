@@ -206,6 +206,16 @@
                                             <span
                                                 jhiTranslate="global.menu.blacklisted-agent">Blacklist</span>
                                         </a>
+                                        <a class="dropdown-item"
+                                           routerLink="legal-terms-management"
+                                           *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_SYSADMIN']"
+                                           routerLinkActive="active"
+                                           (click)="collapseNavbar()">
+                                            <span class="fa fa-fw fa-balance-scale"
+                                                  aria-hidden="true"></span>
+                                            <span
+                                                jhiTranslate="global.menu.termsAndConditions">Terms And Conditions</span>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -485,6 +495,16 @@
                                     <span class="fa fa-fw fa-ban"
                                             aria-hidden="true"></span>
                                     <span jhiTranslate="global.menu.blacklisted-agent">Blacklist</span>
+                                </a>
+
+                                <a class="dropdown-item"
+                                   routerLink="legal-terms-management"
+                                   *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_SYSADMIN']"
+                                   routerLinkActive="active"
+                                   (click)="collapseNavbar()">
+                                    <span class="fa fa-fw fa-balance-scale"
+                                          aria-hidden="true"></span>
+                                    <span jhiTranslate="global.menu.termsAndConditions">Terms And Conditions</span>
                                 </a>
                             </div>
                         </div>

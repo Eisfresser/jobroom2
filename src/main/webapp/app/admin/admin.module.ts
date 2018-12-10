@@ -54,6 +54,10 @@ import { BlacklistedAgentChangeStatusDialogComponent } from './blacklist-agent/b
 import { BlacklistedAgentPropertyFilterPipe } from './blacklist-agent/blacklisted-agent-property-filter.pipe';
 import { BlacklistedAgentService } from './blacklist-agent/blacklisted-agent.service';
 import { AddBlacklistedAgentDialogComponent } from './blacklist-agent/add-blacklisted-agent-dialog/add-blacklisted-agent-dialog.component';
+import { LegalTermsManagementComponent } from './legal-terms-management/legal-terms-management.component';
+import { LegalTermsDetailsDialogComponent } from './legal-terms-management/legal-terms-details-dialog/legal-terms-details-dialog.component';
+import { LegalTermsManagementService } from './legal-terms-management/legal-terms-management.service';
+import { LegalTermsDeleteDialogComponent } from './legal-terms-management/legal-terms-delete-dialog/legal-terms-delete-dialog.component';
 
 /* jhipster-needle-add-admin-module-import - JHipster will add admin modules imports here */
 
@@ -98,7 +102,10 @@ import { AddBlacklistedAgentDialogComponent } from './blacklist-agent/add-blackl
         BlacklistedAgentManagementComponent,
         BlacklistedAgentChangeStatusDialogComponent,
         BlacklistedAgentPropertyFilterPipe,
-        AddBlacklistedAgentDialogComponent
+        AddBlacklistedAgentDialogComponent,
+        LegalTermsManagementComponent,
+        LegalTermsDetailsDialogComponent,
+        LegalTermsDeleteDialogComponent
     ],
     entryComponents: [
         UserMgmtDialogComponent,
@@ -111,7 +118,9 @@ import { AddBlacklistedAgentDialogComponent } from './blacklist-agent/add-blackl
         ApiUserManagementDialogComponent,
         ApiUserManagementPasswordUpdateDialogComponent,
         BlacklistedAgentChangeStatusDialogComponent,
-        AddBlacklistedAgentDialogComponent
+        AddBlacklistedAgentDialogComponent,
+        LegalTermsDetailsDialogComponent,
+        LegalTermsDeleteDialogComponent
     ],
     providers: [
         AuditsService,
@@ -127,6 +136,7 @@ import { AddBlacklistedAgentDialogComponent } from './blacklist-agent/add-blackl
         ApiUserService,
         ApiUserDialogService,
         BlacklistedAgentService,
+        LegalTermsManagementService,
         ModalUtils
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]

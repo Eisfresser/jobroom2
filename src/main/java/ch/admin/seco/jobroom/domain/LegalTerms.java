@@ -6,6 +6,7 @@ import org.hibernate.validator.constraints.URL;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
@@ -31,22 +32,22 @@ public class LegalTerms implements Serializable {
 
     @URL
     @Size(max = 255)
-    @NotNull
+    @NotEmpty
     private String linkDe;
 
     @URL
     @Size(max = 255)
-    @NotNull
+    @NotEmpty
     private String linkEn;
 
     @URL
     @Size(max = 255)
-    @NotNull
+    @NotEmpty
     private String linkFr;
 
     @URL
     @Size(max = 255)
-    @NotNull
+    @NotEmpty
     private String linkIt;
 
     public LegalTerms() {

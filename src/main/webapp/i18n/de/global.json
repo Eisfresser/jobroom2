@@ -208,6 +208,7 @@
             "company-contact-template": "Kontaktangaben",
             "dashboard": "Dashboard",
             "blacklisted-agent": "Blacklist",
+            "termsAndConditions": "AGB",
             "entities": {
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)",
                 "job": "Stelle",

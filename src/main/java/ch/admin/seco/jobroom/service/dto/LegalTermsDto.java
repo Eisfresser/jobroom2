@@ -1,5 +1,8 @@
 package ch.admin.seco.jobroom.service.dto;
 
+import org.hibernate.validator.constraints.URL;
+
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
@@ -11,20 +14,24 @@ public class LegalTermsDto {
     @NotNull
     private LocalDate effectiveAt;
 
+    @URL
     @Size(max = 255)
-    @NotNull
+    @NotEmpty
     private String linkDe;
 
+    @URL
     @Size(max = 255)
-    @NotNull
+    @NotEmpty
     private String linkEn;
 
+    @URL
     @Size(max = 255)
-    @NotNull
+    @NotEmpty
     private String linkFr;
 
+    @URL
     @Size(max = 255)
-    @NotNull
+    @NotEmpty
     private String linkIt;
 
     public String getId() {

@@ -1,0 +1,24 @@
+{
+    "legal-terms-management": {
+        "title": "Manage Terms And Conditions",
+        "filter": {
+            "placeholder": "Filter by Effective At, Link DE, Link EN, Link FR or Link IT"
+        },
+        "add-legal-terms": "Add Terms And Conditions",
+        "header": {
+            "effectiveAt": "Effective At",
+            "linkDe": "DE link",
+            "linkEn": "EN link",
+            "linkFr": "FR link",
+            "linkIt": "IT link",
+            "actions": "Actions"
+        },
+        "legal-terms-details-dialog": "Terms And Conditions Details",
+        "legal-terms-details-dialog.add": "Add",
+        "legal-terms-delete-dialog": {
+            "question": "Are you sure you want to delete Terms And Conditions?"
+        },
+        "legal-terms-details-dialog.validate.pastEffectiveAt": "Effective At date must be in the future.",
+        "legal-terms-details-dialog.validate.url.pattern": "This URL is not valid"
+    }
+}

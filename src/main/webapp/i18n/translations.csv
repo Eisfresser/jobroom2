@@ -414,6 +414,7 @@ global,global.menu.admin.userManagement,Benutzerverwaltung,User management,Gesti
 global,global.menu.company-contact-template,Kontaktangaben,Contact Information,Informations de contact,Informazioni sui contatti
 global,global.menu.dashboard,Dashboard,Dashboard,Dashboard,Dashboard
 global,global.menu.blacklisted-agent,Blacklist,Blacklist,Liste noire,Lista nera
+global,global.menu.termsAndConditions,AGB,Terms And Conditions,CGV,Le condizioni generali
 global,global.menu.entities.jhipster-needle-menu-add-entry,JHipster will add additional entities here (do not translate!),JHipster will add additional entities here (do not translate!),JHipster will add additional entities here (do not translate!),JHipster will add additional entities here (do not translate!)
 global,global.menu.entities.job,Stelle,Job,Emploi,Posto
 global,global.menu.entities.main,Entitäten,Entities,Entités,Entità
@@ -1297,4 +1298,19 @@ job-publication,job-publication.publicContact.lastName.maxlength,Dieses Feld dar
 job-publication,job-publication.publicContact.email.maxlength,Dieses Feld darf max. 50 Zeichen lang sein.,This field cannot be longer than 50 characters.,Ce champ doit comporter au maximum 50 caractères.,Questo campo non può essere più di 50 caratteri.
 job-publication,job-publication.company.name.maxlength,Dieses Feld darf max. 255 Zeichen lang sein.,This field cannot be longer than 255 characters.,Ce champ doit comporter au maximum 255 caractères.,Questo campo non può essere più di 255 caratteri.
 job-publication,job-publication.company.street.maxlength,Dieses Feld darf max. 60 Zeichen lang sein.,This field cannot be longer than 60 characters.,Ce champ doit comporter au maximum 60 caractères.,Questo campo non può essere più di 60 caratteri.
-job-publication,job-publication.application.postAddress.paperApp.city.empty,Dieses Feld darf nicht leer sein!,This field cannot be empty!,Ce champ ne peut pas être vide !,Questo campo non può essere vuoto!
+job-publication,job-publication.application.postAddress.paperApp.city.empty,Dieses Feld darf nicht leer sein!,This field cannot be empty!,Ce champ ne peut pas être vide !,Questo campo non puòlegal-terms-management.add-legal-terms-dialog essere vuoto!
+
+legal-terms-management,legal-terms-management.title,AGB verwalten,Manage Terms And Conditions,Gérer CGV,Gestisci condizioni generali
+legal-terms-management,legal-terms-management.filter.placeholder,"Filtern nach Effektiv Bei, Link DE, Link EN, Link FR oder Link IT","Filter by Effective At, Link DE, Link EN, Link FR or Link IT","Filtrer par Efficace À, Lien DE, Lien EN, Lien FR ou Lien IT","Filtra per Efficace A, Link DE, Link EN, Link FR o Link IT"
+legal-terms-management,legal-terms-management.add-legal-terms,AGB Hinzufügen,Add Terms And Conditions,Ajouter CGV,Aggiungi Condizioni Generali
+legal-terms-management,legal-terms-management.header.effectiveAt,Effektiv Bei,Effective At,Efficace À,Efficace A
+legal-terms-management,legal-terms-management.header.linkDe,DE Link,DE link,DE lien,DE link
+legal-terms-management,legal-terms-management.header.linkEn,EN Link,EN link,EN lien,EN link
+legal-terms-management,legal-terms-management.header.linkFr,FR Link,FR link,FR lien,FR link
+legal-terms-management,legal-terms-management.header.linkIt,IT Link,IT link,IT lien,IT link
+legal-terms-management,legal-terms-management.header.actions,Aktionen,Actions,Actes,Azioni
+legal-terms-management,legal-terms-management.legal-terms-details-dialog,AGB Details,Terms And Conditions Details,CGV Détails,Condizioni Generali Dettagli
+legal-terms-management,legal-terms-management.legal-terms-details-dialog.add,Hinzufügen,Add,Ajouter,Aggiungi
+legal-terms-management,legal-terms-management.legal-terms-delete-dialog.question,"Sind Sie sicher, dass Sie AGB löschen möchten?",Are you sure you want to delete Terms And Conditions?,Etes-vous certain de vouloir supprimer CGV?,Sei sicuro di volere eliminare Condizioni Generali?
+legal-terms-management,legal-terms-management.legal-terms-details-dialog.validate.pastEffectiveAt,Effektiv-Bei-Datum  muss in der Zukunft liegen.,Effective At date must be in the future.,La Efficace À date doit se situer dans le futur.,La Efficace A data deve situarsi nel futuro.
+legal-terms-management,legal-terms-management.legal-terms-details-dialog.validate.url.pattern,Diese URL ist ungültig.,This URL is not valid,Ce lien URL n'est pas valable.,Questo indirizzo URL non è valido.

@@ -77,7 +77,8 @@ public class LegalTermsService {
     private void deleteIfEffectiveAtIsInFuture(LegalTerms legalTerms) throws IrremovableLegalTermsException {
         if (legalTerms.isFutureEffective()) {
             legalTermsRepository.delete(legalTerms);
+        } else {
+            throw new IrremovableLegalTermsException(legalTerms.getId());
         }
-        throw new IrremovableLegalTermsException(legalTerms.getId());
     }
 }
