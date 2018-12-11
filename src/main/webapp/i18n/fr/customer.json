@@ -7,15 +7,23 @@
             "birthdate": {
                 "label": "Anniversaire"
             },
+            "cancel": "Annuler",
             "identificaton": {
-                "mismatch": {
-                    "error": "Nous n'avons trouv\u00e9 aucune donn\u00e9e ORP correspondant \u00e0 vos indications. Veuillez v\u00e9rifier que vous avez indiqu\u00e9 correctement le num\u00e9ro personnel et la date de naissance."
-                },
                 "already-taken": {
                     "error": "Ce num\u00e9ro d\u2019identification personnel est d\u00e9j\u00e0 utilis\u00e9"
                 },
+                "mismatch": {
+                    "error": "Nous n'avons trouv\u00e9 aucune donn\u00e9e ORP correspondant \u00e0 vos indications. Veuillez v\u00e9rifier que vous avez indiqu\u00e9 correctement le num\u00e9ro personnel et la date de naissance."
+                },
                 "technical": {
                     "error": "Un probl\u00e8me technique est survenu. Veuillez r\u00e9essayer plus tard ou nous contacter \u00e0 l\u2019aide du formulaire pr\u00e9vu \u00e0 cet effet"
+                }
+            },
+            "login": "Login",
+            "messages": {
+                "validate": {
+                    "birthdate": "La date doit se situer entre le 01.01.1900 et aujourd'hui.",
+                    "pn": "Veuillez indiquer un nombre \u00e0 8 chiffres"
                 }
             },
             "pn": {
@@ -23,15 +31,7 @@
                 "placeholder": "12345678"
             },
             "text": "Veuillez vous identifier au moyen de votre num\u00e9ro personnel et de votre date de naissance. Vous trouvez votre num\u00e9ro personnel sur la lettre que vous avez re\u00e7u de l'ORP lors de votre inscription.",
-            "title": "Identification",
-            "messages": {
-                "validate": {
-                    "pn": "Veuillez indiquer un nombre \u00e0 8 chiffres",
-                    "birthdate": "La date doit se situer entre le 01.01.1900 et aujourd'hui."
-                }
-            },
-            "login": "Login",
-            "cancel": "Annuler"
+            "title": "Identification"
         }
     }
 }

@@ -5,8 +5,8 @@
             "information": {
                 "pea": {
                     "text": "Registration procedure for private placement officers",
-                    "text.JOB_SEEKERS": "Registration procedure for job seekers",
                     "text.COMPANIES": "Registration procedure for employers",
+                    "text.JOB_SEEKERS": "Registration procedure for job seekers",
                     "text.RECRUITMENT_AGENCIES": "Registration procedure for private placement officers",
                     "url": "https://www.arbeit.swiss/secoalv/en/home/menue/arbeitsvermittler/dienstleistungen-der-rav.html"
                 }
@@ -24,8 +24,8 @@
             "forgot": "Did you forget your password?"
         },
         "title": "Sign in for private employment agencies",
-        "title.JOB_SEEKERS": "Sign in for job seekers",
         "title.COMPANIES": "Sign in for employers",
+        "title.JOB_SEEKERS": "Sign in for job seekers",
         "title.RECRUITMENT_AGENCIES": "Sign in for private employment agencies"
     }
 }

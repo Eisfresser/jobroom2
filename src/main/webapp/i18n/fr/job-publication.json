@@ -22,11 +22,11 @@
     "job-publication": {
         "validation": {
             "maxlength-10": "Ce champ doit comporter au maximum 10 caract\u00e8res.",
+            "maxlength-10000": "Ce champ doit comporter au maximum 10000 caract\u00e8res.",
+            "maxlength-247": "Ce champ doit comporter au maximum 247 caract\u00e8res.",
+            "maxlength-255": "Ce champ doit comporter au maximum 255 caract\u00e8res.",
             "maxlength-50": "Ce champ doit comporter au maximum 50 caract\u00e8res.",
             "maxlength-60": "Ce champ doit comporter au maximum 60 caract\u00e8res.",
-            "maxlength-255": "Ce champ doit comporter au maximum 255 caract\u00e8res.",
-            "maxlength-247": "Ce champ doit comporter au maximum 247 caract\u00e8res.",
-            "maxlength-10000": "Ce champ doit comporter au maximum 10000 caract\u00e8res.",
             "not-empty": "Ce champ ne peut pas \u00eatre vide !"
         }
     }

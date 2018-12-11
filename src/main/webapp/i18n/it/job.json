@@ -59,13 +59,13 @@
             "professions": "Professioni",
             "publicationEndDate": "Data finale pubblicazione",
             "publicationStartDate": "Data inizio pubblicazione",
+            "rav": "URC",
             "registrationDate": "Data di registrazione",
             "startDate": "Data d'inizio",
             "startsImmediately": "Inizio immediato",
             "title": "Titolo del posto",
             "workingTimePercentageMax": "Grado di occupazione max",
-            "workingTimePercentageMin": "Grado di occupazione min",
-            "rav": "URC"
+            "workingTimePercentageMin": "Grado di occupazione min"
         }
     },
     "jobserviceApp": {

@@ -13,12 +13,13 @@
             "additionalInfo": "Additional information",
             "email": "By email",
             "mail": "By post",
-            "phone": "By phone",
             "online": "Electronic",
+            "phone": "By phone",
             "title": "Application forms"
         },
         "back": "Back to search results",
         "contactPerson": "Your contact person",
+        "deactivated": "This job posting is no longer active.",
         "external-job-disclaimer": "This job posting was found on an external website. The unemployment insurance and public employment service provides this search result as an additional service. It has no influence on its content and quality.                                                                                                                                                                                                                    ",
         "onlineSince": "Vacant since",
         "otherJobsCompany": "Show {{count}} jobs",
@@ -32,7 +33,6 @@
         "startsImmediately.false": "By agreement",
         "startsImmediately.true": "Immediately",
         "title": "Job detail",
-        "deactivated": "This job posting is no longer active.",
         "unvalidated": "This advert was published electronically by one of our users on the internet platform of the public employment service. Neither the unemployment insurance office nor the public employment service have any influence over its content or quality."
     },
     "job-fingerprint-redirect": {

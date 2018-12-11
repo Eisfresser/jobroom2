@@ -1,22 +1,22 @@
 {
     "registration": {
         "existing-pav": {
-            "username": {
-                "label": "Username",
-                "placeholder": "Username"
-            },
-            "password": {
-                "label": "Password",
-                "placeholder": "Password"
-            },
+            "cancel": "Cancel",
             "identificaton": {
                 "mismatch": {
                     "error": "We were unable to find your account based on the information provided. Please verify your email address and password."
                 }
             },
-            "text": "Please enter the Job Room login details you regularly use.",
             "login": "Login",
-            "cancel": "Cancel"
+            "password": {
+                "label": "Password",
+                "placeholder": "Password"
+            },
+            "text": "Please enter the Job Room login details you regularly use.",
+            "username": {
+                "label": "Username",
+                "placeholder": "Username"
+            }
         }
     }
 }

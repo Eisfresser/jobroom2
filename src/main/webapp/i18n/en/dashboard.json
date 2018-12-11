@@ -32,16 +32,16 @@
     "job-publication-cancel": {
         "alert": "Please fill in the cancellation details and confirm cancellation of the job posting.",
         "job": {
+            "change-or-repost": "You want to change or repost the position",
             "confirm": "Confirm cancellation",
             "dismiss": "Cancel",
             "not-occupied": "You were unable to fill the position",
             "occupied": "You were able to fill the position",
             "occupied.jobCenter": "in cooperation with the regional employment centre (RAV)",
-            "occupied.privateAgency": "in cooperation with the private employment agency (pAV)",
-            "occupied.self": "You were able to fill the position yourself",
             "occupied.jobroom": "with a candidate from Job-Room",
             "occupied.not-jobroom": "with a candidate not from Job-Room",
-            "change-or-repost": "You want to change or repost the position"
+            "occupied.privateAgency": "in cooperation with the private employment agency (pAV)",
+            "occupied.self": "You were able to fill the position yourself"
         },
         "title": "Cancel job posting"
     },

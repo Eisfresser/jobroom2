@@ -4,17 +4,17 @@
             "text": "Contact",
             "url": "https://www.arbeit.swiss/secoalv/fr/home/service/kontakt.html"
         },
+        "login-cancel": {
+            "message": "Vous avez interrompu la proc\u00e9dure de login",
+            "title": "Echec du login"
+        },
         "registration": {
             "url": "https://www.arbeit.swiss/secoalv/fr/home/menue/unternehmen/stellenmeldepflicht/Registrierung.html"
         },
         "title": "Job-Room",
+        "title.cms": "travail.swiss",
         "title.portal": "travail",
         "title.portal-url": "https://www.arbeit.swiss/secoalv/fr/home.html",
-        "title.cms": "travail.swiss",
-        "login-cancel": {
-            "title": "Echec du login",
-            "message": "Vous avez interrompu la proc\u00e9dure de login"
-        },
         "toolbar": {
             "companies": "Employeurs",
             "jobSeekers": "Demandeur d'emploi",
@@ -43,8 +43,8 @@
                         "placeholder": "max. 255 caract\u00e8res"
                     },
                     "copy-email-from-public-contact": "Comme Contact pour candidats",
-                    "copy-phonenumber-from-public-contact": "Comme Contact pour candidats",
                     "copy-from-business": "Comme l'entreprise",
+                    "copy-phonenumber-from-public-contact": "Comme Contact pour candidats",
                     "email": "Courriel",
                     "online-form": "Formulaire en ligne",
                     "paper-application-post-address": "Adresse postale",
@@ -56,7 +56,10 @@
                     "house-number": "N\u00b0",
                     "name": "Entreprise",
                     "postbox": "Case postale",
+                    "postbox-city": "Lieu",
                     "postbox-number": "Num\u00e9ro de case postale",
+                    "postbox-zip": "Case postale NPA",
+                    "postbox-zipcode": "Case postale NPA / lieu",
                     "street": "Rue",
                     "surrogate": "L'annonce du poste s'effectue par un placeur priv\u00e9",
                     "title": "Entreprise",
@@ -110,7 +113,6 @@
                     "label": "Langue du descriptif"
                 },
                 "job-title": "D\u00e9signation du poste",
-                "number-of-jobs": "Nombre de postes similaires",
                 "language-skills": "Connaissances linguistiques",
                 "language-skills.add": "Ajouter une nouvelle comp\u00e9tence linguistique",
                 "language-skills.spoken.error": "Des connaissances linguistiques sont requises",
@@ -125,27 +127,28 @@
                 },
                 "messages": {
                     "validate": {
+                        "at-least-one-required": "Choisir au moins un type de postulation et remplir correctement les champs respectifs.",
+                        "at-least-one-required-email-or-phone": "Veuillez indiquer le num\u00e9ro de t\u00e9l\u00e9phone ou l'adresse courriel.",
+                        "at-least-one-required-street-or-pobox": "Veuillez indiquer la rue ou le num\u00e9ro de la bo\u00eete postale.",
                         "date-format": "Le format de la date n\u2019est pas conforme. Format correct: JJ.MM.AAAA",
                         "email-format": "Cette adresse courriel n'est pas valide.",
-                        "url-format": "Ce lien URL n'est pas valable.",
                         "employment-duration": {
                             "date-before": "La date doit se situer apr\u00e8s l'entr\u00e9e en fonction."
                         },
                         "employment-start": {
                             "date-before": "La date doit se situer dans le futur."
                         },
+                        "number-of-jobs": "Ce champ doit comporter un nombre entier entre 1 et 99.",
                         "phone-format": "Veuillez indiquer un num\u00e9ro de t\u00e9l\u00e9phone valide, par exemple 031 999 99 99 ou +41 31 999 99 99",
-                        "required": "Ce champ est obligatoire.",
-                        "at-least-one-required-email-or-phone": "Veuillez indiquer le num\u00e9ro de t\u00e9l\u00e9phone ou l'adresse courriel.",
-                        "at-least-one-required": "Choisir au moins un type de postulation et remplir correctement les champs respectifs.",
-                        "at-least-one-required-street-or-pobox": "Veuillez indiquer la rue ou le num\u00e9ro de la bo\u00eete postale.",
                         "pobox-format": "Ce num\u00e9ro de bo\u00eete postale n'est pas valide.",
+                        "required": "Ce champ est obligatoire.",
+                        "url-format": "Ce lien URL n'est pas valable.",
                         "zip-format": "NPA n'est pas valide.",
-                        "zip-or-city-format": "NPA/lieu n'est pas valide.",
-                        "number-of-jobs": "Ce champ doit comporter un nombre entier entre 1 et 99."
+                        "zip-or-city-format": "NPA/lieu n'est pas valide."
                     }
                 },
                 "no-selection": "aucune s\u00e9lection",
+                "number-of-jobs": "Nombre de postes similaires",
                 "occupation": {
                     "label": "Profession",
                     "placeholder": ""

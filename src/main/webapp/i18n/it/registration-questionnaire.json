@@ -1,25 +1,25 @@
 {
     "registrationQuestionnaire": {
-        "title": "Registrazione",
-        "header": "Tipo di utilizzo",
-        "placeholder": "Si prega di selezionare uno dei seguenti tipi di utilizzo.",
-        "ravCustomer": "Voglio usare lavoro.swiss come <b>cliente URC</b>",
         "employer": "Voglio usare lavoro.swiss come <b>datore di lavoro</b>",
-        "recruitmentAgency": {
-            "message": "Voglio usare lavoro.swiss come <b>agenzia privata di collocamento</b>",
-            "new": "\u00c8 la prima volta che accedo alla Job-Room di lavoro.swiss",
-            "existing": "Sono gi\u00e0 un utente di Job-Room"
-        },
-        "termsOfUse": {
-            "accept": "Accetto le condizoni di utilizzo",
-            "link": "<a href=\"https://www.arbeit.swiss/dam/secoalv/it/bilder/unternehmen/Stellenmeldepflicht/Nutzungsbedingungen_Job-Room.pdf.download.pdf/AGB_Job-Room_Juni_2018_it.pdf\" target=\"_blank\">Mostra le condizioni di utilizzo</a>"
-        },
         "error": {
             "candidate": {
                 "service": {
                     "failure": " contact the service desk."
                 }
             }
-        }
+        },
+        "header": "Tipo di utilizzo",
+        "placeholder": "Si prega di selezionare uno dei seguenti tipi di utilizzo.",
+        "ravCustomer": "Voglio usare lavoro.swiss come <b>cliente URC</b>",
+        "recruitmentAgency": {
+            "existing": "Sono gi\u00e0 un utente di Job-Room",
+            "message": "Voglio usare lavoro.swiss come <b>agenzia privata di collocamento</b>",
+            "new": "\u00c8 la prima volta che accedo alla Job-Room di lavoro.swiss"
+        },
+        "termsOfUse": {
+            "accept": "Accetto le condizoni di utilizzo",
+            "link": "<a href=\"https://www.arbeit.swiss/dam/secoalv/it/bilder/unternehmen/Stellenmeldepflicht/Nutzungsbedingungen_Job-Room.pdf.download.pdf/AGB_Job-Room_Juni_2018_it.pdf\" target=\"_blank\">Mostra le condizioni di utilizzo</a>"
+        },
+        "title": "Registrazione"
     }
 }

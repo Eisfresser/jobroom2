@@ -5,8 +5,8 @@
             "information": {
                 "pea": {
                     "text": "Procedura di registrazione per le agenzie di collocamento private",
-                    "text.JOB_SEEKERS": "Procedura di registrazione per persone in cerca d'impiego",
                     "text.COMPANIES": "Procedura di registrazione per datori di lavoro",
+                    "text.JOB_SEEKERS": "Procedura di registrazione per persone in cerca d'impiego",
                     "text.RECRUITMENT_AGENCIES": "Procedura di registrazione per le agenzie di collocamento private",
                     "url": "https://www.arbeit.swiss/secoalv/it/home/menue/arbeitsvermittler/dienstleistungen-der-rav/job-room-konto.html"
                 }
@@ -24,8 +24,8 @@
             "forgot": "Password dimenticata?"
         },
         "title": "Accesso per agenzie private di collocamento",
-        "title.JOB_SEEKERS": "Accesso per persone in cerca d'impiego",
         "title.COMPANIES": "Accesso per datori di lavoro",
+        "title.JOB_SEEKERS": "Accesso per persone in cerca d'impiego",
         "title.RECRUITMENT_AGENCIES": "Accesso per agenzie private di collocamento"
     }
 }

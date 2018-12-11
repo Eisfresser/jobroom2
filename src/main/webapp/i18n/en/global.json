@@ -1,4 +1,12 @@
 {
+    "alert": {
+        "error": {
+            "tooManyRequests": {
+                "anonymous": "There were to many requests from your IP. Please wait 1 minute.",
+                "authenticated": "There were to many requests from your account. Please wait 1 minute."
+            }
+        }
+    },
     "entity": {
         "action": {
             "addblob": "Add blob",
@@ -36,7 +44,6 @@
         "Size": "Field {{ fieldName }} does not meet min/max size requirements!",
         "emailexists": "Email address is already in use!",
         "idexists": "A new {{ entityName }} cannot have an ID yet.",
-        "idmismatch": "An id parameter does not match the ID of DTO..",
         "internalServerError": "Internal server error",
         "server": {
             "not": {
@@ -184,7 +191,6 @@
             "admin": {
                 "api-user-management": "API-Schl\u00fcssel-Verwaltung",
                 "apidocs": "API",
-                "user-info": "User-Info",
                 "audits": "Audits",
                 "configuration": "Configuration",
                 "contact-template-management": "Contact information",
@@ -203,12 +209,12 @@
                 "metrics": "Metrics",
                 "systemNotifications": "System notifications",
                 "tracker": "User tracker",
+                "user-info": "User-Info",
                 "userManagement": "User management"
             },
+            "blacklisted-agent": "Blacklist",
             "company-contact-template": "Contact Information",
             "dashboard": "Dashboard",
-            "blacklisted-agent": "Blacklist",
-            "termsAndConditions": "Terms And Conditions",
             "entities": {
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)",
                 "job": "Job",
@@ -312,13 +318,9 @@
                 "el": "Greek",
                 "en": "English",
                 "es": "Spanish",
+                "fa": "Farsi",
                 "fi": "Finnish",
                 "fr": "French",
-                "nld": "Flemish",
-                "sr-hr": "Serbo-Croatian",
-                "fa": "Farsi",
-                "prs": "Dari",
-                "ti": "Tigrinya",
                 "he": "Hebrew",
                 "hr": "Croatian",
                 "hu": "Hungarian",
@@ -336,9 +338,11 @@
                 "lt": "Lithuanian",
                 "mk": "Macedonian",
                 "nl": "Dutch",
+                "nld": "Flemish",
                 "no": "Norvegian",
                 "no-selection": "No selection",
                 "pl": "Polish",
+                "prs": "Dari",
                 "pt": "Portuguese",
                 "rm": "Rhaeto-Romanic",
                 "ro": "Romanian",
@@ -348,9 +352,11 @@
                 "spoken": "Orally",
                 "sq": "Albanian",
                 "sr": "Serbian",
+                "sr-hr": "Serbo-Croatian",
                 "sv": "Swedish",
                 "ta": "Tamil",
                 "th": "Thai",
+                "ti": "Tigrinya",
                 "tr": "Turkish",
                 "vi": "Vietnamese",
                 "written": "Written",
@@ -507,13 +513,5 @@
         "next": "Next",
         "previous": "Previous",
         "scroll-to-top": "Scroll to top"
-    },
-    "alert": {
-        "error": {
-            "tooManyRequests": {
-                "authenticated": "There were to many requests from your account. Please wait 1 minute.",
-                "anonymous": "There were to many requests from your IP. Please wait 1 minute."
-            }
-        }
     }
 }

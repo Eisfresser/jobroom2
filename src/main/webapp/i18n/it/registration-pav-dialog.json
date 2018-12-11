@@ -1,15 +1,15 @@
 {
     "registrationPavDialog": {
-        "title": "Selezionare la sua organizzazione dall'elenco OE LC",
+        "activationCodeRequested": "La richiesta \u00e8 andata a buon fine",
+        "login": {
+            "description": "Con il codice di attivazione inviato potrai accedere al tuo account utente tramite il login."
+        },
         "placeholder": "Inserire la sua organizzazione",
         "postal": {
             "description": "Invieremo un codice di attivazione <b>per posta</b> all'indirizzo della ditta da voi scelta dall'elenco ES ELC:"
         },
-        "login": {
-            "description": "Con il codice di attivazione inviato potrai accedere al tuo account utente tramite il login."
-        },
         "requestActivationCode": "Richiedere il codice di attivazione per posta",
-        "activationCodeRequested": "La richiesta \u00e8 andata a buon fine",
-        "returnToHomepage": "Torna alla pagina iniziale"
+        "returnToHomepage": "Torna alla pagina iniziale",
+        "title": "Selezionare la sua organizzazione dall'elenco OE LC"
     }
 }

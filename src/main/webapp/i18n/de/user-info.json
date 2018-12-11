@@ -1,46 +1,46 @@
 {
     "user-info": {
-        "title": "Benutzerinformationen",
-        "desc": "Bitte geben Sie die E-Mail-Adresse eines bestehenden Benutzers ein.",
-        "search": "Suchen",
         "account-info": "Account Informationen",
-        "stes-info": "STES Informationen",
-        "roles": "eIAM Rollen",
         "accountabilities": "Verantwortlichkeiten",
-        "info-actions": "Zus\u00e4tzliche Informationen und Aktionen",
-        "label": {
-            "ext-id": "Ext-Id",
-            "email": "E-Mail",
-            "firstname": "Vorname",
-            "lastname": "Nachname",
-            "registration-status": "Registrierungsstatus",
-            "created": "Erstellungsdatum",
-            "modified": "\u00c4nderungsdatum",
-            "lastlogin": "Datum des letzten Logins",
-            "pn": "Personennummer",
-            "verified": "\u00dcberpr\u00fcft am"
-        },
-        "unregistered-user": {
-            "title": "Unregistrierter Benutzer",
-            "desc": "Dieser Benutzer schein bereits einen Account in eIAM erstellt zu haben, jedoch hat er sich bisher nicht in Job-Room registriert. Aus diesem Grund ist keine Aktion f\u00fcr den Benutzer verf\u00fcgbar. Falls der Benutzer Job-Room mit diesem Account nutzen m\u00f6chte, muss er den regul\u00e4ren Registrationsprozess durchf\u00fchren."
-        },
-        "unregister": {
-            "title": "Registrierung zur\u00fcckstellen",
-            "desc": "Diese Aktion setzt die Registrierung des Benutzers zur\u00fcck. Damit wird der Benutzer in den Zustand vor der Registrierung zur\u00fcckgesetzt. Dies l\u00f6scht alle Rollen, Verantwortlichkeiten und setzt den Status auf 'UNREGISTERED' zur\u00fcck. Der Benutzer muss anschliessend den gesamten Registrationsprozess erneut durchf\u00fchren. Dies bedeutet, dass PAV und Arbeitgeber einen Brief mit einem neuen Access Code anfordern m\u00fcssen. Dies ist n\u00f6tig, wenn der Benutzer beim Registrierungsprozess versehentlich die falsche Rolle ausgew\u00e4hlt hat. Wenn der Benutzer den Brief mit dem Access Code verloren oder nicht erhalten hat, kann der Brief im Jira gefunden werden und neu versendet werden. Falls der Benutzer in Jira nicht gefunden werden kann, hat er sich vermutlich vor dem 09.07.2018 registriert. In diesem Fall muss die Registrierung zur\u00fcckgesetzt werden. Achtung: Diese Aktion kann nicht r\u00fcckg\u00e4ngig gemacht werden."
-        },
-        "no-user-info": "Keine Benutzer-Informationen gefunden",
-        "no-account-info": "Keine Account-Informationen gefunden",
-        "no-stes-info": "Keine STES-Informationen gefunden",
-        "no-roles": "Keine Rollen in eIAM gefunden",
-        "no-accountabilities": "Keine Verantwortlichkeiten gefunden",
-        "no-actions": "Keine Aktionen oder zus\u00e4tzlichen Informationen verf\u00fcgbar",
+        "desc": "Bitte geben Sie die E-Mail-Adresse eines bestehenden Benutzers ein.",
         "error": {
-            "user-not-found": "Es konnte kein Benutzer mit dieser E-Mail-Adresse gefunden werden.",
-            "eiam-roles-not-found": "Es konnte keine Rollen in eIAM f\u00fcr diesen Benutzer gefunden werden.",
-            "technical": "Es ist ein technischer Fehler aufgetreten",
             "delete": {
                 "technical": "Es ist ein technischer Fehler beim Zur\u00fccksetzen der Registrierung aufgetreten. Versuchen Sie es sp\u00e4ter noch mal."
-            }
+            },
+            "eiam-roles-not-found": "Es konnte keine Rollen in eIAM f\u00fcr diesen Benutzer gefunden werden.",
+            "technical": "Es ist ein technischer Fehler aufgetreten",
+            "user-not-found": "Es konnte kein Benutzer mit dieser E-Mail-Adresse gefunden werden."
+        },
+        "info-actions": "Zus\u00e4tzliche Informationen und Aktionen",
+        "label": {
+            "created": "Erstellungsdatum",
+            "email": "E-Mail",
+            "ext-id": "Ext-Id",
+            "firstname": "Vorname",
+            "lastlogin": "Datum des letzten Logins",
+            "lastname": "Nachname",
+            "modified": "\u00c4nderungsdatum",
+            "pn": "Personennummer",
+            "registration-status": "Registrierungsstatus",
+            "verified": "\u00dcberpr\u00fcft am"
+        },
+        "no-account-info": "Keine Account-Informationen gefunden",
+        "no-accountabilities": "Keine Verantwortlichkeiten gefunden",
+        "no-actions": "Keine Aktionen oder zus\u00e4tzlichen Informationen verf\u00fcgbar",
+        "no-roles": "Keine Rollen in eIAM gefunden",
+        "no-stes-info": "Keine STES-Informationen gefunden",
+        "no-user-info": "Keine Benutzer-Informationen gefunden",
+        "roles": "eIAM Rollen",
+        "search": "Suchen",
+        "stes-info": "STES Informationen",
+        "title": "Benutzerinformationen",
+        "unregister": {
+            "desc": "Diese Aktion setzt die Registrierung des Benutzers zur\u00fcck. Damit wird der Benutzer in den Zustand vor der Registrierung zur\u00fcckgesetzt. Dies l\u00f6scht alle Rollen, Verantwortlichkeiten und setzt den Status auf 'UNREGISTERED' zur\u00fcck. Der Benutzer muss anschliessend den gesamten Registrationsprozess erneut durchf\u00fchren. Dies bedeutet, dass PAV und Arbeitgeber einen Brief mit einem neuen Access Code anfordern m\u00fcssen. Dies ist n\u00f6tig, wenn der Benutzer beim Registrierungsprozess versehentlich die falsche Rolle ausgew\u00e4hlt hat. Wenn der Benutzer den Brief mit dem Access Code verloren oder nicht erhalten hat, kann der Brief im Jira gefunden werden und neu versendet werden. Falls der Benutzer in Jira nicht gefunden werden kann, hat er sich vermutlich vor dem 09.07.2018 registriert. In diesem Fall muss die Registrierung zur\u00fcckgesetzt werden. Achtung: Diese Aktion kann nicht r\u00fcckg\u00e4ngig gemacht werden.",
+            "title": "Registrierung zur\u00fcckstellen"
+        },
+        "unregistered-user": {
+            "desc": "Dieser Benutzer schein bereits einen Account in eIAM erstellt zu haben, jedoch hat er sich bisher nicht in Job-Room registriert. Aus diesem Grund ist keine Aktion f\u00fcr den Benutzer verf\u00fcgbar. Falls der Benutzer Job-Room mit diesem Account nutzen m\u00f6chte, muss er den regul\u00e4ren Registrationsprozess durchf\u00fchren.",
+            "title": "Unregistrierter Benutzer"
         }
     }
 }

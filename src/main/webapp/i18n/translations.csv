@@ -5,15 +5,14 @@ activate,activate.title,Aktivierung,Activation,Activation,Attivazione
 api-user-management,api-user-management.activated,activated,activated,Active,Attivato
 api-user-management,api-user-management.active,Aktiv,Active,Activé,Attivo
 api-user-management,api-user-management.active-date,Last access date,Last access date,Last access date,Last access date
-api-user-management,api-user-management.companyName,Firma,Company,Entreprise,Impresa
 api-user-management,api-user-management.companyEmail,E-Mail Firma,Company email,Courriel de l'entreprise,E-mail dell'impresa
+api-user-management,api-user-management.companyName,Firma,Company,Entreprise,Impresa
 api-user-management,api-user-management.confirm,Speichern,Save,Sauvegarder,Salva
 api-user-management,api-user-management.contact,Contact,Contact,Contact,Contact
 api-user-management,api-user-management.contact.email,Contact email,Contact email,Contact email,Contact email
 api-user-management,api-user-management.createDate,Erstellungsdatum,Created on,Date de création,Data di creazione
 api-user-management,api-user-management.deactivated,Deaktiviert,Deactivated,Désactivé,Disattivato
 api-user-management,api-user-management.dialog.title,API-User erstellen oder modifizieren,Create or update API user,Créer ou modifier l'utilisateur API,Crea o modifica utente API
-api-user-management,api-user-management.update-password-dialog.title,Change password,Change password,Change password,Change password
 api-user-management,api-user-management.dismiss,Abbrechen,Cancel,Interrompre,Interrompere
 api-user-management,api-user-management.email,E-Mail,Email,Courriel,E-mail
 api-user-management,api-user-management.lastAccessDate,Letzter Zugriff,Last accessed on,Dernier accès,Ultimo accesso
@@ -24,6 +23,7 @@ api-user-management,api-user-management.search,"API-Benutzer nach Benutzername, 
 api-user-management,api-user-management.technicalContactEmail,E-Mail Technischer Kontakt,Technical contact email,Courriel contact technique,E-mail contatto tecnico
 api-user-management,api-user-management.technicalContactName,Technischer Kontakt,Technical contact,Contact technique,Contatto tecnico
 api-user-management,api-user-management.title,API-Benutzer verwalten,Manage API users,Gérer les utilisateurs API,Gestisci utente API
+api-user-management,api-user-management.update-password-dialog.title,Change password,Change password,Change password,Change password
 api-user-management,api-user-management.username,Benutzername,Username,Nom d'utilisateur,Nome utente
 audits,audits.filter.button.clear,leeren,clear,effacer,cancella
 audits,audits.filter.button.close,abschliessen,close,fermer,chiudi
@@ -38,6 +38,28 @@ audits,audits.table.header.date,Datum,Date,Date,Data
 audits,audits.table.header.principal,Benutzer,User,Utilisateur,Utente
 audits,audits.table.header.status,Stand,Status,État,Stato
 audits,audits.title,Audits,Audits,Audits,Cambiamenti
+blacklisted-agent,blacklisted-agent.change-status-dialog.cancel,Abbrechen,Cancel,Cancel,Cancel
+blacklisted-agent,blacklisted-agent.change-status-dialog.change-status,Status ändern,Change Status,Change Status,Change Status
+blacklisted-agent,blacklisted-agent.change-status-dialog.message,Möchten Sie wirklich den Blacklist-Eintrag für den PAV ändern?,Do you really want to change status of the blacklisted agent?,Do you really want to change status of the blacklisted agent?,Do you really want to change status of the blacklisted agent?
+blacklisted-agent,blacklisted-agent.change-status-dialog.title,Status des Blacklist-Eintrags ändern,Change Status of Blacklisted Agent,Change Status of Blacklisted Agent,Change Status of Blacklisted Agent
+blacklisted-agent,blacklisted-agent.choose-organisation-desc,"Bitte wählen Sie eine Organisation aus, die sie auf die Blacklist setzen möchten.",Please choose an organisation that you want to add to the blacklist.,Please choose an organisation that you want to add to the blacklist.,Please choose an organisation that you want to add to the blacklist.
+blacklisted-agent,blacklisted-agent.confirm-alert,Diese Aktion wird sofort ausgeführt und kann nicht rückgängig gemacht werden!,This action will be effectuated immediately and can not be undone!,This action will be effectuated immediately and can not be undone!,This action will be effectuated immediately and can not be undone!
+blacklisted-agent,blacklisted-agent.create-blacklist-entry,PAV auf Blacklist setzen,"Add PAV to Blacklist ","Add PAV to Blacklist ",Add PAV to Blacklist
+blacklisted-agent,blacklisted-agent.filter.placeholder,"Filtern nach Id, External Id, Status, Name, Strasse or PLZ","Filter by Id, External Id, Status, Name, Street or Zip Code","Filter by Id, External Id, Status, Name, Street or Zip Code","Filter by Id, External Id, Status, Name, Street or Zip Code"
+blacklisted-agent,blacklisted-agent.header.blacklistedAt,Aktualisiert am,Blacklisted At,Blacklisted At,Blacklisted At
+blacklisted-agent,blacklisted-agent.header.city,Ort,City,City,City
+blacklisted-agent,blacklisted-agent.header.counter,Anzahl Sperrungen,Counter,Counter,Counter
+blacklisted-agent,blacklisted-agent.header.createdBy,Erstellt von,Created By,Created By,Created By
+blacklisted-agent,blacklisted-agent.header.externalId,External Id,External Id,External Id,External Id
+blacklisted-agent,blacklisted-agent.header.id,Id,Id,Id,Id
+blacklisted-agent,blacklisted-agent.header.name,Name,Name,Name,Name
+blacklisted-agent,blacklisted-agent.header.status,Status,Status,Status,Status
+blacklisted-agent,blacklisted-agent.header.street,Strasse,Street,Street,Street
+blacklisted-agent,blacklisted-agent.header.zipCode,PLZ,Zip Code,Zip Code,Zip Code
+blacklisted-agent,blacklisted-agent.selected-organisation-desc,Möchten Sie folgende Organisation auf die Blacklist setzen?,Do you want to add the following organisation to the blacklist?,Do you want to add the following organisation to the blacklist?,Do you want to add the following organisation to the blacklist?
+blacklisted-agent,blacklisted-agent.status.active,Aktiv,Active,Active,Active
+blacklisted-agent,blacklisted-agent.status.inactive,Inaktiv,Inactive,Inactive,Inactive
+blacklisted-agent,blacklisted-agent.title,Blacklist für PAV,Blacklisted Agent,Blacklisted Agent,Blacklisted Agent
 candidate-detail,candidate-detail.additional-information.drivingCategories.label,Führerausweise,Driving licences,Permis de conduire,Patenti
 candidate-detail,candidate-detail.additional-information.education.label,Ausbildung,Education,Formation,Formazione
 candidate-detail,candidate-detail.additional-information.gender.label,Geschlecht,Gender,Sexe,Sesso
@@ -46,27 +68,27 @@ candidate-detail,candidate-detail.additional-information.no-information,Keine An
 candidate-detail,candidate-detail.additional-information.preferredWorkRegions.label,Gesuchte Arbeitsregionen,Preferred work regions,Régions de travail recherchées,Regioni di ricerca
 candidate-detail,candidate-detail.additional-information.title,Weitere Angaben,Additional information,Autres indications,Altri dati
 candidate-detail,candidate-detail.additional-information.workForm.label,Arbeitsform,Work form,Forme de travail,Tipologia lavorativa
+candidate-detail,candidate-detail.anonymous-contact.city,Ort,City,Place,Posto
+candidate-detail,candidate-detail.anonymous-contact.company,Unternehmen,Company,Impresa,Entreprise
 candidate-detail,candidate-detail.anonymous-contact.confirm,Bestätigen,Confirm,Confirmer,Conferma
+candidate-detail,candidate-detail.anonymous-contact.contact-person,Kontaktperson,Contact person,Personne de contact,Contatto
 candidate-detail,candidate-detail.anonymous-contact.contact-via,Bitte kontaktieren Sie mich per:,Please contact me by:,Veuillez prendre contact avec moi par:,Voglio essere contattato via:
 candidate-detail,candidate-detail.anonymous-contact.contact-via.email,E-Mail,Email,Courriel,E-mail
 candidate-detail,candidate-detail.anonymous-contact.contact-via.phone,Telefon,Phone,Téléphone,Telefono
 candidate-detail,candidate-detail.anonymous-contact.contact-via.validation,Mindestens eine der folgenden Optionen ist erforderlich,At least one of the following options are required,Il faut qu'une option es selectionné,Almeno una è necessaria
-candidate-detail,candidate-detail.anonymous-contact.dismiss,Abbrechen,Cancel,Interrompre,Interrompere
-candidate-detail,candidate-detail.anonymous-contact.title,Kandidat-/in kontaktieren,Contact candidate,Prendre contact avec un/e candidat/e,Contattare il candidato
-candidate-detail,candidate-detail.anonymous-contact.company,Unternehmen,Company,Impresa,Entreprise
-candidate-detail,candidate-detail.anonymous-contact.contact-person,Kontaktperson,Contact person,Personne de contact,Contatto
-candidate-detail,candidate-detail.anonymous-contact.street,Strasse,Street,Rue,Strada
-candidate-detail,candidate-detail.anonymous-contact.house,Nr.,No.,No.,No.
-candidate-detail,candidate-detail.anonymous-contact.zip-code,Postal code,Postal code,Postal code,Postal code
-candidate-detail,candidate-detail.anonymous-contact.city,Ort,City,Place,Posto
 candidate-detail,candidate-detail.anonymous-contact.country,Land,Country,Pays,Paese
+candidate-detail,candidate-detail.anonymous-contact.dismiss,Abbrechen,Cancel,Interrompre,Interrompere
+candidate-detail,candidate-detail.anonymous-contact.house,Nr.,No.,No.,No.
+candidate-detail,candidate-detail.anonymous-contact.mail-body-preamble,"Der unten angegebene Arbeitgeber ist im Job-Room auf Ihr Profil gestossen und wünscht eine Kontaktaufnahme. Bitte kontaktieren Sie die Firma gemäss unten stehenden Angaben, um das weitere Vorgehen zu besprechen.",The following employer discovered your profile on Job Room and would like to communicate with you directly. Please contact the company using the details below to discuss further steps.,L'employeur ci-après a consulté votre profil dans Job-Room et souhaiterait que vous le recontactiez au moyen des coordonnées ci-dessous pour discuter les prochains pas.,Il seguente datore di lavoro ha notato il Suo profilo nel Job-Room e desidera entrare in contatto con Lei. La invitiamo a contattare l’azienda (v. dati sotto) per discutere le prossime tappe.
+candidate-detail,candidate-detail.anonymous-contact.personal-message,Sie können hier eine persönliche Nachricht hinzufügen,You may add a personal message here,Vous pouvez ajouter un message personnel ici,Puoi aggiungere un messaggio personale qui
 candidate-detail,candidate-detail.anonymous-contact.send-to,Post,Mail,Poste,Posta
+candidate-detail,candidate-detail.anonymous-contact.street,Strasse,Street,Rue,Strada
 candidate-detail,candidate-detail.anonymous-contact.title,Kandidat-/in kontaktieren,Contact candidate,Prendre contact avec un/e candidat/e,Contattare il candidato
+candidate-detail,candidate-detail.anonymous-contact.zip-code,Postal code,Postal code,Postal code,Postal code
 candidate-detail,candidate-detail.back,Zurück zu den Suchergebnissen,Back to search results,Retour aux résultats,"Torna ai risultati della ricerca "
 candidate-detail,candidate-detail.candidate-anonymous-contact,Kandidat/in kontaktieren,Contact candidate,Contacter le/la candidat-e,Contattare candidato/a
-candidate-detail,candidate-detail.candidate-anonymous-contact.subject,"Liebe RAV-Kundin, lieber RAV-Kunde","Dear Customer","Chère cliente, cher client ORP","Cara cliente, caro cliente dell'URC"
-candidate-detail,candidate-detail.candidate-anonymous-contact.body,"Der unten angegebene Arbeitgeber ist im Job-Room auf Ihr Profil gestossen und wünscht eine Kontaktaufnahme. Bitte kontaktieren Sie die Firma gemäss unten stehenden Angaben, um das weitere Vorgehen zu besprechen.","The following employer discovered your profile on Job Room and would like to communicate with you directly. Please contact the company using the details below to discuss further steps.","L'employeur ci-après a consulté votre profil dans Job-Room et souhaiterait que vous le recontactiez au moyen des coordonnées ci-dessous pour discuter les prochains pas.","Il seguente datore di lavoro ha notato il Suo profilo nel Job-Room e desidera entrare in contatto con Lei. La invitiamo a contattare l’azienda (v. dati sotto) per discutere le prossime tappe."
-candidate-detail,candidate-detail.candidate-anonymous-contact.success,"Ihr E-mail wurde versandt. Vielen Dank, dass Sie Job-Room benutzen.","Your e-mail was succesfully sent. Thank you for using Job-Room.","Votre courriel a été envoyé. Merci d'utiliser Job-Room.","La sua e-mail è stata inviata. Grazie di avere utilizzato Job-Room."
+candidate-detail,candidate-detail.candidate-anonymous-contact.subject,"Liebe RAV-Kundin, lieber RAV-Kunde",Dear Customer,"Chère cliente, cher client ORP","Cara cliente, caro cliente dell'URC"
+candidate-detail,candidate-detail.candidate-anonymous-contact.success,"Ihr E-mail wurde versandt. Vielen Dank, dass Sie Job-Room benutzen.",Your e-mail was succesfully sent. Thank you for using Job-Room.,Votre courriel a été envoyé. Merci d'utiliser Job-Room.,La sua e-mail è stata inviata. Grazie di avere utilizzato Job-Room.
 candidate-detail,candidate-detail.candidate-copy-link,Link kopieren,Copy link,Copier le lien,Copia link
 candidate-detail,candidate-detail.candidate-print,Drucken,Print,Imprimer,Stampa
 candidate-detail,candidate-detail.candidate-save,Kandidatenprofil speichern,Save candidate profile,Sauvegarder le profil du candidat,Salva candidato
@@ -140,41 +162,41 @@ candidate-search,candidate-search.workplace.placeholder,Arbeitsort,Work location
 companyType,jobroomApp.CompanyType.AVG,AVG,AVG,AVG,AVG
 companyType,jobroomApp.CompanyType.RAV,RAV,RAV,RAV,RAV
 companyType,jobroomApp.CompanyType.null,,,,
-contact-template-management,contact-template-management.title,Persönliche Kontaktangaben für,Personal Contact Information for,Coordonées personnelles pour,Dati di contatto personali per
-contact-template-management,contact-template-management.helptext,"Vorname und Nachname können nicht auf dieser Maske angepasst werden. Bitte ändern Sie diese Daten unter folgendem Link direkt auf ihrem eIAM Konto. Automatisches abfüllen von Kontaktangaben auf den dafür vorgesehenen Formularfeldern für die Stellenmeldung im JobRoom. Diese Angaben haben keinen Einfluss auf die Login-Daten ihres eIAM Kontos.","Names cannot be altered in this field. Please make any changes through your eIAM account using the following link. Contact details are taken automatically from the relevant job registration form fields in JobRoom. These details have no influence on your eIAM account login data.","Le nom et le prénom ne peuvent pas être modifiés sur ce masque. Veuillez modifier ces données directement dans votre compte eIAM en cliquant sur le lien suivant. Saisie automatique des données de contact dans les champs du formulaire prévus à cet effet pour l'annonce de postes dans Job-Room. Ces données n'ont aucun effet sur les données d'accès à votre compte eIAM.","È impossibile modificare nome e cognome in questa maschera. Modifica questi dati direttamente nel tuo conto eIAM. Compilazione automatica dei dati di contatto in JobRoom, negli appositi campi del modulo per l'annuncio dei posti. Queste informazioni non modificano il login del tuo conto eIAM."
-contact-template-management,contact-template-management.link,Link zum eIAM Konto,Link to eIAM account,Lien vers le compte eIAM,Link al conto eIAM
-contact-template-management,contact-template-management.companyName,Unternehmen,Company,Entreprise,Impresa
-contact-template-management,contact-template-management.companyStreet,Strasse,Street,Rue,Via
-contact-template-management,contact-template-management.companyHouseNr,Nr.,No.,N°,N.
-contact-template-management,contact-template-management.companyZipCode,PLZ,Postal code,NPA,NPA
-contact-template-management,contact-template-management.companyCity,Ort,city,lieu,luogo
-contact-template-management,contact-template-management.phone,Telefon,Telephone number,Téléphone,Telefono
-contact-template-management,contact-template-management.email,E-Mail,E-Mail,Courriel,E-Mail
-contact-template-management,contact-template-management.firstName,Vorname,First name,Prénom,Nome
-contact-template-management,contact-template-management.lastName,Nachname,Last name,Nom,Cognome
-contact-template-management,contact-template-management.salutation,Anrede,Title,Civilité,Appellativo
-contact-template-management,contact-template-management.userInformation,Benutzerinformationen,User information,Information utilisateur,Informazioni utente
-contact-template-management,contact-template-management.companyInformation,Unternehemnsinformationen,Company Information,Information Entreprise,Informazioni Impresa
-contact-template-management,contact-template-management.successSaveMessage,Ihre persönlichen Kontaktangaben wurden erfolgreich gespeichert!,Your personal contact information was successfully saved!,Your personal contact information was successfully saved!,Your personal contact information was successfully saved!
-contact-template-management,contact-template-management.failureSaveMessage,Ihre persönlichen Kontaktangaben konnten nicht gespeichert werden,There was an error saving your personal contact information,There was an error saving your personal contact information,There was an error saving your personal contact information
-contact-template-management,contact-template-management.companyhousenr.message,Bitte überprüfen Sie die korrekte Eingabe der Hausnummer,please check that your house number is valid,please check that your house number is valid,please check that your house number is valid
 configuration,configuration.filter,Filter (nach Präfix),Filter (by prefix),Filtrer (par préfixe),Filtro (per prefisso)
 configuration,configuration.table.prefix,Präfix,Prefix,Préfixe,Prefisso
 configuration,configuration.table.properties,Eigenschaften,Properties,Propriétés,Proprietà
 configuration,configuration.title,Konfiguration,Configuration,Configuration,Configurazione
+contact-template-management,contact-template-management.companyCity,Ort,city,lieu,luogo
+contact-template-management,contact-template-management.companyHouseNr,Nr.,No.,N°,N.
+contact-template-management,contact-template-management.companyInformation,Unternehemnsinformationen,Company Information,Information Entreprise,Informazioni Impresa
+contact-template-management,contact-template-management.companyName,Unternehmen,Company,Entreprise,Impresa
+contact-template-management,contact-template-management.companyStreet,Strasse,Street,Rue,Via
+contact-template-management,contact-template-management.companyZipCode,PLZ,Postal code,NPA,NPA
+contact-template-management,contact-template-management.companyhousenr.message,Bitte überprüfen Sie die korrekte Eingabe der Hausnummer,please check that your house number is valid,please check that your house number is valid,please check that your house number is valid
+contact-template-management,contact-template-management.email,E-Mail,E-Mail,Courriel,E-Mail
+contact-template-management,contact-template-management.failureSaveMessage,Ihre persönlichen Kontaktangaben konnten nicht gespeichert werden,There was an error saving your personal contact information,There was an error saving your personal contact information,There was an error saving your personal contact information
+contact-template-management,contact-template-management.firstName,Vorname,First name,Prénom,Nome
+contact-template-management,contact-template-management.helptext,Vorname und Nachname können nicht auf dieser Maske angepasst werden. Bitte ändern Sie diese Daten unter folgendem Link direkt auf ihrem eIAM Konto. Automatisches abfüllen von Kontaktangaben auf den dafür vorgesehenen Formularfeldern für die Stellenmeldung im JobRoom. Diese Angaben haben keinen Einfluss auf die Login-Daten ihres eIAM Kontos.,Names cannot be altered in this field. Please make any changes through your eIAM account using the following link. Contact details are taken automatically from the relevant job registration form fields in JobRoom. These details have no influence on your eIAM account login data.,Le nom et le prénom ne peuvent pas être modifiés sur ce masque. Veuillez modifier ces données directement dans votre compte eIAM en cliquant sur le lien suivant. Saisie automatique des données de contact dans les champs du formulaire prévus à cet effet pour l'annonce de postes dans Job-Room. Ces données n'ont aucun effet sur les données d'accès à votre compte eIAM.,"È impossibile modificare nome e cognome in questa maschera. Modifica questi dati direttamente nel tuo conto eIAM. Compilazione automatica dei dati di contatto in JobRoom, negli appositi campi del modulo per l'annuncio dei posti. Queste informazioni non modificano il login del tuo conto eIAM."
+contact-template-management,contact-template-management.lastName,Nachname,Last name,Nom,Cognome
+contact-template-management,contact-template-management.link,Link zum eIAM Konto,Link to eIAM account,Lien vers le compte eIAM,Link al conto eIAM
+contact-template-management,contact-template-management.phone,Telefon,Telephone number,Téléphone,Telefono
+contact-template-management,contact-template-management.salutation,Anrede,Title,Civilité,Appellativo
+contact-template-management,contact-template-management.successSaveMessage,Ihre persönlichen Kontaktangaben wurden erfolgreich gespeichert!,Your personal contact information was successfully saved!,Your personal contact information was successfully saved!,Your personal contact information was successfully saved!
+contact-template-management,contact-template-management.title,Persönliche Kontaktangaben für,Personal Contact Information for,Coordonées personnelles pour,Dati di contatto personali per
+contact-template-management,contact-template-management.userInformation,Benutzerinformationen,User information,Information utilisateur,Informazioni utente
 customer,customer.title,Registrierung für Kunden,Customer registration,Enregistrement pour les clients,Registrazione per i clienti
 customer,registration.customer.birthdate.label,Geburtstag,Date of Birth,Anniversaire,Compleanno
-customer,registration.customer.identificaton.mismatch.error,"Wir konnten keine RAV-Daten anhand Ihrer Angaben finden. Bitte überprüfen Sie, dass Personennummer und Geburtsdatum korrekt eingegeben wurden.","We were unable to find any RAV data based on the information provided. Please verify your personal ID and date of birth.","Nous n'avons trouvé aucune donnée ORP correspondant à vos indications. Veuillez vérifier que vous avez indiqué correctement le numéro personnel et la date de naissance.","Non abbiamo trovato dati URC in base alle indicazioni fornite. Per favore controllare che il numero personale e la data di nascita siano stati inseriti correttamente."
-customer,registration.customer.identificaton.already-taken.error,"Diese Personennummer wurde bereits verwendet","This personal identification number is already in use","Ce numéro d’identification personnel est déjà utilisé","Questo numero personale è già attribuito"
-customer,registration.customer.identificaton.technical.error,"Es ist ein technisches Problem aufgetreten. Versuchen Sie es später noch einmal ansonsten wenden Sie sich an unseren Support via Kontaktformular","There is a technical problem. Please try again later or contact our support team using the contact form.","Un problème technique est survenu. Veuillez réessayer plus tard ou nous contacter à l’aide du formulaire prévu à cet effet","Si è verificato un problema tecnico. Riprovare più tardi o rivolgersi al Supporto mediante il modulo di contatto"
+customer,registration.customer.cancel,Abbrechen,Cancel,Annuler,Cancel
+customer,registration.customer.identificaton.already-taken.error,Diese Personennummer wurde bereits verwendet,This personal identification number is already in use,Ce numéro d’identification personnel est déjà utilisé,Questo numero personale è già attribuito
+customer,registration.customer.identificaton.mismatch.error,"Wir konnten keine RAV-Daten anhand Ihrer Angaben finden. Bitte überprüfen Sie, dass Personennummer und Geburtsdatum korrekt eingegeben wurden.",We were unable to find any RAV data based on the information provided. Please verify your personal ID and date of birth.,Nous n'avons trouvé aucune donnée ORP correspondant à vos indications. Veuillez vérifier que vous avez indiqué correctement le numéro personnel et la date de naissance.,Non abbiamo trovato dati URC in base alle indicazioni fornite. Per favore controllare che il numero personale e la data di nascita siano stati inseriti correttamente.
+customer,registration.customer.identificaton.technical.error,Es ist ein technisches Problem aufgetreten. Versuchen Sie es später noch einmal ansonsten wenden Sie sich an unseren Support via Kontaktformular,There is a technical problem. Please try again later or contact our support team using the contact form.,Un problème technique est survenu. Veuillez réessayer plus tard ou nous contacter à l’aide du formulaire prévu à cet effet,Si è verificato un problema tecnico. Riprovare più tardi o rivolgersi al Supporto mediante il modulo di contatto
+customer,registration.customer.login,Login,Login,Login,Login
+customer,registration.customer.messages.validate.birthdate,Das Datum muss zwischen dem 01.01.1900 und heute liegen.,The date must be between 01.01.1900 and today,La date doit se situer entre le 01.01.1900 et aujourd'hui.,La data deve essere compresa tra il 01.01.1900 e oggi.
+customer,registration.customer.messages.validate.pn,Bitte eine Zahl mit 8 Stellen eingeben,Please provide a number with 8 digits,Veuillez indiquer un nombre à 8 chiffres,Inserisci un numero di 8 cifre.
 customer,registration.customer.pn.label,Personennummer,Personal ID,Numéro personnel,Numero personale
 customer,registration.customer.pn.placeholder,12345678,12345678,12345678,12345678
-customer,registration.customer.text,"Bitte identifizieren Sie sich mit Ihrer Personennummer und Ihrem Geburtsdatum. Die Personennummer finden Sie auf dem Brief, den Sie bei der Anmeldung vom RAV erhalten haben.","Please authenticate yourself using your personal ID and date of birth. Your personal ID is indicated in the letter which you received from the RAV upon registration.","Veuillez vous identifier au moyen de votre numéro personnel et de votre date de naissance. Vous trouvez votre numéro personnel sur la lettre que vous avez reçu de l'ORP lors de votre inscription.","Identificati con la tua data di nascita e il tuo numero personale che hai ricevuto con la lettera quando ti sei iscritto all'URC."
+customer,registration.customer.text,"Bitte identifizieren Sie sich mit Ihrer Personennummer und Ihrem Geburtsdatum. Die Personennummer finden Sie auf dem Brief, den Sie bei der Anmeldung vom RAV erhalten haben.",Please authenticate yourself using your personal ID and date of birth. Your personal ID is indicated in the letter which you received from the RAV upon registration.,Veuillez vous identifier au moyen de votre numéro personnel et de votre date de naissance. Vous trouvez votre numéro personnel sur la lettre que vous avez reçu de l'ORP lors de votre inscription.,Identificati con la tua data di nascita e il tuo numero personale che hai ricevuto con la lettera quando ti sei iscritto all'URC.
 customer,registration.customer.title,Identifizierung,Identification,Identification,Riconoscimento
-customer,registration.customer.messages.validate.pn,"Bitte eine Zahl mit 8 Stellen eingeben","Please provide a number with 8 digits","Veuillez indiquer un nombre à 8 chiffres","Inserisci un numero di 8 cifre."
-customer,registration.customer.messages.validate.birthdate,"Das Datum muss zwischen dem 01.01.1900 und heute liegen.","The date must be between 01.01.1900 and today","La date doit se situer entre le 01.01.1900 et aujourd'hui.","La data deve essere compresa tra il 01.01.1900 e oggi."
-customer,registration.customer.login,Login,Login,Login,Login
-customer,registration.customer.cancel,Abbrechen,Cancel,Annuler,Cancel
 dashboard,dashboard.job-publication.action,Aktion,Action,Action,Azione
 dashboard,dashboard.job-publication.action.copy,Stellenanzeige duplizieren,Duplicate the job ad,Dupliquer l'annonce,Duplicare l'annuncio
 dashboard,dashboard.job-publication.action.delete,Stellenanzeige abmelden,Cancel job posting,Retirer l'annonce,Cancellare il posto vacante
@@ -196,16 +218,16 @@ dashboard,dashboard.job-publication.title,Stellenanzeigen bewirtschaften,Manage 
 dashboard,dashboard.job-publication.user-information.title,Sie sind eingeloggt als,You are logged in as,Vous êtes connecté(e),Registrato in qualità di:
 dashboard,dashboard.title,Dashboard,Dashboard,Tableau de bord,Dashboard
 dashboard,job-publication-cancel.alert,Bitte füllen Sie die Abmeldeinformationen aus und bestätigen Sie die Abmeldung der Stellenanzeige.,Please fill in the cancellation details and confirm cancellation of the job posting.,Veuillez remplir les informations et confirmer l'annulation de l'annonce.,Compilare i dati per la cancellazione dell'annuncio e confermare
+dashboard,job-publication-cancel.job.change-or-repost,Sie möchten die Ausschreibung ändern oder neu erfassen,You want to change or repost the position,Sie möchten die Ausschreibung ändern oder neu erfassen,Sie möchten die Ausschreibung ändern oder neu erfassen
 dashboard,job-publication-cancel.job.confirm,Abmeldung bestätigen,Confirm cancellation,Confirmer l'annulation,Confermare la cancellazione
 dashboard,job-publication-cancel.job.dismiss,Abbrechen,Cancel,Interrompre,Interrompere
 dashboard,job-publication-cancel.job.not-occupied,Sie konnten die Stelle nicht besetzen,You were unable to fill the position,Vous n'avez pas pu pourvoir le poste,Il posto non è stato assegnato
 dashboard,job-publication-cancel.job.occupied,Sie konnten die Stelle besetzen,You were able to fill the position,Vous avez pourvu le poste,Il posto è stato assegnato
 dashboard,job-publication-cancel.job.occupied.jobCenter,in Zusammenarbeit mit der regionalen Arbeitsvermittlung (RAV),in cooperation with the regional employment centre (RAV),en collaboration avec l'Office régional de placement (ORP),in collaborazione con l'Ufficio regionale di collocamento (URC)
-dashboard,job-publication-cancel.job.occupied.privateAgency,in Zusammenarbeit mit der privaten Arbeitsvermittlung (pAV),in cooperation with the private employment agency (pAV),en collaboration avec un placeur privé,in collaborazione con le agenzie private di collocamento
-dashboard,job-publication-cancel.job.occupied.self,Sie konnten die Stelle selber besetzen,You were able to fill the position yourself,Vous avez pourvu le poste par vos propres soins.,Il posto è stato assegnato senza interventi esterni
 dashboard,job-publication-cancel.job.occupied.jobroom,mit einer Kandidatin/einem Kandidaten aus Job-Room,with a candidate from Job-Room,avec un/une candidat/e de Job-Room,a un candidato di Job-Room
 dashboard,job-publication-cancel.job.occupied.not-jobroom,anderweitig,with a candidate not from Job-Room,par un autre moyen que Job-Room,a un'altra persona
-dashboard,job-publication-cancel.job.change-or-repost,Sie möchten die Ausschreibung ändern oder neu erfassen,You want to change or repost the position,Sie möchten die Ausschreibung ändern oder neu erfassen,Sie möchten die Ausschreibung ändern oder neu erfassen
+dashboard,job-publication-cancel.job.occupied.privateAgency,in Zusammenarbeit mit der privaten Arbeitsvermittlung (pAV),in cooperation with the private employment agency (pAV),en collaboration avec un placeur privé,in collaborazione con le agenzie private di collocamento
+dashboard,job-publication-cancel.job.occupied.self,Sie konnten die Stelle selber besetzen,You were able to fill the position yourself,Vous avez pourvu le poste par vos propres soins.,Il posto è stato assegnato senza interventi esterni
 dashboard,job-publication-cancel.title,Stellenanzeige abmelden,Cancel job posting,Retirer l'annonce,Cancellare il posto vacante
 dashboard,job-publication-details.application.additionalInfo,Ergänzende Angaben,Additional Information,Indications complémentaires,Informazioni complementari
 dashboard,job-publication-details.application.email,E-Mail,Email,Courriel,E-mail
@@ -232,7 +254,7 @@ elasticsearch-reindex,elasticsearch.reindex.candidateservice.accepted,"Request a
 elasticsearch-reindex,elasticsearch.reindex.dialog.cancel,Cancel,Cancel,Cancel,Cancel
 elasticsearch-reindex,elasticsearch.reindex.dialog.confirm,Reindex,Reindex,Reindex,Reindex
 elasticsearch-reindex,elasticsearch.reindex.dialog.question,"Sind Sie sicher, dass Sie Elasticsearch neu indizieren wollen? Das kann eine Weile dauern!",Are you sure you want to reindex Elasticsearch? This could take a while!,Êtes-vous sûr de vouloir réindexer Elasticsearch? Cela peut prendre du temps!,Vuoi davvero reindicizzare Elasticsearch? L'operazione può durare a lungo!
-elasticsearch-reindex,elasticsearch.reindex.dialog.title,Neuindizierung Elasticsearch bestätigen,Confirm Elasticsearch Reindex,Confirmer la réindexation Elasticsearch ,Conferma di voler reindicizzare Elasticsearch.
+elasticsearch-reindex,elasticsearch.reindex.dialog.title,Neuindizierung Elasticsearch bestätigen,Confirm Elasticsearch Reindex,"Confirmer la réindexation Elasticsearch ",Conferma di voler reindicizzare Elasticsearch.
 elasticsearch-reindex,elasticsearch.reindex.document.all,All,All,All,All
 elasticsearch-reindex,elasticsearch.reindex.document.candidates,Candidates,Candidates,Candidates,Candidates
 elasticsearch-reindex,elasticsearch.reindex.document.jobs,Jobs,Jobs,Jobs,Jobs
@@ -253,14 +275,14 @@ error,error.http.405,Das verwendete HTTP-Method wird von diese Webseite nicht un
 error,error.http.500,Internal server error.,Internal server error.,Erreur interne du serveur.,Internal server error.
 error,error.title,Fehlerseite!,Error page!,Page d'erreur !,Pagina di errore!
 error,error.validation,Validation error on the server.,Validation error on the server.,Erreur de validation côté serveur.,Validation error on the server.
-existing-pav,registration.existing-pav.username.label,Benutzername,Username,Nom d'utilisateur,Nome utente
-existing-pav,registration.existing-pav.username.placeholder,Benutzername,Username,Nom d'utilisateur,Nome utente
+existing-pav,registration.existing-pav.cancel,Abbrechen,Cancel,Cancel,Cancel
+existing-pav,registration.existing-pav.identificaton.mismatch.error,"Wir konnten keine Login-Daten anhand Ihrer Angaben finden. Bitte überprüfen Sie, dass E-Mail Adresse und Passwort korrekt eingegeben wurden.",We were unable to find your account based on the information provided. Please verify your email address and password.,Nous n'avons trouvé aucune donnée d’accès correspondant à vos indications. Veuillez vérifier que vous avez indiqué correctement le courriel et le mot de passe.,Non abbiamo trovato i dati di login in base ai valori inseriti. Controlli di aver inserito correttamente indirizzo e-mail e password.
+existing-pav,registration.existing-pav.login,Login,Login,Login,Login
 existing-pav,registration.existing-pav.password.label,Passwort,Password,Mot de passe,Password
 existing-pav,registration.existing-pav.password.placeholder,Passwort,Password,Mot de passe,Password
-existing-pav,registration.existing-pav.identificaton.mismatch.error,"Wir konnten keine Login-Daten anhand Ihrer Angaben finden. Bitte überprüfen Sie, dass E-Mail Adresse und Passwort korrekt eingegeben wurden.","We were unable to find your account based on the information provided. Please verify your email address and password.","Nous n'avons trouvé aucune donnée d’accès correspondant à vos indications. Veuillez vérifier que vous avez indiqué correctement le courriel et le mot de passe.","Non abbiamo trovato i dati di login in base ai valori inseriti. Controlli di aver inserito correttamente indirizzo e-mail e password."
-existing-pav,registration.existing-pav.text,"Bitte geben Sie Ihre Anmeldedaten ein, mit welchen Sie sich bisher in Job-Room anmeldeten.","Please enter the Job Room login details you regularly use.","Veuillez saisir les données utilisées jusqu'à présent pour vous connecter à Job-Room.","Inserisca i dati di accesso che ha utilizzato finora nel Job-Room."
-existing-pav,registration.existing-pav.login,Login,Login,Login,Login
-existing-pav,registration.existing-pav.cancel,Abbrechen,Cancel,Cancel,Cancel
+existing-pav,registration.existing-pav.text,"Bitte geben Sie Ihre Anmeldedaten ein, mit welchen Sie sich bisher in Job-Room anmeldeten.",Please enter the Job Room login details you regularly use.,Veuillez saisir les données utilisées jusqu'à présent pour vous connecter à Job-Room.,Inserisca i dati di accesso che ha utilizzato finora nel Job-Room.
+existing-pav,registration.existing-pav.username.label,Benutzername,Username,Nom d'utilisateur,Nome utente
+existing-pav,registration.existing-pav.username.placeholder,Benutzername,Username,Nom d'utilisateur,Nome utente
 gateway,gateway.refresh.button,Aktualisieren,Refresh,Actualiser,Aggiorna
 gateway,gateway.routes.error,Achtung: keine Server verfügbar!,Warning: no server available!,Attention : aucun serveur disponible !,Attenzione: non ci sono server disponibili!
 gateway,gateway.routes.servers,Verfügbare Server,Available servers,Serveurs disponibles,Server disponibili
@@ -271,6 +293,8 @@ gateway,gateway.title,Gateway,Gateway,Gateway,Gateway
 gender,jobroomApp.Gender.FEMALE,Frau,Female,Femme,Femina
 gender,jobroomApp.Gender.MALE,Mann,Male,Homme,Maschio
 gender,jobroomApp.Gender.null,,,,
+global,alert.error.tooManyRequests.anonymous,Von Ihrer IP-Adresse wurden zu viele Anfragen gesendet. Bitte warten Sie eine Minute.,There were to many requests from your IP. Please wait 1 minute.,De trop nombreuses requêtes ont été envoyées à partir de votre adresse IP. Veuillez réessayer dans une minute.,Sono state inviate troppe richieste da questo indirizzo IP. Riprovare tra un minuto.
+global,alert.error.tooManyRequests.authenticated,Von Ihrem Account aus wurden zu viele Anfragen gesendet. Bitte warten Sie eine Minute.,There were to many requests from your account. Please wait 1 minute.,De trop nombreuses requêtes ont été envoyées à partir de votre compte. Veuillez réessayer dans une minute.,Sono state inviate troppe richieste da questo account. Riprovare tra un minuto.
 global,entity.action.addblob,Blob hinzufügen,Add blob,Ajouter blob,Aggiungi blob
 global,entity.action.addimage,Bild hinzufügen,Add image,Ajouter image,Aggiungi immagine
 global,entity.action.back,Zurück,Back,Retour,Indietro
@@ -390,7 +414,6 @@ global,global.menu.account.sessions,Sitzungen,Sessions,Sessions,Sessioni
 global,global.menu.account.settings,Einstellungen,Settings,Paramètres,Impostazioni
 global,global.menu.admin.api-user-management,API-Schlüssel-Verwaltung,API-Schlüssel-Verwaltung,API-Schlüssel-Verwaltung,API-Schlüssel-Verwaltung
 global,global.menu.admin.apidocs,API,API,API,API
-global,global.menu.admin.user-info,User-Info,User-Info,User-Info,User-Info
 global,global.menu.admin.audits,Audits,Audits,Audits,Cambiamenti
 global,global.menu.admin.configuration,Konfiguration,Configuration,Configuration,Configurazione
 global,global.menu.admin.contact-template-management,Kontaktangaben,Contact information,Contact information,Contact information
@@ -409,10 +432,11 @@ global,global.menu.admin.main,Administration,Administration,Administration,Ammin
 global,global.menu.admin.metrics,Metriken,Metrics,Mesures,Metriche
 global,global.menu.admin.systemNotifications,System Mitteilungen,System notifications,Notification système,Notifica di sistema
 global,global.menu.admin.tracker,Benutzer Aktivitäten,User tracker,Activité des utilisateurs,Tracciamento utente
+global,global.menu.admin.user-info,User-Info,User-Info,User-Info,User-Info
 global,global.menu.admin.userManagement,Benutzerverwaltung,User management,Gestion des utilisateurs,Gestione utenti
+global,global.menu.blacklisted-agent,Blacklist,Blacklist,Liste noire,Lista nera
 global,global.menu.company-contact-template,Kontaktangaben,Contact Information,Informations de contact,Informazioni sui contatti
 global,global.menu.dashboard,Dashboard,Dashboard,Dashboard,Dashboard
-global,global.menu.blacklisted-agent,Blacklist,Blacklist,Liste noire,Lista nera
 global,global.menu.entities.jhipster-needle-menu-add-entry,JHipster will add additional entities here (do not translate!),JHipster will add additional entities here (do not translate!),JHipster will add additional entities here (do not translate!),JHipster will add additional entities here (do not translate!)
 global,global.menu.entities.job,Stelle,Job,Emploi,Posto
 global,global.menu.entities.main,Entitäten,Entities,Entités,Entità
@@ -483,13 +507,9 @@ global,global.reference.language.de-ch,Schweizerdeutsch,Swiss German,Suisse alle
 global,global.reference.language.el,Griechisch,Greek,Grec,Greco
 global,global.reference.language.en,Englisch,English,Anglais,Inglese
 global,global.reference.language.es,Spanisch,Spanish,Espagnol,Spagnolo
+global,global.reference.language.fa,Farsi,Farsi,Farsi,Farsi
 global,global.reference.language.fi,Finnisch,Finnish,Finlandais,Finlandese
 global,global.reference.language.fr,Französisch,French,Français,Francese
-global,global.reference.language.nld,Flämisch,Flemish,Flamand,Fiammingo
-global,global.reference.language.sr-hr,Serbokroatisch,Serbo-Croatian,Serbo-croate,Serbo croato
-global,global.reference.language.fa,Farsi,Farsi,Farsi,Farsi
-global,global.reference.language.prs,Dari,Dari,Dari,Dari
-global,global.reference.language.ti,Tigrinya,Tigrinya,Tigrigna,Tigrino
 global,global.reference.language.he,Hebräisch,Hebrew,Hébraïque,Ebreo
 global,global.reference.language.hr,Kroatisch,Croatian,Croate,Croato
 global,global.reference.language.hu,Ungarisch,Hungarian,Hongrois,Ungherese
@@ -505,9 +525,11 @@ global,global.reference.language.level.PROFICIENT,Sehr gute Kenntnisse,Very good
 global,global.reference.language.lt,Litauisch,Lithuanian,Lituanien,Lituano
 global,global.reference.language.mk,Mazedonisch,Macedonian,Macédonien,Macedone
 global,global.reference.language.nl,Holländisch,Dutch,Hollandais,Olandese
+global,global.reference.language.nld,Flämisch,Flemish,Flamand,Fiammingo
 global,global.reference.language.no,Norwegisch,Norvegian,Norvégien,Norvegese
 global,global.reference.language.no-selection,Keine Auswahl,No selection,Aucune sélection,Nessuna scelta
 global,global.reference.language.pl,Polnisch,Polish,Polonais,Polacco
+global,global.reference.language.prs,Dari,Dari,Dari,Dari
 global,global.reference.language.pt,Portugiesisch,Portuguese,Portugais,Portoghese
 global,global.reference.language.rm,Rätoromanisch,Rhaeto-Romanic,Rheto-Romanche,Reto-Romancio
 global,global.reference.language.ro,Rumänisch,Romanian,Roumain,Rumeno
@@ -517,9 +539,11 @@ global,global.reference.language.sl,Slowenisch,Slovenian,Slovène,Sloveno
 global,global.reference.language.spoken,Mündlich,Orally,Orale,Orale
 global,global.reference.language.sq,Albanisch,Albanian,Albanais,Albanese
 global,global.reference.language.sr,Serbisch,Serbian,Serbe,Serbo
+global,global.reference.language.sr-hr,Serbokroatisch,Serbo-Croatian,Serbo-croate,Serbo croato
 global,global.reference.language.sv,Schwedisch,Swedish,Suédois,Svedese
 global,global.reference.language.ta,Tamil,Tamil,Tamoul,Tamil
 global,global.reference.language.th,Thai,Thai,Thaïlandais,Tailandese
+global,global.reference.language.ti,Tigrinya,Tigrinya,Tigrigna,Tigrino
 global,global.reference.language.tr,Türkisch,Turkish,Turc,Turco
 global,global.reference.language.vi,Vietnamesisch,Vietnamese,Vietnamien,Vietnamita
 global,global.reference.language.written,Schriftlich,Written,Écrite,Scritto
@@ -664,8 +688,6 @@ global,header.title,Arbeitslosenversicherung ALV,Unemployment insurance,Assuranc
 global,navigation.next,Weiter,Next,Suivant,Seguente
 global,navigation.previous,Zurück,Previous,Précédent,Precedente
 global,navigation.scroll-to-top,Nach oben scrollen,Scroll to top,Défiler vers le haut,Scorrere in cima
-global,alert.error.tooManyRequests.authenticated,"Von Ihrem Account aus wurden zu viele Anfragen gesendet. Bitte warten Sie eine Minute.","There were to many requests from your account. Please wait 1 minute.","De trop nombreuses requêtes ont été envoyées à partir de votre compte. Veuillez réessayer dans une minute.","Sono state inviate troppe richieste da questo account. Riprovare tra un minuto."
-global,alert.error.tooManyRequests.anonymous,"Von Ihrer IP-Adresse wurden zu viele Anfragen gesendet. Bitte warten Sie eine Minute.","There were to many requests from your IP. Please wait 1 minute.","De trop nombreuses requêtes ont été envoyées à partir de votre adresse IP. Veuillez réessayer dans une minute.","Sono state inviate troppe richieste da questo indirizzo IP. Riprovare tra un minuto."
 health,health.details.details,Details,Details,Détails,Dettagli
 health,health.details.error,Fehler,Error,Erreur,Errore
 health,health.details.name,Name,Name,Nom,Cognome
@@ -687,13 +709,13 @@ health,health.table.status,Status,Status,Etat,Stato
 health,health.title,Gesundheit Ihrer Anwendung,Health Checks,Diagnostics,Verifiche
 home,home.contactform.text,Kontakt,Contact,Contact,Contatto
 home,home.contactform.url,https://www.arbeit.swiss/secoalv/de/home/service/kontakt.html,https://www.arbeit.swiss/secoalv/en/home/service/kontakt.html,https://www.arbeit.swiss/secoalv/fr/home/service/kontakt.html,https://www.arbeit.swiss/secoalv/it/home/service/kontakt.html
+home,home.login-cancel.message,Sie haben den Login Vorgang abgebrochen,You canceled the login process,Vous avez interrompu la procédure de login,Hai interrotto il processo di login
+home,home.login-cancel.title,Login fehlgeschlagen,Login failed,Echec du login,Login fallito
 home,home.registration.url,https://www.arbeit.swiss/secoalv/de/home/menue/unternehmen/stellenmeldepflicht/Registrierung.html,https://www.arbeit.swiss/secoalv/en/home/menue/unternehmen/stellenmeldepflicht/Registrierung.html,https://www.arbeit.swiss/secoalv/fr/home/menue/unternehmen/stellenmeldepflicht/Registrierung.html,https://www.arbeit.swiss/secoalv/it/home/menue/unternehmen/stellenmeldepflicht/Registrierung.html
 home,home.title,Job-Room,Job-Room,Job-Room,Job-Room
+home,home.title.cms,arbeit.swiss,work.swiss,travail.swiss,lavoro.swiss
 home,home.title.portal,arbeit,work,travail,lavoro
 home,home.title.portal-url,https://www.arbeit.swiss,https://www.arbeit.swiss/secoalv/en/home.html,https://www.arbeit.swiss/secoalv/fr/home.html,https://www.arbeit.swiss/secoalv/it/home.html
-home,home.title.cms,arbeit.swiss,work.swiss,travail.swiss,lavoro.swiss
-home,home.login-cancel.title,Login fehlgeschlagen,Login failed,Echec du login,Login fallito
-home,home.login-cancel.message,Sie haben den Login Vorgang abgebrochen,You canceled the login process,Vous avez interrompu la procédure de login,Hai interrotto il processo di login
 home,home.toolbar.companies,Arbeitgeber,Employers,Employeurs,Datori di lavoro
 home,home.toolbar.jobSeekers,Stellensuchende,Job seekers,Demandeur d'emploi,Persone in cerca d'impiego
 home,home.toolbar.recruitmentAgencies,Arbeitsvermittler,Recruitment agencies,Agence de placement,Collocatori
@@ -709,8 +731,8 @@ home,home.tools.job-publication.application.additional-info.characters-counter-t
 home,home.tools.job-publication.application.additional-info.label,Ergänzende Angaben,Supplementary information,Indications complémentaires,Dati complementari
 home,home.tools.job-publication.application.additional-info.placeholder,max. 255 Zeichen,Max. 255 characters,max. 255 caractères,max. 255 caratteri
 home,home.tools.job-publication.application.copy-email-from-public-contact,Wie bei Kontakt für Stellensuchende,Same as jobseeker contact,Comme Contact pour candidats,Come Contatto per candidati
-home,home.tools.job-publication.application.copy-phonenumber-from-public-contact,Wie bei Kontakt für Stellensuchende,Same as jobseeker contact,Comme Contact pour candidats,Come Contatto per candidati
 home,home.tools.job-publication.application.copy-from-business,Wie bei Unternehmen,Same as business,Comme l'entreprise,Come l'impresa
+home,home.tools.job-publication.application.copy-phonenumber-from-public-contact,Wie bei Kontakt für Stellensuchende,Same as jobseeker contact,Comme Contact pour candidats,Come Contatto per candidati
 home,home.tools.job-publication.application.email,E-Mail,Email,Courriel,E-mail
 home,home.tools.job-publication.application.online-form,Online-Formular,Online form,Formulaire en ligne,Modulo online
 home,home.tools.job-publication.application.paper-application-post-address,Postadresse,Postal address,Adresse postale,Indirizzo postale
@@ -762,7 +784,6 @@ home,home.tools.job-publication.experience.NO_EXPERIENCE,keine Erfahrung,no expe
 home,home.tools.job-publication.job-description,Stellenbeschreibung,Job description,Description du poste,Descrizione del posto
 home,home.tools.job-publication.job-description-lang.label,Sprache der Stellenbeschreibung,Job description language,Langue du descriptif,Lingua della descrizione
 home,home.tools.job-publication.job-title,Stellenbezeichnung,Job title,Désignation du poste,Denominazione del posto
-home,home.tools.job-publication.number-of-jobs,"Anzahl gleiche Stellen","No. of equivalent positions","Nombre de postes similaires","Totale posti uguali"
 home,home.tools.job-publication.language-skills,Sprachkenntnisse,Languages,Connaissances linguistiques,Conoscenze linguistiche
 home,home.tools.job-publication.language-skills.add,Neue Sprachkompetenz hinzufügen,Add new language skill,Ajouter une nouvelle compétence linguistique,Aggiungi nuova conoscenza linguistica
 home,home.tools.job-publication.language-skills.spoken.error,Language skill is required,Language skill is required,Des connaissances linguistiques sont requises,Conoscenze linguistiche obbligatorie
@@ -773,21 +794,22 @@ home,home.tools.job-publication.locality.country,Land,Country,Pays,Paese
 home,home.tools.job-publication.locality.title,Arbeitsort,Place of work,Lieu de travail,Luogo di lavoro
 home,home.tools.job-publication.locality.zip,PLZ,Postal code,"NPA  ","NPA  "
 home,home.tools.job-publication.locality.zipcode,PLZ / Ort,Postal code / city,NPA / lieu,NPA / luogo
+home,home.tools.job-publication.messages.validate.at-least-one-required,Bitte mindestens eine Bewerbungsform wählen und die ausgewählten Bewerbungsformen korrekt ausfüllen.,Select at least one application channel and provide all required information,Choisir au moins un type de postulation et remplir correctement les champs respectifs.,Scegliere almeno una tipologia di candidatura e compilare correttamente i campi rispettivi.
+home,home.tools.job-publication.messages.validate.at-least-one-required-email-or-phone,Bitte Telefon oder E-Mail angeben.,Please indicate telephone number or email,Veuillez indiquer le numéro de téléphone ou l'adresse courriel.,Si prega di indicare telefono o e-mail.
+home,home.tools.job-publication.messages.validate.at-least-one-required-street-or-pobox,Bitte Strasse oder Postfach-Nr. angeben.,Please enter a street name or a post office box,Veuillez indiquer la rue ou le numéro de la boîte postale.,Si prega di indicare la via o il numero della casella postale.
 home,home.tools.job-publication.messages.validate.date-format,"Datumsformat ungültig, richtiges Format: TT.MM.JJJJ","Invalid date format, correct format: DD.MM.YYYY",Le format de la date n’est pas conforme. Format correct: JJ.MM.AAAA,Il formato della data non è corretto. Formato corretto: GG.MM.AAAA
 home,home.tools.job-publication.messages.validate.email-format,Diese E-Mail-Adresse ist ungültig.,This email address is invalid.,Cette adresse courriel n'est pas valide.,L'indirizzo e-mail non è valido.
-home,home.tools.job-publication.messages.validate.url-format,Diese URL ist ungültig.,This URL is not valid,Ce lien URL n'est pas valable.,Questo indirizzo URL non è valido.
 home,home.tools.job-publication.messages.validate.employment-duration.date-before,Datum muss nach dem Stellenantritt liegen.,Date must be after the employment start.,La date doit se situer après l'entrée en fonction.,La data deve trovarsi dopo l'inizio dell'attività.
 home,home.tools.job-publication.messages.validate.employment-start.date-before,Datum muss in der Zukunft liegen.,Date must be in the future.,La date doit se situer dans le futur.,La data deve situarsi nel futuro.
-home,home.tools.job-publication.messages.validate.phone-format,"Bitte gültige Telefonnummer eingeben z.B. 031 999 99 99 oder +41 31 999 99 99","Please indicate a valid telephone number e.g. 031 999 99 99 or +41 31 999 99 99","Veuillez indiquer un numéro de téléphone valide, par exemple 031 999 99 99 ou +41 31 999 99 99","Inserire un numero di telefono valido, per esempio 031 999 99 99 o +41 31 999 99 99"
-home,home.tools.job-publication.messages.validate.required,Pflichtfeld,This field is required.,Ce champ est obligatoire.,Questo campo è obbligatorio.
-home,home.tools.job-publication.messages.validate.at-least-one-required-email-or-phone,Bitte Telefon oder E-Mail angeben.,Please indicate telephone number or email,Veuillez indiquer le numéro de téléphone ou l'adresse courriel.,Si prega di indicare telefono o e-mail.
-home,home.tools.job-publication.messages.validate.at-least-one-required,Bitte mindestens eine Bewerbungsform wählen und die ausgewählten Bewerbungsformen korrekt ausfüllen.,Select at least one application channel and provide all required information,Choisir au moins un type de postulation et remplir correctement les champs respectifs.,Scegliere almeno una tipologia di candidatura e compilare correttamente i campi rispettivi.
-home,home.tools.job-publication.messages.validate.at-least-one-required-street-or-pobox,Bitte Strasse oder Postfach-Nr. angeben.,Please enter a street name or a post office box,Veuillez indiquer la rue ou le numéro de la boîte postale.,Si prega di indicare la via o il numero della casella postale.
+home,home.tools.job-publication.messages.validate.number-of-jobs,Dieses Pflichtfeld muss eine ganze Zahl zwischen 1 und 99 sein.,This field must contain a number between 1 and 99.,Ce champ doit comporter un nombre entier entre 1 et 99.,Questo campo obbligatorio deve contenere un numero intero tra 1 e 99.
+home,home.tools.job-publication.messages.validate.phone-format,Bitte gültige Telefonnummer eingeben z.B. 031 999 99 99 oder +41 31 999 99 99,Please indicate a valid telephone number e.g. 031 999 99 99 or +41 31 999 99 99,"Veuillez indiquer un numéro de téléphone valide, par exemple 031 999 99 99 ou +41 31 999 99 99","Inserire un numero di telefono valido, per esempio 031 999 99 99 o +41 31 999 99 99"
 home,home.tools.job-publication.messages.validate.pobox-format,Diese Postfach-Nr. ist ungültig.,Invalid post office box,Ce numéro de boîte postale n'est pas valide.,Questo numero di casella postale non è valido.
+home,home.tools.job-publication.messages.validate.required,Pflichtfeld,This field is required.,Ce champ est obligatoire.,Questo campo è obbligatorio.
+home,home.tools.job-publication.messages.validate.url-format,Diese URL ist ungültig.,This URL is not valid,Ce lien URL n'est pas valable.,Questo indirizzo URL non è valido.
 home,home.tools.job-publication.messages.validate.zip-format,PLZ ungültig,Invalid postal code,NPA n'est pas valide.,NPA non è valido.
 home,home.tools.job-publication.messages.validate.zip-or-city-format,PLZ/Ort ungültig,Invalid postal code/city,NPA/lieu n'est pas valide.,NPA/luogo non è valido.
-home,home.tools.job-publication.messages.validate.number-of-jobs,"Dieses Pflichtfeld muss eine ganze Zahl zwischen 1 und 99 sein.","This field must contain a number between 1 and 99.","Ce champ doit comporter un nombre entier entre 1 et 99.","Questo campo obbligatorio deve contenere un numero intero tra 1 e 99."
 home,home.tools.job-publication.no-selection,keine Auswahl,No selection,aucune sélection,nessuna scelta
+home,home.tools.job-publication.number-of-jobs,Anzahl gleiche Stellen,No. of equivalent positions,Nombre de postes similaires,Totale posti uguali
 home,home.tools.job-publication.occupation.label,Beruf,Occupation,Profession,Professione
 home,home.tools.job-publication.occupation.placeholder,,,,
 home,home.tools.job-publication.optional,Optional,Optional,Optionnel,Opzionale
@@ -830,11 +852,12 @@ job-detail,job-detail.action.showExternalPage,Zum externen Stelleninserat,Link t
 job-detail,job-detail.application.additionalInfo,Ergänzende Angaben,Additional information,Indications complémentaires,Dati complementari
 job-detail,job-detail.application.email,Per E-Mail,By email,Par courriel,Per e-mail
 job-detail,job-detail.application.mail,Per Post,By post,Par la poste,Per posta
-job-detail,job-detail.application.phone,Telefonisch,By phone,Par téléphone,Telefonicamente
 job-detail,job-detail.application.online,Elektronisch,Electronic,En ligne,Elettronica
+job-detail,job-detail.application.phone,Telefonisch,By phone,Par téléphone,Telefonicamente
 job-detail,job-detail.application.title,Bewerbungsformen,Application forms,Types de postulation,Tipologie di candidatura
 job-detail,job-detail.back,Zurück zu den Suchergebnissen,Back to search results,Retour à la liste des résultats,Torna ai risultati della ricerca
 job-detail,job-detail.contactPerson,Ihre Kontaktperson,Your contact person,Votre personne de contact,La tua persona di contatto
+job-detail,job-detail.deactivated,Dieses Stelleninserat ist mittlerweile nicht mehr aktiv.,This job posting is no longer active.,Cette offre d'emploi n'est plus active.,Questo annuncio di lavoro non è più attivo.
 job-detail,job-detail.external-job-disclaimer,"Dieses Inserat wurde auf einer externen Website gefunden. Die Arbeitslosenversicherung und öffentliche Arbeitsvermittlung stellt Ihnen dieses Suchresultat als zusätzliche Dienstleistung zur Verfügung, hat aber keinerlei Einfluss auf dessen Inhalt und Qualität.                                                                                                                                                              ","This job posting was found on an external website. The unemployment insurance and public employment service provides this search result as an additional service. It has no influence on its content and quality.                                                                                                                                                                                                                    ","Cette annonce a été trouvée sur un site externe. L'assurance-chômage et le service public de l'emploi fournissent ce résultat de recherche en tant que service supplémentaire, mais n'a aucune influence sur son contenu et sa qualité.                                                                                                                                                                                           ","Questo annuncio è stato trovato su un sito web esterno. L'assicurazione contro la disoccupazione e il servizio pubblico per l'impiego fornisce questo risultato di ricerca come un servizio aggiuntivo, ma non ha alcun influsso sul suo contenuto né sulla sua qualità."
 job-detail,job-detail.onlineSince,Vakant seit,Vacant since,Libre depuis,Vacante dal
 job-detail,job-detail.otherJobsCompany,{{count}} Stellen anzeigen,Show {{count}} jobs,Montrer {{count}} emplois,"{{count}} Visualizzare posti "
@@ -848,8 +871,7 @@ job-detail,job-detail.startsImmediately,Stellenantritt,Start date,Entrée en fon
 job-detail,job-detail.startsImmediately.false,Nach Vereinbarung,By agreement,À convenir,Previo accordo
 job-detail,job-detail.startsImmediately.true,Ab Sofort,Immediately,Tout de suite,Da subito
 job-detail,job-detail.title,Stellenbeschreibung,Job detail,Détail de l'emploi,Dettagli sul posto
-job-detail,job-detail.deactivated,Dieses Stelleninserat ist mittlerweile nicht mehr aktiv.,This job posting is no longer active.,Cette offre d'emploi n'est plus active.,Questo annuncio di lavoro non è più attivo.
-job-detail,job-detail.unvalidated,"Dieses Inserat wurde direkt von einem unserer Nutzer elektronisch auf die Internetplattform der öffentlichen Arbeitsvermittlung publiziert. Die Arbeitslosenversicherung und öffentliche Arbeitsvermittlung hat keinen Einfluss auf dessen Inhalt und Qualität.","This advert was published electronically by one of our users on the internet platform of the public employment service. Neither the unemployment insurance office nor the public employment service have any influence over its content or quality.","Cette offre d’emploi a été publiée en ligne sur la plateforme Internet du service public de l’emploi directement par l’un de nos utilisateurs. L’assurance-chômage et le service public de l’emploi ne sont pas responsables de son contenu et de sa qualité.","Questo annuncio è stato pubblicato sul portale del servizio pubblico di collocamento direttamente in formato elettronico da uno dei nostri utenti. L’assicurazione contro la disoccupazione e il servizio pubblico di collocamento non rispondono dei contenuti né della qualità."
+job-detail,job-detail.unvalidated,Dieses Inserat wurde direkt von einem unserer Nutzer elektronisch auf die Internetplattform der öffentlichen Arbeitsvermittlung publiziert. Die Arbeitslosenversicherung und öffentliche Arbeitsvermittlung hat keinen Einfluss auf dessen Inhalt und Qualität.,This advert was published electronically by one of our users on the internet platform of the public employment service. Neither the unemployment insurance office nor the public employment service have any influence over its content or quality.,Cette offre d’emploi a été publiée en ligne sur la plateforme Internet du service public de l’emploi directement par l’un de nos utilisateurs. L’assurance-chômage et le service public de l’emploi ne sont pas responsables de son contenu et de sa qualité.,Questo annuncio è stato pubblicato sul portale del servizio pubblico di collocamento direttamente in formato elettronico da uno dei nostri utenti. L’assicurazione contro la disoccupazione e il servizio pubblico di collocamento non rispondono dei contenuti né della qualità.
 job-detail,job-fingerprint-redirect.not-found,Job not found,Job not found,Job not found,Job not found
 job-publication,job-publication-details.application.additionalInfo,Ergänzende Angaben,Supplementary information,Indications complémentaires,Dati complementari
 job-publication,job-publication-details.application.email,E-Mail,Email,Courriel,E-mail
@@ -865,6 +887,13 @@ job-publication,job-publication-details.copy,Stellenanzeige duplizieren,Duplicat
 job-publication,job-publication-details.permanent,Unbefristet,Permanent,Indéterminé,A tempo indeterminato
 job-publication,job-publication-details.print,Drucken,Print,Imprimer,Stampa
 job-publication,job-publication-details.temporary,Befristet,Temporary,Durée limitée,A tempo determinato
+job-publication,job-publication.validation.maxlength-10,Dieses Feld darf max. 10 Zeichen lang sein.,This field cannot be longer than 10 characters.,Ce champ doit comporter au maximum 10 caractères.,Questo campo non può essere più di 10 caratteri.
+job-publication,job-publication.validation.maxlength-10000,Dieses Feld darf max. 10000 Zeichen lang sein.,This field cannot be longer than 10000 characters.,Ce champ doit comporter au maximum 10000 caractères.,Questo campo non può essere più di 10000 caratteri.
+job-publication,job-publication.validation.maxlength-247,Dieses Feld darf max. 247 Zeichen lang sein.,This field cannot be longer than 255 characters.,Ce champ doit comporter au maximum 247 caractères.,Questo campo non può essere più di 247 caratteri.
+job-publication,job-publication.validation.maxlength-255,Dieses Feld darf max. 255 Zeichen lang sein.,This field cannot be longer than 255 characters.,Ce champ doit comporter au maximum 255 caractères.,Questo campo non può essere più di 255 caratteri.
+job-publication,job-publication.validation.maxlength-50,Dieses Feld darf max. 50 Zeichen lang sein.,This field cannot be longer than 50 characters.,Ce champ doit comporter au maximum 50 caractères.,Questo campo non può essere più di 50 caratteri.
+job-publication,job-publication.validation.maxlength-60,Dieses Feld darf max. 60 Zeichen lang sein.,This field cannot be longer than 60 characters.,Ce champ doit comporter au maximum 60 caractères.,Questo campo non può essere più di 60 caratteri.
+job-publication,job-publication.validation.not-empty,Dieses Feld darf nicht leer sein!,This field cannot be empty!,Ce champ ne peut pas être vide !,Questo campo non può essere vuoto!
 job-search,job-detail.endDate,Befristet bis {{date}},Until {{date}},Jusqu'au {{date}},A {{date}}
 job-search,job-search.filter.company-name.label,Arbeitgeber,Employers,Employeurs,Datori di lavoro
 job-search,job-search.filter.company-name.placeholder,Name des Unternehmens,Company name,Nom de l'entreprise,Nome dell'impresa
@@ -884,8 +913,8 @@ job-search,job-search.filter.title,Suchergebnisse filtern,Filter search result,F
 job-search,job-search.filter.working-time.label,Arbeitspensum,Workload,Taux d'occupation,Grado di occupazione
 job-search,job-search.job-search-list-item.badge.permanent,Unbefristet,Permanent,Indéterminé,A tempo indeterminato
 job-search,job-search.job-search-list-item.badge.restricted,meldepflichtig,registration requirement,obligation d'annonce,obbligo di annuncio
-job-search,job-search.job-search-list-item.badge.temporary,Befristet,Temporary,Durée limitée,A tempo determinato
 job-search,job-search.job-search-list-item.badge.shortEmployment,Kurzeinsatz,Short employment,Engagement de courte durée,Assunzione di corta durata
+job-search,job-search.job-search-list-item.badge.temporary,Befristet,Temporary,Durée limitée,A tempo determinato
 job-search,job-search.job-search-list.error-message,Suche nach Stellen fehlgeschlagen,Failed to load job result list!,Les résultats de la recherche d'emplois n'ont pas pu être chargés,Impossibile caricare l'ultima lista di posti!
 job-search,job-search.job-search-list.title.many,{{count}} Stellen,{{count}} jobs,{{count}} emplois,{{count}} posti
 job-search,job-search.job-search-list.title.many.with-locality,{{count}} Stellen in {{locality}},{{count}} jobs in {{locality}},{{count}} emplois à {{locality}},{{count}} posti in {{locality}}
@@ -960,6 +989,7 @@ job,jobroomApp.job.paymentMin,Minimaler Lohn,Min payment,Salaire minimal,Pagamen
 job,jobroomApp.job.professions,Berufe,Professions,Professions,Professioni
 job,jobroomApp.job.publicationEndDate,Publizieren bis,Publication end date,Publication jusqu'au,Data finale pubblicazione
 job,jobroomApp.job.publicationStartDate,Publizieren ab,Publication start date,Publication à partir du,Data inizio pubblicazione
+job,jobroomApp.job.rav," RAV",RAV,ORP,URC
 job,jobroomApp.job.registrationDate,Registriert am,Registration date,Saisi le,Data di registrazione
 job,jobroomApp.job.startDate,Verfügbar ab,Available from,Disponible à partir du,Data d'inizio
 job,jobroomApp.job.startsImmediately,sofort Verfügbar,Available immediately,Disponible tout de suite,Inizio immediato
@@ -969,10 +999,24 @@ job,jobroomApp.job.workingTimePercentageMin,Min. Beschäftigungsgrad,Minimum wor
 job,jobserviceApp.job.created,Stelle mit ID {{ param }} erstellt,A new job is created with identifier {{ param }},"Un emploi portant l'ID {{ param }} a été créé ",È stato generato un nuovo posto con identificatore { param }}
 job,jobserviceApp.job.deleted,Stelle mit ID {{ param }} gelöscht,A job is deleted with identifier {{ param }},L'emploi portant l'ID {{ param }} a été supprimé,È stato eliminato un posto con identificatore {{ param }}
 job,jobserviceApp.job.updated,Stelle mit ID {{ param }} aktualisiert,A job is updated with identifier {{ param }},L'emploi portant l'ID {{ param }} a été mis à jour,È stato aggiornato un posto identificato da {{ param }}
+legal-terms-management,legal-terms-management.add-legal-terms,AGB Hinzufügen,Add Terms And Conditions,Ajouter CGV,Aggiungi Condizioni Generali
+legal-terms-management,legal-terms-management.filter.placeholder,"Filtern nach Effektiv Bei, Link DE, Link EN, Link FR oder Link IT","Filter by Effective At, Link DE, Link EN, Link FR or Link IT","Filtrer par Efficace À, Lien DE, Lien EN, Lien FR ou Lien IT","Filtra per Efficace A, Link DE, Link EN, Link FR o Link IT"
+legal-terms-management,legal-terms-management.header.actions,Aktionen,Actions,Actes,Azioni
+legal-terms-management,legal-terms-management.header.effectiveAt,Effektiv Bei,Effective At,Efficace À,Efficace A
+legal-terms-management,legal-terms-management.header.linkDe,DE Link,DE link,DE lien,DE link
+legal-terms-management,legal-terms-management.header.linkEn,EN Link,EN link,EN lien,EN link
+legal-terms-management,legal-terms-management.header.linkFr,FR Link,FR link,FR lien,FR link
+legal-terms-management,legal-terms-management.header.linkIt,IT Link,IT link,IT lien,IT link
+legal-terms-management,legal-terms-management.legal-terms-delete-dialog.question,"Sind Sie sicher, dass Sie AGB löschen möchten?",Are you sure you want to delete Terms And Conditions?,Etes-vous certain de vouloir supprimer CGV?,Sei sicuro di volere eliminare Condizioni Generali?
+legal-terms-management,legal-terms-management.legal-terms-details-dialog,AGB Details,Terms And Conditions Details,CGV Détails,Condizioni Generali Dettagli
+legal-terms-management,legal-terms-management.legal-terms-details-dialog.add,Hinzufügen,Add,Ajouter,Aggiungi
+legal-terms-management,legal-terms-management.legal-terms-details-dialog.validate.pastEffectiveAt,Effektiv-Bei-Datum  muss in der Zukunft liegen.,Effective At date must be in the future.,La Efficace À date doit se situer dans le futur.,La Efficace A data deve situarsi nel futuro.
+legal-terms-management,legal-terms-management.legal-terms-details-dialog.validate.url.pattern,Diese URL ist ungültig.,This URL is not valid,Ce lien URL n'est pas valable.,Questo indirizzo URL non è valido.
+legal-terms-management,legal-terms-management.title,AGB verwalten,Manage Terms And Conditions,Gérer CGV,Gestisci condizioni generali
 login,login.form.button,Anmelden,Sign in,Connexion,Accedi
 login,login.form.information.pea.text,Vorgehen zur Registrierung für private Arbeitsvermittler,Registration procedure for private placement officers,Procédure d’enregistrement pour les agences de placement privées,Procedura di registrazione per le agenzie di collocamento private
-login,login.form.information.pea.text.JOB_SEEKERS,Vorgehen zur Registrierung für Stellensuchende,Registration procedure for job seekers,Procédure d’enregistrement pour demandeur d'emploi,Procedura di registrazione per persone in cerca d'impiego
 login,login.form.information.pea.text.COMPANIES,Vorgehen zur Registrierung für Arbeitsgaber,Registration procedure for employers,Procédure d’enregistrement pour employeurs,Procedura di registrazione per datori di lavoro
+login,login.form.information.pea.text.JOB_SEEKERS,Vorgehen zur Registrierung für Stellensuchende,Registration procedure for job seekers,Procédure d’enregistrement pour demandeur d'emploi,Procedura di registrazione per persone in cerca d'impiego
 login,login.form.information.pea.text.RECRUITMENT_AGENCIES,Vorgehen zur Registrierung für private Arbeitsvermittler,Registration procedure for private placement officers,Procédure d’enregistrement pour les agences de placement privées,Procedura di registrazione per le agenzie di collocamento private
 login,login.form.information.pea.url,https://www.arbeit.swiss/secoalv/de/home/menue/arbeitsvermittler/dienstleistungen-der-rav/job-room-konto.html,https://www.arbeit.swiss/secoalv/en/home/menue/arbeitsvermittler/dienstleistungen-der-rav.html,https://www.arbeit.swiss/secoalv/fr/home/menue/arbeitsvermittler/dienstleistungen-der-rav/job-room-konto.html,https://www.arbeit.swiss/secoalv/it/home/menue/arbeitsvermittler/dienstleistungen-der-rav/job-room-konto.html
 login,login.form.password,Passwort,Password,Mot de passe,Password
@@ -981,8 +1025,8 @@ login,login.form.rememberme,Automatische Anmeldung,Remember me,Garder la session
 login,login.messages.error.authentication,<strong>Anmeldung fehlgeschlagen!</strong> Überprüfen Sie bitte Ihre Angaben und versuchen Sie es erneut.,<strong>Failed to sign in!</strong> Please check your login credentials and try again.,<strong>Erreur d'authentification !</strong> Veuillez vérifier vos identifiants de connexion.,<strong>Accesso non riuscito!</strong> Si prega di controllare le credenziali e riprovare.
 login,login.password.forgot,Passwort vergessen,Did you forget your password?,Avez-vous oublié votre mot de passe ?,Password dimenticata?
 login,login.title,Login für private Arbeitsvermittler,Sign in for private employment agencies,Connexion pour agences privées de placement,Accesso per agenzie private di collocamento
-login,login.title.JOB_SEEKERS,Login für Stellensuchende,Sign in for job seekers,Connexion pour demandeur d'emploi,Accesso per persone in cerca d'impiego
 login,login.title.COMPANIES,Login für Arbeitsgaber,Sign in for employers,Connexion pour employeurs,Accesso per datori di lavoro
+login,login.title.JOB_SEEKERS,Login für Stellensuchende,Sign in for job seekers,Connexion pour demandeur d'emploi,Accesso per persone in cerca d'impiego
 login,login.title.RECRUITMENT_AGENCIES,Login für private Arbeitsvermittler,Sign in for private employment agencies,Connexion pour agences privées de placement,Accesso per agenzie private di collocamento
 logs,audits.filter.button.clear,Clear,Clear,Effacer,Clear
 logs,audits.filter.button.close,Close,Close,Fermer,Close
@@ -1107,9 +1151,49 @@ register,register.messages.validate.login.minlength,Ihr Benutzername muss mindes
 register,register.messages.validate.login.pattern,Ihr Benutzername darf nur Kleinbuchstaben und Ziffern enthalten,Your username can only contain lower-case letters and digits.,Votre nom d'utilisateur ne peut contenir que des lettres minuscules et des nombres.,Il nome utente può contenere solo lettere minuscole e cifre.
 register,register.messages.validate.login.required,Ihr Benutzername wird benötigt.,Your username is required.,Votre nom d'utilisateur est requis.,Il nome utente è obbligatorio.
 register,register.title,Registrierung,Registration,Création du compte utilisateur,Registrazione
+registration-access-code,registrationAccessCode.accessCode,Freischaltcode,Activation code,Code de déverrouillage,Codice di attivazione
+registration-access-code,registrationAccessCode.accessCode.error.invalid,Freischaltcode ungültig,Activation code is invalid,Code de déverrouillage non valable,Codice di attivazione non valido
+registration-access-code,registrationAccessCode.accessCode.error.minlength,Freischaltcode muss aus 8 Stellen bestehen,Activation code must contain 8 characters,Le code de déverrouillage doit se composer de 8 caractères,Il codice di attivazione deve avere 8 caratteri
+registration-access-code,registrationAccessCode.accessCode.error.required,Freischaltcode wird benötigt,Activation code is required,"Un code de déverrouillage est nécessaire ",È necessario il codice di attivazione
+registration-access-code,registrationAccessCode.header,Freischaltcode,Activation code,Code de déverrouillage,Codice di attivazione
+registration-access-code,registrationAccessCode.placeholder,Freischaltcode eingeben,Enter activation code,Saisir le code de déverrouillage,Inserire il codice di attivazione
+registration-access-code,registrationAccessCode.title,Freischaltcode eingeben,Enter activation code,Saisir le code de déverrouillage,Inserire il codice di attivazione
+registration-avg-dialog,registrationAvgDialog.login.description,You can then log in to your user account via the login using the sent activation code.,Mit dem zugesendeten Freischaltcode können Sie sich anschliessend über den Login in Ihr Benutzerkonto einloggen.,,
+registration-avg-dialog,registrationAvgDialog.postal.description,"Upon your request, we will send you <b>by post</b> an unlock code to the postal address associated with your company:",Nach Ihrer Anforderung werden wir Ihnen <b>per Post</b> einen Freischaltcode an die im AVG Register eingetragenen Postadresse senden:,,
+registration-avg-dialog,registrationAvgDialog.requestActivationCode,Request activation code,Freischaltcode beantragt,,
+registration-avg-dialog,registrationAvgDialog.returnToHomepage,Return to homepage,Zurück zur Startseite,,
+registration-avg-dialog,registrationAvgDialog.title,Please search for your company in the VZ AVG.,Bitte suchen Sie Ihre Unternehmung im VZ AVG.,,
+registration-company-dialog,registrationCompanyDialog.activationCodeRequested,Freischaltcode erfolgreich beantragt,Activation code requested,Le code de déverrouillage a bien été demandé.,Richiesta inoltrata
+registration-company-dialog,registrationCompanyDialog.confirmButton,Bestätigen,Confirm,Confirmer,Confermare
+registration-company-dialog,registrationCompanyDialog.login.description,Mit dem zugesendeten Freischaltcode können Sie sich anschliessend über den Login in Ihr Benutzerkonto einloggen.,You can then log in to your user account using this activation code.,Vous pourrez ensuite vous connecter à votre compte d'utilisateur au moyen du code de déverrouillage.,Con il codice di attivazione inviato potrà accedere al suo account utente tramite il login.
+registration-company-dialog,registrationCompanyDialog.placeholder,CHE-123.456.789,CHE-123.456.789,CHE-123.456.789,CHE-123.456.789
+registration-company-dialog,registrationCompanyDialog.postal.description,Sie erhalten <b>per Post</b> einen Freischaltcode an die der UID zugehörigen Postadresse:,We will send an activation code <b>by post</b> to the address associated with your UID:,Nous enverrons un code d'activation <b>par poste</b> à l'adresse qui est connectée avec votre IDE:,Invieremo un codice di attivazione <b>per posta</b> all'indirizzo iscritto con il vostro IDI:
+registration-company-dialog,registrationCompanyDialog.requestActivationCode,Freischaltcode per Post anfordern,Request activation code by post,Demander le code de déverrouillage par voie postale,Richiedere il codice di attivazione per posta
+registration-company-dialog,registrationCompanyDialog.returnToHomepage,Zurück zur Startseite,Return to homepage,Retour à la page d'accueil,Tornare alla pagina iniziale
+registration-company-dialog,registrationCompanyDialog.title,Bitte geben Sie nun Ihre Unternehmens-Identifikationsnummer (UID) an.,Please enter your company identification number (UID).,Veuillez indiquer votre numéro d'identification des entreprises (IDE).,Inserire il numero d'identificazione delle imprese (IDI).
+registration-company-dialog,registrationCompanyDialog.validation.error.notFound,Es wurde kein Unternehmen mit der eingegebenen UID gefunden.,We were unable to find a company with the UID you entered.,Aucune entreprise ayant l'IDE indiquée n'a été trouvée.,Non è stata trovata nessuna impresa con l'IDI inserito
+registration-company-dialog,registrationCompanyDialog.validation.error.uid,"Ungültiges UID-Format, gültiges Format: CHE-123.456.789",Invalid UID format. Please use the format CHE-123.456.789,"Format de l'IDE non valable, format valable: CHE-123.456.789","Formato IDI non valido, formato valido: CHE-123.456.789"
+registration-pav-dialog,registrationPavDialog.activationCodeRequested,Freischaltcode erfolgreich beantragt,Activation code requested,Le code de déverrouillage a bien été demandé.,La richiesta è andata a buon fine
+registration-pav-dialog,registrationPavDialog.login.description,Mit dem zugesendeten Freischaltcode können Sie sich anschliessend über den Login in Ihr Benutzerkonto einloggen.,You can then log in to your user account using this activation code.,Vous pourrez ensuite vous connecter à votre compte d'utilisateur au moyen du code de déverrouillage.,Con il codice di attivazione inviato potrai accedere al tuo account utente tramite il login.
+registration-pav-dialog,registrationPavDialog.placeholder,Geben Sie Ihre Organisation ein,Please enter your organisation.,Veuillez indiquer votre organisation,Inserire la sua organizzazione
+registration-pav-dialog,registrationPavDialog.postal.description,Sie erhalten <b>per Post</b> einen Freischaltcode an die aus dem VZ AVG-Register ausgewählte Adresse:,We will send an activation code <b>by post</b> to the address associated with the Register VZ AVG:,Nous enverrons un code d'activation <b>par poste</B à l'adresse qui est connectée avec l'entreprise que vous avez choisie dans le répertoire des AP LSE:,Invieremo un codice di attivazione <b>per posta</b> all'indirizzo della ditta da voi scelta dall'elenco ES ELC:
+registration-pav-dialog,registrationPavDialog.requestActivationCode,Freischaltcode per Post anfordern,Request activation code by post,Demander le code de déverrouillage par voie postale,Richiedere il codice di attivazione per posta
+registration-pav-dialog,registrationPavDialog.returnToHomepage,Zurück zur Startseite,Return to homepage,Retour à la page d'accueil,Torna alla pagina iniziale
+registration-pav-dialog,registrationPavDialog.title,Bitte wählen Sie Ihre Organisation aus der VZ AVG Liste aus,Please select your organisation from the VZ AVG list.,"Veuillez sélectionner votre organisation dans le répertoire des AP LSE ",Selezionare la sua organizzazione dall'elenco OE LC
+registration-questionnaire,registrationQuestionnaire.employer,Ich möchte arbeit.swiss als <b>Arbeitgeber</b> nutzen,I would like to use work.swiss as an <b>employer</b>,"Je souhaite utiliser travail.swiss en tant que <b>employeur</b> ",Voglio usare lavoro.swiss come <b>datore di lavoro</b>
+registration-questionnaire,registrationQuestionnaire.error.candidate.service.failure,Das System zur Prüfung Ihrer Daten ist momentan nicht verfügbar. Bitte versuchen Sie es später wieder. Bitte kontaktieren Sie den ServiceDesk," falls das Problem weiter bestehen sollte.",The system used to validate your data is currently unavailable. Please try again later. If this problem persists," contact the service desk."
+registration-questionnaire,registrationQuestionnaire.header,Nutzungsart wählen,Type of usage,Type d'utilisation,Tipo di utilizzo
+registration-questionnaire,registrationQuestionnaire.placeholder,Bitte wählen Sie eine der folgenden Nutzungsarten aus.,Please select one of the following types of usage.,Veuillez sélectionner l'un des types d'utilisation suivants.,Si prega di selezionare uno dei seguenti tipi di utilizzo.
+registration-questionnaire,registrationQuestionnaire.ravCustomer,Ich möchte arbeit.swiss als <b>RAV-Kunde</b> nutzen,I would like to use work.swiss as a <b>RAV customer</b>,"Je souhaite utiliser travail.swiss en tant que <b>client ORP</b> ",Voglio usare lavoro.swiss come <b>cliente URC</b>
+registration-questionnaire,registrationQuestionnaire.recruitmentAgency.existing,Ich bin ein bestehender Job-Room Nutzer,I am an existing Job Room user,"Je suis déjà un utilisateur de Job-Room ",Sono già un utente di Job-Room
+registration-questionnaire,registrationQuestionnaire.recruitmentAgency.message,Ich möchte arbeit.swiss als <b>privater Arbeitsvermittler</b> nutzen,I would like to use work.swiss as an <b>employment agency</b>,"Je souhaite utiliser travail.swiss en tant que <b>agence de placement privée</b> ",Voglio usare lavoro.swiss come <b>agenzia privata di collocamento</b>
+registration-questionnaire,registrationQuestionnaire.recruitmentAgency.new,Ich melde mich zum ersten Mal bei arbeit.swiss bzw. Job-Room an,This is my first time registering for work.swiss or Job-Room,J'accède pour la première fois à travail.swiss ou Job-Room,È la prima volta che accedo alla Job-Room di lavoro.swiss
+registration-questionnaire,registrationQuestionnaire.termsOfUse.accept,Ich akzeptiere die Nutzungsbedingungen,I agree to the terms and conditions,J'accepte les conditions d'utilisation,Accetto le condizoni di utilizzo
+registration-questionnaire,registrationQuestionnaire.termsOfUse.link,"<a href=""https://www.arbeit.swiss/dam/secoalv/de/bilder/unternehmen/Stellenmeldepflicht/Nutzungsbedingungen_Job-Room.pdf.download.pdf/AGB_Job-Room_Juni_2018_de.pdf"" target=""_blank"">Nutzungsbedingungen anzeigen</a>","<a href=""https://www.arbeit.swiss/dam/secoalv/en/bilder/unternehmen/Stellenmeldepflicht/Nutzungsbedingungen_Job-Room.pdf.download.pdf/AGB_Job-Room_Juni_2018_en.pdf"" target=""_blank"">Show terms and conditions</a>","<a href=""https://www.arbeit.swiss/dam/secoalv/fr/bilder/unternehmen/Stellenmeldepflicht/Nutzungsbedingungen_Job-Room.pdf.download.pdf/AGB_Job-Room_Juni_2018_fr.pdf"" target=""_blank"">Afficher les conditions d'utilisation</a>","<a href=""https://www.arbeit.swiss/dam/secoalv/it/bilder/unternehmen/Stellenmeldepflicht/Nutzungsbedingungen_Job-Room.pdf.download.pdf/AGB_Job-Room_Juni_2018_it.pdf"" target=""_blank"">Mostra le condizioni di utilizzo</a>"
+registration-questionnaire,registrationQuestionnaire.title,Registrierung,Registration,Enregistrement,Registrazione
 relogin,relogin.button.text,Jetzt abmelden,Logout now,Se déconnecter maintenant,Disconnettersi
-relogin,relogin.click.text,"Bitte melden Sie sich ab. Mit Ihrem nächsten Login ist die Registration abgeschlossen.","Please log out. Your registration will be completed the next time you log in.","Veuillez vous déconnecter. L'enregistrement se terminera avec votre prochain accès.","Si prega di disconnettersi. Con il prossimo accesso la registrazione sarà completata"
-relogin,relogin.text,"Sie besitzen nun die Zugriffsrechte für arbeit.swiss. Diese stehen Ihnen jedoch erst nach dem nächsten Login zur Verfügung. Bitte melden Sie sich ab. Danach ist der Registrierungsprozess eIAM abgeschlossen. Sie können sich nun auf www.job-room.ch einloggen und Ihre Registrierung auf Job-Room abschliessen.","You have been granted access permissions for work.swiss. However, you must first log out to complete the registration process. After that the registration process eIAM is completed. Then you will be able to login on www.job-room.ch and complete your Job-Room registration.","Vous avez maintenant les droits d'accès pour travail.swiss. Cependant, ceux-ci ne sont disponibles qu'après le prochain login. Veuillez vous déconnecter. Ensuite, le processus d'enregistrement pour eIAM est terminé. Vous pouvez désormais vous connecter dans le www.job-room.ch et y compléter l'enregistrement.","Avete ora i diritti di accesso per lavoro.swiss. Tuttavia, questi sono disponibili solo dopo il prossimo login. Si prega di disconnettersi. Dopo di che, il processo di registrazione per l'eIAM è completato ed è possibile effettuare il login su www.job-room.ch e completare lì la Vostra registrazione."
+relogin,relogin.click.text,Bitte melden Sie sich ab. Mit Ihrem nächsten Login ist die Registration abgeschlossen.,Please log out. Your registration will be completed the next time you log in.,Veuillez vous déconnecter. L'enregistrement se terminera avec votre prochain accès.,Si prega di disconnettersi. Con il prossimo accesso la registrazione sarà completata
+relogin,relogin.text,Sie besitzen nun die Zugriffsrechte für arbeit.swiss. Diese stehen Ihnen jedoch erst nach dem nächsten Login zur Verfügung. Bitte melden Sie sich ab. Danach ist der Registrierungsprozess eIAM abgeschlossen. Sie können sich nun auf www.job-room.ch einloggen und Ihre Registrierung auf Job-Room abschliessen.,"You have been granted access permissions for work.swiss. However, you must first log out to complete the registration process. After that the registration process eIAM is completed. Then you will be able to login on www.job-room.ch and complete your Job-Room registration.","Vous avez maintenant les droits d'accès pour travail.swiss. Cependant, ceux-ci ne sont disponibles qu'après le prochain login. Veuillez vous déconnecter. Ensuite, le processus d'enregistrement pour eIAM est terminé. Vous pouvez désormais vous connecter dans le www.job-room.ch et y compléter l'enregistrement.","Avete ora i diritti di accesso per lavoro.swiss. Tuttavia, questi sono disponibili solo dopo il prossimo login. Si prega di disconnettersi. Dopo di che, il processo di registrazione per l'eIAM è completato ed è possibile effettuare il login su www.job-room.ch e completare lì la Vostra registrazione."
 relogin,relogin.title,Registrierungsprozess eIAM abschliessen,Complete eIAM registration process,Terminer l'inscription eIAM,Concludere la registrazione eIAM
 reset,reset.finish.form.button,Neues Passwort setzen,Set new password.,Réinitialiser le mot de passe,Convalida la nuova password
 reset,reset.finish.messages.error,Ihr Passwort konnte nicht zurückgesetzt werden. Zur Erinnerung Ihre Anfrage ist nur 24 Stunden gültig.,Your password couldn't be reset. Remember a password request is only valid for 24 hours.,"Votre mot de passe n'a pas pu être réinitialisé. Pour rappel, la demande de réinitialisation n'est valable que 24 heures.",La tua password potrebbe non essere ripristinata. Ricorda che la richiesta della password è valida solo per 24 ore.
@@ -1122,6 +1206,16 @@ reset,reset.request.messages.info,Geben Sie Ihren Benutzername ein.,Enter your u
 reset,reset.request.messages.notfound,<strong>Dieser Benutzername existiert nicht!</strong> Überprüfen Sie Ihren Benutzername und versuchen Sie es nocheinmal.,<strong>Username isn't registered!</strong> Please check and try again.,<strong>Username n'existe pas !</strong> Merci de la vérifier et de réessayer.,<strong>Username non registrata!</strong> Si prega di verificarla e riprovare!
 reset,reset.request.messages.success,Eine E-Mail mit weiteren Instruktionen für das Zurücksetzen des Passworts wurde gesendet.,Check your emails for details on how to reset your password.,"Un courriel vous a été envoyé, contenant les instructions pour réinitialiser votre mot de passe.",Controlla la tua e-mail per i dettagli su come reimpostare la password.
 reset,reset.request.title,Passwort zurücksetzen,Reset your password.,Réinitialiser le mot de passe,Reimposta Password
+select,userRoleSelection.employer,,,,
+select,userRoleSelection.header,,,,
+select,userRoleSelection.placeholder,,,,
+select,userRoleSelection.ravCustomer,,,,
+select,userRoleSelection.recruitmentAgency.existing,,,,
+select,userRoleSelection.recruitmentAgency.message,,,,
+select,userRoleSelection.recruitmentAgency.new,,,,
+select,userRoleSelection.termsOfUse.accept,,,,
+select,userRoleSelection.termsOfUse.link,,,,
+select,userRoleSelection.title,,,,
 sessions,sessions.messages.error,<strong>Es ist ein Fehler aufgetreten!</strong> Die Sitzung konnte nicht geschlossen werden.,<strong>An error has occurred!</strong> The session could not be closed.,<strong>Une erreur s'est produite !</strong> La session n'a pas pu être fermée.,<strong>Si è verificato un errore!</strong> Impossibile invalidare la sessione.
 sessions,sessions.messages.success,<strong>Sitzung wurde geschlossen!</strong>,<strong>Session closed!</strong>,<strong>La session a été fermée !</strong>,<strong>Sessione invalidata!</strong>
 sessions,sessions.table.button,Schliessen,Close,Fermer,Invalida
@@ -1167,6 +1261,38 @@ system-notifications-management,systemNotificationsManagement.systemnotification
 system-notifications-management,systemNotificationsManagement.systemnotification.type.systemerror,Systemfehler,System error,System error,System error
 system-notifications-management,systemNotificationsManagement.title,Titel,Title,Title,Title
 system-notifications-management,systemNotificationsManagement.type,Typ,Type,Type,Type
+user-info,user-info.account-info,Account Informationen,Account Info,Account Info,Account Info
+user-info,user-info.accountabilities,Verantwortlichkeiten,Accountabilities,Accountabilities,Accountabilities
+user-info,user-info.desc,Bitte geben Sie die E-Mail-Adresse eines bestehenden Benutzers ein.,Please enter an email address of an existing user.,Please enter an email address of an existing user.,Please enter an email address of an existing user.
+user-info,user-info.error.delete.technical,Es ist ein technischer Fehler beim Zurücksetzen der Registrierung aufgetreten. Versuchen Sie es später noch mal.,A technical error occurred during unregistering the user. Please try it again later.,A technical error occurred during unregistering the user. Please try it again later.,A technical error occurred during unregistering the user. Please try it again later.
+user-info,user-info.error.eiam-roles-not-found,Es konnte keine Rollen in eIAM für diesen Benutzer gefunden werden.,No roles for this user found in eIAM.,No roles for this user found in eIAM.,No roles for this user found in eIAM.
+user-info,user-info.error.technical,Es ist ein technischer Fehler aufgetreten,A technical error occurred,A technical error occurred,A technical error occurred
+user-info,user-info.error.user-not-found,Es konnte kein Benutzer mit dieser E-Mail-Adresse gefunden werden.,No user found with this email address.,No user found with this email address.,No user found with this email address.
+user-info,user-info.info-actions,Zusätzliche Informationen und Aktionen,Additional Info and Actions,Additional Info and Actions,Additional Info and Actions
+user-info,user-info.label.created,Erstellungsdatum,Created at,Created at,Created at
+user-info,user-info.label.email,E-Mail,Email,Email,Email
+user-info,user-info.label.ext-id,Ext-Id,Ext-Id,Ext-Id,Ext-Id
+user-info,user-info.label.firstname,Vorname,First Name,First Name,First Name
+user-info,user-info.label.lastlogin,Datum des letzten Logins,Last login at,Last login at,Last login at
+user-info,user-info.label.lastname,Nachname,Last Name,Last Name,Last Name
+user-info,user-info.label.modified,Änderungsdatum,Modified at,Modified at,Modified at
+user-info,user-info.label.pn,Personennummer,Personal ID,Numéro personnel,Numero personale
+user-info,user-info.label.registration-status,Registrierungsstatus,Registration Status,Registration Status,Registration Status
+user-info,user-info.label.verified,Überprüft am,Verified at,Verified at,Verified at
+user-info,user-info.no-account-info,Keine Account-Informationen gefunden,No account info found,No account info found,No account info found
+user-info,user-info.no-accountabilities,Keine Verantwortlichkeiten gefunden,No company accountabilities found,No company accountabilities found,No company accountabilities found
+user-info,user-info.no-actions,Keine Aktionen oder zusätzlichen Informationen verfügbar,No actions or additional information available,No actions or additional information available,No actions or additional information available
+user-info,user-info.no-roles,Keine Rollen in eIAM gefunden,No Roles in eIAM found,No Roles in eIAM found,No Roles in eIAM found
+user-info,user-info.no-stes-info,Keine STES-Informationen gefunden,No STES Information found,No STES Information found,No STES Information found
+user-info,user-info.no-user-info,Keine Benutzer-Informationen gefunden,No user information found,No user information found,No user information found
+user-info,user-info.roles,eIAM Rollen,eIAM Roles,eIAM Roles,eIAM Roles
+user-info,user-info.search,Suchen,Search,Search,Search
+user-info,user-info.stes-info,STES Informationen,STES Info,STES Info,STES Info
+user-info,user-info.title,Benutzerinformationen,User Info,User Info,User Info
+user-info,user-info.unregister.desc,"Diese Aktion setzt die Registrierung des Benutzers zurück. Damit wird der Benutzer in den Zustand vor der Registrierung zurückgesetzt. Dies löscht alle Rollen, Verantwortlichkeiten und setzt den Status auf 'UNREGISTERED' zurück. Der Benutzer muss anschliessend den gesamten Registrationsprozess erneut durchführen. Dies bedeutet, dass PAV und Arbeitgeber einen Brief mit einem neuen Access Code anfordern müssen. Dies ist nötig, wenn der Benutzer beim Registrierungsprozess versehentlich die falsche Rolle ausgewählt hat. Wenn der Benutzer den Brief mit dem Access Code verloren oder nicht erhalten hat, kann der Brief im Jira gefunden werden und neu versendet werden. Falls der Benutzer in Jira nicht gefunden werden kann, hat er sich vermutlich vor dem 09.07.2018 registriert. In diesem Fall muss die Registrierung zurückgesetzt werden. Achtung: Diese Aktion kann nicht rückgängig gemacht werden.","                    This action resets the registration of this user. It will revert the user to the state it was before starting the registration process. The action will remove any roles, accountabilities and set the registration state to 'UNREGISTERED'. The user will have to redo the whole registration process, which includes requesting a new access code for PAV and employers. This is needed in the case when the user has chosen the wrong role by mistake. If the user has lost the letter with the access code, the user can be found in jira in order to resend the letter. If the user can't be found in jira the user has presumably registered before 09.07.2018. In this case a reset is needed. Caution: This action can not be undone.","                    This action resets the registration of this user. It will revert the user to the state it was before starting the registration process. The action will remove any roles, accountabilities and set the registration state to 'UNREGISTERED'. The user will have to redo the whole registration process, which includes requesting a new access code for PAV and employers. This is needed in the case when the user has chosen the wrong role by mistake. If the user has lost the letter with the access code, the user can be found in jira in order to resend the letter. If the user can't be found in jira the user has presumably registered before 09.07.2018. In this case a reset is needed. Caution: This action can not be undone.","                    This action resets the registration of this user. It will revert the user to the state it was before starting the registration process. The action will remove any roles, accountabilities and set the registration state to 'UNREGISTERED'. The user will have to redo the whole registration process, which includes requesting a new access code for PAV and employers. This is needed in the case when the user has chosen the wrong role by mistake. If the user has lost the letter with the access code, the user can be found in jira in order to resend the letter. If the user can't be found in jira the user has presumably registered before 09.07.2018. In this case a reset is needed. Caution: This action can not be undone."
+user-info,user-info.unregister.title,Registrierung zurückstellen,Reset Registration,Reset Registration,Reset Registration
+user-info,user-info.unregistered-user.desc,"Dieser Benutzer schein bereits einen Account in eIAM erstellt zu haben, jedoch hat er sich bisher nicht in Job-Room registriert. Aus diesem Grund ist keine Aktion für den Benutzer verfügbar. Falls der Benutzer Job-Room mit diesem Account nutzen möchte, muss er den regulären Registrationsprozess durchführen.",The found user seems to have created an eIAM account but not yet registered for job-room. Thus no action is available for this user. If the user wants to use this account for job-room he simply has to login with his eIAM account and finish the registration process in job-room.,The found user seems to have created an eIAM account but not yet registered for job-room. Thus no action is available for this user. If the user wants to use this account for job-room he simply has to login with his eIAM account and finish the registration process in job-room.,The found user seems to have created an eIAM account but not yet registered for job-room. Thus no action is available for this user. If the user wants to use this account for job-room he simply has to login with his eIAM account and finish the registration process in job-room.
+user-info,user-info.unregistered-user.title,Unregistrierter Benutzer,Unregistered User,Unregistered User,Unregistered User
 user-management,userManagement.activated,Aktiv,Active,Activé,Attivato
 user-management,userManagement.created,Ein neuer Benutzer wurde mit ID {{ param }} erstellt,A new user is created with identifier {{ param }},Un nouvel utilisateur portant l'ID {{ param }} a été créé.,È stato creato un nuovo utente con identificativo {{ param }}
 user-management,userManagement.createdBy,Erstellt von,Created by,Créé par,Creato da
@@ -1191,100 +1317,3 @@ user-management,userManagement.phone,Telefon,Telephone,Téléphone,Telefono
 user-management,userManagement.profiles,Profile,Profiles,Profils,Profili
 user-management,userManagement.search.placeholder,"Benutzer nach Name, E-Mail-Adresse oder Organization suchen","Search for user by username, name, email or organization","Search for user by username, name, email or organization","Search for user by username, name, email or organization"
 user-management,userManagement.updated,Ein Benutzer mit ID {{ param }} wurde geändert,A user was updated with identifier {{ param }},L'utilisateur portant l'ID {{ param }} a été modifié.,Sono stato aggiornati i dati dell'utente identificato da {{ param }}
-user-info,user-info.title,Benutzerinformationen,User Info,User Info,User Info
-user-info,user-info.desc,"Bitte geben Sie die E-Mail-Adresse eines bestehenden Benutzers ein.","Please enter an email address of an existing user.","Please enter an email address of an existing user.","Please enter an email address of an existing user."
-user-info,user-info.search,Suchen,Search,Search,Search
-user-info,user-info.account-info,Account Informationen,Account Info,Account Info,Account Info
-user-info,user-info.stes-info,STES Informationen,STES Info,STES Info,STES Info
-user-info,user-info.roles,eIAM Rollen,eIAM Roles,eIAM Roles,eIAM Roles
-user-info,user-info.accountabilities,Verantwortlichkeiten,Accountabilities,Accountabilities,Accountabilities
-user-info,user-info.info-actions,Zusätzliche Informationen und Aktionen,Additional Info and Actions,Additional Info and Actions,Additional Info and Actions
-user-info,user-info.label.ext-id,Ext-Id,Ext-Id,Ext-Id,Ext-Id
-user-info,user-info.label.email,E-Mail,Email,Email,Email
-user-info,user-info.label.firstname,Vorname,First Name,First Name,First Name
-user-info,user-info.label.lastname,Nachname,Last Name,Last Name,Last Name
-user-info,user-info.label.registration-status,Registrierungsstatus,Registration Status,Registration Status,Registration Status
-user-info,user-info.label.created,Erstellungsdatum,Created at,Created at,Created at
-user-info,user-info.label.modified,Änderungsdatum,Modified at,Modified at,Modified at
-user-info,user-info.label.lastlogin,Datum des letzten Logins,Last login at,Last login at,Last login at
-user-info,user-info.label.pn,Personennummer,Personal ID,Numéro personnel,Numero personale
-user-info,user-info.label.verified,Überprüft am,Verified at,Verified at,Verified at
-user-info,user-info.unregistered-user.title,Unregistrierter Benutzer,Unregistered User,Unregistered User,Unregistered User
-user-info,user-info.unregistered-user.desc,"Dieser Benutzer schein bereits einen Account in eIAM erstellt zu haben, jedoch hat er sich bisher nicht in Job-Room registriert. Aus diesem Grund ist keine Aktion für den Benutzer verfügbar. Falls der Benutzer Job-Room mit diesem Account nutzen möchte, muss er den regulären Registrationsprozess durchführen.","The found user seems to have created an eIAM account but not yet registered for job-room. Thus no action is available for this user. If the user wants to use this account for job-room he simply has to login with his eIAM account and finish the registration process in job-room.","The found user seems to have created an eIAM account but not yet registered for job-room. Thus no action is available for this user. If the user wants to use this account for job-room he simply has to login with his eIAM account and finish the registration process in job-room.","The found user seems to have created an eIAM account but not yet registered for job-room. Thus no action is available for this user. If the user wants to use this account for job-room he simply has to login with his eIAM account and finish the registration process in job-room."
-user-info,user-info.unregister.title,Registrierung zurückstellen,Reset Registration,Reset Registration,Reset Registration
-user-info,user-info.unregister.desc,"Diese Aktion setzt die Registrierung des Benutzers zurück. Damit wird der Benutzer in den Zustand vor der Registrierung zurückgesetzt. Dies löscht alle Rollen, Verantwortlichkeiten und setzt den Status auf 'UNREGISTERED' zurück. Der Benutzer muss anschliessend den gesamten Registrationsprozess erneut durchführen. Dies bedeutet, dass PAV und Arbeitgeber einen Brief mit einem neuen Access Code anfordern müssen. Dies ist nötig, wenn der Benutzer beim Registrierungsprozess versehentlich die falsche Rolle ausgewählt hat. Wenn der Benutzer den Brief mit dem Access Code verloren oder nicht erhalten hat, kann der Brief im Jira gefunden werden und neu versendet werden. Falls der Benutzer in Jira nicht gefunden werden kann, hat er sich vermutlich vor dem 09.07.2018 registriert. In diesem Fall muss die Registrierung zurückgesetzt werden. Achtung: Diese Aktion kann nicht rückgängig gemacht werden.","                    This action resets the registration of this user. It will revert the user to the state it was before starting the registration process. The action will remove any roles, accountabilities and set the registration state to 'UNREGISTERED'. The user will have to redo the whole registration process, which includes requesting a new access code for PAV and employers. This is needed in the case when the user has chosen the wrong role by mistake. If the user has lost the letter with the access code, the user can be found in jira in order to resend the letter. If the user can't be found in jira the user has presumably registered before 09.07.2018. In this case a reset is needed. Caution: This action can not be undone.","                    This action resets the registration of this user. It will revert the user to the state it was before starting the registration process. The action will remove any roles, accountabilities and set the registration state to 'UNREGISTERED'. The user will have to redo the whole registration process, which includes requesting a new access code for PAV and employers. This is needed in the case when the user has chosen the wrong role by mistake. If the user has lost the letter with the access code, the user can be found in jira in order to resend the letter. If the user can't be found in jira the user has presumably registered before 09.07.2018. In this case a reset is needed. Caution: This action can not be undone.","                    This action resets the registration of this user. It will revert the user to the state it was before starting the registration process. The action will remove any roles, accountabilities and set the registration state to 'UNREGISTERED'. The user will have to redo the whole registration process, which includes requesting a new access code for PAV and employers. This is needed in the case when the user has chosen the wrong role by mistake. If the user has lost the letter with the access code, the user can be found in jira in order to resend the letter. If the user can't be found in jira the user has presumably registered before 09.07.2018. In this case a reset is needed. Caution: This action can not be undone."
-user-info,user-info.no-user-info,Keine Benutzer-Informationen gefunden,No user information found,No user information found,No user information found
-user-info,user-info.no-account-info,Keine Account-Informationen gefunden,No account info found,No account info found,No account info found
-user-info,user-info.no-stes-info,Keine STES-Informationen gefunden,No STES Information found,No STES Information found,No STES Information found
-user-info,user-info.no-roles,Keine Rollen in eIAM gefunden,No Roles in eIAM found,No Roles in eIAM found,No Roles in eIAM found
-user-info,user-info.no-accountabilities,Keine Verantwortlichkeiten gefunden,No company accountabilities found,No company accountabilities found,No company accountabilities found
-user-info,user-info.no-actions,Keine Aktionen oder zusätzlichen Informationen verfügbar,No actions or additional information available,No actions or additional information available,No actions or additional information available
-user-info,user-info.error.user-not-found,"Es konnte kein Benutzer mit dieser E-Mail-Adresse gefunden werden.","No user found with this email address.","No user found with this email address.","No user found with this email address."
-user-info,user-info.error.eiam-roles-not-found,"Es konnte keine Rollen in eIAM für diesen Benutzer gefunden werden.","No roles for this user found in eIAM.","No roles for this user found in eIAM.","No roles for this user found in eIAM."
-user-info,user-info.error.technical,"Es ist ein technischer Fehler aufgetreten","A technical error occurred","A technical error occurred","A technical error occurred"
-user-info,user-info.error.delete.technical,"Es ist ein technischer Fehler beim Zurücksetzen der Registrierung aufgetreten. Versuchen Sie es später noch mal.","A technical error occurred during unregistering the user. Please try it again later.","A technical error occurred during unregistering the user. Please try it again later.","A technical error occurred during unregistering the user. Please try it again later."
-registration-questionnaire,registrationQuestionnaire.title,Registrierung,Registration,Enregistrement,Registrazione
-registration-questionnaire,registrationQuestionnaire.header,Nutzungsart wählen,Type of usage,Type d'utilisation,Tipo di utilizzo
-registration-questionnaire,registrationQuestionnaire.placeholder,"Bitte wählen Sie eine der folgenden Nutzungsarten aus.","Please select one of the following types of usage.","Veuillez sélectionner l'un des types d'utilisation suivants.","Si prega di selezionare uno dei seguenti tipi di utilizzo."
-registration-questionnaire,registrationQuestionnaire.ravCustomer,Ich möchte arbeit.swiss als <b>RAV-Kunde</b> nutzen,I would like to use work.swiss as a <b>RAV customer</b>,Je souhaite utiliser travail.swiss en tant que <b>client ORP</b> ,Voglio usare lavoro.swiss come <b>cliente URC</b>
-registration-questionnaire,registrationQuestionnaire.employer,Ich möchte arbeit.swiss als <b>Arbeitgeber</b> nutzen,I would like to use work.swiss as an <b>employer</b>,Je souhaite utiliser travail.swiss en tant que <b>employeur</b> ,Voglio usare lavoro.swiss come <b>datore di lavoro</b>
-registration-questionnaire,registrationQuestionnaire.recruitmentAgency.message,Ich möchte arbeit.swiss als <b>privater Arbeitsvermittler</b> nutzen,I would like to use work.swiss as an <b>employment agency</b>,Je souhaite utiliser travail.swiss en tant que <b>agence de placement privée</b> ,Voglio usare lavoro.swiss come <b>agenzia privata di collocamento</b>
-registration-questionnaire,registrationQuestionnaire.recruitmentAgency.new,Ich melde mich zum ersten Mal bei arbeit.swiss bzw. Job-Room an,This is my first time registering for work.swiss or Job-Room,J'accède pour la première fois à travail.swiss ou Job-Room,È la prima volta che accedo alla Job-Room di lavoro.swiss
-registration-questionnaire,registrationQuestionnaire.recruitmentAgency.existing,Ich bin ein bestehender Job-Room Nutzer,I am an existing Job Room user,Je suis déjà un utilisateur de Job-Room ,Sono già un utente di Job-Room
-registration-questionnaire,registrationQuestionnaire.termsOfUse.accept,Ich akzeptiere die Nutzungsbedingungen,I agree to the terms and conditions,J'accepte les conditions d'utilisation,Accetto le condizoni di utilizzo
-registration-questionnaire,registrationQuestionnaire.termsOfUse.link,"<a href=""https://www.arbeit.swiss/dam/secoalv/de/bilder/unternehmen/Stellenmeldepflicht/Nutzungsbedingungen_Job-Room.pdf.download.pdf/AGB_Job-Room_Juni_2018_de.pdf"" target=""_blank"">Nutzungsbedingungen anzeigen</a>","<a href=""https://www.arbeit.swiss/dam/secoalv/en/bilder/unternehmen/Stellenmeldepflicht/Nutzungsbedingungen_Job-Room.pdf.download.pdf/AGB_Job-Room_Juni_2018_en.pdf"" target=""_blank"">Show terms and conditions</a>","<a href=""https://www.arbeit.swiss/dam/secoalv/fr/bilder/unternehmen/Stellenmeldepflicht/Nutzungsbedingungen_Job-Room.pdf.download.pdf/AGB_Job-Room_Juni_2018_fr.pdf"" target=""_blank"">Afficher les conditions d'utilisation</a>","<a href=""https://www.arbeit.swiss/dam/secoalv/it/bilder/unternehmen/Stellenmeldepflicht/Nutzungsbedingungen_Job-Room.pdf.download.pdf/AGB_Job-Room_Juni_2018_it.pdf"" target=""_blank"">Mostra le condizioni di utilizzo</a>"
-registration-questionnaire,registrationQuestionnaire.error.candidate.service.failure,Das System zur Prüfung Ihrer Daten ist momentan nicht verfügbar. Bitte versuchen Sie es später wieder. Bitte kontaktieren Sie den ServiceDesk, falls das Problem weiter bestehen sollte.,The system used to validate your data is currently unavailable. Please try again later. If this problem persists, contact the service desk.,Le système permettant de vérifier vos données est momentanément indisponible. Veuillez réessayer plus tard. Prenez contact avec le Service Desk si le problème persiste.,Il sistema di verifica dei dati personali non è al momento disponibile. Si prega di riprovare più tardi. Se il problema persiste contattare il Service Desk.
-registration-company-dialog,registrationCompanyDialog.title,Bitte geben Sie nun Ihre Unternehmens-Identifikationsnummer (UID) an.,Please enter your company identification number (UID).,Veuillez indiquer votre numéro d'identification des entreprises (IDE).,Inserire il numero d'identificazione delle imprese (IDI).
-registration-company-dialog,registrationCompanyDialog.placeholder,CHE-123.456.789,CHE-123.456.789,CHE-123.456.789,CHE-123.456.789
-registration-company-dialog,registrationCompanyDialog.postal.description,"Sie erhalten <b>per Post</b> einen Freischaltcode an die der UID zugehörigen Postadresse:","We will send an activation code <b>by post</b> to the address associated with your UID:","Nous enverrons un code d'activation <b>par poste</b> à l'adresse qui est connectée avec votre IDE:","Invieremo un codice di attivazione <b>per posta</b> all'indirizzo iscritto con il vostro IDI:"
-registration-company-dialog,registrationCompanyDialog.login.description,Mit dem zugesendeten Freischaltcode können Sie sich anschliessend über den Login in Ihr Benutzerkonto einloggen.,You can then log in to your user account using this activation code.,Vous pourrez ensuite vous connecter à votre compte d'utilisateur au moyen du code de déverrouillage.,Con il codice di attivazione inviato potrà accedere al suo account utente tramite il login.
-registration-company-dialog,registrationCompanyDialog.requestActivationCode,Freischaltcode per Post anfordern,Request activation code by post,Demander le code de déverrouillage par voie postale,Richiedere il codice di attivazione per posta
-registration-company-dialog,registrationCompanyDialog.activationCodeRequested,Freischaltcode erfolgreich beantragt,Activation code requested,Le code de déverrouillage a bien été demandé.,Richiesta inoltrata
-registration-company-dialog,registrationCompanyDialog.returnToHomepage,Zurück zur Startseite,Return to homepage,Retour à la page d'accueil,Tornare alla pagina iniziale
-registration-company-dialog,registrationCompanyDialog.confirmButton,Bestätigen,Confirm,Confirmer,Confermare
-registration-company-dialog,registrationCompanyDialog.validation.error.uid,"Ungültiges UID-Format, gültiges Format: CHE-123.456.789","Invalid UID format. Please use the format CHE-123.456.789","Format de l'IDE non valable, format valable: CHE-123.456.789","Formato IDI non valido, formato valido: CHE-123.456.789"
-registration-company-dialog,registrationCompanyDialog.validation.error.notFound,Es wurde kein Unternehmen mit der eingegebenen UID gefunden.,We were unable to find a company with the UID you entered.,Aucune entreprise ayant l'IDE indiquée n'a été trouvée.,Non è stata trovata nessuna impresa con l'IDI inserito
-registration-pav-dialog,registrationPavDialog.title,Bitte wählen Sie Ihre Organisation aus der VZ AVG Liste aus,Please select your organisation from the VZ AVG list.,Veuillez sélectionner votre organisation dans le répertoire des AP LSE ,Selezionare la sua organizzazione dall'elenco OE LC
-registration-pav-dialog,registrationPavDialog.placeholder,Geben Sie Ihre Organisation ein,Please enter your organisation.,Veuillez indiquer votre organisation,Inserire la sua organizzazione
-registration-pav-dialog,registrationPavDialog.postal.description,"Sie erhalten <b>per Post</b> einen Freischaltcode an die aus dem VZ AVG-Register ausgewählte Adresse:","We will send an activation code <b>by post</b> to the address associated with the Register VZ AVG:","Nous enverrons un code d'activation <b>par poste</B à l'adresse qui est connectée avec l'entreprise que vous avez choisie dans le répertoire des AP LSE:","Invieremo un codice di attivazione <b>per posta</b> all'indirizzo della ditta da voi scelta dall'elenco ES ELC:"
-registration-pav-dialog,registrationPavDialog.login.description,Mit dem zugesendeten Freischaltcode können Sie sich anschliessend über den Login in Ihr Benutzerkonto einloggen.,You can then log in to your user account using this activation code.,Vous pourrez ensuite vous connecter à votre compte d'utilisateur au moyen du code de déverrouillage.,Con il codice di attivazione inviato potrai accedere al tuo account utente tramite il login.
-registration-pav-dialog,registrationPavDialog.requestActivationCode,Freischaltcode per Post anfordern,Request activation code by post,Demander le code de déverrouillage par voie postale,Richiedere il codice di attivazione per posta
-registration-pav-dialog,registrationPavDialog.activationCodeRequested,Freischaltcode erfolgreich beantragt,Activation code requested,Le code de déverrouillage a bien été demandé.,La richiesta è andata a buon fine
-registration-pav-dialog,registrationPavDialog.returnToHomepage,Zurück zur Startseite,Return to homepage,Retour à la page d'accueil,Torna alla pagina iniziale
-registration-access-code,registrationAccessCode.title,Freischaltcode eingeben,Enter activation code,Saisir le code de déverrouillage,Inserire il codice di attivazione
-registration-access-code,registrationAccessCode.header,Freischaltcode,Activation code,Code de déverrouillage,Codice di attivazione
-registration-access-code,registrationAccessCode.placeholder,Freischaltcode eingeben,Enter activation code,Saisir le code de déverrouillage,Inserire il codice di attivazione
-registration-access-code,registrationAccessCode.accessCode,Freischaltcode,Activation code,Code de déverrouillage,Codice di attivazione
-registration-access-code,registrationAccessCode.accessCode.error.required,Freischaltcode wird benötigt,Activation code is required,Un code de déverrouillage est nécessaire ,È necessario il codice di attivazione
-registration-access-code,registrationAccessCode.accessCode.error.minlength,Freischaltcode muss aus 8 Stellen bestehen,Activation code must contain 8 characters,Le code de déverrouillage doit se composer de 8 caractères,Il codice di attivazione deve avere 8 caratteri
-registration-access-code,registrationAccessCode.accessCode.error.invalid,Freischaltcode ungültig,Activation code is invalid,Code de déverrouillage non valable,Codice di attivazione non valido
-job,jobroomApp.job.rav, RAV,RAV,ORP,URC
-blacklisted-agent,blacklisted-agent.title,Blacklist für PAV,Blacklisted Agent,Blacklisted Agent,Blacklisted Agent
-blacklisted-agent,blacklisted-agent.filter.placeholder,"Filtern nach Id, External Id, Status, Name, Strasse or PLZ","Filter by Id, External Id, Status, Name, Street or Zip Code","Filter by Id, External Id, Status, Name, Street or Zip Code","Filter by Id, External Id, Status, Name, Street or Zip Code"
-blacklisted-agent,blacklisted-agent.header.id,Id,Id,Id,Id
-blacklisted-agent,blacklisted-agent.header.externalId,External Id,External Id,External Id,External Id
-blacklisted-agent,blacklisted-agent.header.status,Status,Status,Status,Status
-blacklisted-agent,blacklisted-agent.header.name,Name,Name,Name,Name
-blacklisted-agent,blacklisted-agent.header.street,Strasse,Street,Street,Street
-blacklisted-agent,blacklisted-agent.header.zipCode,PLZ,Zip Code,Zip Code,Zip Code
-blacklisted-agent,blacklisted-agent.header.city,Ort,City,City,City
-blacklisted-agent,blacklisted-agent.header.createdBy,Erstellt von,Created By,Created By,Created By
-blacklisted-agent,blacklisted-agent.header.blacklistedAt,Aktualisiert am,Blacklisted At,Blacklisted At,Blacklisted At
-blacklisted-agent,blacklisted-agent.header.counter,Anzahl Sperrungen,Counter,Counter,Counter
-blacklisted-agent,blacklisted-agent.status.active,Aktiv,Active,Active,Active
-blacklisted-agent,blacklisted-agent.status.inactive,Inaktiv,Inactive,Inactive,Inactive
-blacklisted-agent,blacklisted-agent.create-blacklist-entry,PAV auf Blacklist setzen,Add PAV to Blacklist ,Add PAV to Blacklist ,Add PAV to Blacklist
-blacklisted-agent,blacklisted-agent.choose-organisation-desc,"Bitte wählen Sie eine Organisation aus, die sie auf die Blacklist setzen möchten." ,"Please choose an organisation that you want to add to the blacklist." ,"Please choose an organisation that you want to add to the blacklist." ,"Please choose an organisation that you want to add to the blacklist."
-blacklisted-agent,blacklisted-agent.selected-organisation-desc,"Möchten Sie folgende Organisation auf die Blacklist setzen?" ,"Do you want to add the following organisation to the blacklist?" ,"Do you want to add the following organisation to the blacklist?" ,"Do you want to add the following organisation to the blacklist?"
-blacklisted-agent,blacklisted-agent.confirm-alert,"Diese Aktion wird sofort ausgeführt und kann nicht rückgängig gemacht werden!" ,"This action will be effectuated immediately and can not be undone!" ,"This action will be effectuated immediately and can not be undone!" ,"This action will be effectuated immediately and can not be undone!"
-blacklisted-agent,blacklisted-agent.change-status-dialog.title,Status des Blacklist-Eintrags ändern,Change Status of Blacklisted Agent,Change Status of Blacklisted Agent,Change Status of Blacklisted Agent,
-blacklisted-agent,blacklisted-agent.change-status-dialog.message,Möchten Sie wirklich den Blacklist-Eintrag für den PAV ändern?,Do you really want to change status of the blacklisted agent?,Do you really want to change status of the blacklisted agent?,Do you really want to change status of the blacklisted agent?
-blacklisted-agent,blacklisted-agent.change-status-dialog.change-status,Status ändern,Change Status,Change Status,Change Status
-blacklisted-agent,blacklisted-agent.change-status-dialog.cancel,Abbrechen,Cancel,Cancel,Cancel
-job-publication,job-publication.validation.maxlength-10,Dieses Feld darf max. 10 Zeichen lang sein.,This field cannot be longer than 10 characters.,Ce champ doit comporter au maximum 10 caractères.,Questo campo non può essere più di 10 caratteri.
-job-publication,job-publication.validation.maxlength-50,Dieses Feld darf max. 50 Zeichen lang sein.,This field cannot be longer than 50 characters.,Ce champ doit comporter au maximum 50 caractères.,Questo campo non può essere più di 50 caratteri.
-job-publication,job-publication.validation.maxlength-60,Dieses Feld darf max. 60 Zeichen lang sein.,This field cannot be longer than 60 characters.,Ce champ doit comporter au maximum 60 caractères.,Questo campo non può essere più di 60 caratteri.
-job-publication,job-publication.validation.maxlength-255,Dieses Feld darf max. 255 Zeichen lang sein.,This field cannot be longer than 255 characters.,Ce champ doit comporter au maximum 255 caractères.,Questo campo non può essere più di 255 caratteri.
-job-publication,job-publication.validation.maxlength-247,Dieses Feld darf max. 247 Zeichen lang sein.,This field cannot be longer than 255 characters.,Ce champ doit comporter au maximum 247 caractères.,Questo campo non può essere più di 247 caratteri.
-job-publication,job-publication.validation.maxlength-10000,Dieses Feld darf max. 10000 Zeichen lang sein.,This field cannot be longer than 10000 characters.,Ce champ doit comporter au maximum 10000 caractères.,Questo campo non può essere più di 10000 caratteri.
-job-publication,job-publication.validation.not-empty,Dieses Feld darf nicht leer sein!,This field cannot be empty!,Ce champ ne peut pas être vide !,Questo campo non può essere vuoto!

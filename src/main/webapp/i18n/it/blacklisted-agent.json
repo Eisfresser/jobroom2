@@ -1,34 +1,34 @@
 {
     "blacklisted-agent": {
-        "title": "Blacklisted Agent",
+        "change-status-dialog": {
+            "cancel": "Cancel",
+            "change-status": "Change Status",
+            "message": "Do you really want to change status of the blacklisted agent?",
+            "title": "Change Status of Blacklisted Agent"
+        },
+        "choose-organisation-desc": "Please choose an organisation that you want to add to the blacklist.",
+        "confirm-alert": "This action will be effectuated immediately and can not be undone!",
+        "create-blacklist-entry": "Add PAV to Blacklist",
         "filter": {
             "placeholder": "Filter by Id, External Id, Status, Name, Street or Zip Code"
         },
         "header": {
-            "id": "Id",
-            "externalId": "External Id",
-            "status": "Status",
-            "name": "Name",
-            "street": "Street",
-            "zipCode": "Zip Code",
-            "city": "City",
-            "createdBy": "Created By",
             "blacklistedAt": "Blacklisted At",
-            "counter": "Counter"
+            "city": "City",
+            "counter": "Counter",
+            "createdBy": "Created By",
+            "externalId": "External Id",
+            "id": "Id",
+            "name": "Name",
+            "status": "Status",
+            "street": "Street",
+            "zipCode": "Zip Code"
         },
+        "selected-organisation-desc": "Do you want to add the following organisation to the blacklist?",
         "status": {
             "active": "Active",
             "inactive": "Inactive"
         },
-        "create-blacklist-entry": "Add PAV to Blacklist",
-        "choose-organisation-desc": "Please choose an organisation that you want to add to the blacklist.",
-        "selected-organisation-desc": "Do you want to add the following organisation to the blacklist?",
-        "confirm-alert": "This action will be effectuated immediately and can not be undone!",
-        "change-status-dialog": {
-            "title": "Change Status of Blacklisted Agent",
-            "message": "Do you really want to change status of the blacklisted agent?",
-            "change-status": "Change Status",
-            "cancel": "Cancel"
-        }
+        "title": "Blacklisted Agent"
     }
 }

@@ -1,13 +1,13 @@
 {
     "registrationAvgDialog": {
-        "title": "",
-        "postal": {
-            "description": ""
-        },
         "login": {
             "description": ""
         },
+        "postal": {
+            "description": ""
+        },
         "requestActivationCode": "",
-        "returnToHomepage": ""
+        "returnToHomepage": "",
+        "title": ""
     }
 }

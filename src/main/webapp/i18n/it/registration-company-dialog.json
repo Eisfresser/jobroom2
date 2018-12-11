@@ -1,21 +1,21 @@
 {
     "registrationCompanyDialog": {
-        "title": "Inserire il numero d'identificazione delle imprese (IDI).",
+        "activationCodeRequested": "Richiesta inoltrata",
+        "confirmButton": "Confermare",
+        "login": {
+            "description": "Con il codice di attivazione inviato potr\u00e0 accedere al suo account utente tramite il login."
+        },
         "placeholder": "CHE-123.456.789",
         "postal": {
             "description": "Invieremo un codice di attivazione <b>per posta</b> all'indirizzo iscritto con il vostro IDI:"
         },
-        "login": {
-            "description": "Con il codice di attivazione inviato potr\u00e0 accedere al suo account utente tramite il login."
-        },
         "requestActivationCode": "Richiedere il codice di attivazione per posta",
-        "activationCodeRequested": "Richiesta inoltrata",
         "returnToHomepage": "Tornare alla pagina iniziale",
-        "confirmButton": "Confermare",
+        "title": "Inserire il numero d'identificazione delle imprese (IDI).",
         "validation": {
             "error": {
-                "uid": "Formato IDI non valido, formato valido: CHE-123.456.789",
-                "notFound": "Non \u00e8 stata trovata nessuna impresa con l'IDI inserito"
+                "notFound": "Non \u00e8 stata trovata nessuna impresa con l'IDI inserito",
+                "uid": "Formato IDI non valido, formato valido: CHE-123.456.789"
             }
         }
     }

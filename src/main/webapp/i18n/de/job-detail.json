@@ -13,12 +13,13 @@
             "additionalInfo": "Erg\u00e4nzende Angaben",
             "email": "Per E-Mail",
             "mail": "Per Post",
-            "phone": "Telefonisch",
             "online": "Elektronisch",
+            "phone": "Telefonisch",
             "title": "Bewerbungsformen"
         },
         "back": "Zur\u00fcck zu den Suchergebnissen",
         "contactPerson": "Ihre Kontaktperson",
+        "deactivated": "Dieses Stelleninserat ist mittlerweile nicht mehr aktiv.",
         "external-job-disclaimer": "Dieses Inserat wurde auf einer externen Website gefunden. Die Arbeitslosenversicherung und \u00f6ffentliche Arbeitsvermittlung stellt Ihnen dieses Suchresultat als zus\u00e4tzliche Dienstleistung zur Verf\u00fcgung, hat aber keinerlei Einfluss auf dessen Inhalt und Qualit\u00e4t.                                                                                                                                                              ",
         "onlineSince": "Vakant seit",
         "otherJobsCompany": "{{count}} Stellen anzeigen",
@@ -32,7 +33,6 @@
         "startsImmediately.false": "Nach Vereinbarung",
         "startsImmediately.true": "Ab Sofort",
         "title": "Stellenbeschreibung",
-        "deactivated": "Dieses Stelleninserat ist mittlerweile nicht mehr aktiv.",
         "unvalidated": "Dieses Inserat wurde direkt von einem unserer Nutzer elektronisch auf die Internetplattform der \u00f6ffentlichen Arbeitsvermittlung publiziert. Die Arbeitslosenversicherung und \u00f6ffentliche Arbeitsvermittlung hat keinen Einfluss auf dessen Inhalt und Qualit\u00e4t."
     },
     "job-fingerprint-redirect": {

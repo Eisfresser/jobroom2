@@ -1,25 +1,25 @@
 {
     "registrationQuestionnaire": {
-        "title": "Registrierung",
-        "header": "Nutzungsart w\u00e4hlen",
-        "placeholder": "Bitte w\u00e4hlen Sie eine der folgenden Nutzungsarten aus.",
-        "ravCustomer": "Ich m\u00f6chte arbeit.swiss als <b>RAV-Kunde</b> nutzen",
         "employer": "Ich m\u00f6chte arbeit.swiss als <b>Arbeitgeber</b> nutzen",
-        "recruitmentAgency": {
-            "message": "Ich m\u00f6chte arbeit.swiss als <b>privater Arbeitsvermittler</b> nutzen",
-            "new": "Ich melde mich zum ersten Mal bei arbeit.swiss bzw. Job-Room an",
-            "existing": "Ich bin ein bestehender Job-Room Nutzer"
-        },
-        "termsOfUse": {
-            "accept": "Ich akzeptiere die Nutzungsbedingungen",
-            "link": "<a href=\"https://www.arbeit.swiss/dam/secoalv/de/bilder/unternehmen/Stellenmeldepflicht/Nutzungsbedingungen_Job-Room.pdf.download.pdf/AGB_Job-Room_Juni_2018_de.pdf\" target=\"_blank\">Nutzungsbedingungen anzeigen</a>"
-        },
         "error": {
             "candidate": {
                 "service": {
                     "failure": "Das System zur Pr\u00fcfung Ihrer Daten ist momentan nicht verf\u00fcgbar. Bitte versuchen Sie es sp\u00e4ter wieder. Bitte kontaktieren Sie den ServiceDesk"
                 }
             }
-        }
+        },
+        "header": "Nutzungsart w\u00e4hlen",
+        "placeholder": "Bitte w\u00e4hlen Sie eine der folgenden Nutzungsarten aus.",
+        "ravCustomer": "Ich m\u00f6chte arbeit.swiss als <b>RAV-Kunde</b> nutzen",
+        "recruitmentAgency": {
+            "existing": "Ich bin ein bestehender Job-Room Nutzer",
+            "message": "Ich m\u00f6chte arbeit.swiss als <b>privater Arbeitsvermittler</b> nutzen",
+            "new": "Ich melde mich zum ersten Mal bei arbeit.swiss bzw. Job-Room an"
+        },
+        "termsOfUse": {
+            "accept": "Ich akzeptiere die Nutzungsbedingungen",
+            "link": "<a href=\"https://www.arbeit.swiss/dam/secoalv/de/bilder/unternehmen/Stellenmeldepflicht/Nutzungsbedingungen_Job-Room.pdf.download.pdf/AGB_Job-Room_Juni_2018_de.pdf\" target=\"_blank\">Nutzungsbedingungen anzeigen</a>"
+        },
+        "title": "Registrierung"
     }
 }

@@ -1,24 +1,24 @@
 {
     "contact-template-management": {
-        "title": "Dati di contatto personali per",
-        "helptext": "\u00c8 impossibile modificare nome e cognome in questa maschera. Modifica questi dati direttamente nel tuo conto eIAM. Compilazione automatica dei dati di contatto in JobRoom, negli appositi campi del modulo per l'annuncio dei posti. Queste informazioni non modificano il login del tuo conto eIAM.",
-        "link": "Link al conto eIAM",
+        "companyCity": "luogo",
+        "companyHouseNr": "N.",
+        "companyInformation": "Informazioni Impresa",
         "companyName": "Impresa",
         "companyStreet": "Via",
-        "companyHouseNr": "N.",
         "companyZipCode": "NPA",
-        "companyCity": "luogo",
-        "phone": "Telefono",
-        "email": "E-Mail",
-        "firstName": "Nome",
-        "lastName": "Cognome",
-        "salutation": "Appellativo",
-        "userInformation": "Informazioni utente",
-        "companyInformation": "Informazioni Impresa",
-        "successSaveMessage": "Your personal contact information was successfully saved!",
-        "failureSaveMessage": "There was an error saving your personal contact information",
         "companyhousenr": {
             "message": "please check that your house number is valid"
-        }
+        },
+        "email": "E-Mail",
+        "failureSaveMessage": "There was an error saving your personal contact information",
+        "firstName": "Nome",
+        "helptext": "\u00c8 impossibile modificare nome e cognome in questa maschera. Modifica questi dati direttamente nel tuo conto eIAM. Compilazione automatica dei dati di contatto in JobRoom, negli appositi campi del modulo per l'annuncio dei posti. Queste informazioni non modificano il login del tuo conto eIAM.",
+        "lastName": "Cognome",
+        "link": "Link al conto eIAM",
+        "phone": "Telefono",
+        "salutation": "Appellativo",
+        "successSaveMessage": "Your personal contact information was successfully saved!",
+        "title": "Dati di contatto personali per",
+        "userInformation": "Informazioni utente"
     }
 }

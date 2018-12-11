@@ -59,13 +59,13 @@
             "professions": "Professions",
             "publicationEndDate": "Publication jusqu'au",
             "publicationStartDate": "Publication \u00e0 partir du",
+            "rav": "ORP",
             "registrationDate": "Saisi le",
             "startDate": "Disponible \u00e0 partir du",
             "startsImmediately": "Disponible tout de suite",
             "title": "Titre du poste",
             "workingTimePercentageMax": "Taux d'occupation maximal",
-            "workingTimePercentageMin": "Taux d'occupation minimal",
-            "rav": "ORP"
+            "workingTimePercentageMin": "Taux d'occupation minimal"
         }
     },
     "jobserviceApp": {

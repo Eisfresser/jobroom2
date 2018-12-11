@@ -1,4 +1,12 @@
 {
+    "alert": {
+        "error": {
+            "tooManyRequests": {
+                "anonymous": "Von Ihrer IP-Adresse wurden zu viele Anfragen gesendet. Bitte warten Sie eine Minute.",
+                "authenticated": "Von Ihrem Account aus wurden zu viele Anfragen gesendet. Bitte warten Sie eine Minute."
+            }
+        }
+    },
     "entity": {
         "action": {
             "addblob": "Blob hinzuf\u00fcgen",
@@ -36,7 +44,6 @@
         "Size": "Feld {{fieldName}} erf\u00fcllt nicht die minimalen/maximalen Voraussetzungen!",
         "emailexists": "E-Mail-Adresse wird bereits verwendet!",
         "idexists": "Ein neuer {{entityName}} kann noch keine ID haben",
-        "idmismatch": "Ein ID-Parameter stimmt nicht mit der ID von DTO \u00fcberein.",
         "internalServerError": "Interner Serverfehler",
         "server": {
             "not": {
@@ -184,7 +191,6 @@
             "admin": {
                 "api-user-management": "API-Schl\u00fcssel-Verwaltung",
                 "apidocs": "API",
-                "user-info": "User-Info",
                 "audits": "Audits",
                 "configuration": "Konfiguration",
                 "contact-template-management": "Kontaktangaben",
@@ -203,12 +209,12 @@
                 "metrics": "Metriken",
                 "systemNotifications": "System Mitteilungen",
                 "tracker": "Benutzer Aktivit\u00e4ten",
+                "user-info": "User-Info",
                 "userManagement": "Benutzerverwaltung"
             },
+            "blacklisted-agent": "Blacklist",
             "company-contact-template": "Kontaktangaben",
             "dashboard": "Dashboard",
-            "blacklisted-agent": "Blacklist",
-            "termsAndConditions": "AGB",
             "entities": {
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)",
                 "job": "Stelle",
@@ -312,13 +318,9 @@
                 "el": "Griechisch",
                 "en": "Englisch",
                 "es": "Spanisch",
+                "fa": "Farsi",
                 "fi": "Finnisch",
                 "fr": "Franz\u00f6sisch",
-                "nld": "Fl\u00e4misch",
-                "sr-hr": "Serbokroatisch",
-                "fa": "Farsi",
-                "prs": "Dari",
-                "ti": "Tigrinya",
                 "he": "Hebr\u00e4isch",
                 "hr": "Kroatisch",
                 "hu": "Ungarisch",
@@ -336,9 +338,11 @@
                 "lt": "Litauisch",
                 "mk": "Mazedonisch",
                 "nl": "Holl\u00e4ndisch",
+                "nld": "Fl\u00e4misch",
                 "no": "Norwegisch",
                 "no-selection": "Keine Auswahl",
                 "pl": "Polnisch",
+                "prs": "Dari",
                 "pt": "Portugiesisch",
                 "rm": "R\u00e4toromanisch",
                 "ro": "Rum\u00e4nisch",
@@ -348,9 +352,11 @@
                 "spoken": "M\u00fcndlich",
                 "sq": "Albanisch",
                 "sr": "Serbisch",
+                "sr-hr": "Serbokroatisch",
                 "sv": "Schwedisch",
                 "ta": "Tamil",
                 "th": "Thai",
+                "ti": "Tigrinya",
                 "tr": "T\u00fcrkisch",
                 "vi": "Vietnamesisch",
                 "written": "Schriftlich",
@@ -507,13 +513,5 @@
         "next": "Weiter",
         "previous": "Zur\u00fcck",
         "scroll-to-top": "Nach oben scrollen"
-    },
-    "alert": {
-        "error": {
-            "tooManyRequests": {
-                "authenticated": "Von Ihrem Account aus wurden zu viele Anfragen gesendet. Bitte warten Sie eine Minute.",
-                "anonymous": "Von Ihrer IP-Adresse wurden zu viele Anfragen gesendet. Bitte warten Sie eine Minute."
-            }
-        }
     }
 }

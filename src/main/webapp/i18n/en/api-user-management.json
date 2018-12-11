@@ -3,8 +3,8 @@
         "activated": "activated",
         "active": "Active",
         "active-date": "Last access date",
-        "companyName": "Company",
         "companyEmail": "Company email",
+        "companyName": "Company",
         "confirm": "Save",
         "contact": "Contact",
         "contact.email": "Contact email",
@@ -12,9 +12,6 @@
         "deactivated": "Deactivated",
         "dialog": {
             "title": "Create or update API user"
-        },
-        "update-password-dialog": {
-            "title": "Change password"
         },
         "dismiss": "Cancel",
         "email": "Email",
@@ -26,6 +23,9 @@
         "technicalContactEmail": "Technical contact email",
         "technicalContactName": "Technical contact",
         "title": "Manage API users",
+        "update-password-dialog": {
+            "title": "Change password"
+        },
         "username": "Username"
     }
 }

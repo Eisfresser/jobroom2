@@ -22,11 +22,11 @@
     "job-publication": {
         "validation": {
             "maxlength-10": "Questo campo non pu\u00f2 essere pi\u00f9 di 10 caratteri.",
+            "maxlength-10000": "Questo campo non pu\u00f2 essere pi\u00f9 di 10000 caratteri.",
+            "maxlength-247": "Questo campo non pu\u00f2 essere pi\u00f9 di 247 caratteri.",
+            "maxlength-255": "Questo campo non pu\u00f2 essere pi\u00f9 di 255 caratteri.",
             "maxlength-50": "Questo campo non pu\u00f2 essere pi\u00f9 di 50 caratteri.",
             "maxlength-60": "Questo campo non pu\u00f2 essere pi\u00f9 di 60 caratteri.",
-            "maxlength-255": "Questo campo non pu\u00f2 essere pi\u00f9 di 255 caratteri.",
-            "maxlength-247": "Questo campo non pu\u00f2 essere pi\u00f9 di 247 caratteri.",
-            "maxlength-10000": "Questo campo non pu\u00f2 essere pi\u00f9 di 10000 caratteri.",
             "not-empty": "Questo campo non pu\u00f2 essere vuoto!"
         }
     }

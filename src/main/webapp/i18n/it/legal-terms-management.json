@@ -1,24 +1,24 @@
 {
     "legal-terms-management": {
-        "title": "Gestisci condizioni generali",
+        "add-legal-terms": "Aggiungi Condizioni Generali",
         "filter": {
             "placeholder": "Filtra per Efficace A, Link DE, Link EN, Link FR o Link IT"
         },
-        "add-legal-terms": "Aggiungi Condizioni Generali",
         "header": {
+            "actions": "Azioni",
             "effectiveAt": "Efficace A",
             "linkDe": "DE link",
             "linkEn": "EN link",
             "linkFr": "FR link",
-            "linkIt": "IT link",
-            "actions": "Azioni"
+            "linkIt": "IT link"
         },
-        "legal-terms-details-dialog": "Condizioni Generali Dettagli",
-        "legal-terms-details-dialog.add": "Aggiungi",
         "legal-terms-delete-dialog": {
             "question": "Sei sicuro di volere eliminare Condizioni Generali?"
         },
+        "legal-terms-details-dialog": "Condizioni Generali Dettagli",
+        "legal-terms-details-dialog.add": "Aggiungi",
         "legal-terms-details-dialog.validate.pastEffectiveAt": "La Efficace A data deve situarsi nel futuro.",
-        "legal-terms-details-dialog.validate.url.pattern": "Questo indirizzo URL non \u00e8 valido."
+        "legal-terms-details-dialog.validate.url.pattern": "Questo indirizzo URL non \u00e8 valido.",
+        "title": "Gestisci condizioni generali"
     }
 }

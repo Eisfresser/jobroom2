@@ -43,8 +43,8 @@
             "badge": {
                 "permanent": "A tempo indeterminato",
                 "restricted": "obbligo di annuncio",
-                "temporary": "A tempo determinato",
-                "shortEmployment": "Assunzione di corta durata"
+                "shortEmployment": "Assunzione di corta durata",
+                "temporary": "A tempo determinato"
             }
         },
         "job-search-list": {

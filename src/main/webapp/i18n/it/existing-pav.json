@@ -1,22 +1,22 @@
 {
     "registration": {
         "existing-pav": {
-            "username": {
-                "label": "Nome utente",
-                "placeholder": "Nome utente"
-            },
-            "password": {
-                "label": "Password",
-                "placeholder": "Password"
-            },
+            "cancel": "Cancel",
             "identificaton": {
                 "mismatch": {
                     "error": "Non abbiamo trovato i dati di login in base ai valori inseriti. Controlli di aver inserito correttamente indirizzo e-mail e password."
                 }
             },
-            "text": "Inserisca i dati di accesso che ha utilizzato finora nel Job-Room.",
             "login": "Login",
-            "cancel": "Cancel"
+            "password": {
+                "label": "Password",
+                "placeholder": "Password"
+            },
+            "text": "Inserisca i dati di accesso che ha utilizzato finora nel Job-Room.",
+            "username": {
+                "label": "Nome utente",
+                "placeholder": "Nome utente"
+            }
         }
     }
 }

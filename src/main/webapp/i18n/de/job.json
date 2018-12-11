@@ -59,13 +59,13 @@
             "professions": "Berufe",
             "publicationEndDate": "Publizieren bis",
             "publicationStartDate": "Publizieren ab",
+            "rav": " RAV",
             "registrationDate": "Registriert am",
             "startDate": "Verf\u00fcgbar ab",
             "startsImmediately": "sofort Verf\u00fcgbar",
             "title": "Stellentitel",
             "workingTimePercentageMax": "Max. Besch\u00e4ftigungsgrad",
-            "workingTimePercentageMin": "Min. Besch\u00e4ftigungsgrad",
-            "rav": " RAV"
+            "workingTimePercentageMin": "Min. Besch\u00e4ftigungsgrad"
         }
     },
     "jobserviceApp": {

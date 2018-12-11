@@ -1,11 +1,11 @@
 {
     "registrationAccessCode": {
-        "title": "Freischaltcode eingeben",
+        "accessCode": "Freischaltcode",
+        "accessCode.error.invalid": "Freischaltcode ung\u00fcltig",
+        "accessCode.error.minlength": "Freischaltcode muss aus 8 Stellen bestehen",
+        "accessCode.error.required": "Freischaltcode wird ben\u00f6tigt",
         "header": "Freischaltcode",
         "placeholder": "Freischaltcode eingeben",
-        "accessCode": "Freischaltcode",
-        "accessCode.error.required": "Freischaltcode wird ben\u00f6tigt",
-        "accessCode.error.minlength": "Freischaltcode muss aus 8 Stellen bestehen",
-        "accessCode.error.invalid": "Freischaltcode ung\u00fcltig"
+        "title": "Freischaltcode eingeben"
     }
 }

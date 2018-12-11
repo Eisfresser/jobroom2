@@ -5,8 +5,8 @@
             "information": {
                 "pea": {
                     "text": "Vorgehen zur Registrierung f\u00fcr private Arbeitsvermittler",
-                    "text.JOB_SEEKERS": "Vorgehen zur Registrierung f\u00fcr Stellensuchende",
                     "text.COMPANIES": "Vorgehen zur Registrierung f\u00fcr Arbeitsgaber",
+                    "text.JOB_SEEKERS": "Vorgehen zur Registrierung f\u00fcr Stellensuchende",
                     "text.RECRUITMENT_AGENCIES": "Vorgehen zur Registrierung f\u00fcr private Arbeitsvermittler",
                     "url": "https://www.arbeit.swiss/secoalv/de/home/menue/arbeitsvermittler/dienstleistungen-der-rav/job-room-konto.html"
                 }
@@ -24,8 +24,8 @@
             "forgot": "Passwort vergessen"
         },
         "title": "Login f\u00fcr private Arbeitsvermittler",
-        "title.JOB_SEEKERS": "Login f\u00fcr Stellensuchende",
         "title.COMPANIES": "Login f\u00fcr Arbeitsgaber",
+        "title.JOB_SEEKERS": "Login f\u00fcr Stellensuchende",
         "title.RECRUITMENT_AGENCIES": "Login f\u00fcr private Arbeitsvermittler"
     }
 }

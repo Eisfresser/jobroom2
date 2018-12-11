@@ -1,4 +1,12 @@
 {
+    "alert": {
+        "error": {
+            "tooManyRequests": {
+                "anonymous": "Sono state inviate troppe richieste da questo indirizzo IP. Riprovare tra un minuto.",
+                "authenticated": "Sono state inviate troppe richieste da questo account. Riprovare tra un minuto."
+            }
+        }
+    },
     "entity": {
         "action": {
             "addblob": "Aggiungi blob",
@@ -36,7 +44,6 @@
         "Size": "Il campo {{ fieldName }} non \u00e8 conforme ai requisiti di lunghezza min/max!",
         "emailexists": "L'indirizzo e-mail \u00e8 gi\u00e0 in uso!",
         "idexists": "Un(a) nuovo/a {{entityName}} non pu\u00f2 gi\u00e0 avere un ID",
-        "idmismatch": "Un parametro ID non corrisponde all'ID del DTO.",
         "internalServerError": "Errore interno server",
         "server": {
             "not": {
@@ -184,7 +191,6 @@
             "admin": {
                 "api-user-management": "API-Schl\u00fcssel-Verwaltung",
                 "apidocs": "API",
-                "user-info": "User-Info",
                 "audits": "Cambiamenti",
                 "configuration": "Configurazione",
                 "contact-template-management": "Contact information",
@@ -203,12 +209,12 @@
                 "metrics": "Metriche",
                 "systemNotifications": "Notifica di sistema",
                 "tracker": "Tracciamento utente",
+                "user-info": "User-Info",
                 "userManagement": "Gestione utenti"
             },
+            "blacklisted-agent": "Lista nera",
             "company-contact-template": "Informazioni sui contatti",
             "dashboard": "Dashboard",
-            "blacklisted-agent": "Lista nera",
-            "termsAndConditions": "Le condizioni generali",
             "entities": {
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)",
                 "job": "Posto",
@@ -312,13 +318,9 @@
                 "el": "Greco",
                 "en": "Inglese",
                 "es": "Spagnolo",
+                "fa": "Farsi",
                 "fi": "Finlandese",
                 "fr": "Francese",
-                "nld": "Fiammingo",
-                "sr-hr": "Serbo croato",
-                "fa": "Farsi",
-                "prs": "Dari",
-                "ti": "Tigrino",
                 "he": "Ebreo",
                 "hr": "Croato",
                 "hu": "Ungherese",
@@ -336,9 +338,11 @@
                 "lt": "Lituano",
                 "mk": "Macedone",
                 "nl": "Olandese",
+                "nld": "Fiammingo",
                 "no": "Norvegese",
                 "no-selection": "Nessuna scelta",
                 "pl": "Polacco",
+                "prs": "Dari",
                 "pt": "Portoghese",
                 "rm": "Reto-Romancio",
                 "ro": "Rumeno",
@@ -348,9 +352,11 @@
                 "spoken": "Orale",
                 "sq": "Albanese",
                 "sr": "Serbo",
+                "sr-hr": "Serbo croato",
                 "sv": "Svedese",
                 "ta": "Tamil",
                 "th": "Tailandese",
+                "ti": "Tigrino",
                 "tr": "Turco",
                 "vi": "Vietnamita",
                 "written": "Scritto",
@@ -507,13 +513,5 @@
         "next": "Seguente",
         "previous": "Precedente",
         "scroll-to-top": "Scorrere in cima"
-    },
-    "alert": {
-        "error": {
-            "tooManyRequests": {
-                "authenticated": "Sono state inviate troppe richieste da questo account. Riprovare tra un minuto.",
-                "anonymous": "Sono state inviate troppe richieste da questo indirizzo IP. Riprovare tra un minuto."
-            }
-        }
     }
 }

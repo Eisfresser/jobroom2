@@ -7,15 +7,23 @@
             "birthdate": {
                 "label": "Geburtstag"
             },
+            "cancel": "Abbrechen",
             "identificaton": {
-                "mismatch": {
-                    "error": "Wir konnten keine RAV-Daten anhand Ihrer Angaben finden. Bitte \u00fcberpr\u00fcfen Sie, dass Personennummer und Geburtsdatum korrekt eingegeben wurden."
-                },
                 "already-taken": {
                     "error": "Diese Personennummer wurde bereits verwendet"
                 },
+                "mismatch": {
+                    "error": "Wir konnten keine RAV-Daten anhand Ihrer Angaben finden. Bitte \u00fcberpr\u00fcfen Sie, dass Personennummer und Geburtsdatum korrekt eingegeben wurden."
+                },
                 "technical": {
                     "error": "Es ist ein technisches Problem aufgetreten. Versuchen Sie es sp\u00e4ter noch einmal ansonsten wenden Sie sich an unseren Support via Kontaktformular"
+                }
+            },
+            "login": "Login",
+            "messages": {
+                "validate": {
+                    "birthdate": "Das Datum muss zwischen dem 01.01.1900 und heute liegen.",
+                    "pn": "Bitte eine Zahl mit 8 Stellen eingeben"
                 }
             },
             "pn": {
@@ -23,15 +31,7 @@
                 "placeholder": "12345678"
             },
             "text": "Bitte identifizieren Sie sich mit Ihrer Personennummer und Ihrem Geburtsdatum. Die Personennummer finden Sie auf dem Brief, den Sie bei der Anmeldung vom RAV erhalten haben.",
-            "title": "Identifizierung",
-            "messages": {
-                "validate": {
-                    "pn": "Bitte eine Zahl mit 8 Stellen eingeben",
-                    "birthdate": "Das Datum muss zwischen dem 01.01.1900 und heute liegen."
-                }
-            },
-            "login": "Login",
-            "cancel": "Abbrechen"
+            "title": "Identifizierung"
         }
     }
 }

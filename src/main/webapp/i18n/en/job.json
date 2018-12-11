@@ -59,13 +59,13 @@
             "professions": "Professions",
             "publicationEndDate": "Publication end date",
             "publicationStartDate": "Publication start date",
+            "rav": "RAV",
             "registrationDate": "Registration date",
             "startDate": "Available from",
             "startsImmediately": "Available immediately",
             "title": "Job title",
             "workingTimePercentageMax": "Maximum working time percentage",
-            "workingTimePercentageMin": "Minimum working time percentage",
-            "rav": "RAV"
+            "workingTimePercentageMin": "Minimum working time percentage"
         }
     },
     "jobserviceApp": {

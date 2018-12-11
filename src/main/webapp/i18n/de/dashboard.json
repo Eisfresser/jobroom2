@@ -32,16 +32,16 @@
     "job-publication-cancel": {
         "alert": "Bitte f\u00fcllen Sie die Abmeldeinformationen aus und best\u00e4tigen Sie die Abmeldung der Stellenanzeige.",
         "job": {
+            "change-or-repost": "Sie m\u00f6chten die Ausschreibung \u00e4ndern oder neu erfassen",
             "confirm": "Abmeldung best\u00e4tigen",
             "dismiss": "Abbrechen",
             "not-occupied": "Sie konnten die Stelle nicht besetzen",
             "occupied": "Sie konnten die Stelle besetzen",
             "occupied.jobCenter": "in Zusammenarbeit mit der regionalen Arbeitsvermittlung (RAV)",
-            "occupied.privateAgency": "in Zusammenarbeit mit der privaten Arbeitsvermittlung (pAV)",
-            "occupied.self": "Sie konnten die Stelle selber besetzen",
             "occupied.jobroom": "mit einer Kandidatin/einem Kandidaten aus Job-Room",
             "occupied.not-jobroom": "anderweitig",
-            "change-or-repost": "Sie m\u00f6chten die Ausschreibung \u00e4ndern oder neu erfassen"
+            "occupied.privateAgency": "in Zusammenarbeit mit der privaten Arbeitsvermittlung (pAV)",
+            "occupied.self": "Sie konnten die Stelle selber besetzen"
         },
         "title": "Stellenanzeige abmelden"
     },

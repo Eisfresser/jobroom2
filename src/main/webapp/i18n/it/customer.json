@@ -7,15 +7,23 @@
             "birthdate": {
                 "label": "Compleanno"
             },
+            "cancel": "Cancel",
             "identificaton": {
-                "mismatch": {
-                    "error": "Non abbiamo trovato dati URC in base alle indicazioni fornite. Per favore controllare che il numero personale e la data di nascita siano stati inseriti correttamente."
-                },
                 "already-taken": {
                     "error": "Questo numero personale \u00e8 gi\u00e0 attribuito"
                 },
+                "mismatch": {
+                    "error": "Non abbiamo trovato dati URC in base alle indicazioni fornite. Per favore controllare che il numero personale e la data di nascita siano stati inseriti correttamente."
+                },
                 "technical": {
                     "error": "Si \u00e8 verificato un problema tecnico. Riprovare pi\u00f9 tardi o rivolgersi al Supporto mediante il modulo di contatto"
+                }
+            },
+            "login": "Login",
+            "messages": {
+                "validate": {
+                    "birthdate": "La data deve essere compresa tra il 01.01.1900 e oggi.",
+                    "pn": "Inserisci un numero di 8 cifre."
                 }
             },
             "pn": {
@@ -23,15 +31,7 @@
                 "placeholder": "12345678"
             },
             "text": "Identificati con la tua data di nascita e il tuo numero personale che hai ricevuto con la lettera quando ti sei iscritto all'URC.",
-            "title": "Riconoscimento",
-            "messages": {
-                "validate": {
-                    "pn": "Inserisci un numero di 8 cifre.",
-                    "birthdate": "La data deve essere compresa tra il 01.01.1900 e oggi."
-                }
-            },
-            "login": "Login",
-            "cancel": "Cancel"
+            "title": "Riconoscimento"
         }
     }
 }

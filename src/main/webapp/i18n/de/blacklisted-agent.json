@@ -1,34 +1,34 @@
 {
     "blacklisted-agent": {
-        "title": "Blacklist f\u00fcr PAV",
+        "change-status-dialog": {
+            "cancel": "Abbrechen",
+            "change-status": "Status \u00e4ndern",
+            "message": "M\u00f6chten Sie wirklich den Blacklist-Eintrag f\u00fcr den PAV \u00e4ndern?",
+            "title": "Status des Blacklist-Eintrags \u00e4ndern"
+        },
+        "choose-organisation-desc": "Bitte w\u00e4hlen Sie eine Organisation aus, die sie auf die Blacklist setzen m\u00f6chten.",
+        "confirm-alert": "Diese Aktion wird sofort ausgef\u00fchrt und kann nicht r\u00fcckg\u00e4ngig gemacht werden!",
+        "create-blacklist-entry": "PAV auf Blacklist setzen",
         "filter": {
             "placeholder": "Filtern nach Id, External Id, Status, Name, Strasse or PLZ"
         },
         "header": {
-            "id": "Id",
-            "externalId": "External Id",
-            "status": "Status",
-            "name": "Name",
-            "street": "Strasse",
-            "zipCode": "PLZ",
-            "city": "Ort",
-            "createdBy": "Erstellt von",
             "blacklistedAt": "Aktualisiert am",
-            "counter": "Anzahl Sperrungen"
+            "city": "Ort",
+            "counter": "Anzahl Sperrungen",
+            "createdBy": "Erstellt von",
+            "externalId": "External Id",
+            "id": "Id",
+            "name": "Name",
+            "status": "Status",
+            "street": "Strasse",
+            "zipCode": "PLZ"
         },
+        "selected-organisation-desc": "M\u00f6chten Sie folgende Organisation auf die Blacklist setzen?",
         "status": {
             "active": "Aktiv",
             "inactive": "Inaktiv"
         },
-        "create-blacklist-entry": "PAV auf Blacklist setzen",
-        "choose-organisation-desc": "Bitte w\u00e4hlen Sie eine Organisation aus, die sie auf die Blacklist setzen m\u00f6chten.",
-        "selected-organisation-desc": "M\u00f6chten Sie folgende Organisation auf die Blacklist setzen?",
-        "confirm-alert": "Diese Aktion wird sofort ausgef\u00fchrt und kann nicht r\u00fcckg\u00e4ngig gemacht werden!",
-        "change-status-dialog": {
-            "title": "Status des Blacklist-Eintrags \u00e4ndern",
-            "message": "M\u00f6chten Sie wirklich den Blacklist-Eintrag f\u00fcr den PAV \u00e4ndern?",
-            "change-status": "Status \u00e4ndern",
-            "cancel": "Abbrechen"
-        }
+        "title": "Blacklist f\u00fcr PAV"
     }
 }

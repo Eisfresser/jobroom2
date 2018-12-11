@@ -22,11 +22,11 @@
     "job-publication": {
         "validation": {
             "maxlength-10": "Dieses Feld darf max. 10 Zeichen lang sein.",
+            "maxlength-10000": "Dieses Feld darf max. 10000 Zeichen lang sein.",
+            "maxlength-247": "Dieses Feld darf max. 247 Zeichen lang sein.",
+            "maxlength-255": "Dieses Feld darf max. 255 Zeichen lang sein.",
             "maxlength-50": "Dieses Feld darf max. 50 Zeichen lang sein.",
             "maxlength-60": "Dieses Feld darf max. 60 Zeichen lang sein.",
-            "maxlength-255": "Dieses Feld darf max. 255 Zeichen lang sein.",
-            "maxlength-247": "Dieses Feld darf max. 247 Zeichen lang sein.",
-            "maxlength-10000": "Dieses Feld darf max. 10000 Zeichen lang sein.",
             "not-empty": "Dieses Feld darf nicht leer sein!"
         }
     }

@@ -32,16 +32,16 @@
     "job-publication-cancel": {
         "alert": "Veuillez remplir les informations et confirmer l'annulation de l'annonce.",
         "job": {
+            "change-or-repost": "Sie m\u00f6chten die Ausschreibung \u00e4ndern oder neu erfassen",
             "confirm": "Confirmer l'annulation",
             "dismiss": "Interrompre",
             "not-occupied": "Vous n'avez pas pu pourvoir le poste",
             "occupied": "Vous avez pourvu le poste",
             "occupied.jobCenter": "en collaboration avec l'Office r\u00e9gional de placement (ORP)",
-            "occupied.privateAgency": "en collaboration avec un placeur priv\u00e9",
-            "occupied.self": "Vous avez pourvu le poste par vos propres soins.",
             "occupied.jobroom": "avec un/une candidat/e de Job-Room",
             "occupied.not-jobroom": "par un autre moyen que Job-Room",
-            "change-or-repost": "Sie m\u00f6chten die Ausschreibung \u00e4ndern oder neu erfassen"
+            "occupied.privateAgency": "en collaboration avec un placeur priv\u00e9",
+            "occupied.self": "Vous avez pourvu le poste par vos propres soins."
         },
         "title": "Retirer l'annonce"
     },

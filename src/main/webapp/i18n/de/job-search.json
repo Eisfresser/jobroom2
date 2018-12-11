@@ -43,8 +43,8 @@
             "badge": {
                 "permanent": "Unbefristet",
                 "restricted": "meldepflichtig",
-                "temporary": "Befristet",
-                "shortEmployment": "Kurzeinsatz"
+                "shortEmployment": "Kurzeinsatz",
+                "temporary": "Befristet"
             }
         },
         "job-search-list": {

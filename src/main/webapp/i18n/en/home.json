@@ -4,17 +4,17 @@
             "text": "Contact",
             "url": "https://www.arbeit.swiss/secoalv/en/home/service/kontakt.html"
         },
+        "login-cancel": {
+            "message": "You canceled the login process",
+            "title": "Login failed"
+        },
         "registration": {
             "url": "https://www.arbeit.swiss/secoalv/en/home/menue/unternehmen/stellenmeldepflicht/Registrierung.html"
         },
         "title": "Job-Room",
+        "title.cms": "work.swiss",
         "title.portal": "work",
         "title.portal-url": "https://www.arbeit.swiss/secoalv/en/home.html",
-        "title.cms": "work.swiss",
-        "login-cancel": {
-            "title": "Login failed",
-            "message": "You canceled the login process"
-        },
         "toolbar": {
             "companies": "Employers",
             "jobSeekers": "Job seekers",
@@ -43,8 +43,8 @@
                         "placeholder": "Max. 255 characters"
                     },
                     "copy-email-from-public-contact": "Same as jobseeker contact",
-                    "copy-phonenumber-from-public-contact": "Same as jobseeker contact",
                     "copy-from-business": "Same as business",
+                    "copy-phonenumber-from-public-contact": "Same as jobseeker contact",
                     "email": "Email",
                     "online-form": "Online form",
                     "paper-application-post-address": "Postal address",
@@ -56,7 +56,10 @@
                     "house-number": "No.",
                     "name": "Business",
                     "postbox": "P.O. Box",
+                    "postbox-city": "City",
                     "postbox-number": "PO box no.",
+                    "postbox-zip": "PO box postal code",
+                    "postbox-zipcode": "PO box postal code / city",
                     "street": "Street",
                     "surrogate": "Job registered through a private employment agency",
                     "title": "Business",
@@ -110,7 +113,6 @@
                     "label": "Job description language"
                 },
                 "job-title": "Job title",
-                "number-of-jobs": "No. of equivalent positions",
                 "language-skills": "Languages",
                 "language-skills.add": "Add new language skill",
                 "language-skills.spoken.error": "Language skill is required",
@@ -125,27 +127,28 @@
                 },
                 "messages": {
                     "validate": {
+                        "at-least-one-required": "Select at least one application channel and provide all required information",
+                        "at-least-one-required-email-or-phone": "Please indicate telephone number or email",
+                        "at-least-one-required-street-or-pobox": "Please enter a street name or a post office box",
                         "date-format": "Invalid date format, correct format: DD.MM.YYYY",
                         "email-format": "This email address is invalid.",
-                        "url-format": "This URL is not valid",
                         "employment-duration": {
                             "date-before": "Date must be after the employment start."
                         },
                         "employment-start": {
                             "date-before": "Date must be in the future."
                         },
+                        "number-of-jobs": "This field must contain a number between 1 and 99.",
                         "phone-format": "Please indicate a valid telephone number e.g. 031 999 99 99 or +41 31 999 99 99",
-                        "required": "This field is required.",
-                        "at-least-one-required-email-or-phone": "Please indicate telephone number or email",
-                        "at-least-one-required": "Select at least one application channel and provide all required information",
-                        "at-least-one-required-street-or-pobox": "Please enter a street name or a post office box",
                         "pobox-format": "Invalid post office box",
+                        "required": "This field is required.",
+                        "url-format": "This URL is not valid",
                         "zip-format": "Invalid postal code",
-                        "zip-or-city-format": "Invalid postal code/city",
-                        "number-of-jobs": "This field must contain a number between 1 and 99."
+                        "zip-or-city-format": "Invalid postal code/city"
                     }
                 },
                 "no-selection": "No selection",
+                "number-of-jobs": "No. of equivalent positions",
                 "occupation": {
                     "label": "Occupation",
                     "placeholder": ""

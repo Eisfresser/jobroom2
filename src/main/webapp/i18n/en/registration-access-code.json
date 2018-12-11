@@ -1,11 +1,11 @@
 {
     "registrationAccessCode": {
-        "title": "Enter activation code",
+        "accessCode": "Activation code",
+        "accessCode.error.invalid": "Activation code is invalid",
+        "accessCode.error.minlength": "Activation code must contain 8 characters",
+        "accessCode.error.required": "Activation code is required",
         "header": "Activation code",
         "placeholder": "Enter activation code",
-        "accessCode": "Activation code",
-        "accessCode.error.required": "Activation code is required",
-        "accessCode.error.minlength": "Activation code must contain 8 characters",
-        "accessCode.error.invalid": "Activation code is invalid"
+        "title": "Enter activation code"
     }
 }

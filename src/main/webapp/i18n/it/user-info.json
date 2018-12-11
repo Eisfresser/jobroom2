@@ -1,46 +1,46 @@
 {
     "user-info": {
-        "title": "User Info",
-        "desc": "Please enter an email address of an existing user.",
-        "search": "Search",
         "account-info": "Account Info",
-        "stes-info": "STES Info",
-        "roles": "eIAM Roles",
         "accountabilities": "Accountabilities",
-        "info-actions": "Additional Info and Actions",
-        "label": {
-            "ext-id": "Ext-Id",
-            "email": "Email",
-            "firstname": "First Name",
-            "lastname": "Last Name",
-            "registration-status": "Registration Status",
-            "created": "Created at",
-            "modified": "Modified at",
-            "lastlogin": "Last login at",
-            "pn": "Numero personale",
-            "verified": "Verified at"
-        },
-        "unregistered-user": {
-            "title": "Unregistered User",
-            "desc": "The found user seems to have created an eIAM account but not yet registered for job-room. Thus no action is available for this user. If the user wants to use this account for job-room he simply has to login with his eIAM account and finish the registration process in job-room."
-        },
-        "unregister": {
-            "title": "Reset Registration",
-            "desc": "                    This action resets the registration of this user. It will revert the user to the state it was before starting the registration process. The action will remove any roles, accountabilities and set the registration state to 'UNREGISTERED'. The user will have to redo the whole registration process, which includes requesting a new access code for PAV and employers. This is needed in the case when the user has chosen the wrong role by mistake. If the user has lost the letter with the access code, the user can be found in jira in order to resend the letter. If the user can't be found in jira the user has presumably registered before 09.07.2018. In this case a reset is needed. Caution: This action can not be undone."
-        },
-        "no-user-info": "No user information found",
-        "no-account-info": "No account info found",
-        "no-stes-info": "No STES Information found",
-        "no-roles": "No Roles in eIAM found",
-        "no-accountabilities": "No company accountabilities found",
-        "no-actions": "No actions or additional information available",
+        "desc": "Please enter an email address of an existing user.",
         "error": {
-            "user-not-found": "No user found with this email address.",
-            "eiam-roles-not-found": "No roles for this user found in eIAM.",
-            "technical": "A technical error occurred",
             "delete": {
                 "technical": "A technical error occurred during unregistering the user. Please try it again later."
-            }
+            },
+            "eiam-roles-not-found": "No roles for this user found in eIAM.",
+            "technical": "A technical error occurred",
+            "user-not-found": "No user found with this email address."
+        },
+        "info-actions": "Additional Info and Actions",
+        "label": {
+            "created": "Created at",
+            "email": "Email",
+            "ext-id": "Ext-Id",
+            "firstname": "First Name",
+            "lastlogin": "Last login at",
+            "lastname": "Last Name",
+            "modified": "Modified at",
+            "pn": "Numero personale",
+            "registration-status": "Registration Status",
+            "verified": "Verified at"
+        },
+        "no-account-info": "No account info found",
+        "no-accountabilities": "No company accountabilities found",
+        "no-actions": "No actions or additional information available",
+        "no-roles": "No Roles in eIAM found",
+        "no-stes-info": "No STES Information found",
+        "no-user-info": "No user information found",
+        "roles": "eIAM Roles",
+        "search": "Search",
+        "stes-info": "STES Info",
+        "title": "User Info",
+        "unregister": {
+            "desc": "                    This action resets the registration of this user. It will revert the user to the state it was before starting the registration process. The action will remove any roles, accountabilities and set the registration state to 'UNREGISTERED'. The user will have to redo the whole registration process, which includes requesting a new access code for PAV and employers. This is needed in the case when the user has chosen the wrong role by mistake. If the user has lost the letter with the access code, the user can be found in jira in order to resend the letter. If the user can't be found in jira the user has presumably registered before 09.07.2018. In this case a reset is needed. Caution: This action can not be undone.",
+            "title": "Reset Registration"
+        },
+        "unregistered-user": {
+            "desc": "The found user seems to have created an eIAM account but not yet registered for job-room. Thus no action is available for this user. If the user wants to use this account for job-room he simply has to login with his eIAM account and finish the registration process in job-room.",
+            "title": "Unregistered User"
         }
     }
 }

@@ -1,4 +1,12 @@
 {
+    "alert": {
+        "error": {
+            "tooManyRequests": {
+                "anonymous": "De trop nombreuses requ\u00eates ont \u00e9t\u00e9 envoy\u00e9es \u00e0 partir de votre adresse IP. Veuillez r\u00e9essayer dans une minute.",
+                "authenticated": "De trop nombreuses requ\u00eates ont \u00e9t\u00e9 envoy\u00e9es \u00e0 partir de votre compte. Veuillez r\u00e9essayer dans une minute."
+            }
+        }
+    },
     "entity": {
         "action": {
             "addblob": "Ajouter blob",
@@ -36,7 +44,6 @@
         "Size": "Le champ {{fieldName}} ne respecte pas les crit\u00e8res minimums et maximums !",
         "emailexists": "Adresse courriel d\u00e9j\u00e0 utilis\u00e9 !",
         "idexists": "La nouvelle entit\u00e9 {{entityName}} ne peut pas encore avoir d'ID !",
-        "idmismatch": "Un param\u00e8tre ID ne correspond pas \u00e0 l'ID de DTO.",
         "internalServerError": "Erreur interne du serveur",
         "server": {
             "not": {
@@ -184,7 +191,6 @@
             "admin": {
                 "api-user-management": "API-Schl\u00fcssel-Verwaltung",
                 "apidocs": "API",
-                "user-info": "User-Info",
                 "audits": "Audits",
                 "configuration": "Configuration",
                 "contact-template-management": "Contact information",
@@ -203,12 +209,12 @@
                 "metrics": "Mesures",
                 "systemNotifications": "Notification syst\u00e8me",
                 "tracker": "Activit\u00e9 des utilisateurs",
+                "user-info": "User-Info",
                 "userManagement": "Gestion des utilisateurs"
             },
+            "blacklisted-agent": "Liste noire",
             "company-contact-template": "Informations de contact",
             "dashboard": "Dashboard",
-            "blacklisted-agent": "Liste noire",
-            "termsAndConditions": "CGV",
             "entities": {
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)",
                 "job": "Emploi",
@@ -312,13 +318,9 @@
                 "el": "Grec",
                 "en": "Anglais",
                 "es": "Espagnol",
+                "fa": "Farsi",
                 "fi": "Finlandais",
                 "fr": "Fran\u00e7ais",
-                "nld": "Flamand",
-                "sr-hr": "Serbo-croate",
-                "fa": "Farsi",
-                "prs": "Dari",
-                "ti": "Tigrigna",
                 "he": "H\u00e9bra\u00efque",
                 "hr": "Croate",
                 "hu": "Hongrois",
@@ -336,9 +338,11 @@
                 "lt": "Lituanien",
                 "mk": "Mac\u00e9donien",
                 "nl": "Hollandais",
+                "nld": "Flamand",
                 "no": "Norv\u00e9gien",
                 "no-selection": "Aucune s\u00e9lection",
                 "pl": "Polonais",
+                "prs": "Dari",
                 "pt": "Portugais",
                 "rm": "Rheto-Romanche",
                 "ro": "Roumain",
@@ -348,9 +352,11 @@
                 "spoken": "Orale",
                 "sq": "Albanais",
                 "sr": "Serbe",
+                "sr-hr": "Serbo-croate",
                 "sv": "Su\u00e9dois",
                 "ta": "Tamoul",
                 "th": "Tha\u00eflandais",
+                "ti": "Tigrigna",
                 "tr": "Turc",
                 "vi": "Vietnamien",
                 "written": "\u00c9crite",
@@ -507,13 +513,5 @@
         "next": "Suivant",
         "previous": "Pr\u00e9c\u00e9dent",
         "scroll-to-top": "D\u00e9filer vers le haut"
-    },
-    "alert": {
-        "error": {
-            "tooManyRequests": {
-                "authenticated": "De trop nombreuses requ\u00eates ont \u00e9t\u00e9 envoy\u00e9es \u00e0 partir de votre compte. Veuillez r\u00e9essayer dans une minute.",
-                "anonymous": "De trop nombreuses requ\u00eates ont \u00e9t\u00e9 envoy\u00e9es \u00e0 partir de votre adresse IP. Veuillez r\u00e9essayer dans une minute."
-            }
-        }
     }
 }

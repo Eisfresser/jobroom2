@@ -1,24 +1,24 @@
 {
     "contact-template-management": {
-        "title": "Personal Contact Information for",
-        "helptext": "Names cannot be altered in this field. Please make any changes through your eIAM account using the following link. Contact details are taken automatically from the relevant job registration form fields in JobRoom. These details have no influence on your eIAM account login data.",
-        "link": "Link to eIAM account",
+        "companyCity": "city",
+        "companyHouseNr": "No.",
+        "companyInformation": "Company Information",
         "companyName": "Company",
         "companyStreet": "Street",
-        "companyHouseNr": "No.",
         "companyZipCode": "Postal code",
-        "companyCity": "city",
-        "phone": "Telephone number",
-        "email": "E-Mail",
-        "firstName": "First name",
-        "lastName": "Last name",
-        "salutation": "Title",
-        "userInformation": "User information",
-        "companyInformation": "Company Information",
-        "successSaveMessage": "Your personal contact information was successfully saved!",
-        "failureSaveMessage": "There was an error saving your personal contact information",
         "companyhousenr": {
             "message": "please check that your house number is valid"
-        }
+        },
+        "email": "E-Mail",
+        "failureSaveMessage": "There was an error saving your personal contact information",
+        "firstName": "First name",
+        "helptext": "Names cannot be altered in this field. Please make any changes through your eIAM account using the following link. Contact details are taken automatically from the relevant job registration form fields in JobRoom. These details have no influence on your eIAM account login data.",
+        "lastName": "Last name",
+        "link": "Link to eIAM account",
+        "phone": "Telephone number",
+        "salutation": "Title",
+        "successSaveMessage": "Your personal contact information was successfully saved!",
+        "title": "Personal Contact Information for",
+        "userInformation": "User information"
     }
 }

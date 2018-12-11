@@ -1,21 +1,21 @@
 {
     "registrationCompanyDialog": {
-        "title": "Please enter your company identification number (UID).",
+        "activationCodeRequested": "Activation code requested",
+        "confirmButton": "Confirm",
+        "login": {
+            "description": "You can then log in to your user account using this activation code."
+        },
         "placeholder": "CHE-123.456.789",
         "postal": {
             "description": "We will send an activation code <b>by post</b> to the address associated with your UID:"
         },
-        "login": {
-            "description": "You can then log in to your user account using this activation code."
-        },
         "requestActivationCode": "Request activation code by post",
-        "activationCodeRequested": "Activation code requested",
         "returnToHomepage": "Return to homepage",
-        "confirmButton": "Confirm",
+        "title": "Please enter your company identification number (UID).",
         "validation": {
             "error": {
-                "uid": "Invalid UID format. Please use the format CHE-123.456.789",
-                "notFound": "We were unable to find a company with the UID you entered."
+                "notFound": "We were unable to find a company with the UID you entered.",
+                "uid": "Invalid UID format. Please use the format CHE-123.456.789"
             }
         }
     }
