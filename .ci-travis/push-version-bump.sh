@@ -8,7 +8,7 @@ GIT_PROJECT_NAME="central-deployment"
 GIT_REPO_URL="https://$GIT_USER:$GIT_PWD@github.com/alv-ch/$GIT_PROJECT_NAME.git"
 
 VERSION_FILE="group_vars/dev/versions.yml"
-VERSION_STRING=candidate_service_version
+VERSION_STRING=jobroom_version
 
 echo "Using project version: $BUILD_VERSION..."
 echo "Using git user email: $GIT_USER..."
