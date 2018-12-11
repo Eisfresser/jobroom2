@@ -8,12 +8,12 @@
                     {{ 'home.tools.job-publication.job-title' | translate }}
                 </label>
                 <div>
-                    <input type="text" [jr2TextSizeLimit]="255" class="form-control"
+                    <input type="text" [jr2TextSizeLimit]="TITLE_MAX_LENGTH" class="form-control"
                            [id]="'job-title-' + i" formControlName="title"/>
                     <jr2-input-error-message [formGroup]="jobDescription" path="title"
                                              [errorCodes]="['required', 'maxlength']"
                                              [keys]="['home.tools.job-publication.messages.validate.required',
-                                             'job-publication.validation.title.maxlength']">
+                                             'job-publication.validation.maxlength-255']">
                     </jr2-input-error-message>
                 </div>
             </div>
@@ -53,7 +53,7 @@
                                              path="description"
                                              [errorCodes]="['required','maxlength']"
                                              [keys]="['home.tools.job-publication.messages.validate.required',
-                                             'job-publication.validation.description.maxlength']">
+                                             'job-publication.validation.maxlength-10000']">
                     </jr2-input-error-message>
                 </div>
             </div>

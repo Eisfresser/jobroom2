@@ -40,7 +40,7 @@
                     "additional-info": {
                         "characters-counter-text": "{{count}} characters available",
                         "label": "Supplementary information",
-                        "placeholder": "Max. 240 characters"
+                        "placeholder": "Max. 255 characters"
                     },
                     "copy-email-from-public-contact": "Same as jobseeker contact",
                     "copy-phonenumber-from-public-contact": "Same as jobseeker contact",

@@ -21,75 +21,13 @@
     },
     "job-publication": {
         "validation": {
-            "title": {
-                "maxlength": "This field cannot be longer than 255 characters."
-            },
-            "language": {
-                "maxlength": "This field cannot be longer than 5 characters."
-            },
-            "description": {
-                "maxlength": "This field cannot be longer than 1000 characters."
-            }
-        },
-        "application": {
-            "electronicApplication": {
-                "mail": {
-                    "maxlength": "This field cannot be longer than 50 characters."
-                }
-            },
-            "postAddress": {
-                "paperApp": {
-                    "companyName": {
-                        "maxlength": "This field cannot be longer than 255 characters."
-                    },
-                    "street": {
-                        "maxlength": "This field cannot be longer than 60 characters."
-                    },
-                    "houseNr": {
-                        "maxlength": "This field cannot be longer than 10 characters."
-                    },
-                    "postboxNr": {
-                        "maxlength": "This field cannot be longer than 20 characters."
-                    },
-                    "zipCode": {
-                        "maxlength": "This field cannot be longer than 10 characters."
-                    },
-                    "city": {
-                        "maxlength": "This field cannot be longer than 10 characters.",
-                        "empty": "This field cannot be empty!"
-                    }
-                }
-            }
-        },
-        "contact": {
-            "firstName": {
-                "maxlength": "This field cannot be longer than 50 characters."
-            },
-            "lastName": {
-                "maxlength": "This field cannot be longer than 50 characters."
-            },
-            "email": {
-                "maxlength": "This field cannot be longer than 50 characters."
-            }
-        },
-        "publicContact": {
-            "firstName": {
-                "maxlength": "This field cannot be longer than 50 characters."
-            },
-            "lastName": {
-                "maxlength": "This field cannot be longer than 50 characters."
-            },
-            "email": {
-                "maxlength": "This field cannot be longer than 50 characters."
-            }
-        },
-        "company": {
-            "name": {
-                "maxlength": "This field cannot be longer than 255 characters."
-            },
-            "street": {
-                "maxlength": "This field cannot be longer than 60 characters."
-            }
+            "maxlength-10": "This field cannot be longer than 10 characters.",
+            "maxlength-50": "This field cannot be longer than 50 characters.",
+            "maxlength-60": "This field cannot be longer than 60 characters.",
+            "maxlength-255": "This field cannot be longer than 255 characters.",
+            "maxlength-247": "This field cannot be longer than 255 characters.",
+            "maxlength-10000": "This field cannot be longer than 10000 characters.",
+            "not-empty": "This field cannot be empty!"
         }
     }
 }

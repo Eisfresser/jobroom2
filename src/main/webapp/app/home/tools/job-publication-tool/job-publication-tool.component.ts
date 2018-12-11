@@ -63,12 +63,12 @@ import { CurrentSelectedCompanyService } from '../../../shared/company/current-s
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JobPublicationToolComponent implements OnInit, OnDestroy {
-    readonly APPLICATION_ELECTRONIC_MAIL_MAX_LENGTH = 50;
+    readonly APPLICATION_ELECTRONIC_EMAIL_MAX_LENGTH = 50;
+    readonly APPLICATION_ELECTRONIC_URL_MAX_LENGTH = 247;
     readonly APPLICATION_PAPER_COUNTRY_ISO_CODE_MAX_LENGTH = 2;
 
     readonly APPLICATION_PAPER_APPLICATION_CITY_MAX_LENGTH = 100;
     readonly APPLICATION_PAPER_APPLICATION_ZIP_MAX_LENGTH = 10;
-    readonly APPLICATION_PAPER_APPLICATION_PO_NO_MAX_LENGTH = 20;
     readonly APPLICATION_PAPER_APPLICATION_HOUSE_NO_MAX_LENGTH = 10;
     readonly APPLICATION_PAPER_APPLICATION_STREET_MAX_LENGTH = 60;
     readonly APPLICATION_PAPER_APPLICATION_COMPANY_NAME_MAX_LENGTH = 255;
@@ -88,10 +88,13 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
     readonly COMPANY_ZIP_CODE_MAX_LENGTH = 10;
     readonly COMPANY_HOUSE_NO_MAX_LENGTH = 10;
     readonly COMPANY_NAME_MAX_LENGTH = 255;
+    readonly LOCATION_ADDITIONAL_DETAILS_MAX_LENGTH = 50;
     readonly EXPERIENCE_MAX_LENGTH = 64;
 
     readonly APPLICATION_ADDITIONAL_INFO_MAX_LENGTH = 255;
     readonly CONTACT_LANGUAGES = ['de', 'fr', 'it', 'en'];
+
+    private readonly COUNTRY_ISO_CODE_SWITZERLAND = 'CH';
 
     @Input()
     jobAdvertisement: JobAdvertisement;
@@ -122,7 +125,6 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
     showSuccessSaveMessage: boolean;
     showErrorSaveMessage: boolean;
     disableSubmit = false;
-    private readonly COUNTRY_ISO_CODE_SWITZERLAND = 'CH';
     private unsubscribe$ = new Subject<void>();
 
     constructor(private coreStore: Store<CoreState>,
@@ -291,7 +293,8 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
     private configureEmployerSection(formModel: JobPublicationForm) {
         this.jobPublicationForm.addControl('employer',
             this.fb.group({
-                name: [formModel.employer.name, Validators.required],
+                name: [formModel.employer.name, Validators.required,
+                    Validators.maxLength(this.APPLICATION_PAPER_APPLICATION_COMPANY_NAME_MAX_LENGTH)],
                 zipCode: [formModel.employer.zipCode],
                 countryCode: [formModel.employer.countryCode, Validators.required],
             }));
@@ -316,9 +319,8 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
                         Validators.maxLength(this.APPLICATION_PAPER_APPLICATION_STREET_MAX_LENGTH)]],
                     paperAppHouseNr: [formModel.application.postAddress.paperAppHouseNr, [
                         Validators.maxLength(this.APPLICATION_PAPER_APPLICATION_HOUSE_NO_MAX_LENGTH)]],
-                    paperAppPostboxNr: [formModel.application.postAddress.paperAppPostboxNr, [
-                        Validators.pattern(POSTBOX_NUMBER_REGEX),
-                        Validators.maxLength(this.APPLICATION_PAPER_APPLICATION_PO_NO_MAX_LENGTH)]],
+                    paperAppPostboxNr: [formModel.application.postAddress.paperAppPostboxNr,
+                        Validators.pattern(POSTBOX_NUMBER_REGEX)],
                     paperAppZip: this.fb.group({
                         zip: [formModel.application.postAddress.paperAppZip.zip, [
                             Validators.maxLength(this.APPLICATION_PAPER_APPLICATION_ZIP_MAX_LENGTH)]],
@@ -334,11 +336,13 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
                 electronicApplicationEmail: [formModel.application.electronicApplicationEmail, [
                     Validators.required,
                     Validators.pattern(EMAIL_REGEX),
-                    Validators.maxLength(this.APPLICATION_ELECTRONIC_MAIL_MAX_LENGTH)
+                    Validators.maxLength(this.APPLICATION_ELECTRONIC_EMAIL_MAX_LENGTH)
                 ]],
                 electronicApplicationUrl: [formModel.application.electronicApplicationUrl, [
                     Validators.required,
-                    Validators.pattern(URL_REGEX)]],
+                    Validators.pattern(URL_REGEX),
+                    Validators.maxLength(this.APPLICATION_ELECTRONIC_URL_MAX_LENGTH)
+                ]],
                 phoneNumber: [formModel.application.phoneNumber, [Validators.required]],
                 additionalInfo: [formModel.application.additionalInfo,
                     [Validators.maxLength(this.APPLICATION_ADDITIONAL_INFO_MAX_LENGTH)]],
@@ -468,7 +472,7 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
                     zip: [formModel.location.zipCode.zip],
                     city: [formModel.location.zipCode.city, [Validators.maxLength(this.COMPANY_NAME_MAX_LENGTH)]]
                 }),
-                additionalDetails: [formModel.location.additionalDetails]
+                additionalDetails: [formModel.location.additionalDetails, [Validators.maxLength(this.LOCATION_ADDITIONAL_DETAILS_MAX_LENGTH)]]
             }),
             company: this.fb.group({
                 name: [formModel.company.name, [Validators.required, Validators.maxLength(this.COMPANY_NAME_MAX_LENGTH)]],

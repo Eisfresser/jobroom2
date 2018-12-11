@@ -21,75 +21,13 @@
     },
     "job-publication": {
         "validation": {
-            "title": {
-                "maxlength": "Questo campo non pu\u00f2 essere pi\u00f9 di 255 caratteri."
-            },
-            "language": {
-                "maxlength": "Questo campo non pu\u00f2 essere pi\u00f9 di 5 caratteri."
-            },
-            "description": {
-                "maxlength": "Questo campo non pu\u00f2 essere pi\u00f9 di 1000 caratteri."
-            }
-        },
-        "application": {
-            "electronicApplication": {
-                "mail": {
-                    "maxlength": "Questo campo non pu\u00f2 essere pi\u00f9 di 50 caratteri."
-                }
-            },
-            "postAddress": {
-                "paperApp": {
-                    "companyName": {
-                        "maxlength": "Questo campo non pu\u00f2 essere pi\u00f9 di 255 caratteri."
-                    },
-                    "street": {
-                        "maxlength": "Questo campo non pu\u00f2 essere pi\u00f9 di 60 caratteri."
-                    },
-                    "houseNr": {
-                        "maxlength": "Questo campo non pu\u00f2 essere pi\u00f9 di 10 caratteri."
-                    },
-                    "postboxNr": {
-                        "maxlength": "Questo campo non pu\u00f2 essere pi\u00f9 di 20 caratteri."
-                    },
-                    "zipCode": {
-                        "maxlength": "Questo campo non pu\u00f2 essere pi\u00f9 di 10 caratteri."
-                    },
-                    "city": {
-                        "maxlength": "Questo campo non pu\u00f2 essere pi\u00f9 di 10 caratteri.",
-                        "empty": "Questo campo non pu\u00f2 essere vuoto!"
-                    }
-                }
-            }
-        },
-        "contact": {
-            "firstName": {
-                "maxlength": "Questo campo non pu\u00f2 essere pi\u00f9 di 50 caratteri."
-            },
-            "lastName": {
-                "maxlength": "Questo campo non pu\u00f2 essere pi\u00f9 di 50 caratteri."
-            },
-            "email": {
-                "maxlength": "Questo campo non pu\u00f2 essere pi\u00f9 di 50 caratteri."
-            }
-        },
-        "publicContact": {
-            "firstName": {
-                "maxlength": "Questo campo non pu\u00f2 essere pi\u00f9 di 50 caratteri."
-            },
-            "lastName": {
-                "maxlength": "Questo campo non pu\u00f2 essere pi\u00f9 di 50 caratteri."
-            },
-            "email": {
-                "maxlength": "Questo campo non pu\u00f2 essere pi\u00f9 di 50 caratteri."
-            }
-        },
-        "company": {
-            "name": {
-                "maxlength": "Questo campo non pu\u00f2 essere pi\u00f9 di 255 caratteri."
-            },
-            "street": {
-                "maxlength": "Questo campo non pu\u00f2 essere pi\u00f9 di 60 caratteri."
-            }
+            "maxlength-10": "Questo campo non pu\u00f2 essere pi\u00f9 di 10 caratteri.",
+            "maxlength-50": "Questo campo non pu\u00f2 essere pi\u00f9 di 50 caratteri.",
+            "maxlength-60": "Questo campo non pu\u00f2 essere pi\u00f9 di 60 caratteri.",
+            "maxlength-255": "Questo campo non pu\u00f2 essere pi\u00f9 di 255 caratteri.",
+            "maxlength-247": "Questo campo non pu\u00f2 essere pi\u00f9 di 247 caratteri.",
+            "maxlength-10000": "Questo campo non pu\u00f2 essere pi\u00f9 di 10000 caratteri.",
+            "not-empty": "Questo campo non pu\u00f2 essere vuoto!"
         }
     }
 }

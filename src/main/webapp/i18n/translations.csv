@@ -53,8 +53,6 @@ candidate-detail,candidate-detail.anonymous-contact.contact-via.phone,Telefon,Ph
 candidate-detail,candidate-detail.anonymous-contact.contact-via.validation,Mindestens eine der folgenden Optionen ist erforderlich,At least one of the following options are required,Il faut qu'une option es selectionné,Almeno una è necessaria
 candidate-detail,candidate-detail.anonymous-contact.dismiss,Abbrechen,Cancel,Interrompre,Interrompere
 candidate-detail,candidate-detail.anonymous-contact.title,Kandidat-/in kontaktieren,Contact candidate,Prendre contact avec un/e candidat/e,Contattare il candidato
-candidate-detail,candidate-detail.anonymous-contact.mail-body-preamble,"Der unten angegebene Arbeitgeber ist im Job-Room auf Ihr Profil gestossen und wünscht eine Kontaktaufnahme. Bitte kontaktieren Sie die Firma gemäss unten stehenden Angaben, um das weitere Vorgehen zu besprechen.","The following employer discovered your profile on Job Room and would like to communicate with you directly. Please contact the company using the details below to discuss further steps.","L'employeur ci-après a consulté votre profil dans Job-Room et souhaiterait que vous le recontactiez au moyen des coordonnées ci-dessous pour discuter les prochains pas.","Il seguente datore di lavoro ha notato il Suo profilo nel Job-Room e desidera entrare in contatto con Lei. La invitiamo a contattare l’azienda (v. dati sotto) per discutere le prossime tappe."
-candidate-detail,candidate-detail.anonymous-contact.personal-message,Sie können hier eine persönliche Nachricht hinzufügen,You may add a personal message here,Vous pouvez ajouter un message personnel ici,Puoi aggiungere un messaggio personale qui
 candidate-detail,candidate-detail.anonymous-contact.company,Unternehmen,Company,Impresa,Entreprise
 candidate-detail,candidate-detail.anonymous-contact.contact-person,Kontaktperson,Contact person,Personne de contact,Contatto
 candidate-detail,candidate-detail.anonymous-contact.street,Strasse,Street,Rue,Strada
@@ -63,9 +61,11 @@ candidate-detail,candidate-detail.anonymous-contact.zip-code,Postal code,Postal 
 candidate-detail,candidate-detail.anonymous-contact.city,Ort,City,Place,Posto
 candidate-detail,candidate-detail.anonymous-contact.country,Land,Country,Pays,Paese
 candidate-detail,candidate-detail.anonymous-contact.send-to,Post,Mail,Poste,Posta
+candidate-detail,candidate-detail.anonymous-contact.title,Kandidat-/in kontaktieren,Contact candidate,Prendre contact avec un/e candidat/e,Contattare il candidato
 candidate-detail,candidate-detail.back,Zurück zu den Suchergebnissen,Back to search results,Retour aux résultats,"Torna ai risultati della ricerca "
 candidate-detail,candidate-detail.candidate-anonymous-contact,Kandidat/in kontaktieren,Contact candidate,Contacter le/la candidat-e,Contattare candidato/a
 candidate-detail,candidate-detail.candidate-anonymous-contact.subject,"Liebe RAV-Kundin, lieber RAV-Kunde","Dear Customer","Chère cliente, cher client ORP","Cara cliente, caro cliente dell'URC"
+candidate-detail,candidate-detail.candidate-anonymous-contact.body,"Der unten angegebene Arbeitgeber ist im Job-Room auf Ihr Profil gestossen und wünscht eine Kontaktaufnahme. Bitte kontaktieren Sie die Firma gemäss unten stehenden Angaben, um das weitere Vorgehen zu besprechen.","The following employer discovered your profile on Job Room and would like to communicate with you directly. Please contact the company using the details below to discuss further steps.","L'employeur ci-après a consulté votre profil dans Job-Room et souhaiterait que vous le recontactiez au moyen des coordonnées ci-dessous pour discuter les prochains pas.","Il seguente datore di lavoro ha notato il Suo profilo nel Job-Room e desidera entrare in contatto con Lei. La invitiamo a contattare l’azienda (v. dati sotto) per discutere le prossime tappe."
 candidate-detail,candidate-detail.candidate-anonymous-contact.success,"Ihr E-mail wurde versandt. Vielen Dank, dass Sie Job-Room benutzen.","Your e-mail was succesfully sent. Thank you for using Job-Room.","Votre courriel a été envoyé. Merci d'utiliser Job-Room.","La sua e-mail è stata inviata. Grazie di avere utilizzato Job-Room."
 candidate-detail,candidate-detail.candidate-copy-link,Link kopieren,Copy link,Copier le lien,Copia link
 candidate-detail,candidate-detail.candidate-print,Drucken,Print,Imprimer,Stampa
@@ -297,7 +297,6 @@ global,error.NotNull,Feld {{fieldName}} darf nicht leer sein!,Field {{ fieldName
 global,error.Size,Feld {{fieldName}} erfüllt nicht die minimalen/maximalen Voraussetzungen!,Field {{ fieldName }} does not meet min/max size requirements!,Le champ {{fieldName}} ne respecte pas les critères minimums et maximums !,Il campo {{ fieldName }} non è conforme ai requisiti di lunghezza min/max!
 global,error.emailexists,E-Mail-Adresse wird bereits verwendet!,Email address is already in use!,Adresse courriel déjà utilisé !,L'indirizzo e-mail è già in uso!
 global,error.idexists,Ein neuer {{entityName}} kann noch keine ID haben,A new {{ entityName }} cannot have an ID yet.,La nouvelle entité {{entityName}} ne peut pas encore avoir d'ID !,Un(a) nuovo/a {{entityName}} non può già avere un ID
-global,error.idmismatch,Ein ID-Parameter stimmt nicht mit der ID von DTO überein.,An id parameter does not match the ID of DTO..,Un paramètre ID ne correspond pas à l'ID de DTO.,Un parametro ID non corrisponde all'ID del DTO.
 global,error.internalServerError,Interner Serverfehler,Internal server error,Erreur interne du serveur,Errore interno server
 global,error.server.not.reachable,Server ist nicht erreichbar,Server not reachable,Serveur inaccessible,Server non raggiungibile
 global,error.url.not.found,Nicht gefunden,Not found,Non trouvé,Non trovato
@@ -414,7 +413,6 @@ global,global.menu.admin.userManagement,Benutzerverwaltung,User management,Gesti
 global,global.menu.company-contact-template,Kontaktangaben,Contact Information,Informations de contact,Informazioni sui contatti
 global,global.menu.dashboard,Dashboard,Dashboard,Dashboard,Dashboard
 global,global.menu.blacklisted-agent,Blacklist,Blacklist,Liste noire,Lista nera
-global,global.menu.termsAndConditions,AGB,Terms And Conditions,CGV,Le condizioni generali
 global,global.menu.entities.jhipster-needle-menu-add-entry,JHipster will add additional entities here (do not translate!),JHipster will add additional entities here (do not translate!),JHipster will add additional entities here (do not translate!),JHipster will add additional entities here (do not translate!)
 global,global.menu.entities.job,Stelle,Job,Emploi,Posto
 global,global.menu.entities.main,Entitäten,Entities,Entités,Entità
@@ -709,7 +707,7 @@ home,home.tools.candidate-search.title,Finden Sie passende Kandidaten,Find suita
 home,home.tools.candidateSearchTab,Kandidaten finden,Find candidates,Trouver des candidats,Trova candidati
 home,home.tools.job-publication.application.additional-info.characters-counter-text,{{count}} Zeichen verbleibend,{{count}} characters available,{{count}} caractères disponibles,{{count}} caratteri disponibili
 home,home.tools.job-publication.application.additional-info.label,Ergänzende Angaben,Supplementary information,Indications complémentaires,Dati complementari
-home,home.tools.job-publication.application.additional-info.placeholder,max. 240 Zeichen,Max. 240 characters,max. 240 caractères,max. 240 caratteri
+home,home.tools.job-publication.application.additional-info.placeholder,max. 255 Zeichen,Max. 255 characters,max. 255 caractères,max. 255 caratteri
 home,home.tools.job-publication.application.copy-email-from-public-contact,Wie bei Kontakt für Stellensuchende,Same as jobseeker contact,Comme Contact pour candidats,Come Contatto per candidati
 home,home.tools.job-publication.application.copy-phonenumber-from-public-contact,Wie bei Kontakt für Stellensuchende,Same as jobseeker contact,Comme Contact pour candidats,Come Contatto per candidati
 home,home.tools.job-publication.application.copy-from-business,Wie bei Unternehmen,Same as business,Comme l'entreprise,Come l'impresa
@@ -722,7 +720,10 @@ home,home.tools.job-publication.company.country,Land,Country,Pays,Paese
 home,home.tools.job-publication.company.house-number,Nr.,No.,N°,N.
 home,home.tools.job-publication.company.name,Unternehmen,Business,Entreprise,Impresa
 home,home.tools.job-publication.company.postbox,Postfach,P.O. Box,Case postale,Casella postale
+home,home.tools.job-publication.company.postbox-city,Ort,City,Lieu,Luogo
 home,home.tools.job-publication.company.postbox-number,Postfach-Nr.,PO box no.,Numéro de case postale,N. casella postale
+home,home.tools.job-publication.company.postbox-zip,Postfach PLZ,PO box postal code,Case postale NPA,Casella postale NPA
+home,home.tools.job-publication.company.postbox-zipcode,Postfach PLZ / Ort,PO box postal code / city,Case postale NPA / lieu,Casella postale NPA / luogo
 home,home.tools.job-publication.company.street,Strasse,Street,Rue,Via
 home,home.tools.job-publication.company.surrogate,Stellenmeldung erfolgt über private Arbeitsvermittlung,Job registered through a private employment agency,L'annonce du poste s'effectue par un placeur privé,Annuncio del posto via collocatore privato
 home,home.tools.job-publication.company.title,Unternehmen,Business,Entreprise,Impresa
@@ -1280,37 +1281,10 @@ blacklisted-agent,blacklisted-agent.change-status-dialog.title,Status des Blackl
 blacklisted-agent,blacklisted-agent.change-status-dialog.message,Möchten Sie wirklich den Blacklist-Eintrag für den PAV ändern?,Do you really want to change status of the blacklisted agent?,Do you really want to change status of the blacklisted agent?,Do you really want to change status of the blacklisted agent?
 blacklisted-agent,blacklisted-agent.change-status-dialog.change-status,Status ändern,Change Status,Change Status,Change Status
 blacklisted-agent,blacklisted-agent.change-status-dialog.cancel,Abbrechen,Cancel,Cancel,Cancel
-job-publication,job-publication.validation.title.maxlength,Dieses Feld darf max. 255 Zeichen lang sein.,This field cannot be longer than 255 characters.,Ce champ doit comporter au maximum 255 caractères.,Questo campo non può essere più di 255 caratteri.
-job-publication,job-publication.validation.language.maxlength,Dieses Feld darf max. 5 Zeichen lang sein.,This field cannot be longer than 5 characters.,Ce champ doit comporter au maximum 5 caractères.,Questo campo non può essere più di 5 caratteri.
-job-publication,job-publication.validation.description.maxlength,Dieses Feld darf max. 1000 Zeichen lang sein.,This field cannot be longer than 1000 characters.,Ce champ doit comporter au maximum 1000 caractères.,Questo campo non può essere più di 1000 caratteri.
-job-publication,job-publication.application.electronicApplication.mail.maxlength,Dieses Feld darf max. 50 Zeichen lang sein.,This field cannot be longer than 50 characters.,Ce champ doit comporter au maximum 50 caractères.,Questo campo non può essere più di 50 caratteri.
-job-publication,job-publication.application.postAddress.paperApp.companyName.maxlength,Dieses Feld darf max. 255 Zeichen lang sein.,This field cannot be longer than 255 characters.,Ce champ doit comporter au maximum 255 caractères.,Questo campo non può essere più di 255 caratteri.
-job-publication,job-publication.application.postAddress.paperApp.street.maxlength,Dieses Feld darf max. 60 Zeichen lang sein.,This field cannot be longer than 60 characters.,Ce champ doit comporter au maximum 60 caractères.,Questo campo non può essere più di 60 caratteri.
-job-publication,job-publication.application.postAddress.paperApp.houseNr.maxlength,Dieses Feld darf max. 10 Zeichen lang sein.,This field cannot be longer than 10 characters.,Ce champ doit comporter au maximum 10 caractères.,Questo campo non può essere più di 10 caratteri.
-job-publication,job-publication.application.postAddress.paperApp.postboxNr.maxlength,Dieses Feld darf max. 20 Zeichen lang sein.,This field cannot be longer than 20 characters.,Ce champ doit comporter au maximum 20 caractères.,Questo campo non può essere più di 20 caratteri.
-job-publication,job-publication.application.postAddress.paperApp.zipCode.maxlength,Dieses Feld darf max. 10 Zeichen lang sein.,This field cannot be longer than 10 characters.,Ce champ doit comporter au maximum 10 caractères.,Questo campo non può essere più di 10 caratteri.
-job-publication,job-publication.application.postAddress.paperApp.city.maxlength,Dieses Feld darf max. 10 Zeichen lang sein.,This field cannot be longer than 10 characters.,Ce champ doit comporter au maximum 10 caractères.,Questo campo non può essere più di 10 caratteri.
-job-publication,job-publication.contact.firstName.maxlength,Dieses Feld darf max. 50 Zeichen lang sein.,This field cannot be longer than 50 characters.,Ce champ doit comporter au maximum 50 caractères.,Questo campo non può essere più di 50 caratteri.
-job-publication,job-publication.contact.lastName.maxlength,Dieses Feld darf max. 50 Zeichen lang sein.,This field cannot be longer than 50 characters.,Ce champ doit comporter au maximum 50 caractères.,Questo campo non può essere più di 50 caratteri.
-job-publication,job-publication.contact.email.maxlength,Dieses Feld darf max. 50 Zeichen lang sein.,This field cannot be longer than 50 characters.,Ce champ doit comporter au maximum 50 caractères.,Questo campo non può essere più di 50 caratteri.
-job-publication,job-publication.publicContact.firstName.maxlength,Dieses Feld darf max. 50 Zeichen lang sein.,This field cannot be longer than 50 characters.,Ce champ doit comporter au maximum 50 caractères.,Questo campo non può essere più di 50 caratteri.
-job-publication,job-publication.publicContact.lastName.maxlength,Dieses Feld darf max. 50 Zeichen lang sein.,This field cannot be longer than 50 characters.,Ce champ doit comporter au maximum 50 caractères.,Questo campo non può essere più di 50 caratteri.
-job-publication,job-publication.publicContact.email.maxlength,Dieses Feld darf max. 50 Zeichen lang sein.,This field cannot be longer than 50 characters.,Ce champ doit comporter au maximum 50 caractères.,Questo campo non può essere più di 50 caratteri.
-job-publication,job-publication.company.name.maxlength,Dieses Feld darf max. 255 Zeichen lang sein.,This field cannot be longer than 255 characters.,Ce champ doit comporter au maximum 255 caractères.,Questo campo non può essere più di 255 caratteri.
-job-publication,job-publication.company.street.maxlength,Dieses Feld darf max. 60 Zeichen lang sein.,This field cannot be longer than 60 characters.,Ce champ doit comporter au maximum 60 caractères.,Questo campo non può essere più di 60 caratteri.
-job-publication,job-publication.application.postAddress.paperApp.city.empty,Dieses Feld darf nicht leer sein!,This field cannot be empty!,Ce champ ne peut pas être vide !,Questo campo non puòlegal-terms-management.add-legal-terms-dialog essere vuoto!
-
-legal-terms-management,legal-terms-management.title,AGB verwalten,Manage Terms And Conditions,Gérer CGV,Gestisci condizioni generali
-legal-terms-management,legal-terms-management.filter.placeholder,"Filtern nach Effektiv Bei, Link DE, Link EN, Link FR oder Link IT","Filter by Effective At, Link DE, Link EN, Link FR or Link IT","Filtrer par Efficace À, Lien DE, Lien EN, Lien FR ou Lien IT","Filtra per Efficace A, Link DE, Link EN, Link FR o Link IT"
-legal-terms-management,legal-terms-management.add-legal-terms,AGB Hinzufügen,Add Terms And Conditions,Ajouter CGV,Aggiungi Condizioni Generali
-legal-terms-management,legal-terms-management.header.effectiveAt,Effektiv Bei,Effective At,Efficace À,Efficace A
-legal-terms-management,legal-terms-management.header.linkDe,DE Link,DE link,DE lien,DE link
-legal-terms-management,legal-terms-management.header.linkEn,EN Link,EN link,EN lien,EN link
-legal-terms-management,legal-terms-management.header.linkFr,FR Link,FR link,FR lien,FR link
-legal-terms-management,legal-terms-management.header.linkIt,IT Link,IT link,IT lien,IT link
-legal-terms-management,legal-terms-management.header.actions,Aktionen,Actions,Actes,Azioni
-legal-terms-management,legal-terms-management.legal-terms-details-dialog,AGB Details,Terms And Conditions Details,CGV Détails,Condizioni Generali Dettagli
-legal-terms-management,legal-terms-management.legal-terms-details-dialog.add,Hinzufügen,Add,Ajouter,Aggiungi
-legal-terms-management,legal-terms-management.legal-terms-delete-dialog.question,"Sind Sie sicher, dass Sie AGB löschen möchten?",Are you sure you want to delete Terms And Conditions?,Etes-vous certain de vouloir supprimer CGV?,Sei sicuro di volere eliminare Condizioni Generali?
-legal-terms-management,legal-terms-management.legal-terms-details-dialog.validate.pastEffectiveAt,Effektiv-Bei-Datum  muss in der Zukunft liegen.,Effective At date must be in the future.,La Efficace À date doit se situer dans le futur.,La Efficace A data deve situarsi nel futuro.
-legal-terms-management,legal-terms-management.legal-terms-details-dialog.validate.url.pattern,Diese URL ist ungültig.,This URL is not valid,Ce lien URL n'est pas valable.,Questo indirizzo URL non è valido.
+job-publication,job-publication.validation.maxlength-10,Dieses Feld darf max. 10 Zeichen lang sein.,This field cannot be longer than 10 characters.,Ce champ doit comporter au maximum 10 caractères.,Questo campo non può essere più di 10 caratteri.
+job-publication,job-publication.validation.maxlength-50,Dieses Feld darf max. 50 Zeichen lang sein.,This field cannot be longer than 50 characters.,Ce champ doit comporter au maximum 50 caractères.,Questo campo non può essere più di 50 caratteri.
+job-publication,job-publication.validation.maxlength-60,Dieses Feld darf max. 60 Zeichen lang sein.,This field cannot be longer than 60 characters.,Ce champ doit comporter au maximum 60 caractères.,Questo campo non può essere più di 60 caratteri.
+job-publication,job-publication.validation.maxlength-255,Dieses Feld darf max. 255 Zeichen lang sein.,This field cannot be longer than 255 characters.,Ce champ doit comporter au maximum 255 caractères.,Questo campo non può essere più di 255 caratteri.
+job-publication,job-publication.validation.maxlength-247,Dieses Feld darf max. 247 Zeichen lang sein.,This field cannot be longer than 255 characters.,Ce champ doit comporter au maximum 247 caractères.,Questo campo non può essere più di 247 caratteri.
+job-publication,job-publication.validation.maxlength-10000,Dieses Feld darf max. 10000 Zeichen lang sein.,This field cannot be longer than 10000 characters.,Ce champ doit comporter au maximum 10000 caractères.,Questo campo non può essere più di 10000 caratteri.
+job-publication,job-publication.validation.not-empty,Dieses Feld darf nicht leer sein!,This field cannot be empty!,Ce champ ne peut pas être vide !,Questo campo non può essere vuoto!

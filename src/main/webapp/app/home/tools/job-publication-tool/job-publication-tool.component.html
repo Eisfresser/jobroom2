@@ -58,14 +58,15 @@
                         <div class="form-group">
                             <label for="degree" class="col-form-label">
                                 {{ 'home.tools.job-publication.degree' | translate }}
-                                <span class="optional">{{ 'home.tools.job-publication.optional' | translate }}</span>
+                                <span
+                                    class="optional">{{ 'home.tools.job-publication.optional' | translate }}</span>
                             </label>
                             <div>
                                 <select class="form-control custom-select" id="degree"
                                         formControlName="degree">
                                     <option [ngValue]="null" selected>{{
                                         'home.tools.job-publication.no-selection' |
-                                        translate }}
+                                            translate }}
                                     </option>
                                     <option *ngFor="let degree of degrees | keys"
                                             [ngValue]="degree.value">
@@ -77,7 +78,7 @@
                         <div class="form-group">
                             <label for="exp" class="col-form-label">{{
                                 'home.tools.job-publication.experience' |
-                                translate }}
+                                    translate }}
                                 <span
                                     class="optional">{{ 'home.tools.job-publication.optional' | translate }}</span>
                             </label>
@@ -86,12 +87,12 @@
                                         formControlName="experience">
                                     <option [ngValue]="null">{{
                                         'home.tools.job-publication.no-selection' |
-                                        translate }}
+                                            translate }}
                                     </option>
                                     <option *ngFor="let experience of experiences | keys"
                                             [ngValue]="experience.value">
                                         {{'home.tools.job-publication.experience.' +
-                                        experience.value | translate}}
+                                    experience.value | translate}}
                                     </option>
                                 </select>
                             </div>
@@ -128,7 +129,7 @@
                         <div class="form-group">
                             <label class="col-form-label">{{
                                 'home.tools.job-publication.employmentStartDate.title'
-                                | translate }}</label>
+                                    | translate }}</label>
                             <div class="form-group__inline">
                                 <div class="radio col-form-label">
                                     <input formControlName="immediate" type="radio"
@@ -137,7 +138,7 @@
                                     <label for="fromNow">
                                         {{
                                         'home.tools.job-publication.employmentStartDate.immediately'
-                                        | translate
+                                            | translate
                                         }}
                                     </label>
                                 </div>
@@ -148,8 +149,8 @@
                                     <label for="byArrangement">
                                         {{
                                         'home.tools.job-publication.employmentStartDate.by-arrangement'
-                                        |
-                                        translate }}
+                                            |
+                                            translate }}
                                     </label>
                                 </div>
 
@@ -158,7 +159,7 @@
                                         <label for="stellenantritt-date" class="sr-only">
                                             {{
                                             'home.tools.job-publication.employmentStartDate.label'
-                                            | translate
+                                                | translate
                                             }}
                                         </label>
                                         <input #startDatePicker="ngbDatepicker"
@@ -195,7 +196,7 @@
                             class="form-group">
                             <label class="col-form-label">{{
                                 'home.tools.job-publication.employmentEndDate.title' |
-                                translate }}</label>
+                                    translate }}</label>
                             <div class="form-group__inline">
                                 <div class="radio col-form-label">
                                     <input type="radio" formControlName="permanent"
@@ -203,7 +204,7 @@
                                     <label for="permanent">
                                         {{
                                         'home.tools.job-publication.employmentEndDate.permanent'
-                                        | translate }}
+                                            | translate }}
                                     </label>
                                 </div>
 
@@ -214,7 +215,7 @@
                                     <label for="temporary">
                                         {{
                                         'home.tools.job-publication.employmentEndDate.temporary'
-                                        | translate }}
+                                            | translate }}
                                     </label>
                                 </div>
 
@@ -223,7 +224,7 @@
                                         <label for="anstellungsdauer-date"
                                                class="sr-only">{{
                                             'home.tools.job-publication.employmentEndDate.label'
-                                            | translate
+                                                | translate
                                             }}</label>
                                         <input #endDatePicker="ngbDatepicker"
                                                #employmentEndDateEl
@@ -291,7 +292,7 @@
                     <div class="form-group">
                         <label for="country" class="col-form-label">{{
                             'home.tools.job-publication.locality.country'
-                            | translate }}</label>
+                                | translate }}</label>
                         <div>
                             <select formControlName="countryCode"
                                     class="form-control custom-select" id="country">
@@ -311,13 +312,20 @@
                         <label for="add-text" class="col-form-label">
                             {{ 'home.tools.job-publication.locality.additional-text' |
                             translate }}
-                            <span class="optional">{{ 'home.tools.job-publication.optional' | translate }}</span>
+                            <span
+                                class="optional">{{ 'home.tools.job-publication.optional' | translate }}</span>
                         </label>
                         <div>
                             <input formControlName="additionalDetails" type="text"
-                                   [jr2TextSizeLimit]="50" class="form-control"
+                                   [jr2TextSizeLimit]="LOCATION_ADDITIONAL_DETAILS_MAX_LENGTH"
+                                   class="form-control"
                                    id="add-text"
                                    placeholder="{{ 'home.tools.job-publication.locality.additional-text.placeholder' | translate}}"/>
+                            <jr2-input-error-message [formGroup]="jobPublicationForm"
+                                                     path="location.additionalDetails"
+                                                     [errorCodes]="['maxlength']"
+                                                     [keys]="['job-publication.validation.maxlength-50']">
+                            </jr2-input-error-message>
                         </div>
                     </div>
                 </fieldset>
@@ -333,59 +341,45 @@
                         </label>
                         <div>
                             <input formControlName="name" type="text"
-                                   [jr2TextSizeLimit]="255" class="form-control"
+                                   [jr2TextSizeLimit]="COMPANY_NAME_MAX_LENGTH"
+                                   class="form-control"
                                    id="unt-name"/>
                             <jr2-input-error-message [formGroup]="jobPublicationForm"
                                                      path="company.name"
                                                      [errorCodes]="['required','maxlength']"
                                                      [keys]="['home.tools.job-publication.messages.validate.required',
-                                                     'job-publication.company.name.maxlength']">
+                                                     'job-publication.validation.maxlength-255']">
                             </jr2-input-error-message>
                         </div>
-                    </div>
-
-                    <div class="form-text md-2 text-muted"
-                         jhiTranslate="home.tools.job-publication.messages.validate.at-least-one-required-street-or-pobox">
                     </div>
 
                     <div class="form-row">
                         <div class="form-group col-md-9">
                             <label for="unt-street" class="col-form-label">{{
                                 'home.tools.job-publication.company.street' |
-                                translate }}</label>
+                                    translate }}</label>
                             <input formControlName="street" type="text"
-                                   [jr2TextSizeLimit]="60" class="form-control w-100"
+                                   [jr2TextSizeLimit]="COMPANY_STREET_MAX_LENGTH"
+                                   class="form-control w-100"
                                    id="unt-street"/>
                         </div>
                         <div class="form-group col-md-3">
                             <label for="unt-house-number" class="col-form-label">{{
                                 'home.tools.job-publication.company.house-number' |
-                                translate }}
-                                <span class="optional">{{ 'home.tools.job-publication.optional' | translate }}</span></label>
+                                    translate }}
+                                <span
+                                    class="optional">{{ 'home.tools.job-publication.optional' | translate }}</span></label>
                             <input formControlName="houseNumber" type="text"
-                                   [jr2TextSizeLimit]="50" class="form-control w-100"
+                                   [jr2TextSizeLimit]="COMPANY_HOUSE_NO_MAX_LENGTH"
+                                   class="form-control w-100"
                                    id="unt-house-number"/>
                         </div>
                         <jr2-input-error-message [formGroup]="jobPublicationForm"
                                                  path="company.street"
-                                                 [errorCodes]="['maxlength']"
-                                                 [keys]="['job-publication.company.street.maxlength']">
+                                                 [errorCodes]="['required','maxlength']"
+                                                 [keys]="['home.tools.job-publication.messages.validate.required',
+                                                 'job-publication.validation.maxlength-60']">
                         </jr2-input-error-message>
-                        <jr2-input-error-message [formGroup]="jobPublicationForm"
-                                                 path="company"
-                                                 [errorCodes]="['atLeastOneRequired']"
-                                                 [keys]="['home.tools.job-publication.messages.validate.at-least-one-required-street-or-pobox']">
-                        </jr2-input-error-message>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="unt-pobox" class="col-form-label">
-                            {{ 'home.tools.job-publication.company.postbox-number' | translate }}
-                        </label>
-                        <div>
-                            <input formControlName="postboxNumber" [jr2TextSizeLimit]="6"
-                                   type="text" class="form-control" id="unt-pobox"/>
-                        </div>
                     </div>
 
                     <jr2-zip-code [group]="jobPublicationForm.get('company')"
@@ -394,9 +388,37 @@
                     </jr2-zip-code>
 
                     <div class="form-group">
-                        <label for="unt-country" class="col-form-label">
-                            {{'home.tools.job-publication.company.country'| translate }}
+                        <label for="unt-pobox" class="col-form-label">
+                            {{ 'home.tools.job-publication.company.postbox-number' |
+                            translate }}
+                            <span
+                                class="optional">{{ 'home.tools.job-publication.optional' | translate }}</span>
                         </label>
+                        <div>
+                            <input formControlName="postboxNumber"
+                                   type="text"
+                                   class="form-control"
+                                   id="unt-pobox"/>
+                        </div>
+                        <jr2-input-error-message
+                            [formGroup]="jobPublicationForm"
+                            path="company.postboxNumber"
+                            [errorCodes]="['pattern']"
+                            [keys]="['home.tools.job-publication.messages.validate.pobox-format']">
+                        </jr2-input-error-message>
+                    </div>
+
+                    <jr2-zip-code [group]="jobPublicationForm.get('company')"
+                                  controlName="postboxZipCode"
+                                  [switzSelected]="isSwitzerlandSelected(jobPublicationForm.get('company.countryCode')) | async"
+                                  [translations]="getPoBoxZipCodeTranslations()"
+                                  [optional]="true">
+                    </jr2-zip-code>
+
+                    <div class="form-group">
+                        <label for="unt-country" class="col-form-label">{{
+                            'home.tools.job-publication.company.country'
+                                | translate }}</label>
                         <div>
                             <select formControlName="countryCode"
                                     class="form-control custom-select" id="unt-country">
@@ -430,12 +452,14 @@
                         </label>
                         <div>
                             <input formControlName="name" type="text"
-                                   [jr2TextSizeLimit]="255" class="form-control"
+                                   [jr2TextSizeLimit]="APPLICATION_PAPER_APPLICATION_COMPANY_NAME_MAX_LENGTH"
+                                   class="form-control"
                                    id="employer-name"/>
                             <jr2-input-error-message [formGroup]="jobPublicationForm"
                                                      path="employer.name"
-                                                     [errorCodes]="['required']"
-                                                     [keys]="['home.tools.job-publication.messages.validate.required']">
+                                                     [errorCodes]="['required','maxlength']"
+                                                     [keys]="['home.tools.job-publication.messages.validate.required',
+                                                     'job-publication.validation.maxlength-255']">
                             </jr2-input-error-message>
                         </div>
                     </div>
@@ -449,7 +473,7 @@
                     <div class="form-group">
                         <label for="employer-country" class="col-form-label">{{
                             'home.tools.job-publication.company.country'
-                            | translate }}</label>
+                                | translate }}</label>
                         <div>
                             <select formControlName="countryCode"
                                     class="form-control custom-select"
@@ -487,7 +511,7 @@
                     <div class="form-group">
                         <label for="kp-anrede" class="col-form-label">{{
                             'home.tools.job-publication.contact.salutation'
-                            | translate }}</label>
+                                | translate }}</label>
                         <div>
                             <select formControlName="salutation"
                                     class="form-control custom-select" id="kp-anrede">
@@ -498,7 +522,7 @@
                                 <option *ngFor="let salutation of salutations | keys"
                                         [ngValue]="salutation.value">
                                     {{'global.contactPerson.salutation.' +
-                                    salutation.value | translate}}
+                                salutation.value | translate}}
                                 </option>
                             </select>
                             <jr2-input-error-message [formGroup]="jobPublicationForm"
@@ -514,28 +538,30 @@
                             'home.tools.job-publication.contact.first-name' | translate
                             }}</label>
                         <div>
-                            <input formControlName="firstName" [jr2TextSizeLimit]="255"
+                            <input formControlName="firstName"
+                                   [jr2TextSizeLimit]="CONTACT_FIRST_NAME_MAX_LENGTH"
                                    type="text" class="form-control" id="kp-vorname"/>
                             <jr2-input-error-message [formGroup]="jobPublicationForm"
                                                      path="contact.firstName"
                                                      [errorCodes]="['required','maxlength']"
                                                      [keys]="['home.tools.job-publication.messages.validate.required',
-                                                     'job-publication.contact.firstName.maxlength']">
+                                                     'job-publication.validation.maxlength-50']">
                             </jr2-input-error-message>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="kp-name" class="col-form-label">{{
                             'home.tools.job-publication.contact.last-name' |
-                            translate }}</label>
+                                translate }}</label>
                         <div>
-                            <input formControlName="lastName" [jr2TextSizeLimit]="255"
+                            <input formControlName="lastName"
+                                   [jr2TextSizeLimit]="CONTACT_LAST_NAME_MAX_LENGTH"
                                    type="text" class="form-control" id="kp-name"/>
                             <jr2-input-error-message [formGroup]="jobPublicationForm"
                                                      path="contact.lastName"
                                                      [errorCodes]="['required','maxlength']"
                                                      [keys]="['home.tools.job-publication.messages.validate.required',
-                                                     'job-publication.contact.lastName.maxlength']">
+                                                     'job-publication.validation.maxlength-50']">
                             </jr2-input-error-message>
                         </div>
                     </div>
@@ -546,7 +572,6 @@
                         <div>
                             <jr2-phone-number-input id="kp-tel"
                                                     formControlName="phoneNumber"
-                                                    [jr2TextSizeLimit]="50"
                                                     [placeholder]="'home.tools.job-publication.placeholders.phone' | translate">
                             </jr2-phone-number-input>
                         </div>
@@ -559,9 +584,10 @@
                     <div class="form-group">
                         <label for="kp-email" class="col-form-label">{{
                             'home.tools.job-publication.contact.email' |
-                            translate }}</label>
+                                translate }}</label>
                         <div>
-                            <input formControlName="email" [jr2TextSizeLimit]="50"
+                            <input formControlName="email"
+                                   [jr2TextSizeLimit]="CONTACT_EMAIL_MAX_LENGTH"
                                    type="email" class="form-control" id="kp-email"
                                    [placeholder]="'home.tools.job-publication.placeholders.email' | translate"/>
                             <jr2-input-error-message [formGroup]="jobPublicationForm"
@@ -569,7 +595,7 @@
                                                      [errorCodes]="['required', 'pattern','maxlength']"
                                                      [keys]="['home.tools.job-publication.messages.validate.required',
                                                      'home.tools.job-publication.messages.validate.email-format',
-                                                     'job-publication.contact.email.maxlength']">
+                                                     'job-publication.validation.maxlength-50']">
                             </jr2-input-error-message>
                         </div>
                     </div>
@@ -606,7 +632,7 @@
                                 <option *ngFor="let salutation of salutations | keys"
                                         [ngValue]="salutation.value">
                                     {{'global.contactPerson.salutation.' +
-                                    salutation.value | translate}}
+                                salutation.value | translate}}
                                 </option>
                             </select>
                             <jr2-input-error-message [formGroup]="jobPublicationForm"
@@ -623,13 +649,14 @@
                             }}
                         </label>
                         <div>
-                            <input formControlName="firstName" [jr2TextSizeLimit]="255"
+                            <input formControlName="firstName"
+                                   [jr2TextSizeLimit]="PUBLIC_CONTACT_FIRST_NAME_MAX_LENGTH"
                                    type="text" class="form-control" id="pkp-vorname"/>
                             <jr2-input-error-message [formGroup]="jobPublicationForm"
                                                      path="publicContact.firstName"
                                                      [errorCodes]="['required','maxlength']"
                                                      [keys]="['home.tools.job-publication.messages.validate.required',
-                                                     'job-publication.publicContact.firstName.maxlength']">
+                                                     'job-publication.validation.maxlength-50']">
                             </jr2-input-error-message>
                         </div>
                     </div>
@@ -640,13 +667,14 @@
                             }}
                         </label>
                         <div>
-                            <input formControlName="lastName" [jr2TextSizeLimit]="255"
+                            <input formControlName="lastName"
+                                   [jr2TextSizeLimit]="PUBLIC_CONTACT_LAST_NAME_MAX_LENGTH"
                                    type="text" class="form-control" id="pkp-name"/>
                             <jr2-input-error-message [formGroup]="jobPublicationForm"
                                                      path="publicContact.lastName"
                                                      [errorCodes]="['required','maxlength']"
                                                      [keys]="['home.tools.job-publication.messages.validate.required',
-                                                     'job-publication.publicContact.lastName.maxlength']">
+                                                     'job-publication.validation.maxlength-50']">
                             </jr2-input-error-message>
                         </div>
                     </div>
@@ -660,7 +688,6 @@
                         <div>
                             <jr2-phone-number-input id="pkp-tel"
                                                     formControlName="phoneNumber"
-                                                    [jr2TextSizeLimit]="50"
                                                     [placeholder]="'home.tools.job-publication.placeholders.phone' | translate">
                             </jr2-phone-number-input>
                         </div>
@@ -681,7 +708,8 @@
                             {{ 'home.tools.job-publication.contact.email' | translate }}
                         </label>
                         <div>
-                            <input formControlName="email" [jr2TextSizeLimit]="50"
+                            <input formControlName="email"
+                                   [jr2TextSizeLimit]="APPLICATION_ELECTRONIC_EMAIL_MAX_LENGTH"
                                    type="email" class="form-control" id="pkp-email"
                                    [placeholder]="'home.tools.job-publication.placeholders.email' | translate"/>
                             <jr2-input-error-message [formGroup]="jobPublicationForm"
@@ -689,7 +717,7 @@
                                                      [errorCodes]="['required', 'pattern','maxlength']"
                                                      [keys]="['home.tools.job-publication.messages.validate.required',
                                                      'home.tools.job-publication.messages.validate.email-format',
-                                                     'job-publication.publicContact.email.maxlength']">
+                                                     'job-publication.validation.maxlength-50']">
                             </jr2-input-error-message>
                             <jr2-input-error-message [formGroup]="jobPublicationForm"
                                                      path="publicContact"
@@ -732,15 +760,18 @@
                                 translate }}
                             </label>
                             <div>
-                                <input type="text" [jr2TextSizeLimit]="255"
+                                <input type="text"
+                                       [jr2TextSizeLimit]="APPLICATION_ELECTRONIC_URL_MAX_LENGTH"
                                        class="form-control" id="app-form"
                                        formControlName="electronicApplicationUrl"
                                        [placeholder]="'home.tools.job-publication.placeholders.url' | translate"/>
                             </div>
                             <jr2-input-error-message [formGroup]="jobPublicationForm"
                                                      path="application.electronicApplicationUrl"
-                                                     [errorCodes]="['required', 'pattern']"
-                                                     [keys]="['home.tools.job-publication.messages.validate.required', 'home.tools.job-publication.messages.validate.url-format']">
+                                                     [errorCodes]="['required', 'pattern','maxlength']"
+                                                     [keys]="['home.tools.job-publication.messages.validate.required',
+                                                     'home.tools.job-publication.messages.validate.url-format',
+                                                     'job-publication.validation.maxlength-247']">
                             </jr2-input-error-message>
                         </div>
                     </div>
@@ -765,10 +796,11 @@
                                     (click)="copyEmailFromPublicContact()">
                                 {{
                                 'home.tools.job-publication.application.copy-email-from-public-contact'
-                                | translate}}
+                                    | translate}}
                             </button>
                             <div>
-                                <input type="email" [jr2TextSizeLimit]="50"
+                                <input type="email"
+                                       [jr2TextSizeLimit]="APPLICATION_ELECTRONIC_EMAIL_MAX_LENGTH"
                                        class="form-control" id="app-email"
                                        formControlName="electronicApplicationEmail"
                                        [placeholder]="'home.tools.job-publication.placeholders.email' | translate"/>
@@ -778,7 +810,7 @@
                                                      [errorCodes]="['required', 'pattern','maxlength']"
                                                      [keys]="['home.tools.job-publication.messages.validate.required',
                                                      'home.tools.job-publication.messages.validate.email-format',
-                                                     'job-publication.application.electronicApplication.mail.maxlength']">
+                                                     'job-publication.validation.maxlength-50']">
                             </jr2-input-error-message>
                         </div>
 
@@ -804,12 +836,11 @@
                                     (click)="copyPhoneNumberFromPublicContact()">
                                 {{
                                 'home.tools.job-publication.application.copy-phonenumber-from-public-contact'
-                                | translate}}
+                                    | translate}}
                             </button>
                             <div>
                                 <jr2-phone-number-input id="app-phone"
                                                         formControlName="phoneNumber"
-                                                        [jr2TextSizeLimit]="50"
                                                         [placeholder]="'home.tools.job-publication.placeholders.phone' | translate">
                                 </jr2-phone-number-input>
                             </div>
@@ -827,7 +858,7 @@
                             <label for="selectPaperApp">
                                 {{
                                 'job-detail.application.mail'
-                                | translate }}
+                                    | translate }}
                             </label>
                         </div>
 
@@ -843,12 +874,12 @@
                                             (click)="copyAddressFromCompany()">
                                         {{
                                         'home.tools.job-publication.application.copy-from-business'
-                                        | translate}}
+                                            | translate}}
                                     </button>
                                     <div>
                                         <input formControlName="paperAppCompanyName"
                                                type="text"
-                                               [jr2TextSizeLimit]="255"
+                                               [jr2TextSizeLimit]="APPLICATION_PAPER_APPLICATION_COMPANY_NAME_MAX_LENGTH"
                                                class="form-control"
                                                id="app-unt-name"/>
                                         <jr2-input-error-message
@@ -856,7 +887,7 @@
                                             path="application.postAddress.paperAppCompanyName"
                                             [errorCodes]="['required','maxlength']"
                                             [keys]="['home.tools.job-publication.messages.validate.required',
-                                            'job-publication.application.postAddress.paperApp.companyName.maxlength']">
+                                            'job-publication.validation.maxlength-255']">
                                         </jr2-input-error-message>
                                     </div>
                                 </div>
@@ -868,43 +899,44 @@
                                         <label for="app-unt-street"
                                                class="col-form-label">{{
                                             'home.tools.job-publication.company.street'
-                                            |
-                                            translate }}</label>
+                                                |
+                                                translate }}</label>
                                         <input formControlName="paperAppStreet"
                                                type="text"
-                                               [jr2TextSizeLimit]="60"
+                                               [jr2TextSizeLimit]="APPLICATION_PAPER_APPLICATION_STREET_MAX_LENGTH"
                                                class="form-control w-100"
                                                id="app-unt-street"/>
+                                        <jr2-input-error-message
+                                            [formGroup]="jobPublicationForm"
+                                            path="application.postAddress.paperAppStreet"
+                                            [errorCodes]="['maxlength']"
+                                            [keys]="['job-publication.validation.maxlength-60']">
+                                        </jr2-input-error-message>
                                         <jr2-input-error-message
                                             [formGroup]="jobPublicationForm"
                                             path="application.postAddress"
                                             [errorCodes]="['atLeastOneRequired']"
                                             [keys]="['home.tools.job-publication.messages.validate.at-least-one-required-street-or-pobox']">
                                         </jr2-input-error-message>
-                                        <jr2-input-error-message
-                                            [formGroup]="jobPublicationForm"
-                                            path="application.postAddress.paperAppStreet"
-                                            [errorCodes]="['maxlength']"
-                                            [keys]="['job-publication.application.postAddress.paperApp.street.maxlength']">
-                                        </jr2-input-error-message>
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label for="app-unt-house-number"
                                                class="col-form-label">{{
                                             'home.tools.job-publication.company.house-number'
-                                            |
-                                            translate }}
-                                            <span class="optional">{{ 'home.tools.job-publication.optional' | translate }}</span></label>
+                                                |
+                                                translate }}
+                                            <span
+                                                class="optional">{{ 'home.tools.job-publication.optional' | translate }}</span></label>
                                         <input formControlName="paperAppHouseNr"
                                                type="text"
-                                               [jr2TextSizeLimit]="50"
+                                               [jr2TextSizeLimit]="APPLICATION_PAPER_APPLICATION_HOUSE_NO_MAX_LENGTH"
                                                class="form-control w-100"
                                                id="app-unt-house-number"/>
                                         <jr2-input-error-message
                                             [formGroup]="jobPublicationForm"
                                             path="application.postAddress.paperAppHouseNr"
                                             [errorCodes]="['maxlength']"
-                                            [keys]="['job-publication.application.postAddress.paperApp.houseNr.maxlength']">
+                                            [keys]="['job-publication.validation.maxlength-10']">
                                         </jr2-input-error-message>
 
                                     </div>
@@ -914,26 +946,26 @@
                                     <label for="app-unt-post-box" class="col-form-label">
                                         {{
                                         'home.tools.job-publication.company.postbox-number'
-                                        |
-                                        translate }}
+                                            |
+                                            translate }}
                                     </label>
                                     <div>
                                         <input formControlName="paperAppPostboxNr"
-                                               [jr2TextSizeLimit]="6" type="text"
+                                               type="text"
                                                class="form-control"
                                                id="app-unt-post-box"/>
                                     </div>
                                     <jr2-input-error-message
                                         [formGroup]="jobPublicationForm"
                                         path="application.postAddress.paperAppPostboxNr"
-                                        [errorCodes]="['pattern','maxlength']"
-                                        [keys]="['home.tools.job-publication.messages.validate.pobox-format',
-                                        'job-publication.application.postAddress.paperApp.postboxNr.maxlength']">
+                                        [errorCodes]="['pattern']"
+                                        [keys]="['home.tools.job-publication.messages.validate.pobox-format']">
                                     </jr2-input-error-message>
                                     <jr2-input-error-message
                                         [formGroup]="jobPublicationForm"
                                         path="application.postAddress"
-                                        [errorCodes]="['atLeastOneRequired']">
+                                        [errorCodes]="['atLeastOneRequired']"
+                                        [keys]="['home.tools.job-publication.messages.validate.at-least-one-required-street-or-pobox']">
                                     </jr2-input-error-message>
                                 </div>
 
@@ -946,7 +978,7 @@
                                 <div class="form-group">
                                     <label for="app-unt-country" class="col-form-label">{{
                                         'home.tools.job-publication.company.country'
-                                        | translate }}</label>
+                                            | translate }}</label>
                                     <div>
                                         <select formControlName="paperAppCountryCode"
                                                 class="form-control custom-select"
@@ -966,8 +998,9 @@
                         <label for="app-text">
                             {{
                             'home.tools.job-publication.application.additional-info.label'
-                            | translate }}
-                            <span class="optional">{{ 'home.tools.job-publication.optional' | translate }}</span>
+                                | translate }}
+                            <span
+                                class="optional">{{ 'home.tools.job-publication.optional' | translate }}</span>
                         </label>
                         <div>
                             <textarea #additionalInfo class="form-control" id="app-text"

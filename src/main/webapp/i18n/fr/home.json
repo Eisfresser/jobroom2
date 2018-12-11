@@ -40,7 +40,7 @@
                     "additional-info": {
                         "characters-counter-text": "{{count}} caract\u00e8res disponibles",
                         "label": "Indications compl\u00e9mentaires",
-                        "placeholder": "max. 240 caract\u00e8res"
+                        "placeholder": "max. 255 caract\u00e8res"
                     },
                     "copy-email-from-public-contact": "Comme Contact pour candidats",
                     "copy-phonenumber-from-public-contact": "Comme Contact pour candidats",
