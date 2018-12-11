@@ -66,7 +66,7 @@
                                         formControlName="degree">
                                     <option [ngValue]="null" selected>{{
                                         'home.tools.job-publication.no-selection' |
-                                            translate }}
+                                        translate }}
                                     </option>
                                     <option *ngFor="let degree of degrees | keys"
                                             [ngValue]="degree.value">
@@ -78,7 +78,7 @@
                         <div class="form-group">
                             <label for="exp" class="col-form-label">{{
                                 'home.tools.job-publication.experience' |
-                                    translate }}
+                                translate }}
                                 <span
                                     class="optional">{{ 'home.tools.job-publication.optional' | translate }}</span>
                             </label>
@@ -87,12 +87,12 @@
                                         formControlName="experience">
                                     <option [ngValue]="null">{{
                                         'home.tools.job-publication.no-selection' |
-                                            translate }}
+                                        translate }}
                                     </option>
                                     <option *ngFor="let experience of experiences | keys"
                                             [ngValue]="experience.value">
                                         {{'home.tools.job-publication.experience.' +
-                                    experience.value | translate}}
+                                        experience.value | translate}}
                                     </option>
                                 </select>
                             </div>
@@ -129,7 +129,7 @@
                         <div class="form-group">
                             <label class="col-form-label">{{
                                 'home.tools.job-publication.employmentStartDate.title'
-                                    | translate }}</label>
+                                | translate }}</label>
                             <div class="form-group__inline">
                                 <div class="radio col-form-label">
                                     <input formControlName="immediate" type="radio"
@@ -138,7 +138,7 @@
                                     <label for="fromNow">
                                         {{
                                         'home.tools.job-publication.employmentStartDate.immediately'
-                                            | translate
+                                        | translate
                                         }}
                                     </label>
                                 </div>
@@ -149,8 +149,8 @@
                                     <label for="byArrangement">
                                         {{
                                         'home.tools.job-publication.employmentStartDate.by-arrangement'
-                                            |
-                                            translate }}
+                                        |
+                                        translate }}
                                     </label>
                                 </div>
 
@@ -159,7 +159,7 @@
                                         <label for="stellenantritt-date" class="sr-only">
                                             {{
                                             'home.tools.job-publication.employmentStartDate.label'
-                                                | translate
+                                            | translate
                                             }}
                                         </label>
                                         <input #startDatePicker="ngbDatepicker"
@@ -196,7 +196,7 @@
                             class="form-group">
                             <label class="col-form-label">{{
                                 'home.tools.job-publication.employmentEndDate.title' |
-                                    translate }}</label>
+                                translate }}</label>
                             <div class="form-group__inline">
                                 <div class="radio col-form-label">
                                     <input type="radio" formControlName="permanent"
@@ -204,7 +204,7 @@
                                     <label for="permanent">
                                         {{
                                         'home.tools.job-publication.employmentEndDate.permanent'
-                                            | translate }}
+                                        | translate }}
                                     </label>
                                 </div>
 
@@ -215,7 +215,7 @@
                                     <label for="temporary">
                                         {{
                                         'home.tools.job-publication.employmentEndDate.temporary'
-                                            | translate }}
+                                        | translate }}
                                     </label>
                                 </div>
 
@@ -224,7 +224,7 @@
                                         <label for="anstellungsdauer-date"
                                                class="sr-only">{{
                                             'home.tools.job-publication.employmentEndDate.label'
-                                                | translate
+                                            | translate
                                             }}</label>
                                         <input #endDatePicker="ngbDatepicker"
                                                #employmentEndDateEl
@@ -292,7 +292,7 @@
                     <div class="form-group">
                         <label for="country" class="col-form-label">{{
                             'home.tools.job-publication.locality.country'
-                                | translate }}</label>
+                            | translate }}</label>
                         <div>
                             <select formControlName="countryCode"
                                     class="form-control custom-select" id="country">
@@ -361,32 +361,39 @@
                         <div class="form-group col-md-9">
                             <label for="unt-street" class="col-form-label">{{
                                 'home.tools.job-publication.company.street' |
-                                    translate }}</label>
+                                translate }}</label>
                             <input formControlName="street" type="text"
                                    [jr2TextSizeLimit]="COMPANY_STREET_MAX_LENGTH"
                                    class="form-control w-100"
                                    id="unt-street"/>
+                            <jr2-input-error-message [formGroup]="jobPublicationForm"
+                                                     path="company.street"
+                                                     [errorCodes]="['maxlength']"
+                                                     [keys]="['job-publication.validation.maxlength-60']">
+                            </jr2-input-error-message>
+                            <jr2-input-error-message [formGroup]="jobPublicationForm"
+                                                     path="company"
+                                                     [errorCodes]="['atLeastOneRequired']"
+                                                     [keys]="['home.tools.job-publication.messages.validate.at-least-one-required-street-or-pobox']">
+                            </jr2-input-error-message>
                         </div>
                         <div class="form-group col-md-3">
                             <label for="unt-house-number" class="col-form-label">{{
                                 'home.tools.job-publication.company.house-number' |
-                                    translate }}
+                                translate }}
                                 <span
                                     class="optional">{{ 'home.tools.job-publication.optional' | translate }}</span></label>
                             <input formControlName="houseNumber" type="text"
                                    [jr2TextSizeLimit]="COMPANY_HOUSE_NO_MAX_LENGTH"
                                    class="form-control w-100"
                                    id="unt-house-number"/>
+                            <jr2-input-error-message [formGroup]="jobPublicationForm"
+                                                     path="company.houseNumber"
+                                                     [errorCodes]="['maxlength']"
+                                                     [keys]="['job-publication.validation.maxlength-10']">
+                            </jr2-input-error-message>
                         </div>
-                        <jr2-input-error-message [formGroup]="jobPublicationForm"
-                                                 path="company.street"
-                                                 [errorCodes]="['maxlength']"
-                                                 [keys]="['job-publication.validation.maxlength-60']">
-                        </jr2-input-error-message>
-                        <jr2-input-error-message [formGroup]="jobPublicationForm"
-                                                 path="company"
-                                                 [errorCodes]="['atLeastOneRequired']"
-                                                 [keys]="['home.tools.job-publication.messages.validate.at-least-one-required-street-or-pobox']">
+
                     </div>
 
                     <div class="form-group">
@@ -397,6 +404,18 @@
                             <input formControlName="postboxNumber"
                                    type="text" class="form-control" id="unt-pobox"/>
                         </div>
+
+                        <jr2-input-error-message
+                            [formGroup]="jobPublicationForm"
+                            path="company.postboxNumber"
+                            [errorCodes]="['pattern']"
+                            [keys]="['home.tools.job-publication.messages.validate.pobox-format']">
+                        </jr2-input-error-message>
+                        <jr2-input-error-message [formGroup]="jobPublicationForm"
+                                                 path="company"
+                                                 [errorCodes]="['atLeastOneRequired']"
+                                                 [keys]="['home.tools.job-publication.messages.validate.at-least-one-required-street-or-pobox']">
+                        </jr2-input-error-message>
                     </div>
 
                     <jr2-zip-code [group]="jobPublicationForm.get('company')"
@@ -407,7 +426,7 @@
                     <div class="form-group">
                         <label for="unt-country" class="col-form-label">{{
                             'home.tools.job-publication.company.country'
-                                | translate }}</label>
+                            | translate }}</label>
                         <div>
                             <select formControlName="countryCode"
                                     class="form-control custom-select" id="unt-country">
@@ -462,7 +481,7 @@
                     <div class="form-group">
                         <label for="employer-country" class="col-form-label">{{
                             'home.tools.job-publication.company.country'
-                                | translate }}</label>
+                            | translate }}</label>
                         <div>
                             <select formControlName="countryCode"
                                     class="form-control custom-select"
@@ -500,7 +519,7 @@
                     <div class="form-group">
                         <label for="kp-anrede" class="col-form-label">{{
                             'home.tools.job-publication.contact.salutation'
-                                | translate }}</label>
+                            | translate }}</label>
                         <div>
                             <select formControlName="salutation"
                                     class="form-control custom-select" id="kp-anrede">
@@ -511,7 +530,7 @@
                                 <option *ngFor="let salutation of salutations | keys"
                                         [ngValue]="salutation.value">
                                     {{'global.contactPerson.salutation.' +
-                                salutation.value | translate}}
+                                    salutation.value | translate}}
                                 </option>
                             </select>
                             <jr2-input-error-message [formGroup]="jobPublicationForm"
@@ -541,7 +560,7 @@
                     <div class="form-group">
                         <label for="kp-name" class="col-form-label">{{
                             'home.tools.job-publication.contact.last-name' |
-                                translate }}</label>
+                            translate }}</label>
                         <div>
                             <input formControlName="lastName"
                                    [jr2TextSizeLimit]="CONTACT_LAST_NAME_MAX_LENGTH"
@@ -573,7 +592,7 @@
                     <div class="form-group">
                         <label for="kp-email" class="col-form-label">{{
                             'home.tools.job-publication.contact.email' |
-                                translate }}</label>
+                            translate }}</label>
                         <div>
                             <input formControlName="email"
                                    [jr2TextSizeLimit]="CONTACT_EMAIL_MAX_LENGTH"
@@ -621,7 +640,7 @@
                                 <option *ngFor="let salutation of salutations | keys"
                                         [ngValue]="salutation.value">
                                     {{'global.contactPerson.salutation.' +
-                                salutation.value | translate}}
+                                    salutation.value | translate}}
                                 </option>
                             </select>
                             <jr2-input-error-message [formGroup]="jobPublicationForm"
@@ -785,7 +804,7 @@
                                     (click)="copyEmailFromPublicContact()">
                                 {{
                                 'home.tools.job-publication.application.copy-email-from-public-contact'
-                                    | translate}}
+                                | translate}}
                             </button>
                             <div>
                                 <input type="email"
@@ -825,7 +844,7 @@
                                     (click)="copyPhoneNumberFromPublicContact()">
                                 {{
                                 'home.tools.job-publication.application.copy-phonenumber-from-public-contact'
-                                    | translate}}
+                                | translate}}
                             </button>
                             <div>
                                 <jr2-phone-number-input id="app-phone"
@@ -847,7 +866,7 @@
                             <label for="selectPaperApp">
                                 {{
                                 'job-detail.application.mail'
-                                    | translate }}
+                                | translate }}
                             </label>
                         </div>
 
@@ -863,7 +882,7 @@
                                             (click)="copyAddressFromCompany()">
                                         {{
                                         'home.tools.job-publication.application.copy-from-business'
-                                            | translate}}
+                                        | translate}}
                                     </button>
                                     <div>
                                         <input formControlName="paperAppCompanyName"
@@ -888,8 +907,8 @@
                                         <label for="app-unt-street"
                                                class="col-form-label">{{
                                             'home.tools.job-publication.company.street'
-                                                |
-                                                translate }}</label>
+                                            |
+                                            translate }}</label>
                                         <input formControlName="paperAppStreet"
                                                type="text"
                                                [jr2TextSizeLimit]="APPLICATION_PAPER_APPLICATION_STREET_MAX_LENGTH"
@@ -912,8 +931,8 @@
                                         <label for="app-unt-house-number"
                                                class="col-form-label">{{
                                             'home.tools.job-publication.company.house-number'
-                                                |
-                                                translate }}
+                                            |
+                                            translate }}
                                             <span
                                                 class="optional">{{ 'home.tools.job-publication.optional' | translate }}</span></label>
                                         <input formControlName="paperAppHouseNr"
@@ -935,8 +954,8 @@
                                     <label for="app-unt-post-box" class="col-form-label">
                                         {{
                                         'home.tools.job-publication.company.postbox-number'
-                                            |
-                                            translate }}
+                                        |
+                                        translate }}
                                     </label>
                                     <div>
                                         <input formControlName="paperAppPostboxNr"
@@ -967,7 +986,7 @@
                                 <div class="form-group">
                                     <label for="app-unt-country" class="col-form-label">{{
                                         'home.tools.job-publication.company.country'
-                                            | translate }}</label>
+                                        | translate }}</label>
                                     <div>
                                         <select formControlName="paperAppCountryCode"
                                                 class="form-control custom-select"
@@ -987,7 +1006,7 @@
                         <label for="app-text">
                             {{
                             'home.tools.job-publication.application.additional-info.label'
-                                | translate }}
+                            | translate }}
                             <span
                                 class="optional">{{ 'home.tools.job-publication.optional' | translate }}</span>
                         </label>
