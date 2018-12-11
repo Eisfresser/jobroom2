@@ -13,6 +13,7 @@ public class CurrentUserDTO {
     private String lastName;
     private String email;
     private String langKey;
+    private boolean legalTermsAccepted;
     private Set<String> authorities = new HashSet<>();
     private RegistrationStatus registrationStatus;
 
@@ -67,6 +68,15 @@ public class CurrentUserDTO {
 
     public CurrentUserDTO setLangKey(String langKey) {
         this.langKey = langKey;
+        return this;
+    }
+
+    public boolean isLegalTermsAccepted() {
+        return legalTermsAccepted;
+    }
+
+    public CurrentUserDTO setLegalTermsAccepted(boolean legalTermsAccepted) {
+        this.legalTermsAccepted = legalTermsAccepted;
         return this;
     }
 

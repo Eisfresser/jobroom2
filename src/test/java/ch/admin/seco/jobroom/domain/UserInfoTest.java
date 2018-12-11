@@ -1,7 +1,15 @@
 package ch.admin.seco.jobroom.domain;
 
+import static ch.admin.seco.jobroom.domain.fixture.UserInfoFixture.testCompanyUserInfo;
+import static ch.admin.seco.jobroom.domain.fixture.UserInfoFixture.testUserInfo;
 import static org.assertj.core.api.Assertions.assertThat;
+
+import java.lang.reflect.Field;
+import java.time.LocalDate;
+
 import org.junit.Test;
+
+import org.springframework.util.ReflectionUtils;
 
 import ch.admin.seco.jobroom.domain.enumeration.RegistrationStatus;
 import ch.admin.seco.jobroom.service.CompanyContactTemplateNotFoundException;
@@ -12,7 +20,7 @@ public class UserInfoTest {
     @Test
     public void testUnregister() {
         // given
-        UserInfo userInfo = prepareCompanyUser();
+        UserInfo userInfo = testCompanyUserInfo();
 
         // when
         userInfo.unregister();
@@ -25,7 +33,7 @@ public class UserInfoTest {
     @Test
     public void testUnregisterTwice() {
         // given
-        UserInfo userInfo = prepareCompanyUser();
+        UserInfo userInfo = testCompanyUserInfo();
 
         // when
         userInfo.unregister();
@@ -39,7 +47,7 @@ public class UserInfoTest {
     @Test
     public void testAddMultipleCompanyContactTemplates() {
         // given
-        UserInfo userInfo = prepareCompanyUser();
+        UserInfo userInfo = testCompanyUserInfo();
         Company company1 = new Company("ACME AG", "CHE-123.456.789");
         Company company2 = new Company("ACME AG", "CHE-123.456.789");
 
@@ -60,7 +68,7 @@ public class UserInfoTest {
     @Test
     public void testAddCompanyContactTemplate() {
         // given
-        UserInfo userInfo = prepareCompanyUser();
+        UserInfo userInfo = testCompanyUserInfo();
         Company company = userInfo.getCompany();
 
         // when
@@ -74,7 +82,7 @@ public class UserInfoTest {
     @Test
     public void testUpdateCompanyContactTemplate() throws CompanyContactTemplateNotFoundException {
         // given
-        UserInfo userInfo = prepareCompanyUser();
+        UserInfo userInfo = testCompanyUserInfo();
         Company company = userInfo.getCompany();
 
         // when
@@ -94,7 +102,7 @@ public class UserInfoTest {
     @Test
     public void testRemoveCompanyContactTemplate() {
         // given
-        UserInfo userInfo = prepareCompanyUser();
+        UserInfo userInfo = testCompanyUserInfo();
         Company company = userInfo.getCompany();
 
         // when
@@ -107,12 +115,51 @@ public class UserInfoTest {
         assertThat(userInfo.getCompanyContactTemplates()).hasSize(0);
     }
 
-    private UserInfo prepareCompanyUser() {
-        UserInfo userInfo = new UserInfo("TEST", "TEST", "test@example.com", "1234", "de");
-        Company company = new Company("ACME AG", "CHE-123.456.789");
-        userInfo.requestAccessAsEmployer(company);
-        return userInfo;
+    @Test
+    public void testIsLatestLegalTermsAccepted_with_not_finished_registration() {
+        // given
+        UserInfo userInfo = testUserInfo();
+
+        // then
+        assertThat(userInfo.isLatestLegalTermsAccepted(LocalDate.now().minusDays(1))).isFalse();
+        assertThat(userInfo.isLatestLegalTermsAccepted(LocalDate.now().plusDays(1))).isFalse();
     }
 
+    @Test
+    public void testIsLatestLegalTermsAccepted_with_finished_registration_for_existing_users() throws Exception {
+        // given
+        UserInfo userInfo = testUserInfo();
+
+        // when
+        finishRegistration(userInfo);
+
+        // then
+        assertThat(userInfo.isLatestLegalTermsAccepted(LocalDate.now().minusDays(1))).isTrue();
+        assertThat(userInfo.isLatestLegalTermsAccepted(LocalDate.now())).isTrue();
+        assertThat(userInfo.isLatestLegalTermsAccepted(LocalDate.now().plusDays(1))).isFalse();
+    }
+
+    @Test
+    public void testIsLatestLegalTermsAccepted_with_accepted_terms() {
+        // given
+        UserInfo userInfo = testUserInfo();
+
+        // when
+        userInfo.acceptLegalTerms();
+
+        // then
+        assertThat(userInfo.isLatestLegalTermsAccepted(LocalDate.now().minusDays(1))).isTrue();
+        assertThat(userInfo.isLatestLegalTermsAccepted(LocalDate.now())).isTrue();
+        assertThat(userInfo.isLatestLegalTermsAccepted(LocalDate.now().plusDays(1))).isFalse();
+    }
+
+    private void finishRegistration(UserInfo userInfo) throws Exception {
+        // Simulates the old userInfo.finishRegistration()
+        // We can not use it because it is changed.
+        userInfo.finishRegistration();
+        Field legalTermsAcceptedAtField = UserInfo.class.getDeclaredField("legalTermsAcceptedAt");
+        ReflectionUtils.makeAccessible(legalTermsAcceptedAtField);
+        ReflectionUtils.setField(legalTermsAcceptedAtField, userInfo, null);
+    }
 
 }

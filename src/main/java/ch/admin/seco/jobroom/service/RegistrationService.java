@@ -1,11 +1,37 @@
 package ch.admin.seco.jobroom.service;
 
 
+import static ch.admin.seco.jobroom.service.logging.BusinessLogAdditionalKey.OBJECT_TYPE_STATUS;
+import static ch.admin.seco.jobroom.service.logging.BusinessLogEventType.USER_UNREGISTERED_EVENT;
+import static ch.admin.seco.jobroom.service.logging.BusinessLogObjectType.USER;
+import static org.apache.commons.lang.WordUtils.capitalize;
+
+import java.time.LocalDate;
+import java.util.Optional;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
+import org.springframework.util.StringUtils;
+
 import ch.admin.seco.jobroom.config.Constants;
-import ch.admin.seco.jobroom.domain.*;
+import ch.admin.seco.jobroom.domain.BlacklistedAgent;
+import ch.admin.seco.jobroom.domain.Company;
+import ch.admin.seco.jobroom.domain.Organization;
+import ch.admin.seco.jobroom.domain.StesInformation;
+import ch.admin.seco.jobroom.domain.UserInfo;
+import ch.admin.seco.jobroom.domain.UserInfoId;
 import ch.admin.seco.jobroom.domain.enumeration.CompanySource;
 import ch.admin.seco.jobroom.domain.enumeration.RegistrationStatus;
-import ch.admin.seco.jobroom.repository.*;
+import ch.admin.seco.jobroom.repository.BlacklistedAgentRepository;
+import ch.admin.seco.jobroom.repository.CompanyRepository;
+import ch.admin.seco.jobroom.repository.OrganizationRepository;
+import ch.admin.seco.jobroom.repository.UserInfoRepository;
+import ch.admin.seco.jobroom.repository.UserRepository;
 import ch.admin.seco.jobroom.security.AuthoritiesConstants;
 import ch.admin.seco.jobroom.security.IsAdmin;
 import ch.admin.seco.jobroom.security.UserPrincipal;
@@ -20,21 +46,6 @@ import ch.admin.seco.jobroom.service.dto.StesVerificationRequest;
 import ch.admin.seco.jobroom.service.dto.StesVerificationResult;
 import ch.admin.seco.jobroom.service.logging.BusinessLogData;
 import ch.admin.seco.jobroom.service.logging.BusinessLogger;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Assert;
-import org.springframework.util.StringUtils;
-
-import java.time.LocalDate;
-import java.util.Optional;
-
-import static ch.admin.seco.jobroom.service.logging.BusinessLogAdditionalKey.OBJECT_TYPE_STATUS;
-import static ch.admin.seco.jobroom.service.logging.BusinessLogEventType.USER_UNREGISTERED_EVENT;
-import static ch.admin.seco.jobroom.service.logging.BusinessLogObjectType.USER;
-import static org.apache.commons.lang.WordUtils.capitalize;
 
 @Service
 @ConfigurationProperties(prefix = "security")
@@ -160,6 +171,12 @@ public class RegistrationService {
 
     public void setAccessCodeMailRecipient(String accessCodeMailRecipient) {
         this.accessCodeMailRecipient = accessCodeMailRecipient;
+    }
+
+    public void acceptLegalTerms() {
+        UserPrincipal userPrincipal = this.currentUserService.getPrincipal();
+        UserInfo userInfo = getUserInfo(userPrincipal.getId());
+        userInfo.acceptLegalTerms();
     }
 
     @IsAdmin

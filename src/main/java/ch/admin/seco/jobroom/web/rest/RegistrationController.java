@@ -69,4 +69,10 @@ public class RegistrationController {
             return new RegistrationResultDTO(false, Constants.TYPE_UNKOWN);
         }
     }
+
+    @PostMapping("/acceptLegalTerms")
+    @Timed
+    public void acceptLegalTerms() {
+        this.registrationService.acceptLegalTerms();
+    }
 }

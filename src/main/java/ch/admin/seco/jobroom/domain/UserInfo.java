@@ -1,9 +1,11 @@
 package ch.admin.seco.jobroom.domain;
 
+import static ch.admin.seco.jobroom.domain.enumeration.RegistrationStatus.REGISTERED;
 import static ch.admin.seco.jobroom.domain.enumeration.RegistrationStatus.UNREGISTERED;
 
 import java.io.Serializable;
 import java.security.SecureRandom;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.HashSet;
@@ -32,6 +34,8 @@ import com.google.common.base.Preconditions;
 import org.apache.commons.codec.binary.Base32;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+
+import org.springframework.util.Assert;
 
 import ch.admin.seco.jobroom.domain.enumeration.AccountabilityType;
 import ch.admin.seco.jobroom.domain.enumeration.RegistrationStatus;
@@ -116,6 +120,9 @@ public class UserInfo implements Serializable {
     @Column(name = "last_login_at")
     private LocalDateTime lastLoginAt;
 
+    @Column(name = "legal_terms_accepted_at")
+    private LocalDateTime legalTermsAcceptedAt;
+
     @Valid
     @ElementCollection
     @CollectionTable(name = "company_contact_templates", joinColumns = @JoinColumn(name = "user_id"))
@@ -156,6 +163,7 @@ public class UserInfo implements Serializable {
     public void finishRegistration() {
         this.changeRegistrationStatus(RegistrationStatus.REGISTERED);
         this.accessCode = null;
+        this.acceptLegalTerms();
         this.touch();
     }
 
@@ -292,6 +300,28 @@ public class UserInfo implements Serializable {
 
     public LocalDateTime getLastLoginAt() {
         return lastLoginAt;
+    }
+
+    public LocalDateTime getLegalTermsAcceptedAt() {
+        return legalTermsAcceptedAt;
+    }
+
+    public void acceptLegalTerms() {
+        this.legalTermsAcceptedAt = LocalDateTime.now();
+    }
+
+    public boolean isLatestLegalTermsAccepted(LocalDate legalTermsEffectiveDate) {
+        Assert.notNull(legalTermsEffectiveDate, "legalTermsEffectiveDate is required");
+
+        final boolean legalTermsAccepted;
+        if (this.legalTermsAcceptedAt != null) {
+            legalTermsAccepted = legalTermsAcceptedAt.isAfter(legalTermsEffectiveDate.atStartOfDay());
+        } else {
+            legalTermsAccepted = ((this.registrationStatus == REGISTERED)
+                && (this.createdAt.isAfter(legalTermsEffectiveDate.atStartOfDay())));
+        }
+
+        return legalTermsAccepted;
     }
 
     void addCompany(Company company) {
