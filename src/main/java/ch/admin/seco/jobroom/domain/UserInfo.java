@@ -1,6 +1,5 @@
 package ch.admin.seco.jobroom.domain;
 
-import static ch.admin.seco.jobroom.domain.enumeration.RegistrationStatus.REGISTERED;
 import static ch.admin.seco.jobroom.domain.enumeration.RegistrationStatus.UNREGISTERED;
 
 import java.io.Serializable;
@@ -316,9 +315,8 @@ public class UserInfo implements Serializable {
     public boolean isLatestLegalTermsAccepted(LocalDate legalTermsEffectiveDate) {
         Assert.notNull(legalTermsEffectiveDate, "legalTermsEffectiveDate is required");
 
-        final LocalDateTime resolvedLegalTermsAcceptedAt = resolveLegalTermsAcceptedAt();
-        if (resolvedLegalTermsAcceptedAt != null) {
-            return resolvedLegalTermsAcceptedAt.isAfter(legalTermsEffectiveDate.atStartOfDay());
+        if (legalTermsAcceptedAt != null) {
+            return legalTermsAcceptedAt.isAfter(legalTermsEffectiveDate.atStartOfDay());
         }
 
         return false;
@@ -328,19 +326,6 @@ public class UserInfo implements Serializable {
         Accountability accountability = new Accountability(AccountabilityType.USER, company);
         accountabilities.add(accountability);
         this.touch();
-    }
-
-    private LocalDateTime resolveLegalTermsAcceptedAt() {
-        //todo: Create a DB migration script for the  legalTermsAcceptedAt
-        if (legalTermsAcceptedAt != null) {
-            return legalTermsAcceptedAt;
-        }
-
-        if (registrationStatus == REGISTERED) {
-            return createdAt != null ? createdAt : DEFAULT_CREATED_AT;
-        }
-
-        return null;
     }
 
     private String createAccessCode() {

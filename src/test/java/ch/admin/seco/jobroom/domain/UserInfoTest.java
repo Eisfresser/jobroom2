@@ -126,20 +126,6 @@ public class UserInfoTest {
     }
 
     @Test
-    public void testIsLatestLegalTermsAccepted_with_finished_registration_for_existing_users() throws Exception {
-        // given
-        LocalDate goLiveDate = LocalDate.of(2018, 7, 1);
-        UserInfo userInfo = testUserInfo();
-
-        // when
-        finishRegistration(userInfo);
-
-        // then
-        assertThat(userInfo.isLatestLegalTermsAccepted(goLiveDate)).isTrue();
-        assertThat(userInfo.isLatestLegalTermsAccepted(LocalDate.now())).isFalse();
-    }
-
-    @Test
     public void testIsLatestLegalTermsAccepted_with_accepted_terms() {
         // given
         UserInfo userInfo = testUserInfo();
@@ -151,19 +137,6 @@ public class UserInfoTest {
         assertThat(userInfo.isLatestLegalTermsAccepted(LocalDate.now().minusDays(1))).isTrue();
         assertThat(userInfo.isLatestLegalTermsAccepted(LocalDate.now())).isTrue();
         assertThat(userInfo.isLatestLegalTermsAccepted(LocalDate.now().plusDays(1))).isFalse();
-    }
-
-    private void finishRegistration(UserInfo userInfo) throws Exception {
-        // Simulates the old userInfo.finishRegistration()
-        // We can not use it because it is changed.
-        userInfo.finishRegistration();
-        Field legalTermsAcceptedAtField = UserInfo.class.getDeclaredField("legalTermsAcceptedAt");
-        ReflectionUtils.makeAccessible(legalTermsAcceptedAtField);
-        ReflectionUtils.setField(legalTermsAcceptedAtField, userInfo, null);
-
-        Field createdAt = UserInfo.class.getDeclaredField("createdAt");
-        ReflectionUtils.makeAccessible(createdAt);
-        ReflectionUtils.setField(createdAt, userInfo, null);
     }
 
 }
