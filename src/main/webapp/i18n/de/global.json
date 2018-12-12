@@ -222,7 +222,8 @@
             },
             "home": "Startseite",
             "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
-            "language": "Sprache"
+            "language": "Sprache",
+            "termsAndConditions": "AGB"
         },
         "messages": {
             "error": {
