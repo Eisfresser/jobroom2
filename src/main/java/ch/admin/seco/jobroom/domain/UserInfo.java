@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.security.SecureRandom;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
@@ -57,6 +58,8 @@ public class UserInfo implements Serializable {
     private static final int RANDOM_NUMBER_LENGTH = 5;
 
     private static final long serialVersionUID = 1L;
+
+    private static final LocalDateTime DEFAULT_CREATED_AT = LocalDate.of(2018, 7, 1).atTime(LocalTime.NOON);
 
     @EmbeddedId
     @AttributeOverride(name = "value", column = @Column(name = "id"))
@@ -313,21 +316,31 @@ public class UserInfo implements Serializable {
     public boolean isLatestLegalTermsAccepted(LocalDate legalTermsEffectiveDate) {
         Assert.notNull(legalTermsEffectiveDate, "legalTermsEffectiveDate is required");
 
-        final boolean legalTermsAccepted;
-        if (this.legalTermsAcceptedAt != null) {
-            legalTermsAccepted = legalTermsAcceptedAt.isAfter(legalTermsEffectiveDate.atStartOfDay());
-        } else {
-            legalTermsAccepted = ((this.registrationStatus == REGISTERED)
-                && (this.createdAt.isAfter(legalTermsEffectiveDate.atStartOfDay())));
+        final LocalDateTime resolvedLegalTermsAcceptedAt = resolveLegalTermsAcceptedAt();
+        if (resolvedLegalTermsAcceptedAt != null) {
+            return resolvedLegalTermsAcceptedAt.isAfter(legalTermsEffectiveDate.atStartOfDay());
         }
 
-        return legalTermsAccepted;
+        return false;
     }
 
     void addCompany(Company company) {
         Accountability accountability = new Accountability(AccountabilityType.USER, company);
         accountabilities.add(accountability);
         this.touch();
+    }
+
+    private LocalDateTime resolveLegalTermsAcceptedAt() {
+        //todo: Create a DB migration script for the  legalTermsAcceptedAt
+        if (legalTermsAcceptedAt != null) {
+            return legalTermsAcceptedAt;
+        }
+
+        if (registrationStatus == REGISTERED) {
+            return createdAt != null ? createdAt : DEFAULT_CREATED_AT;
+        }
+
+        return null;
     }
 
     private String createAccessCode() {

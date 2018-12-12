@@ -128,15 +128,15 @@ public class UserInfoTest {
     @Test
     public void testIsLatestLegalTermsAccepted_with_finished_registration_for_existing_users() throws Exception {
         // given
+        LocalDate goLiveDate = LocalDate.of(2018, 7, 1);
         UserInfo userInfo = testUserInfo();
 
         // when
         finishRegistration(userInfo);
 
         // then
-        assertThat(userInfo.isLatestLegalTermsAccepted(LocalDate.now().minusDays(1))).isTrue();
-        assertThat(userInfo.isLatestLegalTermsAccepted(LocalDate.now())).isTrue();
-        assertThat(userInfo.isLatestLegalTermsAccepted(LocalDate.now().plusDays(1))).isFalse();
+        assertThat(userInfo.isLatestLegalTermsAccepted(goLiveDate)).isTrue();
+        assertThat(userInfo.isLatestLegalTermsAccepted(LocalDate.now())).isFalse();
     }
 
     @Test
@@ -160,6 +160,10 @@ public class UserInfoTest {
         Field legalTermsAcceptedAtField = UserInfo.class.getDeclaredField("legalTermsAcceptedAt");
         ReflectionUtils.makeAccessible(legalTermsAcceptedAtField);
         ReflectionUtils.setField(legalTermsAcceptedAtField, userInfo, null);
+
+        Field createdAt = UserInfo.class.getDeclaredField("createdAt");
+        ReflectionUtils.makeAccessible(createdAt);
+        ReflectionUtils.setField(createdAt, userInfo, null);
     }
 
 }
