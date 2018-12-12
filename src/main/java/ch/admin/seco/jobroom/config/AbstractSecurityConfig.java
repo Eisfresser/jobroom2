@@ -44,6 +44,7 @@ class AbstractSecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers("/api/authenticate").permitAll()
             .antMatchers("/api/active-system-notifications").permitAll()
             .antMatchers("/api/profile-info").permitAll()
+            .antMatchers("/api/legal-terms/current").permitAll()
             .antMatchers("/api/messages/send-anonymous-message")
             /*-*/.hasAnyAuthority(
             /*----*/AuthoritiesConstants.ROLE_COMPANY,
