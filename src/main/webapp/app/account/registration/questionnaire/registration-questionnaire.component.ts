@@ -2,6 +2,8 @@ import { BackgroundUtils } from '../../../shared';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { RegistrationDialogService } from '../registration-dialog.service';
+import { LegalTermsService } from '../legal-terms/legal-terms.service';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
     selector: 'jr2-registration-questionnaire',
@@ -10,10 +12,14 @@ import { RegistrationDialogService } from '../registration-dialog.service';
 })
 export class RegistrationQuestionnaireComponent implements OnInit, OnDestroy {
     public roleForm: FormGroup;
+    public legalTermsUrl$: Observable<string>;
 
     constructor(private fb: FormBuilder,
                 private backgroundUtils: BackgroundUtils,
-                private registrationDialogService: RegistrationDialogService) {
+                private registrationDialogService: RegistrationDialogService,
+                private legalTermsService: LegalTermsService) {
+        this.legalTermsUrl$ = this.legalTermsService.getCurrentLegalTermsUrl()
+            .catch((error) => Observable.of('error'));
     }
 
     ngOnInit() {

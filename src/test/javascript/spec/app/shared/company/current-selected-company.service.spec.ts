@@ -18,7 +18,8 @@ describe('CurrentSelectedCompanyService', () => {
         email: 'email',
         langKey: 'lang',
         authorities: [],
-        registrationStatus: RegistrationStatus.UNREGISTERED
+        registrationStatus: RegistrationStatus.UNREGISTERED,
+        legalTermsAccepted: true
     };
 
     const company = {

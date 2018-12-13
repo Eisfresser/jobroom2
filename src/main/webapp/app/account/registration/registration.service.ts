@@ -10,6 +10,7 @@ const REQUEST_COMPANY_ACCESS_CODE_URL = SERVER_API_URL + 'api/requestEmployerAcc
 const REQUEST_AGENT_ACCESS_CODE_URL = SERVER_API_URL + 'api/requestAgentAccessCode';
 const COMPANY_BY_UID_URL = SERVER_API_URL + 'api/getCompanyByUid';
 const REGISTER_BY_ACCESS_CODE = SERVER_API_URL + 'api/registerEmployerOrAgent';
+const ACCEPT_LEGAL_TERMS = SERVER_API_URL + 'api/acceptLegalTerms';
 
 @Injectable()
 export class RegistrationService {
@@ -39,6 +40,10 @@ export class RegistrationService {
 
     registerEmployerOrAgent(accessCode: string): Observable<any> {
         return this.http.post(REGISTER_BY_ACCESS_CODE, accessCode, { observe: 'response' });
+    }
+
+    acceptLegalTerms(): Observable<any> {
+        return this.http.post(ACCEPT_LEGAL_TERMS, { observe: 'response' });
     }
 
 }

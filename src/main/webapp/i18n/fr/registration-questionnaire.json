@@ -18,7 +18,10 @@
         },
         "termsOfUse": {
             "accept": "J'accepte les conditions d'utilisation",
-            "link": "<a href=\"https://www.arbeit.swiss/dam/secoalv/fr/bilder/unternehmen/Stellenmeldepflicht/Nutzungsbedingungen_Job-Room.pdf.download.pdf/AGB_Job-Room_Juni_2018_fr.pdf\" target=\"_blank\">Afficher les conditions d'utilisation</a>"
+            "link": {
+                "error": "Une erreur s'est produite !",
+                "text": "Afficher les conditions d'utilisation"
+            }
         },
         "title": "Enregistrement"
     }

@@ -11,7 +11,8 @@ export class ProfileService {
     private profileInfoUrl = SERVER_API_URL + 'api/profile-info';
     private profileInfo: Observable<ProfileInfo>;
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient) {
+    }
 
     getProfileInfo(): Observable<ProfileInfo> {
         if (!this.profileInfo) {
@@ -20,11 +21,11 @@ export class ProfileService {
                     const pi = new ProfileInfo();
                     pi.activeProfiles = data.activeProfiles;
                     pi.ribbonEnv = data.ribbonEnv;
-                    pi.inProduction = data.activeProfiles.includes('prod') ;
+                    pi.inProduction = data.activeProfiles.includes('prod');
                     pi.swaggerEnabled = data.activeProfiles.includes('swagger');
                     pi.noEiam = data.activeProfiles.includes('no-eiam');
                     return pi;
-                });
+                }).share();
         }
         return this.profileInfo;
     }

@@ -129,4 +129,6 @@ export interface CurrentUser {
     authorities: Array<string>
 
     registrationStatus: RegistrationStatus
+
+    legalTermsAccepted: boolean
 }

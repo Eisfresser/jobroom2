@@ -177,6 +177,24 @@
                 "REJECTED": "Rejet\u00e9"
             }
         },
+        "legal-terms-dialog": {
+            "body": {
+                "accept-label": "J\u2019accepte les nouvelles CG.",
+                "accept-link": {
+                    "error": "Une erreur s'est produite !",
+                    "text": "Nouvelles conditions g\u00e9n\u00e9rales (CG)"
+                },
+                "content1": "Nos conditions g\u00e9n\u00e9rales ont \u00e9t\u00e9 modifi\u00e9es.",
+                "content2": "Veuillez les accepter afin de poursuivre l\u2019utilisation de votre compte."
+            },
+            "footer": {
+                "accept": "Suivant",
+                "decline": "Ne pas accepter et se d\u00e9sinscrire"
+            },
+            "header": {
+                "title": "Nouvelles conditions g\u00e9n\u00e9rales (CG)"
+            }
+        },
         "menu": {
             "account": {
                 "login": "Login|Enregistrement",
@@ -496,6 +514,16 @@
             "staging": "Staging",
             "test": "Test",
             "training": "Training"
+        },
+        "terms-and-conditions": {
+            "body": {
+                "accept-label": "J\u2019accepte les nouvelles CG.",
+                "accept-link": ""
+            },
+            "footer": {
+                "accept": "Suivant",
+                "decline": "Ne pas accepter et se d\u00e9sinscrire"
+            }
         },
         "title": "Job-Room",
         "workForm": {

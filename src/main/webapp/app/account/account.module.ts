@@ -20,6 +20,8 @@ import { RegistrationDialogService } from './registration/registration-dialog.se
 import { RegistrationAccessCodeComponent } from './registration/access-code/registration-access-code.component';
 import { RegistrationGuardService } from './registration/registration-guard.service';
 import { ContactTemplateManagementComponent } from '../account/contact-template-management/contact-template-management.component';
+import { LegalTermsComponent } from './registration/legal-terms/legal-terms.component';
+import { LegalTermsService } from './registration/legal-terms/legal-terms.service';
 
 @NgModule({
     imports: [
@@ -38,10 +40,12 @@ import { ContactTemplateManagementComponent } from '../account/contact-template-
         RegistrationCompanyDialogComponent,
         RegistrationQuestionnaireComponent,
         RegistrationPavDialogComponent,
-        RegistrationAccessCodeComponent
+        RegistrationAccessCodeComponent,
+        LegalTermsComponent
     ],
     providers: [
         RegistrationService,
+        LegalTermsService,
         BackgroundUtils,
         ModalUtils,
         RegistrationDialogService,
@@ -52,6 +56,9 @@ import { ContactTemplateManagementComponent } from '../account/contact-template-
         JobseekerDialogComponent,
         RegistrationPavDialogComponent,
         RegistrationCompanyDialogComponent
+    ],
+    exports: [
+        LegalTermsComponent
     ]
 })
 export class JobroomAccountModule {

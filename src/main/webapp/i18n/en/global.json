@@ -177,6 +177,24 @@
                 "REJECTED": "Rejected"
             }
         },
+        "legal-terms-dialog": {
+            "body": {
+                "accept-label": "I accept the new Ts&Cs",
+                "accept-link": {
+                    "error": "An error has occurred!",
+                    "text": "New Terms and Conditions (Ts&Cs)"
+                },
+                "content1": "Our general terms and conditions (T&Cs) have changed.",
+                "content2": "Please accept the new T&Cs to continue using your account."
+            },
+            "footer": {
+                "accept": "Next",
+                "decline": "Do not accept and log out"
+            },
+            "header": {
+                "title": "New Terms and Conditions (Ts&Cs)"
+            }
+        },
         "menu": {
             "account": {
                 "login": "Login|Registration",
@@ -496,6 +514,16 @@
             "staging": "Staging",
             "test": "Test",
             "training": "Training"
+        },
+        "terms-and-conditions": {
+            "body": {
+                "accept-label": "I accept the new Ts&Cs",
+                "accept-link": ""
+            },
+            "footer": {
+                "accept": "Next",
+                "decline": "Do not accept and log out"
+            }
         },
         "title": "Job-Room",
         "workForm": {

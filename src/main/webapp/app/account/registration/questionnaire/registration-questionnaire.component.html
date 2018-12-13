@@ -47,7 +47,7 @@
         </div>
 
         <div *ngIf="hasRoleSelected()">
-            <fieldset class="registration-questionnaire__paragraph">
+            <fieldset class="registration-questionnaire__paragraph" *ngIf="legalTermsUrl$ | async as legalTermsUrl">
                 <div class="checkbox">
                     <input
                         type="checkbox"
@@ -59,7 +59,12 @@
                     </label>
                 </div>
                 <div class="checkbox-indent">
-                    <a href="#" jhiTranslate="registrationQuestionnaire.termsOfUse.link"></a>
+                    <a *ngIf="legalTermsUrl !== 'error'" [href]="legalTermsUrl" target="_blank">
+                        {{ 'registrationQuestionnaire.termsOfUse.link.text' | translate}}
+                    </a>
+                    <div *ngIf="legalTermsUrl === 'error'" class="alert alert-danger">
+                        {{ 'registrationQuestionnaire.termsOfUse.link.error' | translate }}
+                    </div>
                 </div>
 
                 <div class="registration-questionnaire__actions">
@@ -68,12 +73,12 @@
                         <button type="button"
                                 class="btn btn-secondary btn-lg"
                                 jhiTranslate="entity.action.cancel"
-                                (click) = "cancel()">
+                                (click)="cancel()">
                         </button>
                         <button type="submit"
                                 class="btn btn-primary btn-lg"
                                 jhiTranslate="navigation.next"
-                                [disabled]="!isTermsAndConditionsAccepted()">
+                                [disabled]="!isTermsAndConditionsAccepted() || legalTermsUrl === 'error'">
                         </button>
                     </div>
                 </div>

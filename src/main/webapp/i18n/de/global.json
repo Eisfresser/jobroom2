@@ -177,6 +177,24 @@
                 "REJECTED": "Zur\u00fcckgewiesen"
             }
         },
+        "legal-terms-dialog": {
+            "body": {
+                "accept-label": "Ich akzeptiere die neuen AGB",
+                "accept-link": {
+                    "error": "Es ist ein Fehler aufgetreten!",
+                    "text": "Neue allgemeine Gesch\u00e4ftsbedingung (AGB)"
+                },
+                "content1": "Unsere allgemeinen Gesch\u00e4ftsbedingungen haben sich ge\u00e4ndert. ",
+                "content2": "Bitte akzeptieren Sie diese, damit Sie ihr Konto weiterhin nutzen k\u00f6nnen."
+            },
+            "footer": {
+                "accept": "Weiter",
+                "decline": "Nicht akzeptieren und ausloggen"
+            },
+            "header": {
+                "title": "Neue allgemeine Gesch\u00e4ftsbedingung (AGB)"
+            }
+        },
         "menu": {
             "account": {
                 "login": "Login|Registrierung",
@@ -496,6 +514,16 @@
             "staging": "Staging",
             "test": "Test",
             "training": "Training"
+        },
+        "terms-and-conditions": {
+            "body": {
+                "accept-label": "Ich akzeptiere die neuen AGB",
+                "accept-link": ""
+            },
+            "footer": {
+                "accept": "Weiter",
+                "decline": "Nicht akzeptieren und ausloggen"
+            }
         },
         "title": "Job-Room",
         "workForm": {

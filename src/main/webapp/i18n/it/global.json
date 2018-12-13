@@ -177,6 +177,24 @@
                 "REJECTED": "Respinto"
             }
         },
+        "legal-terms-dialog": {
+            "body": {
+                "accept-label": "Accetto le nuove CG",
+                "accept-link": {
+                    "error": "Si \u00e8 verificato un errore!",
+                    "text": "Nuove Condizioni generali (CG)"
+                },
+                "content1": "Le nostre Condizioni generali sono cambiate.",
+                "content2": "Per continuare a usare il tuo conto accetta le Condizioni generali."
+            },
+            "footer": {
+                "accept": "Seguente",
+                "decline": "Non accettare, logout"
+            },
+            "header": {
+                "title": "Nuove Condizioni generali (CG)"
+            }
+        },
         "menu": {
             "account": {
                 "login": "Login|Registrazione",
@@ -496,6 +514,16 @@
             "staging": "Staging",
             "test": "Test",
             "training": "Training"
+        },
+        "terms-and-conditions": {
+            "body": {
+                "accept-label": "Accetto le nuove CG",
+                "accept-link": ""
+            },
+            "footer": {
+                "accept": "Seguente",
+                "decline": "Non accettare, logout"
+            }
         },
         "title": "Job-Room",
         "workForm": {
