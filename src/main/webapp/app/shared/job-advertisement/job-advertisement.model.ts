@@ -95,10 +95,10 @@ export interface JobDescription {
 
 export interface Company {
     name: string;
-    street: string;
+    street?: string;
     houseNumber?: string;
-    postalCode: string;
-    city: string;
+    postalCode?: string;
+    city?: string;
     countryIsoCode: string;
     postOfficeBoxNumber?: string;
     postOfficeBoxPostalCode?: string;

@@ -1,13 +1,18 @@
 import { DateUtils, Degree, WorkForm } from '../../../shared';
 import {
     ApplyChannel,
+    Company,
     CreateJobAdvertisement,
     JobAdvertisement,
     LanguageSkill,
     Salutation,
     WorkExperience
 } from '../../../shared/job-advertisement/job-advertisement.model';
-import { ApplicationFormModel, JobPublicationForm } from './job-publication-form.model';
+import {
+    ApplicationFormModel,
+    CompanyFormModel,
+    JobPublicationForm
+} from './job-publication-form.model';
 import * as moment from 'moment';
 
 export class JobPublicationMapper {
@@ -101,18 +106,7 @@ export class JobPublicationMapper {
             },
         };
 
-        jobPublicationForm.company = {
-            name: jobAdvertisement.jobContent.company.name,
-            street: jobAdvertisement.jobContent.company.street,
-            houseNumber: jobAdvertisement.jobContent.company.houseNumber,
-            zipCode: {
-                zip: jobAdvertisement.jobContent.company.postalCode,
-                city: jobAdvertisement.jobContent.company.city
-            },
-            postboxNumber: jobAdvertisement.jobContent.company.postOfficeBoxNumber,
-            countryCode: jobAdvertisement.jobContent.company.countryIsoCode,
-            surrogate: jobAdvertisement.jobContent.company.surrogate,
-        };
+        this.mapCompanyToFormModel(jobAdvertisement.jobContent.company, jobPublicationForm);
 
         if (jobAdvertisement.jobContent.employer) {
             jobPublicationForm.employer = {
@@ -143,6 +137,36 @@ export class JobPublicationMapper {
         };
 
         return jobPublicationForm;
+    }
+
+    static mapCompanyToFormModel(company: Company, jobPublicationForm: JobPublicationForm) {
+        if (company) {
+
+            let addressPostalCode;
+            let addressCity;
+
+            if (company.postOfficeBoxNumber && company.postOfficeBoxPostalCode && company.postOfficeBoxCity) {
+                addressPostalCode = company.postOfficeBoxPostalCode;
+                addressCity = company.postOfficeBoxCity;
+            } else {
+                addressPostalCode = company.postalCode;
+                addressCity = company.city;
+            }
+
+            jobPublicationForm.company = {
+                name: company.name,
+                street: company.street,
+                houseNumber: company.houseNumber,
+                zipCode: {
+                    zip: addressPostalCode,
+                    city: addressCity
+                },
+                postboxNumber: company.postOfficeBoxNumber,
+                countryCode: company.countryIsoCode,
+                surrogate: company.surrogate,
+            };
+        }
+
     }
 
     static mapApplyChannelToFormModel(applyChannel: ApplyChannel, jobPublicationForm: JobPublicationForm) {
@@ -222,17 +246,7 @@ export class JobPublicationMapper {
             postalCode: jobPublicationForm.location.zipCode.zip,
             countryIsoCode: jobPublicationForm.location.countryCode
         };
-
-        jobAd.company = {
-            name: jobPublicationForm.company.name,
-            street: jobPublicationForm.company.street,
-            houseNumber: jobPublicationForm.company.houseNumber,
-            postalCode: jobPublicationForm.company.zipCode.zip,
-            city: jobPublicationForm.company.zipCode.city,
-            countryIsoCode: jobPublicationForm.company.countryCode,
-            postOfficeBoxNumber: jobPublicationForm.company.postboxNumber,
-            surrogate: jobPublicationForm.company.surrogate
-        };
+        this.mapCompanyToCreateJobAdvertisement(jobPublicationForm.company, jobAd);
 
         if (jobPublicationForm.employer) {
             jobAd.employer = {
@@ -273,6 +287,29 @@ export class JobPublicationMapper {
         return jobAd;
     }
 
+    private static mapCompanyToCreateJobAdvertisement(companyFormModel: CompanyFormModel, jobAd: CreateJobAdvertisement) {
+        if (companyFormModel.postboxNumber) {
+            jobAd.company = {
+                name: companyFormModel.name,
+                postOfficeBoxNumber: companyFormModel.postboxNumber,
+                postOfficeBoxCity: companyFormModel.zipCode.city,
+                postOfficeBoxPostalCode: companyFormModel.zipCode.zip,
+                countryIsoCode: companyFormModel.countryCode,
+                surrogate: companyFormModel.surrogate
+            }
+        } else {
+            jobAd.company = {
+                name: companyFormModel.name,
+                street: companyFormModel.street,
+                houseNumber: companyFormModel.houseNumber,
+                postalCode: companyFormModel.zipCode.zip,
+                city: companyFormModel.zipCode.city,
+                countryIsoCode: companyFormModel.countryCode,
+                surrogate: companyFormModel.surrogate
+            };
+        }
+    }
+
     static mapApplyChannelToCreateJobAdvertisement(applyChannel: ApplicationFormModel, jobAd: CreateJobAdvertisement) {
         jobAd.applyChannel = {
             rawPostAddress: null,
@@ -303,7 +340,7 @@ export class JobPublicationMapper {
         }
     }
 
-    static mapPostAddressToCreateJobAdvertisement(postAddress, jobAd: CreateJobAdvertisement):  void {
+    static mapPostAddressToCreateJobAdvertisement(postAddress, jobAd: CreateJobAdvertisement): void {
 
         jobAd.applyChannel.postAddress.name = postAddress.paperAppCompanyName;
         jobAd.applyChannel.postAddress.countryIsoCode = postAddress.paperAppCountryCode;
