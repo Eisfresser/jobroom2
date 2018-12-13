@@ -62,6 +62,9 @@
         file="config/liquibase/changelog/20181212080000_initialize_user_info_legal_terms_accepted_at.xml"
         relativeToChangelogFile="false"/>
 
+    <include
+        file="config/liquibase/changelog/20181213080000_change_initial-legal-terms-date.xml"
+        relativeToChangelogFile="false"/>
 
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
