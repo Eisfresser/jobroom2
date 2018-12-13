@@ -1,5 +1,7 @@
-import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Location } from '@angular/common';
+
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager, JhiLanguageService } from 'ng-jhipster';
 
@@ -14,6 +16,7 @@ import {
 
 import { VERSION } from '../../app.constants';
 import { RegistrationStatus } from '../../shared/user-info/user-info.model';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'jhi-navbar',
@@ -22,7 +25,7 @@ import { RegistrationStatus } from '../../shared/user-info/user-info.model';
         'navbar.scss'
     ]
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent implements OnInit, OnDestroy {
     currentUser: CurrentUser;
     inProduction: boolean;
     isNavbarCollapsed: boolean;
@@ -33,6 +36,9 @@ export class NavbarComponent implements OnInit {
     version: string;
     isReindexMenuCollapsed: boolean;
     hasCompletedRegistration = true;
+    private authenticateSubscription: Subscription;
+    private REGISTRATION_QUESTIONNAIRE_PAGE = '/registrationQuestionnaire';
+    private ACCESS_CODE_PAGE = '/accessCode';
 
     constructor(private loginService: LoginService,
                 private eventManager: JhiEventManager,
@@ -42,14 +48,15 @@ export class NavbarComponent implements OnInit {
                 private loginModalService: LoginModalService,
                 private profileService: ProfileService,
                 private router: Router,
-                private elRef: ElementRef) {
+                private elRef: ElementRef,
+                private location: Location) {
         this.version = VERSION ? 'v' + VERSION : '';
         this.isNavbarCollapsed = true;
         this.isReindexMenuCollapsed = true;
     }
 
     ngOnInit() {
-        this.principal.getAuthenticationState()
+        this.authenticateSubscription = this.principal.getAuthenticationState()
             .subscribe((currentUser) => {
                 this.currentUser = currentUser;
                 if (currentUser) {
@@ -67,6 +74,10 @@ export class NavbarComponent implements OnInit {
                 this.swaggerEnabled = profileInfo.swaggerEnabled;
                 this.noEiam = profileInfo.noEiam;
             });
+    }
+
+    ngOnDestroy() {
+        this.authenticateSubscription.unsubscribe();
     }
 
     @HostListener('document:click', ['$event.target'])
@@ -118,17 +129,19 @@ export class NavbarComponent implements OnInit {
     }
 
     hasNotCompletedRegistration() {
-        return !this.hasCompletedRegistration;
+        return !this.location.isCurrentPathEqualTo(this.REGISTRATION_QUESTIONNAIRE_PAGE) &&
+            !this.location.isCurrentPathEqualTo(this.ACCESS_CODE_PAGE) &&
+            !this.hasCompletedRegistration;
     }
 
     goToFinishRegistration() {
         this.collapseNavbar();
         const currentRegistrationStatus = this.currentUser.registrationStatus;
         if (currentRegistrationStatus === RegistrationStatus.UNREGISTERED) {
-            this.router.navigate(['/registrationQuestionnaire']);
+            this.router.navigate([this.REGISTRATION_QUESTIONNAIRE_PAGE]);
         } else if (currentRegistrationStatus === RegistrationStatus.VALIDATION_PAV
             || currentRegistrationStatus === RegistrationStatus.VALIDATION_EMP) {
-            this.router.navigate(['/accessCode']);
+            this.router.navigate([this.ACCESS_CODE_PAGE]);
         }
     }
 
