@@ -4,7 +4,6 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { EMAIL_REGEX, POSTBOX_NUMBER_REGEX } from '../../shared';
 import { EmailContent, MailService } from '../services/mail.service';
 import { Subject } from 'rxjs/Subject';
-import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     templateUrl: './candidate-anonymous-contact-dialog.component.html',
@@ -16,13 +15,11 @@ export class CandidateAnonymousContactDialogComponent implements OnInit, OnDestr
     @Input() emailContent: EmailContent;
 
     anonymousContactForm: FormGroup;
-    mailBodyPreamble: string;
 
     private unsubscribe$ = new Subject<void>();
 
     constructor(private formBuilder: FormBuilder,
                 private mailService: MailService,
-                private translateService: TranslateService,
                 public activeModal: NgbActiveModal) {
     }
 
@@ -45,8 +42,8 @@ export class CandidateAnonymousContactDialogComponent implements OnInit, OnDestr
                 value: this.emailContent.subject,
                 disabled: true
             }, Validators.required],
-            body: [{
-                value: this.emailContent.body,
+            personalMessage: [{
+                value: this.emailContent.personalMessage,
                 disabled: true
             }],
             companyName: [{
@@ -79,10 +76,6 @@ export class CandidateAnonymousContactDialogComponent implements OnInit, OnDestr
         this.toggleValue('sendPhone', 'phone');
         this.toggleValue('sendEmail', 'email');
         this.toggleValue('sendAddress', 'company');
-
-        this.translateService.get('candidate-detail.anonymous-contact.mail-body-preamble')
-            .takeUntil(this.unsubscribe$)
-            .subscribe((mailBodyPreamble) => this.mailBodyPreamble = mailBodyPreamble);
     }
 
     ngOnDestroy(): void {
@@ -93,8 +86,7 @@ export class CandidateAnonymousContactDialogComponent implements OnInit, OnDestr
     sendEmail(): void {
         if (this.anonymousContactForm.valid) {
             this.applyFormChanges();
-            const mail = Object.assign({}, this.emailContent, { body: this.mailBodyPreamble + '\n' + this.emailContent.body });
-            this.mailService.sendAnonymousContactMessage(mail)
+            this.mailService.sendAnonymousContactMessage(this.emailContent)
                 .subscribe(() => this.activeModal.close());
         }
     }

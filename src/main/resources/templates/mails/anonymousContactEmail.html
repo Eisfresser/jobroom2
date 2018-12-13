@@ -5,7 +5,11 @@
 </head>
 <body>
     <p th:text="${subject}"></p>
-    <p th:text="${body}"></p>
+
+    <p th:text="#{email.anonymousContact.body}"></p>
+
+    <p th:if="${personalMessage != null}" th:text="#{email.anonymousContact.personal-message.title}"></p>
+    <p th:if="${personalMessage != null}" th:text="${personalMessage}"></p>
 
     <p th:text="#{email.anonymousContact.company(${companyName})}"></p>
 

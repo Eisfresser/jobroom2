@@ -218,7 +218,7 @@ export class CandidateDetailComponent implements OnInit {
                 const translations$ = this.translateService.stream(this.CONTACT_MESSAGE_SUBJECT);
                 return Observable.combineLatest(selectedCompanyContactTemplate$, translations$)
                     .map(([companyContactTemplateModel, subject]) =>
-                        new EmailContent(candidate.id, subject, '', companyContactTemplateModel));
+                        new EmailContent(candidate.id, subject, companyContactTemplateModel));
             }
             return Observable.of(null);
         });

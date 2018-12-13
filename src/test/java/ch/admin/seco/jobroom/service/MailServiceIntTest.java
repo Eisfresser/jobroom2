@@ -233,7 +233,7 @@ public class MailServiceIntTest {
         //given
         AnonymousContactMessageDTO anonymousContactMessage = new AnonymousContactMessageDTO();
         anonymousContactMessage.setSubject("Title");
-        anonymousContactMessage.setBody("Message body");
+        anonymousContactMessage.setPersonalMessage("Message body");
         String subject = messageSource.getMessage("email.anonymousContact.mail-subject", null, getLocale());
 
         //when

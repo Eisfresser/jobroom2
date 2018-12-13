@@ -33,28 +33,28 @@
                 </div>
             </div>
 
-            <p>{{ mailBodyPreamble }}</p>
+            <p>{{ 'candidate-detail.anonymous-contact.mail-body-preamble' | translate }}</p>
 
-            <div class="{{anonymousContactForm.get('body').disabled ? 'form-group--icon' : 'input-group' }}">
-                <textarea formControlName="body" class="form-control" rows="8"
+            <div class="{{anonymousContactForm.get('personalMessage').disabled ? 'form-group--icon' : 'input-group' }}">
+                <textarea formControlName="personalMessage" class="form-control" rows="8"
                           aria-describedby="maxChar"
                           [placeholder]="'candidate-detail.anonymous-contact.personal-message' | translate"
                           [jr2TextSizeLimit]="MESSAGE_BODY_MAX_LENGTH"></textarea>
 
-                <a *ngIf="anonymousContactForm.get('body').disabled"
-                   class="fa-stack form-control--icon" (click)="edit('body')">
+                <a *ngIf="anonymousContactForm.get('personalMessage').disabled"
+                   class="fa-stack form-control--icon" (click)="edit('personalMessage')">
                     <span aria-hidden="true" class="fa fa-pencil fa-stack-1x"></span>
                 </a>
 
                 <div class="input-group-append"
-                     *ngIf="anonymousContactForm.get('body').enabled">
+                     *ngIf="anonymousContactForm.get('personalMessage').enabled">
                     <button type="button" class="btn btn-sm" aria-hidden="true"
-                            (click)="discardChanges('body')">
+                            (click)="discardChanges('personalMessage')">
                         <span class="fa fa-times"></span>
                     </button>
                     <button type="button" class="btn btn-sm" aria-hidden="true"
-                            [disabled]="anonymousContactForm.get('body').invalid"
-                            (click)="applyChanges('body')">
+                            [disabled]="anonymousContactForm.get('personalMessage').invalid"
+                            (click)="applyChanges('personalMessage')">
                         <span class="fa fa-check-square"></span>
                     </button>
                 </div>

@@ -6,16 +6,16 @@ import { CompanyContactTemplateModel } from '../../shared/company/company-contac
 export class EmailContent {
     candidateId: string;
     subject: string;
-    body: string;
+    personalMessage: string;
     companyName: string;
     phone?: string;
     email?: string;
     company?: Company;
 
-    constructor(candidateId: string, subject: string, body: string, companyContactTemplateModel: CompanyContactTemplateModel) {
+    constructor(candidateId: string, subject: string, companyContactTemplateModel: CompanyContactTemplateModel) {
         this.candidateId = candidateId;
         this.subject = subject;
-        this.body = body;
+        this.personalMessage = null;
         this.companyName = companyContactTemplateModel.companyName;
         this.phone = companyContactTemplateModel.phone;
         this.email = companyContactTemplateModel.email;

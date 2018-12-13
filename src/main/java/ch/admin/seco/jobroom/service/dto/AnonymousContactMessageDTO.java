@@ -10,8 +10,7 @@ public class AnonymousContactMessageDTO {
     @NotNull
     private String subject;
 
-    @NotNull
-    private String body;
+    private String personalMessage;
 
     @NotNull
     private String companyName;
@@ -38,12 +37,12 @@ public class AnonymousContactMessageDTO {
         this.subject = subject;
     }
 
-    public String getBody() {
-        return body;
+    public String getPersonalMessage() {
+        return personalMessage;
     }
 
-    public void setBody(String body) {
-        this.body = body;
+    public void setPersonalMessage(String personalMessage) {
+        this.personalMessage = personalMessage;
     }
 
     public String getCompanyName() {

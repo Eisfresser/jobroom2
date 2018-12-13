@@ -183,7 +183,7 @@ public class MailService {
         Locale locale = LocaleContextHolder.getLocale();
         Context context = new Context(locale);
         context.setVariable("subject", anonymousContactMessage.getSubject());
-        context.setVariable("body", anonymousContactMessage.getBody());
+        context.setVariable("personalMessage", StringUtils.defaultIfBlank(anonymousContactMessage.getPersonalMessage(), null));
         context.setVariable("companyName", anonymousContactMessage.getCompanyName());
         context.setVariable("phone", anonymousContactMessage.getPhone());
         context.setVariable("email", anonymousContactMessage.getEmail());
