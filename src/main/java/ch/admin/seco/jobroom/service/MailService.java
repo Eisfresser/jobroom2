@@ -185,6 +185,7 @@ public class MailService {
             javaMailSender.send(mimeMessage);
             log.info("Successfully sent email to '{}' with subject '{}'", to, subject);
         } catch (MessagingException e) {
+            log.error("Sending email to '{}' failed with subject '{}'", to, subject, e);
             throw new MailSendException("Could not send email", e);
         }
     }
