@@ -1,5 +1,6 @@
 package ch.admin.seco.jobroom.service.impl.logging;
 
+import static ch.admin.seco.jobroom.service.logging.BusinessLogEventType.USER_LOGOUT;
 import static ch.admin.seco.jobroom.service.logging.BusinessLogEventType.valueOf;
 import static ch.admin.seco.jobroom.service.logging.BusinessLogObjectType.CANDIDATE;
 import static ch.admin.seco.jobroom.service.logging.BusinessLogObjectType.USER;
@@ -24,7 +25,7 @@ public class BusinessLogEventListener {
 
     @EventListener(BusinessLogEvent.class)
     public void handleBusinessLogEvent(BusinessLogEvent event) {
-        if (event.getAuthorities() == null) {
+        if (event.getAuthorities() == null && valueOf(event.getEventType()) != USER_LOGOUT) {
             event.withAuthorities(currentUserService.getPrincipal().getAuthoritiesAsString());
         }
         switch (valueOf(event.getEventType())) {

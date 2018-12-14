@@ -51,7 +51,6 @@ import org.springframework.web.filter.CorsFilter;
 import ch.admin.seco.jobroom.repository.UserInfoRepository;
 import ch.admin.seco.jobroom.security.LoginFormUserDetailsService;
 import ch.admin.seco.jobroom.security.MD5PasswordEncoder;
-import ch.admin.seco.jobroom.security.UserPrincipal;
 import ch.admin.seco.jobroom.security.jwt.JWTConfigurer;
 import ch.admin.seco.jobroom.security.saml.DefaultSamlBasedUserDetailsProvider;
 import ch.admin.seco.jobroom.security.saml.SamlAuthenticationFailureHandler;
@@ -269,13 +268,11 @@ public class SecurityConfiguration {
         private SimpleUrlLogoutSuccessHandler successLogoutHandler() {
             SimpleUrlLogoutSuccessHandler successLogoutHandler = new SimpleUrlLogoutSuccessHandler() {
                 @Override
-                public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-                    UserPrincipal principal = (UserPrincipal) authentication.getPrincipal();
-                    applicationEventPublisher.publishEvent(BusinessLogEvent.of(USER_LOGOUT)
-                        .withObjectType(USER.typeName())
-                        .withObjectId(principal.getId().getValue())
-                        .withAuthorities(principal.getAuthoritiesAsString())
-                    );
+                public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
+                    throws IOException, ServletException {
+
+                    applicationEventPublisher.publishEvent(BusinessLogEvent.of(USER_LOGOUT).withObjectType(USER.typeName()));
+
                     super.onLogoutSuccess(request, response, authentication);
                 }
             };
