@@ -273,7 +273,9 @@ public class SecurityConfiguration {
                     UserPrincipal principal = (UserPrincipal) authentication.getPrincipal();
                     applicationEventPublisher.publishEvent(BusinessLogEvent.of(USER_LOGOUT)
                         .withObjectType(USER.typeName())
-                        .withObjectId(principal.getId().getValue()));
+                        .withObjectId(principal.getId().getValue())
+                        .withAuthorities(principal.getAuthoritiesAsString())
+                    );
                     super.onLogoutSuccess(request, response, authentication);
                 }
             };

@@ -1,13 +1,14 @@
 package ch.admin.seco.jobroom.service.impl.logging;
 
-import ch.admin.seco.jobroom.service.CurrentUserService;
-import ch.admin.seco.jobroom.service.logging.BusinessLogEvent;
-import org.springframework.context.event.EventListener;
-import org.springframework.stereotype.Component;
-
 import static ch.admin.seco.jobroom.service.logging.BusinessLogEventType.valueOf;
 import static ch.admin.seco.jobroom.service.logging.BusinessLogObjectType.CANDIDATE;
 import static ch.admin.seco.jobroom.service.logging.BusinessLogObjectType.USER;
+
+import org.springframework.context.event.EventListener;
+import org.springframework.stereotype.Component;
+
+import ch.admin.seco.jobroom.service.CurrentUserService;
+import ch.admin.seco.jobroom.service.logging.BusinessLogEvent;
 
 @Component
 public class BusinessLogEventListener {
@@ -23,10 +24,9 @@ public class BusinessLogEventListener {
 
     @EventListener(BusinessLogEvent.class)
     public void handleBusinessLogEvent(BusinessLogEvent event) {
-        event.withAuthorities(
-            currentUserService.getPrincipal()
-                .getAuthoritiesAsString()
-        );
+        if (event.getAuthorities() == null) {
+            event.withAuthorities(currentUserService.getPrincipal().getAuthoritiesAsString());
+        }
         switch (valueOf(event.getEventType())) {
             case CANDIDATE_CONTACT_MESSAGE:
                 event.withObjectType(CANDIDATE.typeName())
@@ -50,9 +50,7 @@ public class BusinessLogEventListener {
     }
 
     private String getCurrentUserId() {
-        return currentUserService.getPrincipal()
-            .getId()
-            .getValue();
+        return currentUserService.getPrincipal().getId().getValue();
     }
 }
 
