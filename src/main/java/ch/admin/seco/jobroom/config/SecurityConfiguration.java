@@ -1,15 +1,21 @@
 package ch.admin.seco.jobroom.config;
 
 import static ch.admin.seco.jobroom.security.saml.infrastructure.dsl.SAMLConfigurer.saml;
+import static ch.admin.seco.jobroom.service.logging.BusinessLogEventType.USER_LOGOUT;
+import static ch.admin.seco.jobroom.service.logging.BusinessLogObjectType.USER;
 import static org.opensaml.saml2.core.AuthnContext.KERBEROS_AUTHN_CTX;
 import static org.opensaml.saml2.core.AuthnContext.NOMAD_TELEPHONY_AUTHN_CTX;
 import static org.opensaml.saml2.core.AuthnContext.SMARTCARD_PKI_AUTHN_CTX;
 import static org.opensaml.saml2.core.AuthnContext.SOFTWARE_PKI_AUTHN_CTX;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
 
-import ch.admin.seco.jobroom.service.logging.BusinessLogger;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import io.github.jhipster.config.JHipsterProperties;
 import io.github.jhipster.config.JHipsterProperties.Security.Authentication.Jwt;
 import org.apache.commons.lang.StringUtils;
@@ -29,6 +35,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler;
@@ -44,6 +51,7 @@ import org.springframework.web.filter.CorsFilter;
 import ch.admin.seco.jobroom.repository.UserInfoRepository;
 import ch.admin.seco.jobroom.security.LoginFormUserDetailsService;
 import ch.admin.seco.jobroom.security.MD5PasswordEncoder;
+import ch.admin.seco.jobroom.security.UserPrincipal;
 import ch.admin.seco.jobroom.security.jwt.JWTConfigurer;
 import ch.admin.seco.jobroom.security.saml.DefaultSamlBasedUserDetailsProvider;
 import ch.admin.seco.jobroom.security.saml.SamlAuthenticationFailureHandler;
@@ -51,6 +59,7 @@ import ch.admin.seco.jobroom.security.saml.SamlAuthenticationSuccessHandler;
 import ch.admin.seco.jobroom.security.saml.SamlProperties;
 import ch.admin.seco.jobroom.security.saml.infrastructure.EiamSamlUserDetailsService;
 import ch.admin.seco.jobroom.security.saml.infrastructure.SamlBasedUserDetailsProvider;
+import ch.admin.seco.jobroom.service.logging.BusinessLogEvent;
 
 @Configuration
 @EnableWebSecurity
@@ -163,10 +172,8 @@ public class SecurityConfiguration {
 
         private final EiamSecurityProperties eiamSecurityProperties;
 
-        private final BusinessLogger businessLogger;
-
         @Autowired
-        SamlSecurityConfig(UserInfoRepository userInfoRepository, SamlProperties samlProperties, TransactionTemplate transactionTemplate, JHipsterProperties jHipsterProperties, LoginFormUserDetailsService loginFormUserDetailsService, SecurityProblemSupport problemSupport, ApplicationEventPublisher applicationEventPublisher, EiamSecurityProperties eiamSecurityProperties, BusinessLogger businessLogger) {
+        SamlSecurityConfig(UserInfoRepository userInfoRepository, SamlProperties samlProperties, TransactionTemplate transactionTemplate, JHipsterProperties jHipsterProperties, LoginFormUserDetailsService loginFormUserDetailsService, SecurityProblemSupport problemSupport, ApplicationEventPublisher applicationEventPublisher, EiamSecurityProperties eiamSecurityProperties) {
             super(problemSupport);
             this.userInfoRepository = userInfoRepository;
             this.samlProperties = samlProperties;
@@ -176,7 +183,6 @@ public class SecurityConfiguration {
             this.problemSupport = problemSupport;
             this.applicationEventPublisher = applicationEventPublisher;
             this.eiamSecurityProperties = eiamSecurityProperties;
-            this.businessLogger = businessLogger;
         }
 
         @Bean
@@ -246,8 +252,7 @@ public class SecurityConfiguration {
                 this.samlProperties.getAccessRequestUrl(),
                 this.userInfoRepository,
                 this.authenticationEventPublisher(),
-                this.businessLogger
-            );
+                this.applicationEventPublisher);
             authenticationSuccessHandler.setAlwaysUseDefaultTargetUrl(true);
             authenticationSuccessHandler.setDefaultTargetUrl("/");
             return authenticationSuccessHandler;
@@ -262,7 +267,16 @@ public class SecurityConfiguration {
         }
 
         private SimpleUrlLogoutSuccessHandler successLogoutHandler() {
-            SimpleUrlLogoutSuccessHandler successLogoutHandler = new SimpleUrlLogoutSuccessHandler();
+            SimpleUrlLogoutSuccessHandler successLogoutHandler = new SimpleUrlLogoutSuccessHandler() {
+                @Override
+                public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+                    UserPrincipal principal = (UserPrincipal) authentication.getPrincipal();
+                    applicationEventPublisher.publishEvent(BusinessLogEvent.of(USER_LOGOUT)
+                        .withObjectType(USER.typeName())
+                        .withObjectId(principal.getId().getValue()));
+                    super.onLogoutSuccess(request, response, authentication);
+                }
+            };
             successLogoutHandler.setDefaultTargetUrl("/");
             return successLogoutHandler;
         }
@@ -292,7 +306,5 @@ public class SecurityConfiguration {
                 this.transactionTemplate
             );
         }
-
     }
-
 }

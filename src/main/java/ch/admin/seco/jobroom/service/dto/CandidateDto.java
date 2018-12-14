@@ -2,7 +2,7 @@ package ch.admin.seco.jobroom.service.dto;
 
 import java.util.UUID;
 
-public class CandidateProtectedDataDto {
+public class CandidateDto {
 
     private UUID id;
 
@@ -15,6 +15,8 @@ public class CandidateProtectedDataDto {
     private String mobile;
 
     private String email;
+
+    private String externalId;
 
     public UUID getId() {
         return id;
@@ -62,5 +64,13 @@ public class CandidateProtectedDataDto {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getExternalId() {
+        return externalId;
+    }
+
+    public void setExternalId(String externalId) {
+        this.externalId = externalId;
     }
 }

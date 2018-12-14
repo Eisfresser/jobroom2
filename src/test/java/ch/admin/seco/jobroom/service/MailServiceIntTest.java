@@ -21,6 +21,7 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
+import ch.admin.seco.jobroom.repository.UserInfoRepository;
 import io.github.jhipster.config.JHipsterProperties;
 import org.apache.commons.lang3.tuple.Pair;
 import org.junit.Before;
@@ -30,6 +31,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
+import org.springframework.context.ApplicationEventPublisher;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 
@@ -73,12 +75,18 @@ public class MailServiceIntTest {
 
     private PdfCreatorService pdfCreatorService;
 
+    @Autowired
+    private ApplicationEventPublisher publisher;
+
+    @Autowired
+    private CandidateService candidateService;
+
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
         doNothing().when(javaMailSender).send(any(MimeMessage.class));
         pdfCreatorService = new PdfCreatorService(messageSource);
-        mailService = new MailService(jHipsterProperties, javaMailSender, messageSource, templateEngine, pdfCreatorService);
+        mailService = new MailService(jHipsterProperties, javaMailSender, messageSource, templateEngine, pdfCreatorService, candidateService, publisher);
     }
 
     @Test
@@ -237,7 +245,7 @@ public class MailServiceIntTest {
         String subject = messageSource.getMessage("email.anonymousContact.mail-subject", null, getLocale());
 
         //when
-        mailService.sendAnonymousContactMail(anonymousContactMessage, MAIL_RECIPIENT);
+        mailService.sendAnonymousContactMail(anonymousContactMessage);
 
         //then
         verify(javaMailSender).send((MimeMessage) messageCaptor.capture());

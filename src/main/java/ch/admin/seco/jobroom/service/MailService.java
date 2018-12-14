@@ -1,34 +1,37 @@
 package ch.admin.seco.jobroom.service;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.util.Locale;
-import java.util.stream.Stream;
-
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
-
+import ch.admin.seco.jobroom.domain.BlacklistedAgent;
+import ch.admin.seco.jobroom.domain.User;
+import ch.admin.seco.jobroom.domain.UserInfo;
+import ch.admin.seco.jobroom.service.dto.AnonymousContactMessageDTO;
+import ch.admin.seco.jobroom.service.dto.CandidateDto;
+import ch.admin.seco.jobroom.service.logging.BusinessLogEvent;
+import ch.admin.seco.jobroom.service.pdf.PdfCreatorService;
 import io.github.jhipster.config.JHipsterProperties;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.mail.util.IDNEmailAddressConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.thymeleaf.context.Context;
-import org.thymeleaf.spring5.SpringTemplateEngine;
-
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.mail.MailSendException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.context.Context;
+import org.thymeleaf.spring5.SpringTemplateEngine;
 
-import ch.admin.seco.jobroom.domain.BlacklistedAgent;
-import ch.admin.seco.jobroom.domain.User;
-import ch.admin.seco.jobroom.domain.UserInfo;
-import ch.admin.seco.jobroom.service.dto.AnonymousContactMessageDTO;
-import ch.admin.seco.jobroom.service.pdf.PdfCreatorService;
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.Locale;
+import java.util.Optional;
+import java.util.stream.Stream;
+
+import static ch.admin.seco.jobroom.service.logging.BusinessLogEventType.CANDIDATE_CONTACT_MESSAGE;
 
 /**
  * Service for sending emails.
@@ -56,16 +59,24 @@ public class MailService {
 
     private IDNEmailAddressConverter idnEmailAddressConverter;
 
+    private final CandidateService candidateService;
+
+    private final ApplicationEventPublisher applicationEventPublisher;
+
     public MailService(JHipsterProperties jHipsterProperties,
         JavaMailSender javaMailSender,
         MessageSource messageSource,
         SpringTemplateEngine templateEngine,
-        PdfCreatorService pdfCreatorService) {
+        PdfCreatorService pdfCreatorService,
+        CandidateService candidateService,
+        ApplicationEventPublisher applicationEventPublisher) {
         this.jHipsterProperties = jHipsterProperties;
         this.javaMailSender = javaMailSender;
         this.messageSource = messageSource;
         this.templateEngine = templateEngine;
         this.pdfCreatorService = pdfCreatorService;
+        this.candidateService = candidateService;
+        this.applicationEventPublisher = applicationEventPublisher;
         this.idnEmailAddressConverter = new IDNEmailAddressConverter();
     }
 
@@ -100,12 +111,19 @@ public class MailService {
         sendEmail(emailAddress, subject, content, true, true, attachmentFilename, pathToPdf);
     }
 
-    public void sendAnonymousContactMail(AnonymousContactMessageDTO anonymousContactMessage, String recipient) {
-        log.info("Sending anonymous contact email to '{}'", recipient);
+    public void sendAnonymousContactMail(AnonymousContactMessageDTO anonymousContactMessage) throws CandidateNotFoundException {
+        String candidateId = anonymousContactMessage.getCandidateId();
+        Optional<CandidateDto> candidateDto = this.candidateService.getCandidate(candidateId);
+        if (!candidateDto.isPresent()) {
+            throw new CandidateNotFoundException(candidateId);
+        }
+        CandidateDto candidate = candidateDto.get();
+        log.info("Sending anonymous contact email to '{}'", candidate.getEmail());
         Context context = createAnonymousContactMailContext(anonymousContactMessage);
         String content = templateEngine.process("mails/anonymousContactEmail", context);
         String subject = messageSource.getMessage("email.anonymousContact.mail-subject", null, LocaleContextHolder.getLocale());
-        sendEmail(recipient, subject, content, false, true);
+        sendEmail(candidate.getEmail(), subject, content, false, true);
+        applicationEventPublisher.publishEvent(BusinessLogEvent.of(CANDIDATE_CONTACT_MESSAGE).withObjectId(candidate.getExternalId()));
     }
 
     public void sendStesUnregisteringMail(String stesEmail, String recipient) {

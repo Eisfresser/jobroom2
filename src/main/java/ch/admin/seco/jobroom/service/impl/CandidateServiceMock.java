@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import ch.admin.seco.jobroom.service.CandidateService;
-import ch.admin.seco.jobroom.service.dto.CandidateProtectedDataDto;
+import ch.admin.seco.jobroom.service.dto.CandidateDto;
 import ch.admin.seco.jobroom.service.dto.StesVerificationRequest;
 import ch.admin.seco.jobroom.service.dto.StesVerificationResult;
 
@@ -30,12 +30,13 @@ public class CandidateServiceMock implements CandidateService {
     }
 
     @Override
-    public Optional<CandidateProtectedDataDto> getCandidate(String id) {
-        CandidateProtectedDataDto candidateProtectedDataDto = new CandidateProtectedDataDto();
-        candidateProtectedDataDto.setId(UUID.fromString(id));
-        candidateProtectedDataDto.setEmail("candidate-mail@example.com");
-        candidateProtectedDataDto.setFirstName("candidate-firstName");
-        candidateProtectedDataDto.setLastName("candidate-lastName");
-        return Optional.of(candidateProtectedDataDto);
+    public Optional<CandidateDto> getCandidate(String id) {
+        CandidateDto candidateDto = new CandidateDto();
+        candidateDto.setId(UUID.fromString(id));
+        candidateDto.setEmail("candidate-mail@example.com");
+        candidateDto.setFirstName("candidate-firstName");
+        candidateDto.setLastName("candidate-lastName");
+        candidateDto.setExternalId("AC123456");
+        return Optional.of(candidateDto);
     }
 }

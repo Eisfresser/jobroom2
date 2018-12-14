@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import ch.admin.seco.jobroom.config.OAuth2InterceptedFeignConfiguration;
-import ch.admin.seco.jobroom.service.dto.CandidateProtectedDataDto;
+import ch.admin.seco.jobroom.service.dto.CandidateDto;
 import ch.admin.seco.jobroom.service.dto.StesVerificationRequest;
 import ch.admin.seco.jobroom.service.dto.StesVerificationResult;
 
@@ -25,9 +25,9 @@ public interface CandidateService {
 
     @GetMapping("/api/candidates/{id}")
     @HystrixCommand(fallbackMethod = "emptyCandidate")
-    Optional<CandidateProtectedDataDto> getCandidate(@PathVariable("id") String id);
+    Optional<CandidateDto> getCandidate(@PathVariable("id") String id);
 
-    default Optional<CandidateProtectedDataDto> emptyCandidate() {
+    default Optional<CandidateDto> emptyCandidate() {
         return Optional.empty();
     }
 

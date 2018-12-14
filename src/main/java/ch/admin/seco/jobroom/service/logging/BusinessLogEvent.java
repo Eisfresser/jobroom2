@@ -3,9 +3,12 @@ package ch.admin.seco.jobroom.service.logging;
 import java.util.HashMap;
 import java.util.Map;
 
+import static net.logstash.logback.encoder.org.apache.commons.lang.StringUtils.isNotEmpty;
 import static org.springframework.util.Assert.hasText;
 
-public class BusinessLogData {
+public class BusinessLogEvent {
+
+    private String authorities;
 
     private String eventType;
 
@@ -15,13 +18,22 @@ public class BusinessLogData {
 
     private Map<String, Object> additionalData = new HashMap<>();
 
-    public static BusinessLogData of(BusinessLogEventType eventType) {
-        return new BusinessLogData(eventType.name());
+    public static BusinessLogEvent of(BusinessLogEventType eventType) {
+        return new BusinessLogEvent(eventType.name());
     }
 
-    public BusinessLogData(String eventType) {
+    public BusinessLogEvent(String eventType) {
         hasText(eventType, "Event type must not be empty!");
         this.eventType = eventType;
+    }
+
+    public String getAuthorities() {
+        return authorities;
+    }
+
+    public BusinessLogEvent withAuthorities(String authorities) {
+        this.authorities = authorities;
+        return this;
     }
 
     public String getEventType() {
@@ -32,12 +44,12 @@ public class BusinessLogData {
         return objectType;
     }
 
-    public BusinessLogData withObjectType(String objectType) {
+    public BusinessLogEvent withObjectType(String objectType) {
         this.objectType = objectType;
         return this;
     }
 
-    public BusinessLogData withObjectId(String objectId) {
+    public BusinessLogEvent withObjectId(String objectId) {
         this.objectId = objectId;
         return this;
     }
@@ -46,8 +58,10 @@ public class BusinessLogData {
         return this.objectId;
     }
 
-    public BusinessLogData withAdditionalData(String key, Object value) {
-        this.additionalData.put(key, value);
+    public BusinessLogEvent withAdditionalData(String key, Object value) {
+        if (isNotEmpty(key) && value != null) {
+            this.additionalData.put(key, value);
+        }
         return this;
     }
 
