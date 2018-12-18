@@ -16,7 +16,7 @@ export class LegalTermsService {
             en: 'linkEn',
             de: 'linkDe',
             fr: 'linkFr',
-            it: 'linkIr',
+            it: 'linkIt',
         };
 
         const currentLanguage$ = this.translateService.onLangChange
