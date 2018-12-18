@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.mail.MailException;
 import org.springframework.mail.MailSendException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -184,9 +185,9 @@ public class MailService {
             }
             javaMailSender.send(mimeMessage);
             log.info("Successfully sent email to '{}' with subject '{}'", to, subject);
-        } catch (MessagingException e) {
-            log.error("Sending email to '{}' failed with subject '{}'", to, subject, e);
-            throw new MailSendException("Could not send email", e);
+        } catch (MailException | MessagingException e) {
+            String message = String.format("Sending email to '%s' failed with subject '%s'", to, subject);
+            throw new MailSendException(message, e);
         }
     }
 
