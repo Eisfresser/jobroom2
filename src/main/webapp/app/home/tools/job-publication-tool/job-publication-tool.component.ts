@@ -293,8 +293,8 @@ export class JobPublicationToolComponent implements OnInit, OnDestroy {
     private configureEmployerSection(formModel: JobPublicationForm) {
         this.jobPublicationForm.addControl('employer',
             this.fb.group({
-                name: [formModel.employer.name, Validators.required,
-                    Validators.maxLength(this.APPLICATION_PAPER_APPLICATION_COMPANY_NAME_MAX_LENGTH)],
+                name: [formModel.employer.name, [Validators.required,
+                    Validators.maxLength(this.APPLICATION_PAPER_APPLICATION_COMPANY_NAME_MAX_LENGTH)]],
                 zipCode: [formModel.employer.zipCode],
                 countryCode: [formModel.employer.countryCode, Validators.required],
             }));
