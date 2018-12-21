@@ -1,6 +1,6 @@
 {
     "legal-terms-management": {
-        "add-legal-terms": "Aggiungi Condizioni Generali",
+        "add-legal-terms": "Aggiungi CG",
         "filter": {
             "placeholder": "Filtra per Efficace A, Link DE, Link EN, Link FR o Link IT"
         },
@@ -15,10 +15,10 @@
         "legal-terms-delete-dialog": {
             "question": "Sei sicuro di volere eliminare Condizioni Generali?"
         },
-        "legal-terms-details-dialog": "Condizioni Generali Dettagli",
+        "legal-terms-details-dialog": "Dettagli CG",
         "legal-terms-details-dialog.add": "Aggiungi",
         "legal-terms-details-dialog.validate.pastEffectiveAt": "La Efficace A data deve situarsi nel futuro.",
         "legal-terms-details-dialog.validate.url.pattern": "Questo indirizzo URL non \u00e8 valido.",
-        "title": "Gestisci condizioni generali"
+        "title": "Gestisci CG"
     }
 }

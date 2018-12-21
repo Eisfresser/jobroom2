@@ -1,6 +1,6 @@
 {
     "legal-terms-management": {
-        "add-legal-terms": "Ajouter CGV",
+        "add-legal-terms": "Ajouter CG",
         "filter": {
             "placeholder": "Filtrer par Efficace \u00c0, Lien DE, Lien EN, Lien FR ou Lien IT"
         },
@@ -13,12 +13,12 @@
             "linkIt": "IT lien"
         },
         "legal-terms-delete-dialog": {
-            "question": "Etes-vous certain de vouloir supprimer CGV?"
+            "question": "Etes-vous certain de vouloir supprimer CG?"
         },
-        "legal-terms-details-dialog": "CGV D\u00e9tails",
+        "legal-terms-details-dialog": "D\u00e9tails CG",
         "legal-terms-details-dialog.add": "Ajouter",
         "legal-terms-details-dialog.validate.pastEffectiveAt": "La Efficace \u00c0 date doit se situer dans le futur.",
         "legal-terms-details-dialog.validate.url.pattern": "Ce lien URL n'est pas valable.",
-        "title": "G\u00e9rer CGV"
+        "title": "G\u00e9rer CG"
     }
 }

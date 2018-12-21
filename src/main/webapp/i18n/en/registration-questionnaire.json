@@ -17,10 +17,10 @@
             "new": "This is my first time registering for work.swiss or Job-Room"
         },
         "termsOfUse": {
-            "accept": "I agree to the terms and conditions",
+            "accept": "I agree to the General Terms and Conditions",
             "link": {
                 "error": "An error has occurred!",
-                "text": "Show terms and conditions"
+                "text": "Show General Terms and Conditions"
             }
         },
         "title": "Registration"

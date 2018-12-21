@@ -179,20 +179,20 @@
         },
         "legal-terms-dialog": {
             "body": {
-                "accept-label": "I accept the new Ts&Cs",
+                "accept-label": "I accept the new GTC",
                 "accept-link": {
                     "error": "An error has occurred!",
-                    "text": "New Terms and Conditions (Ts&Cs)"
+                    "text": "New General Terms and Conditions (GTC)"
                 },
-                "content1": "Our general terms and conditions (T&Cs) have changed.",
-                "content2": "Please accept the new T&Cs to continue using your account."
+                "content1": "Our General Terms and Conditions have changed.",
+                "content2": "Please accept them in order to continue using your account."
             },
             "footer": {
                 "accept": "Next",
                 "decline": "Do not accept and log out"
             },
             "header": {
-                "title": "New Terms and Conditions (Ts&Cs)"
+                "title": "New General Terms and Conditions (GTC)"
             }
         },
         "menu": {
@@ -517,7 +517,7 @@
         },
         "terms-and-conditions": {
             "body": {
-                "accept-label": "I accept the new Ts&Cs",
+                "accept-label": "I accept the new GTC",
                 "accept-link": ""
             },
             "footer": {

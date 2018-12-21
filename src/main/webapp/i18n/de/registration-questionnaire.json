@@ -17,10 +17,10 @@
             "new": "Ich melde mich zum ersten Mal bei arbeit.swiss bzw. Job-Room an"
         },
         "termsOfUse": {
-            "accept": "Ich akzeptiere die Nutzungsbedingungen",
+            "accept": "Ich akzeptiere die Allgemeinen Gesch\u00e4ftsbedingungen",
             "link": {
                 "error": "Es ist ein Fehler aufgetreten!",
-                "text": "Nutzungsbedingungen anzeigen"
+                "text": "Allgemeine Gesch\u00e4ftsbedingungen anzeigen"
             }
         },
         "title": "Registrierung"

@@ -404,14 +404,14 @@ global,global.job-publication.status.PUBLISHED_PUBLIC,Öffentlich publiziert,Pub
 global,global.job-publication.status.PUBLISHED_RESTRICTED,Eingeschränkt publiziert,Restricted posting,Publié dans l'espace réservé,Pubblicazione ristretta
 global,global.job-publication.status.REFINING,Wird überarbeitet,In revision,En révision,Revisione in corso
 global,global.job-publication.status.REJECTED,Zurückgewiesen,Rejected,Rejeté,Respinto
-global,global.legal-terms-dialog.body.accept-label,Ich akzeptiere die neuen AGB,I accept the new Ts&Cs,J’accepte les nouvelles CG.,Accetto le nuove CG
+global,global.legal-terms-dialog.body.accept-label,Ich akzeptiere die neuen AGB,I accept the new GTC,J’accepte les nouvelles CG.,Accetto le nuove CG
 global,global.legal-terms-dialog.body.accept-link.error,Es ist ein Fehler aufgetreten!,An error has occurred!,Une erreur s'est produite !,Si è verificato un errore!
-global,global.legal-terms-dialog.body.accept-link.text,Neue allgemeine Geschäftsbedingung (AGB),New Terms and Conditions (Ts&Cs),Nouvelles conditions générales (CG),Nuove Condizioni generali (CG)
-global,global.legal-terms-dialog.body.content1,"Unsere allgemeinen Geschäftsbedingungen haben sich geändert. ",Our general terms and conditions (T&Cs) have changed.,Nos conditions générales ont été modifiées.,Le nostre Condizioni generali sono cambiate.
-global,global.legal-terms-dialog.body.content2,"Bitte akzeptieren Sie diese, damit Sie ihr Konto weiterhin nutzen können.",Please accept the new T&Cs to continue using your account.,Veuillez les accepter afin de poursuivre l’utilisation de votre compte.,Per continuare a usare il tuo conto accetta le Condizioni generali.
+global,global.legal-terms-dialog.body.accept-link.text,Neue Allgemeine Geschäftsbedingungen (AGB),New General Terms and Conditions (GTC),Nouvelles conditions générales (CG),Nuove Condizioni generali (CG)
+global,global.legal-terms-dialog.body.content1,"Unsere Allgemeinen Geschäftsbedingungen haben sich geändert. ",Our General Terms and Conditions have changed.,Nos conditions générales ont été modifiées.,Le nostre Condizioni generali sono cambiate.
+global,global.legal-terms-dialog.body.content2,"Bitte akzeptieren Sie diese, damit Sie Ihr Konto weiterhin nutzen können.",Please accept them in order to continue using your account.,Veuillez les accepter afin de poursuivre l’utilisation de votre compte.,Per continuare a usare il tuo conto accetta le Condizioni generali.
 global,global.legal-terms-dialog.footer.accept,Weiter,Next,Suivant,Seguente
 global,global.legal-terms-dialog.footer.decline,Nicht akzeptieren und ausloggen,Do not accept and log out,Ne pas accepter et se désinscrire,"Non accettare, logout"
-global,global.legal-terms-dialog.header.title,Neue allgemeine Geschäftsbedingung (AGB),New Terms and Conditions (Ts&Cs),Nouvelles conditions générales (CG),Nuove Condizioni generali (CG)
+global,global.legal-terms-dialog.header.title,Neue Allgemeine Geschäftsbedingungen (AGB),New General Terms and Conditions (GTC),Nouvelles conditions générales (CG),Nuove Condizioni generali (CG)
 global,global.menu.account.login,Login|Registrierung,Login|Registration,Login|Enregistrement,Login|Registrazione
 global,global.menu.account.logout,Abmelden,Sign out,Déconnexion,Esci
 global,global.menu.account.main,Zugang,Account,Compte,Utente
@@ -686,7 +686,7 @@ global,global.ribbon.development,Entwicklung,Development,Développement,Developm
 global,global.ribbon.staging,Staging,Staging,Staging,Staging
 global,global.ribbon.test,Test,Test,Test,Test
 global,global.ribbon.training,Training,Training,Training,Training
-global,global.terms-and-conditions.body.accept-label,Ich akzeptiere die neuen AGB,I accept the new Ts&Cs,J’accepte les nouvelles CG.,Accetto le nuove CG
+global,global.terms-and-conditions.body.accept-label,Ich akzeptiere die neuen AGB,I accept the new GTC,J’accepte les nouvelles CG.,Accetto le nuove CG
 global,global.terms-and-conditions.body.accept-link,,,,
 global,global.terms-and-conditions.footer.accept,Weiter,Next,Suivant,Seguente
 global,global.terms-and-conditions.footer.decline,Nicht akzeptieren und ausloggen,Do not accept and log out,Ne pas accepter et se désinscrire,"Non accettare, logout"
@@ -1012,7 +1012,7 @@ job,jobroomApp.job.workingTimePercentageMin,Min. Beschäftigungsgrad,Minimum wor
 job,jobserviceApp.job.created,Stelle mit ID {{ param }} erstellt,A new job is created with identifier {{ param }},Un emploi portant l'ID {{ param }} a été créé ,È stato generato un nuovo posto con identificatore { param }}
 job,jobserviceApp.job.deleted,Stelle mit ID {{ param }} gelöscht,A job is deleted with identifier {{ param }},L'emploi portant l'ID {{ param }} a été supprimé,È stato eliminato un posto con identificatore {{ param }}
 job,jobserviceApp.job.updated,Stelle mit ID {{ param }} aktualisiert,A job is updated with identifier {{ param }},L'emploi portant l'ID {{ param }} a été mis à jour,È stato aggiornato un posto identificato da {{ param }}
-legal-terms-management,legal-terms-management.add-legal-terms,AGB Hinzufügen,Add Terms And Conditions,Ajouter CGV,Aggiungi Condizioni Generali
+legal-terms-management,legal-terms-management.add-legal-terms,AGB Hinzufügen,Add GTC,Ajouter CG,Aggiungi CG
 legal-terms-management,legal-terms-management.filter.placeholder,"Filtern nach Effektiv Bei, Link DE, Link EN, Link FR oder Link IT","Filter by Effective At, Link DE, Link EN, Link FR or Link IT","Filtrer par Efficace À, Lien DE, Lien EN, Lien FR ou Lien IT","Filtra per Efficace A, Link DE, Link EN, Link FR o Link IT"
 legal-terms-management,legal-terms-management.header.actions,Aktionen,Actions,Actes,Azioni
 legal-terms-management,legal-terms-management.header.effectiveAt,Effektiv Bei,Effective At,Efficace À,Efficace A
@@ -1020,12 +1020,12 @@ legal-terms-management,legal-terms-management.header.linkDe,DE Link,DE link,DE l
 legal-terms-management,legal-terms-management.header.linkEn,EN Link,EN link,EN lien,EN link
 legal-terms-management,legal-terms-management.header.linkFr,FR Link,FR link,FR lien,FR link
 legal-terms-management,legal-terms-management.header.linkIt,IT Link,IT link,IT lien,IT link
-legal-terms-management,legal-terms-management.legal-terms-delete-dialog.question,"Sind Sie sicher, dass Sie AGB löschen möchten?",Are you sure you want to delete Terms And Conditions?,Etes-vous certain de vouloir supprimer CGV?,Sei sicuro di volere eliminare Condizioni Generali?
-legal-terms-management,legal-terms-management.legal-terms-details-dialog,AGB Details,Terms And Conditions Details,CGV Détails,Condizioni Generali Dettagli
+legal-terms-management,legal-terms-management.legal-terms-delete-dialog.question,"Sind Sie sicher, dass Sie AGB löschen möchten?",Are you sure you want to delete Terms And Conditions?,Etes-vous certain de vouloir supprimer CG?,Sei sicuro di volere eliminare Condizioni Generali?
+legal-terms-management,legal-terms-management.legal-terms-details-dialog,AGB Details,GTC Details,Détails CG,Dettagli CG
 legal-terms-management,legal-terms-management.legal-terms-details-dialog.add,Hinzufügen,Add,Ajouter,Aggiungi
 legal-terms-management,legal-terms-management.legal-terms-details-dialog.validate.pastEffectiveAt,Effektiv-Bei-Datum  muss in der Zukunft liegen.,Effective At date must be in the future.,La Efficace À date doit se situer dans le futur.,La Efficace A data deve situarsi nel futuro.
 legal-terms-management,legal-terms-management.legal-terms-details-dialog.validate.url.pattern,Diese URL ist ungültig.,This URL is not valid,Ce lien URL n'est pas valable.,Questo indirizzo URL non è valido.
-legal-terms-management,legal-terms-management.title,AGB verwalten,Manage Terms And Conditions,Gérer CGV,Gestisci condizioni generali
+legal-terms-management,legal-terms-management.title,AGB verwalten,Manage GTC,Gérer CG,Gestisci CG
 login,login.form.button,Anmelden,Sign in,Connexion,Accedi
 login,login.form.information.pea.text,Vorgehen zur Registrierung für private Arbeitsvermittler,Registration procedure for private placement officers,Procédure d’enregistrement pour les agences de placement privées,Procedura di registrazione per le agenzie di collocamento private
 login,login.form.information.pea.text.COMPANIES,Vorgehen zur Registrierung für Arbeitsgaber,Registration procedure for employers,Procédure d’enregistrement pour employeurs,Procedura di registrazione per datori di lavoro
@@ -1201,9 +1201,9 @@ registration-questionnaire,registrationQuestionnaire.ravCustomer,Ich möchte arb
 registration-questionnaire,registrationQuestionnaire.recruitmentAgency.existing,Ich bin ein bestehender Job-Room Nutzer,I am an existing Job Room user,Je suis déjà un utilisateur de Job-Room ,Sono già un utente di Job-Room
 registration-questionnaire,registrationQuestionnaire.recruitmentAgency.message,Ich möchte arbeit.swiss als <b>privater Arbeitsvermittler</b> nutzen,I would like to use work.swiss as an <b>employment agency</b>,Je souhaite utiliser travail.swiss en tant que <b>agence de placement privée</b> ,Voglio usare lavoro.swiss come <b>agenzia privata di collocamento</b>
 registration-questionnaire,registrationQuestionnaire.recruitmentAgency.new,Ich melde mich zum ersten Mal bei arbeit.swiss bzw. Job-Room an,This is my first time registering for work.swiss or Job-Room,J'accède pour la première fois à travail.swiss ou Job-Room,È la prima volta che accedo alla Job-Room di lavoro.swiss
-registration-questionnaire,registrationQuestionnaire.termsOfUse.accept,Ich akzeptiere die Nutzungsbedingungen,I agree to the terms and conditions,J'accepte les conditions d'utilisation,Accetto le condizoni di utilizzo
+registration-questionnaire,registrationQuestionnaire.termsOfUse.accept,Ich akzeptiere die Allgemeinen Geschäftsbedingungen,I agree to the General Terms and Conditions,J'accepte les conditions générales,Accetto le Condizioni generali
 registration-questionnaire,registrationQuestionnaire.termsOfUse.link.error,Es ist ein Fehler aufgetreten!,An error has occurred!,Une erreur s'est produite !,Si è verificato un errore!
-registration-questionnaire,registrationQuestionnaire.termsOfUse.link.text,Nutzungsbedingungen anzeigen,Show terms and conditions,Afficher les conditions d'utilisation,Mostra le condizioni di utilizzo
+registration-questionnaire,registrationQuestionnaire.termsOfUse.link.text,Allgemeine Geschäftsbedingungen anzeigen,Show General Terms and Conditions,Afficher les conditions générales,Mostra le Condizioni generali
 registration-questionnaire,registrationQuestionnaire.title,Registrierung,Registration,Enregistrement,Registrazione
 relogin,relogin.button.text,Jetzt abmelden,Logout now,Se déconnecter maintenant,Disconnettersi
 relogin,relogin.click.text,Bitte melden Sie sich ab. Mit Ihrem nächsten Login ist die Registration abgeschlossen.,Please log out. Your registration will be completed the next time you log in.,Veuillez vous déconnecter. L'enregistrement se terminera avec votre prochain accès.,Si prega di disconnettersi. Con il prossimo accesso la registrazione sarà completata

@@ -1,6 +1,6 @@
 {
     "legal-terms-management": {
-        "add-legal-terms": "Add Terms And Conditions",
+        "add-legal-terms": "Add GTC",
         "filter": {
             "placeholder": "Filter by Effective At, Link DE, Link EN, Link FR or Link IT"
         },
@@ -15,10 +15,10 @@
         "legal-terms-delete-dialog": {
             "question": "Are you sure you want to delete Terms And Conditions?"
         },
-        "legal-terms-details-dialog": "Terms And Conditions Details",
+        "legal-terms-details-dialog": "GTC Details",
         "legal-terms-details-dialog.add": "Add",
         "legal-terms-details-dialog.validate.pastEffectiveAt": "Effective At date must be in the future.",
         "legal-terms-details-dialog.validate.url.pattern": "This URL is not valid",
-        "title": "Manage Terms And Conditions"
+        "title": "Manage GTC"
     }
 }

@@ -182,17 +182,17 @@
                 "accept-label": "Ich akzeptiere die neuen AGB",
                 "accept-link": {
                     "error": "Es ist ein Fehler aufgetreten!",
-                    "text": "Neue allgemeine Gesch\u00e4ftsbedingung (AGB)"
+                    "text": "Neue Allgemeine Gesch\u00e4ftsbedingungen (AGB)"
                 },
-                "content1": "Unsere allgemeinen Gesch\u00e4ftsbedingungen haben sich ge\u00e4ndert. ",
-                "content2": "Bitte akzeptieren Sie diese, damit Sie ihr Konto weiterhin nutzen k\u00f6nnen."
+                "content1": "Unsere Allgemeinen Gesch\u00e4ftsbedingungen haben sich ge\u00e4ndert. ",
+                "content2": "Bitte akzeptieren Sie diese, damit Sie Ihr Konto weiterhin nutzen k\u00f6nnen."
             },
             "footer": {
                 "accept": "Weiter",
                 "decline": "Nicht akzeptieren und ausloggen"
             },
             "header": {
-                "title": "Neue allgemeine Gesch\u00e4ftsbedingung (AGB)"
+                "title": "Neue Allgemeine Gesch\u00e4ftsbedingungen (AGB)"
             }
         },
         "menu": {
