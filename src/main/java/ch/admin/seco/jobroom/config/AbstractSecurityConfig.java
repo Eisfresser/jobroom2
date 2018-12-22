@@ -18,11 +18,10 @@ class AbstractSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    public void configure(WebSecurity web) throws Exception {
+    public void configure(WebSecurity web) {
         web.ignoring()
-            .antMatchers("**.{woff,woff2,ttf,eot}")
+            .antMatchers("/**/*.{woff,woff2,ttf,eot}")
             .antMatchers(HttpMethod.OPTIONS, "/**")
-            .antMatchers("/app/**/*.{js,html}")
             .antMatchers("/i18n/**")
             .antMatchers("/content/**")
             .antMatchers("/test/**")
