@@ -38,6 +38,9 @@ import { CurrentSelectedCompanyService } from './company/current-selected-compan
 import { UserInfoService } from './user-info/user-info.service';
 import { FormValidationDirective } from './validation/form-validation.directive';
 import { CapitalizePipe } from './pipes/capitalize.pipe';
+import { LandingPageComponent } from './landing-page/landing-page.component';
+import { LandingPageService } from './landing-page/landing-page.service';
+import { LandingPageGuard } from './landing-page/landing-page.guard';
 
 @NgModule({
     imports: [
@@ -60,7 +63,8 @@ import { CapitalizePipe } from './pipes/capitalize.pipe';
         ScrollToTopComponent,
         ShortenPipe,
         CompanySelectionComponent,
-        CapitalizePipe
+        CapitalizePipe,
+        LandingPageComponent
     ],
     providers: [
         LoginService,
@@ -85,7 +89,9 @@ import { CapitalizePipe } from './pipes/capitalize.pipe';
         JobAdvertisementService,
         LanguageFilterService,
         CurrentSelectedCompanyService,
-        UserInfoService
+        UserInfoService,
+        LandingPageService,
+        LandingPageGuard
     ],
     entryComponents: [JhiLoginModalComponent],
     exports: [
@@ -106,7 +112,8 @@ import { CapitalizePipe } from './pipes/capitalize.pipe';
         ScrollToTopComponent,
         ShortenPipe,
         CompanySelectionComponent,
-        CapitalizePipe
+        CapitalizePipe,
+        LandingPageComponent
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 

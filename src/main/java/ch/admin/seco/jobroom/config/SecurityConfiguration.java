@@ -209,7 +209,8 @@ public class SecurityConfiguration {
                 .antMatchers("/samllogin").fullyAuthenticated();
 
             http.sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+                .sessionFixation().migrateSession()
+                .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
                 .and()
                 .csrf().disable()
                 .apply(jwt())
@@ -252,7 +253,7 @@ public class SecurityConfiguration {
                 this.userInfoRepository,
                 this.authenticationEventPublisher(),
                 this.applicationEventPublisher);
-            authenticationSuccessHandler.setAlwaysUseDefaultTargetUrl(true);
+            authenticationSuccessHandler.setAlwaysUseDefaultTargetUrl(false);
             authenticationSuccessHandler.setDefaultTargetUrl("/");
             return authenticationSuccessHandler;
         }

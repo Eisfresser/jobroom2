@@ -31,6 +31,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.http.MediaType;
+import org.springframework.web.context.annotation.SessionScope;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
@@ -70,6 +71,12 @@ public class WebConfigurer implements ServletContextInitializer, WebServerFactor
         }
         initMDCInserting(servletContext, disps);
         log.info("Web application fully configured");
+    }
+
+    @Bean
+    @SessionScope
+    public LoginRedirectURISessionAttribute loginRedirectURISessionAttribute() {
+        return new LoginRedirectURISessionAttribute();
     }
 
     /**

@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home.component';
 import { JobAdvertisementResolverService } from './tools/job-publication-tool/service/job-advertisement-resolver.service';
+import { LandingPageComponent } from '../shared/landing-page/landing-page.component';
+import { LandingPageGuard } from '../shared/landing-page/landing-page.guard';
 
 const routes: Routes = [
     {
@@ -58,6 +60,15 @@ const routes: Routes = [
         resolve: {
             jobAdvertisement: JobAdvertisementResolverService,
         },
+        data: {
+            authorities: [],
+            pageTitle: 'home.title'
+        }
+    },
+    {
+        path: 'landing-page',
+        component: LandingPageComponent,
+        canActivate: [LandingPageGuard],
         data: {
             authorities: [],
             pageTitle: 'home.title'

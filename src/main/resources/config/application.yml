@@ -207,3 +207,4 @@ security:
         enable-redirect-on-cancellation: true
     user:
         logout_url: '/saml/logout'
+        redirect-base-url:  ${jhipster.mail.base-url}
