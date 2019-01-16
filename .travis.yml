@@ -51,8 +51,7 @@ deploy:
     ./gradlew bootWar dependencyCheckAggregate pushDockerImage publish -Pprod -Pzipkin -x test -Pversion=${TRAVIS_JOB_NUMBER}-SNAPSHOT -PaddLatestTagToDockerImage=true --stacktrace
     && .ci-travis/push-version-bump.sh ${TRAVIS_JOB_NUMBER}-SNAPSHOT ${GIT_USER} ${GIT_PWD}
   on:
-      all_branches: true
-      condition: "$TRAVIS_BRANCH =~ ^release.*$"
+      branch: develop
 
 - provider: script
   skip_cleanup: true
