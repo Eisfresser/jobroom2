@@ -39,9 +39,9 @@ public class UserInfoResource {
         this.registrationService = registrationService;
     }
 
-    @GetMapping("/{eMail}")
+    @GetMapping("/")
     @Timed
-    public UserInfoDTO getUserInfo(@PathVariable String eMail) throws UserInfoNotFoundException {
+    public UserInfoDTO getUserInfo(@RequestParam String eMail) throws UserInfoNotFoundException {
         return this.userInfoService.getUserInfo(eMail);
     }
 

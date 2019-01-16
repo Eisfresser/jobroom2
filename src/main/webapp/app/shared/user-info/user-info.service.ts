@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 
 import { SERVER_API_URL } from '../../app.constants';
@@ -16,7 +16,11 @@ export class UserInfoService {
     }
 
     public loadUserInfoByMail(email): Observable<any> {
-        return this.http.get(UserInfoService.USER_INFO_URL + email, { observe: 'response' });
+        const params = new HttpParams().set('eMail', email);
+        return this.http.get(UserInfoService.USER_INFO_URL + email, {
+            params: params,
+            observe: 'response'
+        });
     }
 
     public loadUserRoles(userInfoId: string): Observable<any> {
