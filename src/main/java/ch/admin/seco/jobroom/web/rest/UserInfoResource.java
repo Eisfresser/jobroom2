@@ -76,9 +76,9 @@ public class UserInfoResource {
         this.userInfoService.removeCompanyContactTemplate(userInfoId, companyId);
     }
 
-    @DeleteMapping("/{eMail}")
+    @DeleteMapping("/")
     @Timed
-    public void unregister(@PathVariable String eMail, @RequestParam Role role) throws UserNotFoundException {
+    public void unregister(@RequestParam String eMail, @RequestParam Role role) throws UserNotFoundException {
         switch (role) {
             case JOB_SEEKER:
                 this.registrationService.unregisterJobSeeker(eMail);

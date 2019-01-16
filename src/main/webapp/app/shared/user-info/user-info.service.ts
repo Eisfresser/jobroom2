@@ -17,7 +17,7 @@ export class UserInfoService {
 
     public loadUserInfoByMail(email): Observable<any> {
         const params = new HttpParams().set('eMail', email);
-        return this.http.get(UserInfoService.USER_INFO_URL + email, {
+        return this.http.get(UserInfoService.USER_INFO_URL, {
             params: params,
             observe: 'response'
         });
@@ -28,8 +28,11 @@ export class UserInfoService {
     }
 
     public unregisterUser(email, deleteParams): Observable<any> {
-        return this.http.delete(UserInfoService.USER_INFO_URL + email, {
-            params: deleteParams,
+        const params = new HttpParams()
+            .set('email', email)
+            .set('deleteParams', deleteParams);
+        return this.http.delete(UserInfoService.USER_INFO_URL, {
+            params: params,
             observe: 'response'
         })
     }
