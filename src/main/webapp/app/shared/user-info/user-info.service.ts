@@ -29,7 +29,7 @@ export class UserInfoService {
 
     public unregisterUser(email, deleteParams): Observable<any> {
         const params = new HttpParams()
-            .set('email', email)
+            .set('eMail', email)
             .set('deleteParams', deleteParams);
         return this.http.delete(UserInfoService.USER_INFO_URL, {
             params: params,
