@@ -27,12 +27,9 @@ export class UserInfoService {
         return this.http.get(UserInfoService.USER_INFO_URL + userInfoId + UserInfoService.USER_INFO_ROLE_POSTFIX, { observe: 'response' });
     }
 
-    public unregisterUser(email, deleteParams): Observable<any> {
-        const params = new HttpParams()
-            .set('eMail', email)
-            .set('deleteParams', deleteParams);
+    public unregisterUser(deleteParams): Observable<any> {
         return this.http.delete(UserInfoService.USER_INFO_URL, {
-            params: params,
+            params: deleteParams,
             observe: 'response'
         })
     }

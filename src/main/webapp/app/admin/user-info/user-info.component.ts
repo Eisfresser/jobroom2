@@ -113,13 +113,11 @@ export class UserInfoComponent {
     }
 
     public unregister() {
-        const email = this.email.value;
-
         const confirmed = window.confirm(`Are you sure to unregister ${this.selectedUserInfo.email}?`);
         if (!confirmed) {
             return;
         }
-        this.userInfoService.unregisterUser(email, this.prepareDeleteParams())
+        this.userInfoService.unregisterUser(this.prepareDeleteParams())
             .subscribe((res: HttpResponse<any>) => {
                 this.searchByEMail();
             }, (error: HttpErrorResponse) => {
@@ -128,7 +126,9 @@ export class UserInfoComponent {
     }
 
     private prepareDeleteParams() {
-        let params = new HttpParams().set('role', 'NO_ROLE');
+        let params = new HttpParams()
+            .set('eMail', this.email.value)
+            .set('role', 'NO_ROLE');
         if (this.userRoles == null) {
             return params;
         }
