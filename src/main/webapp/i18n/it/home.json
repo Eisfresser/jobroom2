@@ -122,7 +122,7 @@
                     "city": "Luogo",
                     "country": "Paese",
                     "title": "Luogo di lavoro",
-                    "zip": "NPA  ",
+                    "zip": "NPA",
                     "zipcode": "NPA / luogo"
                 },
                 "messages": {
@@ -186,7 +186,7 @@
                 },
                 "submit": "Inviare l'annuncio",
                 "submit.error": "Annuncio non salvata.",
-                "submit.success": "Grazie di aver annunciato il posto vacante que sar\u00e0 esaminato dall'URC. Ricever\u00e0 un'e-mail non appena il posto vacante verr\u00e0 pubblicato.",
+                "submit.success": "Grazie di aver annunciato il posto vacante che sar\u00e0 esaminato dall'URC. Ricever\u00e0 un'e-mail non appena il posto vacante verr\u00e0 pubblicato.",
                 "workload": "Grado di occupazione"
             },
             "job-search": {
