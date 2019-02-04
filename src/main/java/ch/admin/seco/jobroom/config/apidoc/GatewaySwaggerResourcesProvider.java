@@ -70,6 +70,10 @@ public class GatewaySwaggerResourcesProvider implements SwaggerResourcesProvider
         try {
             ResponseEntity<RemoteSwaggerResource[]> entity = ribbonClientRestTemplate
                 .getForEntity("http://" + serviceId + "/swagger-resources", RemoteSwaggerResource[].class);
+            if (entity.getBody() == null) {
+                LOGGER.warn("Received empty swagger-resources from service-id: " + serviceId);
+                return new RemoteSwaggerResource[0];
+            }
             return entity.getBody();
         } catch (Exception e) {
             LOGGER.warn("Could not resolve swagger-resources from service-id: " + serviceId, e);
