@@ -2,6 +2,7 @@ package ch.admin.seco.jobroom.config.apidoc;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import io.github.jhipster.config.JHipsterConstants;
 import org.slf4j.Logger;
@@ -46,13 +47,16 @@ public class GatewaySwaggerResourcesProvider implements SwaggerResourcesProvider
 
         //Add the registered microservices swagger docs as additional swagger resources
         List<Route> routes = routeLocator.getRoutes();
-        routes.forEach(route -> {
-                RemoteSwaggerResource[] remoteSwaggerResources = resolveRemoteSwaggerResources(route.getId());
-                for (RemoteSwaggerResource remoteSwaggerResource : remoteSwaggerResources) {
-                    resources.add(swaggerRemoteResource(route, remoteSwaggerResource));
+        routes.stream()
+            .peek(route -> LOGGER.debug("handling following route " + route))
+            .filter(Objects::nonNull)
+            .forEach(route -> {
+                    RemoteSwaggerResource[] remoteSwaggerResources = resolveRemoteSwaggerResources(route.getId());
+                    for (RemoteSwaggerResource remoteSwaggerResource : remoteSwaggerResources) {
+                        resources.add(swaggerRemoteResource(route, remoteSwaggerResource));
+                    }
                 }
-            }
-        );
+            );
         return resources;
     }
 
