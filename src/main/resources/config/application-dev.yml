@@ -203,6 +203,10 @@ zuul:
         - Set-Cookie
         - Authorization
     ignoredPatterns:
+        - /saml/**
+        - /authentication/**
+        - /login
+        - /samllogin
         - /webjars/**
         - /jr2/**
         - /api/**
