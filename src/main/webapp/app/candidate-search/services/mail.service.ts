@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { CompanyContactTemplateModel } from '../../shared/company/company-contact-template.model';
+import { SERVER_API_URL } from '../../app.constants';
 
 export class EmailContent {
     candidateId: string;
@@ -48,6 +49,6 @@ export class MailService {
     }
 
     sendAnonymousContactMessage(emailContent: EmailContent): Observable<void> {
-        return this.http.post<void>('/api/messages/send-anonymous-message', emailContent)
+        return this.http.post<void>(SERVER_API_URL + '/api/messages/send-anonymous-message', emailContent)
     }
 }

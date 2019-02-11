@@ -3,11 +3,12 @@ import { Observable } from 'rxjs/Rx';
 
 import { VersionInfo } from './version-info.model';
 import { HttpClient } from '@angular/common/http';
+import { SERVER_API_URL } from '../../app.constants';
 
 @Injectable()
 export class VersionService {
 
-    private versionInfoUrl = 'management/info';
+    private versionInfoUrl = SERVER_API_URL + 'management/info';
 
     constructor(private http: HttpClient) {
     }

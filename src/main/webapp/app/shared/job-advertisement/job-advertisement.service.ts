@@ -14,10 +14,11 @@ import {
     JobAdvertisementSearchRequestBody
 } from './job-advertisement-search-request';
 import { PEAJobAdsSearchRequest } from './pea-job-ads-search-request';
+import { SERVER_API_URL } from '../../app.constants';
 
 @Injectable()
 export class JobAdvertisementService {
-    private readonly resourceUrl = 'jobadservice/api/jobAdvertisements';
+    private readonly resourceUrl = SERVER_API_URL + 'jobadservice/api/jobAdvertisements';
     private readonly searchUrl = `${this.resourceUrl}/_search`;
     private readonly countUrl = `${this.resourceUrl}/_count`;
 
@@ -34,14 +35,20 @@ export class JobAdvertisementService {
     searchPEAJobAds(request: PEAJobAdsSearchRequest): Observable<ResponseWrapper> {
         const params = createPageableURLSearchParams(request);
 
-        return this.http.post(`${this.searchUrl}/pea`, request.body, { params, observe: 'response' })
+        return this.http.post(`${this.searchUrl}/pea`, request.body, {
+            params,
+            observe: 'response'
+        })
             .map((resp) => new ResponseWrapper(resp.headers, resp.body, resp.status));
     }
 
     search(request: JobAdvertisementSearchRequest): Observable<ResponseWrapper> {
         const params = createPageableURLSearchParams(request);
 
-        return this.http.post(this.searchUrl, request.body, { params, observe: 'response' })
+        return this.http.post(this.searchUrl, request.body, {
+            params,
+            observe: 'response'
+        })
             .map((resp) => new ResponseWrapper(resp.headers, resp.body, resp.status));
     }
 

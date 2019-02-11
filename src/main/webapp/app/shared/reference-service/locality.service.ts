@@ -10,8 +10,9 @@ import {
 import { Observer } from 'rxjs/Observer';
 import { TypeaheadMultiselectModel } from '../input-components';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { SERVER_API_URL } from '../../app.constants';
 
-const LOCALITIES_URL = 'referenceservice/api/_search/localities';
+const LOCALITIES_URL =  SERVER_API_URL + 'referenceservice/api/_search/localities';
 const DEFAULT_RESPONSE_SIZE = '10';
 
 export const NAVIGATOR_TOKEN = new InjectionToken<NavigatorGeolocation>('NavigatorGeolocation');

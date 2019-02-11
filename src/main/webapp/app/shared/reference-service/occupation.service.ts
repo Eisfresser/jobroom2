@@ -9,10 +9,11 @@ import {
 import { TypeaheadMultiselectModel } from '../input-components';
 import { OccupationInputType } from './occupation-presentation.service';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { SERVER_API_URL } from '../../app.constants';
 
 const DEFAULT_RESPONSE_SIZE = '10';
-const SEARCH_URL = 'referenceservice/api/_search/occupations/synonym';
-const OCCUPATIONS_URL = 'referenceservice/api/occupations';
+const SEARCH_URL =  SERVER_API_URL + 'referenceservice/api/_search/occupations/synonym';
+const OCCUPATIONS_URL =  SERVER_API_URL + 'referenceservice/api/occupations';
 
 export interface Occupation {
     code: number;

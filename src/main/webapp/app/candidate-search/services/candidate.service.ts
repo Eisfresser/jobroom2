@@ -12,13 +12,14 @@ import { CandidateSearchFilter } from '../state-management/state/candidate-searc
 import { JhiBase64Service } from 'ng-jhipster';
 import { OccupationCode, OccupationMapping } from '../../shared/reference-service';
 import { HttpClient, HttpResponse } from '@angular/common/http';
+import { SERVER_API_URL } from '../../app.constants';
 
 @Injectable()
 export class CandidateService {
 
-    private resourceUrl = 'candidateservice/api/candidates';
-    private searchUrl = 'candidateservice/api/_search/candidates';
-    private countUrl = 'candidateservice/api/_count/candidates';
+    private resourceUrl = SERVER_API_URL + 'candidateservice/api/candidates';
+    private searchUrl = SERVER_API_URL + 'candidateservice/api/_search/candidates';
+    private countUrl = SERVER_API_URL + 'candidateservice/api/_count/candidates';
 
     private static convertResponse(res: HttpResponse<any>): ResponseWrapper {
         return new ResponseWrapper(res.headers, res.body, res.status);

@@ -5,7 +5,7 @@
     },
     "apps": [{
         "root": "src/main/webapp",
-        "outDir": "build/www/app",
+        "outDir": "build/www/jr2/app",
         "assets": [
             "content",
             "i18n",

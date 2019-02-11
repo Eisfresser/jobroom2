@@ -58,7 +58,7 @@ module.exports = (enviroment) => {
     return webpackMerge(commonConfig({ env: ENV }), {
         devtool: 'eval-source-map',
         devServer: {
-            contentBase: './build/www',
+            contentBase: './build/www/jr2',
             proxy: getProxies(enviroment),
             watchOptions: {
                 ignored: /node_modules/
@@ -70,7 +70,7 @@ module.exports = (enviroment) => {
             main: './src/main/webapp/app/app.main'
         },
         output: {
-            path: utils.root('build/www'),
+            path: utils.root('build/www/jr2'),
             filename: 'app/[name].bundle.js',
             chunkFilename: 'app/[id].chunk.js'
         },

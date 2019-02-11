@@ -26,7 +26,7 @@ module.exports = webpackMerge(commonConfig({ env: ENV, gaTrackingId: GA_TRACKING
         main: './src/main/webapp/app/app.main'
     },
     output: {
-        path: utils.root('build/www'),
+        path: utils.root('build/www/jr2'),
         filename: 'app/[name].[hash].bundle.js',
         chunkFilename: 'app/[id].[hash].chunk.js'
     },

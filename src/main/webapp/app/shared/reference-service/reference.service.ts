@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { TranslateService } from '@ngx-translate/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { SERVER_API_URL } from '../../app.constants';
 
-const REFERENCESERVICE_URL = 'referenceservice/api/';
+const REFERENCESERVICE_URL =  SERVER_API_URL + 'referenceservice/api/';
 const JOB_CENTER_URL = REFERENCESERVICE_URL + 'job-centers';
 
 export class Address {

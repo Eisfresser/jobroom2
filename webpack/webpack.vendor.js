@@ -41,13 +41,13 @@ module.exports = {
     },
     output: {
         filename: '[name].dll.js',
-        path: path.resolve('./build/www'),
+        path: path.resolve('./build/www/jr2'),
         library: '[name]'
     },
     plugins: [
         new webpack.DllPlugin({
             name: '[name]',
-            path: path.resolve('./build/www/[name].json')
+            path: path.resolve('./build/www/jr2/[name].json')
         })
     ]
 };

@@ -42,7 +42,7 @@ describe('OccupationService', () => {
 
             // THEN
             httpMock.expectOne((req) =>
-                req.url === 'referenceservice/api/_search/occupations/synonym'
+                req.url === '/referenceservice/api/_search/occupations/synonym'
                 && req.params.get('prefix') === 'info'
                 && req.params.get('resultSize') === '10'
                 && req.params.get('language') === 'de');
@@ -87,7 +87,7 @@ describe('OccupationService', () => {
 
             // THEN
             httpMock.expectOne((req) =>
-                req.url === 'referenceservice/api/_search/occupations/synonym'
+                req.url === '/referenceservice/api/_search/occupations/synonym'
                 && req.params.get('prefix') === 'info'
                 && req.params.get('resultSize') === '10'
                 && req.params.get('language') === 'de');
@@ -129,7 +129,7 @@ describe('OccupationService', () => {
 
             // THEN
             httpMock.expectOne((req) =>
-                req.url === 'referenceservice/api/occupations'
+                req.url === '/referenceservice/api/occupations'
                 && req.params.get('code') === '2242422');
         });
 

@@ -33,12 +33,12 @@ export class SystemNotificationService {
     }
 
     getAllSystemNotifications(): Observable<SystemNotification[]> {
-        return this.http.get<SystemNotification[]>(`${this.resourceUrl}`)
+        return this.http.get<SystemNotification[]>(this.resourceUrl)
             .pipe(catchError((error: any) => Observable.throw(error.json())));
     }
 
     getActiveSystemNotifications(): Observable<SystemNotification[]> {
-        return this.http.get<SystemNotification[]>(`api/active-system-notifications`)
+        return this.http.get<SystemNotification[]>(SERVER_API_URL + `api/active-system-notifications`)
             .pipe(catchError((error: any) => Observable.throw(error.json())));
     }
 }

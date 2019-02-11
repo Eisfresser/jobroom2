@@ -2,10 +2,11 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { OccupationCode } from './occupation-code';
+import { SERVER_API_URL } from '../../app.constants';
 
 const DEFAULT_RESPONSE_SIZE = '10';
-const OCCUPATION_LABEL_RESOURCE_SEARCH_URL = 'referenceservice/api/_search/occupations/label';
-const OCCUPATION_LABEL_RESOURCE_URL = 'referenceservice/api/occupations/label';
+const OCCUPATION_LABEL_RESOURCE_SEARCH_URL =  SERVER_API_URL + 'referenceservice/api/_search/occupations/label';
+const OCCUPATION_LABEL_RESOURCE_URL =  SERVER_API_URL + 'referenceservice/api/occupations/label';
 
 export interface OccupationLabelAutocomplete {
     occupations: OccupationLabelSuggestion[];

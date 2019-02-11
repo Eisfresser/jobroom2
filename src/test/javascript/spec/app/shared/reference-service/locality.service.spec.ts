@@ -39,7 +39,7 @@ describe('LocalityService', () => {
 
                 // THEN
                 httpMock.expectOne((req) =>
-                    req.url === 'referenceservice/api/_search/localities'
+                    req.url === '/referenceservice/api/_search/localities'
                     && req.params.get('prefix') === 'ber'
                     && req.params.get('distinctByLocalityCity') === 'true');
             }));
@@ -96,7 +96,7 @@ describe('LocalityService', () => {
 
                 // THEN
                 httpMock.expectOne((req) =>
-                    req.url === 'referenceservice/api/_search/localities/nearest'
+                    req.url === '/referenceservice/api/_search/localities/nearest'
                     && req.params.get('latitude') === '1111'
                     && req.params.get('longitude') === '2222');
             }));
