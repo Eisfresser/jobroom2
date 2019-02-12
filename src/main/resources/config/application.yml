@@ -41,20 +41,46 @@ ribbon:
         # must be set to false since otherwise the RibbonClientHttpRequestFactory is used which doesn't support 'PATCH'
         enabled: false
 
-# See http://cloud.spring.io/spring-cloud-netflix/spring-cloud-netflix.html
-zuul: # those values must be configured depending on the application specific needs
+# See https://cloud.spring.io/spring-cloud-netflix/single/spring-cloud-netflix.html#_router_and_filter_zuul
+zuul:
     host:
         max-total-connections: 1000
         max-per-route-connections: 100
     semaphore:
         max-semaphores: 500
+    ignoreSecurityHeaders: false
     sensitiveHeaders:
         - Set-Cookie
         - Authorization
-        - X-Frame-Options
-        - X-Content-Type-Options
-        - X-XSS-Protection
-    ignoreSecurityHeaders: false
+    ignoredServices:
+        - alv-portal-webapp
+    ignoredPatterns:
+        # spring security saml
+        - /saml/**
+        # authentication redirection endpoints
+        - /authentication/**
+        - /login
+        - /samllogin
+        # jr2-ui
+        - /jr2/**
+        # gateway endpoints
+        - /api/**
+        # actuator endpoints
+        - /management/**
+        # swagger
+        - /webjars/**
+        - /swagger-ui.html
+        - /swagger-resources
+        - /swagger-resources/**
+        - /v2/api-docs
+    routes:
+        jobdesk:
+            path: /jobdesk/**
+            serviceId: jobdesk-service
+            strip-prefix: false
+        portal-ui:
+            path: /**
+            serviceId: alv-portal-webapp
 
 # See https://github.com/Netflix/Hystrix/wiki/Configuration
 hystrix:
@@ -160,7 +186,6 @@ jhipster:
             - test
             - staging
             - training
-
 
 gateway:
     rate-limiting:

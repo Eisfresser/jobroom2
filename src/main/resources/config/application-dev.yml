@@ -196,32 +196,3 @@ security:
             truststore:
                 location: classpath:uid/jks/uid-client-truststore.jks
                 password: MUST_BE_PROVIDED_BY_THE_CONFIG_SERVER
-
-
-zuul:
-    ignoredServices:
-        - alv-portal-webapp
-    sensitiveHeaders:
-        - Set-Cookie
-        - Authorization
-    ignoredPatterns:
-        - /saml/**
-        - /authentication/**
-        - /login
-        - /samllogin
-        - /webjars/**
-        - /jr2/**
-        - /api/**
-        - /management/**
-        - /swagger-ui.html
-        - /swagger-resources
-        - /swagger-resources/**
-        - /v2/api-docs
-    routes:
-        jobdesk:
-            path: /jobdesk/**
-            serviceId: jobdesk-service
-            strip-prefix: false
-        portal-ui:
-            path: /**
-            serviceId: alv-portal-webapp
