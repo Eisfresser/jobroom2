@@ -4,7 +4,6 @@ package ch.admin.seco.jobroom.service.pdf;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.Locale;
 
 import javax.imageio.ImageIO;
 
@@ -18,7 +17,7 @@ import org.apache.pdfbox.pdmodel.graphics.image.LosslessFactory;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import org.apache.pdfbox.text.PDFTextStripper;
 
-import org.springframework.context.MessageSource;
+import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.core.io.ClassPathResource;
 
 public abstract class PdfDocument<T> {
@@ -46,13 +45,10 @@ public abstract class PdfDocument<T> {
     protected static final Color COLOR_PRIMARY = Color.BLACK;
     protected static final Color COLOR_SECONDARY = Color.GRAY;
 
-    protected final MessageSource messageSource;
-    protected final Locale locale;
+    protected final MessageSourceAccessor messageSource;
 
-
-    PdfDocument(MessageSource messageSource, String languageKey) throws IOException {
+    PdfDocument(MessageSourceAccessor messageSource) throws IOException {
         this.messageSource = messageSource;
-        this.locale = Locale.forLanguageTag(languageKey);
         this.createNewPage();
         this.setFont(FONT_NORMAL, FONT_MEDIUM, COLOR_PRIMARY);
     }
@@ -137,27 +133,27 @@ public abstract class PdfDocument<T> {
         contentStream.drawImage(pdImage, 55, 740, 195, 50);
         return this.setPosition(340, 780)
             .setFont(FONT_NORMAL, FONT_SMALL, COLOR_PRIMARY)
-            .insertTextLine(this.messageSource.getMessage("pdf.header.defr1", null, this.locale))
+            .insertTextLine(this.messageSource.getMessage("pdf.header.defr1"))
             .newLine(10)
-            .insertTextLine(this.messageSource.getMessage("pdf.header.defr2", null, this.locale))
+            .insertTextLine(this.messageSource.getMessage("pdf.header.defr2"))
             .newLine()
             .setFont(FONT_BOLD, FONT_SMALL, COLOR_PRIMARY)
-            .insertTextLine(this.messageSource.getMessage("pdf.header.seco1", null, this.locale))
+            .insertTextLine(this.messageSource.getMessage("pdf.header.seco1"))
             .newLine(10)
             .setFont(FONT_NORMAL, FONT_SMALL, COLOR_PRIMARY)
-            .insertTextLine(this.messageSource.getMessage("pdf.header.seco2", null, this.locale))
+            .insertTextLine(this.messageSource.getMessage("pdf.header.seco2"))
             .newLine(10)
-            .insertTextLine(this.messageSource.getMessage("pdf.header.seco3", null, this.locale));
+            .insertTextLine(this.messageSource.getMessage("pdf.header.seco3"));
     }
 
     PdfDocument addDefaultFooter() throws IOException {
         return this.setPosition(340, 30)
             .setFont(FONT_NORMAL, FONT_SMALL, COLOR_PRIMARY)
-            .insertTextLine(this.messageSource.getMessage("pdf.footer.name", null, this.locale))
+            .insertTextLine(this.messageSource.getMessage("pdf.footer.name"))
             .newLine(10)
-            .insertTextLine(this.messageSource.getMessage("pdf.footer.place", null, this.locale))
+            .insertTextLine(this.messageSource.getMessage("pdf.footer.place"))
             .newLine(10)
-            .insertTextLine(this.messageSource.getMessage("pdf.footer.email", null, this.locale));
+            .insertTextLine(this.messageSource.getMessage("pdf.footer.email"));
     }
 
     PdfDocument drawLine(int startX, int startY, int endX, int endY) throws IOException {

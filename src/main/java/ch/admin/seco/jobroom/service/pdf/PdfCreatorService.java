@@ -1,11 +1,10 @@
 package ch.admin.seco.jobroom.service.pdf;
 
-import java.io.IOException;
-
+import ch.admin.seco.jobroom.domain.UserInfo;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
-import ch.admin.seco.jobroom.domain.UserInfo;
+import java.io.IOException;
 
 /**
  * Service for generating PDF documents.
@@ -22,9 +21,6 @@ public class PdfCreatorService {
     }
 
     public String createAccessCodePdf(UserInfo user) throws IOException {
-        return new AccessCodeDocument(this.messageSource, user.getLangKey()).create(user, this.creationDirectoryPath);
-
+        return new AccessCodeDocument(this.messageSource).create(user, this.creationDirectoryPath);
     }
-
-
 }

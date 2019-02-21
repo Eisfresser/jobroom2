@@ -1,24 +1,39 @@
 package ch.admin.seco.jobroom.service.pdf;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
+import ch.admin.seco.jobroom.JobroomApp;
+import ch.admin.seco.jobroom.domain.Company;
+import ch.admin.seco.jobroom.domain.UserInfo;
 import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.MessageSource;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.test.context.junit4.rules.SpringClassRule;
+import org.springframework.test.context.junit4.rules.SpringMethodRule;
 
-import ch.admin.seco.jobroom.JobroomApp;
-import ch.admin.seco.jobroom.config.Constants;
-import ch.admin.seco.jobroom.domain.Company;
-import ch.admin.seco.jobroom.domain.UserInfo;
+import java.util.Collection;
+import java.util.Locale;
 
-@RunWith(SpringRunner.class)
+import static ch.admin.seco.jobroom.config.Constants.DEFAULT_LANGUAGE;
+import static java.util.Arrays.asList;
+import static java.util.Locale.*;
+import static org.assertj.core.api.Assertions.assertThat;
+
+@RunWith(Parameterized.class)
 @SpringBootTest(classes = JobroomApp.class)
 public class PdfCreatorServiceTest {
+
+    @ClassRule
+    public static final SpringClassRule SPRING_CLASS_RULE = new SpringClassRule();
+
+    @Rule
+    public final SpringMethodRule springMethodRule = new SpringMethodRule();
 
     @Autowired
     private MessageSource messageSource;
@@ -26,6 +41,8 @@ public class PdfCreatorServiceTest {
     private PdfCreatorService pdfCreatorService;
 
     private UserInfo registeringUser;
+    private Locale locale;
+    private String expectedLanguage;
 
     @Before
     public void setup() {
@@ -36,40 +53,33 @@ public class PdfCreatorServiceTest {
         company.setStreet("Stadtstrasse 21");
         company.setZipCode("8600");
         company.setName("Stellenvermittlung24");
-        registeringUser = new UserInfo("Hans", "Muster", "hans.muster@example.com", "extId", Constants.DEFAULT_LANGUAGE);
+        registeringUser = new UserInfo("Hans", "Muster", "hans.muster@example.com", "extId", DEFAULT_LANGUAGE);
         registeringUser.requestAccessAsEmployer(company);
     }
 
-    @Test
-    public void testCreateActivationPdfGerman() throws Exception {
-        registeringUser.setLangKey("de");
-        String pathToPdf = pdfCreatorService.createAccessCodePdf(registeringUser);
-        String accessCode = registeringUser.getAccessCode();
-        assertThat(pathToPdf).isEqualTo(System.getProperty("java.io.tmpdir") + "/accessCode_de_" + accessCode + ".pdf");
+    @Parameters(name = "{index}: should create access code PDF of language {1} if locale is {0}")
+    public static Collection<Object[]> data() {
+        return asList(new Object[][] {
+            { GERMANY,"de" },
+            { FRANCE, "fr" },
+            { ITALY, "it" },
+            { US, "en" },
+            { forLanguageTag("es"), "de" }
+        });
+    }
+
+    public PdfCreatorServiceTest(Locale locale, String expectedLanguage) {
+        this.locale = locale;
+        this.expectedLanguage = expectedLanguage;
     }
 
     @Test
-    public void testCreateActivationPdfFrench() throws Exception {
-        registeringUser.setLangKey("fr");
-        String pathToPdf = pdfCreatorService.createAccessCodePdf(registeringUser);
+    public void test() throws Exception {
+        LocaleContextHolder.setLocale(locale);
         String accessCode = registeringUser.getAccessCode();
-        assertThat(pathToPdf).isEqualTo(System.getProperty("java.io.tmpdir") + "/accessCode_fr_" + accessCode + ".pdf");
-    }
 
-    @Test
-    public void testCreateActivationPdfItalian() throws Exception {
-        registeringUser.setLangKey("it");
         String pathToPdf = pdfCreatorService.createAccessCodePdf(registeringUser);
-        String accessCode = registeringUser.getAccessCode();
-        assertThat(pathToPdf).isEqualTo(System.getProperty("java.io.tmpdir") + "/accessCode_it_" + accessCode + ".pdf");
-    }
 
-    @Test
-    public void testCreateActivationPdfEnglish() throws Exception {
-        registeringUser.setLangKey("en");
-        String pathToPdf = pdfCreatorService.createAccessCodePdf(registeringUser);
-        String accessCode = registeringUser.getAccessCode();
-        assertThat(pathToPdf).isEqualTo(System.getProperty("java.io.tmpdir") + "/accessCode_en_" + accessCode + ".pdf");
+        assertThat(pathToPdf).isEqualTo(System.getProperty("java.io.tmpdir") + "/accessCode_" + expectedLanguage + "_" + accessCode + ".pdf");
     }
-
 }
