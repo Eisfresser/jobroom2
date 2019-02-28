@@ -45,6 +45,12 @@ public class UserInfoResource {
         return this.userInfoService.getUserInfo(eMail);
     }
 
+    @GetMapping("/_search/by-stes-nr")
+    @Timed
+    public UserInfoDTO findUserInfoByStesNr(@RequestParam String stesNr) throws UserInfoNotFoundException {
+        return this.userInfoService.getUserInfo(Long.parseLong(stesNr));
+    }
+
     @GetMapping("/{userInfoId}/roles")
     @Timed
     public Set<String> getRoles(@PathVariable UserInfoId userInfoId) throws UserNotFoundException, UserInfoNotFoundException {

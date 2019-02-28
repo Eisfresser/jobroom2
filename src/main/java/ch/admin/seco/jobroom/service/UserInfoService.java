@@ -44,6 +44,13 @@ public class UserInfoService {
     }
 
     @IsAdmin
+    public UserInfoDTO getUserInfo(Long stesNr) throws UserInfoNotFoundException {
+        Optional<UserInfo> userInfo = this.userInfoRepository.findByPersonNumber(stesNr);
+        return userInfo.map(UserInfoService::toUserInfoDTO)
+            .orElseThrow(() -> new UserInfoNotFoundException(String.valueOf(stesNr)));
+    }
+
+    @IsAdmin
     public Set<String> getRoles(UserInfoId userInfoId) throws UserNotFoundException, UserInfoNotFoundException {
         UserInfo userInfo = getUserInfo(userInfoId);
         return eiamAdminService.getRoles(userInfo.getUserExternalId());
