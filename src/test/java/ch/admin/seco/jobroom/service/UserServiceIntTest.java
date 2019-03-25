@@ -1,17 +1,14 @@
 package ch.admin.seco.jobroom.service;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.util.List;
-import java.util.Optional;
-
+import ch.admin.seco.jobroom.config.Constants;
+import ch.admin.seco.jobroom.domain.User;
+import ch.admin.seco.jobroom.domain.UserRepository;
+import ch.admin.seco.jobroom.service.dto.UserDTO;
+import ch.admin.seco.jobroom.service.util.RandomUtil;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
@@ -19,20 +16,15 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import ch.admin.seco.jobroom.JobroomApp;
-import ch.admin.seco.jobroom.config.Constants;
-import ch.admin.seco.jobroom.domain.User;
-import ch.admin.seco.jobroom.repository.UserRepository;
-import ch.admin.seco.jobroom.service.dto.UserDTO;
-import ch.admin.seco.jobroom.service.util.RandomUtil;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.List;
+import java.util.Optional;
 
-/**
- * Test class for the UserResource REST controller.
- *
- * @see UserService
- */
+import static org.assertj.core.api.Assertions.assertThat;
+
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = JobroomApp.class)
+@SpringBootTest
 @Transactional
 public class UserServiceIntTest {
 

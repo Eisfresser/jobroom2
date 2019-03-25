@@ -1,24 +1,14 @@
 package ch.admin.seco.jobroom.domain;
 
-import java.io.Serializable;
-import java.util.Objects;
+import ch.admin.seco.jobroom.domain.enumeration.CompanySource;
 
-import javax.persistence.AttributeOverride;
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-
-import ch.admin.seco.jobroom.domain.enumeration.CompanySource;
+import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * A company of a user (referenced via accountability). We have two types of companies
@@ -27,7 +17,6 @@ import ch.admin.seco.jobroom.domain.enumeration.CompanySource;
  */
 @Entity
 @Table(name = "company")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Company implements Serializable {
 
     private static final long serialVersionUID = 1L;

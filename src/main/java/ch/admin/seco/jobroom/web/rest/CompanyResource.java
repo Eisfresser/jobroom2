@@ -3,7 +3,7 @@ package ch.admin.seco.jobroom.web.rest;
 
 import java.util.Optional;
 
-import com.codahale.metrics.annotation.Timed;
+import io.micrometer.core.annotation.Timed;
 import io.github.jhipster.web.util.ResponseUtil;
 
 import org.springframework.http.ResponseEntity;

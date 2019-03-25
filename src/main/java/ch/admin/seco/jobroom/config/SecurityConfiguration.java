@@ -1,26 +1,19 @@
 package ch.admin.seco.jobroom.config;
 
-import static ch.admin.seco.jobroom.security.saml.infrastructure.dsl.SAMLConfigurer.saml;
-import static ch.admin.seco.jobroom.service.logging.BusinessLogEventType.USER_LOGOUT;
-import static ch.admin.seco.jobroom.service.logging.BusinessLogObjectType.USER;
-import static org.opensaml.saml2.core.AuthnContext.KERBEROS_AUTHN_CTX;
-import static org.opensaml.saml2.core.AuthnContext.NOMAD_TELEPHONY_AUTHN_CTX;
-import static org.opensaml.saml2.core.AuthnContext.SMARTCARD_PKI_AUTHN_CTX;
-import static org.opensaml.saml2.core.AuthnContext.SOFTWARE_PKI_AUTHN_CTX;
-
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.Collection;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import ch.admin.seco.jobroom.domain.UserInfoRepository;
+import ch.admin.seco.jobroom.security.LoginFormUserDetailsService;
+import ch.admin.seco.jobroom.security.MD5PasswordEncoder;
+import ch.admin.seco.jobroom.security.jwt.JWTConfigurer;
+import ch.admin.seco.jobroom.security.saml.DefaultSamlBasedUserDetailsProvider;
+import ch.admin.seco.jobroom.security.saml.SamlAuthenticationFailureHandler;
+import ch.admin.seco.jobroom.security.saml.SamlAuthenticationSuccessHandler;
+import ch.admin.seco.jobroom.security.saml.SamlProperties;
+import ch.admin.seco.jobroom.security.saml.infrastructure.EiamSamlUserDetailsService;
+import ch.admin.seco.jobroom.security.saml.infrastructure.SamlBasedUserDetailsProvider;
+import ch.admin.seco.jobroom.service.logging.BusinessLogEvent;
 import io.github.jhipster.config.JHipsterProperties;
 import io.github.jhipster.config.JHipsterProperties.Security.Authentication.Jwt;
 import org.apache.commons.lang.StringUtils;
-import org.zalando.problem.spring.web.advice.security.SecurityProblemSupport;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.ApplicationEventPublisher;
@@ -28,6 +21,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Profile;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.security.authentication.AuthenticationEventPublisher;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.DefaultAuthenticationEventPublisher;
@@ -47,22 +41,24 @@ import org.springframework.security.web.util.matcher.NegatedRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.transaction.support.TransactionTemplate;
 import org.springframework.web.filter.CorsFilter;
+import org.zalando.problem.spring.web.advice.security.SecurityProblemSupport;
 
-import ch.admin.seco.jobroom.repository.UserInfoRepository;
-import ch.admin.seco.jobroom.security.LoginFormUserDetailsService;
-import ch.admin.seco.jobroom.security.MD5PasswordEncoder;
-import ch.admin.seco.jobroom.security.jwt.JWTConfigurer;
-import ch.admin.seco.jobroom.security.saml.DefaultSamlBasedUserDetailsProvider;
-import ch.admin.seco.jobroom.security.saml.SamlAuthenticationFailureHandler;
-import ch.admin.seco.jobroom.security.saml.SamlAuthenticationSuccessHandler;
-import ch.admin.seco.jobroom.security.saml.SamlProperties;
-import ch.admin.seco.jobroom.security.saml.infrastructure.EiamSamlUserDetailsService;
-import ch.admin.seco.jobroom.security.saml.infrastructure.SamlBasedUserDetailsProvider;
-import ch.admin.seco.jobroom.service.logging.BusinessLogEvent;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collection;
+
+import static ch.admin.seco.jobroom.security.saml.infrastructure.dsl.SAMLConfigurer.saml;
+import static ch.admin.seco.jobroom.service.logging.BusinessLogEventType.USER_LOGOUT;
+import static ch.admin.seco.jobroom.service.logging.BusinessLogObjectType.USER;
+import static org.opensaml.saml2.core.AuthnContext.*;
 
 @Configuration
 @EnableWebSecurity
 @Import(SecurityProblemSupport.class)
+@EnableJpaAuditing(auditorAwareRef = "springSecurityAuditorAware")
 public class SecurityConfiguration {
 
     @Configuration

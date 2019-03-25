@@ -1,8 +1,24 @@
 package ch.admin.seco.jobroom.service.impl;
 
-import static java.util.Objects.isNull;
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
+import ch.admin.seco.jobroom.domain.Organization;
+import ch.admin.seco.jobroom.domain.OrganizationRepository;
+import ch.admin.seco.jobroom.security.IsAdmin;
+import ch.admin.seco.jobroom.service.OrganizationService;
+import ch.admin.seco.jobroom.service.OrganizationSuggestionService;
+import ch.admin.seco.jobroom.service.dto.OrganizationAutocompleteDTO;
+import ch.admin.seco.jobroom.service.dto.OrganizationDTO;
+import ch.admin.seco.jobroom.service.mapper.OrganizationMapper;
+import ch.admin.seco.jobroom.service.search.OrganizationSearchRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import reactor.core.publisher.Flux;
 
+import javax.persistence.EntityManager;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -11,27 +27,8 @@ import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 
-import javax.persistence.EntityManager;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import reactor.core.publisher.Flux;
-
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import ch.admin.seco.jobroom.domain.Organization;
-import ch.admin.seco.jobroom.repository.OrganizationRepository;
-import ch.admin.seco.jobroom.repository.search.OrganizationSearchRepository;
-import ch.admin.seco.jobroom.security.IsAdmin;
-import ch.admin.seco.jobroom.service.OrganizationService;
-import ch.admin.seco.jobroom.service.OrganizationSuggestionService;
-import ch.admin.seco.jobroom.service.dto.OrganizationAutocompleteDTO;
-import ch.admin.seco.jobroom.service.dto.OrganizationDTO;
-import ch.admin.seco.jobroom.service.mapper.OrganizationMapper;
+import static java.util.Objects.isNull;
+import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
 
 @Service
 @Transactional

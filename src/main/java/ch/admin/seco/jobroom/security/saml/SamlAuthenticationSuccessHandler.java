@@ -1,14 +1,10 @@
 package ch.admin.seco.jobroom.security.saml;
 
-import java.io.IOException;
-import java.util.Collection;
-import java.util.stream.Collectors;
 import ch.admin.seco.jobroom.domain.UserInfo;
-import ch.admin.seco.jobroom.repository.UserInfoRepository;
+import ch.admin.seco.jobroom.domain.UserInfoRepository;
 import ch.admin.seco.jobroom.security.AuthoritiesConstants;
 import ch.admin.seco.jobroom.security.UserPrincipal;
 import ch.admin.seco.jobroom.service.logging.BusinessLogEvent;
-
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.authentication.AuthenticationEventPublisher;
 import org.springframework.security.authentication.AuthenticationServiceException;
@@ -20,7 +16,9 @@ import org.springframework.security.web.authentication.SavedRequestAwareAuthenti
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import java.io.IOException;
+import java.util.Collection;
+import java.util.stream.Collectors;
 
 import static ch.admin.seco.jobroom.service.logging.BusinessLogEventType.USER_LOGIN;
 

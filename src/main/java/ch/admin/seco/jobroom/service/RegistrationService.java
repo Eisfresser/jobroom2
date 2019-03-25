@@ -4,7 +4,6 @@ import ch.admin.seco.jobroom.config.Constants;
 import ch.admin.seco.jobroom.domain.*;
 import ch.admin.seco.jobroom.domain.enumeration.CompanySource;
 import ch.admin.seco.jobroom.domain.enumeration.RegistrationStatus;
-import ch.admin.seco.jobroom.repository.*;
 import ch.admin.seco.jobroom.security.AuthoritiesConstants;
 import ch.admin.seco.jobroom.security.IsAdmin;
 import ch.admin.seco.jobroom.security.UserPrincipal;
@@ -18,10 +17,8 @@ import ch.admin.seco.jobroom.service.dto.RegistrationResultDTO;
 import ch.admin.seco.jobroom.service.dto.StesVerificationRequest;
 import ch.admin.seco.jobroom.service.dto.StesVerificationResult;
 import ch.admin.seco.jobroom.service.logging.BusinessLogEvent;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;

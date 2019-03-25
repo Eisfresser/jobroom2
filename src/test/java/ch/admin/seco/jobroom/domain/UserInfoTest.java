@@ -1,21 +1,16 @@
 package ch.admin.seco.jobroom.domain;
 
+import ch.admin.seco.jobroom.domain.enumeration.RegistrationStatus;
+import ch.admin.seco.jobroom.service.CompanyContactTemplateNotFoundException;
+import org.junit.Test;
+
+import java.time.LocalDate;
+
 import static ch.admin.seco.jobroom.domain.fixture.UserInfoFixture.testCompanyUserInfo;
 import static ch.admin.seco.jobroom.domain.fixture.UserInfoFixture.testUserInfo;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.lang.reflect.Field;
-import java.time.LocalDate;
-
-import org.junit.Test;
-
-import org.springframework.util.ReflectionUtils;
-
-import ch.admin.seco.jobroom.domain.enumeration.RegistrationStatus;
-import ch.admin.seco.jobroom.service.CompanyContactTemplateNotFoundException;
-
 public class UserInfoTest {
-
 
     @Test
     public void testUnregister() {

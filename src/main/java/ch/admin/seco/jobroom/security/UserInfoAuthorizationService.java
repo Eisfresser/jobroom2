@@ -1,14 +1,13 @@
 package ch.admin.seco.jobroom.security;
 
-import java.util.Optional;
-
-import org.springframework.stereotype.Component;
-
 import ch.admin.seco.jobroom.domain.CompanyId;
 import ch.admin.seco.jobroom.domain.UserInfo;
 import ch.admin.seco.jobroom.domain.UserInfoId;
-import ch.admin.seco.jobroom.repository.UserInfoRepository;
+import ch.admin.seco.jobroom.domain.UserInfoRepository;
 import ch.admin.seco.jobroom.service.CurrentUserService;
+import org.springframework.stereotype.Component;
+
+import java.util.Optional;
 
 @Component
 public class UserInfoAuthorizationService {

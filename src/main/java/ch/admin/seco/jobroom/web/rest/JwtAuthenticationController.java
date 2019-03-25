@@ -8,7 +8,7 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
-import com.codahale.metrics.annotation.Timed;
+import io.micrometer.core.annotation.Timed;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import org.springframework.http.MediaType;

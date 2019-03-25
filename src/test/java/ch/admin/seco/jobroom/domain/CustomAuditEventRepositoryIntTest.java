@@ -1,19 +1,10 @@
-package ch.admin.seco.jobroom.repository;
+package ch.admin.seco.jobroom.domain;
 
-import static ch.admin.seco.jobroom.repository.CustomAuditEventRepository.EVENT_DATA_COLUMN_MAX_LENGTH;
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.time.Instant;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpSession;
-
+import ch.admin.seco.jobroom.config.Constants;
+import ch.admin.seco.jobroom.config.audit.AuditEventConverter;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.actuate.audit.AuditEvent;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,10 +14,14 @@ import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import ch.admin.seco.jobroom.JobroomApp;
-import ch.admin.seco.jobroom.config.Constants;
-import ch.admin.seco.jobroom.config.audit.AuditEventConverter;
-import ch.admin.seco.jobroom.domain.PersistentAuditEvent;
+import javax.servlet.http.HttpSession;
+import java.time.Instant;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import static ch.admin.seco.jobroom.domain.CustomAuditEventRepository.EVENT_DATA_COLUMN_MAX_LENGTH;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Test class for the CustomAuditEventRepository class.
@@ -34,7 +29,7 @@ import ch.admin.seco.jobroom.domain.PersistentAuditEvent;
  * @see CustomAuditEventRepository
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = JobroomApp.class)
+@SpringBootTest
 @Transactional
 public class CustomAuditEventRepositoryIntTest {
 

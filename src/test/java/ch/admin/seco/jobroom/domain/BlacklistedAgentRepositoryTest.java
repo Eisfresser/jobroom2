@@ -1,29 +1,23 @@
-package ch.admin.seco.jobroom.repository;
+package ch.admin.seco.jobroom.domain;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 import static ch.admin.seco.jobroom.domain.BlacklistedAgentStatus.ACTIVE;
 import static ch.admin.seco.jobroom.domain.fixture.BlacklistedAgentFixture.testBlacklistedAgent;
 import static ch.admin.seco.jobroom.domain.fixture.UserPrincipalFixture.testPrincipal;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.Optional;
 
-import ch.admin.seco.jobroom.domain.BlacklistedAgentStatus;
-import ch.admin.seco.jobroom.domain.fixture.UserPrincipalFixture;
-import ch.admin.seco.jobroom.security.UserPrincipal;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.transaction.annotation.Transactional;
-
-import ch.admin.seco.jobroom.JobroomApp;
-import ch.admin.seco.jobroom.domain.BlacklistedAgent;
-
-@Transactional()
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = JobroomApp.class)
+@SpringBootTest
+@Transactional
 public class BlacklistedAgentRepositoryTest {
 
     @Autowired

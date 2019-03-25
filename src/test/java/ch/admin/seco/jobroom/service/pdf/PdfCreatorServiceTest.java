@@ -1,6 +1,5 @@
 package ch.admin.seco.jobroom.service.pdf;
 
-import ch.admin.seco.jobroom.JobroomApp;
 import ch.admin.seco.jobroom.domain.Company;
 import ch.admin.seco.jobroom.domain.UserInfo;
 import org.junit.Before;
@@ -26,7 +25,7 @@ import static java.util.Locale.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(Parameterized.class)
-@SpringBootTest(classes = JobroomApp.class)
+@SpringBootTest
 public class PdfCreatorServiceTest {
 
     @ClassRule

@@ -1,17 +1,16 @@
 package ch.admin.seco.jobroom.service;
 
-import java.time.Instant;
-import java.util.Optional;
-import java.util.UUID;
-
+import ch.admin.seco.jobroom.config.audit.AuditEventConverter;
+import ch.admin.seco.jobroom.domain.PersistenceAuditEventRepository;
 import org.springframework.boot.actuate.audit.AuditEvent;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ch.admin.seco.jobroom.config.audit.AuditEventConverter;
-import ch.admin.seco.jobroom.repository.PersistenceAuditEventRepository;
+import java.time.Instant;
+import java.util.Optional;
+import java.util.UUID;
 
 /**
  * Service for managing audit events.

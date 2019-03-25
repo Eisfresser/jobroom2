@@ -1,7 +1,7 @@
 package ch.admin.seco.jobroom.web.rest;
 
 import ch.admin.seco.jobroom.domain.User;
-import ch.admin.seco.jobroom.repository.UserRepository;
+import ch.admin.seco.jobroom.domain.UserRepository;
 import ch.admin.seco.jobroom.security.SecurityUtils;
 import ch.admin.seco.jobroom.service.MailService;
 import ch.admin.seco.jobroom.service.UserService;
@@ -11,7 +11,7 @@ import ch.admin.seco.jobroom.web.rest.errors.InvalidPasswordException;
 import ch.admin.seco.jobroom.web.rest.errors.LoginNotFoundException;
 import ch.admin.seco.jobroom.web.rest.vm.KeyAndPasswordVM;
 import ch.admin.seco.jobroom.web.rest.vm.ManagedUserVM;
-import com.codahale.metrics.annotation.Timed;
+import io.micrometer.core.annotation.Timed;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

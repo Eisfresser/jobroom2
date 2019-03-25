@@ -6,7 +6,7 @@ import java.util.UUID;
 
 import javax.validation.Valid;
 
-import com.codahale.metrics.annotation.Timed;
+import io.micrometer.core.annotation.Timed;
 import com.hazelcast.util.Preconditions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,7 +1,5 @@
-package ch.admin.seco.jobroom.repository;
+package ch.admin.seco.jobroom.domain;
 
-import ch.admin.seco.jobroom.JobroomApp;
-import ch.admin.seco.jobroom.domain.LegalTerms;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,16 +9,15 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 import static ch.admin.seco.jobroom.domain.fixture.LegalTermsFixture.testLegalTermsFixture;
 import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Transactional()
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = JobroomApp.class)
+@SpringBootTest
+@Transactional
 public class LegalTermsRepositoryTest {
 
     private List<LegalTerms> testLegalTerms;
@@ -36,7 +33,7 @@ public class LegalTermsRepositoryTest {
             testLegalTermsFixture()
                 .setEffectiveAt(LocalDate.of(2018, 9, 1)),
             testLegalTermsFixture()
-                .setEffectiveAt(LocalDate.of(2018, 10, 2 ))
+                .setEffectiveAt(LocalDate.of(2018, 10, 2))
         );
         legalTermsRepository.saveAll(
             testLegalTerms

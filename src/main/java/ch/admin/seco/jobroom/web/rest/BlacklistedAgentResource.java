@@ -36,8 +36,8 @@ public class BlacklistedAgentResource {
     @PostMapping("/")
     public void create(@RequestBody CreateNewBlacklistedAgentResource createNewBlacklistedAgentResource)
         throws OrganizationNotFoundException, BlacklistedAgentAlreadyExistsException {
-        LOG.debug("REST request to create a new blacklisted agent with organization id: {}", createNewBlacklistedAgentResource.organizationId);
-        this.blacklistedAgentService.create(createNewBlacklistedAgentResource.organizationId);
+        LOG.debug("REST request to create a new blacklisted agent with organization id: {}", createNewBlacklistedAgentResource.externalId);
+        this.blacklistedAgentService.create(createNewBlacklistedAgentResource.externalId);
     }
 
     @PutMapping("/{id}/status")
@@ -47,6 +47,6 @@ public class BlacklistedAgentResource {
     }
 
     static class CreateNewBlacklistedAgentResource {
-        public String organizationId;
+        public String externalId;
     }
 }

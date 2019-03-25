@@ -2,8 +2,8 @@ package ch.admin.seco.jobroom.service;
 
 import ch.admin.seco.jobroom.domain.BlacklistedAgent;
 import ch.admin.seco.jobroom.domain.BlacklistedAgentId;
+import ch.admin.seco.jobroom.domain.BlacklistedAgentRepository;
 import ch.admin.seco.jobroom.domain.BlacklistedAgentStatus;
-import ch.admin.seco.jobroom.repository.BlacklistedAgentRepository;
 import ch.admin.seco.jobroom.security.IsAdmin;
 import ch.admin.seco.jobroom.service.dto.BlacklistedAgentDto;
 import ch.admin.seco.jobroom.service.dto.OrganizationDTO;
@@ -41,7 +41,7 @@ public class BlacklistedAgentService {
 
     @IsAdmin
     public BlacklistedAgentId create(String externalId) throws OrganizationNotFoundException, BlacklistedAgentAlreadyExistsException {
-        LOG.debug("Request to create a blacklisted agent for an organization id {}", externalId);
+        LOG.debug("Request to create a blacklisted agent for an organization externalId {}", externalId);
         OrganizationDTO organizationDTO = organizationService.findOneByExternalId(externalId)
             .orElseThrow(() -> new OrganizationNotFoundException(externalId));
 

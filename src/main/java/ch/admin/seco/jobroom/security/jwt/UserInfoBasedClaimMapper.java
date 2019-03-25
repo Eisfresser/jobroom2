@@ -1,30 +1,20 @@
 package ch.admin.seco.jobroom.security.jwt;
 
-import static ch.admin.seco.jobroom.security.jwt.ClaimMapper.ClaimKey.auth;
-import static ch.admin.seco.jobroom.security.jwt.ClaimMapper.ClaimKey.companyId;
-import static ch.admin.seco.jobroom.security.jwt.ClaimMapper.ClaimKey.email;
-import static ch.admin.seco.jobroom.security.jwt.ClaimMapper.ClaimKey.externalId;
-import static ch.admin.seco.jobroom.security.jwt.ClaimMapper.ClaimKey.firstName;
-import static ch.admin.seco.jobroom.security.jwt.ClaimMapper.ClaimKey.langKey;
-import static ch.admin.seco.jobroom.security.jwt.ClaimMapper.ClaimKey.lastName;
-import static ch.admin.seco.jobroom.security.jwt.ClaimMapper.ClaimKey.userId;
-import static ch.admin.seco.jobroom.security.jwt.ClaimMapper.ClaimKey.userProfileExtId;
-import static ch.admin.seco.jobroom.security.jwt.JWTConfigurer.TokenToAuthenticationConverter.KEY_VALUE_DELIMITER;
-import static java.util.stream.Collectors.joining;
-
-import java.util.Collection;
-
+import ch.admin.seco.jobroom.domain.UserInfo;
+import ch.admin.seco.jobroom.domain.UserInfoRepository;
+import ch.admin.seco.jobroom.security.UserPrincipal;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import org.apache.commons.lang.StringUtils;
-
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import ch.admin.seco.jobroom.domain.UserInfo;
-import ch.admin.seco.jobroom.repository.UserInfoRepository;
-import ch.admin.seco.jobroom.security.UserPrincipal;
+import java.util.Collection;
+
+import static ch.admin.seco.jobroom.security.jwt.ClaimMapper.ClaimKey.*;
+import static ch.admin.seco.jobroom.security.jwt.JWTConfigurer.TokenToAuthenticationConverter.KEY_VALUE_DELIMITER;
+import static java.util.stream.Collectors.joining;
 
 @Component
 @Transactional

@@ -17,9 +17,13 @@ spring:
         active: #spring.profiles.active#
     cloud:
         config:
-            fail-fast: false # if not in "prod" profile, do not force to use Spring Cloud Config
+            fail-fast: true
             uri: http://admin:${jhipster.registry.password}@localhost:8761/config
             # name of the config server's property source (file.yml) that we want to use
             name: jobroom
             label: master # toggle to switch to a different version of the configuration as stored in git
             # it can be set to any label, branch or commit of the configuration source Git repository
+            retry:
+                initial-interval: 1000
+                max-interval: 2000
+                max-attempts: 100

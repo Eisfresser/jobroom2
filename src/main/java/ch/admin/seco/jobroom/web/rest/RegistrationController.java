@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 import javax.validation.Valid;
 
-import com.codahale.metrics.annotation.Timed;
+import io.micrometer.core.annotation.Timed;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

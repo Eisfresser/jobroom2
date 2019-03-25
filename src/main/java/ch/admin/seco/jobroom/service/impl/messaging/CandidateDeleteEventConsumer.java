@@ -1,20 +1,18 @@
 package ch.admin.seco.jobroom.service.impl.messaging;
 
 
-import java.util.Optional;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.springframework.cloud.stream.annotation.StreamListener;
-import org.springframework.cloud.stream.messaging.Sink;
-
 import ch.admin.seco.jobroom.domain.UserInfo;
-import ch.admin.seco.jobroom.repository.UserInfoRepository;
+import ch.admin.seco.jobroom.domain.UserInfoRepository;
 import ch.admin.seco.jobroom.security.registration.eiam.UserNotFoundException;
 import ch.admin.seco.jobroom.service.MailService;
 import ch.admin.seco.jobroom.service.RegistrationService;
 import ch.admin.seco.jobroom.service.impl.security.LoginAsTechnicalUser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.cloud.stream.annotation.StreamListener;
+import org.springframework.cloud.stream.messaging.Sink;
+
+import java.util.Optional;
 
 class CandidateDeleteEventConsumer {
 

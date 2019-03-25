@@ -270,7 +270,7 @@ public class UserDTO {
             ", lastModifiedBy='" + lastModifiedBy + '\'' +
             ", lastModifiedDate=" + lastModifiedDate +
             ", authorities=" + authorities +
-            ", organizationId=" + organizationId +
+            ", externalId=" + organizationId +
             ", organizationName=" + organizationName +
             "}";
     }

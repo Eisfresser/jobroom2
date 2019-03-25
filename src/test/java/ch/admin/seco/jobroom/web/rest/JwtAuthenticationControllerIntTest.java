@@ -1,9 +1,8 @@
 package ch.admin.seco.jobroom.web.rest;
 
-import ch.admin.seco.jobroom.JobroomApp;
+import ch.admin.seco.jobroom.domain.OrganizationRepository;
 import ch.admin.seco.jobroom.domain.User;
-import ch.admin.seco.jobroom.repository.OrganizationRepository;
-import ch.admin.seco.jobroom.repository.UserRepository;
+import ch.admin.seco.jobroom.domain.UserRepository;
 import ch.admin.seco.jobroom.security.jwt.TokenProvider;
 import ch.admin.seco.jobroom.web.rest.errors.ExceptionTranslator;
 import ch.admin.seco.jobroom.web.rest.vm.LoginVM;
@@ -24,7 +23,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = JobroomApp.class)
+@SpringBootTest
 public class JwtAuthenticationControllerIntTest {
 
     @Autowired

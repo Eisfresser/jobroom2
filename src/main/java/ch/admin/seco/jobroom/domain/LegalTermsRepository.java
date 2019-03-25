@@ -1,6 +1,5 @@
-package ch.admin.seco.jobroom.repository;
+package ch.admin.seco.jobroom.domain;
 
-import ch.admin.seco.jobroom.domain.LegalTerms;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

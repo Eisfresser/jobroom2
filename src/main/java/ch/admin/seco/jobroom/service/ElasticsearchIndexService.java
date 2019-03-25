@@ -1,20 +1,17 @@
 package ch.admin.seco.jobroom.service;
 
-import java.io.Serializable;
-import java.lang.reflect.Method;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.function.Function;
-import java.util.stream.Stream;
-
-import javax.persistence.EntityManager;
-
-import com.codahale.metrics.annotation.Timed;
+import ch.admin.seco.jobroom.domain.Organization;
+import ch.admin.seco.jobroom.domain.OrganizationRepository;
+import ch.admin.seco.jobroom.domain.UserRepository;
+import ch.admin.seco.jobroom.service.mapper.UserDocumentMapper;
+import ch.admin.seco.jobroom.service.search.OrganizationSearchRepository;
+import ch.admin.seco.jobroom.service.search.UserDocument;
+import ch.admin.seco.jobroom.service.search.UserSearchRepository;
+import io.micrometer.core.annotation.Timed;
 import org.hibernate.CacheMode;
 import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import reactor.core.publisher.Flux;
-
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
@@ -24,14 +21,14 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StopWatch;
+import reactor.core.publisher.Flux;
 
-import ch.admin.seco.jobroom.domain.Organization;
-import ch.admin.seco.jobroom.domain.search.user.UserDocument;
-import ch.admin.seco.jobroom.repository.OrganizationRepository;
-import ch.admin.seco.jobroom.repository.UserRepository;
-import ch.admin.seco.jobroom.repository.search.OrganizationSearchRepository;
-import ch.admin.seco.jobroom.repository.search.UserSearchRepository;
-import ch.admin.seco.jobroom.service.mapper.UserDocumentMapper;
+import javax.persistence.EntityManager;
+import java.io.Serializable;
+import java.lang.reflect.Method;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Function;
+import java.util.stream.Stream;
 
 @Service
 public class ElasticsearchIndexService {

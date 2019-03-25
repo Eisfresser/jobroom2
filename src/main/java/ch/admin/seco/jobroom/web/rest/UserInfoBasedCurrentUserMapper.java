@@ -1,16 +1,15 @@
 package ch.admin.seco.jobroom.web.rest;
 
-import java.time.LocalDate;
-import java.util.stream.Collectors;
-
+import ch.admin.seco.jobroom.domain.UserInfoRepository;
+import ch.admin.seco.jobroom.security.UserPrincipal;
+import ch.admin.seco.jobroom.service.LegalTermsService;
+import ch.admin.seco.jobroom.service.dto.CurrentUserDTO;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import ch.admin.seco.jobroom.repository.UserInfoRepository;
-import ch.admin.seco.jobroom.security.UserPrincipal;
-import ch.admin.seco.jobroom.service.LegalTermsService;
-import ch.admin.seco.jobroom.service.dto.CurrentUserDTO;
+import java.time.LocalDate;
+import java.util.stream.Collectors;
 
 @Component
 @Transactional

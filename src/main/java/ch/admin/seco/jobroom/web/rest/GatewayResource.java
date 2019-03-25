@@ -3,7 +3,7 @@ package ch.admin.seco.jobroom.web.rest;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.codahale.metrics.annotation.Timed;
+import io.micrometer.core.annotation.Timed;
 
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.cloud.netflix.zuul.filters.Route;

@@ -1,14 +1,12 @@
-package ch.admin.seco.jobroom.repository;
-
-import java.time.Instant;
-import java.util.List;
-import java.util.UUID;
+package ch.admin.seco.jobroom.domain;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import ch.admin.seco.jobroom.domain.PersistentAuditEvent;
+import java.time.Instant;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * Spring Data JPA repository for the PersistentAuditEvent entity.

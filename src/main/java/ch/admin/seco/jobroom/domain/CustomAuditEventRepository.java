@@ -1,13 +1,9 @@
-package ch.admin.seco.jobroom.repository;
+package ch.admin.seco.jobroom.domain;
 
-import java.time.Instant;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import ch.admin.seco.jobroom.config.Constants;
+import ch.admin.seco.jobroom.config.audit.AuditEventConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.boot.actuate.audit.AuditEvent;
 import org.springframework.boot.actuate.audit.AuditEventRepository;
 import org.springframework.data.domain.Page;
@@ -17,9 +13,10 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import ch.admin.seco.jobroom.config.Constants;
-import ch.admin.seco.jobroom.config.audit.AuditEventConverter;
-import ch.admin.seco.jobroom.domain.PersistentAuditEvent;
+import java.time.Instant;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * An implementation of Spring Boot's AuditEventRepository.

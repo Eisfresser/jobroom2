@@ -1,13 +1,12 @@
 package ch.admin.seco.jobroom.service;
 
-import java.util.Optional;
-
+import ch.admin.seco.jobroom.domain.Company;
+import ch.admin.seco.jobroom.domain.CompanyRepository;
+import ch.admin.seco.jobroom.service.dto.CompanyDTO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ch.admin.seco.jobroom.domain.Company;
-import ch.admin.seco.jobroom.repository.CompanyRepository;
-import ch.admin.seco.jobroom.service.dto.CompanyDTO;
+import java.util.Optional;
 
 @Service
 @Transactional

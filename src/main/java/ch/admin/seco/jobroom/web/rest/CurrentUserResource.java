@@ -1,20 +1,18 @@
 package ch.admin.seco.jobroom.web.rest;
 
-import static ch.admin.seco.jobroom.security.jwt.JWTConfigurer.TokenResolver.AUTHORIZATION_HEADER;
-import static ch.admin.seco.jobroom.security.jwt.JWTConfigurer.TokenResolver.TOKEN_PREFIX;
-
-import com.codahale.metrics.annotation.Timed;
-
+import ch.admin.seco.jobroom.security.UserPrincipal;
+import ch.admin.seco.jobroom.security.jwt.TokenProvider;
+import ch.admin.seco.jobroom.service.CurrentUserService;
+import ch.admin.seco.jobroom.service.dto.CurrentUserDTO;
+import io.micrometer.core.annotation.Timed;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import ch.admin.seco.jobroom.security.UserPrincipal;
-import ch.admin.seco.jobroom.security.jwt.TokenProvider;
-import ch.admin.seco.jobroom.service.CurrentUserService;
-import ch.admin.seco.jobroom.service.dto.CurrentUserDTO;
+import static ch.admin.seco.jobroom.security.jwt.JWTConfigurer.TokenResolver.AUTHORIZATION_HEADER;
+import static ch.admin.seco.jobroom.security.jwt.JWTConfigurer.TokenResolver.TOKEN_PREFIX;
 
 /**
  * REST controller for managing the current user's account.

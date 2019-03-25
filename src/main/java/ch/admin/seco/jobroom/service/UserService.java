@@ -1,17 +1,13 @@
 package ch.admin.seco.jobroom.service;
 
 import ch.admin.seco.jobroom.config.Constants;
-import ch.admin.seco.jobroom.domain.Authority;
-import ch.admin.seco.jobroom.domain.User;
+import ch.admin.seco.jobroom.domain.*;
 import ch.admin.seco.jobroom.domain.enumeration.Gender;
-import ch.admin.seco.jobroom.repository.AuthorityRepository;
-import ch.admin.seco.jobroom.repository.OrganizationRepository;
-import ch.admin.seco.jobroom.repository.UserRepository;
-import ch.admin.seco.jobroom.repository.search.UserSearchRepository;
 import ch.admin.seco.jobroom.security.AuthoritiesConstants;
 import ch.admin.seco.jobroom.security.SecurityUtils;
 import ch.admin.seco.jobroom.service.dto.UserDTO;
 import ch.admin.seco.jobroom.service.mapper.UserDocumentMapper;
+import ch.admin.seco.jobroom.service.search.UserSearchRepository;
 import ch.admin.seco.jobroom.service.search.UserSearchService;
 import ch.admin.seco.jobroom.service.util.RandomUtil;
 import ch.admin.seco.jobroom.web.rest.errors.InvalidPasswordException;

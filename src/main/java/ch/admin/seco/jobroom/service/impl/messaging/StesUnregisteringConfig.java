@@ -1,15 +1,14 @@
 package ch.admin.seco.jobroom.service.impl.messaging;
 
+import ch.admin.seco.jobroom.domain.UserInfoRepository;
+import ch.admin.seco.jobroom.service.MailService;
+import ch.admin.seco.jobroom.service.RegistrationService;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.messaging.Sink;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-
-import ch.admin.seco.jobroom.repository.UserInfoRepository;
-import ch.admin.seco.jobroom.service.MailService;
-import ch.admin.seco.jobroom.service.RegistrationService;
 
 @Configuration
 @EnableBinding(Sink.class)

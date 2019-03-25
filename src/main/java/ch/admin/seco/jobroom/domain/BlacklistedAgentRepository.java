@@ -1,16 +1,11 @@
-package ch.admin.seco.jobroom.repository;
-
-import java.util.Optional;
+package ch.admin.seco.jobroom.domain;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
 
-import ch.admin.seco.jobroom.domain.BlacklistedAgent;
-import ch.admin.seco.jobroom.domain.BlacklistedAgentId;
+import java.util.Optional;
 
-@Repository
 public interface BlacklistedAgentRepository extends JpaRepository<BlacklistedAgent, BlacklistedAgentId> {
 
     @Query("select ba from BlacklistedAgent ba where ba.externalId = :externalId")

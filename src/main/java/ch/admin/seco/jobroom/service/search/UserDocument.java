@@ -1,12 +1,12 @@
-package ch.admin.seco.jobroom.domain.search.user;
-
-import java.time.Instant;
-import java.util.Set;
-import java.util.UUID;
+package ch.admin.seco.jobroom.service.search;
 
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Mapping;
 import org.springframework.data.elasticsearch.annotations.Setting;
+
+import java.time.Instant;
+import java.util.Set;
+import java.util.UUID;
 
 @Document(indexName = "user-document", type = "user-document")
 @Mapping(mappingPath = "config/elasticsearch/mappings/user-document.json")

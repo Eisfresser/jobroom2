@@ -1,45 +1,25 @@
 package ch.admin.seco.jobroom.domain;
 
-import static ch.admin.seco.jobroom.domain.enumeration.RegistrationStatus.UNREGISTERED;
+import ch.admin.seco.jobroom.domain.enumeration.AccountabilityType;
+import ch.admin.seco.jobroom.domain.enumeration.RegistrationStatus;
+import ch.admin.seco.jobroom.service.CompanyContactTemplateNotFoundException;
+import com.google.common.base.Preconditions;
+import org.apache.commons.codec.binary.Base32;
+import org.springframework.util.Assert;
 
+import javax.persistence.*;
+import javax.validation.Valid;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.security.SecureRandom;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
-import javax.persistence.AttributeOverride;
-import javax.persistence.AttributeOverrides;
-import javax.persistence.CollectionTable;
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.Embedded;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.JoinColumn;
-import javax.persistence.Table;
-import javax.validation.Valid;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
-import com.google.common.base.Preconditions;
-import org.apache.commons.codec.binary.Base32;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-
-import org.springframework.util.Assert;
-
-import ch.admin.seco.jobroom.domain.enumeration.AccountabilityType;
-import ch.admin.seco.jobroom.domain.enumeration.RegistrationStatus;
-import ch.admin.seco.jobroom.service.CompanyContactTemplateNotFoundException;
+import static ch.admin.seco.jobroom.domain.enumeration.RegistrationStatus.UNREGISTERED;
 
 /**
  * Additional information about a user. The eIAM is master, which means users are registered
@@ -51,7 +31,6 @@ import ch.admin.seco.jobroom.service.CompanyContactTemplateNotFoundException;
  */
 @Entity
 @Table(name = "user_info")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class UserInfo implements Serializable {
 
     private static final int RANDOM_NUMBER_LENGTH = 5;

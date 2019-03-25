@@ -1,23 +1,21 @@
 package ch.admin.seco.jobroom.security.saml;
 
-import java.util.Collections;
-import java.util.Map;
-import java.util.Optional;
-
+import ch.admin.seco.jobroom.domain.UserInfo;
+import ch.admin.seco.jobroom.domain.UserInfoRepository;
+import ch.admin.seco.jobroom.security.UserPrincipal;
+import ch.admin.seco.jobroom.security.saml.infrastructure.EiamEnrichedSamlUser;
+import ch.admin.seco.jobroom.security.saml.infrastructure.SamlBasedUserDetailsProvider;
+import ch.admin.seco.jobroom.security.saml.infrastructure.SamlUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionTemplate;
 
-import ch.admin.seco.jobroom.domain.UserInfo;
-import ch.admin.seco.jobroom.repository.UserInfoRepository;
-import ch.admin.seco.jobroom.security.UserPrincipal;
-import ch.admin.seco.jobroom.security.saml.infrastructure.EiamEnrichedSamlUser;
-import ch.admin.seco.jobroom.security.saml.infrastructure.SamlBasedUserDetailsProvider;
-import ch.admin.seco.jobroom.security.saml.infrastructure.SamlUser;
+import java.util.Collections;
+import java.util.Map;
+import java.util.Optional;
 
 public class DefaultSamlBasedUserDetailsProvider implements SamlBasedUserDetailsProvider {
 

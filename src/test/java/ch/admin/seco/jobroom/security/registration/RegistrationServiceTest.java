@@ -1,41 +1,7 @@
 package ch.admin.seco.jobroom.security.registration;
 
-import static org.junit.Assert.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.eq;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Optional;
-
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
-
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-
 import ch.admin.seco.jobroom.config.Constants;
-import ch.admin.seco.jobroom.domain.Company;
-import ch.admin.seco.jobroom.domain.Organization;
-import ch.admin.seco.jobroom.domain.User;
-import ch.admin.seco.jobroom.domain.UserInfo;
-import ch.admin.seco.jobroom.repository.CompanyRepository;
-import ch.admin.seco.jobroom.repository.OrganizationRepository;
-import ch.admin.seco.jobroom.repository.UserInfoRepository;
-import ch.admin.seco.jobroom.repository.UserRepository;
+import ch.admin.seco.jobroom.domain.*;
 import ch.admin.seco.jobroom.security.AuthoritiesConstants;
 import ch.admin.seco.jobroom.security.MD5PasswordEncoder;
 import ch.admin.seco.jobroom.security.UserPrincipal;
@@ -45,18 +11,32 @@ import ch.admin.seco.jobroom.security.registration.uid.AddressData;
 import ch.admin.seco.jobroom.security.registration.uid.FirmData;
 import ch.admin.seco.jobroom.security.registration.uid.UidClient;
 import ch.admin.seco.jobroom.security.registration.uid.UidCompanyNotFoundException;
-import ch.admin.seco.jobroom.service.AvgNotFoundException;
-import ch.admin.seco.jobroom.service.CandidateService;
-import ch.admin.seco.jobroom.service.CurrentUserService;
-import ch.admin.seco.jobroom.service.InvalidAccessCodeException;
-import ch.admin.seco.jobroom.service.InvalidOldLoginException;
-import ch.admin.seco.jobroom.service.InvalidPersonenNumberException;
-import ch.admin.seco.jobroom.service.MailService;
-import ch.admin.seco.jobroom.service.RegistrationService;
-import ch.admin.seco.jobroom.service.StesPersonNumberAlreadyTaken;
+import ch.admin.seco.jobroom.service.*;
 import ch.admin.seco.jobroom.service.dto.RegistrationResultDTO;
 import ch.admin.seco.jobroom.service.dto.StesVerificationResult;
 import ch.admin.seco.jobroom.web.rest.vm.RegisterJobseekerVM;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Optional;
+
+import static org.junit.Assert.assertTrue;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.eq;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RegistrationServiceTest {
@@ -107,12 +87,19 @@ public class RegistrationServiceTest {
     @Mock
     private CurrentUserService currentUserService;
 
+    @Mock
+    private BlacklistedAgentRepository blacklistedAgentRepository;
+
+    @Mock
+    private ApplicationEventPublisher applicationEventPublisher;
+
     @Before
     public void setup() {
         registrationService.setAccessCodeMailRecipient("servicedesk@jobroom.ch");
         setupSecurityContextMockWithRegistrationStatus();
         UserInfo userInfo = this.getDummyUser();
         when(this.mockUserInfoRepository.findById(any())).thenReturn(Optional.of(userInfo));
+        when(this.blacklistedAgentRepository.findActiveByExternalId(any())).thenReturn(Optional.empty());
     }
 
     @Test

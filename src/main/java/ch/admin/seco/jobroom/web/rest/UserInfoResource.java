@@ -3,7 +3,7 @@ package ch.admin.seco.jobroom.web.rest;
 import java.util.List;
 import java.util.Set;
 
-import com.codahale.metrics.annotation.Timed;
+import io.micrometer.core.annotation.Timed;
 
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;

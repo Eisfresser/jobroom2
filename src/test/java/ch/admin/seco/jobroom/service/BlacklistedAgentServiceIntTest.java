@@ -1,20 +1,11 @@
 package ch.admin.seco.jobroom.service;
 
-import static ch.admin.seco.jobroom.domain.fixture.OrganizationFixture.testOrganization;
-import static ch.admin.seco.jobroom.security.AuthoritiesConstants.ROLE_ADMIN;
-import static java.util.UUID.randomUUID;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.MockitoAnnotations.initMocks;
-
-import java.util.List;
-import java.util.UUID;
-
+import ch.admin.seco.jobroom.domain.BlacklistedAgentRepository;
+import ch.admin.seco.jobroom.security.UserPrincipal;
+import ch.admin.seco.jobroom.service.mapper.OrganizationMapper;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -22,10 +13,13 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import ch.admin.seco.jobroom.repository.BlacklistedAgentRepository;
-import ch.admin.seco.jobroom.security.UserPrincipal;
-import ch.admin.seco.jobroom.service.dto.BlacklistedAgentDto;
-import ch.admin.seco.jobroom.service.mapper.OrganizationMapper;
+import static ch.admin.seco.jobroom.domain.fixture.OrganizationFixture.testOrganization;
+import static ch.admin.seco.jobroom.security.AuthoritiesConstants.ROLE_ADMIN;
+import static java.util.UUID.randomUUID;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.MockitoAnnotations.initMocks;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

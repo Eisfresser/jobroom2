@@ -1,7 +1,7 @@
 package ch.admin.seco.jobroom.service;
 
 import ch.admin.seco.jobroom.domain.LegalTerms;
-import ch.admin.seco.jobroom.repository.LegalTermsRepository;
+import ch.admin.seco.jobroom.domain.LegalTermsRepository;
 import ch.admin.seco.jobroom.service.dto.LegalTermsDto;
 import ch.admin.seco.jobroom.service.mapper.LegalTermsMapper;
 import org.slf4j.Logger;

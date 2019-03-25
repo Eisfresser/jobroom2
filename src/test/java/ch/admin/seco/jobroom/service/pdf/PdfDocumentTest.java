@@ -1,33 +1,33 @@
 package ch.admin.seco.jobroom.service.pdf;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.io.IOException;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.MessageSource;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import ch.admin.seco.jobroom.JobroomApp;
+import java.io.IOException;
+import java.util.Locale;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = JobroomApp.class)
+@SpringBootTest
 public class PdfDocumentTest {
 
     @Autowired
-    private MessageSource messageSourceTest;
+    private MessageSource messageSource;
 
     private PdfDocument testPdfDocument;
 
     @Before
     public void setUp() throws IOException {
-        this.testPdfDocument = new PdfDocument<String>(new MessageSourceAccessor(this.messageSourceTest)) {
+        MessageSourceAccessor messageSourceAccessor = new MessageSourceAccessor(this.messageSource, Locale.GERMAN);
+
+        this.testPdfDocument = new PdfDocument<String>(messageSourceAccessor) {
             @Override
             String create(String data, String creationDirectoryPath) {
                 return null;

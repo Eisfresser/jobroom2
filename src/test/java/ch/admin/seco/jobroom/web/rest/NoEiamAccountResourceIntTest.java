@@ -1,12 +1,11 @@
 package ch.admin.seco.jobroom.web.rest;
 
-import ch.admin.seco.jobroom.JobroomApp;
 import ch.admin.seco.jobroom.config.Constants;
 import ch.admin.seco.jobroom.domain.Authority;
+import ch.admin.seco.jobroom.domain.AuthorityRepository;
 import ch.admin.seco.jobroom.domain.User;
+import ch.admin.seco.jobroom.domain.UserRepository;
 import ch.admin.seco.jobroom.domain.enumeration.Gender;
-import ch.admin.seco.jobroom.repository.AuthorityRepository;
-import ch.admin.seco.jobroom.repository.UserRepository;
 import ch.admin.seco.jobroom.security.AuthoritiesConstants;
 import ch.admin.seco.jobroom.service.MailService;
 import ch.admin.seco.jobroom.service.UserService;
@@ -44,13 +43,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-/**
- * Test class for the AccountResource REST controller.
- *
- * @see NoEiamAccountResource
- */
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = JobroomApp.class)
+@SpringBootTest
 public class NoEiamAccountResourceIntTest {
 
     @Autowired

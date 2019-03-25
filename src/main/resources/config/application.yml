@@ -1,19 +1,9 @@
-# ===================================================================
-# Spring Boot configuration.
-#
-# This configuration will be overridden by the Spring profile you use,
-# for example application-dev.yml if you use the "dev" profile.
-#
-# More information on profiles: http://www.jhipster.tech/profiles/
-# More information on configuration properties: http://www.jhipster.tech/common-application-properties/
-# ===================================================================
-
-# ===================================================================
-# Standard Spring Boot properties.
-# Full reference is available at:
-# http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
-# ===================================================================
-
+server:
+    port: 8080
+    servlet:
+        session:
+            cookie:
+                http-only: true
 eureka:
     client:
         enabled: true
@@ -97,12 +87,12 @@ management:
         web:
             base-path: /management
             exposure:
-              include: '*'
+                include: '*'
     endpoint:
         health:
             show-details: when_authorized
             cache:
-              time-to-live: 30s
+                time-to-live: 30s
     info:
         git:
             mode: simple
@@ -115,17 +105,35 @@ spring:
     jpa:
         open-in-view: false
         hibernate:
-            ddl-auto: none
+            ddl-auto: validate
             naming:
                 physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
                 implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
+        properties:
+            hibernate.jdbc.lob.non_contextual_creation: true
+            hibernate.id.new_generator_mappings: true
+            hibernate.generate_statistics: true
     messages:
         basename: i18n/messages
     mvc:
         favicon:
             enabled: false
     thymeleaf:
+        cache: true
         mode: HTML
+    liquibase:
+        change-log: classpath:/config/liquibase/master.xml
+    task:
+        execution:
+            thread-name-prefix: jr2-async
+            pool:
+                core-size: 2
+                max-size: 50
+                queue-capacity: 10000
+        scheduling:
+            thread-name-prefix: jr2-scheduler
+            pool:
+                size: 1
     cloud:
         stream:
             bindings:
@@ -141,12 +149,8 @@ spring:
                         consumer:
                             enableDlq: true
                             dlq-name: candidate.event.dlq
-
-server:
-    servlet:
-        session:
-            cookie:
-                http-only: true
+    main:
+        allow-bean-definition-overriding: true
 
 info:
     project:
@@ -157,20 +161,7 @@ info:
 #
 # Full reference is available at: http://www.jhipster.tech/common-application-properties/
 # ===================================================================
-
 jhipster:
-    async:
-        core-pool-size: 2
-        max-pool-size: 50
-        queue-capacity: 10000
-    # By default CORS is disabled. Uncomment to enable.
-    #cors:
-        #allowed-origins: "*"
-        #allowed-methods: "*"
-        #allowed-headers: "*"
-        #exposed-headers: "Authorization,Link,X-Total-Count"
-        #allow-credentials: true
-        #max-age: 1800
     mail:
         from: jobroom@localhost
     gateway:
@@ -179,43 +170,27 @@ jhipster:
             referenceservice: /api,/v2/api-docs,/swagger-resources,/management
             candidateservice: /api,/v2/api-docs,/swagger-resources,/management
             jobadservice: /api,/v2/api-docs,/swagger-resources,/management
-    ribbon:
-        display-on-active-profiles:
-            - dev
-            - development
-            - test
-            - staging
-            - training
 
+# ===================================================================
+# Application specific properties
+#
+# ===================================================================
 gateway:
     rate-limiting:
         enabled: true
         rate-filter-options:
             # Avoid fetching mass-fetching of sensitive candidate information
-            -
-                bucket-prefix: 'candidate-details'
-                method: 'GET'
-                url: '/candidateservice/api/candidates/*'
-                limit: 5
-                duration: 10s
+            - bucket-prefix: 'candidate-details'
+              method: 'GET'
+              url: '/candidateservice/api/candidates/*'
+              limit: 5
+              duration: 10s
 
             # apply rate-limiting filter to any request
-            -
-                bucket-prefix: 'all'
-                url: '/**'
-                limit: 100
-                duration: 10s
-
-# ===================================================================
-# Application specific properties
-# Add your own application properties here, see the ApplicationProperties class
-# to have type-safe configuration, like in the JHipsterProperties above
-#
-# More documentation is available at:
-# http://www.jhipster.tech/common-application-properties/
-# ===================================================================
-
-# application:
+            - bucket-prefix: 'all'
+              url: '/**'
+              limit: 100
+              duration: 10s
 
 security:
     eiam:

@@ -1,20 +1,6 @@
 package ch.admin.seco.jobroom.service;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import ch.admin.seco.jobroom.domain.CompanyContactTemplate;
-import ch.admin.seco.jobroom.domain.CompanyId;
-import ch.admin.seco.jobroom.domain.StesInformation;
-import ch.admin.seco.jobroom.domain.UserInfo;
-import ch.admin.seco.jobroom.domain.UserInfoId;
-import ch.admin.seco.jobroom.repository.UserInfoRepository;
+import ch.admin.seco.jobroom.domain.*;
 import ch.admin.seco.jobroom.security.IsAdmin;
 import ch.admin.seco.jobroom.security.registration.eiam.EiamAdminService;
 import ch.admin.seco.jobroom.security.registration.eiam.UserNotFoundException;
@@ -22,6 +8,14 @@ import ch.admin.seco.jobroom.service.dto.AccountabilityDTO;
 import ch.admin.seco.jobroom.service.dto.CompanyContactTemplateDTO;
 import ch.admin.seco.jobroom.service.dto.StesInformationDto;
 import ch.admin.seco.jobroom.service.dto.UserInfoDTO;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(rollbackFor = Exception.class)
