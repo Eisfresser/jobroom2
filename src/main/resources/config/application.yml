@@ -51,8 +51,6 @@ zuul:
         - /authentication/**
         - /login
         - /samllogin
-        # jr2-ui
-        - /jr2/**
         # gateway endpoints
         - /api/**
         # actuator endpoints

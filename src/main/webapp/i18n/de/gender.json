@@ -1,9 +1,0 @@
-{
-    "jobroomApp": {
-        "Gender": {
-            "FEMALE": "Frau",
-            "MALE": "Mann",
-            "null": ""
-        }
-    }
-}

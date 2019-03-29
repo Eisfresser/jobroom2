@@ -20,14 +20,6 @@ bootRun {
 }
 
 
-task webpack_test(type: YarnTask, dependsOn: 'yarn_install') {
-    args = ["run", "webpack:test"]
-}
-
-task webpack(type: YarnTask, dependsOn: 'yarn_install') {
-    args = ["run", "webpack:prod"]
-}
-
 war {
     webAppDirName = 'build/www/'
 }
@@ -54,6 +46,3 @@ generateGitProperties {
 gitProperties {
     keys = ['git.branch', 'git.commit.id.abbrev']
 }
-
-test.dependsOn webpack_test
-processResources.dependsOn webpack

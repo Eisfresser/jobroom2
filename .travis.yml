@@ -9,14 +9,10 @@ jdk:
 sudo: false
 cache:
   directories:
-  - node
-  - node_modules
-  - "$HOME/.yarn-cache"
   - "$HOME/.gradle/wrapper"
   - "$HOME/.gradle/caches/modules-2/files-2.1"
 env:
   global:
-  - NODE_VERSION=6.11.0
   - SPRING_OUTPUT_ANSI_ENABLED=ALWAYS
   - SPRING_JPA_SHOW_SQL=false
   - ANALYTICS_TRACKING_ID=UA-36686902-1
@@ -33,12 +29,8 @@ before_install:
 - chmod +x gradlew
 - jdk_switcher use oraclejdk8
 - java -version
-- curl -o- -L https://yarnpkg.com/install.sh | bash
-- export PATH=$HOME/.yarn/bin:$PATH
 install:
-- yarn install
 script:
-- yarn test
 - ./gradlew check -Pprod
 after_success:
 - bash <(curl -s https://codecov.io/bash)
@@ -72,9 +64,6 @@ deploy:
   on:
     tags: true
 
-#Uncomment gatling task when at least one test exists
-#after_deploy:
-#- sleep 90 && baseURL=https://dev.job-room.ch:8443 ./gradlew -b e2e.gradle gatlingRunAll --stacktrace
 notifications:
   webhooks:
     on_success: change

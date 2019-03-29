@@ -1,9 +1,0 @@
-<div infiniteScroll [infiniteScrollDistance]="1" (scrolled)="onScroll($event)" [infiniteScrollDisabled]="getMaxCount() <= profileList.length">
-    <ngb-alert *ngIf="showError" [type]="'danger'" (close)="closeAlert()">{{ 'candidate-search.candidate-search-list.error-message' | translate}}
-    </ngb-alert>
-
-    <h3 class="result-list__title" *ngIf="!showError">{{ getTitle() | async }}</h3>
-
-    <jr2-candidate-search-list-item *ngFor="let profile of profileList" [profile]="profile" [occupationCodes]="occupationCodes"></jr2-candidate-search-list-item>
-
-</div>

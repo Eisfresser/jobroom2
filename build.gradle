@@ -140,11 +140,9 @@ task generateEiamWsClient(type: Exec) {
 apply from: 'gradle/checkstyle.gradle'
 apply from: 'gradle/docker.gradle'
 apply from: 'gradle/docker-compose.gradle'
-/*apply from: 'gradle/sonar.gradle'*/
 apply from: 'gradle/liquibase.gradle'
 apply from: 'gradle/mapstruct.gradle'
 apply from: 'gradle/maven-publish.gradle'
-apply from: 'gradle/translation.gradle'
 //jhipster-needle-gradle-apply-from - JHipster will add additional gradle scripts to be applied here
 
 if (project.hasProperty('prod')) {
@@ -266,15 +264,6 @@ task cleanResources(type: Delete) {
 
 task wrapper(type: Wrapper) {
     gradleVersion = '4.10.3'
-}
-
-if (project.hasProperty('nodeInstall')) {
-    node {
-        version = "${node_version}"
-        npmVersion = "${npm_version}"
-        yarnVersion = "${yarn_version}"
-        download = true
-    }
 }
 
 task buildWebserviceClients() {

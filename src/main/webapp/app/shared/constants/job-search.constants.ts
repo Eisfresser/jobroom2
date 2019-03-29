@@ -1,1 +1,0 @@
-export const ONLINE_SINCE_DEFAULT_VALUE = 30;
