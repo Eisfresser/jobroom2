@@ -4,7 +4,6 @@ import ch.admin.seco.jobroom.config.OAuth2InterceptedFeignConfiguration;
 import ch.admin.seco.jobroom.service.dto.CandidateDto;
 import ch.admin.seco.jobroom.service.dto.StesVerificationRequest;
 import ch.admin.seco.jobroom.service.dto.StesVerificationResult;
-import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,11 +20,6 @@ public interface CandidateService {
     StesVerificationResult verifyStesRegistrationData(@Valid @RequestBody StesVerificationRequest stesVerificationRequest);
 
     @GetMapping("/api/candidates/{id}")
-    @HystrixCommand(fallbackMethod = "emptyCandidate")
     Optional<CandidateDto> getCandidate(@PathVariable("id") String id);
-
-    default Optional<CandidateDto> emptyCandidate() {
-        return Optional.empty();
-    }
 
 }

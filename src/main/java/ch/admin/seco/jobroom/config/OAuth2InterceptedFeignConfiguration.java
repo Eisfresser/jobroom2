@@ -4,8 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import feign.RequestInterceptor;
 import feign.codec.Decoder;
+import feign.optionals.OptionalDecoder;
 import io.github.jhipster.config.JHipsterProperties;
-
 import org.springframework.beans.factory.ObjectFactory;
 import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
 import org.springframework.cloud.openfeign.support.ResponseEntityDecoder;
@@ -39,7 +39,7 @@ public class OAuth2InterceptedFeignConfiguration {
             .build();
         HttpMessageConverter jacksonConverter = new MappingJackson2HttpMessageConverter(objectMapper);
         ObjectFactory<HttpMessageConverters> objectFactory = () -> new HttpMessageConverters(jacksonConverter);
-        return new ResponseEntityDecoder(new SpringDecoder(objectFactory));
+        return new OptionalDecoder(new ResponseEntityDecoder(new SpringDecoder(objectFactory)));
     }
 
 
