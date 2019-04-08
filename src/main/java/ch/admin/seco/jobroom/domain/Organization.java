@@ -1,35 +1,23 @@
 package ch.admin.seco.jobroom.domain;
 
-import java.io.Serializable;
-import java.util.Objects;
-import java.util.UUID;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-
+import ch.admin.seco.jobroom.domain.enumeration.CompanyType;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Mapping;
 import org.springframework.data.elasticsearch.annotations.Setting;
 
-import ch.admin.seco.jobroom.domain.enumeration.CompanyType;
+import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import java.io.Serializable;
+import java.util.Objects;
+import java.util.UUID;
 
 /**
  * A Organization.
  */
 @Entity
 @Table(name = "organization")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @Document(indexName = "organization", type = "organization")
 @Mapping(mappingPath = "config/elasticsearch/mappings/organization.json")
 @Setting(settingPath = "config/elasticsearch/settings/folding-analyzer.json")

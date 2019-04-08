@@ -1,15 +1,31 @@
 package ch.admin.seco.jobroom.web.rest;
 
-import static ch.admin.seco.jobroom.web.rest.TestUtil.createFormattingConversionService;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.hasItem;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import ch.admin.seco.jobroom.domain.Organization;
+import ch.admin.seco.jobroom.domain.OrganizationRepository;
+import ch.admin.seco.jobroom.domain.enumeration.CompanyType;
+import ch.admin.seco.jobroom.service.OrganizationService;
+import ch.admin.seco.jobroom.service.dto.OrganizationDTO;
+import ch.admin.seco.jobroom.service.mapper.OrganizationMapper;
+import ch.admin.seco.jobroom.service.search.OrganizationSearchRepository;
+import ch.admin.seco.jobroom.web.rest.errors.ExceptionTranslator;
+import org.aspectj.lang.annotation.Aspect;
+import org.assertj.core.api.Condition;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.MockitoAnnotations;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
+import org.springframework.http.MediaType;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -19,39 +35,13 @@ import java.util.UUID;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-import org.aspectj.lang.annotation.Aspect;
-import org.assertj.core.api.Condition;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.MockitoAnnotations;
-import org.slf4j.LoggerFactory;
+import static ch.admin.seco.jobroom.security.AuthoritiesConstants.ROLE_ADMIN;
+import static ch.admin.seco.jobroom.web.rest.TestUtil.createFormattingConversionService;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
-import org.springframework.http.MediaType;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.transaction.annotation.Transactional;
-
-import ch.admin.seco.jobroom.domain.Organization;
-import ch.admin.seco.jobroom.domain.enumeration.CompanyType;
-import ch.admin.seco.jobroom.repository.OrganizationRepository;
-import ch.admin.seco.jobroom.repository.search.OrganizationSearchRepository;
-import ch.admin.seco.jobroom.service.OrganizationService;
-import ch.admin.seco.jobroom.service.dto.OrganizationDTO;
-import ch.admin.seco.jobroom.service.mapper.OrganizationMapper;
-import ch.admin.seco.jobroom.web.rest.errors.ExceptionTranslator;
-
-/**
- * Test class for the OrganizationResource REST controller.
- *
- * @see OrganizationResource
- */
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class OrganizationResourceIntTest {
@@ -150,9 +140,9 @@ public class OrganizationResourceIntTest {
 
     @Test
     @Transactional
+    @WithMockUser(authorities = {ROLE_ADMIN})
     public void createOrganization() throws Exception {
         int databaseSizeBeforeCreate = Long.valueOf(organizationRepository.count()).intValue();
-
 
         // Create the Organization
         OrganizationDTO organizationDTO = organizationMapper.toDto(organization);
@@ -312,6 +302,7 @@ public class OrganizationResourceIntTest {
 
     @Test
     @Transactional
+    @WithMockUser(authorities = {ROLE_ADMIN})
     public void updateOrganization() throws Exception {
         // Initialize the database
         organizationRepository.saveAndFlush(organization);
@@ -359,6 +350,7 @@ public class OrganizationResourceIntTest {
 
     @Test
     @Transactional
+    @WithMockUser(authorities = {ROLE_ADMIN})
     public void updateNonExistingOrganization() throws Exception {
         int databaseSizeBeforeUpdate = organizationRepository.findAll().size();
 
@@ -378,6 +370,7 @@ public class OrganizationResourceIntTest {
 
     @Test
     @Transactional
+    @WithMockUser(authorities = {ROLE_ADMIN})
     public void deleteOrganization() throws Exception {
         // Initialize the database
         organizationRepository.saveAndFlush(organization);
@@ -511,6 +504,7 @@ public class OrganizationResourceIntTest {
 
     @Test
     @Transactional
+    @WithMockUser(authorities = {ROLE_ADMIN})
     public void housekeeping() throws Exception {
         organizationService.save(organizationMapper.toDto(createEntity().externalId("1")));
         organizationService.save(organizationMapper.toDto(createEntity().externalId("2")));

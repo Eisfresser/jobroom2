@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <changeSet id="20180813120000" author="pado">
+
+        <createTable tableName="company_contact_templates">
+            <column name="user_id" type="varchar(36)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="company_id" type="varchar(36)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="company_name" type="varchar(150)"/>
+            <column name="company_street" type="varchar(50)"/>
+            <column name="company_house_nr" type="varchar(10)"/>
+            <column name="company_zip_code" type="varchar(4)"/>
+            <column name="company_city" type="varchar(50)"/>
+            <column name="phone" type="varchar(50)"/>
+            <column name="email" type="varchar(150)"/>
+            <column name="salutation" type="varchar(20)"/>
+        </createTable>
+
+        <addPrimaryKey columnNames="user_id, company_id"
+                       tableName="company_contact_templates"/>
+    </changeSet>
+
+</databaseChangeLog>

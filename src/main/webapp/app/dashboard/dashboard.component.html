@@ -1,8 +1,0 @@
-<div class="container">
-    <jr2-pea-dashboard [jobAdvertisementFilter]="jobAdvertisementFilter$ | async"
-                       [jobAdvertisementList]="jobAdvertisements$ | async"
-                       [totalCount]="jobAdvertisementsTotalCount$ | async"
-                       [page]="jobAdvertisementsPage$ | async"
-                       (pageChange)="changeJobAdvertisementsPage($event)"
-                       (filterJobAdvertisements)="filterJobAdvertisements($event)"></jr2-pea-dashboard>
-</div>

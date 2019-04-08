@@ -1,7 +1,11 @@
 package ch.admin.seco.jobroom.security;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,63 +18,30 @@ public final class SecurityUtils {
     private SecurityUtils() {
     }
 
-    /**
-     * Get the login of the current user.
-     *
-     * @return the login of the current user
-     */
+    public static boolean hasAnyRole(String... roles) {
+        final List<String> rolesList = Arrays.asList(roles);
+        return getAuthentication()
+            .map(authentication -> authentication.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .anyMatch(rolesList::contains))
+            .orElse(false);
+    }
+
     public static Optional<String> getCurrentUserLogin() {
-        SecurityContext securityContext = SecurityContextHolder.getContext();
-        return Optional.ofNullable(securityContext.getAuthentication())
-            .map(authentication -> {
-                if (authentication.getPrincipal() instanceof UserDetails) {
-                    UserDetails springSecurityUser = (UserDetails) authentication.getPrincipal();
-                    return springSecurityUser.getUsername();
-                } else if (authentication.getPrincipal() instanceof String) {
-                    return (String) authentication.getPrincipal();
-                }
-                return null;
-            });
+        return getUserDetails()
+            .map(UserDetails::getUsername);
     }
 
-    /**
-     * Get the JWT of the current user.
-     *
-     * @return the JWT of the current user
-     */
-    public static Optional<String> getCurrentUserJWT() {
+    private static Optional<Authentication> getAuthentication() {
         SecurityContext securityContext = SecurityContextHolder.getContext();
-        return Optional.ofNullable(securityContext.getAuthentication())
-            .filter(authentication -> authentication.getCredentials() instanceof String)
-            .map(authentication -> (String) authentication.getCredentials());
+        return Optional.ofNullable(securityContext.getAuthentication());
     }
 
-    /**
-     * Check if a user is authenticated.
-     *
-     * @return true if the user is authenticated, false otherwise
-     */
-    public static boolean isAuthenticated() {
-        SecurityContext securityContext = SecurityContextHolder.getContext();
-        return Optional.ofNullable(securityContext.getAuthentication())
-            .map(authentication -> authentication.getAuthorities().stream()
-                .noneMatch(grantedAuthority -> grantedAuthority.getAuthority().equals(AuthoritiesConstants.ANONYMOUS)))
-            .orElse(false);
+    private static Optional<UserDetails> getUserDetails() {
+        return getAuthentication()
+            .map(Authentication::getPrincipal)
+            .filter(principal -> principal instanceof UserDetails)
+            .map(UserDetails.class::cast);
     }
 
-    /**
-     * If the current user has a specific authority (security role).
-     * <p>
-     * The name of this method comes from the isUserInRole() method in the Servlet API
-     *
-     * @param authority the authority to check
-     * @return true if the current user has the authority, false otherwise
-     */
-    public static boolean isCurrentUserInRole(String authority) {
-        SecurityContext securityContext = SecurityContextHolder.getContext();
-        return Optional.ofNullable(securityContext.getAuthentication())
-            .map(authentication -> authentication.getAuthorities().stream()
-                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals(authority)))
-            .orElse(false);
-    }
 }

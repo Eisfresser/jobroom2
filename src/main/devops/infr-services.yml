@@ -1,14 +1,15 @@
 version: '3.3'
 services:
     jhipster-registry:
-        image: jhipster/jhipster-registry
+        image: jhipster/jhipster-registry:v4.0.1
         env_file: env.properties
         environment:
-            - SPRING_PROFILES_ACTIVE=development
-            - GIT_URI=https://github.com/alv-ch/central-config.git
+            - SPRING_PROFILES_ACTIVE=prod,swagger
+            - SPRING_SECURITY_USER_PASSWORD=$${jhipster.registry.password}
+            - SPRING_CONFIG_ADDITIONALLOCATION=file:/run/secrets/
             - SPRING_CLOUD_CONFIG_PROFILE=development
-            - SECURITY_USER_PASSWORD=$${jhipster.registry.password}
-            - SPRING_CONFIG_LOCATION=file:/run/secrets/
+            - SPRING_CLOUD_CONFIG_SERVER_COMPOSITE_0_TYPE=git
+            - SPRING_CLOUD_CONFIG_SERVER_COMPOSITE_0_URI=https://github.com/alv-ch/central-config
         ports:
             - 8761:8761
         networks:
@@ -16,7 +17,6 @@ services:
         secrets:
             - source: bootstrap.yml-1
               target: bootstrap.yml
-            - truststore.jks
         command: java -Xmx512m -Xms256m -Duser.timezone=Europe/Zurich -Djava.security.egd=file:/dev/./urandom -jar /jhipster-registry.war --spring.cloud.config.server.git.uri=https://github.com/alv-ch/central-config.git
         deploy:
             placement:
@@ -48,13 +48,13 @@ services:
         volumes:
             - nginx-error-pages:/var/errorpages
         configs:
-            - source: nginx-default.conf.4
+            - source: nginx-default.conf.5
               target: /etc/nginx/conf.d/default.conf
         networks:
             - jobroom_data2
         secrets:
-            - dev.job-room.ch.key
-            - dev.job-room.ch.pem
+            - dev_job-room_ch.crt
+            - dev_job-room_ch.key
         deploy:
             placement:
                 constraints: [node.labels.type == java]
@@ -112,13 +112,13 @@ secrets:
         external: true
     truststore.jks:
         external: true
-    dev.job-room.ch.key:
+    dev_job-room_ch.crt:
         external: true
-    dev.job-room.ch.pem:
+    dev_job-room_ch.key:
         external: true
 
 configs:
-    nginx-default.conf.4:
+    nginx-default.conf.5:
         external: true
 
 volumes:

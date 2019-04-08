@@ -92,10 +92,7 @@
         <loadData encoding="UTF-8"
                   file="config/liquibase/users.csv"
                   separator=";"
-                  tableName="jhi_user">
-            <column name="activated" type="boolean"/>
-            <column name="created_date" type="timestamp"/>
-        </loadData>
+                  tableName="jhi_user"/>
         <dropDefaultValue tableName="jhi_user" columnName="created_date"
                           columnDataType="datetime"/>
         <loadData encoding="UTF-8"

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="#{email.unregisterCandidateEmail.title}">Job-Room candidate unregistration request</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="shortcut icon" th:href="@{|${baseUrl}/favicon.ico|}"/>
+</head>
+<body>
+<p th:text="#{email.greeting}">
+    Hello,
+</p>
+<p th:text="#{email.unregisterCandidateEmail.text(${candidateEmail})}"></p>
+<p>
+    <span th:text="#{email.greeting2}">Regards,</span>
+    <br/>
+    <em th:text="#{email.signature}">the Job-Room Team</em>
+</p>
+</body>
+</html>

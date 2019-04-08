@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+    <p th:text="${subject}"></p>
+
+    <p th:text="#{email.anonymousContact.body}"></p>
+
+    <p th:if="${personalMessage != null}" th:text="#{email.anonymousContact.personal-message.title}"></p>
+    <p th:if="${personalMessage != null}" th:text="${personalMessage}"></p>
+
+    <p th:text="#{email.anonymousContact.company(${companyName})}"></p>
+
+    <p th:if="${phone != null}" th:text="#{email.anonymousContact.phone(${phone})}"></p>
+
+    <p th:if="${email != null}" th:text="#{email.anonymousContact.email(${email})}"></p>
+
+    <p th:if="${hasCompany}">
+        <label th:text="${name}"></label><br>
+        <label th:text="${contactPerson}"></label><br>
+        <label th:text="${address}"></label><br>
+        <label th:text="${city}"></label><br>
+        <label th:text="${country}"></label>
+    </p>
+    <p th:utext="#{email.anonymousContact.footer}"></p>
+</body>
+</html>

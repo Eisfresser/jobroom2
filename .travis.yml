@@ -9,14 +9,10 @@ jdk:
 sudo: false
 cache:
   directories:
-  - node
-  - node_modules
-  - "$HOME/.yarn-cache"
   - "$HOME/.gradle/wrapper"
   - "$HOME/.gradle/caches/modules-2/files-2.1"
 env:
   global:
-  - NODE_VERSION=6.11.0
   - SPRING_OUTPUT_ANSI_ENABLED=ALWAYS
   - SPRING_JPA_SHOW_SQL=false
   - ANALYTICS_TRACKING_ID=UA-36686902-1
@@ -24,47 +20,50 @@ env:
   - secure: Fi2t7vytwOg4t6ZTmVtU9xVrrWFFkZlNApqL7uIi81OlJmtg10gCUg1L0Hp5bomQtaZiOhkTuj4A+Udvxq/bHlAs0LYlQUL/nrSz0XKMRaRJH8Ti9G8bJGZvl77PGRjI+Cu/AlcjLYgBGvQunYtmTuJKnh6vsr3dFRF4M9lxs8Y=
   - secure: Tjnu+v8VPgxqVcVvnwL9xVdGRf0WLte3S4vPkr9FjVPsf0sN/75QVZhk2mZMe/HnTW61+0aeW/thjOTwXlG/uZEOBsbRtTkihFqW7Tob4nNTZBOtvfJb5UkD67ak9NyJyX51dlXy3xX+7u4mOSF0oTHJJRma9pic1nSwH4ypEaI=
   - secure: Dc5ljX42EOCiN9s7eCZuwJtowaiqg11FLeAXKcSJAAjzCCp838AUp5xKXMeOkBbPOngGfMZWX+TaEG0Qom0TU26FzDYahnAcBnibWDqAOOVoTPC9XHLEKXUDb+sCvHLnKfHvN7J/F05j8txb6NgQG0oi/fijbxmvH/0LDC1QWFc=
+  # GIT_USER
+  - secure: W7FCL4D7VPdic+lheEN5pwn2J4Fk8axk+aux2eKs2MzpMQonbijYf6KTWVoDAqOtnthRtu8jaFpwqVav3tEnyR2NxVYqi35FR/JHoCt1qpXR4pyypE0Ttdj+uSH/hXKSJvNdGscaxbERjhtJKvPyxHqaR7FJMuNjNM2O4ta0IqI=
+  # GIT_PWD
+  - secure: MyYRydJfFOMSjmn+VKP8clMgUnifOvQnR+9TEZpSAp1Uduo+nLvrsRJlfD2TNrVnrwSPfajyKWE2Mlg0fumJ74ki0PnoZuG2+pe2gKyX1vlVrq+7cZl3vy+Enshiug17YCeaXH4jRxBzGHCglnjNk97ecoE/cmNGIrn0UrxvfR0=
 before_install:
 - git fetch --unshallow || true
 - chmod +x gradlew
 - jdk_switcher use oraclejdk8
 - java -version
-- curl -o- -L https://yarnpkg.com/install.sh | bash
-- export PATH=$HOME/.yarn/bin:$PATH
 install:
-- yarn install
 script:
-- yarn test
-- ./gradlew check jacocoTestReport sonarqube -Pprod
+- ./gradlew check -Pprod
 after_success:
 - bash <(curl -s https://codecov.io/bash)
 before_deploy:
 - chmod +x .travis/deploy.sh
 deploy:
-deploy:
 - provider: script
   skip_cleanup: true
-  script: "./gradlew bootWar publish -Pprod -Pzipkin -x test -Pversion=${TRAVIS_JOB_NUMBER}-SNAPSHOT --stacktrace
-    && curl https://dev.job-room.ch:8443/deploy/jr2 --insecure"
+  script: >-
+    ./gradlew bootWar dependencyCheckAggregate pushDockerImage publish -Pprod -Pzipkin -x test -Pversion=${TRAVIS_JOB_NUMBER}-SNAPSHOT -PaddLatestTagToDockerImage=true --stacktrace
+    && .ci-travis/push-version-bump.sh ${TRAVIS_JOB_NUMBER}-SNAPSHOT ${GIT_USER} ${GIT_PWD}
   on:
-    branch: develop
+      branch: develop
 
 - provider: script
   skip_cleanup: true
-  script: "./gradlew bootWar publish -Pprod -Pzipkin -x test -Pversion=`echo ${TRAVIS_BRANCH} | cut -c9-`"
+  script: "./gradlew bootWar publish -Pprod -Pzipkin -x test -Pversion=EIAM-SNAPSHOT --stacktrace"
+  on:
+    branch: feature/eiam-integration-poc
+
+- provider: script
+  skip_cleanup: true
+  script: "./gradlew bootWar dependencyCheckAggregate pushDockerImage publish -Pprod -Pzipkin -x test -Pversion=`echo ${TRAVIS_BRANCH} | cut -c9-`"
   on:
     all_branches: true
     condition: "$TRAVIS_BRANCH =~ ^release.*$"
 
 - provider: script
   skip_cleanup: true
-  script: "./gradlew bootWar publish -Pprod -Pzipkin -x test -Pversion=${TRAVIS_TAG}"
+  script: "./gradlew bootWar pushDockerImage publish -Pprod -Pzipkin -x test -Pversion=${TRAVIS_TAG}"
   on:
     tags: true
 
-#Uncomment gatling task when at least one test exists
-#after_deploy:
-#- sleep 90 && baseURL=https://dev.job-room.ch:8443 ./gradlew -b e2e.gradle gatlingRunAll --stacktrace
 notifications:
   webhooks:
     on_success: change

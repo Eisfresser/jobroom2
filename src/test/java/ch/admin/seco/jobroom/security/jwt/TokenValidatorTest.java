@@ -9,11 +9,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class TokenValidatorTest {
 
-    private TokenValidator tokenValidator;
+    private JWTConfigurer.TokenValidator tokenValidator;
 
     @Before
     public void setup() {
-        tokenValidator = new TokenValidator(e5c9ee274ae87bc031adda32e27fa98b9290da83.name());
+        tokenValidator = new JWTConfigurer.TokenValidator(e5c9ee274ae87bc031adda32e27fa98b9290da83.name());
     }
 
     @Test

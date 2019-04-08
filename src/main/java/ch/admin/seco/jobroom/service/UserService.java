@@ -1,19 +1,18 @@
 package ch.admin.seco.jobroom.service;
 
-import static java.util.Objects.nonNull;
-
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.UUID;
-import java.util.stream.Collectors;
-
+import ch.admin.seco.jobroom.config.Constants;
+import ch.admin.seco.jobroom.domain.*;
+import ch.admin.seco.jobroom.domain.enumeration.Gender;
+import ch.admin.seco.jobroom.security.AuthoritiesConstants;
+import ch.admin.seco.jobroom.security.SecurityUtils;
+import ch.admin.seco.jobroom.service.dto.UserDTO;
+import ch.admin.seco.jobroom.service.mapper.UserDocumentMapper;
+import ch.admin.seco.jobroom.service.search.UserSearchRepository;
+import ch.admin.seco.jobroom.service.search.UserSearchService;
+import ch.admin.seco.jobroom.service.util.RandomUtil;
+import ch.admin.seco.jobroom.web.rest.errors.InvalidPasswordException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.cache.CacheManager;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,30 +21,23 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ch.admin.seco.jobroom.config.Constants;
-import ch.admin.seco.jobroom.domain.Authority;
-import ch.admin.seco.jobroom.domain.User;
-import ch.admin.seco.jobroom.domain.enumeration.Gender;
-import ch.admin.seco.jobroom.repository.AuthorityRepository;
-import ch.admin.seco.jobroom.repository.OrganizationRepository;
-import ch.admin.seco.jobroom.repository.UserRepository;
-import ch.admin.seco.jobroom.repository.search.UserSearchRepository;
-import ch.admin.seco.jobroom.security.AuthoritiesConstants;
-import ch.admin.seco.jobroom.security.SecurityUtils;
-import ch.admin.seco.jobroom.service.dto.UserDTO;
-import ch.admin.seco.jobroom.service.mapper.UserDocumentMapper;
-import ch.admin.seco.jobroom.service.search.UserSearchService;
-import ch.admin.seco.jobroom.service.util.RandomUtil;
-import ch.admin.seco.jobroom.web.rest.errors.InvalidPasswordException;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.*;
+import java.util.stream.Collectors;
+
+import static java.util.Objects.nonNull;
 
 /**
  * Service class for managing users.
  */
 @Service
 @Transactional
+@Deprecated
 public class UserService {
 
     private static final String USERS_CACHE = UserRepository.USERS_BY_LOGIN_CACHE;
+
     private final Logger log = LoggerFactory.getLogger(UserService.class);
 
     private final UserRepository userRepository;
@@ -65,13 +57,13 @@ public class UserService {
     private final UserSearchService userSearchService;
 
     public UserService(UserRepository userRepository,
-        PasswordEncoder passwordEncoder,
-        UserSearchRepository userSearchRepository,
-        OrganizationRepository organizationRepository,
-        AuthorityRepository authorityRepository,
-        CacheManager cacheManager,
-        UserDocumentMapper userDocumentMapper,
-        UserSearchService userSearchService) {
+            PasswordEncoder passwordEncoder,
+            UserSearchRepository userSearchRepository,
+            OrganizationRepository organizationRepository,
+            AuthorityRepository authorityRepository,
+            CacheManager cacheManager,
+            UserDocumentMapper userDocumentMapper,
+            UserSearchService userSearchService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.userSearchRepository = userSearchRepository;
@@ -85,40 +77,40 @@ public class UserService {
     public Optional<User> activateRegistration(String key) {
         log.debug("Activating user for activation key {}", key);
         return userRepository.findOneByActivationKey(key)
-            .map(user -> {
-                // activate given user for the registration key.
-                user.setActivated(true);
-                user.setActivationKey(null);
-                userSearchRepository.save(userDocumentMapper.userToUserDocument(user));
-                cacheManager.getCache(USERS_CACHE).evict(user.getLogin());
-                log.debug("Activated user: {}", user);
-                return user;
-            });
+                .map(user -> {
+                    // activate given user for the registration key.
+                    user.setActivated(true);
+                    user.setActivationKey(null);
+                    userSearchRepository.save(userDocumentMapper.userToUserDocument(user));
+                    cacheManager.getCache(USERS_CACHE).evict(user.getLogin());
+                    log.debug("Activated user: {}", user);
+                    return user;
+                });
     }
 
     public Optional<User> completePasswordReset(String newPassword, String key) {
         log.debug("Reset user password for reset key {}", key);
 
         return userRepository.findOneByResetKey(key)
-            .filter(user -> user.getResetDate().isAfter(Instant.now().minusSeconds(86400)))
-            .map(user -> {
-                user.setPassword(passwordEncoder.encode(newPassword));
-                user.setResetKey(null);
-                user.setResetDate(null);
-                cacheManager.getCache(USERS_CACHE).evict(user.getLogin());
-                return user;
-            });
+                .filter(user -> user.getResetDate().isAfter(Instant.now().minusSeconds(86400)))
+                .map(user -> {
+                    user.setPassword(passwordEncoder.encode(newPassword));
+                    user.setResetKey(null);
+                    user.setResetDate(null);
+                    cacheManager.getCache(USERS_CACHE).evict(user.getLogin());
+                    return user;
+                });
     }
 
     public Optional<User> requestPasswordReset(String login) {
         return userRepository.findOneByLogin(login)
-            .filter(User::getActivated)
-            .map(user -> {
-                user.setResetKey(RandomUtil.generateResetKey());
-                user.setResetDate(Instant.now());
-                cacheManager.getCache(USERS_CACHE).evict(user.getLogin());
-                return user;
-            });
+                .filter(User::getActivated)
+                .map(user -> {
+                    user.setResetKey(RandomUtil.generateResetKey());
+                    user.setResetDate(Instant.now());
+                    cacheManager.getCache(USERS_CACHE).evict(user.getLogin());
+                    return user;
+                });
     }
 
     public User registerUser(UserDTO userDTO, String password) {
@@ -145,7 +137,7 @@ public class UserService {
         newUser.setAuthorities(authorities);
         if (nonNull(userDTO.getOrganizationId())) {
             organizationRepository.findByExternalId(userDTO.getOrganizationId())
-                .ifPresent(newUser::setOrganization);
+                    .ifPresent(newUser::setOrganization);
         }
         userRepository.save(newUser);
         userSearchRepository.save(userDocumentMapper.userToUserDocument(newUser));
@@ -169,10 +161,10 @@ public class UserService {
         }
         if (userDTO.getAuthorities() != null) {
             Set<Authority> authorities = userDTO.getAuthorities().stream()
-                .map(authorityRepository::findById)
-                .filter(Optional::isPresent)
-                .map(Optional::get)
-                .collect(Collectors.toSet());
+                    .map(authorityRepository::findById)
+                    .filter(Optional::isPresent)
+                    .map(Optional::get)
+                    .collect(Collectors.toSet());
             user.setAuthorities(authorities);
         }
         String encryptedPassword = passwordEncoder.encode(RandomUtil.generatePassword());
@@ -182,7 +174,7 @@ public class UserService {
         user.setActivated(true);
         if (nonNull(userDTO.getOrganizationId())) {
             organizationRepository.findByExternalId(userDTO.getOrganizationId())
-                .ifPresent(user::setOrganization);
+                    .ifPresent(user::setOrganization);
         }
         userRepository.save(user);
         userSearchRepository.save(userDocumentMapper.userToUserDocument(user));
@@ -203,19 +195,19 @@ public class UserService {
      */
     public void updateUser(String firstName, String lastName, String email, String phone, Gender gender, String langKey, String imageUrl) {
         SecurityUtils.getCurrentUserLogin()
-            .flatMap(userRepository::findOneByLogin)
-            .ifPresent(user -> {
-                user.setFirstName(firstName);
-                user.setLastName(lastName);
-                user.setEmail(email);
-                user.setPhone(phone);
-                user.setGender(gender);
-                user.setLangKey(langKey);
-                user.setImageUrl(imageUrl);
-                userSearchRepository.save(userDocumentMapper.userToUserDocument(user));
-                cacheManager.getCache(USERS_CACHE).evict(user.getLogin());
-                log.debug("Changed Information for User: {}", user);
-            });
+                .flatMap(userRepository::findOneByLogin)
+                .ifPresent(user -> {
+                    user.setFirstName(firstName);
+                    user.setLastName(lastName);
+                    user.setEmail(email);
+                    user.setPhone(phone);
+                    user.setGender(gender);
+                    user.setLangKey(langKey);
+                    user.setImageUrl(imageUrl);
+                    userSearchRepository.save(userDocumentMapper.userToUserDocument(user));
+                    cacheManager.getCache(USERS_CACHE).evict(user.getLogin());
+                    log.debug("Changed Information for User: {}", user);
+                });
     }
 
     /**
@@ -226,35 +218,37 @@ public class UserService {
      */
     public Optional<UserDTO> updateUser(UserDTO userDTO) {
         return Optional.of(userRepository
-            .findById(userDTO.getId()))
-            .filter(Optional::isPresent)
-            .map(Optional::get)
-            .map(user -> {
-                user.setLogin(userDTO.getLogin());
-                user.setFirstName(userDTO.getFirstName());
-                user.setLastName(userDTO.getLastName());
-                user.setEmail(userDTO.getEmail());
-                user.setPhone(userDTO.getPhone());
-                user.setGender(userDTO.getGender());
-                user.setImageUrl(userDTO.getImageUrl());
-                user.setActivated(userDTO.isActivated());
-                user.setLangKey(userDTO.getLangKey());
-                Set<Authority> managedAuthorities = user.getAuthorities();
-                managedAuthorities.clear();
-                managedAuthorities.addAll(
-                    userDTO.getAuthorities().stream()
-                        .map(authorityRepository::getOne)
-                        .collect(Collectors.toSet()));
-                if (nonNull(userDTO.getOrganizationId())) {
-                    organizationRepository.findByExternalId(userDTO.getOrganizationId())
-                        .ifPresent(user::setOrganization);
-                }
-                userSearchRepository.save(userDocumentMapper.userToUserDocument(user));
-                cacheManager.getCache(USERS_CACHE).evict(user.getLogin());
-                log.debug("Changed Information for User: {}", user);
-                return user;
-            })
-            .map(UserDTO::new);
+                .findById(userDTO.getId()))
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .map(user -> {
+                    user.setLogin(userDTO.getLogin());
+                    user.setFirstName(userDTO.getFirstName());
+                    user.setLastName(userDTO.getLastName());
+                    user.setEmail(userDTO.getEmail());
+                    user.setPhone(userDTO.getPhone());
+                    user.setGender(userDTO.getGender());
+                    user.setImageUrl(userDTO.getImageUrl());
+                    user.setActivated(userDTO.isActivated());
+                    user.setLangKey(userDTO.getLangKey());
+                    Set<Authority> managedAuthorities = user.getAuthorities();
+                    managedAuthorities.clear();
+                    managedAuthorities.addAll(
+                            userDTO.getAuthorities().stream()
+                                    .map(authorityRepository::getOne)
+                                    .collect(Collectors.toSet()));
+                    if (nonNull(userDTO.getOrganizationId())) {
+                        organizationRepository.findByExternalId(userDTO.getOrganizationId())
+                                .ifPresent(user::setOrganization);
+                    } else {
+                        user.setOrganization(null);
+                    }
+                    userSearchRepository.save(userDocumentMapper.userToUserDocument(user));
+                    cacheManager.getCache(USERS_CACHE).evict(user.getLogin());
+                    log.debug("Changed Information for User: {}", user);
+                    return user;
+                })
+                .map(UserDTO::new);
     }
 
     public void deleteUser(String login) {
@@ -292,7 +286,7 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public Optional<User> getUserWithAuthoritiesByLogin(String login) {
-        return userRepository.findOneWithAuthoritiesByLogin(login);
+        return userRepository.findOneWithAuthoritiesByLoginFromCache(login);
     }
 
     @Transactional(readOnly = true)
@@ -302,7 +296,7 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public Optional<User> getUserWithAuthorities() {
-        return SecurityUtils.getCurrentUserLogin().flatMap(userRepository::findOneWithAuthoritiesByLogin);
+        return SecurityUtils.getCurrentUserLogin().flatMap(userRepository::findOneWithAuthoritiesByLoginFromCache);
     }
 
     /**

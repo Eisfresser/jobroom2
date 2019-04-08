@@ -1,28 +1,10 @@
-# ===================================================================
-# Spring Boot configuration.
-#
-# This configuration is used for unit/integration tests.
-#
-# More information on profiles: http://www.jhipster.tech/profiles/
-# More information on configuration properties: http://www.jhipster.tech/common-application-properties/
-# ===================================================================
-
-# ===================================================================
-# Standard Spring Boot properties.
-# Full reference is available at:
-# http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
-# ===================================================================
-
 eureka:
     client:
-        enabled: true
-    instance:
-        appname: jobroom
-        instanceId: jobroom:${spring.application.instance-id:${random.value}}
+        enabled: false
 
 spring:
-    application:
-        name: jobroom
+    profiles:
+        active: default,no-eiam,eiam-mock,uid-mock,stes-mock
     jackson:
         serialization.write_dates_as_timestamps: false
     cache:
@@ -37,26 +19,12 @@ spring:
         database-platform: io.github.jhipster.domain.util.FixedH2Dialect
         database: H2
         open-in-view: false
-        show-sql: false
-        hibernate:
-            ddl-auto: none
-            naming:
-                physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
-                implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
-        properties:
-            hibernate.id.new_generator_mappings: true
-            hibernate.cache.use_second_level_cache: false
-            hibernate.cache.use_query_cache: false
-            hibernate.generate_statistics: true
-            hibernate.hbm2ddl.auto: validate
     data:
         elasticsearch:
             cluster-name:
             cluster-nodes: localhost:9300
     liquibase:
-        contexts: test
-    mail:
-        host: localhost
+        enabled: false
     messages:
         basename: i18n/messages
     mvc:
@@ -64,6 +32,19 @@ spring:
             enabled: false
     thymeleaf:
         mode: HTML
+    task:
+        execution:
+            thread-name-prefix: jr2-async
+            pool:
+                core-size: 2
+                max-size: 50
+                queue-capacity: 10000
+        scheduling:
+            thread-name-prefix: jr2-scheduler
+            pool:
+                size: 1
+    main:
+        allow-bean-definition-overriding: true
 
 server:
     port: 10344
@@ -80,10 +61,6 @@ info:
 # ===================================================================
 
 jhipster:
-    async:
-        core-pool-size: 1
-        max-pool-size: 50
-        queue-capacity: 10000
     # To test logstash appender
     logging:
         logstash:
@@ -105,6 +82,43 @@ jhipster:
         logs: # Reports Dropwizard metrics in the logs
             enabled: true
             report-frequency: 60 # in seconds
+
+security:
+    saml:
+        idpConfigPath: classpath:config/security/local-shibboleth-idp-metadata.xml
+        keystorePath: classpath:config/security/local-keystore.jks
+        keystorePassword: 'DUMMY'
+        keystorePrivateKeyName: 'saml2-sp'
+        keystorePrivateKeyPassword: 'DUMMY'
+        externalContextScheme: 'http'
+        externalContextServerName: 'localhost'
+        externalContextServerPort: '8080'
+        externalContextPath: '/'
+        accessRequestUrl: '#'
+        entityId: 'urn:wrong.url:sp:seco:JOBROOM-LOCAL'
+        #entityAlias: ''
+    user:
+        logout_url: 'http://localhost:8080/saml/logout'
+        profile_url: 'http://www.cowsays.com/cow_messages/4701'
+        login_url: 'http://www.cowsays.com/cow_messages/4701'
+    accessCodeMailRecipient: service-desk-mail-address@mail.ch
+    eiam:
+        wsclient:
+            clientName: ALV
+            endpointAddress: 'DUMMY'
+            keystore:
+                location: 'DUMMY'
+                password: 'DUMMY'
+                privateKeyName: 'DUMMY'
+            truststore:
+                location: 'DUMMY'
+                password: 'DUMMY'
+    uid:
+        wsclient:
+            endpointAddress: 'DUMMY'
+            truststore:
+                location: 'DUMMY'
+                password: 'DUMMY'
 
 # ===================================================================
 # Application specific properties

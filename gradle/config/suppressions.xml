@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!DOCTYPE suppressions PUBLIC
+    "-//Puppy Crawl//DTD Suppressions 1.1//EN"
+    "http://www.puppycrawl.com/dtds/suppressions_1_1.dtd">
+<suppressions>
+    <suppress checks="." files="[\\/]org.oasis_open.docs.ws_sx.ws_trust._200512.wsdl[\\/].*\.java$"/>
+    <suppress checks="." files="[\\/]ch.adnovum.nevisidm.ws.services[\\/].*\.java$"/>
+    <suppress checks="." files="[\\/]com.microsoft.schemas._2003._10.serialization[\\/].*\.java$"/>
+    <suppress checks="." files="[\\/]org.datacontract.schemas._2004._07.ch_admin_bit_uid[\\/].*\.java$"/>
+    <suppress checks="." files="[\\/]org.tempuri[\\/].*\.java$"/>
+    <suppress checks="." files="[\\/]ch.admin.bit.xmlns.uid_wse_f._3[\\/].*\.java$"/>
+    <suppress checks="." files="[\\/]ch.admin.uid.xmlns.uid_wse[\\/].*\.java$"/>
+    <suppress checks="." files="[\\/]ch.ech.xmlns[\\/].*\.java$"/>
+</suppressions>

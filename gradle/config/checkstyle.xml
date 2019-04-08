@@ -9,6 +9,9 @@
     <module name="com.puppycrawl.tools.checkstyle.checks.NewlineAtEndOfFileCheck">
         <property name="lineSeparator" value="lf"/>
     </module>
+    <module name="SuppressionFilter">
+        <property name="file" value="gradle/config/suppressions.xml"/>
+    </module>
 
     <!-- TreeWalker Checks -->
     <module name="com.puppycrawl.tools.checkstyle.TreeWalker">
@@ -35,7 +38,7 @@
         <module name="com.puppycrawl.tools.checkstyle.checks.blocks.RightCurlyCheck">
             <property name="option" value="same"/>
         </module>
-        <module name="com.puppycrawl.tools.checkstyle.checks.blocks.NeedBracesCheck"/>
+     <!--   <module name="com.puppycrawl.tools.checkstyle.checks.blocks.NeedBracesCheck"/>-->
         <module
             name="com.puppycrawl.tools.checkstyle.checks.blocks.AvoidNestedBlocksCheck"/>
 
@@ -83,8 +86,8 @@
             name="com.puppycrawl.tools.checkstyle.checks.coding.OneStatementPerLineCheck"/>
 
         <!-- Imports -->
-        <module
-            name="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
+<!--        <module
+            name="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>-->
         <!--<module name="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStaticImportCheck">-->
         <!--<property name="excludes"-->
         <!--value="org.assertj.core.api.Assertions.*, org.junit.Assert.*, org.junit.Assume.*, org.junit.internal.matchers.ThrowableMessageMatcher.*, org.hamcrest.CoreMatchers.*, org.hamcrest.Matchers.*, org.springframework.boot.configurationprocessor.ConfigurationMetadataMatchers.*, org.springframework.boot.configurationprocessor.TestCompiler.*, org.springframework.boot.test.autoconfigure.AutoConfigurationImportedCondition.*, org.mockito.Mockito.*, org.mockito.BDDMockito.*, org.mockito.ArgumentMatchers.*, org.mockito.Matchers.*, org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.*, org.springframework.restdocs.hypermedia.HypermediaDocumentation.*, org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*, org.springframework.test.web.servlet.result.MockMvcResultMatchers.*, org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.*, org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.*, org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo, org.springframework.test.web.client.match.MockRestRequestMatchers.*, org.springframework.test.web.client.response.MockRestResponseCreators.*"/>-->
@@ -99,36 +102,36 @@
         <!--<property name="file" value="${main.basedir}/spring-boot-parent/src/checkstyle/import-control.xml" />-->
         <!--<property name="path" value="^.*[\\/]src[\\/]main[\\/].*$" />-->
         <!--</module>-->
-        <module name="com.puppycrawl.tools.checkstyle.checks.imports.ImportOrderCheck">
+       <!-- <module name="com.puppycrawl.tools.checkstyle.checks.imports.ImportOrderCheck">
             <property name="groups"
                       value="java,/^javax?\./,*,org.springframework,ch.admin"/>
             <property name="ordered" value="true"/>
             <property name="separated" value="true"/>
             <property name="option" value="top"/>
             <property name="sortStaticImportsAlphabetically" value="true"/>
-        </module>
+        </module>-->
 
         <!-- Javadoc Comments -->
         <!--<module name="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocTypeCheck">-->
         <!--<property name="scope" value="package"/>-->
         <!--<property name="authorFormat" value=".+\s.+"/>-->
         <!--</module>-->
-        <module name="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheck">
-            <property name="allowMissingJavadoc" value="true"/>
-        </module>
+        <!--<module name="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocMethodCheck">-->
+            <!--<property name="allowMissingJavadoc" value="true"/>-->
+        <!--</module>-->
         <!--<module name="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocVariableCheck">-->
         <!--<property name="scope" value="public"/>-->
         <!--</module>-->
-        <module name="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocStyleCheck">
-            <property name="checkEmptyJavadoc" value="true"/>
-        </module>
-        <module
-            name="com.puppycrawl.tools.checkstyle.checks.javadoc.NonEmptyAtclauseDescriptionCheck"/>
-        <module
-            name="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocTagContinuationIndentationCheck">
-            <property name="offset" value="0"/>
-        </module>
-        <module name="com.puppycrawl.tools.checkstyle.checks.javadoc.AtclauseOrderCheck">
+        <!--<module name="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocStyleCheck">-->
+            <!--<property name="checkEmptyJavadoc" value="true"/>-->
+        <!--</module>-->
+        <!--<module-->
+            <!--name="com.puppycrawl.tools.checkstyle.checks.javadoc.NonEmptyAtclauseDescriptionCheck"/>-->
+        <!--<module-->
+            <!--name="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocTagContinuationIndentationCheck">-->
+            <!--<property name="offset" value="0"/>-->
+        <!--</module>-->
+     <!--   <module name="com.puppycrawl.tools.checkstyle.checks.javadoc.AtclauseOrderCheck">
             <property name="target" value="CLASS_DEF, INTERFACE_DEF, ENUM_DEF"/>
             <property name="tagOrder"
                       value="@param, @author, @since, @see, @version, @serial, @deprecated"/>
@@ -137,7 +140,7 @@
             <property name="target" value="METHOD_DEF, CTOR_DEF, VARIABLE_DEF"/>
             <property name="tagOrder"
                       value="@param, @return, @throws, @since, @deprecated, @see"/>
-        </module>
+        </module>-->
 
         <!-- Miscellaneous -->
         <module

@@ -13,3 +13,14 @@ eureka:
     client:
         service-url:
             defaultZone: http://admin:${jhipster.registry.password}@localhost:8761/eureka/
+
+
+# ===================================================================
+# Spring Boot Actuator
+# ===================================================================
+management:
+    endpoints:
+        web:
+            base-path: /management
+            exposure:
+                include: '*'

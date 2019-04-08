@@ -8,6 +8,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.servlet.http.HttpServletRequest;
 
+import ch.admin.seco.jobroom.service.CandidateNotFoundException;
 import org.zalando.problem.DefaultProblem;
 import org.zalando.problem.Problem;
 import org.zalando.problem.ProblemBuilder;
@@ -23,6 +24,9 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.NativeWebRequest;
 
+import ch.admin.seco.jobroom.service.BlacklistedAgentAlreadyExistsException;
+import ch.admin.seco.jobroom.service.CompanyContactTemplateNotFoundException;
+import ch.admin.seco.jobroom.service.OrganizationNotFoundException;
 import ch.admin.seco.jobroom.web.rest.util.HeaderUtil;
 
 /**
@@ -104,6 +108,42 @@ public class ExceptionTranslator implements ProblemHandling {
         Problem problem = Problem.builder()
             .withStatus(Status.CONFLICT)
             .with("message", ErrorConstants.ERR_CONCURRENCY_FAILURE)
+            .build();
+        return create(ex, problem, request);
+    }
+
+    @ExceptionHandler(CompanyContactTemplateNotFoundException.class)
+    public ResponseEntity<Problem> handleCompanyContactTemplateNotFoundException(CompanyContactTemplateNotFoundException ex, NativeWebRequest request) {
+        Problem problem = Problem.builder()
+            .withStatus(Status.NOT_FOUND)
+            .with("message", ex.getMessage())
+            .build();
+        return create(ex, problem, request);
+    }
+
+    @ExceptionHandler(OrganizationNotFoundException.class)
+    public ResponseEntity<Problem> handleOrganizationNotFoundException(OrganizationNotFoundException ex, NativeWebRequest request) {
+        Problem problem = Problem.builder()
+            .withStatus(Status.NOT_FOUND)
+            .with("message", ex.getMessage())
+            .build();
+        return create(ex, problem, request);
+    }
+
+    @ExceptionHandler(BlacklistedAgentAlreadyExistsException.class)
+    public ResponseEntity<Problem> handleBlacklistedAgentAlreadyExistsException(BlacklistedAgentAlreadyExistsException ex, NativeWebRequest request) {
+        Problem problem = Problem.builder()
+            .withStatus(Status.BAD_REQUEST)
+            .with("message", ex.getMessage())
+            .build();
+        return create(ex, problem, request);
+    }
+
+    @ExceptionHandler(CandidateNotFoundException.class)
+    public ResponseEntity<Problem> handleCandidateNotFoundException(CandidateNotFoundException ex, NativeWebRequest request) {
+        Problem problem = Problem.builder()
+            .withStatus(Status.NOT_FOUND)
+            .with("message", ex.getMessage())
             .build();
         return create(ex, problem, request);
     }

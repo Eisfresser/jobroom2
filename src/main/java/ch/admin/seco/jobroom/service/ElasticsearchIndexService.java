@@ -1,20 +1,19 @@
 package ch.admin.seco.jobroom.service;
 
-import java.io.Serializable;
-import java.lang.reflect.Method;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.function.Function;
-import java.util.stream.Stream;
-
-import javax.persistence.EntityManager;
-
-import com.codahale.metrics.annotation.Timed;
+import ch.admin.seco.jobroom.domain.Organization;
+import ch.admin.seco.jobroom.domain.OrganizationRepository;
+import ch.admin.seco.jobroom.domain.UserRepository;
+import ch.admin.seco.jobroom.service.mapper.UserDocumentMapper;
+import ch.admin.seco.jobroom.service.search.OrganizationSearchRepository;
+import ch.admin.seco.jobroom.service.search.UserDocument;
+import ch.admin.seco.jobroom.service.search.UserSearchRepository;
+import io.micrometer.core.annotation.Timed;
 import org.hibernate.CacheMode;
 import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import reactor.core.publisher.Flux;
-
+import org.springframework.cache.Cache;
+import org.springframework.cache.CacheManager;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -22,14 +21,14 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StopWatch;
+import reactor.core.publisher.Flux;
 
-import ch.admin.seco.jobroom.domain.Organization;
-import ch.admin.seco.jobroom.domain.search.user.UserDocument;
-import ch.admin.seco.jobroom.repository.OrganizationRepository;
-import ch.admin.seco.jobroom.repository.UserRepository;
-import ch.admin.seco.jobroom.repository.search.OrganizationSearchRepository;
-import ch.admin.seco.jobroom.repository.search.UserSearchRepository;
-import ch.admin.seco.jobroom.service.mapper.UserDocumentMapper;
+import javax.persistence.EntityManager;
+import java.io.Serializable;
+import java.lang.reflect.Method;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Function;
+import java.util.stream.Stream;
 
 @Service
 public class ElasticsearchIndexService {
@@ -50,13 +49,15 @@ public class ElasticsearchIndexService {
 
     private final UserDocumentMapper userDocumentMapper;
 
+    private final CacheManager cacheManager;
+
     public ElasticsearchIndexService(
-        EntityManager entityManager, UserRepository userRepository,
-        UserSearchRepository userSearchRepository,
-        OrganizationRepository organizationRepository,
-        OrganizationSearchRepository organizationSearchRepository,
-        ElasticsearchTemplate elasticsearchTemplate,
-        UserDocumentMapper userDocumentMapper) {
+            EntityManager entityManager, UserRepository userRepository,
+            UserSearchRepository userSearchRepository,
+            OrganizationRepository organizationRepository,
+            OrganizationSearchRepository organizationSearchRepository,
+            ElasticsearchTemplate elasticsearchTemplate,
+            UserDocumentMapper userDocumentMapper, CacheManager cacheManager) {
         this.entityManager = entityManager;
         this.userRepository = userRepository;
         this.userSearchRepository = userSearchRepository;
@@ -64,6 +65,7 @@ public class ElasticsearchIndexService {
         this.organizationSearchRepository = organizationSearchRepository;
         this.elasticsearchTemplate = elasticsearchTemplate;
         this.userDocumentMapper = userDocumentMapper;
+        this.cacheManager = cacheManager;
     }
 
     @Async
@@ -73,30 +75,38 @@ public class ElasticsearchIndexService {
         reindexForClass(UserDocument.class, userRepository, userSearchRepository, userDocumentMapper::userToUserDocument);
         reindexForClass(Organization.class, organizationRepository, organizationSearchRepository, Function.identity());
 
+        evictAllCaches();
+
         log.info("Elasticsearch: Successfully performed reindexing");
     }
 
     @SuppressWarnings("unchecked")
     <JPA, ELASTIC, ID extends Serializable> void reindexForClass(
-        Class<ELASTIC> documentClass,
-        JpaRepository<JPA, ID> jpaRepository,
-        ElasticsearchRepository<ELASTIC, ID> elasticsearchRepository,
-        Function<JPA, ELASTIC> entityToDocumentMapper) {
+            Class<ELASTIC> documentClass,
+            JpaRepository<JPA, ID> jpaRepository,
+            ElasticsearchRepository<ELASTIC, ID> elasticsearchRepository,
+            Function<JPA, ELASTIC> entityToDocumentMapper) {
         elasticsearchTemplate.deleteIndex(documentClass);
         elasticsearchTemplate.createIndex(documentClass);
         elasticsearchTemplate.putMapping(documentClass);
 
         if (jpaRepository.count() > 0) {
             reindexWithStream(jpaRepository, elasticsearchRepository,
-                entityToDocumentMapper, documentClass);
+                    entityToDocumentMapper, documentClass);
         }
         log.info("Elasticsearch: Indexed all rows for " + documentClass.getSimpleName());
     }
 
+    private void evictAllCaches() {
+        cacheManager.getCacheNames().stream()
+                .map(cacheManager::getCache)
+                .forEach(Cache::clear);
+    }
+
     private <JPA, ELASTIC, ID extends Serializable> void reindexWithStream(
-        JpaRepository<JPA, ID> jpaRepository,
-        ElasticsearchRepository<ELASTIC, ID> elasticsearchRepository,
-        Function<JPA, ELASTIC> entityToDocumentMapper, Class entityClass) {
+            JpaRepository<JPA, ID> jpaRepository,
+            ElasticsearchRepository<ELASTIC, ID> elasticsearchRepository,
+            Function<JPA, ELASTIC> entityToDocumentMapper, Class entityClass) {
 
         try {
             disableHibernateSecondaryCache();
@@ -108,17 +118,17 @@ public class ElasticsearchIndexService {
             stopWatch.start();
             Stream<JPA> stream = Stream.class.cast(m.invoke(jpaRepository));
             Flux.fromStream(stream)
-                .map(entityToDocumentMapper)
-                .buffer(100)
-                .doOnNext(elasticsearchRepository::saveAll)
-                .doOnNext(jobs ->
-                    log.info("Index {} chunk #{}, {} / {}", entityClass.getSimpleName(), index.incrementAndGet(), counter.addAndGet(jobs.size()), total))
-                .doOnComplete(() -> {
-                        stopWatch.stop();
-                        log.info("Indexed {} of {} entities from {} in {} s", elasticsearchRepository.count(), jpaRepository.count(), entityClass.getSimpleName(), stopWatch.getTotalTimeSeconds());
-                    }
-                )
-                .subscribe(jobs -> removeAllElementFromHibernatePrimaryCache());
+                    .map(entityToDocumentMapper)
+                    .buffer(100)
+                    .doOnNext(elasticsearchRepository::saveAll)
+                    .doOnNext(jobs ->
+                            log.info("Index {} chunk #{}, {} / {}", entityClass.getSimpleName(), index.incrementAndGet(), counter.addAndGet(jobs.size()), total))
+                    .doOnComplete(() -> {
+                                stopWatch.stop();
+                                log.info("Indexed {} of {} entities from {} in {} s", elasticsearchRepository.count(), jpaRepository.count(), entityClass.getSimpleName(), stopWatch.getTotalTimeSeconds());
+                            }
+                    )
+                    .subscribe(jobs -> removeAllElementFromHibernatePrimaryCache());
         } catch (Exception e) {
             log.error("ReindexWithStream failed", e);
         }

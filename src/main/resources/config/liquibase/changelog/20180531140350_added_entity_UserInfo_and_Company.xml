@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="20180514134344-1" author="jhipster">
+
+        <createTable tableName="company">
+            <column name="id" type="varchar(36)">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="external_id" type="varchar(12)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="name" type="varchar(150)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="street" type="varchar(50)"/>
+            <column name="zip_code" type="varchar(4)"/>
+            <column name="city" type="varchar(50)"/>
+            <column name="email" type="varchar(50)">
+                <constraints unique="false" nullable="true"/>
+            </column>
+            <column name="phone" type="varchar(20)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="source" type="varchar(3)"/>
+        </createTable>
+        <createIndex indexName="idx_company_external_id"
+                     tableName="company"
+                     unique="true">
+            <column name="external_id" type="varchar(12)"/>
+        </createIndex>
+
+        <createTable tableName="user">
+            <column name="id" type="uuid">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="external_id" type="varchar(10)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="first_name" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_name" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="varchar(100)">
+                <constraints unique="false" nullable="true"/>
+            </column>
+            <column name="phone" type="varchar(50)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="lang_key" type="varchar(6)"/>
+            <column name="access_code" type="varchar(15)"/>
+            <column name="registration_status" type="varchar(15)"/>
+        </createTable>
+        <createIndex indexName="idx_user_external_id"
+                     tableName="user"
+                     unique="true">
+            <column name="external_id" type="varchar(10)"/>
+        </createIndex>
+
+        <createTable tableName="accountability">
+            <column name="user_id" type="uuid">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="accountability_type" type="varchar(15)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="company_id" type="varchar(36)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseColumnNames="user_id"
+                                 baseTableName="accountability"
+                                 constraintName="fk_accountability_user_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="user"/>
+        <addForeignKeyConstraint baseColumnNames="company_id"
+                                 baseTableName="accountability"
+                                 constraintName="fk_accountability_company_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="company"/>
+
+    </changeSet>
+</databaseChangeLog>

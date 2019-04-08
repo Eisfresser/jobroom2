@@ -1,7 +1,6 @@
 ######################
 # Project Specific
 ######################
-/src/main/webapp/content/css/main.css
 /build/www/**
 /src/test/javascript/build/
 /src/test/javascript/coverage/
@@ -141,7 +140,6 @@ Desktop.ini
 !.mvn/wrapper/maven-wrapper.jar
 
 ######################
-# ESLint
+# H2
 ######################
-.eslintcache
-yarn.lock
+.h2.server.properties

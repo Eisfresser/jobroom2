@@ -1,31 +1,45 @@
 package ch.admin.seco.jobroom;
 
+import ch.admin.seco.jobroom.config.ApplicationProperties;
+import ch.admin.seco.jobroom.config.DefaultProfileUtil;
+import io.github.jhipster.config.JHipsterConstants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.liquibase.LiquibaseProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
+import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.core.Ordered;
+import org.springframework.core.env.Environment;
+import org.springframework.data.elasticsearch.repository.config.EnableElasticsearchRepositories;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+
+import javax.annotation.PostConstruct;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.Collection;
 
-import javax.annotation.PostConstruct;
-
-import io.github.jhipster.config.JHipsterConstants;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.liquibase.LiquibaseProperties;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
-import org.springframework.core.env.Environment;
-
-import ch.admin.seco.jobroom.config.ApplicationProperties;
-import ch.admin.seco.jobroom.config.DefaultProfileUtil;
-
 @SpringBootApplication
 @EnableConfigurationProperties({LiquibaseProperties.class, ApplicationProperties.class})
 @EnableDiscoveryClient
 @EnableZuulProxy
+@EnableFeignClients
+@EnableTransactionManagement(order = Ordered.HIGHEST_PRECEDENCE)
+@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
+@EnableJpaRepositories(basePackages = "ch.admin.seco.jobroom.domain")
+@EnableElasticsearchRepositories(basePackages = "ch.admin.seco.jobroom.service.search")
+@EnableCaching
+@EnableAsync
+@EnableScheduling
 public class JobroomApp {
 
     private static final Logger log = LoggerFactory.getLogger(JobroomApp.class);

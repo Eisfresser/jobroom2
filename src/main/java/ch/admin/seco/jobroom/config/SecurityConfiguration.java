@@ -1,141 +1,306 @@
 package ch.admin.seco.jobroom.config;
 
+import ch.admin.seco.jobroom.domain.UserInfoRepository;
+import ch.admin.seco.jobroom.security.LoginFormUserDetailsService;
+import ch.admin.seco.jobroom.security.MD5PasswordEncoder;
+import ch.admin.seco.jobroom.security.jwt.JWTConfigurer;
+import ch.admin.seco.jobroom.security.saml.DefaultSamlBasedUserDetailsProvider;
+import ch.admin.seco.jobroom.security.saml.SamlAuthenticationFailureHandler;
+import ch.admin.seco.jobroom.security.saml.SamlAuthenticationSuccessHandler;
+import ch.admin.seco.jobroom.security.saml.SamlProperties;
+import ch.admin.seco.jobroom.security.saml.infrastructure.EiamSamlUserDetailsService;
+import ch.admin.seco.jobroom.security.saml.infrastructure.SamlBasedUserDetailsProvider;
+import ch.admin.seco.jobroom.service.logging.BusinessLogEvent;
 import io.github.jhipster.config.JHipsterProperties;
 import io.github.jhipster.config.JHipsterProperties.Security.Authentication.Jwt;
-import org.zalando.problem.spring.web.advice.security.SecurityProblemSupport;
-
-import org.springframework.beans.factory.BeanInitializationException;
+import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.http.HttpMethod;
+import org.springframework.context.annotation.Profile;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.springframework.security.authentication.AuthenticationEventPublisher;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.DefaultAuthenticationEventPublisher;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler;
 import org.springframework.security.web.header.HeaderWriter;
 import org.springframework.security.web.header.writers.CacheControlHeadersWriter;
 import org.springframework.security.web.header.writers.DelegatingRequestMatcherHeaderWriter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.NegatedRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
+import org.springframework.transaction.support.TransactionTemplate;
 import org.springframework.web.filter.CorsFilter;
+import org.zalando.problem.spring.web.advice.security.SecurityProblemSupport;
 
-import ch.admin.seco.jobroom.security.AuthoritiesConstants;
-import ch.admin.seco.jobroom.security.MD5PasswordEncoder;
-import ch.admin.seco.jobroom.security.jwt.JWTConfigurer;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collection;
+
+import static ch.admin.seco.jobroom.security.saml.infrastructure.dsl.SAMLConfigurer.saml;
+import static ch.admin.seco.jobroom.service.logging.BusinessLogEventType.USER_LOGOUT;
+import static ch.admin.seco.jobroom.service.logging.BusinessLogObjectType.USER;
+import static org.opensaml.saml2.core.AuthnContext.*;
 
 @Configuration
 @EnableWebSecurity
 @Import(SecurityProblemSupport.class)
-public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+@EnableJpaAuditing(auditorAwareRef = "springSecurityAuditorAware")
+public class SecurityConfiguration {
 
-    private final AuthenticationManagerBuilder authenticationManagerBuilder;
+    @Configuration
+    @Profile("no-eiam")
+    static class NoEiamSecurityConfig extends AbstractSecurityConfig {
 
-    private final UserDetailsService userDetailsService;
+        private final LoginFormUserDetailsService loginFormUserDetailsService;
 
-    private final JHipsterProperties jHipsterProperties;
+        private final JHipsterProperties jHipsterProperties;
 
-    private final CorsFilter corsFilter;
+        private final CorsFilter corsFilter;
 
-    private final SecurityProblemSupport problemSupport;
+        private final SecurityProblemSupport problemSupport;
 
-    public SecurityConfiguration(AuthenticationManagerBuilder authenticationManagerBuilder,
-                                 UserDetailsService userDetailsService,
-                                 CorsFilter corsFilter,
-                                 SecurityProblemSupport problemSupport,
-                                 JHipsterProperties jHipsterProperties
-    ) {
-        this.authenticationManagerBuilder = authenticationManagerBuilder;
-        this.userDetailsService = userDetailsService;
-        this.jHipsterProperties = jHipsterProperties;
-        this.corsFilter = corsFilter;
-        this.problemSupport = problemSupport;
-    }
+        NoEiamSecurityConfig(LoginFormUserDetailsService loginFormUserDetailsService, CorsFilter corsFilter, SecurityProblemSupport problemSupport, JHipsterProperties jHipsterProperties) {
+            super(problemSupport);
+            this.loginFormUserDetailsService = loginFormUserDetailsService;
+            this.jHipsterProperties = jHipsterProperties;
+            this.corsFilter = corsFilter;
+            this.problemSupport = problemSupport;
+        }
 
-    @Bean
-    public AuthenticationManager authenticationManager() {
-        try {
-            return authenticationManagerBuilder
-                .userDetailsService(userDetailsService)
-                .passwordEncoder(passwordEncoder())
+        @Bean
+        public PasswordEncoder passwordEncoder() {
+            return new MD5PasswordEncoder();
+        }
+
+        @Bean
+        public AuthenticationManager authenticationManager() throws Exception {
+            return super.authenticationManager();
+        }
+
+        @Override
+        protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+            super.configure(auth);
+            auth.userDetailsService(this.loginFormUserDetailsService)
+                .passwordEncoder(passwordEncoder());
+        }
+
+        @Override
+        protected void configure(HttpSecurity http) throws Exception {
+            http.authorizeRequests()
+                .antMatchers("/api/activate").permitAll()
+                .antMatchers("/api/account/reset-password/init").permitAll()
+                .antMatchers("/api/account/reset-password/finish").permitAll();
+
+            http
+                .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
+                .exceptionHandling()
+                .authenticationEntryPoint(problemSupport)
                 .and()
-                .build();
-        } catch (Exception e) {
-            throw new BeanInitializationException("Security configuration failed", e);
+                .csrf()
+                .disable()
+                .headers()
+                .cacheControl().disable()
+                .addHeaderWriter(prepareHeaderWriter())
+                .frameOptions()
+                .disable()
+                .and()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .apply(jwt());
+
+            super.configure(http);
+        }
+
+        private HeaderWriter prepareHeaderWriter() {
+            RequestMatcher notResourcesMatcher = new NegatedRequestMatcher(new AntPathRequestMatcher("/*service/**"));
+            return new DelegatingRequestMatcherHeaderWriter(notResourcesMatcher, new CacheControlHeadersWriter());
+        }
+
+        private JWTConfigurer jwt() {
+            final Jwt jwt = this.jHipsterProperties.getSecurity()
+                .getAuthentication()
+                .getJwt();
+            return new JWTConfigurer(jwt);
         }
     }
 
-    @Override
-    public void configure(WebSecurity web) {
-        web.ignoring()
-            .antMatchers(HttpMethod.OPTIONS, "/**")
-            .antMatchers("/app/**/*.{js,html}")
-            .antMatchers("/i18n/**")
-            .antMatchers("/content/**")
-            .antMatchers("/swagger-ui/index.html")
-            .antMatchers("/test/**")
-            .antMatchers("/h2-console/**");
-    }
+    @Configuration
+    @Profile("!no-eiam")
+    @EnableConfigurationProperties(EiamSecurityProperties.class)
+    static class SamlSecurityConfig extends AbstractSecurityConfig {
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        RequestMatcher notResourcesMatcher = new NegatedRequestMatcher(new AntPathRequestMatcher("/*service/**"));
-        HeaderWriter notResourcesHeaderWriter = new DelegatingRequestMatcherHeaderWriter(notResourcesMatcher, new CacheControlHeadersWriter());
+        private static final Collection<String> DEFAULT_AUTHN_CTX = Arrays.asList(
+            NOMAD_TELEPHONY_AUTHN_CTX,
+            SMARTCARD_PKI_AUTHN_CTX,
+            SOFTWARE_PKI_AUTHN_CTX,
+            KERBEROS_AUTHN_CTX
+        );
 
-        // formatter:off
-        http
-            .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
-            .exceptionHandling()
-            .authenticationEntryPoint(problemSupport)
-            .accessDeniedHandler(problemSupport)
-            .and()
-            .csrf()
-            .disable()
-            .headers()
-            .cacheControl().disable()
-            .addHeaderWriter(notResourcesHeaderWriter)
-            .frameOptions()
-            .disable()
-            .and()
-            .sessionManagement()
-            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            .and()
-            .authorizeRequests()
-            .antMatchers("/api/register").permitAll()
-            .antMatchers("/api/activate").permitAll()
-            .antMatchers("/api/authenticate").permitAll()
-            .antMatchers("/api/account/reset-password/init").permitAll()
-            .antMatchers("/api/account/reset-password/finish").permitAll()
-            .antMatchers("/api/profile-info").permitAll()
-            .antMatchers("/api/**").authenticated()
-            .antMatchers("/management/health").permitAll()
-            .antMatchers("/management/info").permitAll()
-            .antMatchers("/management/**").hasAuthority(AuthoritiesConstants.ADMIN)
-            .antMatchers("/v2/api-docs/**").permitAll()
-            .antMatchers("/swagger-resources/configuration/ui").permitAll()
-            .antMatchers("/swagger-ui/index.html").hasAuthority(AuthoritiesConstants.ADMIN)
-            .and()
-            .apply(securityConfigurerAdapter());
+        private final UserInfoRepository userInfoRepository;
 
-    }
+        private final SamlProperties samlProperties;
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new MD5PasswordEncoder();
-    }
+        private final TransactionTemplate transactionTemplate;
 
+        private final JHipsterProperties jHipsterProperties;
 
-    private JWTConfigurer securityConfigurerAdapter() {
-        final Jwt jwt = this.jHipsterProperties.getSecurity()
-                                               .getAuthentication()
-                                               .getJwt();
-        return new JWTConfigurer(jwt);
+        private final LoginFormUserDetailsService loginFormUserDetailsService;
+
+        private final SecurityProblemSupport problemSupport;
+
+        private final ApplicationEventPublisher applicationEventPublisher;
+
+        private final EiamSecurityProperties eiamSecurityProperties;
+
+        @Autowired
+        SamlSecurityConfig(UserInfoRepository userInfoRepository, SamlProperties samlProperties, TransactionTemplate transactionTemplate, JHipsterProperties jHipsterProperties, LoginFormUserDetailsService loginFormUserDetailsService, SecurityProblemSupport problemSupport, ApplicationEventPublisher applicationEventPublisher, EiamSecurityProperties eiamSecurityProperties) {
+            super(problemSupport);
+            this.userInfoRepository = userInfoRepository;
+            this.samlProperties = samlProperties;
+            this.transactionTemplate = transactionTemplate;
+            this.jHipsterProperties = jHipsterProperties;
+            this.loginFormUserDetailsService = loginFormUserDetailsService;
+            this.problemSupport = problemSupport;
+            this.applicationEventPublisher = applicationEventPublisher;
+            this.eiamSecurityProperties = eiamSecurityProperties;
+        }
+
+        @Bean
+        public PasswordEncoder passwordEncoder() {
+            return new MD5PasswordEncoder();
+        }
+
+        @Bean
+        public AuthenticationManager authenticationManager() throws Exception {
+            return super.authenticationManager();
+        }
+
+        @Override
+        protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+            super.configure(auth);
+            auth
+                .userDetailsService(this.loginFormUserDetailsService)
+                .passwordEncoder(passwordEncoder());
+        }
+
+        @Override
+        protected void configure(HttpSecurity http) throws Exception {
+            http.authorizeRequests()
+                .antMatchers("/login").permitAll()
+                .antMatchers("/samllogin").fullyAuthenticated();
+
+            http.sessionManagement()
+                .sessionFixation().migrateSession()
+                .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
+                .and()
+                .csrf().disable()
+                .apply(jwt())
+                .and()
+                .apply(saml())
+                .serviceProvider()
+                /*-*/.keyStore()
+                /*----*/.storeFilePath(samlProperties.getKeystorePath())
+                /*----*/.password(samlProperties.getKeystorePassword())
+                /*----*/.keyname(samlProperties.getKeystorePrivateKeyName())
+                /*----*/.keyPassword(samlProperties.getKeystorePrivateKeyPassword())
+                /*----*/.and()
+                /*-*/.protocol(samlProperties.getExternalContextScheme())
+                /*-*/.hostname(buildHostname())
+                /*-*/.basePath(samlProperties.getExternalContextPath())
+                /*-*/.entityId(samlProperties.getEntityId())
+                /*-*/.entityAlias(samlProperties.getEntityAlias())
+                /*-*/.withEmptyStorage(false)
+                /*-*/.excludeCredential(false)
+                .and()
+                .identityProvider()
+                /*-*/.discoveryEnabled(false)
+                /*-*/.signMetadata(true)
+                /*-*/.metadataFilePath(samlProperties.getIdpConfigPath())
+                .and()
+                .userDetailsService(this.eiamSamlUserDetailsService())
+                .successHandler(this.authenticationSuccessHandler())
+                .failureHandler(this.authenticationFailureHandler())
+                .logoutHandler(this.successLogoutHandler())
+                .xmlHttpRequestedWithEntryPoint(this.problemSupport)
+                .applicationEventPublisher(this.applicationEventPublisher)
+                .defaultAuthnCtx(DEFAULT_AUTHN_CTX);
+
+            super.configure(http);
+        }
+
+        private SamlAuthenticationSuccessHandler authenticationSuccessHandler() {
+            SamlAuthenticationSuccessHandler authenticationSuccessHandler = new SamlAuthenticationSuccessHandler(
+                this.samlProperties.getAccessRequestUrl(),
+                this.userInfoRepository,
+                this.authenticationEventPublisher(),
+                this.applicationEventPublisher);
+            authenticationSuccessHandler.setAlwaysUseDefaultTargetUrl(false);
+            authenticationSuccessHandler.setDefaultTargetUrl("/");
+            return authenticationSuccessHandler;
+        }
+
+        private AuthenticationEventPublisher authenticationEventPublisher() {
+            return new DefaultAuthenticationEventPublisher();
+        }
+
+        private SamlAuthenticationFailureHandler authenticationFailureHandler() {
+            return new SamlAuthenticationFailureHandler(this.eiamSecurityProperties.isEnableRedirectOnCancellation());
+        }
+
+        private SimpleUrlLogoutSuccessHandler successLogoutHandler() {
+            SimpleUrlLogoutSuccessHandler successLogoutHandler = new SimpleUrlLogoutSuccessHandler() {
+                @Override
+                public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
+                    throws IOException, ServletException {
+
+                    applicationEventPublisher.publishEvent(BusinessLogEvent.of(USER_LOGOUT).withObjectType(USER.typeName()));
+
+                    super.onLogoutSuccess(request, response, authentication);
+                }
+            };
+            successLogoutHandler.setDefaultTargetUrl("/");
+            return successLogoutHandler;
+        }
+
+        private JWTConfigurer jwt() {
+            final Jwt jwt = this.jHipsterProperties.getSecurity()
+                .getAuthentication()
+                .getJwt();
+            return new JWTConfigurer(jwt);
+        }
+
+        private String buildHostname() {
+            if (StringUtils.isBlank(samlProperties.getExternalContextServerPort())) {
+                return samlProperties.getExternalContextServerName();
+            }
+            return samlProperties.getExternalContextServerName() + ":" + samlProperties.getExternalContextServerPort();
+        }
+
+        private EiamSamlUserDetailsService eiamSamlUserDetailsService() {
+            return new EiamSamlUserDetailsService(samlBasedUserDetailsProvider());
+        }
+
+        private SamlBasedUserDetailsProvider samlBasedUserDetailsProvider() {
+            return new DefaultSamlBasedUserDetailsProvider(
+                this.userInfoRepository,
+                this.eiamSecurityProperties.getRolemapping(),
+                this.transactionTemplate
+            );
+        }
     }
 }

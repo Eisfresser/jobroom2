@@ -1,17 +1,14 @@
 package ch.admin.seco.jobroom.web.rest;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import io.github.jhipster.config.JHipsterProperties;
-
+import ch.admin.seco.jobroom.config.DefaultProfileUtil;
 import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import ch.admin.seco.jobroom.config.DefaultProfileUtil;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Resource to return information about the currently running Spring profiles.
@@ -22,11 +19,8 @@ public class ProfileInfoResource {
 
     private final Environment env;
 
-    private final JHipsterProperties jHipsterProperties;
-
-    public ProfileInfoResource(Environment env, JHipsterProperties jHipsterProperties) {
+    public ProfileInfoResource(Environment env) {
         this.env = env;
-        this.jHipsterProperties = jHipsterProperties;
     }
 
     @GetMapping("/profile-info")
@@ -36,11 +30,7 @@ public class ProfileInfoResource {
     }
 
     private String getRibbonEnv(String[] activeProfiles) {
-        String[] displayOnActiveProfiles = jHipsterProperties.getRibbon().getDisplayOnActiveProfiles();
-        if (displayOnActiveProfiles == null) {
-            return null;
-        }
-        List<String> ribbonProfiles = new ArrayList<>(Arrays.asList(displayOnActiveProfiles));
+        List<String> ribbonProfiles = new ArrayList<>();
         List<String> springBootProfiles = Arrays.asList(activeProfiles);
         ribbonProfiles.retainAll(springBootProfiles);
         if (!ribbonProfiles.isEmpty()) {

@@ -1,37 +1,6 @@
 package ch.admin.seco.jobroom.web.rest;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
-
-import javax.validation.Valid;
-
-import com.codahale.metrics.annotation.Timed;
-import io.github.jhipster.web.util.ResponseUtil;
-import io.swagger.annotations.ApiParam;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import ch.admin.seco.jobroom.security.AuthoritiesConstants;
+import ch.admin.seco.jobroom.security.IsAdmin;
 import ch.admin.seco.jobroom.security.SecurityUtils;
 import ch.admin.seco.jobroom.service.OrganizationService;
 import ch.admin.seco.jobroom.service.dto.OrganizationAutocompleteDTO;
@@ -39,6 +8,25 @@ import ch.admin.seco.jobroom.service.dto.OrganizationDTO;
 import ch.admin.seco.jobroom.web.rest.errors.BadRequestAlertException;
 import ch.admin.seco.jobroom.web.rest.util.HeaderUtil;
 import ch.admin.seco.jobroom.web.rest.util.PaginationUtil;
+import io.github.jhipster.web.util.ResponseUtil;
+import io.micrometer.core.annotation.Timed;
+import io.swagger.annotations.ApiParam;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 /**
  * REST controller for managing Organization.
@@ -48,7 +36,9 @@ import ch.admin.seco.jobroom.web.rest.util.PaginationUtil;
 public class OrganizationResource {
 
     private static final String ENTITY_NAME = "organization";
+
     private final Logger log = LoggerFactory.getLogger(OrganizationResource.class);
+
     private final OrganizationService organizationService;
 
     public OrganizationResource(OrganizationService organizationService) {
@@ -172,7 +162,7 @@ public class OrganizationResource {
 
     @PostMapping("/organizations/housekeeping")
     @Timed
-    @Secured(AuthoritiesConstants.ADMIN)
+    @IsAdmin
     public ResponseEntity<Void> housekeeping(@RequestParam LocalDateTime beforeDateTime) {
         log.info("REST request to start housekeeping for Organizations by user : {}", SecurityUtils.getCurrentUserLogin());
         organizationService.housekeeping(beforeDateTime);

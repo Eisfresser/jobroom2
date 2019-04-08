@@ -1,19 +1,9 @@
-# ===================================================================
-# Spring Boot configuration.
-#
-# This configuration will be overridden by the Spring profile you use,
-# for example application-dev.yml if you use the "dev" profile.
-#
-# More information on profiles: http://www.jhipster.tech/profiles/
-# More information on configuration properties: http://www.jhipster.tech/common-application-properties/
-# ===================================================================
-
-# ===================================================================
-# Standard Spring Boot properties.
-# Full reference is available at:
-# http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
-# ===================================================================
-
+server:
+    port: 8080
+    servlet:
+        session:
+            cookie:
+                http-only: true
 eureka:
     client:
         enabled: true
@@ -37,23 +27,52 @@ eureka:
 ribbon:
     eureka:
         enabled: true
-# See http://cloud.spring.io/spring-cloud-netflix/spring-cloud-netflix.html
-zuul: # those values must be configured depending on the application specific needs
+    restclient:
+        # must be set to false since otherwise the RibbonClientHttpRequestFactory is used which doesn't support 'PATCH'
+        enabled: false
+
+# See https://cloud.spring.io/spring-cloud-netflix/single/spring-cloud-netflix.html#_router_and_filter_zuul
+zuul:
     host:
         max-total-connections: 1000
         max-per-route-connections: 100
     semaphore:
         max-semaphores: 500
+    ignoreSecurityHeaders: false
     sensitiveHeaders:
         - Set-Cookie
         - Authorization
-        - X-Frame-Options
-        - X-Content-Type-Options
-        - X-XSS-Protection
-    ignoreSecurityHeaders: false
+    ignoredServices:
+        - alv-portal-webapp
+    ignoredPatterns:
+        # spring security saml
+        - /saml/**
+        # authentication redirection endpoints
+        - /authentication/**
+        - /login
+        - /samllogin
+        # gateway endpoints
+        - /api/**
+        # actuator endpoints
+        - /management/**
+        # swagger
+        - /webjars/**
+        - /swagger-ui.html
+        - /swagger-resources
+        - /swagger-resources/**
+        - /v2/api-docs
+    routes:
+        jobdesk:
+            path: /jobdesk/**
+            serviceId: jobdesk-service
+            strip-prefix: false
+        portal-ui:
+            path: /**
+            serviceId: alv-portal-webapp
 
 # See https://github.com/Netflix/Hystrix/wiki/Configuration
 hystrix:
+    shareSecurityContext: true
     command:
         default:
             execution:
@@ -65,16 +84,17 @@ management:
     endpoints:
         web:
             base-path: /management
-            expose: '*'
+            exposure:
+                include: '*'
     endpoint:
         health:
-            show-details: always
+            show-details: when_authorized
+            cache:
+                time-to-live: 30s
     info:
         git:
-            mode: full
-    health:
-        mail:
-            enabled: false # When using the MailService, configure an SMTP server and set this to true
+            mode: simple
+
 spring:
     application:
         name: jobroom
@@ -83,23 +103,52 @@ spring:
     jpa:
         open-in-view: false
         hibernate:
-            ddl-auto: none
+            ddl-auto: validate
             naming:
                 physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
                 implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
+        properties:
+            hibernate.jdbc.lob.non_contextual_creation: true
+            hibernate.id.new_generator_mappings: true
+            hibernate.generate_statistics: true
     messages:
         basename: i18n/messages
     mvc:
         favicon:
             enabled: false
     thymeleaf:
+        cache: true
         mode: HTML
-
-server:
-    servlet:
-        session:
-            cookie:
-                http-only: true
+    liquibase:
+        change-log: classpath:/config/liquibase/master.xml
+    task:
+        execution:
+            thread-name-prefix: jr2-async
+            pool:
+                core-size: 2
+                max-size: 50
+                queue-capacity: 10000
+        scheduling:
+            thread-name-prefix: jr2-scheduler
+            pool:
+                size: 1
+    cloud:
+        stream:
+            bindings:
+                input:
+                    group: jobroom
+                    destination: candidate.event
+            kafka:
+                binder:
+                    auto-add-partitions: true
+                    auto-create-topics: true
+                bindings:
+                    input:
+                        consumer:
+                            enableDlq: true
+                            dlq-name: candidate.event.dlq
+    main:
+        allow-bean-definition-overriding: true
 
 info:
     project:
@@ -110,47 +159,50 @@ info:
 #
 # Full reference is available at: http://www.jhipster.tech/common-application-properties/
 # ===================================================================
-
 jhipster:
-    async:
-        core-pool-size: 2
-        max-pool-size: 50
-        queue-capacity: 10000
-    # By default CORS is disabled. Uncomment to enable.
-    #cors:
-        #allowed-origins: "*"
-        #allowed-methods: "*"
-        #allowed-headers: "*"
-        #exposed-headers: "Authorization,Link,X-Total-Count"
-        #allow-credentials: true
-        #max-age: 1800
     mail:
         from: jobroom@localhost
-    swagger:
-        default-include-pattern: /api/.*
-        title: jobroom API
-        description: jobroom API documentation
-        version: 0.0.1
-        terms-of-service-url:
-        contact-name:
-        contact-url:
-        contact-email:
-        license:
-        license-url:
-    ribbon:
-        display-on-active-profiles:
-            - dev
-            - development
-            - test
-            - staging
+    gateway:
+        authorized-microservices-endpoints:
+            jobservice: /api,/v2/api-docs,/swagger-resources,/management
+            referenceservice: /api,/v2/api-docs,/swagger-resources,/management
+            candidateservice: /api,/v2/api-docs,/swagger-resources,/management
+            jobadservice: /api,/v2/api-docs,/swagger-resources,/management
 
 # ===================================================================
 # Application specific properties
-# Add your own application properties here, see the ApplicationProperties class
-# to have type-safe configuration, like in the JHipsterProperties above
 #
-# More documentation is available at:
-# http://www.jhipster.tech/common-application-properties/
 # ===================================================================
+gateway:
+    rate-limiting:
+        enabled: true
+        rate-filter-options:
+            # Avoid fetching mass-fetching of sensitive candidate information
+            - bucket-prefix: 'candidate-details'
+              method: 'GET'
+              url: '/candidateservice/api/candidates/*'
+              limit: 5
+              duration: 10s
 
-# application:
+            # apply rate-limiting filter to any request
+            - bucket-prefix: 'all'
+              url: '/**'
+              limit: 100
+              duration: 10s
+
+security:
+    eiam:
+        rolemapping:
+            ROLE_ALLOW: ALV-jobroom.ALLOW
+            ROLE_REGISTRATION: ALV-jobroom.ROLE_REGISTRATION
+            ROLE_USER: ALV-jobroom.ROLE_USER
+            ROLE_JOBSEEKER_CLIENT: ALV-jobroom.ROLE_JOBSEEKER
+            ROLE_PRIVATE_EMPLOYMENT_AGENT: ALV-jobroom.ROLE_PRIVATE_EMPLOYMENT_AGENT
+            ROLE_COMPANY: ALV-jobroom.ROLE_COMPANY
+            ROLE_PUBLIC_EMPLOYMENT_SERVICE: ALV-jobroom.ROLE_PUBLIC_EMPLOYMENT_SERVICE
+            ROLE_ADMIN: ALV-jobroom.ROLE_ADMIN
+            ROLE_SYSADMIN: ALV-jobroom.ROLE_SYSADMIN
+        enable-redirect-on-cancellation: true
+    user:
+        logout_url: '/saml/logout'
+        redirect-base-url:  ${jhipster.mail.base-url}

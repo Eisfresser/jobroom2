@@ -1,11 +1,10 @@
 package ch.admin.seco.jobroom.service.dto;
 
-import java.time.Instant;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
-import java.util.UUID;
-import java.util.stream.Collectors;
+import ch.admin.seco.jobroom.config.Constants;
+import ch.admin.seco.jobroom.domain.Authority;
+import ch.admin.seco.jobroom.domain.Organization;
+import ch.admin.seco.jobroom.domain.User;
+import ch.admin.seco.jobroom.domain.enumeration.Gender;
 
 import javax.persistence.Column;
 import javax.persistence.EnumType;
@@ -14,16 +13,17 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-
-import ch.admin.seco.jobroom.config.Constants;
-import ch.admin.seco.jobroom.domain.Authority;
-import ch.admin.seco.jobroom.domain.Organization;
-import ch.admin.seco.jobroom.domain.User;
-import ch.admin.seco.jobroom.domain.enumeration.Gender;
+import java.time.Instant;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 /**
  * A DTO representing a user, with his authorities.
  */
+@Deprecated
 public class UserDTO {
 
     private UUID id;
@@ -114,6 +114,8 @@ public class UserDTO {
             this.organizationName = organization.getName();
         }
     }
+
+
 
     public UUID getId() {
         return id;
@@ -268,7 +270,7 @@ public class UserDTO {
             ", lastModifiedBy='" + lastModifiedBy + '\'' +
             ", lastModifiedDate=" + lastModifiedDate +
             ", authorities=" + authorities +
-            ", organizationId=" + organizationId +
+            ", externalId=" + organizationId +
             ", organizationName=" + organizationName +
             "}";
     }

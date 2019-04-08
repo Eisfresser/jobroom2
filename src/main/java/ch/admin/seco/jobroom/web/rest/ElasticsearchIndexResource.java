@@ -1,18 +1,15 @@
 package ch.admin.seco.jobroom.web.rest;
 
-import java.net.URISyntaxException;
-
-import com.codahale.metrics.annotation.Timed;
+import io.micrometer.core.annotation.Timed;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import ch.admin.seco.jobroom.security.AuthoritiesConstants;
+import ch.admin.seco.jobroom.security.IsSystemAdmin;
 import ch.admin.seco.jobroom.security.SecurityUtils;
 import ch.admin.seco.jobroom.service.ElasticsearchIndexService;
 import ch.admin.seco.jobroom.web.rest.util.HeaderUtil;
@@ -37,8 +34,8 @@ public class ElasticsearchIndexResource {
      */
     @PostMapping("/elasticsearch/index")
     @Timed
-    @Secured(AuthoritiesConstants.ADMIN)
-    public ResponseEntity<Void> reindexAll() throws URISyntaxException {
+    @IsSystemAdmin
+    public ResponseEntity<Void> reindexAll() {
         log.info("REST request to reindex Elasticsearch by user : {}", SecurityUtils.getCurrentUserLogin());
         elasticsearchIndexService.reindexAll();
         return ResponseEntity.accepted()

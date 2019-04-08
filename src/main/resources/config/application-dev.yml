@@ -18,6 +18,7 @@ logging:
         ROOT: DEBUG
         io.github.jhipster: DEBUG
         ch.admin.seco.jobroom: DEBUG
+        com.netflix.discovery: OFF
 
 eureka:
     instance:
@@ -29,7 +30,7 @@ eureka:
 spring:
     profiles:
         active: dev
-        include: swagger
+        include: swagger, messagebroker-mock
     devtools:
         restart:
             enabled: true
@@ -39,25 +40,13 @@ spring:
         serialization.indent_output: true
     datasource:
         type: com.zaxxer.hikari.HikariDataSource
-        url: jdbc:h2:file:./build/h2db/db/jobroom;DB_CLOSE_DELAY=-1
+        url: jdbc:postgresql://localhost:5432/jobroom
         username: jobroom
-        password:
+        password: secret
     h2:
         console:
             enabled: false
-    jpa:
-        database-platform: io.github.jhipster.domain.util.FixedH2Dialect
-        database: H2
-        show-sql: true
-        properties:
-            hibernate.id.new_generator_mappings: true
-            hibernate.cache.use_second_level_cache: true
-            hibernate.cache.use_query_cache: false
-            hibernate.generate_statistics: true
-            hibernate.cache.region.factory_class: com.hazelcast.hibernate.HazelcastCacheRegionFactory
-            hibernate.cache.hazelcast.instance_name: jobroom
-            hibernate.cache.use_minimal_puts: true
-            hibernate.cache.hazelcast.use_lite_member: true
+
     data:
         elasticsearch:
             cluster-name:
@@ -69,8 +58,6 @@ spring:
         port: 25
         username:
         password:
-    messages:
-#        cache-seconds:
     thymeleaf:
         cache: false
     zipkin: # Use the "zipkin" Maven profile to have the Spring Cloud Zipkin dependencies
@@ -107,21 +94,11 @@ server:
 # ===================================================================
 
 jhipster:
-    gateway:
-        rate-limiting:
-            enabled: false
-            limit: 100000
-            duration-in-seconds: 3600
-        authorized-microservices-endpoints: # Access Control Policy, if left empty for a route, all endpoints will be accessible
-            jobservice: /api,/v2/api-docs # recommended dev configuration
-            referenceservice: /api,/v2/api-docs # recommended dev configuration
-            candidateservice: /api,/v2/api-docs # recommended dev configuration
-            jobadservice: /api,/v2/api-docs # recommended dev configuration
     http:
         version: V_1_1 # To use HTTP/2 you will need SSL support (see above the "server.ssl" configuration)
     cache: # Cache configuration
         hazelcast: # Hazelcast distributed cache
-            time-to-live-seconds: 3600
+            time-to-live-seconds: 20
             backup-count: 1
             management-center: # Full reference is available at: http://docs.hazelcast.org/docs/management-center/3.9/manual/html/Deploying_and_Starting.html
                 enabled: false
@@ -136,6 +113,10 @@ jhipster:
         allow-credentials: true
         max-age: 1800
     security:
+        client-authorization:
+            access-token-uri: http://localhost:8080/api/authenticate
+            client-id: admin
+            client-secret: admin
         authentication:
             jwt:
                 secret: my-secret-token-to-change-in-production
@@ -158,13 +139,46 @@ jhipster:
             port: 5000
             queue-size: 512
 
-# ===================================================================
-# Application specific properties
-# Add your own application properties here, see the ApplicationProperties class
-# to have type-safe configuration, like in the JHipsterProperties above
-#
-# More documentation is available at:
-# http://www.jhipster.tech/common-application-properties/
-# ===================================================================
+management:
+    health:
+        mail:
+            enabled: false
 
-# application:
+security:
+    saml:
+        idpConfigPath: classpath:config/security/local-shibboleth-idp-metadata.xml
+        keystorePath: classpath:config/security/local-keystore.jks
+        keystorePassword: 'mima01'
+        keystorePrivateKeyName: 'saml2-sp'
+        keystorePrivateKeyPassword: 'mima01'
+        externalContextScheme: 'http'
+        externalContextServerName: 'localhost'
+        externalContextServerPort: '8080'
+        externalContextPath: '/'
+        accessRequestUrl: 'https://sts-r.alv.admin.ch/_pep/accessRequest?appl=ALV-jobroom&returnURL=https%3A%2F%2Fdev.job-room.ch%2F%23%2Fregister'
+        entityId: 'urn:wrong.url:sp:seco:JOBROOM-LOCAL'
+        #entityAlias: ''
+    user:
+        profile_url: 'http://www.cowsays.com/cow_messages/4701'
+        login_url: 'http://www.cowsays.com/cow_messages/4701'
+    accessCodeMailRecipient: service-desk-mail-address@mail.ch
+    eiam:
+        wsclient:
+            clientName: ALV
+            #endpointAddress: http://localhost:8991/mockAdminServicePortBinding
+            endpointAddress: https://services.gate-r.eiam.admin.ch/nevisidm/services/v1_32/AdminService
+            #endpointAddress: https://services.gate-a.eiam.admin.ch/nevisidm/services/v1_32/AdminService
+            keystore:
+                location: file://TO_YOUR_LOCAL_DIRECTORY/eiam-client.jks
+                password: MUST_BE_PROVIDED_BY_THE_CONFIG_SERVER
+                privateKeyName: dev.job-room.ch
+            truststore:
+                location: classpath:eiam/jks/eiam-client-truststore.jks
+                password: MUST_BE_PROVIDED_BY_THE_CONFIG_SERVER
+    uid:
+        wsclient:
+            monitoring-uid: 115635627
+            endpointAddress: https://www.uid-wse-a.admin.ch/V3.0/PublicServices.svc
+            truststore:
+                location: classpath:uid/jks/uid-client-truststore.jks
+                password: MUST_BE_PROVIDED_BY_THE_CONFIG_SERVER

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <changeSet id="20181213080000" author="wole">
+        <sql>
+            update legal_terms
+            set effective_at = '2018-07-01'
+            where id = '8d9b707a-ddf4-11e5-b86d-9a79f06e9478';
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

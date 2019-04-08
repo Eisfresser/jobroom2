@@ -11,9 +11,9 @@ ENV SPRING_OUTPUT_ANSI_ENABLED=ALWAYS \
 RUN wget -O spring-cloud-dataflow-server-local.jar https://alvch.jfrog.io/alvch/libs-releases/org/springframework/cloud/spring-cloud-dataflow-server-local/1.4.0.FIXED/spring-cloud-dataflow-server-local-1.4.0.FIXED.jar
 
 # Path for logs
-RUN mkdir -p ${TMP}
+#RUN mkdir -p ${TMP}
 
-VOLUME ${TMP}
+#:VOLUME ${TMP}
 
 # Port range for streams
 EXPOSE 7000-7010 9393

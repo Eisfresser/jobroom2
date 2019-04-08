@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:cache="http://www.springframework.org/schema/cache"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+                           http://www.springframework.org/schema/cache
+                           http://www.springframework.org/schema/cache/spring-cache-3.2.xsd">
+
+    <cache:annotation-driven/>
+
+    <bean id="cacheManager" class="org.springframework.cache.support.SimpleCacheManager">
+        <property name="caches">
+            <set>
+                <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean">
+                    <property name="name" value="users"/>
+                </bean>
+            </set>
+        </property>
+    </bean>
+
+    <bean id="webServiceTemplate" class="org.springframework.ws.client.core.WebServiceTemplate">
+        <property name="defaultUri" value="http://my.web.ch/service"/>
+    </bean>
+
+    <bean id="client"
+          class="ch.admin.seco.jobroom.security.registration.eiam.DefaultEiamClient">
+        <constructor-arg name="clientName" value="ALV"/>
+        <constructor-arg name="webServiceTemplate" ref="webServiceTemplate" />
+    </bean>
+
+</beans>
